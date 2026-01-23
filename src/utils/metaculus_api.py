@@ -50,7 +50,7 @@ class MetaculusQuestion:
         """Parse a question from the API response."""
         question_data = data.get("question", data)
 
-        # Determine question type
+        # Determine question type from nested question object
         q_type = question_data.get("type", "binary")
         if q_type == "multiple_choice":
             question_type = "multiple_choice"
@@ -61,20 +61,37 @@ class MetaculusQuestion:
         else:
             question_type = "binary"
 
+        # Get status from nested question object if not at top level
+        status = data.get("status") or question_data.get("status", "")
+
+        # Try to get community prediction from aggregations
+        community_pred = None
+        aggregations = question_data.get("aggregations", {})
+        if aggregations:
+            recency = aggregations.get("recency_weighted", {})
+            if recency:
+                history = recency.get("history", [])
+                if history:
+                    # Get the latest forecast
+                    latest = history[-1] if history else {}
+                    centers = latest.get("centers", [])
+                    if centers:
+                        community_pred = centers[0]  # First center is median
+
         return cls(
             id=data.get("id"),
             title=data.get("title", ""),
-            description=data.get("description", ""),
-            resolution_criteria=data.get("resolution_criteria", ""),
-            fine_print=data.get("fine_print", ""),
+            description=data.get("description") or "",  # Handle None
+            resolution_criteria=data.get("resolution_criteria") or "",
+            fine_print=data.get("fine_print") or "",
             question_type=question_type,
             created_at=data.get("created_at", ""),
-            scheduled_close_time=data.get("scheduled_close_time"),
-            scheduled_resolve_time=data.get("scheduled_resolve_time"),
-            status=data.get("status", ""),
+            scheduled_close_time=data.get("scheduled_close_time") or question_data.get("scheduled_close_time"),
+            scheduled_resolve_time=data.get("scheduled_resolve_time") or question_data.get("scheduled_resolve_time"),
+            status=status,
             possibilities=question_data.get("possibilities"),
             options=question_data.get("options"),
-            community_prediction=question_data.get("community_prediction", {}).get("full", {}).get("q2"),
+            community_prediction=community_pred,
             num_forecasters=data.get("nr_forecasters"),
             raw=data,
         )

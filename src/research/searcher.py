@@ -154,11 +154,12 @@ class ResearchOrchestrator:
         """Generate search queries using an LLM."""
         num_queries = self.config.get("research", {}).get("queries_per_question", 5)
 
+        description_text = question_text[:1000] if question_text else "(No description provided)"
         prompt = f"""Generate {num_queries} diverse search queries to research this forecasting question.
 
 Question: {question_title}
 
-Description: {question_text[:1000]}
+Description: {description_text}
 
 Generate queries that will help find:
 1. Historical base rates and precedents
@@ -203,11 +204,12 @@ Keep queries concise (under 10 words each).
         perplexity_config = next((s for s in sources if s.get("type") == "perplexity"), {})
         model = perplexity_config.get("model", "sonar-reasoning-pro")
 
+        description_text = question_text[:2000] if question_text else "(No description provided)"
         prompt = f"""Research this forecasting question and provide relevant information:
 
 Question: {question_title}
 
-Description: {question_text[:2000]}
+Description: {description_text}
 
 Provide:
 1. Relevant historical precedents and base rates
@@ -283,31 +285,63 @@ Be thorough and cite sources where possible.
             return ("web_search", [])
 
     async def _search_asknews(self, query: str) -> tuple[str, list[SearchResult]]:
-        """Search using AskNews API."""
+        """Search using AskNews API.
+
+        Supports two auth methods:
+        1. API Key (ASKNEWS_API_KEY) - simpler, static token (scopes set at key creation)
+        2. OAuth (ASKNEWS_CLIENT_ID + ASKNEWS_CLIENT_SECRET) - short-lived tokens
+
+        IMPORTANT: Your credentials must have the 'news' scope enabled.
+        Go to https://my.asknews.app -> API Credentials to check/regenerate.
+        """
+        api_key = os.getenv("ASKNEWS_API_KEY")
         client_id = os.getenv("ASKNEWS_CLIENT_ID")
         client_secret = os.getenv("ASKNEWS_CLIENT_SECRET")
 
-        if not client_id or not client_secret:
-            logger.warning("AskNews credentials not set, skipping AskNews search")
+        # Determine auth method
+        if api_key:
+            # Use API key directly (scopes defined at key creation time)
+            headers = {"Authorization": f"Bearer {api_key}"}
+        elif client_id and client_secret:
+            # Use OAuth flow to get token with required scopes
+            # Token URL from AskNews SDK: https://auth.asknews.app/oauth2/token
+            try:
+                import base64
+                # AskNews uses HTTP Basic Auth for the token endpoint
+                credentials = base64.b64encode(f"{client_id}:{client_secret}".encode()).decode()
+                auth_response = await self.http_client.post(
+                    "https://auth.asknews.app/oauth2/token",
+                    headers={
+                        "Authorization": f"Basic {credentials}",
+                        "Content-Type": "application/x-www-form-urlencoded",
+                    },
+                    data={
+                        "grant_type": "client_credentials",
+                        # Request the scopes needed for news search
+                        "scope": "news chat stories analytics offline openid",
+                    },
+                )
+                auth_response.raise_for_status()
+                token = auth_response.json().get("access_token")
+                headers = {"Authorization": f"Bearer {token}"}
+            except httpx.HTTPStatusError as e:
+                logger.error(f"AskNews OAuth failed (HTTP {e.response.status_code}): {e.response.text}")
+                if e.response.status_code == 403:
+                    logger.error("403 Forbidden - Your credentials may not have the required scopes. "
+                                "Go to https://my.asknews.app -> API Credentials and regenerate "
+                                "with 'news' scope enabled.")
+                return ("asknews", [])
+            except Exception as e:
+                logger.error(f"AskNews OAuth failed: {e}")
+                return ("asknews", [])
+        else:
+            logger.warning("AskNews credentials not set (need ASKNEWS_API_KEY or CLIENT_ID+SECRET)")
             return ("asknews", [])
 
         try:
-            # First get access token
-            auth_response = await self.http_client.post(
-                "https://api.asknews.app/v1/oauth/token",
-                data={
-                    "grant_type": "client_credentials",
-                    "client_id": client_id,
-                    "client_secret": client_secret,
-                },
-            )
-            auth_response.raise_for_status()
-            token = auth_response.json().get("access_token")
-
-            # Then search
             response = await self.http_client.get(
                 "https://api.asknews.app/v1/news/search",
-                headers={"Authorization": f"Bearer {token}"},
+                headers=headers,
                 params={"q": query, "n_articles": 10},
             )
             response.raise_for_status()
@@ -323,8 +357,16 @@ Be thorough and cite sources where possible.
                     published_date=article.get("published_at"),
                 ))
 
+            logger.info(f"AskNews returned {len(results)} articles")
             return ("asknews", results)
 
+        except httpx.HTTPStatusError as e:
+            logger.error(f"AskNews search failed (HTTP {e.response.status_code}): {e.response.text}")
+            if e.response.status_code == 403:
+                logger.error("403 Forbidden - Your credentials may not have the 'news' scope. "
+                            "Go to https://my.asknews.app -> API Credentials and regenerate "
+                            "with 'news' scope enabled.")
+            return ("asknews", [])
         except Exception as e:
             logger.error(f"AskNews search failed: {e}")
             return ("asknews", [])

@@ -58,17 +58,17 @@ For each piece of strong/moderate evidence, determine:
 - Is this evidence already captured in the base rate (no update needed)?
 
 Evidence update reasoning:
-- [Evidence 1]: {direction} by approximately {X} percentage points because [reasoning]
-- [Evidence 2]: {direction} by approximately {X} percentage points because [reasoning]
+- [Evidence 1]: [UP/DOWN] by approximately [X] percentage points because [reasoning]
+- [Evidence 2]: [UP/DOWN] by approximately [X] percentage points because [reasoning]
 - ...
 
 ### Step 4: Integration
 
 Starting from {base_rate}%:
-- Adjustment 1: {+/- X}% for [reason]
-- Adjustment 2: {+/- X}% for [reason]
-- Adjustment 3: {+/- X}% for [reason]
-- **Cumulative adjustment:** {total adjustment}%
+- Adjustment 1: [+/- X]% for [reason]
+- Adjustment 2: [+/- X]% for [reason]
+- Adjustment 3: [+/- X]% for [reason]
+- **Cumulative adjustment:** [total adjustment]%
 
 ### Step 5: Sanity Checks
 
@@ -99,11 +99,11 @@ Provide your full analysis following ALL steps above, then conclude with:
 
 **Adjustment Calculation:**
 - Base rate: {base_rate}%
-- Total adjustment: {adjustment}%
-- Final estimate: {final}%
+- Total adjustment: [adjustment]%
+- Final estimate: [final]%
 
 **Confidence in Adjustment:** [1-10]
 
-**Probability: {X}%**
+**Probability: [X]%**
 
-Important: End your response with exactly "Probability: {X}%" where X is your final probability estimate (a number between 0.1 and 99.9).
+Important: End your response with exactly "Probability: [X]%" where [X] is your final probability estimate (a number between 0.1 and 99.9).

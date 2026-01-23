@@ -89,12 +89,13 @@ async def forecast_question(
         print(f"Cost: ${result['costs']['total_cost']:.4f}")
         print(f"Artifacts: {result['artifacts_dir']}")
 
-        if result.get('submission', {}).get('success'):
+        submission = result.get('submission') or {}
+        if submission.get('success'):
             print("Status: SUBMITTED")
         elif dry_run:
             print("Status: DRY RUN (not submitted)")
         else:
-            print(f"Status: FAILED - {result.get('submission', {}).get('error', 'Unknown error')}")
+            print(f"Status: FAILED - {submission.get('error', 'Unknown error')}")
 
         return result
 
@@ -199,8 +200,8 @@ def main():
 
     args = parser.parse_args()
 
-    # Load environment variables
-    load_dotenv()
+    # Load environment variables (override=True ensures .env values take precedence)
+    load_dotenv(override=True)
 
     # Setup logging
     setup_logging(args.verbose)
