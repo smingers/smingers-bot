@@ -271,14 +271,20 @@ class BinaryForecaster:
 
     def _extract_probability(self, text: str) -> float:
         """Extract probability from LLM response."""
-        # Look for "Probability: X%" pattern
-        match = re.search(r"Probability:\s*([0-9]+(?:\.[0-9]+)?)\s*%", text, re.IGNORECASE)
+        # Look for "Probability: X%" pattern (with optional markdown formatting)
+        match = re.search(r"\*{0,2}Probability:?\*{0,2}\s*([0-9]+(?:\.[0-9]+)?)\s*%", text, re.IGNORECASE)
         if match:
             prob = float(match.group(1)) / 100
             return max(0.001, min(0.999, prob))
 
-        # Look for "Base Rate Estimate: X%" pattern
-        match = re.search(r"Base Rate Estimate:\s*([0-9]+(?:\.[0-9]+)?)\s*%", text, re.IGNORECASE)
+        # Look for "Base Rate Estimate: X%" pattern (with optional markdown formatting)
+        match = re.search(r"\*{0,2}Base Rate Estimate:?\*{0,2}\s*([0-9]+(?:\.[0-9]+)?)\s*%", text, re.IGNORECASE)
+        if match:
+            prob = float(match.group(1)) / 100
+            return max(0.001, min(0.999, prob))
+
+        # Look for "Final Estimate: X%" or "Final Probability: X%" pattern
+        match = re.search(r"\*{0,2}Final (?:Estimate|Probability):?\*{0,2}\s*([0-9]+(?:\.[0-9]+)?)\s*%", text, re.IGNORECASE)
         if match:
             prob = float(match.group(1)) / 100
             return max(0.001, min(0.999, prob))

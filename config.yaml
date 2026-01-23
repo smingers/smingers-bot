@@ -32,31 +32,33 @@ models:
 
 ensemble:
   agents:
-    # For testing: just one agent with cheapest model
-    # Switch to claude-sonnet-4-20250514 for production quality
-    - name: "forecaster"
+    # All agents use Haiku for testing (switch to Sonnet for production)
+    - name: "analyst"
       model: "claude-3-haiku-20240307"
       weight: 1.0
       role_description: |
-        You are a superforecaster. Your job is to carefully weigh all available
-        evidence, classify each piece by strength (strong, moderate, weak),
-        reason through how the evidence updates the base rate, and produce
-        a well-calibrated probability estimate.
+        You are a geopolitical analyst and superforecaster. Focus on the current
+        situation, key actors, their incentives, and recent developments. Weigh
+        evidence by strength (strong, moderate, weak) and reason through how
+        each piece updates the base rate.
 
-    # Uncomment these for full ensemble (will use more API credits):
-    # - name: "contrarian"
-    #   model: "claude-sonnet-4-20250514"
-    #   weight: 1.0
-    #   role_description: |
-    #     You are a contrarian forecaster. Find counterarguments and reasons
-    #     the consensus might be wrong.
-    #
-    # - name: "calculator"
-    #   model: "gpt-4o"  # Requires OPENAI_API_KEY
-    #   weight: 1.5
-    #   role_description: |
-    #     You are a quantitative forecaster. Focus on numbers, statistics,
-    #     and mathematical reasoning.
+    - name: "historian"
+      model: "claude-3-haiku-20240307"
+      weight: 1.0
+      role_description: |
+        You are a historian and superforecaster. Focus on historical precedents,
+        analogous situations, and patterns from the past. Consider how often
+        similar situations have resolved in various ways. Use history to inform
+        your probability estimate.
+
+    - name: "contrarian"
+      model: "claude-3-haiku-20240307"
+      weight: 0.8
+      role_description: |
+        You are a contrarian forecaster. Your job is to challenge the obvious
+        narrative, find reasons the consensus might be wrong, and identify
+        blind spots. Consider: What would make the base rate misleading?
+        What are people overlooking?
 
   aggregation: "weighted_average"
 
@@ -86,11 +88,18 @@ research:
       model: "sonar-reasoning-pro"
       max_queries: 3
 
-    # Web search via Serper - requires SERPER_API_KEY (has free tier)
+    # Web search via Serper - requires SERPER_API_KEY (has free tier: 2,500/month)
     - type: "web_search"
-      enabled: false
+      enabled: true
       provider: "serper"
       max_results: 10
+
+    # Claude native web search - uses Anthropic API directly
+    # Cost: $10 per 1,000 searches + token costs
+    # Disabled by default since Serper is cheaper for basic search
+    - type: "claude_web_search"
+      enabled: false
+      model: "claude-3-haiku-20240307"
 
   queries_per_question: 3
   max_research_time: 60

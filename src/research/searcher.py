@@ -97,10 +97,14 @@ class ResearchOrchestrator:
         if self._is_source_enabled("perplexity"):
             tasks.append(self._search_perplexity(question_title, question_text))
 
-        # Web search (if enabled)
+        # Web search via Serper (if enabled)
         if self._is_source_enabled("web_search"):
             for query in queries[:3]:  # Limit queries
                 tasks.append(self._search_web(query))
+
+        # Claude native web search (if enabled)
+        if self._is_source_enabled("claude_web_search"):
+            tasks.append(self._search_claude_native(question_title, question_text))
 
         # AskNews (if enabled)
         if self._is_source_enabled("asknews"):
@@ -258,13 +262,15 @@ Be thorough and cite sources where possible.
             return ("web_search", [])
 
         try:
+            # Remove quotes from query - Serper doesn't handle them well
+            clean_query = query.replace('"', '').replace("'", "")
             response = await self.http_client.post(
                 "https://google.serper.dev/search",
                 headers={
                     "X-API-KEY": api_key,
                     "Content-Type": "application/json",
                 },
-                json={"q": query, "num": 10},
+                json={"q": clean_query, "num": 10},
             )
             response.raise_for_status()
             data = response.json()
@@ -278,6 +284,7 @@ Be thorough and cite sources where possible.
                     source="serper",
                 ))
 
+            logger.info(f"Serper returned {len(results)} results for query: {query[:50]}...")
             return ("web_search", results)
 
         except Exception as e:
@@ -371,6 +378,73 @@ Be thorough and cite sources where possible.
             logger.error(f"AskNews search failed: {e}")
             return ("asknews", [])
 
+    async def _search_claude_native(
+        self,
+        question_title: str,
+        question_text: str,
+    ) -> tuple[str, list[SearchResult]]:
+        """Search using Claude's native web search tool (API feature).
+
+        Requires Anthropic API. Cost: $10 per 1,000 searches + token costs.
+        Works with Haiku, Sonnet 3.5, and Sonnet 3.7.
+        """
+        import anthropic
+
+        api_key = os.getenv("ANTHROPIC_API_KEY")
+        if not api_key:
+            logger.warning("ANTHROPIC_API_KEY not set, skipping Claude web search")
+            return ("claude_web_search", [])
+
+        # Get model from config (default to haiku for cost)
+        sources = self.config.get("research", {}).get("sources", [])
+        claude_config = next((s for s in sources if s.get("type") == "claude_web_search"), {})
+        model = claude_config.get("model", "claude-3-haiku-20240307")
+
+        description_text = question_text[:2000] if question_text else "(No description provided)"
+        prompt = f"""Research this forecasting question and provide relevant, up-to-date information:
+
+Question: {question_title}
+
+Description: {description_text}
+
+Search for:
+1. Recent news and developments (last few months)
+2. Historical precedents and base rates
+3. Expert analysis and opinions
+4. Relevant statistics and data
+
+Provide a comprehensive summary with specific facts, dates, and sources."""
+
+        try:
+            client = anthropic.Anthropic(api_key=api_key)
+
+            response = client.messages.create(
+                model=model,
+                max_tokens=2048,
+                tools=[{"type": "web_search", "name": "web_search"}],
+                messages=[{"role": "user", "content": prompt}],
+                betas=["web-search-2025-03-05"],
+            )
+
+            # Extract the text content from response
+            content = ""
+            for block in response.content:
+                if hasattr(block, 'text'):
+                    content += block.text
+
+            logger.info(f"Claude web search completed, got {len(content)} chars")
+
+            return ("claude_web_search", [SearchResult(
+                title="Claude Web Search Synthesis",
+                url="https://anthropic.com",
+                snippet=content,
+                source="claude_web_search",
+            )])
+
+        except Exception as e:
+            logger.error(f"Claude web search failed: {e}")
+            return ("claude_web_search", [])
+
     def synthesize_results(self, results: ResearchResults) -> str:
         """
         Create a markdown synthesis of all research results.
@@ -414,6 +488,14 @@ Be thorough and cite sources where possible.
                 date_str = f" ({result.published_date})" if result.published_date else ""
                 lines.append(f"### [{result.title}]({result.url}){date_str}")
                 lines.append(f"> {result.snippet}")
+                lines.append("")
+
+        # Claude web search results
+        if "claude_web_search" in results.results_by_source:
+            lines.append("## Claude Web Search Results")
+            lines.append("")
+            for result in results.results_by_source["claude_web_search"]:
+                lines.append(result.snippet)
                 lines.append("")
 
         return "\n".join(lines)
