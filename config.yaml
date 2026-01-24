@@ -157,6 +157,20 @@ research:
       provider: "serper"
       max_results: 10
 
+    # Google News via Serper - requires SERPER_API_KEY (uses same quota as web_search)
+    # Great for current events and recent developments
+    - type: "google_news"
+      enabled: true
+      max_results: 10
+
+    # Full article scraping - FREE (uses Trafilatura/BeautifulSoup)
+    # Fetches full text from URLs returned by search
+    # Provides much richer context than snippets alone
+    - type: "article_scraping"
+      enabled: true
+      max_articles: 5          # How many articles to scrape per question
+      max_content_length: 5000 # Max chars per article
+
     # Claude native web search - uses Anthropic API directly
     # Cost: $10 per 1,000 searches + token costs
     # Disabled by default since Serper is cheaper for basic search

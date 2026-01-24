@@ -3,8 +3,10 @@ Research Orchestrator
 
 Coordinates multiple search sources to gather information for forecasting:
 - Perplexity API (reasoning + search)
-- Web search (via Serper or Exa)
+- Web search (via Serper)
+- Google News (via Serper)
 - AskNews API
+- Full article scraping (via Trafilatura/BeautifulSoup)
 """
 
 import asyncio
@@ -17,6 +19,7 @@ from datetime import datetime, timezone
 import httpx
 
 from ..utils.llm import LLMClient, LLMResponse
+from .extractor import ContentExtractor, ExtractedContent
 
 logger = logging.getLogger(__name__)
 
@@ -29,6 +32,7 @@ class SearchResult:
     snippet: str
     source: str  # Which search provider
     published_date: Optional[str] = None
+    full_content: Optional[str] = None  # Full article text if scraped
 
 
 @dataclass
@@ -64,9 +68,13 @@ class ResearchOrchestrator:
         # Initialize HTTP clients for various APIs
         self.http_client = httpx.AsyncClient(timeout=30.0)
 
+        # Content extractor for full article scraping
+        self.extractor = ContentExtractor()
+
     async def close(self):
         """Clean up resources."""
         await self.http_client.aclose()
+        await self.extractor.close()
 
     async def research(
         self,
@@ -102,6 +110,11 @@ class ResearchOrchestrator:
             for query in queries[:3]:  # Limit queries
                 tasks.append(self._search_web(query))
 
+        # Google News via Serper (if enabled)
+        if self._is_source_enabled("google_news"):
+            for query in queries[:2]:  # Limit news queries
+                tasks.append(self._search_google_news(query))
+
         # Claude native web search (if enabled)
         if self._is_source_enabled("claude_web_search"):
             tasks.append(self._search_claude_native(question_title, question_text))
@@ -123,6 +136,10 @@ class ResearchOrchestrator:
                     if source not in results_by_source:
                         results_by_source[source] = []
                     results_by_source[source].extend(items)
+
+        # Step 3: Scrape full article content (if enabled)
+        if self._is_source_enabled("article_scraping"):
+            results_by_source = await self._scrape_articles(results_by_source)
 
         # Count total results
         total_results = sum(len(items) for items in results_by_source.values())
@@ -290,6 +307,100 @@ Be thorough and cite sources where possible.
         except Exception as e:
             logger.error(f"Web search failed: {e}")
             return ("web_search", [])
+
+    async def _search_google_news(self, query: str) -> tuple[str, list[SearchResult]]:
+        """Search Google News using Serper API."""
+        api_key = os.getenv("SERPER_API_KEY")
+        if not api_key:
+            logger.warning("SERPER_API_KEY not set, skipping Google News search")
+            return ("google_news", [])
+
+        try:
+            clean_query = query.replace('"', '').replace("'", "")
+            response = await self.http_client.post(
+                "https://google.serper.dev/news",
+                headers={
+                    "X-API-KEY": api_key,
+                    "Content-Type": "application/json",
+                },
+                json={"q": clean_query, "num": 10},
+            )
+            response.raise_for_status()
+            data = response.json()
+
+            results = []
+            for item in data.get("news", [])[:10]:
+                results.append(SearchResult(
+                    title=item.get("title", ""),
+                    url=item.get("link", ""),
+                    snippet=item.get("snippet", ""),
+                    source="google_news",
+                    published_date=item.get("date"),
+                ))
+
+            logger.info(f"Google News returned {len(results)} results for query: {query[:50]}...")
+            return ("google_news", results)
+
+        except Exception as e:
+            logger.error(f"Google News search failed: {e}")
+            return ("google_news", [])
+
+    async def _scrape_articles(
+        self,
+        results_by_source: dict[str, list[SearchResult]],
+    ) -> dict[str, list[SearchResult]]:
+        """Scrape full article content for search results."""
+        # Get scraping config
+        sources = self.config.get("research", {}).get("sources", [])
+        scraping_config = next(
+            (s for s in sources if s.get("type") == "article_scraping"),
+            {}
+        )
+        max_articles = scraping_config.get("max_articles", 5)
+        max_content_per_article = scraping_config.get("max_content_length", 5000)
+
+        # Collect URLs to scrape (prioritize news sources)
+        urls_to_scrape = []
+        url_to_result: dict[str, SearchResult] = {}
+
+        # Priority order: google_news, asknews, web_search
+        for source in ["google_news", "asknews", "web_search"]:
+            if source in results_by_source:
+                for result in results_by_source[source]:
+                    if result.url and result.url not in url_to_result:
+                        urls_to_scrape.append(result.url)
+                        url_to_result[result.url] = result
+
+        # Limit URLs
+        urls_to_scrape = urls_to_scrape[:max_articles]
+
+        if not urls_to_scrape:
+            return results_by_source
+
+        logger.info(f"Scraping {len(urls_to_scrape)} articles...")
+
+        # Extract content
+        extracted = await self.extractor.extract_batch(
+            urls_to_scrape,
+            max_concurrent=5,
+            max_urls=max_articles,
+        )
+
+        # Update results with full content
+        success_count = 0
+        for content in extracted:
+            if content.success and content.url in url_to_result:
+                result = url_to_result[content.url]
+                # Truncate content if needed
+                text = content.text
+                if len(text) > max_content_per_article:
+                    text = text[:max_content_per_article] + "...[truncated]"
+                result.full_content = text
+                success_count += 1
+
+        logger.info(f"Successfully scraped {success_count}/{len(urls_to_scrape)} articles")
+
+        return results_by_source
 
     async def _search_asknews(self, query: str) -> tuple[str, list[SearchResult]]:
         """Search using AskNews API.
@@ -471,6 +582,20 @@ Provide a comprehensive summary with specific facts, dates, and sources."""
             lines.append(results.perplexity_synthesis)
             lines.append("")
 
+        # Google News results
+        if "google_news" in results.results_by_source:
+            lines.append("## Google News Results")
+            lines.append("")
+            for result in results.results_by_source["google_news"]:
+                date_str = f" ({result.published_date})" if result.published_date else ""
+                lines.append(f"### [{result.title}]({result.url}){date_str}")
+                lines.append(f"> {result.snippet}")
+                if result.full_content:
+                    lines.append("")
+                    lines.append("**Full Article:**")
+                    lines.append(result.full_content[:3000])  # Limit for synthesis
+                lines.append("")
+
         # Web search results
         if "web_search" in results.results_by_source:
             lines.append("## Web Search Results")
@@ -478,6 +603,10 @@ Provide a comprehensive summary with specific facts, dates, and sources."""
             for result in results.results_by_source["web_search"]:
                 lines.append(f"### [{result.title}]({result.url})")
                 lines.append(f"> {result.snippet}")
+                if result.full_content:
+                    lines.append("")
+                    lines.append("**Full Article:**")
+                    lines.append(result.full_content[:3000])  # Limit for synthesis
                 lines.append("")
 
         # AskNews results
@@ -488,6 +617,10 @@ Provide a comprehensive summary with specific facts, dates, and sources."""
                 date_str = f" ({result.published_date})" if result.published_date else ""
                 lines.append(f"### [{result.title}]({result.url}){date_str}")
                 lines.append(f"> {result.snippet}")
+                if result.full_content:
+                    lines.append("")
+                    lines.append("**Full Article:**")
+                    lines.append(result.full_content[:3000])
                 lines.append("")
 
         # Claude web search results
