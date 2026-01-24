@@ -1,0 +1,14 @@
+[
+  {
+    "query": "\"US military action against Iran history\"",
+    "source": "llm_generated"
+  },
+  {
+    "query": "\"recent developments US Iran tensions\"",
+    "source": "llm_generated"
+  },
+  {
+    "query": "\"expert analysis likelihood US attack Iran\"",
+    "source": "llm_generated"
+  }
+]

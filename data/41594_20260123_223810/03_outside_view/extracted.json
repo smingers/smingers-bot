@@ -1,0 +1,11 @@
+{
+  "base_rate": 0.3,
+  "reference_classes": [
+    "US Military Interventions in the Middle East**",
+    "US Military Attacks on Sovereign Nations**",
+    "US Military Conflicts Initiated Before April**",
+    "(weight 8): 40%",
+    "(weight 7): 25% "
+  ],
+  "confidence": 7
+}

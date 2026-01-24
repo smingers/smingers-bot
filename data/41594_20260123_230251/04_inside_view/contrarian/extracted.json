@@ -1,0 +1,18 @@
+{
+  "prediction": 0.32799999999999996,
+  "weight": 0.8,
+  "evidence_weights": {
+    "strong": [
+      "[Evidence 1]: The history of US-Iran tensions, including the 1979 hostage crisis, the 1988 attack on",
+      "[Evidence 2]: The recent escalation of tensions, including the US assassination of Soleimani and Ira"
+    ],
+    "moderate": [
+      "[Evidence 1]: The 2015 Iran nuclear deal and subsequent US withdrawal in 2018 have increased tension",
+      "[Evidence 2]: The ongoing protests and unrest in Iran, which the US has been accused of fomenting, c"
+    ],
+    "weak": [
+      "[Evidence 1]: Speculation about a potential US \"armada\" moving towards Iran, which may be more rheto",
+      "[Evidence 2]: Uncertain predictions from experts about the likelihood of a US-Iran conflict in the n"
+    ]
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "base_rate": 0.5,
+  "reference_classes": [
+    "US military interventions against other countries**",
+    "US-Iran military confrontations**",
+    "Preemptive US military strikes against perceived threats**"
+  ],
+  "confidence": 5
+}

@@ -1,0 +1,18 @@
+{
+  "prediction": 0.46799999999999997,
+  "weight": 1.0,
+  "evidence_weights": {
+    "strong": [
+      "The history of US military interventions against Iran, including the 1988 attack on Iranian oil plat",
+      "The 2023 outbreak of war between Israel and Iran-backed Palestinian militants, which drew the US int"
+    ],
+    "moderate": [
+      "The Trump administration's \"maximum pressure\" campaign against Iran, including the killing of Qasem ",
+      "The recent crackdown by the Iranian regime on nationwide protests, and the resulting tensions with t"
+    ],
+    "weak": [
+      "Speculation about potential US military strikes against Iran in response to the protests, as suggest",
+      "Reports of the US moving naval assets towards Iran are volatile indicators that do not provide a cle"
+    ]
+  }
+}

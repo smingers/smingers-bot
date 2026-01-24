@@ -1,0 +1,18 @@
+{
+  "prediction": 0.251,
+  "weight": 1.0,
+  "evidence_weights": {
+    "strong": [
+      "Recent military deployments and escalating rhetoric from both the US and Iran suggest a heightened r",
+      "The US has a history of military interventions in the Middle East, including against Iran, with a hi"
+    ],
+    "moderate": [
+      "The US and Iran have had a long and contentious relationship since the 1979 Islamic Revolution, mark",
+      "Domestic political pressures in both the US and Iran could incentivize escalation, as leaders seek t"
+    ],
+    "weak": [
+      "The 2015 nuclear deal and subsequent US withdrawal have increased tensions, but also demonstrated a ",
+      "The US may be deterred by the risk of Iranian retaliation, including through asymmetric means like c"
+    ]
+  }
+}
