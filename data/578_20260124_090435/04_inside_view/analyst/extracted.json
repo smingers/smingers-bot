@@ -1,0 +1,18 @@
+{
+  "prediction": 0.28600000000000003,
+  "weight": 1.0,
+  "evidence_weights": {
+    "strong": [
+      "[Evidence 1]: A study predicting that 27% of vertebrate diversity will vanish by 2100 due to climate",
+      "[Evidence 2]: Statements from experts, including a Stanford epidemiologist, that human extinction is"
+    ],
+    "moderate": [
+      "[Evidence 1]: Estimates from experts that the median probability of human extinction by 2100 is arou",
+      "[Evidence 2]: Projections that a third of Earth's species could become extinct by 2100 if climate ch"
+    ],
+    "weak": [
+      "[Evidence 1]: Anecdotal discussions and speculation about the timeline of human extinction, ranging ",
+      "[Evidence 2]: A study predicting human extinction in 314 years, which seems highly speculative and n"
+    ]
+  }
+}

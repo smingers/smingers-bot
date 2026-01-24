@@ -1,0 +1,1 @@
+See prompts/outside_view_multiple_choice.md template

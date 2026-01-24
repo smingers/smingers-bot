@@ -1,0 +1,18 @@
+{
+  "prediction": 0.275,
+  "weight": 0.8,
+  "evidence_weights": {
+    "strong": [
+      "[Extinctions during human era worse than thought] - This source provides a historical \"normal backgr",
+      "[An upper bound for the background rate of human extinction] - This study calculates an upper bound "
+    ],
+    "moderate": [
+      "[There have been five mass extinctions in Earth's history] - This provides context on the scale and ",
+      "[Extinction of the human species: What could cause it and how likely] - This source discusses potent"
+    ],
+    "weak": [
+      "[Humans driving extinctions on scale not seen since dinosaurs] - This source discusses the human imp",
+      "[Poll: Most Americans Believe Cities Will Be Lost to Rising Sea Levels] - This poll is not directly "
+    ]
+  }
+}

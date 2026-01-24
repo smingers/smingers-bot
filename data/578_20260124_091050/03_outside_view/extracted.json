@@ -1,0 +1,10 @@
+{
+  "base_rate": 0.01,
+  "reference_classes": [
+    "Large Mammalian Species Extinctions**",
+    "Hominin Species Extinctions**",
+    "Civilization Collapse Events**",
+    "Mass Extinction Events**"
+  ],
+  "confidence": 5
+}

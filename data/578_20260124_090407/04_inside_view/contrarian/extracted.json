@@ -1,0 +1,18 @@
+{
+  "prediction": 0.259,
+  "weight": 0.8,
+  "evidence_weights": {
+    "strong": [
+      "[Evidence 1]: Recent scientific studies suggesting that up to a third of species could go extinct by",
+      "[Evidence 2]: Historical examples of mass extinctions in Earth's past, which could set a precedent f"
+    ],
+    "moderate": [
+      "[Evidence 1]: Polls showing that a significant portion of the public believes climate change could l",
+      "[Evidence 2]: Analyses suggesting that human activity is currently causing a \"sixth mass extinction\""
+    ],
+    "weak": [
+      "[Evidence 1]: Speculation about a potential mass extinction event in 250 million years due to extrem",
+      "[Evidence 2]: Anecdotal reports of cities being lost to rising sea levels. While concerning, this do"
+    ]
+  }
+}

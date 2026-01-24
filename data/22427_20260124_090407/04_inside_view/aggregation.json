@@ -1,0 +1,42 @@
+{
+  "individual_distributions": [
+    {
+      "agent": "analyst",
+      "distribution": {
+        "Option 1": 0.01,
+        "Option 2": 0.12,
+        "Option 3": 0.4,
+        "Option 4": 0.47
+      },
+      "weight": 1.0
+    },
+    {
+      "agent": "historian",
+      "distribution": {
+        "Option 1": 0.02,
+        "Option 2": 0.15,
+        "Option 3": 0.38,
+        "Option 4": 0.45
+      },
+      "weight": 1.0
+    },
+    {
+      "agent": "contrarian",
+      "distribution": {
+        "Option 1": 0.028999999999999998,
+        "Option 2": 0.17600000000000002,
+        "Option 3": 0.324,
+        "Option 4": 0.47100000000000003
+      },
+      "weight": 0.8
+    }
+  ],
+  "method": "weighted_average",
+  "num_agents": 3,
+  "final_distribution": {
+    "0": 0.019,
+    "1": 0.14671428571428574,
+    "2": 0.3711428571428572,
+    "3": 0.46314285714285713
+  }
+}

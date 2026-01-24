@@ -129,9 +129,11 @@ class BinaryForecaster:
             resolution_criteria=resolution_criteria[:1000],
         )
 
-        # Get model from config
-        model = self.config.get("models", {}).get(
-            "base_rate_estimator", "claude-sonnet-4-20250514"
+        # Get model from config (mode-aware)
+        active_models = self.config.get("_active_models", {})
+        model = active_models.get(
+            "base_rate_estimator",
+            self.config.get("models", {}).get("base_rate_estimator", "claude-sonnet-4-20250514")
         )
 
         # Call LLM
@@ -168,7 +170,12 @@ class BinaryForecaster:
         base_rate_confidence: int,
     ) -> list[AgentPrediction]:
         """Run all ensemble agents in parallel."""
-        agents_config = self.config.get("ensemble", {}).get("agents", [])
+        # Get agents from mode-aware config
+        agents_config = self.config.get("_active_agents", [])
+
+        if not agents_config:
+            # Fallback to old config format
+            agents_config = self.config.get("ensemble", {}).get("agents", [])
 
         if not agents_config:
             # Default single agent if no ensemble configured

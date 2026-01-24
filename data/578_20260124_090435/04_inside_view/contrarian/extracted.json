@@ -1,0 +1,18 @@
+{
+  "prediction": 0.251,
+  "weight": 0.8,
+  "evidence_weights": {
+    "strong": [
+      "[Evidence 1]: A supercomputer study predicting 27% of vertebrate diversity will vanish by 2100. This",
+      "[Evidence 2]: Estimates from experts that put a 6% median probability of human extinction by 2100, a"
+    ],
+    "moderate": [
+      "[Evidence 1]: Projections that a third of Earth's species could become extinct by 2100 due to climat",
+      "[Evidence 2]: Discussions around the inevitability of human extinction at some point, even if the ti"
+    ],
+    "weak": [
+      "[Evidence 1]: Anecdotal speculation about when humanity might go extinct, without clear supporting e",
+      "[Evidence 2]: Optimistic scenarios suggesting human population and living standards could continue t"
+    ]
+  }
+}

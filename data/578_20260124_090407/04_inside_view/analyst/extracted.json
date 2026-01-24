@@ -1,0 +1,18 @@
+{
+  "prediction": 0.22399999999999998,
+  "weight": 1.0,
+  "evidence_weights": {
+    "strong": [
+      "Multiple sources indicate that the current rate of species extinction is much higher than the natura",
+      "Experts predict that climate change could cause up to a third of all species to go extinct by 2100, "
+    ],
+    "moderate": [
+      "Historical data shows that human populations have experienced dramatic declines in the past, with ev",
+      "Mathematical models have predicted that a sixth mass extinction event is likely to occur due to the "
+    ],
+    "weak": [
+      "Anecdotal reports of public concern about the potential for human extinction due to climate change, ",
+      "Speculation about a mass extinction event in 250 million years due to extreme heat and rising CO2 le"
+    ]
+  }
+}

@@ -61,17 +61,57 @@ async def list_questions(tournament_id: int):
         print(f"\nTotal: {len(questions)} questions")
 
 
+def apply_mode_to_config(config: dict, mode: str = None, dry_run: bool = False) -> dict:
+    """
+    Apply run mode to config, selecting appropriate models and submission settings.
+
+    Modes:
+    - dry_run: Cheap models, no submission
+    - dry_run_heavy: Production models, no submission
+    - production: Production models, submits to Metaculus
+    """
+    # Determine effective mode
+    if mode:
+        effective_mode = mode
+    elif dry_run:
+        effective_mode = "dry_run"
+    else:
+        effective_mode = config.get("mode", "dry_run")
+
+    # Select model tier based on mode
+    model_tier = "cheap" if effective_mode == "dry_run" else "production"
+
+    # Apply models
+    if "models" in config and model_tier in config["models"]:
+        config["_active_models"] = config["models"][model_tier]
+    else:
+        # Fallback for old config format
+        config["_active_models"] = config.get("models", {})
+
+    # Apply ensemble agents
+    if "ensemble" in config and model_tier in config["ensemble"]:
+        config["_active_agents"] = config["ensemble"][model_tier]
+    else:
+        # Fallback for old config format
+        config["_active_agents"] = config.get("ensemble", {}).get("agents", [])
+
+    # Set submission behavior
+    config["_should_submit"] = (effective_mode == "production")
+    config["_effective_mode"] = effective_mode
+
+    return config
+
+
 async def forecast_question(
     question_id: int = None,
     question_url: str = None,
     config_path: str = "config.yaml",
     dry_run: bool = False,
+    mode: str = None,
 ):
     """Forecast a single question."""
     config = load_config(config_path)
-
-    if dry_run:
-        config["submission"]["dry_run"] = True
+    config = apply_mode_to_config(config, mode=mode, dry_run=dry_run)
 
     async with Forecaster(config) as forecaster:
         result = await forecaster.forecast_question(
@@ -84,16 +124,35 @@ async def forecast_question(
         print(f"{'='*60}")
         print(f"Question: {result['question'].title}")
         print(f"Type: {result['question'].question_type}")
-        print(f"Prediction: {result['prediction']:.1%}")
-        print(f"Base Rate: {result['forecast_result']['base_rate']:.1%}")
+
+        # Format prediction based on question type
+        question_type = result['question'].question_type
+        if question_type == "binary":
+            print(f"Prediction: {result['prediction']:.1%}")
+            print(f"Base Rate: {result['forecast_result']['base_rate']:.1%}")
+        elif question_type == "numeric":
+            median = result['prediction'].get(50, 0)
+            base_median = result['forecast_result'].get('base_percentiles', {}).get(50, 0)
+            print(f"Prediction (median): {median:.2f}")
+            print(f"Base Rate (median): {base_median:.2f}")
+        elif question_type == "multiple_choice":
+            dist = result['prediction']
+            best = max(dist.items(), key=lambda x: x[1])
+            print(f"Prediction: {best[0]} ({best[1]:.1%})")
+            print(f"Distribution: {dist}")
+        else:
+            print(f"Prediction: {result['prediction']}")
+
         print(f"Cost: ${result['costs']['total_cost']:.4f}")
         print(f"Artifacts: {result['artifacts_dir']}")
 
         submission = result.get('submission') or {}
+        effective_mode = config.get("_effective_mode", "dry_run")
         if submission.get('success'):
             print("Status: SUBMITTED")
-        elif dry_run:
-            print("Status: DRY RUN (not submitted)")
+        elif effective_mode in ("dry_run", "dry_run_heavy"):
+            mode_label = "DRY RUN" if effective_mode == "dry_run" else "DRY RUN (heavy models)"
+            print(f"Status: {mode_label} (not submitted)")
         else:
             print(f"Status: FAILED - {submission.get('error', 'Unknown error')}")
 
@@ -104,14 +163,13 @@ async def forecast_new_questions(
     tournament_id: int,
     config_path: str = "config.yaml",
     dry_run: bool = False,
+    mode: str = None,
     limit: int = 10,
 ):
     """Forecast all new questions in a tournament."""
     config = load_config(config_path)
     config["submission"]["tournament_id"] = tournament_id
-
-    if dry_run:
-        config["submission"]["dry_run"] = True
+    config = apply_mode_to_config(config, mode=mode, dry_run=dry_run)
 
     async with MetaculusClient() as client:
         # Get all open questions
@@ -178,7 +236,13 @@ def main():
     parser.add_argument(
         "--dry-run",
         action="store_true",
-        help="Don't actually submit predictions"
+        help="Don't actually submit predictions (shortcut for --mode dry_run)"
+    )
+    parser.add_argument(
+        "--mode", "-m",
+        type=str,
+        choices=["dry_run", "dry_run_heavy", "production"],
+        help="Run mode: dry_run (cheap models, no submit), dry_run_heavy (production models, no submit), production (production models, submits)"
     )
     parser.add_argument(
         "--config", "-c",
@@ -221,6 +285,7 @@ def main():
             tournament_id=args.tournament,
             config_path=args.config,
             dry_run=args.dry_run,
+            mode=args.mode,
             limit=args.limit,
         ))
 
@@ -230,6 +295,7 @@ def main():
             question_url=args.url,
             config_path=args.config,
             dry_run=args.dry_run,
+            mode=args.mode,
         ))
 
     else:

@@ -1,0 +1,18 @@
+{
+  "prediction": 0.012,
+  "weight": 1.0,
+  "evidence_weights": {
+    "strong": [
+      "**Accelerated extinction rates**: Multiple sources confirm current extinction rates are 35-1,000 tim",
+      "**Historical mass extinction patterns**: MIT research suggesting mathematical models predict potenti"
+    ],
+    "moderate": [
+      "**Climate-driven species loss projections**: Studies suggesting 1/3 of species could go extinct by 2",
+      "**Genus-level extinctions**: Stanford research showing genus extinctions occurring 35x faster than e"
+    ],
+    "weak": [
+      "**Public opinion polls**: General public beliefs about climate change causing human extinction (not ",
+      "**Speculative projections**: Some sources making broad claims without specific methodological detail"
+    ]
+  }
+}

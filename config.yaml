@@ -2,6 +2,18 @@
 # All tunable parameters in one place
 
 # =============================================================================
+# RUN MODE
+# =============================================================================
+# Controls model selection and submission behavior:
+#   - "dry_run": Cheap models (Haiku), no submission - for testing pipeline
+#   - "dry_run_heavy": Production models, no submission - for evaluating quality
+#   - "production": Production models, submits to Metaculus
+#
+# Override with --mode flag: python main.py --question 12345 --mode production
+
+mode: "dry_run"
+
+# =============================================================================
 # MODEL CONFIGURATION
 # =============================================================================
 # Models are accessed via litellm which supports multiple providers.
@@ -14,25 +26,30 @@
 #   - openrouter/anthropic/claude-3.5-sonnet
 #   - openrouter/openai/gpt-4o
 #
-# Current config: Uses Anthropic directly (cheapest to start testing)
+# Models are selected based on run mode. Define both cheap and production models.
 
 models:
-  # Fast/cheap model for question analysis and query generation
-  classifier: "claude-3-haiku-20240307"
-  query_generator: "claude-3-haiku-20240307"
+  # Models for dry_run mode (cheap, fast)
+  cheap:
+    classifier: "claude-3-haiku-20240307"
+    query_generator: "claude-3-haiku-20240307"
+    base_rate_estimator: "claude-3-haiku-20240307"
 
-  # Reasoning model for outside view base rate estimation
-  # Using Haiku for testing to minimize costs (switch to Sonnet for production)
-  base_rate_estimator: "claude-3-haiku-20240307"
+  # Models for dry_run_heavy and production modes
+  production:
+    classifier: "claude-3-haiku-20240307"  # Keep cheap for simple tasks
+    query_generator: "claude-3-haiku-20240307"  # Keep cheap for simple tasks
+    base_rate_estimator: "claude-sonnet-4-20250514"
 
 # =============================================================================
 # ENSEMBLE CONFIGURATION
 # =============================================================================
-# Start simple: Single Claude agent for testing, expand to multi-model ensemble later
+# Define agents for both cheap and production modes.
+# Production mode uses stronger models with optimized weights.
 
 ensemble:
-  agents:
-    # All agents use Haiku for testing (switch to Sonnet for production)
+  # Agents for dry_run mode (cheap, fast)
+  cheap:
     - name: "analyst"
       model: "claude-3-haiku-20240307"
       weight: 1.0
@@ -59,6 +76,52 @@ ensemble:
         narrative, find reasons the consensus might be wrong, and identify
         blind spots. Consider: What would make the base rate misleading?
         What are people overlooking?
+
+  # Agents for dry_run_heavy and production modes
+  # Uses stronger models, more agents, optimized weights (inspired by Q2 winner)
+  production:
+    - name: "analyst"
+      model: "claude-sonnet-4-20250514"
+      weight: 1.0
+      role_description: |
+        You are a geopolitical analyst and superforecaster. Focus on the current
+        situation, key actors, their incentives, and recent developments. Weigh
+        evidence by strength (strong, moderate, weak) and reason through how
+        each piece updates the base rate.
+
+    - name: "historian"
+      model: "claude-sonnet-4-20250514"
+      weight: 1.0
+      role_description: |
+        You are a historian and superforecaster. Focus on historical precedents,
+        analogous situations, and patterns from the past. Consider how often
+        similar situations have resolved in various ways. Use history to inform
+        your probability estimate.
+
+    - name: "contrarian"
+      model: "claude-sonnet-4-20250514"
+      weight: 0.8
+      role_description: |
+        You are a contrarian forecaster. Your job is to challenge the obvious
+        narrative, find reasons the consensus might be wrong, and identify
+        blind spots. Consider: What would make the base rate misleading?
+        What are people overlooking?
+
+    - name: "quantitative"
+      model: "claude-sonnet-4-20250514"  # Use Claude if no OpenAI key; change to gpt-4o if available
+      weight: 1.0
+      role_description: |
+        You are a quantitative analyst and superforecaster. Focus on data,
+        statistics, and numerical analysis. Look for base rates in the data,
+        trend extrapolations, and quantitative models that inform the forecast.
+
+    - name: "synthesizer"
+      model: "claude-sonnet-4-20250514"
+      weight: 1.2
+      role_description: |
+        You are a synthesis expert and superforecaster. Your job is to integrate
+        multiple perspectives, identify key uncertainties, and form a balanced
+        view. Consider all evidence holistically and identify what matters most.
 
   aggregation: "weighted_average"
 
@@ -136,8 +199,10 @@ calibration:
 # =============================================================================
 # SUBMISSION CONFIGURATION
 # =============================================================================
+# Note: dry_run is now controlled by the 'mode' setting at the top.
+# - mode: "dry_run" or "dry_run_heavy" -> no submission
+# - mode: "production" -> submits to Metaculus
 submission:
-  dry_run: true  # Start with dry_run for testing!
   store_reasoning: true
   max_ensemble_disagreement: 0.0
   tournament_id: null

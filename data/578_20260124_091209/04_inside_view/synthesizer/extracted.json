@@ -1,0 +1,20 @@
+{
+  "prediction": 0.009000000000000001,
+  "weight": 1.2,
+  "evidence_weights": {
+    "strong": [
+      "**Accelerating extinction rates**: Multiple sources confirm current species extinction rates are 35-",
+      "**Climate change projections**: MIT mathematical models predict potential sixth mass extinction by 2",
+      "**One-third species extinction risk**: Meta-analysis suggests 1/3 of species could go extinct by 210"
+    ],
+    "moderate": [
+      "**Historical precedent**: Five previous mass extinctions show such events are possible, though none ",
+      "**Public perception**: 25% of Americans believe climate change could cause human extinction (indicat",
+      "**Ocean carbon thresholds**: Specific predictions about ocean carbon triggering mass extinction even"
+    ],
+    "weak": [
+      "**General biodiversity statistics**: Background extinction rates, while concerning, don't directly p",
+      "**Genus-level extinctions**: Human-driven genus extinctions, while unprecedented, don't directly tra"
+    ]
+  }
+}

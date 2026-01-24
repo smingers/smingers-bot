@@ -1,0 +1,14 @@
+[
+  {
+    "query": "Will humans go extinct before 2100?",
+    "source": "llm_generated"
+  },
+  {
+    "query": "Will humans go extinct before 2100? statistics",
+    "source": "llm_generated"
+  },
+  {
+    "query": "Will humans go extinct before 2100? recent news",
+    "source": "llm_generated"
+  }
+]

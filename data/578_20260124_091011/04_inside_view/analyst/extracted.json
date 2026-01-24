@@ -1,0 +1,19 @@
+{
+  "prediction": 0.35,
+  "weight": 1.0,
+  "evidence_weights": {
+    "strong": [
+      "Extinctions during the human era are occurring at a rate much higher than the \"normal background rat",
+      "Mathematical models predict a sixth mass extinction event by 2100 if current trends continue, with t"
+    ],
+    "moderate": [
+      "Estimates that up to a third of all species alive today could go extinct by 2100 due to climate chan",
+      "Evidence that human ancestors may have experienced a near-extinction event around 930,000 years ago,",
+      "Polling data showing that a significant portion of the public believes climate change could lead to "
+    ],
+    "weak": [
+      "Anecdotal reports of cities being lost to rising sea levels, which could contribute to human extinct",
+      "Speculation about other potential triggers for human extinction, such as technological risks or othe"
+    ]
+  }
+}

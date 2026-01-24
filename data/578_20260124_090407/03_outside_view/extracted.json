@@ -1,0 +1,9 @@
+{
+  "base_rate": 0.024,
+  "reference_classes": [
+    "All Mammal Species**",
+    "Primate Species**",
+    "Megafauna Species**"
+  ],
+  "confidence": 7
+}

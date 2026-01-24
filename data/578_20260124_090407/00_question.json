@@ -1,0 +1,335 @@
+{
+  "id": 578,
+  "title": "Will humans go extinct before 2100?",
+  "short_title": "Human Extinction by 2100?",
+  "url_title": "Human Extinction by 2100?",
+  "slug": "human-extinction-by-2100",
+  "author_id": 103733,
+  "author_username": "jzima",
+  "coauthors": [],
+  "created_at": "2017-11-07T08:26:49.817900Z",
+  "published_at": "2017-11-12T08:00:00Z",
+  "edited_at": "2026-01-23T00:48:44.224748Z",
+  "curation_status": "approved",
+  "curation_status_updated_at": "2017-11-12T08:00:00Z",
+  "comment_count": 378,
+  "status": "open",
+  "resolved": false,
+  "actual_close_time": null,
+  "scheduled_close_time": "2100-01-02T00:00:00Z",
+  "scheduled_resolve_time": "2100-01-02T00:01:00Z",
+  "actual_resolve_time": null,
+  "open_time": "2017-11-12T08:00:00Z",
+  "nr_forecasters": 1673,
+  "html_metadata_json": null,
+  "projects": {
+    "topic": [
+      {
+        "id": 15865,
+        "name": "Health & Pandemics",
+        "slug": "biosecurity",
+        "emoji": "\ud83e\uddec",
+        "type": "topic"
+      },
+      {
+        "id": 15868,
+        "name": "Nuclear Technology & Risks",
+        "slug": "nuclear",
+        "emoji": "\u2623\ufe0f",
+        "type": "topic"
+      },
+      {
+        "id": 15854,
+        "name": "Top Questions",
+        "slug": "top-50",
+        "emoji": "\u2728\ud83d\udd1d",
+        "type": "topic"
+      }
+    ],
+    "site_main": [
+      {
+        "id": 144,
+        "type": "site_main",
+        "name": "Metaculus Community",
+        "slug": null,
+        "header_image": null,
+        "prize_pool": null,
+        "start_date": null,
+        "close_date": null,
+        "forecasting_end_date": null,
+        "html_metadata_json": null,
+        "is_ongoing": null,
+        "user_permission": "forecaster",
+        "order": 0,
+        "created_at": "2023-11-08T16:55:29.484707Z",
+        "edited_at": "2025-12-15T13:27:26.396036Z",
+        "score_type": null,
+        "default_permission": "forecaster",
+        "visibility": "normal",
+        "show_on_homepage": false,
+        "is_current_content_translated": false,
+        "bot_leaderboard_status": "exclude_and_show",
+        "description_preview": "-"
+      }
+    ],
+    "default_project": {
+      "id": 144,
+      "type": "site_main",
+      "name": "Metaculus Community",
+      "slug": null,
+      "header_image": null,
+      "prize_pool": null,
+      "start_date": null,
+      "close_date": null,
+      "forecasting_end_date": null,
+      "html_metadata_json": null,
+      "is_ongoing": null,
+      "user_permission": "forecaster",
+      "order": 0,
+      "created_at": "2023-11-08T16:55:29.484707Z",
+      "edited_at": "2025-12-15T13:27:26.396036Z",
+      "score_type": null,
+      "default_permission": "forecaster",
+      "visibility": "normal",
+      "show_on_homepage": false,
+      "is_current_content_translated": false,
+      "bot_leaderboard_status": "exclude_and_show",
+      "description_preview": "-"
+    },
+    "category": [
+      {
+        "id": 3701,
+        "name": "Technology",
+        "slug": "technology",
+        "emoji": "\u2699\ufe0f",
+        "description": "Technology",
+        "type": "category"
+      },
+      {
+        "id": 3690,
+        "name": "Nuclear Technology & Risks",
+        "slug": "nuclear",
+        "emoji": "\u2622\ufe0f",
+        "description": "Nuclear Technology & Risks",
+        "type": "category"
+      },
+      {
+        "id": 3691,
+        "name": "Health & Pandemics",
+        "slug": "health-pandemics",
+        "emoji": "\ud83e\udda0",
+        "description": "Health & Pandemics",
+        "type": "category"
+      }
+    ]
+  },
+  "question": {
+    "id": 578,
+    "title": "Will humans go extinct before 2100?",
+    "created_at": "2017-11-07T08:26:49.817900Z",
+    "open_time": "2017-11-12T08:00:00Z",
+    "cp_reveal_time": "2017-11-13T09:55:29.115000Z",
+    "spot_scoring_time": "2017-11-13T09:55:29.115000Z",
+    "scheduled_resolve_time": "2100-01-02T00:01:00Z",
+    "actual_resolve_time": null,
+    "resolution_set_time": null,
+    "scheduled_close_time": "2100-01-02T00:00:00Z",
+    "actual_close_time": "2100-01-02T00:00:00Z",
+    "type": "binary",
+    "options": [],
+    "group_variable": "",
+    "status": "open",
+    "possibilities": {
+      "type": "binary"
+    },
+    "resolution": null,
+    "include_bots_in_aggregates": false,
+    "question_weight": 1.0,
+    "default_score_type": "peer",
+    "default_aggregation_method": "recency_weighted",
+    "label": "",
+    "unit": "",
+    "open_upper_bound": null,
+    "open_lower_bound": null,
+    "inbound_outcome_count": null,
+    "scaling": {
+      "range_min": null,
+      "range_max": null,
+      "nominal_min": null,
+      "nominal_max": null,
+      "zero_point": null,
+      "open_upper_bound": null,
+      "open_lower_bound": null,
+      "inbound_outcome_count": null,
+      "continuous_range": null
+    },
+    "group_rank": null,
+    "coherence_links": null,
+    "coherence_link_aggregations": null,
+    "short_title": "Human Extinction by 2100?",
+    "post_id": 578,
+    "aggregations": {
+      "recency_weighted": {
+        "history": [
+          {
+            "start_time": 1769129313.272456,
+            "end_time": 1769701516.464711,
+            "forecaster_count": 1663,
+            "interval_lower_bounds": [
+              0.001
+            ],
+            "centers": [
+              0.01
+            ],
+            "interval_upper_bounds": [
+              0.1
+            ]
+          }
+        ],
+        "latest": {
+          "start_time": 1769129313.272456,
+          "end_time": 1769701516.464711,
+          "forecaster_count": 1663,
+          "interval_lower_bounds": [
+            0.001
+          ],
+          "centers": [
+            0.01
+          ],
+          "interval_upper_bounds": [
+            0.1
+          ],
+          "forecast_values": [
+            0.99,
+            0.01
+          ],
+          "means": [
+            0.12858563560052658
+          ],
+          "histogram": [
+            [
+              28.71845892961416,
+              15.419376177130125,
+              3.064278452251987,
+              2.616093871642172,
+              0.6912988287876152,
+              6.3338785641187805,
+              0.9335316801800795,
+              0.378034092950591,
+              0.7564797830576957,
+              0.4268063670905312,
+              4.333791238292012,
+              0.013805733938340269,
+              2.4012598980166275e-05,
+              0.014436713407153847,
+              2.0594852381931987e-10,
+              2.3692226006494197,
+              0.09431155353988721,
+              0.0006477410003433093,
+              0.37364098997866463,
+              0.00979621041603466,
+              0.7116896626525131,
+              1.0878327032453652e-08,
+              0.0436227616438859,
+              2.6237151664553066e-08,
+              0.24892481022950078,
+              1.3395430487250293,
+              1.2371942244391095e-05,
+              1.6286941602435365,
+              2.6261056681833612e-05,
+              0.0,
+              0.09682401008108651,
+              1.8487948365423754e-15,
+              1.0657745342222917e-07,
+              0.029878999453602735,
+              0.0,
+              0.032822713777349306,
+              0.2205597194740804,
+              0.02612120900248359,
+              7.474112024063886e-09,
+              0.0,
+              0.2043642122924209,
+              0.0,
+              0.001241076773949312,
+              0.0,
+              0.0067190441898889106,
+              0.007306033118083514,
+              6.3785244904849085e-09,
+              0.003277744360176034,
+              0.029087460478812468,
+              0.0005322715689040338,
+              0.9308259994082121,
+              0.15405220783883233,
+              0.0,
+              0.0,
+              2.0019993747890135e-07,
+              7.06710375945938e-11,
+              4.706212700044331e-07,
+              0.007105037255616649,
+              0.0,
+              0.010053926965550809,
+              0.717203430434903,
+              0.0,
+              5.479705154993223e-07,
+              8.705409505656749e-07,
+              0.0,
+              3.0826590708136484e-07,
+              0.002386347138572309,
+              0.0072048537341711585,
+              1.2766579759158398e-13,
+              0.019139677757727916,
+              0.7442861807139165,
+              0.0,
+              5.800176046849203e-07,
+              0.0,
+              0.0,
+              0.0051474985034211974,
+              0.0,
+              0.11607936084842181,
+              0.008673534131851079,
+              0.0,
+              1.8078466497352284,
+              0.0,
+              0.011802983607628985,
+              0.0,
+              0.009125707001761012,
+              0.013987034562408879,
+              0.0008077323866893184,
+              0.0,
+              6.861845148990426e-05,
+              3.048755797287923e-05,
+              0.3481844519627569,
+              0.006007251188922413,
+              0.0,
+              0.0,
+              0.0,
+              0.8226858564773178,
+              0.0,
+              0.10329586046248046,
+              0.6336828407498654,
+              2.401967983280332
+            ]
+          ]
+        },
+        "score_data": {},
+        "movement": null
+      }
+    },
+    "average_coverage": null,
+    "my_forecasts": {
+      "history": [],
+      "latest": null,
+      "score_data": {}
+    }
+  },
+  "user_permission": "forecaster",
+  "vote": {
+    "score": 80,
+    "user_vote": null
+  },
+  "forecasts_count": 8370,
+  "subscriptions": [],
+  "key_factors": [],
+  "is_current_content_translated": false,
+  "description": null
+}

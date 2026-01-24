@@ -1,0 +1,19 @@
+{
+  "prediction": 0.012,
+  "weight": 1.0,
+  "evidence_weights": {
+    "strong": [
+      "Historical mass extinction patterns: Five major extinction events in Earth's history, with natural b",
+      "Human-driven acceleration: Current extinction rates are \"unprecedented in human history and highly u"
+    ],
+    "moderate": [
+      "Expert survey data: 2008 Future of Humanity Institute survey estimated 5% probability of AI extincti",
+      "Quantified background rates: Nature study providing upper bounds for human extinction background rat"
+    ],
+    "weak": [
+      "Individual AI researcher predictions of 99.9% extinction risk - appears to be outlier opinion withou",
+      "General biodiversity crisis data - relevant but doesn't directly address human extinction specifical",
+      "Climate change concerns - mentioned but without specific extinction probability estimates."
+    ]
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "prediction": 0.56,
+  "weight": 1.0,
+  "evidence_weights": {
+    "strong": [
+      "[Evidence 1]: Recent studies suggesting up to a third of all species could go extinct by 2100 due to",
+      "[Evidence 2]: Mathematical models predicting a sixth mass extinction event by 2100 driven by climate"
+    ],
+    "moderate": [
+      "[Evidence 1]: Historical data showing that mass extinctions have occurred in the past, suggesting th",
+      "[Evidence 2]: Estimates of the \"normal background rate\" of extinctions being much lower than the cur"
+    ],
+    "weak": [
+      "[Evidence 1]: Poll data showing that a significant portion of the public believes climate change cou",
+      "[Evidence 2]: Anecdotal reports of human ancestors experiencing population crashes in the past, whic"
+    ]
+  }
+}

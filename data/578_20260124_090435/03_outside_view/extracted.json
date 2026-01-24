@@ -1,0 +1,9 @@
+{
+  "base_rate": 0.121,
+  "reference_classes": [
+    "Mass Extinction Events**",
+    "Primate Extinctions**",
+    "Civilizational Collapses**"
+  ],
+  "confidence": 7
+}

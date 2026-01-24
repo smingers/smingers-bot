@@ -1,0 +1,18 @@
+{
+  "prediction": 0.05,
+  "weight": 0.8,
+  "evidence_weights": {
+    "strong": [
+      "Nature paper establishing background extinction rates: Provides scientific baseline but for natural ",
+      "Current biodiversity crisis data: Shows we're already in a mass extinction event, but this doesn't d"
+    ],
+    "moderate": [
+      "AI extinction risk assessments (5% by 2100 from expert surveys): These are expert opinions but highl",
+      "Climate change impacts: Serious civilizational threat but unlikely to cause complete extinction give"
+    ],
+    "weak": [
+      "Single researcher claiming 99.9% AI extinction risk: Extreme outlier opinion, not peer-reviewed cons",
+      "Media reports on AI autonomy by 2027: Speculative timeline predictions with poor track record"
+    ]
+  }
+}

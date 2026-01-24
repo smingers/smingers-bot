@@ -1,0 +1,95 @@
+# Research Synthesis
+
+**Generated:** 2026-01-24T09:10:51.956913+00:00
+**Total Sources:** 28
+
+## Search Queries
+1. "human extinction rates historical trends"
+2. "recent news human extinction predictions"
+3. "expert opinions human extinction likelihood"
+
+## Web Search Results
+
+### [There have been five mass extinctions in Earth's history](https://ourworldindata.org/mass-extinctions)
+> There's a natural background rate to the timing and frequency of extinctions: 10% of species are lost every million years, 30% every 10 million ...
+
+### [An upper bound for the background rate of human extinction - Nature](https://www.nature.com/articles/s41598-019-47540-7)
+> Blue horizontal lines indicate likelihood of 10% and 1%. Rates exceeding 6.9 × 10−5 are ruled out even with the most conservative data.
+
+### [Extinctions during human era worse than thought | News from Brown](https://archive2.news.brown.edu/2007-2015/articles/2014/09/extinctions.html)
+> In absolute, albeit rough, terms the paper calculates a “normal background rate” of extinction of 0.1 extinctions per million species per year.
+
+### [Human Population Growth and Extinction](https://www.biologicaldiversity.org/programs/population_and_sustainability/extinction/)
+> Current population growth trends indicate that the number of threatened species will increase by 7 percent over the next 20 years and 14 percent by 2050. And ...
+
+### [Human-driven mass extinction is eliminating entire genera](https://news.stanford.edu/stories/2023/09/human-driven-mass-extinction-eliminating-entire-genera)
+> Seventy-three genera of land-dwelling vertebrates, Ceballos and Ehrlich found, have gone extinct since 1500 AD. Birds suffered the heaviest ...
+
+### [Global Extinction Rates: Why Do Estimates Vary So Wildly?](https://e360.yale.edu/features/global_extinction_rates_why_do_estimates_vary_so_wildly)
+> Only about 800 extinctions have been documented in the past 400 years, according to data held by the International Union for the Conservation of ...
+
+### [Biodiversity crisis or sixth mass extinction? Does the current ...](https://pmc.ncbi.nlm.nih.gov/articles/PMC8728607/)
+> The current human‐driven biodiversity crisis still does not qualify for a mass extinction in terms of the percentage of extinct species yet.
+
+### [Accelerated modern human–induced species losses - Science](https://www.science.org/doi/10.1126/sciadv.1400253)
+> The evidence is incontrovertible that recent extinction rates are unprecedented in human history and highly unusual in Earth's history. Our ...
+
+### [A slowdown, not salvation: what new extinction data reveal about ...](https://news.mongabay.com/2025/11/a-slowdown-not-salvation-what-new-extinction-data-reveal-about-the-state-of-life-on-earth/)
+> Their analysis, covering nearly two million assessed species, shows that losses rose steeply through the 1800s and early 1900s before slowing.
+
+### [Is this how AI might eliminate humanity? - BBC](https://www.bbc.com/reel/video/p0lwdg8y/is-this-how-ai-might-eliminate-humanity-)
+> A new research paper predicts AI autonomy by 2027 could lead to human extinction within a decade.
+
+### [Without big changes, this is what the environment will look like in 2050](https://www.unep.org/news-and-stories/story/without-big-changes-what-environment-will-look-2050)
+> By 2050, humans will be pulling 165 billion tonnes of raw materials from the Earth annually. This represents a more than 60 per cent jump from ...
+
+### [Experts Warn Artificial Intelligence Will Lead To Human Extinction](https://www.youtube.com/watch?v=hHisNCWtZnY)
+> The authors of the new book 'If Anyone Builds It, Everyone Dies ... news/ 10 News+ is based in Australia and is a division of Paramount.
+
+### [The Sixth Mass Extinction | World Wildlife Fund](https://www.worldwildlife.org/resources/explainers/what-is-the-sixth-mass-extinction-and-what-can-we-do-about-it/)
+> Experts now believe we're in the midst of a sixth mass extinction. What's causing the sixth mass extinction? Unlike previous extinction events caused by natural ...
+
+### [AI researcher warns of 99.9% human extinction risk - Daily Express](https://www.express.co.uk/news/science/2143931/ai-expert-calculates-99-9-risk-human-extinction-within-next-century)
+> AI expert calculates 99.9% risk of human extinction within the next century. A computer scientist who specialises in AI safety has predicted ...
+
+### [Could AI Really Kill Off Humans? - RAND](https://www.rand.org/pubs/commentary/2025/05/could-ai-really-kill-off-humans.html)
+> In real-world surveys AI researchers say that they see human extinction as a plausible outcome of AI development.
+
+### [Human extinction - Wikipedia](https://en.wikipedia.org/wiki/Human_extinction)
+> A 2008 survey by the Future of Humanity Institute estimated a 5% probability of extinction by superintelligence by 2100. · A 2016 survey of AI experts found a ...
+
+### [Will climate change drive humans extinct or destroy civilization?](https://climate.mit.edu/ask-mit/will-climate-change-drive-humans-extinct-or-destroy-civilization)
+> “If I had to rate odds, I would say the chances of climate change driving us to the point of human extinction are very low, if not zero,” says ...
+
+### [AI2027: Is this how AI might destroy humanity? - BBC World Service](https://www.youtube.com/watch?v=1UufaK3pQMg)
+> A research paper predicting that artificial intelligence will go rogue in 2027 and lead to humanity's extinction within a decade is making ...
+
+### [Technology in 2050 - experts give their predictions - BBC](https://www.bbc.com/news/articles/c865n800d5jo)
+> Here are their predictions for the technology we'll be using by 2050 - and how it could reshape our lives. Merging humans and machines. Science ...
+
+### [Extinction of the human species: What could cause it and how likely ...](https://pmc.ncbi.nlm.nih.gov/articles/PMC11950659/)
+> The literature suggests that the likelihood of human extinction from exogenous threats, where we have more robust data to draw on, is extremely low. For ...
+
+### [Do half of AI researchers believe that there's a 10% chance AI will ...](https://aiguide.substack.com/p/do-half-of-ai-researchers-believe)
+> The claim—that half of AI researchers believe that there is at least a 10% chance that rogue AI will kill us all—is based on a survey question ...
+
+### [Extinction of the human species: What could cause it and how likely ...](https://www.cser.ac.uk/work/extinction-of-the-human-species-what-could-cause-it-and-how-likely-is-it-to-occur/)
+> This review provides an overview of potential human extinction causes considered plausible in the current academic literature, experts ...
+
+### [An upper bound for the background rate of human extinction - Nature](https://www.nature.com/articles/s41598-019-47540-7)
+> Results of sample bias models. We evaluate the likelihood of extinction rates between 10−8 and 10−2, given a human survival time of 200 kyr and ...
+
+### [Current Estimates for Likelihood of X-Risk? — EA Forum](https://forum.effectivealtruism.org/posts/frYYAAa5K4nHqRCPG/current-estimates-for-likelihood-of-x-risk)
+> I've found it to be extremely helpful to give an estimate for the percent chance humanity goes extinct by 2100 (or in 100 years). Right now, I say ~10% or 5-19 ...
+
+### ['Godfather of AI' shortens odds of the technology wiping out ...](https://www.theguardian.com/technology/2024/dec/27/godfather-of-ai-raises-odds-of-the-technology-wiping-out-humanity-over-next-30-years)
+> Geoffrey Hinton says there is 10% to 20% chance AI will lead to human extinction in three decades, as change moves fast.
+
+### [Will climate change drive humans extinct or destroy civilization?](https://climate.mit.edu/ask-mit/will-climate-change-drive-humans-extinct-or-destroy-civilization)
+> “If I had to rate odds, I would say the chances of climate change driving us to the point of human extinction are very low, if not zero,” says ...
+
+### [Spoiler: Only 5% chance of human extinction because of AI and ...](https://www.linkedin.com/pulse/spoiler-only-5-chance-human-extinction-because-ai-other-stave-phd-ppmee)
+> Indeed, a 2022 survey of AI researchers found a majority believe there is at least a 10% chance that humans will be unable to control future AI ...
+
+### [Possibility of Human Extinction Still “Dangerously Unexplored”: Study](https://earth.org/human-extinction-unexplored/)
+> A new analysis warns that catastrophic consequences of global warming outcomes – including human extinction – are still widely unexplored by scientists.

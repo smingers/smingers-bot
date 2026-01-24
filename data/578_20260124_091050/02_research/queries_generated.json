@@ -1,0 +1,14 @@
+[
+  {
+    "query": "\"human extinction rates historical trends\"",
+    "source": "llm_generated"
+  },
+  {
+    "query": "\"recent news human extinction predictions\"",
+    "source": "llm_generated"
+  },
+  {
+    "query": "\"expert opinions human extinction likelihood\"",
+    "source": "llm_generated"
+  }
+]
