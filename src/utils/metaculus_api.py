@@ -98,6 +98,13 @@ class MetaculusQuestion:
 
 
 @dataclass
+class MyForecast:
+    """Represents a forecast I've already made."""
+    question_id: int
+    timestamp: Optional[datetime] = None  # When the forecast was made
+
+
+@dataclass
 class PredictionSubmission:
     """A prediction to submit to Metaculus."""
     question_id: int
@@ -168,7 +175,7 @@ class MetaculusClient:
 
     async def get_tournament_questions(
         self,
-        tournament_id: int,
+        tournament_id: int | str,
         status: Optional[str] = "open",
         limit: int = 100,
     ) -> list[MetaculusQuestion]:
@@ -176,7 +183,7 @@ class MetaculusClient:
         Get questions from a tournament.
 
         Args:
-            tournament_id: Tournament/project ID
+            tournament_id: Tournament/project ID (int) or slug (str like "minibench")
             status: Filter by status (open, closed, resolved, etc.)
             limit: Maximum questions to return
 
@@ -204,8 +211,19 @@ class MetaculusClient:
 
         return questions
 
-    async def get_my_forecasts(self, tournament_id: Optional[int] = None) -> list[dict]:
-        """Get questions I've already forecasted on."""
+    async def get_my_forecasts(
+        self,
+        tournament_id: Optional[int | str] = None,
+    ) -> dict[int, "MyForecast"]:
+        """
+        Get questions I've already forecasted on.
+
+        Args:
+            tournament_id: Optional tournament ID or slug to filter by
+
+        Returns:
+            Dict mapping question_id to MyForecast object with timestamp
+        """
         params = {"forecast_by_me": True, "limit": 500}
         if tournament_id:
             params["project"] = tournament_id
@@ -214,7 +232,28 @@ class MetaculusClient:
         response.raise_for_status()
         data = response.json()
 
-        return [item["id"] for item in data.get("results", [])]
+        forecasts = {}
+        for item in data.get("results", []):
+            question_id = item.get("id")
+            if question_id:
+                # Try to get my latest forecast timestamp
+                my_forecasts = item.get("my_forecasts", {})
+                latest = my_forecasts.get("latest") if my_forecasts else None
+                timestamp = None
+                if latest:
+                    timestamp_str = latest.get("start_time") or latest.get("created_at")
+                    if timestamp_str:
+                        try:
+                            timestamp = datetime.fromisoformat(timestamp_str.replace("Z", "+00:00"))
+                        except (ValueError, TypeError):
+                            pass
+
+                forecasts[question_id] = MyForecast(
+                    question_id=question_id,
+                    timestamp=timestamp,
+                )
+
+        return forecasts
 
     # =========================================================================
     # Predictions

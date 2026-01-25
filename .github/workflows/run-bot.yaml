@@ -1,0 +1,108 @@
+name: Run Metaculus Forecasting Bot
+
+on:
+  workflow_dispatch:  # Manual trigger for testing
+  schedule:
+    - cron: "0 */4 * * *"  # Every 4 hours
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false  # Don't cancel in-progress forecasts
+
+jobs:
+  forecast:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install poetry
+        uses: snok/install-poetry@v1
+        with:
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+        timeout-minutes: 2
+        continue-on-error: true
+
+      - name: Retry poetry install on failure
+        if: failure()
+        run: |
+          sleep 30
+          pip install poetry
+          poetry config virtualenvs.create true
+          poetry config virtualenvs.in-project true
+
+      - name: Load cached venv
+        uses: actions/cache@v4
+        with:
+          path: .venv
+          key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
+
+      - name: Install dependencies
+        run: poetry install --no-interaction --no-root
+
+      # ============================================================
+      # AIB TOURNAMENTS (ENABLED)
+      # ============================================================
+
+      - name: Forecast Seasonal AIB
+        run: |
+          poetry run python run_bot.py \
+            --tournament 32916 \
+            --mode aib \
+            --limit 50
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          METACULUS_TOKEN: ${{ secrets.METACULUS_TOKEN }}
+          ASKNEWS_CLIENT_ID: ${{ secrets.ASKNEWS_CLIENT_ID }}
+          ASKNEWS_CLIENT_SECRET: ${{ secrets.ASKNEWS_CLIENT_SECRET }}
+
+      - name: Forecast MiniBench
+        run: |
+          poetry run python run_bot.py \
+            --tournament minibench \
+            --mode aib \
+            --limit 50
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          METACULUS_TOKEN: ${{ secrets.METACULUS_TOKEN }}
+          ASKNEWS_CLIENT_ID: ${{ secrets.ASKNEWS_CLIENT_ID }}
+          ASKNEWS_CLIENT_SECRET: ${{ secrets.ASKNEWS_CLIENT_SECRET }}
+
+      # ============================================================
+      # OPTIONAL TOURNAMENTS (DISABLED - uncomment to enable)
+      # These use 1x/week re-forecasting to manage costs
+      # ============================================================
+
+      # - name: Forecast Metaculus Cup
+      #   run: |
+      #     poetry run python run_bot.py \
+      #       --tournament 32917 \
+      #       --mode reforecast \
+      #       --reforecast-days 7 \
+      #       --limit 20
+      #   env:
+      #     ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      #     METACULUS_TOKEN: ${{ secrets.METACULUS_TOKEN }}
+      #     ASKNEWS_CLIENT_ID: ${{ secrets.ASKNEWS_CLIENT_ID }}
+      #     ASKNEWS_CLIENT_SECRET: ${{ secrets.ASKNEWS_CLIENT_SECRET }}
+
+      # - name: Forecast Main Site
+      #   run: |
+      #     poetry run python run_bot.py \
+      #       --tournament main-site \
+      #       --mode reforecast \
+      #       --reforecast-days 7 \
+      #       --limit 10
+      #   env:
+      #     ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      #     METACULUS_TOKEN: ${{ secrets.METACULUS_TOKEN }}
+      #     ASKNEWS_CLIENT_ID: ${{ secrets.ASKNEWS_CLIENT_ID }}
+      #     ASKNEWS_CLIENT_SECRET: ${{ secrets.ASKNEWS_CLIENT_SECRET }}
