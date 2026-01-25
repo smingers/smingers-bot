@@ -81,6 +81,7 @@ class ResearchOrchestrator:
         question_title: str,
         question_text: str,
         question_type: str = "binary",
+        options: list[str] | None = None,
     ) -> ResearchResults:
         """
         Conduct research on a question.
@@ -89,12 +90,13 @@ class ResearchOrchestrator:
             question_title: The question title
             question_text: Full question description
             question_type: binary, numeric, or multiple_choice
+            options: List of option labels for multiple choice questions
 
         Returns:
             ResearchResults with all gathered information
         """
         # Step 1: Generate search queries
-        queries = await self._generate_queries(question_title, question_text)
+        queries = await self._generate_queries(question_title, question_text, options)
         logger.info(f"Generated {len(queries)} search queries")
 
         # Step 2: Execute searches in parallel
@@ -171,23 +173,38 @@ class ResearchOrchestrator:
         self,
         question_title: str,
         question_text: str,
+        options: list[str] | None = None,
     ) -> list[str]:
         """Generate search queries using an LLM."""
         num_queries = self.config.get("research", {}).get("queries_per_question", 5)
 
         description_text = question_text[:1000] if question_text else "(No description provided)"
+
+        # Build options context for multiple choice questions
+        options_context = ""
+        if options:
+            options_str = "\n".join(f"- {opt}" for opt in options)
+            options_context = f"""
+OPTIONS/CHOICES (IMPORTANT - search for information about EACH of these):
+{options_str}
+
+"""
+
         prompt = f"""Generate {num_queries} diverse search queries to research this forecasting question.
 
 Question: {question_title}
 
 Description: {description_text}
-
+{options_context}
 Generate queries that will help find:
 1. Historical base rates and precedents
 2. Recent news and developments
 3. Expert opinions and analysis
 4. Statistical data and trends
 5. Counterarguments and alternative perspectives
+{"6. Specific information about EACH option/choice listed above" if options else ""}
+
+IMPORTANT: {"Include queries that specifically search for the key entities/names in the options (e.g., artist names, album names, team names, candidate names)." if options else ""}
 
 Output exactly {num_queries} queries, one per line, no numbering or bullets.
 Keep queries concise (under 10 words each).

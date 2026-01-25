@@ -1,0 +1,14 @@
+[
+  {
+    "query": "\"traditional country grammy award history\"",
+    "source": "llm_generated"
+  },
+  {
+    "query": "\"2026 grammy predictions traditional country album\"",
+    "source": "llm_generated"
+  },
+  {
+    "query": "\"[each option/choice] album review grammy prediction\"",
+    "source": "llm_generated"
+  }
+]

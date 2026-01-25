@@ -166,14 +166,14 @@ research:
 
     # Web search via Serper - requires SERPER_API_KEY (has free tier: 2,500/month)
     - type: "web_search"
-      enabled: true
+      enabled: false  # Disabled during testing - using AskNews instead
       provider: "serper"
       max_results: 10
 
     # Google News via Serper - requires SERPER_API_KEY (uses same quota as web_search)
     # Great for current events and recent developments
     - type: "google_news"
-      enabled: true
+      enabled: false  # Disabled during testing - using AskNews instead
       max_results: 10
 
     # Full article scraping - FREE (uses Trafilatura/BeautifulSoup)

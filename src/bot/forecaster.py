@@ -376,10 +376,17 @@ class Forecaster:
 
         # Conduct fresh research
         logger.info("Conducting fresh research...")
+
+        # Extract option labels for multiple choice questions
+        options = None
+        if question.question_type == "multiple_choice" and question.options:
+            options = question.options  # Already a list of strings from API
+
         research_results = await self.research.research(
             question_title=question.title,
             question_text=question.description,
             question_type=question.question_type,
+            options=options,
         )
 
         # Save research artifacts
@@ -533,9 +540,29 @@ class Forecaster:
     ) -> dict:
         """Run multiple choice forecasting pipeline."""
         # Extract options from question
-        options = question.raw.get("options", [])
+        # question.options comes from the API - can be list of strings or list of dicts
+        raw_options = question.options
+        if not raw_options:
+            # Fallback: try nested question object in raw data
+            raw_options = question.raw.get("question", {}).get("options", [])
+
+        # Convert to standard format: list of {id, label} dicts
+        options = []
+        for i, opt in enumerate(raw_options or []):
+            if isinstance(opt, str):
+                # Option is a string - use as both id and label
+                options.append({"id": str(i), "label": opt})
+            elif isinstance(opt, dict):
+                # Option is already a dict - ensure it has id and label
+                options.append({
+                    "id": opt.get("id", str(i)),
+                    "label": opt.get("label", f"Option {i+1}")
+                })
+            else:
+                options.append({"id": str(i), "label": f"Option {i+1}"})
+
         if not options:
-            # Fallback: try to get from group_of_questions or other fields
+            # Final fallback
             options = [{"id": str(i), "label": f"Option {i+1}"} for i in range(4)]
 
         result = await self.multiple_choice_forecaster.forecast(
