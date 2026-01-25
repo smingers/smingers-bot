@@ -171,7 +171,7 @@ class NumericForecaster:
         active_models = self.config.get("_active_models", {})
         model = active_models.get(
             "base_rate_estimator",
-            self.config.get("models", {}).get("base_rate_estimator", "claude-sonnet-4-20250514")
+            self.config.get("models", {}).get("base_rate_estimator", "claude-sonnet-4-5-20250929")
         )
 
         response = await self.llm.complete(
@@ -212,7 +212,7 @@ class NumericForecaster:
         if not agents_config:
             agents_config = [{
                 "name": "default",
-                "model": "claude-sonnet-4-20250514",
+                "model": "claude-sonnet-4-5-20250929",
                 "weight": 1.0,
                 "role_description": "You are a balanced forecaster.",
             }]
@@ -264,7 +264,7 @@ class NumericForecaster:
     ) -> AgentPrediction:
         """Run a single ensemble agent."""
         agent_name = agent.get("name", "unnamed")
-        model = agent.get("model", "claude-sonnet-4-20250514")
+        model = agent.get("model", "claude-sonnet-4-5-20250929")
         weight = agent.get("weight", 1.0)
         role_description = agent.get("role_description", "You are a forecaster.")
 

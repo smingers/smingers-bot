@@ -19,7 +19,7 @@ mode: "dry_run"
 # Models are accessed via litellm which supports multiple providers.
 #
 # Direct API usage (set ANTHROPIC_API_KEY or OPENAI_API_KEY):
-#   - claude-sonnet-4-20250514, claude-3-5-sonnet-20241022, claude-3-haiku-20240307
+#   - claude-sonnet-4-5-20250929, claude-3-5-sonnet-20241022, claude-3-haiku-20240307
 #   - gpt-4o, gpt-4o-mini, o1-mini
 #
 # Via OpenRouter (set OPENROUTER_API_KEY, prefix with "openrouter/"):
@@ -39,7 +39,7 @@ models:
   production:
     classifier: "claude-3-haiku-20240307"  # Keep cheap for simple tasks
     query_generator: "claude-3-haiku-20240307"  # Keep cheap for simple tasks
-    base_rate_estimator: "claude-sonnet-4-20250514"
+    base_rate_estimator: "claude-sonnet-4-5-20250929"
 
 # =============================================================================
 # ENSEMBLE CONFIGURATION
@@ -81,7 +81,7 @@ ensemble:
   # Uses stronger models, more agents, optimized weights (inspired by Q2 winner)
   production:
     - name: "analyst"
-      model: "claude-sonnet-4-20250514"
+      model: "claude-sonnet-4-5-20250929"
       weight: 1.0
       role_description: |
         You are a geopolitical analyst and superforecaster. Focus on the current
@@ -90,7 +90,7 @@ ensemble:
         each piece updates the base rate.
 
     - name: "historian"
-      model: "claude-sonnet-4-20250514"
+      model: "claude-sonnet-4-5-20250929"
       weight: 1.0
       role_description: |
         You are a historian and superforecaster. Focus on historical precedents,
@@ -99,7 +99,7 @@ ensemble:
         your probability estimate.
 
     - name: "contrarian"
-      model: "claude-sonnet-4-20250514"
+      model: "claude-sonnet-4-5-20250929"
       weight: 0.8
       role_description: |
         You are a contrarian forecaster. Your job is to challenge the obvious
@@ -108,7 +108,7 @@ ensemble:
         What are people overlooking?
 
     - name: "quantitative"
-      model: "claude-sonnet-4-20250514"  # Use Claude if no OpenAI key; change to gpt-4o if available
+      model: "claude-sonnet-4-5-20250929"  # Use Claude if no OpenAI key; change to gpt-4o if available
       weight: 1.0
       role_description: |
         You are a quantitative analyst and superforecaster. Focus on data,
@@ -116,12 +116,18 @@ ensemble:
         trend extrapolations, and quantitative models that inform the forecast.
 
     - name: "synthesizer"
-      model: "claude-sonnet-4-20250514"
+      model: "claude-sonnet-4-5-20250929"
       weight: 1.2
       role_description: |
         You are a synthesis expert and superforecaster. Your job is to integrate
         multiple perspectives, identify key uncertainties, and form a balanced
         view. Consider all evidence holistically and identify what matters most.
+
+    - name: "panshul42"
+      model: "claude-sonnet-4-5-20250929"
+      weight: 1.0
+      role_description: |
+        Uses the exact Panshul42 Q2 winner inside view prompt structure.
 
   aggregation: "weighted_average"
 

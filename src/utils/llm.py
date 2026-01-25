@@ -27,7 +27,8 @@ MODEL_COSTS = {
     # Anthropic
     "claude-3-haiku-20240307": {"input": 0.25, "output": 1.25},
     "claude-3-5-haiku-20241022": {"input": 1.0, "output": 5.0},
-    "claude-sonnet-4-20250514": {"input": 3.0, "output": 15.0},
+    "claude-sonnet-4-5-20250929": {"input": 3.0, "output": 15.0},
+    "claude-opus-4-5-20251101": {"input": 5.0, "output": 25.0},
     "claude-opus-4-20250514": {"input": 15.0, "output": 75.0},
     # OpenAI
     "gpt-4o": {"input": 2.5, "output": 10.0},
@@ -130,7 +131,7 @@ class LLMClient:
     Usage:
         client = LLMClient()
         response = await client.complete(
-            model="claude-sonnet-4-20250514",
+            model="claude-sonnet-4-5-20250929",
             messages=[{"role": "user", "content": "Hello!"}]
         )
         print(response.content)
@@ -162,7 +163,7 @@ class LLMClient:
         Make a completion request to an LLM.
 
         Args:
-            model: Model identifier (e.g., "claude-sonnet-4-20250514", "gpt-4o")
+            model: Model identifier (e.g., "claude-sonnet-4-5-20250929", "gpt-4o")
             messages: List of message dicts with "role" and "content"
             temperature: Sampling temperature (0.0-1.0)
             max_tokens: Maximum tokens in response

@@ -133,10 +133,10 @@ ensemble:
 For production quality:
 ```yaml
 models:
-  base_rate_estimator: "claude-sonnet-4-20250514"
+  base_rate_estimator: "claude-sonnet-4-5-20250929"
 ensemble:
   agents:
-    - model: "claude-sonnet-4-20250514"
+    - model: "claude-sonnet-4-5-20250929"
 ```
 
 ## Artifacts

@@ -9,6 +9,7 @@ import asyncio
 import logging
 from typing import Optional
 from pathlib import Path
+from datetime import datetime
 
 from ..utils.llm import LLMClient
 from ..ensemble.aggregator import EnsembleAggregator, AgentPrediction
@@ -133,7 +134,7 @@ class BinaryForecaster:
         active_models = self.config.get("_active_models", {})
         model = active_models.get(
             "base_rate_estimator",
-            self.config.get("models", {}).get("base_rate_estimator", "claude-sonnet-4-20250514")
+            self.config.get("models", {}).get("base_rate_estimator", "claude-sonnet-4-5-20250929")
         )
 
         # Call LLM
@@ -181,19 +182,24 @@ class BinaryForecaster:
             # Default single agent if no ensemble configured
             agents_config = [{
                 "name": "default",
-                "model": "claude-sonnet-4-20250514",
+                "model": "claude-sonnet-4-5-20250929",
                 "weight": 1.0,
                 "role_description": "You are a balanced forecaster.",
             }]
 
-        # Load prompt template
-        template_path = self.prompts_dir / "inside_view.md"
-        with open(template_path) as f:
-            template = f.read()
-
         # Create tasks for each agent
         tasks = []
         for agent in agents_config:
+            # Load appropriate template based on agent name
+            agent_name = agent.get("name", "unnamed")
+            if agent_name == "panshul42":
+                template_path = self.prompts_dir / "inside_view_panshul42.md"
+            else:
+                template_path = self.prompts_dir / "inside_view.md"
+            
+            with open(template_path) as f:
+                template = f.read()
+            
             task = self._run_single_agent(
                 agent=agent,
                 template=template,
@@ -234,22 +240,44 @@ class BinaryForecaster:
     ) -> AgentPrediction:
         """Run a single ensemble agent."""
         agent_name = agent.get("name", "unnamed")
-        model = agent.get("model", "claude-sonnet-4-20250514")
+        model = agent.get("model", "claude-sonnet-4-5-20250929")
         weight = agent.get("weight", 1.0)
         role_description = agent.get("role_description", "You are a forecaster.")
 
-        # Fill in the template
-        prompt = template.format(
-            agent_role=agent_name,
-            role_description=role_description,
-            question_title=question_title,
-            question_text=question_text[:3000],
-            resolution_criteria=resolution_criteria[:1000],
-            base_rate=f"{base_rate * 100:.1f}",
-            reference_classes=", ".join(reference_classes) if reference_classes else "N/A",
-            base_rate_confidence=base_rate_confidence,
-            research_summary=research_summary[:5000],  # Truncate if too long
-        )
+        # Check if this is the Panshul42 prompt format
+        is_panshul42 = "{today}" in template and "{context}" in template and "{fine_print}" in template
+        
+        if is_panshul42:
+            # Panshul42 prompt format
+            # Construct context: "Outside view analysis + current information/news articles"
+            outside_view_text = f"Base rate: {base_rate * 100:.1f}%\n"
+            if reference_classes:
+                outside_view_text += f"Reference classes: {', '.join(reference_classes)}\n"
+            outside_view_text += f"Confidence: {base_rate_confidence}/10"
+            
+            context = f"{outside_view_text}\n\nCurrent information/news articles:\n{research_summary[:5000]}"
+            
+            # Fill in the Panshul42 template
+            prompt = template.format(
+                title=question_title,
+                resolution_criteria=resolution_criteria[:1000],
+                fine_print="",  # fine_print not available in current function signature
+                today=datetime.now().strftime("%Y-%m-%d"),
+                context=context,
+            )
+        else:
+            # Standard prompt format
+            prompt = template.format(
+                agent_role=agent_name,
+                role_description=role_description,
+                question_title=question_title,
+                question_text=question_text[:3000],
+                resolution_criteria=resolution_criteria[:1000],
+                base_rate=f"{base_rate * 100:.1f}",
+                reference_classes=", ".join(reference_classes) if reference_classes else "N/A",
+                base_rate_confidence=base_rate_confidence,
+                research_summary=research_summary[:5000],  # Truncate if too long
+            )
 
         # Call LLM
         response = await self.llm.complete(
