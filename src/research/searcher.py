@@ -193,7 +193,12 @@ Output exactly {num_queries} queries, one per line, no numbering or bullets.
 Keep queries concise (under 10 words each).
 """
 
-        model = self.config.get("models", {}).get("query_generator", "claude-3-haiku-20240307")
+        # Use mode-aware model selection (_active_models set by main.py)
+        active_models = self.config.get("_active_models", {})
+        model = active_models.get(
+            "query_generator",
+            self.config.get("models", {}).get("query_generator", "claude-3-haiku-20240307")
+        )
 
         try:
             response = await self.llm.complete(

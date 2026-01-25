@@ -21,7 +21,7 @@ from datetime import datetime, timezone
 
 from ..utils.llm import LLMClient, get_cost_tracker, reset_cost_tracker
 from ..utils.metaculus_api import MetaculusClient, MetaculusQuestion
-from ..research.searcher import ResearchOrchestrator
+from ..research.searcher import ResearchOrchestrator, ResearchResults
 from ..ensemble.aggregator import EnsembleAggregator
 from ..storage.artifact_store import ArtifactStore, ForecastArtifacts
 from ..storage.database import ForecastDatabase, ForecastRecord, AgentPredictionRecord, ResearchSourceRecord
@@ -151,27 +151,11 @@ class Forecaster:
             analysis = self._analyze_question(question)
             self.artifact_store.save_analysis(artifacts, analysis)
 
-            # Step 3: Conduct research
-            logger.info("Conducting research...")
-            research_results = await self.research.research(
-                question_title=question.title,
-                question_text=question.description,
-                question_type=question.question_type,
+            # Step 3: Conduct research (or reuse existing)
+            research_summary, research_results, reuse_metadata = await self._get_or_reuse_research(
+                question=question,
+                artifacts=artifacts,
             )
-
-            # Save research artifacts
-            self.artifact_store.save_research_queries(artifacts, [
-                {"query": q, "source": "llm_generated"} for q in research_results.queries
-            ])
-            for source, results in research_results.results_by_source.items():
-                self.artifact_store.save_research_source(
-                    artifacts, source, [
-                        {"title": r.title, "url": r.url, "snippet": r.snippet}
-                        for r in results
-                    ]
-                )
-
-            research_summary = self.research.synthesize_results(research_results)
             self.artifact_store.save_research_synthesis(artifacts, research_summary)
 
             # Step 4: Run type-specific forecaster
@@ -259,6 +243,7 @@ class Forecaster:
                     "end": end_time.isoformat(),
                     "duration_seconds": (end_time - start_time).total_seconds(),
                 },
+                research_reuse=reuse_metadata,
             )
 
             # Save to database
@@ -326,6 +311,91 @@ class Forecaster:
             "community_prediction": question.community_prediction,
             "num_forecasters": question.num_forecasters,
         }
+
+    async def _get_or_reuse_research(
+        self,
+        question: MetaculusQuestion,
+        artifacts: ForecastArtifacts,
+    ) -> tuple[str, ResearchResults, dict | None]:
+        """
+        Get research for a question, either by reusing recent research or conducting fresh.
+
+        Returns:
+            Tuple of (research_summary, research_results, reuse_metadata)
+            reuse_metadata is None if fresh research was conducted.
+        """
+        reuse_config = self.config.get("research", {}).get("reuse", {})
+        reuse_enabled = reuse_config.get("enabled", False)
+        max_age_hours = reuse_config.get("max_age_hours", 168)
+        force_fresh = reuse_config.get("force_fresh", False)
+
+        # Try to reuse research if enabled
+        if reuse_enabled and not force_fresh:
+            logger.info(f"Checking for recent research (max age: {max_age_hours}h)...")
+            recent_research = self.artifact_store.find_recent_research(
+                question_id=question.id,
+                max_age_hours=max_age_hours,
+            )
+
+            if recent_research:
+                logger.info(
+                    f"Found research from {recent_research['age_hours']:.1f}h ago, reusing..."
+                )
+                reuse_metadata = self.artifact_store.copy_research(
+                    source_research_dir=recent_research["research_dir"],
+                    target_artifacts=artifacts,
+                    metadata=recent_research,
+                )
+
+                # Load the synthesis from copied research
+                synthesis_path = artifacts.research_dir / "synthesis.md"
+                if synthesis_path.exists():
+                    with open(synthesis_path) as f:
+                        research_summary = f.read()
+
+                    # Load original queries if available
+                    queries = []
+                    queries_path = artifacts.research_dir / "queries_generated.json"
+                    if queries_path.exists():
+                        import json
+                        with open(queries_path) as f:
+                            queries_data = json.load(f)
+                            queries = [q.get("query", "") for q in queries_data]
+
+                    # Create ResearchResults for compatibility with report/database code
+                    research_results = ResearchResults(
+                        queries=queries if queries else [],
+                        results_by_source={},
+                        perplexity_synthesis=None,
+                        total_results=0,
+                    )
+
+                    return research_summary, research_results, reuse_metadata
+                else:
+                    logger.warning("No synthesis found in reused research, falling back to fresh")
+
+        # Conduct fresh research
+        logger.info("Conducting fresh research...")
+        research_results = await self.research.research(
+            question_title=question.title,
+            question_text=question.description,
+            question_type=question.question_type,
+        )
+
+        # Save research artifacts
+        self.artifact_store.save_research_queries(artifacts, [
+            {"query": q, "source": "llm_generated"} for q in research_results.queries
+        ])
+        for source, results in research_results.results_by_source.items():
+            self.artifact_store.save_research_source(
+                artifacts, source, [
+                    {"title": r.title, "url": r.url, "snippet": r.snippet}
+                    for r in results
+                ]
+            )
+
+        research_summary = self.research.synthesize_results(research_results)
+        return research_summary, research_results, None
 
     async def _forecast_binary(
         self,

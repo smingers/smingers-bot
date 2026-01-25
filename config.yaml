@@ -181,6 +181,13 @@ research:
   queries_per_question: 3
   max_research_time: 60
 
+  # Research reuse - avoid redundant API calls for repeat forecasts
+  # Useful for testing and updating forecasts on same question
+  reuse:
+    enabled: true              # Set to false to always run fresh research
+    max_age_hours: 168         # Reuse research if less than this many hours old (168 = 7 days)
+    force_fresh: false         # Override reuse for this run (useful for CLI flag)
+
 # =============================================================================
 # PROMPT CONFIGURATION
 # =============================================================================

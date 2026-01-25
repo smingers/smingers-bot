@@ -7,12 +7,15 @@ Nothing is ephemeral - every step produces a recorded artifact.
 
 import json
 import hashlib
+import logging
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Optional
 from dataclasses import dataclass, field, asdict
 import yaml
 import shutil
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass
@@ -233,7 +236,8 @@ class ArtifactStore:
         config: dict,
         costs: dict,
         timing: dict,
-        errors: list[str] | None = None
+        errors: list[str] | None = None,
+        research_reuse: dict | None = None,
     ) -> None:
         """Save forecast metadata including config, costs, and timing."""
         metadata = {
@@ -246,6 +250,11 @@ class ArtifactStore:
             "timing": timing,
             "errors": errors or [],
         }
+
+        # Add research reuse info if applicable
+        if research_reuse:
+            metadata["research_reuse"] = research_reuse
+
         self._write_json(artifacts.metadata_path, metadata)
 
     # =========================================================================
@@ -342,3 +351,103 @@ class ArtifactStore:
                 continue
 
         return sorted(forecasts, key=lambda x: x["timestamp"], reverse=True)
+
+    def find_recent_research(
+        self,
+        question_id: int,
+        max_age_hours: float = 168,
+    ) -> Optional[dict]:
+        """
+        Find the most recent research for a question within the age threshold.
+
+        Args:
+            question_id: Question to find research for
+            max_age_hours: Maximum age of research to consider (default: 7 days)
+
+        Returns:
+            Dict with 'forecast_id', 'timestamp', 'research_dir', 'age_hours'
+            or None if no suitable research found
+        """
+        forecasts = self.list_forecasts(question_id=question_id)
+        if not forecasts:
+            return None
+
+        # Get most recent forecast
+        most_recent = forecasts[0]
+        timestamp_str = most_recent["timestamp"]
+
+        # Parse timestamp and calculate age
+        try:
+            forecast_time = datetime.strptime(timestamp_str, "%Y%m%d_%H%M%S")
+            forecast_time = forecast_time.replace(tzinfo=timezone.utc)
+            age_hours = (datetime.now(timezone.utc) - forecast_time).total_seconds() / 3600
+
+            if age_hours > max_age_hours:
+                logger.info(
+                    f"Most recent research is {age_hours:.1f} hours old "
+                    f"(threshold: {max_age_hours:.1f}), running fresh research"
+                )
+                return None
+
+            research_dir = Path(most_recent["directory"]) / "02_research"
+            if not research_dir.exists():
+                logger.warning(f"Research directory not found at {research_dir}")
+                return None
+
+            return {
+                "forecast_id": f"{question_id}_{timestamp_str}",
+                "timestamp": timestamp_str,
+                "research_dir": research_dir,
+                "age_hours": age_hours,
+                "created_at": forecast_time.isoformat(),
+            }
+
+        except (ValueError, TypeError) as e:
+            logger.error(f"Failed to parse timestamp {timestamp_str}: {e}")
+            return None
+
+    def copy_research(
+        self,
+        source_research_dir: Path,
+        target_artifacts: ForecastArtifacts,
+        metadata: dict,
+    ) -> dict:
+        """
+        Copy research artifacts from a previous forecast to a new one.
+
+        Args:
+            source_research_dir: Path to source 02_research directory
+            target_artifacts: Target forecast artifacts
+            metadata: Metadata about the source (from find_recent_research)
+
+        Returns:
+            Dict with reuse metadata
+        """
+        if not source_research_dir.exists():
+            raise FileNotFoundError(f"Source research directory not found: {source_research_dir}")
+
+        # Copy all files from source to target
+        logger.info(f"Copying research from {metadata['forecast_id']} (age: {metadata['age_hours']:.1f}h)")
+
+        for source_file in source_research_dir.iterdir():
+            if source_file.is_file():
+                target_file = target_artifacts.research_dir / source_file.name
+                shutil.copy2(source_file, target_file)
+                logger.debug(f"Copied {source_file.name}")
+
+        # Create reuse metadata
+        reuse_metadata = {
+            "reused": True,
+            "source_forecast_id": metadata["forecast_id"],
+            "source_timestamp": metadata["timestamp"],
+            "source_created_at": metadata["created_at"],
+            "age_hours": metadata["age_hours"],
+            "copied_at": datetime.now(timezone.utc).isoformat(),
+            "reason": "within_age_threshold",
+        }
+
+        # Save reuse metadata in research directory
+        reuse_file = target_artifacts.research_dir / "_reuse_metadata.json"
+        self._write_json(reuse_file, reuse_metadata)
+
+        return reuse_metadata
