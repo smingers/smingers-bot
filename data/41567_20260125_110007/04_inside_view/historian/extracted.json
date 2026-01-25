@@ -1,0 +1,15 @@
+{
+  "prediction": 0.52,
+  "weight": 1.0,
+  "evidence_weights": {
+    "strong": [
+      "The 2023 Israel-Hamas war resulted in over 70,000 casualties in the Gaza Strip and the holding of ov"
+    ],
+    "moderate": [
+      "The 2023 war led to a nationwide shelter order in Israel, suggesting that such orders are a possible"
+    ],
+    "weak": [
+      "There is limited information on the likelihood of attacks on Israel causing 5+ casualties before Mar"
+    ]
+  }
+}

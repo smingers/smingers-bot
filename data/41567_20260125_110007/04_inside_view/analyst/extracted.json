@@ -1,0 +1,17 @@
+{
+  "prediction": 0.62,
+  "weight": 1.0,
+  "evidence_weights": {
+    "strong": [
+      "The Israel-Hamas war has resulted in over 70,000 deaths in the Gaza Strip as of November 2025, with ",
+      "Over 67,000 people have been killed in Gaza since the war began in October 2023."
+    ],
+    "moderate": [
+      "Experts have warned of the potential for continued high-casualty attacks on Israel, given the escala",
+      "Historical patterns of attacks on Israel, including the 2023 surprise attack that sparked the curren"
+    ],
+    "weak": [
+      "Speculation about the potential for a nationwide shelter order in Israel, as the articles do not pro"
+    ]
+  }
+}

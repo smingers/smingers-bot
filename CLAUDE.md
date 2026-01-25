@@ -75,8 +75,49 @@ All tunable parameters are in `config.yaml`:
 
 - **Models**: `models.classifier`, `models.base_rate_estimator`
 - **Ensemble**: `ensemble.agents[]` with model, weight, role_description
-- **Research**: Enable/disable sources (llm_knowledge, perplexity, asknews, web_search)
+- **Research**: Enable/disable sources (llm_knowledge, perplexity, asknews, web_search, google_news, article_scraping)
 - **Submission**: `dry_run: true` for testing without submitting
+
+### AskNews Integration
+
+AskNews provides news search and AI-powered forecasting. Free for Metaculus tournament participants (3k+ calls/month).
+
+**Setup:**
+1. Sign up at https://my.asknews.app with your Metaculus-registered email
+2. Create API credentials with **all scopes**: news, chat, stories, analytics
+3. Add to `.env`: `ASKNEWS_CLIENT_ID` and `ASKNEWS_CLIENT_SECRET`
+
+**Features in `config.yaml`:**
+```yaml
+- type: "asknews"
+  enabled: true
+  max_results: 10           # Articles per search
+  hours_back: 72            # How far back to search
+
+  # Forecast endpoint (deep API call - uses more credits)
+  forecast_enabled: false   # Enable for AskNews probability forecasts
+  forecast_lookback: 14     # Days of news to analyze
+  forecast_articles: 15     # Articles to use for forecast
+  forecast_model: "gpt-4.1-2025-04-14"  # Model for forecast
+  forecast_web_search: true # Enable web search in forecast
+```
+
+**Programmatic access:**
+```python
+from src.research.searcher import ResearchSearcher
+
+searcher = ResearchSearcher(config)
+
+# News search
+results = await searcher._search_asknews(queries=["topic query"])
+
+# AI forecast (returns probability, reasoning, sources, timeline)
+forecast = await searcher.get_asknews_forecast(
+    question_title="Will X happen?",
+    question_text="Full question details...",
+    resolution_criteria="Resolves YES if..."
+)
+```
 
 ### Cost Management
 
@@ -157,5 +198,5 @@ Required in `.env`:
 Optional:
 - `OPENROUTER_API_KEY` - OpenRouter for multi-provider access
 - `PERPLEXITY_API_KEY` - Perplexity search
-- `ASKNEWS_CLIENT_ID` / `ASKNEWS_CLIENT_SECRET` - AskNews
-- `SERPER_API_KEY` - Web search
+- `ASKNEWS_CLIENT_ID` / `ASKNEWS_CLIENT_SECRET` - AskNews (free via Metaculus, requires all scopes)
+- `SERPER_API_KEY` - Web search (free tier: 2,500/month)

@@ -1,0 +1,16 @@
+{
+  "prediction": 0.42,
+  "weight": 0.8,
+  "evidence_weights": {
+    "strong": [
+      "None"
+    ],
+    "moderate": [
+      "The ongoing conflict between Israel and Hamas, with a history of short but intense confrontations, s",
+      "The worsening humanitarian crisis in Gaza and the high death toll from the conflict (over 67,000 in "
+    ],
+    "weak": [
+      "None"
+    ]
+  }
+}

@@ -407,92 +407,180 @@ Be thorough and cite sources where possible.
 
         return results_by_source
 
-    async def _search_asknews(self, query: str) -> tuple[str, list[SearchResult]]:
-        """Search using AskNews API.
+    def _get_asknews_client(self):
+        """Get or create AskNews SDK client.
 
-        Supports two auth methods:
-        1. API Key (ASKNEWS_API_KEY) - simpler, static token (scopes set at key creation)
-        2. OAuth (ASKNEWS_CLIENT_ID + ASKNEWS_CLIENT_SECRET) - short-lived tokens
-
-        IMPORTANT: Your credentials must have the 'news' scope enabled.
-        Go to https://my.asknews.app -> API Credentials to check/regenerate.
+        Uses OAuth credentials (ASKNEWS_CLIENT_ID + ASKNEWS_CLIENT_SECRET).
+        Returns None if credentials not configured.
         """
-        api_key = os.getenv("ASKNEWS_API_KEY")
+        if hasattr(self, '_asknews_client') and self._asknews_client:
+            return self._asknews_client
+
+        try:
+            from asknews_sdk import AskNewsSDK
+        except ImportError:
+            logger.error("asknews SDK not installed. Run: poetry add asknews")
+            return None
+
         client_id = os.getenv("ASKNEWS_CLIENT_ID")
         client_secret = os.getenv("ASKNEWS_CLIENT_SECRET")
 
-        # Determine auth method
-        if api_key:
-            # Use API key directly (scopes defined at key creation time)
-            headers = {"Authorization": f"Bearer {api_key}"}
-        elif client_id and client_secret:
-            # Use OAuth flow to get token with required scopes
-            # Token URL from AskNews SDK: https://auth.asknews.app/oauth2/token
+        if client_id and client_secret:
             try:
-                import base64
-                # AskNews uses HTTP Basic Auth for the token endpoint
-                credentials = base64.b64encode(f"{client_id}:{client_secret}".encode()).decode()
-                auth_response = await self.http_client.post(
-                    "https://auth.asknews.app/oauth2/token",
-                    headers={
-                        "Authorization": f"Basic {credentials}",
-                        "Content-Type": "application/x-www-form-urlencoded",
-                    },
-                    data={
-                        "grant_type": "client_credentials",
-                        # Request the scopes needed for news search
-                        "scope": "news chat stories analytics offline openid",
-                    },
+                self._asknews_client = AskNewsSDK(
+                    client_id=client_id,
+                    client_secret=client_secret,
+                    scopes=["news", "chat", "stories", "analytics"],
                 )
-                auth_response.raise_for_status()
-                token = auth_response.json().get("access_token")
-                headers = {"Authorization": f"Bearer {token}"}
-            except httpx.HTTPStatusError as e:
-                logger.error(f"AskNews OAuth failed (HTTP {e.response.status_code}): {e.response.text}")
-                if e.response.status_code == 403:
-                    logger.error("403 Forbidden - Your credentials may not have the required scopes. "
-                                "Go to https://my.asknews.app -> API Credentials and regenerate "
-                                "with 'news' scope enabled.")
-                return ("asknews", [])
+                logger.info("AskNews SDK initialized with OAuth credentials")
+                return self._asknews_client
             except Exception as e:
-                logger.error(f"AskNews OAuth failed: {e}")
-                return ("asknews", [])
+                logger.error(f"Failed to initialize AskNews SDK: {e}")
+                return None
         else:
-            logger.warning("AskNews credentials not set (need ASKNEWS_API_KEY or CLIENT_ID+SECRET)")
+            logger.warning("AskNews credentials not set (need ASKNEWS_CLIENT_ID + ASKNEWS_CLIENT_SECRET)")
+            return None
+
+    async def _search_asknews(self, query: str) -> tuple[str, list[SearchResult]]:
+        """Search news using AskNews SDK.
+
+        Uses the official SDK for better reliability and features.
+        Provides article summaries which are often sufficient without scraping.
+        """
+        client = self._get_asknews_client()
+        if not client:
             return ("asknews", [])
+
+        # Get config options
+        sources = self.config.get("research", {}).get("sources", [])
+        asknews_config = next((s for s in sources if s.get("type") == "asknews"), {})
+        max_results = asknews_config.get("max_results", 10)
+        hours_back = asknews_config.get("hours_back", 72)  # Default 3 days
 
         try:
-            response = await self.http_client.get(
-                "https://api.asknews.app/v1/news/search",
-                headers=headers,
-                params={"q": query, "n_articles": 10},
-            )
-            response.raise_for_status()
-            data = response.json()
+            # SDK is synchronous, run in thread pool to avoid blocking
+            def do_search():
+                return client.news.search_news(
+                    query=query,
+                    n_articles=max_results,
+                    return_type="dicts",
+                    method="kw",  # Keyword search
+                    hours_back=hours_back,
+                    diversify_sources=True,
+                )
+
+            response = await asyncio.get_event_loop().run_in_executor(None, do_search)
 
             results = []
-            for article in data.get("articles", [])[:10]:
+            articles = response.as_dicts if hasattr(response, 'as_dicts') else []
+
+            for article in articles[:max_results]:
+                # SDK returns objects with attributes, not dicts
+                title = getattr(article, 'eng_title', None) or getattr(article, 'title', '')
+                url = getattr(article, 'article_url', '')
+                summary = getattr(article, 'summary', '')
+                pub_date = getattr(article, 'pub_date', None)
+
                 results.append(SearchResult(
-                    title=article.get("title", ""),
-                    url=article.get("url", ""),
-                    snippet=article.get("summary", ""),
+                    title=title,
+                    url=url,
+                    snippet=summary,
                     source="asknews",
-                    published_date=article.get("published_at"),
+                    published_date=str(pub_date) if pub_date else None,
+                    full_content=summary,  # AskNews provides summaries
                 ))
 
-            logger.info(f"AskNews returned {len(results)} articles")
+            logger.info(f"AskNews returned {len(results)} articles for query: {query[:50]}...")
             return ("asknews", results)
 
-        except httpx.HTTPStatusError as e:
-            logger.error(f"AskNews search failed (HTTP {e.response.status_code}): {e.response.text}")
-            if e.response.status_code == 403:
-                logger.error("403 Forbidden - Your credentials may not have the 'news' scope. "
-                            "Go to https://my.asknews.app -> API Credentials and regenerate "
-                            "with 'news' scope enabled.")
-            return ("asknews", [])
         except Exception as e:
             logger.error(f"AskNews search failed: {e}")
             return ("asknews", [])
+
+    async def get_asknews_forecast(
+        self,
+        question_title: str,
+        question_text: str,
+        resolution_criteria: str = "",
+    ) -> Optional[dict]:
+        """Get a forecast from AskNews for a question.
+
+        This uses AskNews's forecast endpoint which provides:
+        - Probability estimate (0-100)
+        - Reasoning with sources
+        - Timeline of relevant events
+        - Confidence level
+
+        This is a "deep API call" - costs more but provides expert-level analysis.
+
+        Returns dict with forecast data or None if unavailable.
+        """
+        client = self._get_asknews_client()
+        if not client:
+            return None
+
+        # Get config options
+        sources = self.config.get("research", {}).get("sources", [])
+        asknews_config = next((s for s in sources if s.get("type") == "asknews"), {})
+
+        # Check if forecast is enabled
+        if not asknews_config.get("forecast_enabled", False):
+            logger.debug("AskNews forecast disabled in config")
+            return None
+
+        # Forecast-specific config
+        lookback = asknews_config.get("forecast_lookback", 14)
+        articles_to_use = asknews_config.get("forecast_articles", 15)
+        model = asknews_config.get("forecast_model", "gpt-4.1-2025-04-14")
+        web_search = asknews_config.get("forecast_web_search", True)
+
+        # Build the forecast query
+        query = f"{question_title}"
+        if resolution_criteria:
+            query += f"\n\nResolution criteria: {resolution_criteria[:500]}"
+
+        try:
+            def do_forecast():
+                return client.chat.get_forecast(
+                    query=query,
+                    lookback=lookback,
+                    articles_to_use=articles_to_use,
+                    model=model,
+                    web_search=web_search,
+                    additional_context=question_text[:1000] if question_text else None,
+                )
+
+            response = await asyncio.get_event_loop().run_in_executor(None, do_forecast)
+
+            # Extract relevant fields from ForecastResponse
+            forecast_data = {
+                "probability": response.probability / 100.0 if response.probability else None,
+                "confidence": response.confidence,
+                "llm_confidence": response.llm_confidence,
+                "reasoning": response.reasoning,
+                "summary": response.summary,
+                "timeline": response.timeline,
+                "sources": [
+                    {
+                        "title": s.get("eng_title", s.get("title", "")),
+                        "url": s.get("article_url", ""),
+                        "summary": s.get("summary", ""),
+                    }
+                    for s in (response.sources or [])[:10]
+                ],
+                "key_facets": response.key_facets,
+                "model_used": response.model_used,
+                "choice": response.choice,  # True/False for binary questions
+                "likelihood": response.likelihood,  # e.g. "likely", "unlikely"
+            }
+
+            logger.info(f"AskNews forecast: {response.probability}% probability, "
+                       f"confidence={response.confidence}")
+            return forecast_data
+
+        except Exception as e:
+            logger.error(f"AskNews forecast failed: {e}")
+            return None
 
     async def _search_claude_native(
         self,

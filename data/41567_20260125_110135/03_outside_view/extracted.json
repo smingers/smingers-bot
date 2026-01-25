@@ -1,0 +1,9 @@
+{
+  "base_rate": 0.2143,
+  "reference_classes": [
+    "Attacks on Israel resulting in 5+ casualties**",
+    "Attacks on Israel resulting in any casualties**",
+    "Attacks on other countries resulting in 5+ casualties**"
+  ],
+  "confidence": 5
+}

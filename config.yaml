@@ -138,12 +138,19 @@ research:
     - type: "llm_knowledge"
       enabled: true
 
-    # AskNews - FREE for tournament participants (3k calls/month)
-    # Requires Metaculus tournament signup for free tier access
-    # See: https://www.metaculus.com/aib/ for setup instructions
+    # AskNews - FREE for tournament participants (3k+ calls/month)
+    # Sign up at https://my.asknews.app with your Metaculus-registered email
+    # Create API credentials with scopes: news, chat, stories, analytics
     - type: "asknews"
-      enabled: false
+      enabled: true
       max_results: 10
+      hours_back: 72              # How far back to search (hours)
+      # Forecast endpoint (deep API call - uses more credits but very powerful)
+      forecast_enabled: false     # Enable to get AskNews's own probability forecasts
+      forecast_lookback: 14       # Days of news to analyze for forecast
+      forecast_articles: 15       # Number of articles to use
+      forecast_model: "gpt-4.1-2025-04-14"  # Model for forecast (gpt-4o, claude-sonnet-4, o3-mini, etc.)
+      forecast_web_search: true   # Enable web search in forecast
 
     # Perplexity - requires PERPLEXITY_API_KEY
     - type: "perplexity"

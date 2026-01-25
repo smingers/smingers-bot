@@ -22,6 +22,7 @@ dependencies = [
     "beautifulsoup4>=4.12.0",
     "trafilatura>=1.6.0",
     "lxml>=5.0.0",
+    "asknews (>=0.13.10,<0.14.0)",
 ]
 
 [project.scripts]
