@@ -1,0 +1,45 @@
+{
+  "individual_distributions": [
+    {
+      "agent": "analyst",
+      "distribution": {
+        "Dollar a Day (by Charley Crockett)": 0.05,
+        "American Romance (by Lukas Nelson)": 0.15,
+        "Oh What a Beautiful World (by Willie Nelson)": 0.35,
+        "Hard Headed Woman (by Margo Price)": 0.25,
+        "Ain't in it for My Health (by Zach Top)": 0.2
+      },
+      "weight": 1.0
+    },
+    {
+      "agent": "historian",
+      "distribution": {
+        "Dollar a Day (by Charley Crockett)": 0.2,
+        "American Romance (by Lukas Nelson)": 0.2,
+        "Oh What a Beautiful World (by Willie Nelson)": 0.2,
+        "Hard Headed Woman (by Margo Price)": 0.2,
+        "Ain't in it for My Health (by Zach Top)": 0.2
+      },
+      "weight": 1.0
+    },
+    {
+      "agent": "contrarian",
+      "distribution": {
+        "Dollar a Day (by Charley Crockett)": 0.32894736842105265,
+        "American Romance (by Lukas Nelson)": 0.013157894736842105,
+        "Oh What a Beautiful World (by Willie Nelson)": 0.39473684210526316,
+        "Hard Headed Woman (by Margo Price)": 0.2631578947368421
+      },
+      "weight": 0.8
+    }
+  ],
+  "method": "weighted_average",
+  "num_agents": 3,
+  "final_distribution": {
+    "0": 0.17336415362731156,
+    "1": 0.12179943100995733,
+    "2": 0.29249644381223333,
+    "3": 0.22315078236130867,
+    "4": 0.18918918918918923
+  }
+}

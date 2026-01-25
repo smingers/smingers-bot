@@ -76,7 +76,30 @@ All tunable parameters are in `config.yaml`:
 - **Models**: `models.classifier`, `models.base_rate_estimator`
 - **Ensemble**: `ensemble.agents[]` with model, weight, role_description
 - **Research**: Enable/disable sources (llm_knowledge, perplexity, asknews, web_search, google_news, article_scraping)
+- **Iterative Research**: `research.iterative.enabled` for agentic search (LLM identifies gaps and generates follow-up queries)
 - **Submission**: `dry_run: true` for testing without submitting
+
+### Iterative Research
+
+Based on the AIA Forecaster paper, iterative/agentic search improves forecast accuracy. The LLM:
+1. Runs initial search
+2. Analyzes results and identifies information gaps
+3. Generates targeted follow-up queries
+4. Repeats until confident or max iterations reached
+
+**Configuration in `config.yaml`:**
+```yaml
+research:
+  iterative:
+    enabled: true              # Enable iterative research
+    max_iterations: 3          # Maximum research iterations
+    confidence_threshold: 0.7  # Stop when LLM confidence reaches this level
+    queries_per_iteration: 2   # Number of follow-up queries per iteration
+```
+
+**Note:** Iterative research uses more API calls. With AskNews free tier, you may hit rate limits. Consider:
+- Setting `max_iterations: 2` for testing
+- Disabling iterative research for rapid iteration on other parts of the pipeline
 
 ### AskNews Integration
 

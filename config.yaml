@@ -147,16 +147,55 @@ research:
     # AskNews - FREE for tournament participants (3k+ calls/month)
     # Sign up at https://my.asknews.app with your Metaculus-registered email
     # Create API credentials with scopes: news, chat, stories, analytics
+    #
+    # This implementation mirrors the Metaculus template bot's AskNews integration:
+    # - AsyncAskNewsSDK for native async support
+    # - Dual search strategy (latest news + historical/news knowledge)
+    # - Deep research via get_deep_news endpoint
+    # - Response caching with configurable modes
+    # - Research presets for easy configuration
     - type: "asknews"
       enabled: true
+
+      # Cache mode: "no_cache", "use_cache", or "use_cache_with_fallback"
+      # - no_cache: Always fetch fresh results (default)
+      # - use_cache: Only use cached results, fail if not cached
+      # - use_cache_with_fallback: Try cache first, fetch if not found
+      cache_mode: "no_cache"
+
+      # Research preset (used by get_deep_research):
+      # - "asknews/news-summaries" - Dual strategy news search (fast, low cost)
+      # - "asknews/deep-research/low-depth" - Light deep research, asknews only
+      # - "asknews/deep-research/medium-depth" - Medium depth, all sources
+      # - "asknews/deep-research/high-depth" - Maximum depth, all sources
+      # You can append a model: "asknews/deep-research/low-depth/claude-3-7-sonnet-latest"
+      research_preset: "asknews/deep-research/low-depth"
+
+      # Deep research settings (for get_deep_news endpoint)
+      deep_research:
+        enabled: true              # Enable deep research
+        model: "deepseek-basic"    # Model: deepseek-basic, deepseek, claude-3-7-sonnet-latest, o3-mini
+        search_depth: 1            # Search depth (1-4)
+        max_depth: 1               # Maximum depth (1-6)
+        sources:                   # Sources to search
+          - "asknews"              # AskNews news archive
+          # - "google"             # Google search (may require higher tier)
+          # - "x"                  # Twitter/X (may require higher tier)
+          # - "wiki"               # Wikipedia
+
+      # Legacy settings (kept for backward compatibility)
       max_results: 10
-      hours_back: 72              # How far back to search (hours)
-      # Forecast endpoint (deep API call - uses more credits but very powerful)
-      forecast_enabled: false     # Enable to get AskNews's own probability forecasts
-      forecast_lookback: 14       # Days of news to analyze for forecast
-      forecast_articles: 15       # Number of articles to use
-      forecast_model: "gpt-4.1-2025-04-14"  # Model for forecast (gpt-4o, claude-sonnet-4, o3-mini, etc.)
-      forecast_web_search: true   # Enable web search in forecast
+      hours_back: 72
+
+    # AskNews Wikipedia - encyclopedic info about entities
+    # Uses same API credentials as asknews. Great for:
+    # - Artist/person background info
+    # - Historical context and facts
+    # - Reference data that news sources don't cover
+    # Note: Same rate limits as asknews (free tier: 1 req/10s)
+    - type: "asknews_wiki"
+      enabled: true
+      max_results: 5              # Wikipedia docs per query
 
     # Perplexity - requires PERPLEXITY_API_KEY
     - type: "perplexity"
@@ -193,6 +232,16 @@ research:
 
   queries_per_question: 3
   max_research_time: 60
+
+  # Iterative/agentic research - LLM analyzes results and identifies gaps
+  # Based on AIA Forecaster paper showing agentic search improves Brier scores
+  iterative:
+    enabled: true              # Enable iterative research (more API calls but better results)
+    max_iterations: 3          # Maximum research iterations
+    confidence_threshold: 0.7  # Stop when LLM confidence reaches this level (0-1)
+    queries_per_iteration: 2   # Number of follow-up queries per iteration
+    iteration_delay_seconds: 10 # Delay between iterations to respect API rate limits
+                                # Free tier: 10s, Spelunker: 1s, Analyst: 0.5s
 
   # Research reuse - avoid redundant API calls for repeat forecasts
   # Useful for testing and updating forecasts on same question
