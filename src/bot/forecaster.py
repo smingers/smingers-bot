@@ -151,27 +151,75 @@ class Forecaster:
             analysis = self._analyze_question(question)
             self.artifact_store.save_analysis(artifacts, analysis)
 
-            # Step 3: Conduct research
-            logger.info("Conducting research...")
-            research_results = await self.research.research(
-                question_title=question.title,
-                question_text=question.description,
-                question_type=question.question_type,
-            )
+            # Step 3: Conduct research (or reuse existing)
+            from ..research.searcher import ResearchResults
 
-            # Save research artifacts
-            self.artifact_store.save_research_queries(artifacts, [
-                {"query": q, "source": "llm_generated"} for q in research_results.queries
-            ])
-            for source, results in research_results.results_by_source.items():
-                self.artifact_store.save_research_source(
-                    artifacts, source, [
-                        {"title": r.title, "url": r.url, "snippet": r.snippet}
-                        for r in results
-                    ]
+            research_reuse_config = self.config.get("research", {}).get("reuse", {})
+            reuse_enabled = research_reuse_config.get("enabled", False)
+            reuse_max_age = research_reuse_config.get("max_age_hours", 168)
+            force_fresh = research_reuse_config.get("force_fresh", False)
+
+            research_summary = None
+            research_results = None
+            reuse_metadata = None
+
+            # Try to reuse research if enabled and not forcing fresh
+            if reuse_enabled and not force_fresh:
+                logger.info(f"Checking for recent research (max age: {reuse_max_age}h)...")
+                recent_research = self.artifact_store.find_recent_research(
+                    question_id=question.id,
+                    max_age_hours=reuse_max_age,
                 )
 
-            research_summary = self.research.synthesize_results(research_results)
+                if recent_research:
+                    logger.info(
+                        f"Found research from {recent_research['age_hours']:.1f}h ago, reusing..."
+                    )
+                    reuse_metadata = self.artifact_store.copy_research(
+                        source_research_dir=recent_research["research_dir"],
+                        target_artifacts=artifacts,
+                        metadata=recent_research,
+                    )
+
+                    # Load the synthesis from copied research
+                    synthesis_path = artifacts.research_dir / "synthesis.md"
+                    if synthesis_path.exists():
+                        with open(synthesis_path) as f:
+                            research_summary = f.read()
+
+                        # Create minimal ResearchResults for compatibility with report/database code
+                        research_results = ResearchResults(
+                            queries=["Reused from previous forecast"],
+                            results_by_source={},
+                            perplexity_synthesis=None,
+                            total_results=0,
+                        )
+                    else:
+                        logger.warning("No synthesis found in reused research, falling back to fresh research")
+                        reuse_metadata = None
+
+            # Run fresh research if not reused
+            if research_summary is None:
+                logger.info("Conducting fresh research...")
+                research_results = await self.research.research(
+                    question_title=question.title,
+                    question_text=question.description,
+                    question_type=question.question_type,
+                )
+
+                # Save research artifacts
+                self.artifact_store.save_research_queries(artifacts, [
+                    {"query": q, "source": "llm_generated"} for q in research_results.queries
+                ])
+                for source, results in research_results.results_by_source.items():
+                    self.artifact_store.save_research_source(
+                        artifacts, source, [
+                            {"title": r.title, "url": r.url, "snippet": r.snippet}
+                            for r in results
+                        ]
+                    )
+
+                research_summary = self.research.synthesize_results(research_results)
             self.artifact_store.save_research_synthesis(artifacts, research_summary)
 
             # Step 4: Run type-specific forecaster
@@ -259,6 +307,7 @@ class Forecaster:
                     "end": end_time.isoformat(),
                     "duration_seconds": (end_time - start_time).total_seconds(),
                 },
+                research_reuse=reuse_metadata,
             )
 
             # Save to database
