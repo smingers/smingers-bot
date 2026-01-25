@@ -31,7 +31,36 @@ from dotenv import load_dotenv
 sys.path.insert(0, str(Path(__file__).parent))
 
 from src.bot.forecaster import Forecaster, load_config
+from src.bot.multiple_choice import ExtractionError
 from src.utils.metaculus_api import MetaculusClient
+from datetime import datetime, timezone
+
+FAILURE_LOG_PATH = Path("data/failed_forecasts.log")
+
+
+def write_failure_log(mode: str, extraction_errors: list, other_errors: list):
+    """Write failures to persistent log file."""
+    if not extraction_errors and not other_errors:
+        return
+
+    FAILURE_LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
+
+    with open(FAILURE_LOG_PATH, "a") as f:
+        f.write(f"\n{'='*70}\n")
+        f.write(f"RUN: {datetime.now(timezone.utc).isoformat()}\n")
+        f.write(f"Mode: {mode} | Via: main.py\n")
+        f.write(f"Extraction errors: {len(extraction_errors)} | Other: {len(other_errors)}\n")
+        f.write(f"{'='*70}\n")
+
+        for qid, title, err in extraction_errors:
+            f.write(f"\n🔴 EXTRACTION Q{qid}: {title[:60]}\n")
+            f.write(f"  {err[:200]}\n")
+
+        for qid, title, err in other_errors:
+            f.write(f"\n🟡 OTHER Q{qid}: {title[:60]}\n")
+            f.write(f"  {err[:200]}\n")
+
+    print(f"Failures logged to: {FAILURE_LOG_PATH}")
 
 
 def setup_logging(verbose: bool = False):
@@ -46,7 +75,7 @@ def setup_logging(verbose: bool = False):
     )
 
 
-async def list_questions(tournament_id: int):
+async def list_questions(tournament_id: int | str):
     """List open questions in a tournament."""
     async with MetaculusClient() as client:
         questions = await client.get_tournament_questions(tournament_id)
@@ -113,54 +142,72 @@ async def forecast_question(
     config = load_config(config_path)
     config = apply_mode_to_config(config, mode=mode, dry_run=dry_run)
 
-    async with Forecaster(config) as forecaster:
-        result = await forecaster.forecast_question(
-            question_id=question_id,
-            question_url=question_url,
-        )
+    try:
+        async with Forecaster(config) as forecaster:
+            result = await forecaster.forecast_question(
+                question_id=question_id,
+                question_url=question_url,
+            )
 
-        print(f"\n{'='*60}")
-        print(f"FORECAST COMPLETE")
-        print(f"{'='*60}")
-        print(f"Question: {result['question'].title}")
-        print(f"Type: {result['question'].question_type}")
+            print(f"\n{'='*60}")
+            print(f"FORECAST COMPLETE")
+            print(f"{'='*60}")
+            print(f"Question: {result['question'].title}")
+            print(f"Type: {result['question'].question_type}")
 
-        # Format prediction based on question type
-        question_type = result['question'].question_type
-        if question_type == "binary":
-            print(f"Prediction: {result['prediction']:.1%}")
-            print(f"Base Rate: {result['forecast_result']['base_rate']:.1%}")
-        elif question_type == "numeric":
-            median = result['prediction'].get(50, 0)
-            base_median = result['forecast_result'].get('base_percentiles', {}).get(50, 0)
-            print(f"Prediction (median): {median:.2f}")
-            print(f"Base Rate (median): {base_median:.2f}")
-        elif question_type == "multiple_choice":
-            dist = result['prediction']
-            best = max(dist.items(), key=lambda x: x[1])
-            print(f"Prediction: {best[0]} ({best[1]:.1%})")
-            print(f"Distribution: {dist}")
-        else:
-            print(f"Prediction: {result['prediction']}")
+            # Format prediction based on question type
+            question_type = result['question'].question_type
+            if question_type == "binary":
+                print(f"Prediction: {result['prediction']:.1%}")
+                print(f"Base Rate: {result['forecast_result']['base_rate']:.1%}")
+            elif question_type == "numeric":
+                median = result['prediction'].get(50, 0)
+                base_median = result['forecast_result'].get('base_percentiles', {}).get(50, 0)
+                print(f"Prediction (median): {median:.2f}")
+                print(f"Base Rate (median): {base_median:.2f}")
+            elif question_type == "multiple_choice":
+                dist = result['prediction']
+                best = max(dist.items(), key=lambda x: x[1])
+                print(f"Prediction: {best[0]} ({best[1]:.1%})")
+                print(f"Distribution: {dist}")
+            else:
+                print(f"Prediction: {result['prediction']}")
 
-        print(f"Cost: ${result['costs']['total_cost']:.4f}")
-        print(f"Artifacts: {result['artifacts_dir']}")
+            print(f"Cost: ${result['costs']['total_cost']:.4f}")
+            print(f"Artifacts: {result['artifacts_dir']}")
 
-        submission = result.get('submission') or {}
-        effective_mode = config.get("_effective_mode", "dry_run")
-        if submission.get('success'):
-            print("Status: SUBMITTED")
-        elif effective_mode in ("dry_run", "dry_run_heavy"):
-            mode_label = "DRY RUN" if effective_mode == "dry_run" else "DRY RUN (heavy models)"
-            print(f"Status: {mode_label} (not submitted)")
-        else:
-            print(f"Status: FAILED - {submission.get('error', 'Unknown error')}")
+            submission = result.get('submission') or {}
+            effective_mode = config.get("_effective_mode", "dry_run")
+            if submission.get('success'):
+                print("Status: SUBMITTED")
+            elif effective_mode in ("dry_run", "dry_run_heavy"):
+                mode_label = "DRY RUN" if effective_mode == "dry_run" else "DRY RUN (heavy models)"
+                print(f"Status: {mode_label} (not submitted)")
+            else:
+                print(f"Status: FAILED - {submission.get('error', 'Unknown error')}")
 
-        return result
+            return result
+
+    except ExtractionError as e:
+        print(f"\n{'!'*60}")
+        print("EXTRACTION ERROR - FORECAST FAILED")
+        print(f"{'!'*60}")
+        print(f"\nThe LLM response could not be parsed into a valid distribution.")
+        print(f"This means NO forecast was submitted.\n")
+        print(f"Error: {e}")
+        if e.agent_name:
+            print(f"Failed agent: {e.agent_name}")
+        if e.response_preview:
+            print(f"\nResponse preview:\n{e.response_preview[:300]}...")
+        print(f"\n{'!'*60}")
+        print("To debug: Check the artifacts directory for the full LLM response.")
+        print("The prompts may need adjustment for this question type.")
+        print(f"{'!'*60}")
+        sys.exit(1)
 
 
 async def forecast_new_questions(
-    tournament_id: int,
+    tournament_id: int | str,
     config_path: str = "config.yaml",
     dry_run: bool = False,
     mode: str = None,
@@ -189,15 +236,58 @@ async def forecast_new_questions(
             return
 
     # Forecast each new question
+    success_count = 0
+    extraction_errors = []
+    other_errors = []
+
     async with Forecaster(config) as forecaster:
         for i, question in enumerate(new_questions[:limit]):
             print(f"\n[{i+1}/{min(len(new_questions), limit)}] Forecasting: {question.title}")
 
             try:
                 result = await forecaster.forecast_question(question=question)
-                print(f"  -> Prediction: {result['prediction']:.1%}")
+                pred = result.get('prediction')
+                if isinstance(pred, float):
+                    print(f"  ✓ Prediction: {pred:.1%}")
+                else:
+                    print(f"  ✓ Prediction: {pred}")
+                success_count += 1
+            except ExtractionError as e:
+                print(f"  ✗ EXTRACTION FAILED: {e}")
+                extraction_errors.append((question.id, question.title, str(e)))
             except Exception as e:
-                print(f"  -> FAILED: {e}")
+                print(f"  ✗ FAILED: {e}")
+                other_errors.append((question.id, question.title, str(e)))
+
+    # Print summary
+    print(f"\n{'='*60}")
+    print("BATCH FORECAST SUMMARY")
+    print(f"{'='*60}")
+    print(f"Successful: {success_count}")
+    print(f"Failed: {len(extraction_errors) + len(other_errors)}")
+
+    if extraction_errors:
+        print(f"\n{'!'*60}")
+        print(f"🔴 EXTRACTION ERRORS: {len(extraction_errors)}")
+        print("These questions were SKIPPED (not submitted):")
+        for qid, title, err in extraction_errors:
+            print(f"  Q{qid}: {title[:50]}")
+        print(f"{'!'*60}")
+
+    if other_errors:
+        print(f"\n🟡 Other errors: {len(other_errors)}")
+        for qid, title, err in other_errors:
+            print(f"  Q{qid}: {title[:50]} - {err[:60]}")
+
+    print(f"{'='*60}")
+
+    # Write failures to persistent log file
+    effective_mode = config.get("_effective_mode", "unknown")
+    write_failure_log(effective_mode, extraction_errors, other_errors)
+
+    # Exit with error if any extraction errors occurred
+    if extraction_errors:
+        sys.exit(1)
 
 
 def main():
@@ -220,8 +310,8 @@ def main():
     )
     parser.add_argument(
         "--tournament", "-t",
-        type=int,
-        help="Tournament ID"
+        type=str,
+        help="Tournament ID or slug (e.g., 32916, minibench)"
     )
     parser.add_argument(
         "--list", "-l",

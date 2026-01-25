@@ -22,6 +22,19 @@ from ..ensemble.aggregator import EnsembleAggregator, AgentPrediction
 logger = logging.getLogger(__name__)
 
 
+class ExtractionError(Exception):
+    """
+    Raised when distribution extraction fails and cannot be recovered.
+
+    This error should bubble up and cause the forecast to fail rather than
+    silently falling back to a uniform distribution (which would be garbage data).
+    """
+    def __init__(self, message: str, agent_name: str = None, response_preview: str = None):
+        super().__init__(message)
+        self.agent_name = agent_name
+        self.response_preview = response_preview
+
+
 class MultipleChoiceForecaster:
     """
     Forecaster for multiple choice questions.
@@ -169,7 +182,16 @@ class MultipleChoiceForecaster:
         )
 
         reasoning = response.content
-        distribution = self._extract_distribution(reasoning, option_labels)
+
+        try:
+            distribution = self._extract_distribution(reasoning, option_labels)
+        except ExtractionError as e:
+            # Re-raise with context about this being the base rate step
+            raise ExtractionError(
+                f"Base rate estimation (outside view): {e}",
+                agent_name="base_rate_estimator",
+                response_preview=e.response_preview
+            ) from e
 
         return {
             "distribution": distribution,
@@ -227,11 +249,28 @@ class MultipleChoiceForecaster:
         results = await asyncio.gather(*tasks, return_exceptions=True)
 
         predictions = []
+        extraction_errors = []
+
         for result, agent in zip(results, agents_config):
-            if isinstance(result, Exception):
+            if isinstance(result, ExtractionError):
+                # Extraction errors are fatal - collect them and fail
+                extraction_errors.append(result)
+                logger.error(f"EXTRACTION FAILED for agent {agent['name']}: {result}")
+            elif isinstance(result, Exception):
+                # Other errors (network, API, etc.) - log and skip agent
                 logger.error(f"Agent {agent['name']} failed: {result}")
                 continue
-            predictions.append(result)
+            else:
+                predictions.append(result)
+
+        # If ANY extraction failed, fail the entire forecast
+        if extraction_errors:
+            failed_agents = [e.agent_name for e in extraction_errors]
+            raise ExtractionError(
+                f"Distribution extraction failed for {len(extraction_errors)} agent(s): {failed_agents}. "
+                f"Cannot produce reliable forecast. First error: {extraction_errors[0]}",
+                agent_name=", ".join(failed_agents)
+            )
 
         return predictions
 
@@ -273,14 +312,20 @@ class MultipleChoiceForecaster:
         )
 
         reasoning = response.content
-        distribution = self._extract_distribution(reasoning, option_labels)
+
+        try:
+            distribution = self._extract_distribution(reasoning, option_labels)
+        except ExtractionError as e:
+            # Re-raise with agent context
+            raise ExtractionError(
+                f"Agent '{agent_name}' ({model}): {e}",
+                agent_name=agent_name,
+                response_preview=e.response_preview
+            ) from e
 
         # Find most likely option for scalar prediction
-        if distribution:
-            best = max(distribution.items(), key=lambda x: x[1])
-            prediction = best[1]
-        else:
-            prediction = 1.0 / len(option_labels)
+        best = max(distribution.items(), key=lambda x: x[1])
+        prediction = best[1]
 
         return AgentPrediction(
             agent_name=agent_name,
@@ -379,12 +424,14 @@ class MultipleChoiceForecaster:
                     logger.info("Extracted distribution via Distribution section")
                     return validated
 
-        # All methods failed - return uniform with warning
-        logger.warning(
+        # All methods failed - raise error instead of returning garbage
+        response_preview = text[:500] + "..." if len(text) > 500 else text
+        raise ExtractionError(
             f"Could not extract distribution from response. "
-            f"Returning uniform distribution for {len(option_labels)} options."
+            f"Tried JSON block, strict matching ({len(format_variations)} formats), and Distribution section. "
+            f"Options expected: {option_labels}",
+            response_preview=response_preview
         )
-        return {label: 1.0 / len(option_labels) for label in option_labels}
 
     def _extract_with_strict_matching(
         self,

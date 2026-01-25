@@ -53,6 +53,7 @@ jobs:
       # ============================================================
 
       - name: Forecast Seasonal AIB
+        id: forecast_aib
         run: |
           poetry run python run_bot.py \
             --tournament 32916 \
@@ -64,17 +65,31 @@ jobs:
           ASKNEWS_CLIENT_ID: ${{ secrets.ASKNEWS_CLIENT_ID }}
           ASKNEWS_CLIENT_SECRET: ${{ secrets.ASKNEWS_CLIENT_SECRET }}
 
-      - name: Forecast MiniBench
+      # ============================================================
+      # FAILURE NOTIFICATION
+      # If any forecasts failed due to extraction errors, this step
+      # creates a visible annotation in the GitHub Actions UI
+      # ============================================================
+      - name: Check for failures
+        if: failure()
         run: |
-          poetry run python run_bot.py \
-            --tournament minibench \
-            --mode aib \
-            --limit 50
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          METACULUS_TOKEN: ${{ secrets.METACULUS_TOKEN }}
-          ASKNEWS_CLIENT_ID: ${{ secrets.ASKNEWS_CLIENT_ID }}
-          ASKNEWS_CLIENT_SECRET: ${{ secrets.ASKNEWS_CLIENT_SECRET }}
+          echo "::error::One or more forecasts failed! Check the logs above for details."
+          echo "::error::Look for 'EXTRACTION ERRORS' or 'FAILED QUESTIONS' in the output."
+          echo ""
+          echo "To retry failed questions manually:"
+          echo "  python main.py --question <QUESTION_ID> --mode production"
+
+      # - name: Forecast MiniBench
+      #   run: |
+      #     poetry run python run_bot.py \
+      #       --tournament minibench \
+      #       --mode aib \
+      #       --limit 50
+      #   env:
+      #     ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      #     METACULUS_TOKEN: ${{ secrets.METACULUS_TOKEN }}
+      #     ASKNEWS_CLIENT_ID: ${{ secrets.ASKNEWS_CLIENT_ID }}
+      #     ASKNEWS_CLIENT_SECRET: ${{ secrets.ASKNEWS_CLIENT_SECRET }}
 
       # ============================================================
       # OPTIONAL TOURNAMENTS (DISABLED - uncomment to enable)

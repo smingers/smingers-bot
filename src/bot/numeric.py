@@ -22,8 +22,12 @@ from scipy.interpolate import PchipInterpolator
 
 from ..utils.llm import LLMClient
 from ..ensemble.aggregator import EnsembleAggregator, AgentPrediction
+from .multiple_choice import ExtractionError
 
 logger = logging.getLogger(__name__)
+
+# Minimum percentiles required for a valid extraction
+MIN_REQUIRED_PERCENTILES = 5
 
 # Standard percentiles we ask the LLM to estimate
 STANDARD_PERCENTILES = [1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 99]
@@ -184,6 +188,17 @@ class NumericForecaster:
         reasoning = response.content
         percentiles = self._extract_percentiles(reasoning)
 
+        try:
+            percentiles = self._validate_percentiles(
+                percentiles, "Base rate estimation (outside view)", reasoning
+            )
+        except ExtractionError as e:
+            raise ExtractionError(
+                str(e),
+                agent_name="base_rate_estimator",
+                response_preview=e.response_preview
+            ) from e
+
         return {
             "percentiles": percentiles,
             "reasoning": reasoning,
@@ -242,11 +257,28 @@ class NumericForecaster:
         results = await asyncio.gather(*tasks, return_exceptions=True)
 
         predictions = []
+        extraction_errors = []
+
         for result, agent in zip(results, agents_config):
-            if isinstance(result, Exception):
+            if isinstance(result, ExtractionError):
+                # Extraction errors are fatal - collect them and fail
+                extraction_errors.append(result)
+                logger.error(f"EXTRACTION FAILED for agent {agent['name']}: {result}")
+            elif isinstance(result, Exception):
+                # Other errors (network, API, etc.) - log and skip agent
                 logger.error(f"Agent {agent['name']} failed: {result}")
                 continue
-            predictions.append(result)
+            else:
+                predictions.append(result)
+
+        # If ANY extraction failed, fail the entire forecast
+        if extraction_errors:
+            failed_agents = [e.agent_name for e in extraction_errors]
+            raise ExtractionError(
+                f"Percentile extraction failed for {len(extraction_errors)} agent(s): {failed_agents}. "
+                f"Cannot produce reliable forecast. First error: {extraction_errors[0]}",
+                agent_name=", ".join(failed_agents)
+            )
 
         return predictions
 
@@ -290,6 +322,17 @@ class NumericForecaster:
 
         reasoning = response.content
         percentiles = self._extract_percentiles(reasoning)
+
+        try:
+            percentiles = self._validate_percentiles(
+                percentiles, f"Agent '{agent_name}' ({model})", reasoning
+            )
+        except ExtractionError as e:
+            raise ExtractionError(
+                str(e),
+                agent_name=agent_name,
+                response_preview=e.response_preview
+            ) from e
 
         return AgentPrediction(
             agent_name=agent_name,
@@ -364,9 +407,25 @@ class NumericForecaster:
                     if pct in STANDARD_PERCENTILES:
                         percentiles[pct] = self._parse_number(match.group(2))
 
-        if not percentiles:
-            logger.warning("Could not extract percentiles from response")
+        return percentiles
 
+    def _validate_percentiles(self, percentiles: dict[int, float], context: str, text: str) -> dict[int, float]:
+        """
+        Validate extracted percentiles - raise ExtractionError if insufficient.
+
+        Args:
+            percentiles: The extracted percentiles
+            context: Description of where this came from (for error messages)
+            text: Original response text (for error preview)
+        """
+        if len(percentiles) < MIN_REQUIRED_PERCENTILES:
+            response_preview = text[:500] + "..." if len(text) > 500 else text
+            raise ExtractionError(
+                f"{context}: Could not extract sufficient percentiles from response. "
+                f"Got {len(percentiles)} percentiles, need at least {MIN_REQUIRED_PERCENTILES}. "
+                f"Extracted: {list(percentiles.keys())}",
+                response_preview=response_preview
+            )
         return percentiles
 
     def _aggregate_percentiles(
@@ -407,10 +466,13 @@ class NumericForecaster:
         Uses PCHIP (Piecewise Cubic Hermite Interpolating Polynomial) for
         smooth, monotonic interpolation.
         """
-        if not percentiles:
-            # Fallback: uniform distribution
-            logger.warning("No percentiles available, using uniform CDF")
-            return [i / (num_points - 1) for i in range(num_points)]
+        if not percentiles or len(percentiles) < MIN_REQUIRED_PERCENTILES:
+            # This should not happen if validation is working, but fail loudly if it does
+            raise ExtractionError(
+                f"Cannot generate CDF: insufficient percentiles. "
+                f"Got {len(percentiles)}, need at least {MIN_REQUIRED_PERCENTILES}.",
+                agent_name="cdf_generator"
+            )
 
         # Sort percentiles by percentile value
         sorted_pcts = sorted(percentiles.items())

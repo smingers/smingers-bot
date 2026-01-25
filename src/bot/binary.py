@@ -13,6 +13,7 @@ from datetime import datetime
 
 from ..utils.llm import LLMClient
 from ..ensemble.aggregator import EnsembleAggregator, AgentPrediction
+from .multiple_choice import ExtractionError
 
 logger = logging.getLogger(__name__)
 
@@ -148,7 +149,11 @@ class BinaryForecaster:
         reasoning = response.content
 
         # Extract base rate from response
-        base_rate = self._extract_probability(reasoning)
+        base_rate = self._extract_probability(
+            reasoning,
+            context="Base rate estimation (outside view)",
+            agent_name="base_rate_estimator"
+        )
         reference_classes = self._extract_reference_classes(reasoning)
         confidence = self._extract_confidence(reasoning)
 
@@ -218,11 +223,28 @@ class BinaryForecaster:
 
         # Collect successful predictions
         predictions = []
+        extraction_errors = []
+
         for result, agent in zip(results, agents_config):
-            if isinstance(result, Exception):
+            if isinstance(result, ExtractionError):
+                # Extraction errors are fatal - collect them and fail
+                extraction_errors.append(result)
+                logger.error(f"EXTRACTION FAILED for agent {agent['name']}: {result}")
+            elif isinstance(result, Exception):
+                # Other errors (network, API, etc.) - log and skip agent
                 logger.error(f"Agent {agent['name']} failed: {result}")
                 continue
-            predictions.append(result)
+            else:
+                predictions.append(result)
+
+        # If ANY extraction failed, fail the entire forecast
+        if extraction_errors:
+            failed_agents = [e.agent_name for e in extraction_errors]
+            raise ExtractionError(
+                f"Probability extraction failed for {len(extraction_errors)} agent(s): {failed_agents}. "
+                f"Cannot produce reliable forecast. First error: {extraction_errors[0]}",
+                agent_name=", ".join(failed_agents)
+            )
 
         return predictions
 
@@ -290,7 +312,11 @@ class BinaryForecaster:
         reasoning = response.content
 
         # Extract prediction
-        prediction = self._extract_probability(reasoning)
+        prediction = self._extract_probability(
+            reasoning,
+            context=f"Agent '{agent_name}' ({model})",
+            agent_name=agent_name
+        )
 
         # Extract evidence weights if possible
         evidence_weights = self._extract_evidence_weights(reasoning)
@@ -304,8 +330,18 @@ class BinaryForecaster:
             evidence_weights=evidence_weights,
         )
 
-    def _extract_probability(self, text: str) -> float:
-        """Extract probability from LLM response."""
+    def _extract_probability(self, text: str, context: str = "unknown", agent_name: str = None) -> float:
+        """
+        Extract probability from LLM response.
+
+        Args:
+            text: The LLM response text
+            context: Description of where this came from (for error messages)
+            agent_name: Name of the agent (for error messages)
+
+        Raises:
+            ExtractionError: If no probability can be extracted
+        """
         # Look for "Probability: X%" pattern (with optional markdown formatting)
         match = re.search(r"\*{0,2}Probability:?\*{0,2}\s*([0-9]+(?:\.[0-9]+)?)\s*%", text, re.IGNORECASE)
         if match:
@@ -330,8 +366,15 @@ class BinaryForecaster:
             prob = float(matches[-1]) / 100
             return max(0.001, min(0.999, prob))
 
-        logger.warning("Could not extract probability from response, using 0.5")
-        return 0.5
+        # All extraction methods failed - raise error
+        response_preview = text[:500] + "..." if len(text) > 500 else text
+        raise ExtractionError(
+            f"{context}: Could not extract probability from response. "
+            f"Looked for 'Probability: X%', 'Base Rate Estimate: X%', 'Final Estimate: X%', "
+            f"and any percentage in last 500 chars.",
+            agent_name=agent_name,
+            response_preview=response_preview
+        )
 
     def _extract_reference_classes(self, text: str) -> list[str]:
         """Extract reference classes from outside view reasoning."""

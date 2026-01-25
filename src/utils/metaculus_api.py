@@ -191,7 +191,7 @@ class MetaculusClient:
             List of MetaculusQuestion objects
         """
         params = {
-            "project": tournament_id,
+            "tournaments": tournament_id,
             "limit": limit,
             "order_by": "-created_at",
         }
@@ -202,12 +202,36 @@ class MetaculusClient:
         response.raise_for_status()
         data = response.json()
 
+        # Filter to only include questions where this tournament is the default_project
+        # The API returns all questions linked to the tournament, but we only want
+        # questions that are primarily part of this tournament
         questions = []
         for item in data.get("results", []):
-            try:
-                questions.append(MetaculusQuestion.from_api_response(item))
-            except Exception as e:
-                logger.warning(f"Failed to parse question: {e}")
+            # Check if this tournament is the default_project
+            default_project = item.get("projects", {}).get("default_project", {})
+            default_id = default_project.get("id")
+            default_slug = default_project.get("slug")
+
+            # Match by ID or slug
+            is_primary = False
+            if isinstance(tournament_id, int) and default_id == tournament_id:
+                is_primary = True
+            elif isinstance(tournament_id, str):
+                # Try matching as slug, or as int if it's a numeric string
+                if default_slug == tournament_id:
+                    is_primary = True
+                else:
+                    try:
+                        if default_id == int(tournament_id):
+                            is_primary = True
+                    except ValueError:
+                        pass
+
+            if is_primary:
+                try:
+                    questions.append(MetaculusQuestion.from_api_response(item))
+                except Exception as e:
+                    logger.warning(f"Failed to parse question: {e}")
 
         return questions
 
@@ -226,7 +250,7 @@ class MetaculusClient:
         """
         params = {"forecast_by_me": True, "limit": 500}
         if tournament_id:
-            params["project"] = tournament_id
+            params["tournaments"] = tournament_id
 
         response = await self.client.get("/questions/", params=params)
         response.raise_for_status()
