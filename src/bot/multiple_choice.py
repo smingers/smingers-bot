@@ -300,11 +300,42 @@ class MultipleChoiceForecaster:
         Extract probability distribution from LLM response.
 
         Looks for patterns like:
+        - JSON block with "distribution" key (most reliable)
         - "Option A: 30%"
         - "Probabilities: [0.3, 0.5, 0.2]"
         - "A: 30%, B: 50%, C: 20%"
+
+        IMPORTANT: We prioritize finding distributions in the FINAL section of the
+        response, as LLM outputs often mention base rates earlier that we don't want.
         """
+        import json
         distribution = {}
+
+        # Pattern 0: JSON block (most reliable - new foolproof format)
+        json_match = re.search(
+            r"```json\s*(\{[^`]+\})\s*```",
+            text,
+            re.DOTALL
+        )
+        if json_match:
+            try:
+                json_data = json.loads(json_match.group(1))
+                if "distribution" in json_data:
+                    dist = json_data["distribution"]
+                    # Map JSON keys to option labels (fuzzy match if needed)
+                    for label in option_labels:
+                        if label in dist:
+                            distribution[label] = float(dist[label])
+                        else:
+                            # Try case-insensitive match
+                            for key, val in dist.items():
+                                if key.lower() == label.lower():
+                                    distribution[label] = float(val)
+                                    break
+                    if len(distribution) == len(option_labels):
+                        return self._normalize_distribution(distribution)
+            except (json.JSONDecodeError, KeyError, ValueError) as e:
+                logger.debug(f"JSON parsing failed: {e}")
 
         # Pattern 1: "Probabilities: [0.3, 0.5, 0.2]"
         prob_list_match = re.search(
@@ -322,51 +353,73 @@ class MultipleChoiceForecaster:
             except ValueError:
                 pass
 
-        # Pattern 2: Look for each option label followed by percentage or probability
-        for label in option_labels:
-            # Escape special regex characters in label
-            escaped_label = re.escape(label)
-
-            # Try "Label: X%" pattern
-            match = re.search(
-                rf"{escaped_label}\s*[:=]\s*([0-9]+(?:\.[0-9]+)?)\s*%",
-                text,
-                re.IGNORECASE
-            )
-            if match:
-                distribution[label] = float(match.group(1)) / 100
-                continue
-
-            # Try "Label: 0.X" pattern
-            match = re.search(
-                rf"{escaped_label}\s*[:=]\s*([0-9]*\.?[0-9]+)",
-                text,
-                re.IGNORECASE
-            )
-            if match:
-                val = float(match.group(1))
-                # If value > 1, assume it's a percentage
-                if val > 1:
-                    val = val / 100
-                distribution[label] = val
-
-        # Pattern 3: Look for "Option X: Y%" in Final Distribution section
-        dist_section = re.search(
-            r"(?:Final\s+)?Distribution:?\s*\n((?:.*?[:=]\s*[0-9.]+%?\s*\n?)+)",
+        # Pattern 2: Look for "Distribution:" section FIRST (most reliable)
+        # This finds the LAST "Distribution:" section to get final values
+        dist_sections = re.findall(
+            r"\*{0,2}Distribution:?\*{0,2}\s*\n((?:[^\n]*[:=]\s*[0-9.]+%?\s*\n?)+)",
             text,
-            re.IGNORECASE | re.DOTALL
+            re.IGNORECASE
         )
-        if dist_section and not distribution:
-            section_text = dist_section.group(1)
+        if dist_sections:
+            # Use the LAST distribution section (final answer)
+            section_text = dist_sections[-1]
             for label in option_labels:
                 escaped_label = re.escape(label)
-                match = re.search(
-                    rf"{escaped_label}\s*[:=]\s*([0-9]+(?:\.[0-9]+)?)\s*%?",
-                    section_text,
+                # Use word boundary for short labels (like "0", "1") to avoid false matches
+                # Also capture the % sign to know if value is percentage
+                if len(label) <= 2:
+                    pattern = rf"(?:^|\s|-)({escaped_label})\s*[:=]\s*([0-9]+(?:\.[0-9]+)?)\s*(%?)"
+                else:
+                    pattern = rf"({escaped_label})\s*[:=]\s*([0-9]+(?:\.[0-9]+)?)\s*(%?)"
+
+                match = re.search(pattern, section_text, re.IGNORECASE | re.MULTILINE)
+                if match:
+                    # Value is always in group 2, % sign in group 3
+                    val = float(match.group(2))
+                    has_percent = match.group(3) == '%'
+                    # If has % or value > 1, treat as percentage
+                    if has_percent or val > 1:
+                        val = val / 100
+                    distribution[label] = val
+
+            if len(distribution) == len(option_labels):
+                return self._normalize_distribution(distribution)
+
+        # Pattern 3: Fallback - find LAST occurrence of each label with percentage
+        # This handles cases where there's no explicit "Distribution:" header
+        if not distribution:
+            for label in option_labels:
+                escaped_label = re.escape(label)
+
+                # For short labels, require start of line or whitespace before
+                # Capture value and % sign
+                if len(label) <= 2:
+                    pattern = rf"(?:^|\n|\s|-)({escaped_label})\s*[:=]\s*([0-9]+(?:\.[0-9]+)?)\s*(%?)"
+                else:
+                    pattern = rf"({escaped_label})\s*[:=]\s*([0-9]+(?:\.[0-9]+)?)\s*(%?)"
+
+                # Find ALL matches and take the LAST one
+                matches = re.findall(pattern, text, re.IGNORECASE | re.MULTILINE)
+                if matches:
+                    # Value is second element, % sign is third
+                    val = float(matches[-1][1])
+                    has_percent = matches[-1][2] == '%'
+                    if has_percent or val > 1:
+                        val = val / 100
+                    distribution[label] = val
+
+        # Pattern 4: Try decimal format (0.X) as last resort
+        if not distribution:
+            for label in option_labels:
+                escaped_label = re.escape(label)
+                matches = re.findall(
+                    rf"{escaped_label}\s*[:=]\s*([0-9]*\.[0-9]+)",
+                    text,
                     re.IGNORECASE
                 )
-                if match:
-                    val = float(match.group(1))
+                if matches:
+                    val = float(matches[-1])
+                    # If value > 1, assume it's a percentage
                     if val > 1:
                         val = val / 100
                     distribution[label] = val

@@ -1,0 +1,26 @@
+{
+  "paraphrase": {
+    "passed": true,
+    "response": "How many dissenting votes will there be at the January 28, 2026 Federal Open Market Committee meeting?"
+  },
+  "base_rate_grounded": {
+    "passed": true,
+    "response": "Base distribution: {'0': 0.7000000000000001, '1': 0.20000000000000004, '2': 0.08000000000000002, '3+': 0.020000000000000004}, Final: {'0': 0.6281824611032533, '1': 0.31577086280056577, '2': 0.042538896746817545, '3': 0.013507779349363508}"
+  },
+  "consistency_test": {
+    "passed": true,
+    "response": "Automated check passed"
+  },
+  "evidence_audit": {
+    "passed": true,
+    "response": "Evidence recorded in artifacts"
+  },
+  "blind_spots": {
+    "passed": true,
+    "response": "To be reviewed manually"
+  },
+  "status_quo_bias": {
+    "passed": true,
+    "response": "To be reviewed manually"
+  }
+}

@@ -95,7 +95,10 @@ Given your role as {agent_role}, provide your complete reasoning:
 
 Provide your full analysis following ALL steps above, then conclude with your adjusted distribution.
 
-**IMPORTANT:** Your probabilities must sum to exactly 100%. Format as shown:
+**CRITICAL FORMATTING REQUIREMENT:**
+- Your probabilities must sum to exactly 100%
+- You MUST use the EXACT option labels as written above (copy-paste them exactly)
+- Do NOT rephrase, reorder, or summarize the option labels
 
 **Evidence Summary:**
 - Strong evidence favoring: [which options]
@@ -103,13 +106,23 @@ Provide your full analysis following ALL steps above, then conclude with your ad
 - Net direction: [which option(s) gained probability]
 
 **Distribution:**
-[Option 1 name]: [X]%
-[Option 2 name]: [X]%
-[Option 3 name]: [X]%
-... (for all {num_options} options)
+{options}
+
+(Replace each option with the exact label followed by ": X%")
 
 **Most Likely Outcome:** [Option name] ([X]%)
 
 **Confidence in Adjustment:** [1-10]
 
-All probabilities must sum to exactly 100%.
+After your distribution, also provide this JSON block for automated parsing:
+
+```json
+{{
+  "distribution": {{
+    "[exact option 1 label]": 0.XX,
+    "[exact option 2 label]": 0.XX
+  }}
+}}
+```
+
+All probabilities must sum to exactly 1.0 in the JSON block.

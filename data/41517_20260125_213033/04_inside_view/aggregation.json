@@ -1,0 +1,72 @@
+{
+  "individual_distributions": [
+    {
+      "agent": "analyst",
+      "distribution": {
+        "0": 0.13953488372093023,
+        "1": 0.7674418604651162,
+        "2": 0.08527131782945736,
+        "3+": 0.007751937984496124
+      },
+      "weight": 1.0
+    },
+    {
+      "agent": "historian",
+      "distribution": {
+        "0": 0.74,
+        "1": 0.2,
+        "2": 0.05,
+        "3+": 0.01
+      },
+      "weight": 1.0
+    },
+    {
+      "agent": "contrarian",
+      "distribution": {
+        "0": 0.74,
+        "1": 0.2,
+        "2": 0.05,
+        "3+": 0.01
+      },
+      "weight": 0.8
+    },
+    {
+      "agent": "quantitative",
+      "distribution": {
+        "0": 0.74,
+        "1": 0.2,
+        "2": 0.05,
+        "3+": 0.01
+      },
+      "weight": 1.0
+    },
+    {
+      "agent": "synthesizer",
+      "distribution": {
+        "0": 0.74,
+        "1": 0.2,
+        "2": 0.05,
+        "3+": 0.01
+      },
+      "weight": 1.2
+    },
+    {
+      "agent": "panshul42",
+      "distribution": {
+        "0": 0.74,
+        "1": 0.2,
+        "2": 0.05,
+        "3+": 0.01
+      },
+      "weight": 1.0
+    }
+  ],
+  "method": "weighted_average",
+  "num_agents": 6,
+  "final_distribution": {
+    "0": 0.6396804103460073,
+    "1": 0.29446221190973076,
+    "2": 0.05585741519778884,
+    "3": 0.009999962546473045
+  }
+}

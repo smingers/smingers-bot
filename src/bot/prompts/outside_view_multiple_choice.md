@@ -69,13 +69,15 @@ Rate your confidence in this base distribution (1-10):
 
 Provide your analysis following ALL the steps above, then conclude with your distribution.
 
-**IMPORTANT:** Your probabilities must sum to exactly 100%. Format as shown:
+**CRITICAL FORMATTING REQUIREMENT:**
+- Your probabilities must sum to exactly 100%
+- You MUST use the EXACT option labels as written above (copy-paste them exactly)
+- Do NOT rephrase, reorder, or summarize the option labels
 
 **Distribution:**
-[Option 1 name]: [X]%
-[Option 2 name]: [X]%
-[Option 3 name]: [X]%
-... (for all options)
+{options}
+
+(Replace each option with the exact label followed by ": X%")
 
 **Most Likely Outcome:** [Option name] ([X]%)
 
@@ -86,4 +88,17 @@ Provide your analysis following ALL the steps above, then conclude with your dis
 - [Uncertainty 2]
 - [Uncertainty 3]
 
-Remember: This is the OUTSIDE VIEW only. Do not adjust for current events or recent news. That adjustment happens in the next stage. All probabilities must sum to 100%.
+After your distribution, also provide this JSON block for automated parsing:
+
+```json
+{{
+  "distribution": {{
+    "[exact option 1 label]": 0.XX,
+    "[exact option 2 label]": 0.XX
+  }}
+}}
+```
+
+All probabilities must sum to exactly 1.0 in the JSON block.
+
+Remember: This is the OUTSIDE VIEW only. Do not adjust for current events or recent news. That adjustment happens in the next stage.
