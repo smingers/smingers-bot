@@ -299,19 +299,18 @@ class MultipleChoiceForecaster:
         """
         Extract probability distribution from LLM response.
 
-        Looks for patterns like:
-        - JSON block with "distribution" key (most reliable)
-        - "Option A: 30%"
-        - "Probabilities: [0.3, 0.5, 0.2]"
-        - "A: 30%, B: 50%, C: 20%"
+        Uses a strict approach inspired by panshul42/Metaculus template:
+        - Try multiple option format variations
+        - Require exactly ONE match per option (fail if ambiguous)
+        - Validate sum is close to 1.0
+        - Fail loudly rather than guess wrong
 
-        IMPORTANT: We prioritize finding distributions in the FINAL section of the
-        response, as LLM outputs often mention base rates earlier that we don't want.
+        Falls back to uniform distribution only if all extraction methods fail.
         """
         import json
-        distribution = {}
+        import string
 
-        # Pattern 0: JSON block (most reliable - new foolproof format)
+        # Method 1: JSON block (most reliable - foolproof format)
         json_match = re.search(
             r"```json\s*(\{[^`]+\})\s*```",
             text,
@@ -322,112 +321,153 @@ class MultipleChoiceForecaster:
                 json_data = json.loads(json_match.group(1))
                 if "distribution" in json_data:
                     dist = json_data["distribution"]
-                    # Map JSON keys to option labels (fuzzy match if needed)
+                    distribution = {}
                     for label in option_labels:
                         if label in dist:
                             distribution[label] = float(dist[label])
                         else:
                             # Try case-insensitive match
                             for key, val in dist.items():
-                                if key.lower() == label.lower():
+                                if key.lower().strip() == label.lower().strip():
                                     distribution[label] = float(val)
                                     break
                     if len(distribution) == len(option_labels):
-                        return self._normalize_distribution(distribution)
+                        validated = self._validate_and_normalize(distribution)
+                        if validated:
+                            logger.info("Extracted distribution via JSON block")
+                            return validated
             except (json.JSONDecodeError, KeyError, ValueError) as e:
                 logger.debug(f"JSON parsing failed: {e}")
 
-        # Pattern 1: "Probabilities: [0.3, 0.5, 0.2]"
-        prob_list_match = re.search(
-            r"Probabilities:\s*\[([0-9.,\s]+)\]",
-            text,
-            re.IGNORECASE
-        )
-        if prob_list_match:
-            try:
-                probs = [float(p.strip()) for p in prob_list_match.group(1).split(",")]
-                if len(probs) == len(option_labels):
-                    for label, prob in zip(option_labels, probs):
-                        distribution[label] = prob
-                    return self._normalize_distribution(distribution)
-            except ValueError:
-                pass
+        # Method 2: Strict option matching (panshul42 approach)
+        # Generate multiple format variations to try
+        alphabet = list(string.ascii_uppercase[:len(option_labels)])
+        format_variations = [
+            option_labels,  # Original labels
+            [label.strip() for label in option_labels],  # Cleaned
+            [label.strip().replace(" ", "_") for label in option_labels],  # Underscored
+            [f"Option {label}" for label in option_labels],
+            [f"Option {i+1}" for i in range(len(option_labels))],
+            [f"Option {letter}" for letter in alphabet],
+            alphabet,  # Just letters A, B, C...
+        ]
 
-        # Pattern 2: Look for "Distribution:" section FIRST (most reliable)
-        # This finds the LAST "Distribution:" section to get final values
+        for format_list in format_variations:
+            try:
+                distribution = self._extract_with_strict_matching(text, option_labels, format_list)
+                if distribution:
+                    validated = self._validate_and_normalize(distribution)
+                    if validated:
+                        logger.info(f"Extracted distribution via strict matching")
+                        return validated
+            except ValueError as e:
+                logger.debug(f"Strict matching failed for format: {e}")
+                continue
+
+        # Method 3: Last Distribution section (fallback)
         dist_sections = re.findall(
             r"\*{0,2}Distribution:?\*{0,2}\s*\n((?:[^\n]*[:=]\s*[0-9.]+%?\s*\n?)+)",
             text,
             re.IGNORECASE
         )
         if dist_sections:
-            # Use the LAST distribution section (final answer)
-            section_text = dist_sections[-1]
-            for label in option_labels:
-                escaped_label = re.escape(label)
-                # Use word boundary for short labels (like "0", "1") to avoid false matches
-                # Also capture the % sign to know if value is percentage
-                if len(label) <= 2:
-                    pattern = rf"(?:^|\s|-)({escaped_label})\s*[:=]\s*([0-9]+(?:\.[0-9]+)?)\s*(%?)"
-                else:
-                    pattern = rf"({escaped_label})\s*[:=]\s*([0-9]+(?:\.[0-9]+)?)\s*(%?)"
+            section_text = dist_sections[-1]  # Use LAST section
+            distribution = self._extract_from_section(section_text, option_labels)
+            if distribution and len(distribution) == len(option_labels):
+                validated = self._validate_and_normalize(distribution)
+                if validated:
+                    logger.info("Extracted distribution via Distribution section")
+                    return validated
 
-                match = re.search(pattern, section_text, re.IGNORECASE | re.MULTILINE)
+        # All methods failed - return uniform with warning
+        logger.warning(
+            f"Could not extract distribution from response. "
+            f"Returning uniform distribution for {len(option_labels)} options."
+        )
+        return {label: 1.0 / len(option_labels) for label in option_labels}
+
+    def _extract_with_strict_matching(
+        self,
+        text: str,
+        original_labels: list[str],
+        format_labels: list[str],
+    ) -> dict[str, float] | None:
+        """
+        Extract distribution requiring exactly ONE match per option.
+        Raises ValueError if ambiguous (0 or 2+ matches for any option).
+        """
+        distribution = {}
+
+        for orig_label, format_label in zip(original_labels, format_labels):
+            escaped = re.escape(format_label.lower().strip())
+            # Pattern: label followed by : or | then a number
+            pattern = rf"^\s*\W*{escaped}(?![\w.,-])\s*\W*[|:]\s*(-?\d[\d,]*(?:\.\d+)?)"
+
+            matches = []
+            for line in text.split("\n"):
+                cleaned_line = line.strip().lower()
+                match = re.search(pattern, cleaned_line, re.IGNORECASE)
                 if match:
-                    # Value is always in group 2, % sign in group 3
-                    val = float(match.group(2))
-                    has_percent = match.group(3) == '%'
-                    # If has % or value > 1, treat as percentage
-                    if has_percent or val > 1:
-                        val = val / 100
-                    distribution[label] = val
+                    val_str = match.group(1).replace(",", "")
+                    matches.append(float(val_str))
 
-            if len(distribution) == len(option_labels):
-                return self._normalize_distribution(distribution)
+            if len(matches) == 0:
+                return None  # This format doesn't work
+            if len(matches) > 1:
+                raise ValueError(f"Ambiguous: {len(matches)} matches for '{format_label}'")
 
-        # Pattern 3: Fallback - find LAST occurrence of each label with percentage
-        # This handles cases where there's no explicit "Distribution:" header
+            distribution[orig_label] = matches[0]
+
+        return distribution
+
+    def _extract_from_section(
+        self,
+        section_text: str,
+        option_labels: list[str],
+    ) -> dict[str, float]:
+        """Extract from a Distribution section, taking care with short labels."""
+        distribution = {}
+
+        for label in option_labels:
+            escaped_label = re.escape(label)
+
+            # For short labels (0, 1, 2, etc), require line start or whitespace
+            if len(label) <= 2:
+                pattern = rf"(?:^|\s|-)({escaped_label})\s*[:=]\s*([0-9]+(?:\.[0-9]+)?)\s*(%?)"
+            else:
+                pattern = rf"({escaped_label})\s*[:=]\s*([0-9]+(?:\.[0-9]+)?)\s*(%?)"
+
+            match = re.search(pattern, section_text, re.IGNORECASE | re.MULTILINE)
+            if match:
+                val = float(match.group(2))
+                has_percent = match.group(3) == '%'
+                if has_percent or val > 1:
+                    val = val / 100
+                distribution[label] = val
+
+        return distribution
+
+    def _validate_and_normalize(
+        self,
+        distribution: dict[str, float],
+    ) -> dict[str, float] | None:
+        """
+        Validate distribution sums to ~1.0 and normalize.
+        Returns None if validation fails (sum too far from 1.0).
+        """
         if not distribution:
-            for label in option_labels:
-                escaped_label = re.escape(label)
+            return None
 
-                # For short labels, require start of line or whitespace before
-                # Capture value and % sign
-                if len(label) <= 2:
-                    pattern = rf"(?:^|\n|\s|-)({escaped_label})\s*[:=]\s*([0-9]+(?:\.[0-9]+)?)\s*(%?)"
-                else:
-                    pattern = rf"({escaped_label})\s*[:=]\s*([0-9]+(?:\.[0-9]+)?)\s*(%?)"
+        # Convert percentages if needed
+        total = sum(distribution.values())
+        if total > 1.5:  # Likely percentages
+            distribution = {k: v / 100 for k, v in distribution.items()}
+            total = sum(distribution.values())
 
-                # Find ALL matches and take the LAST one
-                matches = re.findall(pattern, text, re.IGNORECASE | re.MULTILINE)
-                if matches:
-                    # Value is second element, % sign is third
-                    val = float(matches[-1][1])
-                    has_percent = matches[-1][2] == '%'
-                    if has_percent or val > 1:
-                        val = val / 100
-                    distribution[label] = val
-
-        # Pattern 4: Try decimal format (0.X) as last resort
-        if not distribution:
-            for label in option_labels:
-                escaped_label = re.escape(label)
-                matches = re.findall(
-                    rf"{escaped_label}\s*[:=]\s*([0-9]*\.[0-9]+)",
-                    text,
-                    re.IGNORECASE
-                )
-                if matches:
-                    val = float(matches[-1])
-                    # If value > 1, assume it's a percentage
-                    if val > 1:
-                        val = val / 100
-                    distribution[label] = val
-
-        if not distribution:
-            logger.warning("Could not extract distribution from response")
-            # Return uniform distribution
-            return {label: 1.0 / len(option_labels) for label in option_labels}
+        # Validate sum is reasonable (0.95 to 1.05)
+        if not (0.95 <= total <= 1.05):
+            logger.warning(f"Distribution sum {total:.3f} too far from 1.0, may be incorrect")
+            # Still try to normalize, but log warning
 
         return self._normalize_distribution(distribution)
 
