@@ -1,0 +1,12 @@
+{
+  "prediction": 0.085,
+  "weight": 0.8,
+  "evidence_weights": {
+    "strong": [
+      "Strong evidence pointing DOWN: None",
+      "Net direction: NEUTRAL"
+    ],
+    "moderate": [],
+    "weak": []
+  }
+}
