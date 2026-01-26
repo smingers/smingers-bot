@@ -37,12 +37,12 @@ models:
 # =============================================================================
 # 5-AGENT ENSEMBLE CONFIGURATION (Panshul42 Structure)
 # =============================================================================
-# The ensemble uses 5 forecasting agents with fixed roles:
+# The ensemble uses 5 forecasting agents with equal weights:
 #   - forecaster_1: Claude (weight 1.0)
 #   - forecaster_2: Claude (weight 1.0)
-#   - forecaster_3: GPT-4o-mini (weight 1.0)
-#   - forecaster_4: o3 (weight 2.0) - higher weight for reasoning model
-#   - forecaster_5: o3 (weight 2.0) - higher weight for reasoning model
+#   - forecaster_3: o3-mini-high (weight 1.0)
+#   - forecaster_4: o3 (weight 1.0)
+#   - forecaster_5: o3 (weight 1.0)
 #
 # Cross-pollination structure (from Panshul42):
 #   - Agent 1 receives Agent 1's step 1 output (Outside view)
@@ -68,13 +68,13 @@ ensemble:
 
     - name: "forecaster_4"
       model: "openrouter/anthropic/claude-3.5-haiku"
-      weight: 2.0
+      weight: 1.0
 
     - name: "forecaster_5"
       model: "openrouter/anthropic/claude-3.5-haiku"
-      weight: 2.0
+      weight: 1.0
 
-  # Agents for production (Panshul42's winning mix)
+  # Agents for production
   production:
     - name: "forecaster_1"
       model: "openrouter/anthropic/claude-sonnet-4.5"
@@ -90,11 +90,11 @@ ensemble:
 
     - name: "forecaster_4"
       model: "openrouter/openai/o3"
-      weight: 2.0
+      weight: 1.0
 
     - name: "forecaster_5"
       model: "openrouter/openai/o3"
-      weight: 2.0
+      weight: 1.0
 
   aggregation: "weighted_average"
 

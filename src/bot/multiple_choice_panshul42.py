@@ -399,13 +399,13 @@ class MultipleChoiceForecaster:
             agents = self.config.get("ensemble", {}).get("agents", [])
 
         if not agents:
-            # Default: Panshul42's winning configuration
+            # Default configuration with equal weights
             agents = [
-                {"name": "forecaster_1", "model": "openrouter/anthropic/claude-sonnet-4-20250514", "weight": 1.0},
-                {"name": "forecaster_2", "model": "openrouter/anthropic/claude-sonnet-4-20250514", "weight": 1.0},
-                {"name": "forecaster_3", "model": "openrouter/openai/gpt-4o-mini", "weight": 1.0},
-                {"name": "forecaster_4", "model": "openrouter/openai/o3", "weight": 2.0},
-                {"name": "forecaster_5", "model": "openrouter/openai/o3", "weight": 2.0},
+                {"name": "forecaster_1", "model": "openrouter/anthropic/claude-sonnet-4.5", "weight": 1.0},
+                {"name": "forecaster_2", "model": "openrouter/anthropic/claude-sonnet-4.5", "weight": 1.0},
+                {"name": "forecaster_3", "model": "openrouter/openai/o3-mini-high", "weight": 1.0},
+                {"name": "forecaster_4", "model": "openrouter/openai/o3", "weight": 1.0},
+                {"name": "forecaster_5", "model": "openrouter/openai/o3", "weight": 1.0},
             ]
 
         return agents[:5]
