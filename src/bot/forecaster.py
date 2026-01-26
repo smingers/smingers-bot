@@ -243,7 +243,7 @@ class Forecaster:
                     "end": end_time.isoformat(),
                     "duration_seconds": (end_time - start_time).total_seconds(),
                 },
-                research_reuse=reuse_metadata,
+                research_reuse=None,
             )
 
             # Save to database
