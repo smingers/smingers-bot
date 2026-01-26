@@ -68,7 +68,7 @@ jobs:
       # TEST MODE: Single question forecast
       # ============================================================
       - name: Forecast single test question
-        if: ${{ github.event.inputs.test_question_id != '' }}
+        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.test_question_id != '' }}
         run: |
           poetry run python main.py \
             --question ${{ github.event.inputs.test_question_id }} \
@@ -84,7 +84,7 @@ jobs:
       # ============================================================
 
       - name: Forecast Seasonal AIB
-        if: ${{ github.event.inputs.test_question_id == '' }}
+        if: ${{ github.event_name == 'schedule' || github.event.inputs.test_question_id == '' }}
         id: forecast_aib
         run: |
           poetry run python run_bot.py \
