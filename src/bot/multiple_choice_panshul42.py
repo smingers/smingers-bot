@@ -302,13 +302,14 @@ class MultipleChoiceForecaster:
         write("\n=== Step 6: Extracting and aggregating probabilities ===")
 
         all_probs = []
+        all_weights = []
         agent_results = []
+        valid_count = 0
 
         for i, (agent, output) in enumerate(zip(agents, step2_outputs)):
             if isinstance(output, Exception):
                 write(f"\nForecaster_{i + 1} step 2 ERROR: {output}")
-                # Use uniform distribution as fallback
-                probs = [1.0 / num_options] * num_options
+                probs = None
                 error = str(output)
             else:
                 write(f"\nForecaster_{i + 1} step 2 output:\n{output[:300]}...")
@@ -317,22 +318,36 @@ class MultipleChoiceForecaster:
                     probs = normalize_probabilities(probs)
                     write(f"Forecaster_{i + 1} probabilities: {probs}")
                     error = None
+                    valid_count += 1
                 except Exception as e:
                     write(f"Forecaster_{i + 1} extraction error: {e}")
-                    # Use uniform distribution as fallback
-                    probs = [1.0 / num_options] * num_options
+                    probs = None
                     error = str(e)
 
-            all_probs.append(probs)
+            # Only include valid probabilities in aggregation
+            if probs is not None:
+                all_probs.append(probs)
+                all_weights.append(agent["weight"])
+
             agent_results.append(AgentResult(
                 agent_id=f"forecaster_{i + 1}",
                 model=agent["model"],
                 weight=agent["weight"],
                 step1_output=step1_outputs[i] if not isinstance(step1_outputs[i], Exception) else "",
                 step2_output=output if not isinstance(output, Exception) else "",
-                probabilities=probs,
+                probabilities=probs if probs is not None else [],
                 error=error,
             ))
+
+        # Fail loudly if no valid extractions
+        if valid_count == 0:
+            error_msg = (
+                f"All {len(agents)} agents failed to extract valid probabilities. "
+                f"Errors: {[r.error for r in agent_results]}"
+            )
+            logger.error(error_msg)
+            write(f"FATAL ERROR: {error_msg}")
+            raise RuntimeError(error_msg)
 
         # Save step 2 artifacts
         if self.artifact_store:
@@ -344,9 +359,11 @@ class MultipleChoiceForecaster:
                     "error": result.error,
                 })
 
-        # Compute weighted average across agents
+        # Compute weighted average across valid agents only
         probs_matrix = np.array(all_probs)
-        weights = np.array([agent["weight"] for agent in agents])
+        weights = np.array(all_weights)
+
+        write(f"\nAggregating {valid_count}/{len(agents)} valid agent predictions")
 
         # Weighted average
         weighted_probs = np.average(probs_matrix, axis=0, weights=weights)

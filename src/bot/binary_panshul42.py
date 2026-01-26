@@ -335,15 +335,20 @@ class BinaryForecaster:
         weights = [agent["weight"] for agent in agents]
         valid_probs = [(p, w) for p, w in zip(probabilities, weights) if p is not None]
 
-        if valid_probs:
-            weighted_sum = sum(p * w for p, w in valid_probs)
-            weight_sum = sum(w for _, w in valid_probs)
-            final_prob_pct = weighted_sum / weight_sum
-            # Normalize to [0.001, 0.999]
-            final_prob = max(0.001, min(0.999, final_prob_pct / 100))
-        else:
-            write("ERROR: No valid probabilities extracted!")
-            final_prob = 0.5  # Fallback
+        if not valid_probs:
+            error_msg = (
+                f"All {len(agents)} agents failed to extract valid probabilities. "
+                f"Probabilities: {probabilities}, Errors: {[r.error for r in agent_results]}"
+            )
+            logger.error(error_msg)
+            write(f"FATAL ERROR: {error_msg}")
+            raise RuntimeError(error_msg)
+
+        weighted_sum = sum(p * w for p, w in valid_probs)
+        weight_sum = sum(w for _, w in valid_probs)
+        final_prob_pct = weighted_sum / weight_sum
+        # Normalize to [0.001, 0.999]
+        final_prob = max(0.001, min(0.999, final_prob_pct / 100))
 
         write(f"\nProbabilities: {probabilities}")
         write(f"Weights: {weights}")
