@@ -1,0 +1,19 @@
+{
+  "prediction": 0.006,
+  "weight": 1.0,
+  "evidence_weights": {
+    "strong": [
+      "**Human adaptive capacity and declining disaster mortality** (90% reduction since 1920): Multiple hi",
+      "**No precedent for rapid extinction of widespread, large-bodied mammalian species**: Homo sapiens' g"
+    ],
+    "moderate": [
+      "**Nuclear risk assessment**: While nuclear winter models are well-established, the probability of fu",
+      "**Climate change as risk multiplier rather than direct extinction threat**: Expert consensus (synthe",
+      "**AI risk estimates (10-20% civilizational collapse)**: Single synthesis claim without clear methodo"
+    ],
+    "weak": [
+      "**Space colonization as backup**: Hawking's advocacy is noted, but no concrete timeline or probabili",
+      "**Engineered pandemic potential**: Logical threat but no specific probability estimates for extincti"
+    ]
+  }
+}

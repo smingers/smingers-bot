@@ -1,0 +1,16 @@
+{
+  "prediction": 0.22399999999999998,
+  "weight": 1.0,
+  "evidence_weights": {
+    "strong": [
+      "[\"Hamas Will Inflict Pain\": IDF Fears Huge Casualties If It Follows Netanyahu's 'Invade Gaza' Order]",
+      "[\"Yes, We Were Hit\": Five Israeli Bases Bombarded By Iran Missiles | Big Admission By Israel]: This "
+    ],
+    "moderate": [
+      "[Netanyahu Set To Back Out Of Truce? Sensational Reveal By Top Strategist | Gaza Crisis]: This artic"
+    ],
+    "weak": [
+      "[\"Drone Blast, Power Outage, 27 Injured\": Houthi Twin Drone Strikes Create Chaos In Eilat | Watch]: "
+    ]
+  }
+}

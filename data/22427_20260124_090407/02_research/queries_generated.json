@@ -1,0 +1,14 @@
+[
+  {
+    "query": "\"new AI labs founding rate trends\"",
+    "source": "llm_generated"
+  },
+  {
+    "query": "\"leading AI labs within 2 years founding\"",
+    "source": "llm_generated"
+  },
+  {
+    "query": "\"expert opinions on AI lab growth predictions\"",
+    "source": "llm_generated"
+  }
+]

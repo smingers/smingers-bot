@@ -281,7 +281,7 @@ class BinaryForecaster:
             
             # Fill in the Panshul42 template
             prompt = template.format(
-                title=question_title,
+                question_title=question_title,
                 resolution_criteria=resolution_criteria[:1000],
                 fine_print="",  # fine_print not available in current function signature
                 today=datetime.now().strftime("%Y-%m-%d"),
@@ -299,6 +299,7 @@ class BinaryForecaster:
                 reference_classes=", ".join(reference_classes) if reference_classes else "N/A",
                 base_rate_confidence=base_rate_confidence,
                 research_summary=research_summary[:5000],  # Truncate if too long
+                today=datetime.now().strftime("%Y-%m-%d"),
             )
 
         # Call LLM

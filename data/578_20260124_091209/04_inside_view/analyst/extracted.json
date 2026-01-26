@@ -1,0 +1,20 @@
+{
+  "prediction": 0.017,
+  "weight": 1.0,
+  "evidence_weights": {
+    "strong": [
+      "**Accelerated extinction rates under human influence**: Multiple sources confirm current extinction ",
+      "**Climate-driven mass extinction projections**: MIT mathematical models and UConn meta-analysis inde",
+      "**Ocean carbon threshold**: MIT research identifies specific carbon threshold that could trigger mas"
+    ],
+    "moderate": [
+      "**One-third species extinction by 2100**: Recent 2024 studies suggest 30% of current species could b",
+      "**Public perception of existential risk**: 25% of Americans believe climate change could cause human",
+      "**Genus-level extinctions accelerating**: Stanford research shows genus extinctions occurring 18,000"
+    ],
+    "weak": [
+      "**General background extinction rate data**: Historical baseline rates, while informative, don't dir",
+      "**Species-specific extinction data**: While concerning for biodiversity, doesn't directly translate "
+    ]
+  }
+}

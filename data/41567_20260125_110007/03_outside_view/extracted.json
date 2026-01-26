@@ -1,0 +1,9 @@
+{
+  "base_rate": 0.32,
+  "reference_classes": [
+    "Attacks on Israel causing 5+ casualties**",
+    "Nationwide shelter orders in Israel**",
+    "Attacks on Israel before March 1, 2026**"
+  ],
+  "confidence": 5
+}

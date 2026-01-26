@@ -1,0 +1,11 @@
+{
+  "base_rate": 0.18,
+  "reference_classes": [
+    "US military attacks against other countries**",
+    "US military attacks against Middle Eastern countries**",
+    "US military attacks against countries with nuclear capabilities**",
+    "(US military attacks against other countries): 40% weight",
+    "(US military attacks against Middle Eastern countries): 50% weight"
+  ],
+  "confidence": 8
+}

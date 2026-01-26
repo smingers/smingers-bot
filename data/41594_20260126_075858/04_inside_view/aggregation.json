@@ -1,0 +1,26 @@
+{
+  "individual_predictions": [
+    {
+      "agent": "analyst",
+      "prediction": 0.13,
+      "weight": 1.0
+    },
+    {
+      "agent": "historian",
+      "prediction": 0.07,
+      "weight": 1.0
+    },
+    {
+      "agent": "contrarian",
+      "prediction": 0.1,
+      "weight": 0.8
+    }
+  ],
+  "method": "weighted_average",
+  "mean": 0.1,
+  "median": 0.1,
+  "std_dev": 0.03,
+  "min": 0.07,
+  "max": 0.13,
+  "final": 0.10000000000000002
+}

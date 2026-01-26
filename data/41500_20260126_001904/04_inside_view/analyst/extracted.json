@@ -1,0 +1,17 @@
+{
+  "prediction": 0.38,
+  "weight": 1.0,
+  "evidence_weights": {
+    "strong": [
+      "The lack of any Windows-related announcements or updates in January 2026, despite multiple product u"
+    ],
+    "moderate": [
+      "The initial October 2025 communications from OpenAI stating that Windows support would arrive \"in th",
+      "OpenAI's engineering lead indicating that post-launch updates would focus on macOS features first su"
+    ],
+    "weak": [
+      "The absence of leaks, beta programs, or developer previews for Windows, as well as the continued foc",
+      "The \"early stages\" comment from OpenAI's CEO at launch implies longer development cycles, which coul"
+    ]
+  }
+}

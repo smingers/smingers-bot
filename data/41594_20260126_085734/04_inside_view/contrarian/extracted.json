@@ -1,0 +1,22 @@
+{
+  "prediction": 0.11,
+  "weight": 0.8,
+  "evidence_weights": {
+    "strong": [
+      "**USS Abraham Lincoln carrier deployment to Iran region:** Multiple sources confirm actual military ",
+      "**F-15E Strike Eagles deployed to Middle East:** Confirmed by US Central Command - these are offensi",
+      "**UK Typhoon fighters to Qatar:** Allied military positioning suggests coordinated preparation",
+      "**Iranian Revolutionary Guard \"finger on the trigger\" statement:** Official military posture declara"
+    ],
+    "moderate": [
+      "**Trump's specific threats about military action:** He has history of threats without follow-through",
+      "**500+ deaths in Iranian protests:** Creates domestic Iranian instability that could trigger unpredi",
+      "**Timeline pressure (before April 2026):** Only 2 months away, which is very short for major militar"
+    ],
+    "weak": [
+      "**Tehran billboard:** Propaganda response, not predictive",
+      "**Internet blackout in Iran:** Domestic control measure, not military indicator",
+      "**Former Trump statements about June strikes:** Hypothetical past discussion"
+    ]
+  }
+}

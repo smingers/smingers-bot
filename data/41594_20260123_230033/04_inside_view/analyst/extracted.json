@@ -1,0 +1,18 @@
+{
+  "prediction": 0.7,
+  "weight": 1.0,
+  "evidence_weights": {
+    "strong": [
+      "The US has a history of military interventions against perceived threats, such as the 2003 invasion ",
+      "Iran has a track record of supporting militant groups and proxy forces that have attacked US interes"
+    ],
+    "moderate": [
+      "Tensions between the US and Iran have escalated in recent years, with the US withdrawing from the Ir",
+      "The US has deployed military assets, including an aircraft carrier group, to the Middle East in resp"
+    ],
+    "weak": [
+      "Some experts have expressed skepticism about the likelihood of a full-scale US military attack on Ir",
+      "Domestic political considerations in the US, such as the desire to avoid another costly and unpopula"
+    ]
+  }
+}

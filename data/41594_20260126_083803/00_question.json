@@ -1,0 +1,308 @@
+{
+  "id": 41594,
+  "title": "Will the United States attack Iran before April 2026?",
+  "short_title": "Will the U.S. attack Iran before April 2026?",
+  "url_title": "Will the U.S. attack Iran before April 2026?",
+  "slug": "will-the-us-attack-iran-before-april-2026",
+  "author_id": 103907,
+  "author_username": "darkives",
+  "coauthors": [],
+  "created_at": "2026-01-17T18:58:49.294817Z",
+  "published_at": "2026-01-19T22:51:59Z",
+  "edited_at": "2026-01-26T08:35:49.819031Z",
+  "curation_status": "approved",
+  "curation_status_updated_at": "2026-01-19T22:57:26.955939Z",
+  "comment_count": 2,
+  "status": "open",
+  "resolved": false,
+  "actual_close_time": null,
+  "scheduled_close_time": "2026-04-01T00:00:00Z",
+  "scheduled_resolve_time": "2026-04-01T00:00:00Z",
+  "actual_resolve_time": null,
+  "open_time": "2026-01-21T17:00:00Z",
+  "nr_forecasters": 91,
+  "html_metadata_json": null,
+  "projects": {
+    "leaderboard_tag": [
+      {
+        "id": 32925,
+        "name": "2026 Leaderboard",
+        "slug": "2026_leaderboard",
+        "type": "leaderboard_tag"
+      }
+    ],
+    "tournament": [
+      {
+        "id": 32921,
+        "type": "tournament",
+        "name": "Metaculus Cup Spring 2026",
+        "slug": "metaculus-cup-spring-2026",
+        "header_image": "https://cdn.metaculus.com/cup-cover.jpg",
+        "prize_pool": "5000.00",
+        "start_date": "2026-01-07T17:00:00Z",
+        "close_date": "2026-05-01T00:00:00Z",
+        "forecasting_end_date": "2026-05-01T00:00:00Z",
+        "html_metadata_json": {
+          "image_url": "https://cdn.metaculus.com/user_uploaded/image_8.png"
+        },
+        "is_ongoing": true,
+        "user_permission": null,
+        "order": 0,
+        "created_at": "2025-12-29T12:43:16.555925Z",
+        "edited_at": "2026-01-26T08:35:50.034811Z",
+        "score_type": "peer_tournament",
+        "default_permission": "forecaster",
+        "visibility": "normal",
+        "show_on_homepage": true,
+        "is_current_content_translated": false,
+        "bot_leaderboard_status": "exclude_and_show",
+        "description_preview": "<p>Welcome to the Metaculus Cup! Forecasting novices and veterans are invited to make predictions on new topical questions each week while c"
+      }
+    ],
+    "default_project": {
+      "id": 32921,
+      "type": "tournament",
+      "name": "Metaculus Cup Spring 2026",
+      "slug": "metaculus-cup-spring-2026",
+      "header_image": "https://cdn.metaculus.com/cup-cover.jpg",
+      "prize_pool": "5000.00",
+      "start_date": "2026-01-07T17:00:00Z",
+      "close_date": "2026-05-01T00:00:00Z",
+      "forecasting_end_date": "2026-05-01T00:00:00Z",
+      "html_metadata_json": {
+        "image_url": "https://cdn.metaculus.com/user_uploaded/image_8.png"
+      },
+      "is_ongoing": true,
+      "user_permission": null,
+      "order": 0,
+      "created_at": "2025-12-29T12:43:16.555925Z",
+      "edited_at": "2026-01-26T08:35:50.034811Z",
+      "score_type": "peer_tournament",
+      "default_permission": "forecaster",
+      "visibility": "normal",
+      "show_on_homepage": true,
+      "is_current_content_translated": false,
+      "bot_leaderboard_status": "exclude_and_show",
+      "description_preview": "<p>Welcome to the Metaculus Cup! Forecasting novices and veterans are invited to make predictions on new topical questions each week while c"
+    },
+    "category": [
+      {
+        "id": 3687,
+        "name": "Geopolitics",
+        "slug": "geopolitics",
+        "emoji": "\ud83c\udf0d",
+        "description": "Geopolitics",
+        "type": "category"
+      }
+    ]
+  },
+  "question": {
+    "id": 41340,
+    "title": "Will the United States attack Iran before April 2026?",
+    "created_at": "2026-01-17T18:58:49.295277Z",
+    "open_time": "2026-01-21T17:00:00Z",
+    "cp_reveal_time": "2026-01-23T17:00:00Z",
+    "spot_scoring_time": "2026-01-23T17:00:00Z",
+    "scheduled_resolve_time": "2026-04-01T00:00:00Z",
+    "actual_resolve_time": null,
+    "resolution_set_time": null,
+    "scheduled_close_time": "2026-04-01T00:00:00Z",
+    "actual_close_time": "2026-04-01T00:00:00Z",
+    "type": "binary",
+    "options": null,
+    "all_options_ever": null,
+    "options_history": null,
+    "group_variable": "",
+    "status": "open",
+    "possibilities": null,
+    "resolution": null,
+    "include_bots_in_aggregates": false,
+    "question_weight": 1.0,
+    "default_score_type": "peer",
+    "default_aggregation_method": "recency_weighted",
+    "label": "",
+    "unit": "",
+    "open_upper_bound": false,
+    "open_lower_bound": false,
+    "inbound_outcome_count": null,
+    "scaling": {
+      "range_min": null,
+      "range_max": null,
+      "nominal_min": null,
+      "nominal_max": null,
+      "zero_point": null,
+      "open_upper_bound": false,
+      "open_lower_bound": false,
+      "inbound_outcome_count": null,
+      "continuous_range": null
+    },
+    "group_rank": null,
+    "coherence_links": null,
+    "coherence_link_aggregations": null,
+    "short_title": "Will the U.S. attack Iran before April 2026?",
+    "post_id": 41594,
+    "aggregations": {
+      "recency_weighted": {
+        "history": [
+          {
+            "start_time": 1769416539.091451,
+            "end_time": 1769593060.777,
+            "forecaster_count": 91,
+            "interval_lower_bounds": [
+              0.5
+            ],
+            "centers": [
+              0.56
+            ],
+            "interval_upper_bounds": [
+              0.7
+            ]
+          }
+        ],
+        "latest": {
+          "start_time": 1769416539.091451,
+          "end_time": 1769593060.777,
+          "forecaster_count": 91,
+          "interval_lower_bounds": [
+            0.5
+          ],
+          "centers": [
+            0.56
+          ],
+          "interval_upper_bounds": [
+            0.7
+          ],
+          "forecast_values": [
+            0.43999999999999995,
+            0.56
+          ],
+          "means": [
+            0.5994586172431041
+          ],
+          "histogram": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0117915453441316,
+              0.0,
+              0.0005317208022573057,
+              0.010069711394226119,
+              0.0,
+              0.003460269966480128,
+              0.22829097309954705,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.1663892557059332,
+              0.214511481729654,
+              0.3695799203115134,
+              0.029030972137388197,
+              0.11811320346689796,
+              0.0,
+              0.0,
+              1.0,
+              0.0,
+              0.00199601345085512,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.13285854779068557,
+              0.11964891568324479,
+              0.0,
+              0.0,
+              0.015697917683711572,
+              0.0033131931248719364,
+              0.0,
+              0.0634779910345077,
+              1.1014199793676558,
+              0.0,
+              0.003928914836847643,
+              0.0,
+              0.7666127313093721,
+              0.0,
+              0.0008689061390834006,
+              1.035818240140202,
+              0.0,
+              0.15675726164582882,
+              0.8365893278419698,
+              0.09090288086409391,
+              1.9524013464734034,
+              1.0339561130771164,
+              0.0,
+              0.0,
+              0.18019813460488976,
+              0.5351826901504443,
+              0.0,
+              0.6163089641375369,
+              0.0,
+              0.29148458645309366,
+              0.0,
+              0.5214209506007933,
+              0.0014453669945896995,
+              0.0,
+              0.0,
+              2.117339082032216,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.10589375779050983,
+              0.0,
+              0.0,
+              0.0,
+              0.4151406185251411,
+              0.6108710125423178,
+              0.007836395920405472,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.24283972782177998,
+              0.0,
+              0.7018807026209718,
+              0.07891436402356318,
+              0.0,
+              0.0,
+              0.0,
+              0.27439660300288415,
+              0.0,
+              0.7262597419388622,
+              0.0,
+              0.6878113878105488
+            ]
+          ]
+        },
+        "score_data": {},
+        "movement": null
+      }
+    },
+    "average_coverage": null,
+    "my_forecasts": {
+      "history": [],
+      "latest": null,
+      "score_data": {}
+    }
+  },
+  "user_permission": "forecaster",
+  "vote": {
+    "score": 3,
+    "user_vote": null
+  },
+  "forecasts_count": 218,
+  "subscriptions": [],
+  "key_factors": [],
+  "is_current_content_translated": false,
+  "description": null
+}

@@ -1,0 +1,13 @@
+{
+  "prediction": 0.05,
+  "weight": 1.0,
+  "evidence_weights": {
+    "strong": [
+      "*None identified.** The single news article lacks independent corroboration and contains multiple re"
+    ],
+    "moderate": [
+      "The largest single adjustment (-3%) is for source reliability, which is appropriate given the red fl"
+    ],
+    "weak": []
+  }
+}

@@ -1,0 +1,14 @@
+[
+  {
+    "query": "\"us military history iran conflict\"",
+    "source": "llm_generated"
+  },
+  {
+    "query": "\"latest news iran us tensions\"",
+    "source": "llm_generated"
+  },
+  {
+    "query": "\"experts predict us iran war likelihood\"",
+    "source": "llm_generated"
+  }
+]

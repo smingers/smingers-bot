@@ -1,0 +1,9 @@
+{
+  "reused": true,
+  "source_forecast_id": "41514_20260125_235125",
+  "source_timestamp": "20260125_235125",
+  "source_created_at": "2026-01-25T23:51:25+00:00",
+  "age_hours": 0.00016000472222222223,
+  "copied_at": "2026-01-25T23:51:25.576231+00:00",
+  "reason": "within_age_threshold"
+}

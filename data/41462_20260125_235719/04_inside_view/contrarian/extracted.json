@@ -1,0 +1,18 @@
+{
+  "prediction": 0.5760000000000001,
+  "weight": 0.8,
+  "evidence_weights": {
+    "strong": [
+      "Khamenei's critical health and security situation, including reports of physical and cognitive decli",
+      "Regime instability and escape contingencies, including mass protests, potential security force defec"
+    ],
+    "moderate": [
+      "Contested succession plans, with factions backing different candidates (Evidence 19, 20)",
+      "U.S. pressure and military threats, including the deployment of warships and threats of \"decisive st"
+    ],
+    "weak": [
+      "Conflicting reports about the momentum of the protests and the loyalty of the IRGC (Evidence 4, 11, ",
+      "Limitations in verifying Khamenei's health status due to his bunker isolation (Evidence 7, 8, 9, 10)"
+    ]
+  }
+}

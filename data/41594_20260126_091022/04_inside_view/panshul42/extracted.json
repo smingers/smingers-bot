@@ -1,0 +1,21 @@
+{
+  "prediction": 0.02,
+  "weight": 1.0,
+  "evidence_weights": {
+    "strong": [
+      "None present. No multiple independent sources confirming military preparations, no clear deployment "
+    ],
+    "moderate": [
+      "USS Abraham Lincoln deployment mentioned in billboard article (if accurate) - however, carrier deplo",
+      "Trump administration's adversarial stance toward Iran - but this is longstanding policy, not new dev",
+      "Absence of key military indicators (troop buildups, emergency appropriations, ally coordination) - t"
+    ],
+    "weak": [
+      "Speculative commentary from Russian analyst about Trump needing \"dramatic action\" - purely speculati",
+      "European media references to \"suggestions of military intervention\" - vague and unattributed",
+      "French diplomatic efforts - suggests diplomatic channels still active, which argues against imminent",
+      "Internal Republican divisions and multiple crises - suggests administration is distracted, arguing a",
+      "Tehran propaganda billboard - this is Iranian posturing, not evidence of US intentions"
+    ]
+  }
+}

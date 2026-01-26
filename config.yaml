@@ -18,40 +18,55 @@ mode: "dry_run"
 # =============================================================================
 # Models are accessed via litellm which supports multiple providers.
 #
-# Direct API usage (set ANTHROPIC_API_KEY or OPENAI_API_KEY):
-#   - claude-sonnet-4-5-20250929, claude-3-5-sonnet-20241022, claude-3-haiku-20240307
-#   - gpt-4o, gpt-4o-mini, o1-mini
-#
 # Via OpenRouter (set OPENROUTER_API_KEY, prefix with "openrouter/"):
-#   - openrouter/anthropic/claude-3.5-sonnet
-#   - openrouter/openai/gpt-4o
+#   Anthropic models:
+#   - openrouter/anthropic/claude-sonnet-4.5 ($3/$15 per M tokens)
+#   - openrouter/anthropic/claude-opus-4.5 ($5/$25 per M tokens)
+#   - openrouter/anthropic/claude-3.5-haiku ($0.80/$4 per M tokens - fast, cheap)
+#   OpenAI models:
+#   - openrouter/openai/gpt-5.2 ($1.75/$14 per M tokens - latest GPT)
+#   - openrouter/openai/gpt-4o ($2.50/$10 per M tokens)
+#   - openrouter/openai/o3 ($2/$8 per M tokens - strong reasoning)
+#   - openrouter/openai/o3-mini-high ($1.10/$4.40 per M tokens - cost-efficient reasoning)
+#
+# Direct API usage (if you have your own keys):
+#   - claude-sonnet-4-5-20250929, claude-3-haiku-20240307
+#   - gpt-4o, gpt-4o-mini
+#
+# NOTE: Don't use ":online" suffix - Exa costs not covered by Metaculus credits
 #
 # Models are selected based on run mode. Define both cheap and production models.
 
 models:
   # Models for dry_run mode (cheap, fast)
   cheap:
-    classifier: "claude-3-haiku-20240307"
-    query_generator: "claude-3-haiku-20240307"
-    base_rate_estimator: "claude-3-haiku-20240307"
+    classifier: "openrouter/anthropic/claude-3.5-haiku"
+    query_generator: "openrouter/anthropic/claude-3.5-haiku"
+    base_rate_estimator: "openrouter/anthropic/claude-3.5-haiku"
 
   # Models for dry_run_heavy and production modes
   production:
-    classifier: "claude-3-haiku-20240307"  # Keep cheap for simple tasks
-    query_generator: "claude-3-haiku-20240307"  # Keep cheap for simple tasks
-    base_rate_estimator: "claude-sonnet-4-5-20250929"
+    classifier: "openrouter/anthropic/claude-3.5-haiku"  # Keep cheap for simple tasks
+    query_generator: "openrouter/anthropic/claude-3.5-haiku"  # Keep cheap for simple tasks
+    base_rate_estimator: "openrouter/anthropic/claude-sonnet-4.5"
 
 # =============================================================================
 # ENSEMBLE CONFIGURATION
 # =============================================================================
 # Define agents for both cheap and production modes.
 # Production mode uses stronger models with optimized weights.
+#
+# Model selection strategy (via OpenRouter):
+# - Claude Sonnet 4.5: Best overall for forecasting tasks (reasoning + analysis)
+# - o3: Strong reasoning model for base rates and complex analysis
+# - o3-mini-high: Cost-efficient reasoning for quantitative tasks
+# - Claude 3.5 Haiku: Fast/cheap for simple tasks
 
 ensemble:
   # Agents for dry_run mode (cheap, fast)
   cheap:
     - name: "analyst"
-      model: "claude-3-haiku-20240307"
+      model: "openrouter/anthropic/claude-3.5-haiku"
       weight: 1.0
       role_description: |
         You are a geopolitical analyst and superforecaster. Focus on the current
@@ -60,7 +75,7 @@ ensemble:
         each piece updates the base rate.
 
     - name: "historian"
-      model: "claude-3-haiku-20240307"
+      model: "openrouter/anthropic/claude-3.5-haiku"
       weight: 1.0
       role_description: |
         You are a historian and superforecaster. Focus on historical precedents,
@@ -69,7 +84,7 @@ ensemble:
         your probability estimate.
 
     - name: "contrarian"
-      model: "claude-3-haiku-20240307"
+      model: "openrouter/anthropic/claude-3.5-haiku"
       weight: 0.8
       role_description: |
         You are a contrarian forecaster. Your job is to challenge the obvious
@@ -79,9 +94,10 @@ ensemble:
 
   # Agents for dry_run_heavy and production modes
   # Uses stronger models, more agents, optimized weights (inspired by Q2 winner)
+  # Mix of Claude Sonnet 4.5 and OpenAI o3 reasoning models for diversity
   production:
     - name: "analyst"
-      model: "claude-sonnet-4-5-20250929"
+      model: "openrouter/anthropic/claude-sonnet-4.5"
       weight: 1.0
       role_description: |
         You are a geopolitical analyst and superforecaster. Focus on the current
@@ -90,7 +106,7 @@ ensemble:
         each piece updates the base rate.
 
     - name: "historian"
-      model: "claude-sonnet-4-5-20250929"
+      model: "openrouter/anthropic/claude-sonnet-4.5"
       weight: 1.0
       role_description: |
         You are a historian and superforecaster. Focus on historical precedents,
@@ -99,7 +115,7 @@ ensemble:
         your probability estimate.
 
     - name: "contrarian"
-      model: "claude-sonnet-4-5-20250929"
+      model: "openrouter/anthropic/claude-sonnet-4.5"
       weight: 0.8
       role_description: |
         You are a contrarian forecaster. Your job is to challenge the obvious
@@ -108,7 +124,7 @@ ensemble:
         What are people overlooking?
 
     - name: "quantitative"
-      model: "claude-sonnet-4-5-20250929"  # Use Claude if no OpenAI key; change to gpt-4o if available
+      model: "openrouter/anthropic/claude-sonnet-4.5"
       weight: 1.0
       role_description: |
         You are a quantitative analyst and superforecaster. Focus on data,
@@ -116,7 +132,7 @@ ensemble:
         trend extrapolations, and quantitative models that inform the forecast.
 
     - name: "synthesizer"
-      model: "claude-sonnet-4-5-20250929"
+      model: "openrouter/anthropic/claude-sonnet-4.5"
       weight: 1.2
       role_description: |
         You are a synthesis expert and superforecaster. Your job is to integrate
@@ -124,7 +140,7 @@ ensemble:
         view. Consider all evidence holistically and identify what matters most.
 
     - name: "panshul42"
-      model: "claude-sonnet-4-5-20250929"
+      model: "openrouter/anthropic/claude-sonnet-4.5"
       weight: 1.0
       role_description: |
         Uses the exact Panshul42 Q2 winner inside view prompt structure.

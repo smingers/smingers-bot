@@ -1,0 +1,14 @@
+[
+  {
+    "query": "\"historical attacks on israel casualties\"",
+    "source": "llm_generated"
+  },
+  {
+    "query": "\"recent attacks on israel news\"",
+    "source": "llm_generated"
+  },
+  {
+    "query": "\"experts forecast israel attacks casualties\"",
+    "source": "llm_generated"
+  }
+]

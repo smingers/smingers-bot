@@ -1,0 +1,17 @@
+{
+  "prediction": 0.726,
+  "weight": 1.0,
+  "evidence_weights": {
+    "strong": [
+      "Khamenei (86) has reportedly retreated to a fortified Tehran bunker due to fears of U.S. military ac",
+      "Credible intelligence confirms a \"Plan B\" to flee to Moscow with 20 loyalists if security forces def"
+    ],
+    "moderate": [
+      "Mass protests since December 2025 (30,000+ deaths per reports [1][2][6]) over economic collapse have",
+      "Former President Trump has threatened \"decisive strikes\" if protests are violently suppressed [4][17"
+    ],
+    "weak": [
+      "Succession plans are actively contested between factions backing:"
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "base_rate": 0.04,
+  "reference_classes": [
+    "US Military Attacks on Sovereign Nations (Post-Cold War Era, 1991-2024)",
+    "US Military Actions Specifically Against Iran (1979-2024)",
+    "US Attacks on Adversarial States With Nuclear Ambitions",
+    "Frequency of US Initiating New Major Military Operations",
+    "(US attacks post-Cold War): 3.0% (weight: 0.20)"
+  ],
+  "confidence": 6
+}

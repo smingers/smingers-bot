@@ -1,0 +1,14 @@
+{
+  "prediction": 0.13,
+  "weight": 1.0,
+  "evidence_weights": {
+    "strong": [
+      "Strong evidence pointing DOWN: Expert analysis emphasizing diplomatic tools, short planning timeline",
+      "Net direction: UP (moderate increase from base rate)"
+    ],
+    "moderate": [],
+    "weak": [
+      "Proportionality appears appropriate"
+    ]
+  }
+}

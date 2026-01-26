@@ -1,0 +1,18 @@
+{
+  "prediction": 0.31,
+  "weight": 0.8,
+  "evidence_weights": {
+    "strong": [
+      "[Evidence 1]: The history of US military attacks against Iran and the Middle East, including the 198",
+      "[Evidence 2]: The recent escalation of tensions between the US and Iran, including the killing of Qa"
+    ],
+    "moderate": [
+      "[Evidence 1]: Expert predictions of a possible US-Iran conflict in 2026 provide some support for an ",
+      "[Evidence 2]: The ongoing unrest and protests in Iran, and the Iranian regime's crackdown, could pot"
+    ],
+    "weak": [
+      "[Evidence 1]: Speculation about a potential US \"armada\" moving towards Iran and Trump's tough rhetor",
+      "[Evidence 2]: The history of US-Iran relations, while relevant context, is largely already captured "
+    ]
+  }
+}

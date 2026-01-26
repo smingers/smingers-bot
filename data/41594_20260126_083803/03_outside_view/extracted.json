@@ -1,0 +1,11 @@
+{
+  "base_rate": 0.06,
+  "reference_classes": [
+    "U.S. direct military attacks on Iran, 1979-2023  ",
+    "U.S. attacks on any adversarial Middle-East state, 1979-2023  ",
+    "U.S. overt attacks on any sovereign state worldwide, 1945-2023  ",
+    "Iran-specific attacks: 5.2 % base rate (weight 0.5)",
+    "Middle-East adversary attacks: 8.5 % base rate (weight 0.3)"
+  ],
+  "confidence": 5
+}

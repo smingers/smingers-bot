@@ -1,0 +1,21 @@
+{
+  "prediction": 0.13,
+  "weight": 1.0,
+  "evidence_weights": {
+    "strong": [
+      "De-escalation diplomatic efforts actively ongoing",
+      "U.S. strategic focus shifted away from Middle East",
+      "No visible military mobilization preparations",
+      "Domestic political constraints limiting aggressive foreign action"
+    ],
+    "moderate": [
+      "Intermittent hostile rhetoric from political figures",
+      "Ongoing tensions in Middle Eastern region",
+      "Unpredictability of current political leadership"
+    ],
+    "weak": [
+      "Sensationalist media reports about potential conflict",
+      "Isolated threats without substantive follow-through"
+    ]
+  }
+}

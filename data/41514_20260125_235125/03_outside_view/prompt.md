@@ -1,0 +1,1 @@
+See prompts/outside_view.md template

@@ -1,0 +1,14 @@
+[
+  {
+    "query": "\"human extinction rates over time\"",
+    "source": "llm_generated"
+  },
+  {
+    "query": "\"recent news human extinction 2100\"",
+    "source": "llm_generated"
+  },
+  {
+    "query": "\"expert forecasts human extinction 2100\"",
+    "source": "llm_generated"
+  }
+]

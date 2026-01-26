@@ -1,0 +1,18 @@
+{
+  "prediction": 0.12,
+  "weight": 1.0,
+  "evidence_weights": {
+    "strong": [
+      "None. The military deployment claims would constitute strong evidence if independently verified, but"
+    ],
+    "moderate": [
+      "**Military deployments reported (USS Abraham Lincoln, F-15E fighters, UK Typhoons)**: If accurate, t",
+      "**Explicit presidential threats**: Article mentions US President threatened military action over pro"
+    ],
+    "weak": [
+      "**Iranian billboard and rhetoric**: Propaganda response, not predictive of US action.",
+      "**June 2025 Israel-Iran conflict reference**: If this occurred, it's context but doesn't predict US ",
+      "**Protest situation**: Internal Iranian instability could theoretically create intervention pretext,"
+    ]
+  }
+}

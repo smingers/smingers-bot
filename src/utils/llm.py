@@ -23,20 +23,40 @@ logger = logging.getLogger(__name__)
 
 # Approximate costs per 1M tokens (as of Jan 2026)
 # These are estimates - actual costs may vary
+# OpenRouter pricing: https://openrouter.ai/docs/models
 MODEL_COSTS = {
-    # Anthropic
+    # Anthropic (direct API)
     "claude-3-haiku-20240307": {"input": 0.25, "output": 1.25},
-    "claude-3-5-haiku-20241022": {"input": 1.0, "output": 5.0},
+    "claude-3-5-haiku-20241022": {"input": 0.80, "output": 4.0},
     "claude-sonnet-4-5-20250929": {"input": 3.0, "output": 15.0},
     "claude-opus-4-5-20251101": {"input": 5.0, "output": 25.0},
     "claude-opus-4-20250514": {"input": 15.0, "output": 75.0},
-    # OpenAI
+    # OpenAI (direct API)
     "gpt-4o": {"input": 2.5, "output": 10.0},
     "gpt-4o-mini": {"input": 0.15, "output": 0.60},
     "o1": {"input": 15.0, "output": 60.0},
     "o1-mini": {"input": 3.0, "output": 12.0},
     "o3": {"input": 20.0, "output": 80.0},  # Estimate
-    "o3-mini": {"input": 1.0, "output": 4.0},  # Estimate
+    "o3-mini": {"input": 1.10, "output": 4.40},
+    # OpenRouter - Anthropic models
+    "openrouter/anthropic/claude-3.5-haiku": {"input": 0.80, "output": 4.0},
+    "openrouter/anthropic/claude-3.5-haiku-20241022": {"input": 0.80, "output": 4.0},
+    "openrouter/anthropic/claude-sonnet-4.5": {"input": 3.0, "output": 15.0},
+    "openrouter/anthropic/claude-opus-4.5": {"input": 5.0, "output": 25.0},
+    "openrouter/anthropic/claude-sonnet-4": {"input": 3.0, "output": 15.0},
+    "openrouter/anthropic/claude-3.5-sonnet": {"input": 3.0, "output": 15.0},
+    "openrouter/anthropic/claude-3.5-sonnet-20241022": {"input": 3.0, "output": 15.0},
+    # OpenRouter - OpenAI models
+    "openrouter/openai/gpt-5.2": {"input": 1.75, "output": 14.0},
+    "openrouter/openai/gpt-4o": {"input": 2.5, "output": 10.0},
+    "openrouter/openai/gpt-4o-2024-11-20": {"input": 2.5, "output": 10.0},
+    "openrouter/openai/gpt-4o-mini": {"input": 0.15, "output": 0.60},
+    "openrouter/openai/gpt-4o-mini-2024-07-18": {"input": 0.15, "output": 0.60},
+    "openrouter/openai/o1": {"input": 15.0, "output": 60.0},
+    "openrouter/openai/o1-mini": {"input": 3.0, "output": 12.0},
+    "openrouter/openai/o3": {"input": 2.0, "output": 8.0},
+    "openrouter/openai/o3-mini": {"input": 1.10, "output": 4.40},
+    "openrouter/openai/o3-mini-high": {"input": 1.10, "output": 4.40},
     # Perplexity
     "perplexity/sonar-reasoning-pro": {"input": 2.0, "output": 8.0},
     "perplexity/sonar-pro": {"input": 1.0, "output": 4.0},

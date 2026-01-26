@@ -1,0 +1,237 @@
+{
+  "id": 41451,
+  "title": "Which album will win the Best Traditional Country Album Award at the 2026 Grammys?",
+  "short_title": "Best Traditional Country Album at 2026 Grammys?",
+  "url_title": "Best Traditional Country Album at 2026 Grammys?",
+  "slug": "best-traditional-country-album-at-2026-grammys",
+  "author_id": 276265,
+  "author_username": "AutoQuestionsBot",
+  "coauthors": [],
+  "created_at": "2026-01-04T03:51:35.487807Z",
+  "published_at": "2026-01-06T05:34:08Z",
+  "edited_at": "2026-01-10T17:39:43.565589Z",
+  "curation_status": "approved",
+  "curation_status_updated_at": "2026-01-04T03:51:35.703063Z",
+  "comment_count": 3,
+  "status": "closed",
+  "resolved": false,
+  "actual_close_time": "2026-01-06T07:04:08Z",
+  "scheduled_close_time": "2026-01-06T07:04:08Z",
+  "scheduled_resolve_time": "2026-02-02T12:00:00Z",
+  "actual_resolve_time": null,
+  "open_time": "2026-01-06T05:34:08Z",
+  "nr_forecasters": 84,
+  "html_metadata_json": null,
+  "projects": {
+    "tournament": [
+      {
+        "id": 32916,
+        "type": "tournament",
+        "name": "Spring 2026 AI Forecasting Benchmark Tournament",
+        "slug": "spring-aib-2026",
+        "header_image": "https://cdn.metaculus.com/aib-spring-cover.webp",
+        "prize_pool": "50000.00",
+        "start_date": "2026-01-05T00:00:00Z",
+        "close_date": "2026-07-05T00:00:00Z",
+        "forecasting_end_date": "2026-05-06T00:00:00Z",
+        "html_metadata_json": null,
+        "is_ongoing": true,
+        "user_permission": null,
+        "order": 0,
+        "created_at": "2025-12-12T16:53:45.337955Z",
+        "edited_at": "2026-01-25T17:43:02.169940Z",
+        "score_type": "spot_peer_tournament",
+        "default_permission": "forecaster",
+        "visibility": "not_in_main_feed",
+        "show_on_homepage": true,
+        "is_current_content_translated": false,
+        "bot_leaderboard_status": "bots_only",
+        "description_preview": "<p>Welcome to the Spring 2026 AI Forecasting Benchmark! This is a bot-only competition where bot-makers attempt to push AI to its limits in"
+      }
+    ],
+    "default_project": {
+      "id": 32916,
+      "type": "tournament",
+      "name": "Spring 2026 AI Forecasting Benchmark Tournament",
+      "slug": "spring-aib-2026",
+      "header_image": "https://cdn.metaculus.com/aib-spring-cover.webp",
+      "prize_pool": "50000.00",
+      "start_date": "2026-01-05T00:00:00Z",
+      "close_date": "2026-07-05T00:00:00Z",
+      "forecasting_end_date": "2026-05-06T00:00:00Z",
+      "html_metadata_json": null,
+      "is_ongoing": true,
+      "user_permission": null,
+      "order": 0,
+      "created_at": "2025-12-12T16:53:45.337955Z",
+      "edited_at": "2026-01-25T17:43:02.169940Z",
+      "score_type": "spot_peer_tournament",
+      "default_permission": "forecaster",
+      "visibility": "not_in_main_feed",
+      "show_on_homepage": true,
+      "is_current_content_translated": false,
+      "bot_leaderboard_status": "bots_only",
+      "description_preview": "<p>Welcome to the Spring 2026 AI Forecasting Benchmark! This is a bot-only competition where bot-makers attempt to push AI to its limits in"
+    }
+  },
+  "question": {
+    "id": 41176,
+    "title": "Which album will win the Best Traditional Country Album Award at the 2026 Grammys?",
+    "created_at": "2026-01-04T03:51:35.488291Z",
+    "open_time": "2026-01-06T05:34:08Z",
+    "cp_reveal_time": "2026-01-06T07:04:08Z",
+    "spot_scoring_time": "2026-01-06T07:04:08Z",
+    "scheduled_resolve_time": "2026-02-02T12:00:00Z",
+    "actual_resolve_time": null,
+    "resolution_set_time": null,
+    "scheduled_close_time": "2026-01-06T07:04:08Z",
+    "actual_close_time": "2026-01-06T07:04:08Z",
+    "type": "multiple_choice",
+    "options": [
+      "Dollar a Day (by Charley Crockett)",
+      "American Romance (by Lukas Nelson)",
+      "Oh What a Beautiful World (by Willie Nelson)",
+      "Hard Headed Woman (by Margo Price)",
+      "Ain't in it for My Health (by Zach Top)"
+    ],
+    "all_options_ever": [
+      "Dollar a Day (by Charley Crockett)",
+      "American Romance (by Lukas Nelson)",
+      "Oh What a Beautiful World (by Willie Nelson)",
+      "Hard Headed Woman (by Margo Price)",
+      "Ain't in it for My Health (by Zach Top)"
+    ],
+    "options_history": [
+      [
+        "0001-01-01T00:00:00",
+        [
+          "Dollar a Day (by Charley Crockett)",
+          "American Romance (by Lukas Nelson)",
+          "Oh What a Beautiful World (by Willie Nelson)",
+          "Hard Headed Woman (by Margo Price)",
+          "Ain't in it for My Health (by Zach Top)"
+        ]
+      ]
+    ],
+    "group_variable": "Album",
+    "status": "closed",
+    "possibilities": null,
+    "resolution": null,
+    "include_bots_in_aggregates": true,
+    "question_weight": 1.0,
+    "default_score_type": "spot_peer",
+    "default_aggregation_method": "unweighted",
+    "label": "",
+    "unit": "",
+    "open_upper_bound": false,
+    "open_lower_bound": false,
+    "inbound_outcome_count": null,
+    "scaling": {
+      "range_min": null,
+      "range_max": null,
+      "nominal_min": null,
+      "nominal_max": null,
+      "zero_point": null,
+      "open_upper_bound": false,
+      "open_lower_bound": false,
+      "inbound_outcome_count": null,
+      "continuous_range": null
+    },
+    "group_rank": null,
+    "coherence_links": null,
+    "coherence_link_aggregations": null,
+    "short_title": "Best Traditional Country Album at 2026 Grammys?",
+    "post_id": 41451,
+    "aggregations": {
+      "unweighted": {
+        "history": [
+          {
+            "start_time": 1767681723.110844,
+            "end_time": null,
+            "forecaster_count": 84,
+            "interval_lower_bounds": [
+              0.1394696868733203,
+              0.07987459002227854,
+              0.2638055106535559,
+              0.08972080398998257,
+              0.1541224104746532
+            ],
+            "centers": [
+              0.16267182631019556,
+              0.11365545640876322,
+              0.29796922332826176,
+              0.11917114423096922,
+              0.30653234972181026
+            ],
+            "interval_upper_bounds": [
+              0.2054802016549839,
+              0.16103333744041365,
+              0.35550810783302955,
+              0.14382724303737665,
+              0.39044343986912144
+            ]
+          }
+        ],
+        "latest": {
+          "start_time": 1767681723.110844,
+          "end_time": null,
+          "forecaster_count": 84,
+          "interval_lower_bounds": [
+            0.1394696868733203,
+            0.07987459002227854,
+            0.2638055106535559,
+            0.08972080398998257,
+            0.1541224104746532
+          ],
+          "centers": [
+            0.16267182631019556,
+            0.11365545640876322,
+            0.29796922332826176,
+            0.11917114423096922,
+            0.30653234972181026
+          ],
+          "interval_upper_bounds": [
+            0.2054802016549839,
+            0.16103333744041365,
+            0.35550810783302955,
+            0.14382724303737665,
+            0.39044343986912144
+          ],
+          "forecast_values": [
+            0.16267182631019556,
+            0.11365545640876322,
+            0.29796922332826176,
+            0.11917114423096922,
+            0.30653234972181026
+          ],
+          "means": [
+            0.16623497061871356,
+            0.1240531761381482,
+            0.3130013256863404,
+            0.12219114510929259,
+            0.2745193824475052
+          ],
+          "histogram": null
+        },
+        "score_data": {},
+        "movement": null
+      }
+    },
+    "average_coverage": null,
+    "my_forecasts": {
+      "history": [],
+      "latest": null,
+      "score_data": {}
+    }
+  },
+  "user_permission": "forecaster",
+  "vote": {
+    "score": -1,
+    "user_vote": null
+  },
+  "forecasts_count": 85,
+  "subscriptions": [],
+  "key_factors": [],
+  "is_current_content_translated": false,
+  "description": null
+}

@@ -1,0 +1,18 @@
+{
+  "prediction": 0.85,
+  "weight": 1.0,
+  "evidence_weights": {
+    "strong": [
+      "The long history of US-Iran military confrontations and proxy conflicts, including the Iran-Iraq War",
+      "The Trump administration's withdrawal from the Iran nuclear deal and imposition of harsh sanctions, "
+    ],
+    "moderate": [
+      "Recent incidents of military posturing and near-clashes, such as the US drone strike that killed Ira",
+      "Ongoing tensions over Iran's nuclear program and its regional influence, which could lead to miscalc"
+    ],
+    "weak": [
+      "Speculation and predictions by experts and analysts about the likelihood of a US-Iran war, which can",
+      "Volatile indicators like protests and domestic political dynamics in both countries, which may or ma"
+    ]
+  }
+}

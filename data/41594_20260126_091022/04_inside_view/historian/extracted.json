@@ -1,0 +1,23 @@
+{
+  "prediction": 0.125,
+  "weight": 1.0,
+  "evidence_weights": {
+    "strong": [
+      "**USS Abraham Lincoln carrier deployment toward Iran**: This represents actual military positioning,",
+      "**Revolutionary Guard \"finger on the trigger\" warning with confirmed readiness**: Indicates both sid",
+      "**Only 2-month timeframe remaining**: Short windows reduce the number of intervening factors that co"
+    ],
+    "moderate": [
+      "**Massive internal unrest in Iran (5,848 deaths, 41,280 arrests per HRW)**: Historical pattern shows",
+      "**Trump's documented threats of military action over protester deaths**: Creates public justificatio",
+      "**Diplomatic breakdown with European allies**: Reduces constraints on unilateral action, though also",
+      "**Multiple administration crises creating distraction**: Could either prevent focus on Iran OR creat"
+    ],
+    "weak": [
+      "**Russian analyst speculation about \"dramatic action\"**: Pure speculation from biased source",
+      "**European media commentary on Trump's \"suggestions\"**: Vague and interpretive",
+      "**Macron diplomatic overtures**: Could indicate either prevention efforts or preparation for action",
+      "**Ted Cruz warnings about \"bloodbath\"**: Refers to electoral consequences, not military plans"
+    ]
+  }
+}

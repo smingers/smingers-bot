@@ -1,0 +1,18 @@
+{
+  "prediction": 0.132,
+  "weight": 1.0,
+  "evidence_weights": {
+    "strong": [
+      "Denmark has repeatedly and unequivocally rejected any sale of Greenland, calling sovereignty a \"red ",
+      "Current discussions exclusively involve NATO-led Arctic security cooperation, with Denmark explicitl"
+    ],
+    "moderate": [
+      "With only 3 months until May 1, 2026, no formal purchase framework exists [12][18], and trust is sev",
+      "Denmark and Greenland are fortifying military defenses to deter US ambitions [8][13][18].",
+      "The EU, NATO allies, and Greenland's leadership oppose a transfer [5][13][18], and even Greenland's "
+    ],
+    "weak": [
+      "The US interest in purchasing Greenland persists [9][14][20], despite the diplomatic pivot toward se"
+    ]
+  }
+}

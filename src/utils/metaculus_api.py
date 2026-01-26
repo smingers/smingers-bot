@@ -17,13 +17,14 @@ import httpx
 
 logger = logging.getLogger(__name__)
 
-METACULUS_API_BASE = "https://www.metaculus.com/api2"
+METACULUS_API_BASE = "https://www.metaculus.com/api"
 
 
 @dataclass
 class MetaculusQuestion:
     """Parsed Metaculus question data."""
-    id: int
+    id: int  # Post ID (used in URLs)
+    question_id: int  # Question ID (used for forecasting API)
     title: str
     description: str
     resolution_criteria: str
@@ -78,8 +79,13 @@ class MetaculusQuestion:
                     if centers:
                         community_pred = centers[0]  # First center is median
 
+        # Get both post ID (in URL) and question ID (for forecasting)
+        post_id = data.get("id")
+        question_id = question_data.get("id", post_id)  # Nested question has the actual question ID
+
         return cls(
-            id=data.get("id"),
+            id=post_id,
+            question_id=question_id,
             title=data.get("title", ""),
             description=data.get("description") or "",  # Handle None
             resolution_criteria=data.get("resolution_criteria") or "",
@@ -137,6 +143,7 @@ class MetaculusClient:
             headers={
                 "Authorization": f"Token {self.token}",
                 "Content-Type": "application/json",
+                "Accept-Language": "en",
             },
             timeout=30.0,
         )
@@ -156,8 +163,8 @@ class MetaculusClient:
     # =========================================================================
 
     async def get_question(self, question_id: int) -> MetaculusQuestion:
-        """Get a single question by ID."""
-        response = await self.client.get(f"/questions/{question_id}/")
+        """Get a single question by ID (post ID)."""
+        response = await self.client.get(f"/posts/{question_id}/")
         response.raise_for_status()
         data = response.json()
         return MetaculusQuestion.from_api_response(data)
@@ -196,9 +203,9 @@ class MetaculusClient:
             "order_by": "-created_at",
         }
         if status:
-            params["status"] = status
+            params["statuses"] = status
 
-        response = await self.client.get("/questions/", params=params)
+        response = await self.client.get("/posts/", params=params)
         response.raise_for_status()
         data = response.json()
 
@@ -252,7 +259,7 @@ class MetaculusClient:
         if tournament_id:
             params["tournaments"] = tournament_id
 
-        response = await self.client.get("/questions/", params=params)
+        response = await self.client.get("/posts/", params=params)
         response.raise_for_status()
         data = response.json()
 
@@ -301,10 +308,17 @@ class MetaculusClient:
         # Ensure bounds
         prediction = max(0.001, min(0.999, prediction))
 
-        payload = {"prediction": prediction}
+        # Use the batch forecast endpoint (same as metaculus-forecasting-tools)
+        payload = [
+            {
+                "question": question_id,
+                "source": "api",
+                "probability_yes": prediction,
+            }
+        ]
 
         response = await self.client.post(
-            f"/questions/{question_id}/predict/",
+            "/questions/forecast/",
             json=payload,
         )
         response.raise_for_status()
@@ -331,10 +345,17 @@ class MetaculusClient:
         # Ensure CDF is valid (monotonic, bounded)
         cdf = self._validate_cdf(cdf)
 
-        payload = {"prediction": {"kind": "multi", "d": cdf}}
+        # Use the batch forecast endpoint (same as metaculus-forecasting-tools)
+        payload = [
+            {
+                "question": question_id,
+                "source": "api",
+                "continuous_cdf": cdf,
+            }
+        ]
 
         response = await self.client.post(
-            f"/questions/{question_id}/predict/",
+            "/questions/forecast/",
             json=payload,
         )
         response.raise_for_status()
@@ -360,10 +381,17 @@ class MetaculusClient:
         if abs(total - 1.0) > 0.01:
             probabilities = {k: v / total for k, v in probabilities.items()}
 
-        payload = {"prediction": probabilities}
+        # Use the batch forecast endpoint (same as metaculus-forecasting-tools)
+        payload = [
+            {
+                "question": question_id,
+                "source": "api",
+                "probability_yes_per_category": probabilities,
+            }
+        ]
 
         response = await self.client.post(
-            f"/questions/{question_id}/predict/",
+            "/questions/forecast/",
             json=payload,
         )
         response.raise_for_status()
@@ -384,12 +412,13 @@ class MetaculusClient:
         Returns:
             API response dict
         """
+        # Use question_id (not post id) for the forecast API
         if question.question_type == "binary":
-            return await self.submit_binary_prediction(question.id, prediction)
+            return await self.submit_binary_prediction(question.question_id, prediction)
         elif question.question_type == "numeric":
-            return await self.submit_numeric_prediction(question.id, prediction)
+            return await self.submit_numeric_prediction(question.question_id, prediction)
         elif question.question_type == "multiple_choice":
-            return await self.submit_multiple_choice_prediction(question.id, prediction)
+            return await self.submit_multiple_choice_prediction(question.question_id, prediction)
         else:
             raise ValueError(f"Unsupported question type: {question.question_type}")
 

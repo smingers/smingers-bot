@@ -1,0 +1,23 @@
+{
+  "prediction": 0.02,
+  "weight": 0.8,
+  "evidence_weights": {
+    "strong": [
+      "*None identified.** No credible reports of:",
+      "Military mobilization",
+      "Congressional authorization discussions",
+      "Specific operational planning",
+      "Regional ally coordination"
+    ],
+    "moderate": [
+      "**Trump administration distraction**: Multiple simultaneous crises (trade wars, Greenland, domestic ",
+      "**Diplomatic channel activity**: Macron's engagement with Trump on Iran suggests diplomatic rather t",
+      "**Republican internal opposition**: Ted Cruz warnings about \"bloodbath\" and impeachment suggest poli",
+      "**Allied trust erosion**: Damaged relationships reduce coalition-building capacity essential for Ira"
+    ],
+    "weak": [
+      "**Speculative mentions**: Russian analyst and European media references to potential Iran strikes (b",
+      "**Tehran billboard**: If authentic, suggests Iranian perception of elevated threat (but could be rou"
+    ]
+  }
+}

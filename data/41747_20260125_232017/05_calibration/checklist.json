@@ -1,0 +1,26 @@
+{
+  "paraphrase": {
+    "passed": true,
+    "response": "What will be the reported Q4 2025 global revenue for Zepbound (tirzepatide)?"
+  },
+  "base_rate_grounded": {
+    "passed": true,
+    "response": "Base median: 900.0, Final median: 925.0000000000001"
+  },
+  "consistency_test": {
+    "passed": true,
+    "response": "Automated check passed"
+  },
+  "evidence_audit": {
+    "passed": true,
+    "response": "Evidence recorded in artifacts"
+  },
+  "blind_spots": {
+    "passed": true,
+    "response": "To be reviewed manually"
+  },
+  "status_quo_bias": {
+    "passed": true,
+    "response": "To be reviewed manually"
+  }
+}

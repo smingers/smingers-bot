@@ -1,0 +1,14 @@
+[
+  {
+    "query": "\"attacks on israel casualties 2016-2026\"",
+    "source": "llm_generated"
+  },
+  {
+    "query": "\"israel shelter order news 2023-2026\"",
+    "source": "llm_generated"
+  },
+  {
+    "query": "\"experts forecast israel security situation 2026\"",
+    "source": "llm_generated"
+  }
+]

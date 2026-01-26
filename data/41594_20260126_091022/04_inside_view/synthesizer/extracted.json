@@ -1,0 +1,14 @@
+{
+  "prediction": 0.012,
+  "weight": 1.2,
+  "evidence_weights": {
+    "strong": [
+      "Moderate evidence gets smaller weights (-0.5 to -1.5%)",
+      "Weak evidence largely discounted"
+    ],
+    "moderate": [
+      "Weak evidence largely discounted"
+    ],
+    "weak": []
+  }
+}

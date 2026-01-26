@@ -1,0 +1,26 @@
+{
+  "paraphrase": {
+    "passed": true,
+    "response": "Before 2030, how many new AI labs will be leading labs within 2 years of their founding?"
+  },
+  "base_rate_grounded": {
+    "passed": true,
+    "response": "Base distribution: {'Option 1': 0.25, 'Option 2': 0.25, 'Option 3': 0.25, 'Option 4': 0.25}, Final: {'0': 0.23928571428571432, '1': 0.29285714285714287, '2': 0.2785714285714286, '3': 0.1892857142857143}"
+  },
+  "consistency_test": {
+    "passed": true,
+    "response": "Automated check passed"
+  },
+  "evidence_audit": {
+    "passed": true,
+    "response": "Evidence recorded in artifacts"
+  },
+  "blind_spots": {
+    "passed": true,
+    "response": "To be reviewed manually"
+  },
+  "status_quo_bias": {
+    "passed": true,
+    "response": "To be reviewed manually"
+  }
+}

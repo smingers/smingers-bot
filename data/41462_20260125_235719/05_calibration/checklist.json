@@ -1,0 +1,26 @@
+{
+  "paraphrase": {
+    "passed": true,
+    "response": "Will Ali Khamenei cease to be Supreme Leader of Iran before 2027?"
+  },
+  "base_rate_grounded": {
+    "passed": false,
+    "response": "Base rate: 22.6%, Final: 63.0%"
+  },
+  "consistency_test": {
+    "passed": true,
+    "response": "Automated check passed"
+  },
+  "evidence_audit": {
+    "passed": true,
+    "response": "Evidence recorded in artifacts"
+  },
+  "blind_spots": {
+    "passed": true,
+    "response": "To be reviewed manually"
+  },
+  "status_quo_bias": {
+    "passed": true,
+    "response": "To be reviewed manually"
+  }
+}

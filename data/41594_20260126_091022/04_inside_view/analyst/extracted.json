@@ -1,0 +1,17 @@
+{
+  "prediction": 0.012,
+  "weight": 1.0,
+  "evidence_weights": {
+    "strong": [
+      "**Adjustment 2:** -1.0% for multiple concurrent crises consuming bandwidth (strong evidence)",
+      "**Adjustment 3:** -0.5% for damaged alliance relationships (moderate evidence)",
+      "**Adjustment 4:** -0.3% for internal Republican opposition (moderate evidence)",
+      "**Adjustment 5:** +0.2% for speculative political discourse keeping option alive (moderate evidence)"
+    ],
+    "moderate": [
+      "**Adjustment 4:** -0.3% for internal Republican opposition (moderate evidence)",
+      "**Adjustment 5:** +0.2% for speculative political discourse keeping option alive (moderate evidence)"
+    ],
+    "weak": []
+  }
+}

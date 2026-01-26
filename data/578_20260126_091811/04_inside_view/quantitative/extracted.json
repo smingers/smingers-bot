@@ -1,0 +1,12 @@
+{
+  "prediction": 0.011000000000000001,
+  "weight": 1.0,
+  "evidence_weights": {
+    "strong": [
+      "**Strong evidence pointing DOWN:** Human adaptive capacity (90% mortality reduction since 1920)",
+      "**Net direction:** UP (anthropogenic risks outweigh demonstrated resilience for tail-risk scenarios)"
+    ],
+    "moderate": [],
+    "weak": []
+  }
+}

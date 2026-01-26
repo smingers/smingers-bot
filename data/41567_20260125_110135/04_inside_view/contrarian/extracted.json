@@ -1,0 +1,18 @@
+{
+  "prediction": 0.254,
+  "weight": 0.8,
+  "evidence_weights": {
+    "strong": [
+      "None"
+    ],
+    "moderate": [
+      "The IDF's fears of high casualties in a Gaza invasion (DOWN)",
+      "The confirmation of Iranian missile strikes on Israeli bases (UP)",
+      "The potential for Netanyahu to back out of a truce with Hamas (UP)",
+      "The Houthi drone strikes on Eilat, Israel (UP)"
+    ],
+    "weak": [
+      "None"
+    ]
+  }
+}

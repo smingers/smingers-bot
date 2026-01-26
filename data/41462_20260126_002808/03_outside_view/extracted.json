@@ -1,0 +1,11 @@
+{
+  "base_rate": 0.79,
+  "reference_classes": [
+    "Longevity of authoritarian leaders**",
+    "Longevity of Iranian political leaders**",
+    "Longevity of religious leaders**",
+    "(weight: 0.5)",
+    "(weight: 0.3) "
+  ],
+  "confidence": 8
+}

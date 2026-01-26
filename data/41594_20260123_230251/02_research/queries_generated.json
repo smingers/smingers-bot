@@ -1,0 +1,14 @@
+[
+  {
+    "query": "\"US military actions against Iran history\"",
+    "source": "llm_generated"
+  },
+  {
+    "query": "\"recent US-Iran tensions and conflict news\"",
+    "source": "llm_generated"
+  },
+  {
+    "query": "\"expert predictions US Iran conflict 2026\"",
+    "source": "llm_generated"
+  }
+]

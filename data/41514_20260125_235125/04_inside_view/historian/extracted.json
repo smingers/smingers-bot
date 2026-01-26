@@ -1,0 +1,16 @@
+{
+  "prediction": 0.484,
+  "weight": 1.0,
+  "evidence_weights": {
+    "strong": [
+      "The article \"The Danish Sale of the Virgin Islands: A Historical Precedent for the Greenland Debate\"",
+      "The article \"They Tried Several Times: How the U.S. Attempted to Buy Greenland\" provides a comprehen"
+    ],
+    "moderate": [
+      "The article \"What Does Donald Trump Want with Greenland? An Alternative Interpretation Rooted in U.S"
+    ],
+    "weak": [
+      "There is no weak evidence in the provided research synthesis."
+    ]
+  }
+}

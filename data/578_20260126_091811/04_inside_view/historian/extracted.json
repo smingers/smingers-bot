@@ -1,0 +1,15 @@
+{
+  "prediction": 0.004,
+  "weight": 1.0,
+  "evidence_weights": {
+    "strong": [
+      "200,000+ year survival record with zero extinctions despite severe bottlenecks",
+      "81 years of nuclear weapons without catastrophic use despite multiple near-misses",
+      "90%+ decline in disaster mortality over past century showing improving resilience"
+    ],
+    "moderate": [
+      "Novel risks get meaningful but not overwhelming weight (+0.15-0.25% total)"
+    ],
+    "weak": []
+  }
+}
