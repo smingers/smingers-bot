@@ -43,8 +43,6 @@ data/configs/*
 !data/configs/.gitkeep
 data/*.db
 
-# Ignore all forecast run directories (timestamped folders like 41517_20260125_213033/)
-data/[0-9]*_*/
 
 # Jupyter
 .ipynb_checkpoints/
