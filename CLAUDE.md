@@ -16,17 +16,35 @@ poetry install
 cp .env.template .env
 # Add: ANTHROPIC_API_KEY, METACULUS_TOKEN
 
-# Run a forecast (dry run)
-python main.py --question 41594 --dry-run
+# Run a forecast (dry run with cheap models)
+python main.py --question 41594 --mode dry_run
 
-# Run a forecast (submit)
-python main.py --question 41594
+# Run a forecast (dry run with production models)
+python main.py --question 41594 --mode dry_run_heavy
+
+# Run a forecast (submit with production models)
+python main.py --question 41594 --mode production
 
 # List tournament questions
 python main.py --tournament 32721 --list
 
 # Forecast all new questions
 python main.py --tournament 32721 --forecast-new --limit 5
+
+# Verbose logging
+python main.py --question 41594 --mode dry_run --verbose
+```
+
+### Automated Forecasting (GitHub Actions)
+
+The bot runs automatically via `.github/workflows/run-bot.yaml` every 4 hours using `run_bot.py`:
+
+```bash
+# Forecast new AIB tournament questions only
+python run_bot.py --mode aib
+
+# Re-forecast questions older than N days
+python run_bot.py --mode reforecast --reforecast-days 7
 ```
 
 ## Architecture
@@ -38,24 +56,38 @@ Question Intake → Research → Outside View (Base Rate) → Inside View (Ensem
 ```
 
 1. **Research Phase** (`src/research/searcher.py`) - Gathers context via LLM knowledge, Perplexity, AskNews, web search
-2. **Outside View** (`src/bot/prompts/outside_view.md`) - Establishes base rate from reference classes
-3. **Inside View** (`src/bot/prompts/inside_view.md`) - Adjusts base rate with current evidence via ensemble agents
+2. **Outside View** (`src/bot/prompts/outside_view*.md`) - Establishes base rate from reference classes
+3. **Inside View** (`src/bot/prompts/inside_view*.md`) - Adjusts base rate with current evidence via ensemble agents
 4. **Aggregation** (`src/ensemble/aggregator.py`) - Weighted average of agent predictions
+
+### Question Types
+
+The bot handles three question types with dedicated handlers:
+- **Binary** (`src/bot/binary.py`) - Yes/No probability (0-1)
+- **Numeric** (`src/bot/numeric.py`) - Continuous values with 201-point CDF
+- **Multiple Choice** (`src/bot/multiple_choice.py`) - Probability distributions across options
 
 ### Key Files
 
 | File | Purpose |
 |------|---------|
-| `main.py` | CLI entry point |
+| `main.py` | CLI entry point (interactive use) |
+| `run_bot.py` | Batch/automation entry point (GitHub Actions) |
 | `config.yaml` | All tunable parameters (models, weights, prompts) |
 | `src/bot/forecaster.py` | Main pipeline orchestrator |
 | `src/bot/binary.py` | Binary question handler |
-| `src/bot/prompts/*.md` | Prompt templates (critical IP) |
+| `src/bot/numeric.py` | Numeric/continuous question handler |
+| `src/bot/multiple_choice.py` | Multiple choice question handler |
+| `src/bot/prompts/*.md` | Prompt templates (type-specific) |
 | `src/ensemble/aggregator.py` | Weighted model aggregation |
 | `src/research/searcher.py` | Multi-source research orchestration |
+| `src/research/asknews_searcher.py` | AskNews-specific integration with caching |
+| `src/research/extractor.py` | Web content extraction (Trafilatura) |
 | `src/utils/llm.py` | LLM client with cost tracking |
 | `src/utils/metaculus_api.py` | Metaculus API wrapper |
 | `src/storage/artifact_store.py` | Saves all intermediate outputs |
+| `src/storage/database.py` | SQLite analytics database |
+| `src/storage/report_generator.py` | Markdown report generation |
 
 ### Prompt Templates
 
@@ -69,15 +101,31 @@ Prompts use Python's `.format()` for variable substitution. **Important:** Examp
 [UP/DOWN], [X], [+/- X]
 ```
 
+**Type-specific prompts** in `src/bot/prompts/`:
+- `outside_view.md` / `inside_view.md` - Binary questions
+- `outside_view_numeric.md` / `inside_view_numeric.md` - Numeric questions
+- `outside_view_multiple_choice.md` / `inside_view_multiple_choice.md` - Multiple choice
+- `calibration_checklist.md` - Final calibration checks
+
 ## Configuration
 
 All tunable parameters are in `config.yaml`:
 
-- **Models**: `models.classifier`, `models.base_rate_estimator`
-- **Ensemble**: `ensemble.agents[]` with model, weight, role_description
-- **Research**: Enable/disable sources (llm_knowledge, perplexity, asknews, web_search, google_news, article_scraping)
+- **Models**: `models.cheap` (testing) and `models.production` (quality) tiers
+- **Ensemble**: `ensemble.cheap` and `ensemble.production` agent configurations
+- **Research**: Enable/disable sources (llm_knowledge, perplexity, asknews, asknews_wiki, claude_web_search, web_search, google_news, article_scraping)
 - **Iterative Research**: `research.iterative.enabled` for agentic search (LLM identifies gaps and generates follow-up queries)
 - **Submission**: `dry_run: true` for testing without submitting
+
+### Mode Selection
+
+The `--mode` flag controls model tier and submission behavior:
+
+| Mode | Models | Submits | Use Case |
+|------|--------|---------|----------|
+| `dry_run` | cheap | No | Quick testing |
+| `dry_run_heavy` | production | No | Quality testing |
+| `production` | production | Yes | Live forecasting |
 
 ### Iterative Research
 
@@ -144,22 +192,23 @@ forecast = await searcher.get_asknews_forecast(
 
 ### Cost Management
 
-For testing, use cheapest model:
-```yaml
-models:
-  base_rate_estimator: "claude-3-haiku-20240307"
-ensemble:
-  agents:
-    - model: "claude-3-haiku-20240307"
+Model tiers are configured in `config.yaml` under `models.cheap` and `models.production`. The `--mode` flag selects which tier to use:
+
+```bash
+# Uses cheap models (fast, low cost)
+python main.py --question 41594 --mode dry_run
+
+# Uses production models (higher quality)
+python main.py --question 41594 --mode production
 ```
 
-For production quality:
+### AskNews Cache Modes
+
+Control AskNews caching behavior:
+
 ```yaml
-models:
-  base_rate_estimator: "claude-sonnet-4-5-20250929"
-ensemble:
-  agents:
-    - model: "claude-sonnet-4-5-20250929"
+- type: "asknews"
+  cache_mode: "use_cache_with_fallback"  # Options: no_cache, use_cache, use_cache_with_fallback
 ```
 
 ## Artifacts
@@ -198,11 +247,21 @@ data/41594_20260123_203130/
 pytest tests/
 ```
 
+### GitHub Actions
+
+The bot runs automatically via `.github/workflows/run-bot.yaml`:
+- **Schedule**: Every 4 hours
+- **Entry point**: `run_bot.py` (not main.py)
+- **Mode**: `aib` for new questions only
+
 ### Database
 SQLite at `data/forecasts.db` for analytics queries:
 - `forecasts` - main predictions table
 - `agent_predictions` - individual agent outputs
 - `research_sources` - research metadata
+
+Managed by `src/storage/database.py` with dataclasses:
+- `ForecastRecord`, `AgentPredictionRecord`, `ResearchSourceRecord`
 
 ### Common Issues
 
@@ -223,3 +282,10 @@ Optional:
 - `PERPLEXITY_API_KEY` - Perplexity search
 - `ASKNEWS_CLIENT_ID` / `ASKNEWS_CLIENT_SECRET` - AskNews (free via Metaculus, requires all scopes)
 - `SERPER_API_KEY` - Web search (free tier: 2,500/month)
+
+## Additional Documentation
+
+See these files for more details:
+- `PIPELINE_WORKFLOW.md` - Detailed pipeline workflow
+- `PROMPTS.md` - Prompt documentation
+- `.env.template` - Complete environment variable reference

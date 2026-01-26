@@ -243,13 +243,6 @@ research:
     iteration_delay_seconds: 10 # Delay between iterations to respect API rate limits
                                 # Free tier: 10s, Spelunker: 1s, Analyst: 0.5s
 
-  # Research reuse - avoid redundant API calls for repeat forecasts
-  # Useful for testing and updating forecasts on same question
-  reuse:
-    enabled: true              # Set to false to always run fresh research
-    max_age_hours: 168         # Reuse research if less than this many hours old (168 = 7 days)
-    force_fresh: false         # Override reuse for this run (useful for CLI flag)
-
 # =============================================================================
 # PROMPT CONFIGURATION
 # =============================================================================

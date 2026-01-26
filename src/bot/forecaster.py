@@ -151,8 +151,8 @@ class Forecaster:
             analysis = self._analyze_question(question)
             self.artifact_store.save_analysis(artifacts, analysis)
 
-            # Step 3: Conduct research (or reuse existing)
-            research_summary, research_results, reuse_metadata = await self._get_or_reuse_research(
+            # Step 3: Conduct research
+            research_summary, research_results = await self._conduct_research(
                 question=question,
                 artifacts=artifacts,
             )
@@ -312,75 +312,23 @@ class Forecaster:
             "num_forecasters": question.num_forecasters,
         }
 
-    async def _get_or_reuse_research(
+    async def _conduct_research(
         self,
         question: MetaculusQuestion,
         artifacts: ForecastArtifacts,
-    ) -> tuple[str, ResearchResults, dict | None]:
+    ) -> tuple[str, ResearchResults]:
         """
-        Get research for a question, either by reusing recent research or conducting fresh.
+        Conduct fresh research for a question.
 
         Returns:
-            Tuple of (research_summary, research_results, reuse_metadata)
-            reuse_metadata is None if fresh research was conducted.
+            Tuple of (research_summary, research_results)
         """
-        reuse_config = self.config.get("research", {}).get("reuse", {})
-        reuse_enabled = reuse_config.get("enabled", False)
-        max_age_hours = reuse_config.get("max_age_hours", 168)
-        force_fresh = reuse_config.get("force_fresh", False)
-
-        # Try to reuse research if enabled
-        if reuse_enabled and not force_fresh:
-            logger.info(f"Checking for recent research (max age: {max_age_hours}h)...")
-            recent_research = self.artifact_store.find_recent_research(
-                question_id=question.id,
-                max_age_hours=max_age_hours,
-            )
-
-            if recent_research:
-                logger.info(
-                    f"Found research from {recent_research['age_hours']:.1f}h ago, reusing..."
-                )
-                reuse_metadata = self.artifact_store.copy_research(
-                    source_research_dir=recent_research["research_dir"],
-                    target_artifacts=artifacts,
-                    metadata=recent_research,
-                )
-
-                # Load the synthesis from copied research
-                synthesis_path = artifacts.research_dir / "synthesis.md"
-                if synthesis_path.exists():
-                    with open(synthesis_path) as f:
-                        research_summary = f.read()
-
-                    # Load original queries if available
-                    queries = []
-                    queries_path = artifacts.research_dir / "queries_generated.json"
-                    if queries_path.exists():
-                        import json
-                        with open(queries_path) as f:
-                            queries_data = json.load(f)
-                            queries = [q.get("query", "") for q in queries_data]
-
-                    # Create ResearchResults for compatibility with report/database code
-                    research_results = ResearchResults(
-                        queries=queries if queries else [],
-                        results_by_source={},
-                        perplexity_synthesis=None,
-                        total_results=0,
-                    )
-
-                    return research_summary, research_results, reuse_metadata
-                else:
-                    logger.warning("No synthesis found in reused research, falling back to fresh")
-
-        # Conduct fresh research
-        logger.info("Conducting fresh research...")
+        logger.info("Conducting research...")
 
         # Extract option labels for multiple choice questions
         options = None
         if question.question_type == "multiple_choice" and question.options:
-            options = question.options  # Already a list of strings from API
+            options = question.options
 
         research_results = await self.research.research(
             question_title=question.title,
@@ -402,7 +350,7 @@ class Forecaster:
             )
 
         research_summary = self.research.synthesize_results(research_results)
-        return research_summary, research_results, None
+        return research_summary, research_results
 
     async def _forecast_binary(
         self,
