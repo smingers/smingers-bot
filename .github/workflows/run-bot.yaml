@@ -17,7 +17,7 @@ on:
           - dry_run_heavy
           - dry_run
   schedule:
-    - cron: "0 */4 * * *"  # Every 4 hours
+    - cron: "*/30 * * * *"  # Every 30 minutes
 
 concurrency:
   group: ${{ github.workflow }}
@@ -31,6 +31,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -168,5 +170,6 @@ jobs:
 
           Run: ${{ github.run_id }}
           Triggered by: ${{ github.event_name }}"
+            git pull --rebase
             git push
           fi
