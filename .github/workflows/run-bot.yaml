@@ -7,11 +7,15 @@ on:
         description: 'Single question ID to test (leave empty for normal tournament run)'
         required: false
         type: string
-      dry_run:
-        description: 'Dry run (no submission to Metaculus)'
+      mode:
+        description: 'Run mode'
         required: false
-        type: boolean
-        default: false
+        type: choice
+        default: 'production'
+        options:
+          - production
+          - dry_run_heavy
+          - dry_run
   schedule:
     - cron: "0 */4 * * *"  # Every 4 hours
 
@@ -66,7 +70,7 @@ jobs:
         run: |
           poetry run python main.py \
             --question ${{ github.event.inputs.test_question_id }} \
-            ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }}
+            --mode ${{ github.event.inputs.mode || 'production' }}
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           METACULUS_TOKEN: ${{ secrets.METACULUS_TOKEN }}
