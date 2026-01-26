@@ -1,9 +1,0 @@
-{
-  "base_rate": 0.63,
-  "reference_classes": [
-    "New browser releases by major tech companies**",
-    "New software releases by AI companies**",
-    "New browser releases targeting the Windows platform**"
-  ],
-  "confidence": 7
-}

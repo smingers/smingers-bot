@@ -31,7 +31,7 @@ from dotenv import load_dotenv
 sys.path.insert(0, str(Path(__file__).parent))
 
 from src.bot.forecaster import Forecaster, load_config
-from src.bot.multiple_choice import ExtractionError
+from src.bot import ExtractionError
 from src.utils.metaculus_api import MetaculusClient
 from datetime import datetime, timezone
 
@@ -159,12 +159,19 @@ async def forecast_question(
             question_type = result['question'].question_type
             if question_type == "binary":
                 print(f"Prediction: {result['prediction']:.1%}")
-                print(f"Base Rate: {result['forecast_result']['base_rate']:.1%}")
+                # Panshul42 pipeline doesn't use separate base rate
+                agent_results = result.get('forecast_result', {}).get('agent_results', [])
+                if agent_results:
+                    probs = [r.probability for r in agent_results if hasattr(r, 'probability') and r.probability]
+                    if probs:
+                        print(f"Agent probabilities: {[f'{p:.0%}' for p in probs]}")
             elif question_type == "numeric":
-                median = result['prediction'].get(50, 0)
-                base_median = result['forecast_result'].get('base_percentiles', {}).get(50, 0)
+                percentiles = result.get('prediction', {})
+                median = percentiles.get("50", percentiles.get(50, 0))
                 print(f"Prediction (median): {median:.2f}")
-                print(f"Base Rate (median): {base_median:.2f}")
+                p10 = percentiles.get("10", percentiles.get(10, 0))
+                p90 = percentiles.get("90", percentiles.get(90, 0))
+                print(f"80% CI: [{p10:.2f}, {p90:.2f}]")
             elif question_type == "multiple_choice":
                 dist = result['prediction']
                 best = max(dist.items(), key=lambda x: x[1])
