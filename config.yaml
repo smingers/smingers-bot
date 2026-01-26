@@ -1,5 +1,5 @@
 # Metaculus AI Forecasting Bot Configuration
-# All tunable parameters in one place
+# Panshul42 Integration - 5-Agent Ensemble Pipeline
 
 # =============================================================================
 # RUN MODE
@@ -16,294 +16,141 @@ mode: "dry_run"
 # =============================================================================
 # MODEL CONFIGURATION
 # =============================================================================
-# Models are accessed via litellm which supports multiple providers.
+# Models used for research query generation and other utility tasks.
+# All models accessed via OpenRouter (set OPENROUTER_API_KEY).
 #
-# Via OpenRouter (set OPENROUTER_API_KEY, prefix with "openrouter/"):
-#   Anthropic models:
-#   - openrouter/anthropic/claude-sonnet-4.5 ($3/$15 per M tokens)
-#   - openrouter/anthropic/claude-opus-4.5 ($5/$25 per M tokens)
-#   - openrouter/anthropic/claude-3.5-haiku ($0.80/$4 per M tokens - fast, cheap)
-#   OpenAI models:
-#   - openrouter/openai/gpt-5.2 ($1.75/$14 per M tokens - latest GPT)
-#   - openrouter/openai/gpt-4o ($2.50/$10 per M tokens)
-#   - openrouter/openai/o3 ($2/$8 per M tokens - strong reasoning)
-#   - openrouter/openai/o3-mini-high ($1.10/$4.40 per M tokens - cost-efficient reasoning)
-#
-# Direct API usage (if you have your own keys):
-#   - claude-sonnet-4-5-20250929, claude-3-haiku-20240307
-#   - gpt-4o, gpt-4o-mini
-#
-# NOTE: Don't use ":online" suffix - Exa costs not covered by Metaculus credits
-#
-# Models are selected based on run mode. Define both cheap and production models.
+# The 5-agent ensemble is configured separately below.
 
 models:
   # Models for dry_run mode (cheap, fast)
   cheap:
-    classifier: "openrouter/anthropic/claude-3.5-haiku"
     query_generator: "openrouter/anthropic/claude-3.5-haiku"
-    base_rate_estimator: "openrouter/anthropic/claude-3.5-haiku"
+    article_summarizer: "openrouter/anthropic/claude-3.5-haiku"
+    agentic_search: "openrouter/anthropic/claude-3.5-haiku"
 
   # Models for dry_run_heavy and production modes
   production:
-    classifier: "openrouter/anthropic/claude-3.5-haiku"  # Keep cheap for simple tasks
-    query_generator: "openrouter/anthropic/claude-3.5-haiku"  # Keep cheap for simple tasks
-    base_rate_estimator: "openrouter/anthropic/claude-sonnet-4.5"
+    query_generator: "openrouter/openai/o3"
+    article_summarizer: "openrouter/anthropic/claude-sonnet-4.5"
+    agentic_search: "openrouter/openai/o3"
 
 # =============================================================================
-# ENSEMBLE CONFIGURATION
+# 5-AGENT ENSEMBLE CONFIGURATION (Panshul42 Structure)
 # =============================================================================
-# Define agents for both cheap and production modes.
-# Production mode uses stronger models with optimized weights.
+# The ensemble uses 5 forecasting agents with equal weights:
+#   - forecaster_1: Claude (weight 1.0)
+#   - forecaster_2: Claude (weight 1.0)
+#   - forecaster_3: o3-mini-high (weight 1.0)
+#   - forecaster_4: o3 (weight 1.0)
+#   - forecaster_5: o3 (weight 1.0)
 #
-# Model selection strategy (via OpenRouter):
-# - Claude Sonnet 4.5: Best overall for forecasting tasks (reasoning + analysis)
-# - o3: Strong reasoning model for base rates and complex analysis
-# - o3-mini-high: Cost-efficient reasoning for quantitative tasks
-# - Claude 3.5 Haiku: Fast/cheap for simple tasks
+# Cross-pollination structure (from Panshul42):
+#   - Agent 1 receives Agent 1's step 1 output (Outside view)
+#   - Agent 2 receives Agent 3's step 1 output (Outside view)
+#   - Agent 3 receives Agent 2's step 1 output (Outside view)
+#   - Agent 4 receives Agent 4's step 1 output (Inside view)
+#   - Agent 5 receives Agent 5's step 1 output (Inside view)
 
 ensemble:
-  # Agents for dry_run mode (cheap, fast)
+  # Agents for dry_run mode (all Haiku - cheap, fast)
   cheap:
-    - name: "analyst"
+    - name: "forecaster_1"
       model: "openrouter/anthropic/claude-3.5-haiku"
       weight: 1.0
-      role_description: |
-        You are a geopolitical analyst and superforecaster. Focus on the current
-        situation, key actors, their incentives, and recent developments. Weigh
-        evidence by strength (strong, moderate, weak) and reason through how
-        each piece updates the base rate.
 
-    - name: "historian"
+    - name: "forecaster_2"
       model: "openrouter/anthropic/claude-3.5-haiku"
       weight: 1.0
-      role_description: |
-        You are a historian and superforecaster. Focus on historical precedents,
-        analogous situations, and patterns from the past. Consider how often
-        similar situations have resolved in various ways. Use history to inform
-        your probability estimate.
 
-    - name: "contrarian"
+    - name: "forecaster_3"
       model: "openrouter/anthropic/claude-3.5-haiku"
-      weight: 0.8
-      role_description: |
-        You are a contrarian forecaster. Your job is to challenge the obvious
-        narrative, find reasons the consensus might be wrong, and identify
-        blind spots. Consider: What would make the base rate misleading?
-        What are people overlooking?
+      weight: 1.0
 
-  # Agents for dry_run_heavy and production modes
-  # Uses stronger models, more agents, optimized weights (inspired by Q2 winner)
-  # Mix of Claude Sonnet 4.5 and OpenAI o3 reasoning models for diversity
+    - name: "forecaster_4"
+      model: "openrouter/anthropic/claude-3.5-haiku"
+      weight: 1.0
+
+    - name: "forecaster_5"
+      model: "openrouter/anthropic/claude-3.5-haiku"
+      weight: 1.0
+
+  # Agents for production
   production:
-    - name: "analyst"
+    - name: "forecaster_1"
       model: "openrouter/anthropic/claude-sonnet-4.5"
       weight: 1.0
-      role_description: |
-        You are a geopolitical analyst and superforecaster. Focus on the current
-        situation, key actors, their incentives, and recent developments. Weigh
-        evidence by strength (strong, moderate, weak) and reason through how
-        each piece updates the base rate.
 
-    - name: "historian"
+    - name: "forecaster_2"
       model: "openrouter/anthropic/claude-sonnet-4.5"
       weight: 1.0
-      role_description: |
-        You are a historian and superforecaster. Focus on historical precedents,
-        analogous situations, and patterns from the past. Consider how often
-        similar situations have resolved in various ways. Use history to inform
-        your probability estimate.
 
-    - name: "contrarian"
-      model: "openrouter/anthropic/claude-sonnet-4.5"
-      weight: 0.8
-      role_description: |
-        You are a contrarian forecaster. Your job is to challenge the obvious
-        narrative, find reasons the consensus might be wrong, and identify
-        blind spots. Consider: What would make the base rate misleading?
-        What are people overlooking?
-
-    - name: "quantitative"
-      model: "openrouter/anthropic/claude-sonnet-4.5"
+    - name: "forecaster_3"
+      model: "openrouter/openai/o3-mini-high"
       weight: 1.0
-      role_description: |
-        You are a quantitative analyst and superforecaster. Focus on data,
-        statistics, and numerical analysis. Look for base rates in the data,
-        trend extrapolations, and quantitative models that inform the forecast.
 
-    - name: "synthesizer"
-      model: "openrouter/anthropic/claude-sonnet-4.5"
-      weight: 1.2
-      role_description: |
-        You are a synthesis expert and superforecaster. Your job is to integrate
-        multiple perspectives, identify key uncertainties, and form a balanced
-        view. Consider all evidence holistically and identify what matters most.
-
-    - name: "panshul42"
-      model: "openrouter/anthropic/claude-sonnet-4.5"
+    - name: "forecaster_4"
+      model: "openrouter/openai/o3"
       weight: 1.0
-      role_description: |
-        Uses the exact Panshul42 Q2 winner inside view prompt structure.
+
+    - name: "forecaster_5"
+      model: "openrouter/openai/o3"
+      weight: 1.0
 
   aggregation: "weighted_average"
 
 # =============================================================================
-# RESEARCH CONFIGURATION
+# RESEARCH CONFIGURATION (Panshul42 Pipeline)
 # =============================================================================
-# For testing: Disable external research, use LLM's training knowledge only
-# Enable sources as you get API keys
+# Research is integrated into each handler. The pipeline:
+# 1. Generate historical queries (outside view context)
+# 2. Generate current queries (inside view context)
+# 3. Execute searches via Google (Serper) and AskNews
+# 4. Extract and summarize content
+#
+# This replaces the previous separate research phase.
 
 research:
+  # Google search via Serper API
+  google_enabled: true
+  google_max_results: 10
+
+  # AskNews integration
+  asknews_enabled: true
+  asknews_max_results: 10
+  asknews_hours_back: 72
+
+  # Agentic search (iterative LLM-guided research)
+  agentic_search_enabled: true
+  agentic_search_max_steps: 7
+
+  # Article scraping
+  scraping_enabled: true
+  max_articles_to_scrape: 10
+  max_content_length: 15000
+
+  # Legacy settings (for backward compatibility)
   sources:
-    # Claude will use its training knowledge for research
-    # No external API calls needed for basic testing
     - type: "llm_knowledge"
       enabled: true
 
-    # AskNews - FREE for tournament participants (3k+ calls/month)
-    # Sign up at https://my.asknews.app with your Metaculus-registered email
-    # Create API credentials with scopes: news, chat, stories, analytics
-    #
-    # This implementation mirrors the Metaculus template bot's AskNews integration:
-    # - AsyncAskNewsSDK for native async support
-    # - Dual search strategy (latest news + historical/news knowledge)
-    # - Deep research via get_deep_news endpoint
-    # - Response caching with configurable modes
-    # - Research presets for easy configuration
     - type: "asknews"
       enabled: true
-
-      # Cache mode: "no_cache", "use_cache", or "use_cache_with_fallback"
-      # - no_cache: Always fetch fresh results (default)
-      # - use_cache: Only use cached results, fail if not cached
-      # - use_cache_with_fallback: Try cache first, fetch if not found
       cache_mode: "no_cache"
 
-      # Research preset (used by get_deep_research):
-      # - "asknews/news-summaries" - Dual strategy news search (fast, low cost)
-      # - "asknews/deep-research/low-depth" - Light deep research, asknews only
-      # - "asknews/deep-research/medium-depth" - Medium depth, all sources
-      # - "asknews/deep-research/high-depth" - Maximum depth, all sources
-      # You can append a model: "asknews/deep-research/low-depth/claude-3-7-sonnet-latest"
-      research_preset: "asknews/deep-research/low-depth"
-
-      # Deep research settings (for get_deep_news endpoint)
-      deep_research:
-        enabled: true              # Enable deep research
-        model: "deepseek-basic"    # Model: deepseek-basic, deepseek, claude-3-7-sonnet-latest, o3-mini
-        search_depth: 1            # Search depth (1-4)
-        max_depth: 1               # Maximum depth (1-6)
-        sources:                   # Sources to search
-          - "asknews"              # AskNews news archive
-          # - "google"             # Google search (may require higher tier)
-          # - "x"                  # Twitter/X (may require higher tier)
-          # - "wiki"               # Wikipedia
-
-      # Legacy settings (kept for backward compatibility)
-      max_results: 10
-      hours_back: 72
-
-    # AskNews Wikipedia - encyclopedic info about entities
-    # Uses same API credentials as asknews. Great for:
-    # - Artist/person background info
-    # - Historical context and facts
-    # - Reference data that news sources don't cover
-    # Note: Same rate limits as asknews (free tier: 1 req/10s)
     - type: "asknews_wiki"
       enabled: true
-      max_results: 5              # Wikipedia docs per query
+      max_results: 5
 
-    # Perplexity - requires PERPLEXITY_API_KEY
-    - type: "perplexity"
-      enabled: false
-      model: "sonar-reasoning-pro"
-      max_queries: 3
-
-    # Web search via Serper - requires SERPER_API_KEY (has free tier: 2,500/month)
-    - type: "web_search"
-      enabled: false  # Disabled during testing - using AskNews instead
-      provider: "serper"
-      max_results: 10
-
-    # Google News via Serper - requires SERPER_API_KEY (uses same quota as web_search)
-    # Great for current events and recent developments
-    - type: "google_news"
-      enabled: false  # Disabled during testing - using AskNews instead
-      max_results: 10
-
-    # Full article scraping - FREE (uses Trafilatura/BeautifulSoup)
-    # Fetches full text from URLs returned by search
-    # Provides much richer context than snippets alone
     - type: "article_scraping"
       enabled: true
-      max_articles: 5          # How many articles to scrape per question
-      max_content_length: 5000 # Max chars per article
-
-    # Claude native web search - uses Anthropic API directly
-    # Cost: $10 per 1,000 searches + token costs
-    # Disabled by default since Serper is cheaper for basic search
-    - type: "claude_web_search"
-      enabled: false
-      model: "claude-3-haiku-20240307"
-
-  queries_per_question: 3
-  max_research_time: 60
-
-  # Iterative/agentic research - LLM analyzes results and identifies gaps
-  # Based on AIA Forecaster paper showing agentic search improves Brier scores
-  iterative:
-    enabled: true              # Enable iterative research (more API calls but better results)
-    max_iterations: 3          # Maximum research iterations
-    confidence_threshold: 0.7  # Stop when LLM confidence reaches this level (0-1)
-    queries_per_iteration: 2   # Number of follow-up queries per iteration
-    iteration_delay_seconds: 10 # Delay between iterations to respect API rate limits
-                                # Free tier: 10s, Spelunker: 1s, Analyst: 0.5s
-
-  # Research reuse - avoid redundant API calls for repeat forecasts
-  # Useful for testing and updating forecasts on same question
-  reuse:
-    enabled: true              # Set to false to always run fresh research
-    max_age_hours: 168         # Reuse research if less than this many hours old (168 = 7 days)
-    force_fresh: false         # Override reuse for this run (useful for CLI flag)
-
-# =============================================================================
-# PROMPT CONFIGURATION
-# =============================================================================
-prompts:
-  outside_view_template: "outside_view.md"
-  inside_view_template: "inside_view.md"
-  evidence_classification: "evidence_classification.md"
-  calibration_checklist: "calibration_checklist.md"
-  verbosity: "maximum"
-
-# =============================================================================
-# CALIBRATION CONFIGURATION
-# =============================================================================
-calibration:
-  enabled: true
-  checklist_items:
-    - id: "paraphrase"
-      description: "Can you summarize the question in <30 words?"
-    - id: "base_rate_grounded"
-      description: "Is the final prediction rooted in the outside view base rate?"
-    - id: "consistency_test"
-      description: "Does 'X out of 100 times, this happens' feel right?"
-    - id: "evidence_audit"
-      description: "Are the top 3-5 pieces of evidence factually valid?"
-    - id: "blind_spots"
-      description: "What scenario would make this forecast look silly?"
-    - id: "status_quo_bias"
-      description: "Have you appropriately considered inertia/status quo?"
+      max_articles: 5
+      max_content_length: 5000
 
 # =============================================================================
 # SUBMISSION CONFIGURATION
 # =============================================================================
-# Note: dry_run is now controlled by the 'mode' setting at the top.
-# - mode: "dry_run" or "dry_run_heavy" -> no submission
-# - mode: "production" -> submits to Metaculus
 submission:
   store_reasoning: true
-  max_ensemble_disagreement: 0.0
   tournament_id: null
 
 # =============================================================================
@@ -321,3 +168,15 @@ logging:
   level: "INFO"
   log_llm_calls: true
   track_costs: true
+
+# =============================================================================
+# API KEYS (Set in .env file)
+# =============================================================================
+# Required:
+#   OPENROUTER_API_KEY - For all model calls
+#   METACULUS_TOKEN - For question fetching and submission
+#
+# For research:
+#   SERPER_API_KEY - Google search (free tier: 2,500/month)
+#   ASKNEWS_CLIENT_ID - AskNews (free for tournament participants)
+#   ASKNEWS_CLIENT_SECRET - AskNews secret

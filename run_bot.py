@@ -22,7 +22,7 @@ from dataclasses import dataclass, field
 sys.path.insert(0, str(Path(__file__).parent))
 
 from src.bot.forecaster import Forecaster, load_config
-from src.bot.multiple_choice import ExtractionError
+from src.bot import ExtractionError
 from src.utils.metaculus_api import MetaculusClient
 
 logger = logging.getLogger(__name__)
