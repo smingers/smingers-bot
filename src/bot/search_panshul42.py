@@ -105,6 +105,9 @@ class SearchPipeline:
         self.asknews_client_id = os.getenv("ASKNEWS_CLIENT_ID")
         self.asknews_secret = os.getenv("ASKNEWS_CLIENT_SECRET") or os.getenv("ASKNEWS_SECRET")
 
+        # Semaphore to limit concurrent AskNews calls (free tier has concurrency limit)
+        self._asknews_semaphore = asyncio.Semaphore(1)
+
     async def __aenter__(self):
         self.http_client = httpx.AsyncClient(timeout=70.0)
         return self
@@ -434,83 +437,90 @@ class SearchPipeline:
         Search AskNews for relevant articles.
 
         Uses dual strategy: latest news + historical news.
+        Uses semaphore to respect AskNews free tier concurrency limits.
         """
         if not self.asknews_client_id or not self.asknews_secret:
             logger.warning("AskNews credentials not set")
             return "AskNews credentials not configured."
 
-        try:
-            from asknews_sdk import AskNewsSDK
+        # Use semaphore to limit concurrent AskNews calls (free tier limit)
+        async with self._asknews_semaphore:
+            try:
+                from asknews_sdk import AskNewsSDK
 
-            ask = AskNewsSDK(
-                client_id=self.asknews_client_id,
-                client_secret=self.asknews_secret,
-                scopes=set(["news"])
-            )
+                ask = AskNewsSDK(
+                    client_id=self.asknews_client_id,
+                    client_secret=self.asknews_secret,
+                    scopes=set(["news"])
+                )
 
-            # Run both searches in parallel
-            hot_task = asyncio.create_task(
-                asyncio.to_thread(
+                # Run searches sequentially with rate limit delay
+                # AskNews Pro tier (via Metaculus): 1 request per 10 seconds, add 2s buffer
+                rate_limit_delay = 12
+
+                logger.debug(f"[call_asknews] Searching latest news for: {query[:50]}...")
+                hot_response = await asyncio.to_thread(
                     ask.news.search_news,
                     query=query,
                     n_articles=8,
                     return_type="both",
                     strategy="latest news"
                 )
-            )
-            historical_task = asyncio.create_task(
-                asyncio.to_thread(
+
+                # Rate limit delay between calls
+                logger.debug(f"[call_asknews] Waiting {rate_limit_delay}s for rate limit...")
+                await asyncio.sleep(rate_limit_delay)
+
+                logger.debug(f"[call_asknews] Searching historical news for: {query[:50]}...")
+                historical_response = await asyncio.to_thread(
                     ask.news.search_news,
                     query=query,
                     n_articles=8,
                     return_type="both",
                     strategy="news knowledge"
                 )
-            )
 
-            hot_response, historical_response = await asyncio.gather(hot_task, historical_task)
+                # Format results
+                formatted_articles = "Here are the relevant news articles:\n\n"
 
-            # Format results
-            formatted_articles = "Here are the relevant news articles:\n\n"
+                hot_articles = hot_response.as_dicts
+                if hot_articles:
+                    hot_articles = [article.__dict__ for article in hot_articles]
+                    hot_articles = sorted(hot_articles, key=lambda x: x["pub_date"], reverse=True)
 
-            hot_articles = hot_response.as_dicts
-            if hot_articles:
-                hot_articles = [article.__dict__ for article in hot_articles]
-                hot_articles = sorted(hot_articles, key=lambda x: x["pub_date"], reverse=True)
+                    for article in hot_articles:
+                        pub_date = article["pub_date"].strftime("%B %d, %Y %I:%M %p")
+                        formatted_articles += (
+                            f"**{article['eng_title']}**\n"
+                            f"{article['summary']}\n"
+                            f"Original language: {article['language']}\n"
+                            f"Publish date: {pub_date}\n"
+                            f"Source:[{article['source_id']}]({article['article_url']})\n\n"
+                        )
 
-                for article in hot_articles:
-                    pub_date = article["pub_date"].strftime("%B %d, %Y %I:%M %p")
-                    formatted_articles += (
-                        f"**{article['eng_title']}**\n"
-                        f"{article['summary']}\n"
-                        f"Original language: {article['language']}\n"
-                        f"Publish date: {pub_date}\n"
-                        f"Source:[{article['source_id']}]({article['article_url']})\n\n"
-                    )
+                historical_articles = historical_response.as_dicts
+                if historical_articles:
+                    historical_articles = [article.__dict__ for article in historical_articles]
+                    historical_articles = sorted(historical_articles, key=lambda x: x["pub_date"], reverse=True)
 
-            historical_articles = historical_response.as_dicts
-            if historical_articles:
-                historical_articles = [article.__dict__ for article in historical_articles]
-                historical_articles = sorted(historical_articles, key=lambda x: x["pub_date"], reverse=True)
+                    for article in historical_articles:
+                        pub_date = article["pub_date"].strftime("%B %d, %Y %I:%M %p")
+                        formatted_articles += (
+                            f"**{article['eng_title']}**\n"
+                            f"{article['summary']}\n"
+                            f"Original language: {article['language']}\n"
+                            f"Publish date: {pub_date}\n"
+                            f"Source:[{article['source_id']}]({article['article_url']})\n\n"
+                        )
 
-                for article in historical_articles:
-                    pub_date = article["pub_date"].strftime("%B %d, %Y %I:%M %p")
-                    formatted_articles += (
-                        f"**{article['eng_title']}**\n"
-                        f"{article['summary']}\n"
-                        f"Original language: {article['language']}\n"
-                        f"Publish date: {pub_date}\n"
-                        f"Source:[{article['source_id']}]({article['article_url']})\n\n"
-                    )
+                if not hot_articles and not historical_articles:
+                    formatted_articles += "No articles were found.\n\n"
 
-            if not hot_articles and not historical_articles:
-                formatted_articles += "No articles were found.\n\n"
+                return formatted_articles
 
-            return formatted_articles
-
-        except Exception as e:
-            logger.error(f"[call_asknews] Error: {e}")
-            return f"Error retrieving news articles: {e}"
+            except Exception as e:
+                logger.error(f"[call_asknews] Error: {e}")
+                return f"Error retrieving news articles: {e}"
 
     # -------------------------------------------------------------------------
     # Agentic Search
