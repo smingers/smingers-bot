@@ -131,7 +131,8 @@ def extract_percentiles_from_response(text: Union[str, List], verbose: bool = Tr
             logger.warning(f"Failed parsing line {idx}: {line} -> {e}")
 
     if not percentiles:
-        raise ValueError("No valid percentiles extracted.")
+        snippet = str(text)[-300:] if len(str(text)) > 300 else str(text)
+        raise ValueError(f"No valid percentiles extracted. Last 300 chars: {snippet!r}")
 
     return percentiles
 
