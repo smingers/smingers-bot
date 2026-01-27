@@ -1,9 +1,11 @@
 """
 Tests for CDF generation in numeric forecasting.
 
-Tests the functions in src/bot/numeric.py:
+Tests the functions in src/bot/cdf.py:
 - generate_continuous_cdf()
 - _safe_cdf_bounds()
+
+And src/bot/extractors.py:
 - enforce_strict_increasing()
 
 These are critical for Metaculus submission validity.
@@ -13,11 +15,11 @@ import pytest
 import numpy as np
 from typing import Dict
 
-from src.bot.numeric import (
+from src.bot.cdf import (
     generate_continuous_cdf,
     _safe_cdf_bounds,
-    enforce_strict_increasing,
 )
+from src.bot.extractors import enforce_strict_increasing
 from src.bot.exceptions import CDFGenerationError
 
 
