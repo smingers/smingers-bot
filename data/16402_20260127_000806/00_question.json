@@ -1,0 +1,1598 @@
+{
+  "id": 16402,
+  "title": "What will be the level of anthropogenic methane emissions in 2050?",
+  "short_title": "Global Methane Emissions in 2050?",
+  "url_title": "Global Methane Emissions in 2050?",
+  "slug": "global-methane-emissions-in-2050",
+  "author_id": 104161,
+  "author_username": "casens",
+  "coauthors": [],
+  "created_at": "2023-04-20T00:38:17.840692Z",
+  "published_at": "2023-04-19T00:38:00Z",
+  "edited_at": "2025-12-02T18:37:34.095493Z",
+  "curation_status": "approved",
+  "curation_status_updated_at": "2023-04-20T00:38:40.595038Z",
+  "comment_count": 4,
+  "status": "open",
+  "resolved": false,
+  "actual_close_time": null,
+  "scheduled_close_time": "2050-12-31T18:00:00Z",
+  "scheduled_resolve_time": "2050-12-31T18:00:00Z",
+  "actual_resolve_time": null,
+  "open_time": "2023-04-19T00:38:00Z",
+  "nr_forecasters": 11,
+  "html_metadata_json": null,
+  "projects": {
+    "topic": [
+      {
+        "id": 15867,
+        "name": "Environment & Climate",
+        "slug": "climate",
+        "emoji": "\ud83c\udf0e",
+        "type": "topic"
+      }
+    ],
+    "site_main": [
+      {
+        "id": 144,
+        "type": "site_main",
+        "name": "Metaculus Community",
+        "slug": null,
+        "header_image": null,
+        "prize_pool": null,
+        "start_date": null,
+        "close_date": null,
+        "forecasting_end_date": null,
+        "html_metadata_json": null,
+        "is_ongoing": null,
+        "user_permission": "forecaster",
+        "order": 0,
+        "created_at": "2023-11-08T16:55:29.484707Z",
+        "edited_at": "2025-12-15T13:27:26.396036Z",
+        "score_type": null,
+        "default_permission": "forecaster",
+        "visibility": "normal",
+        "show_on_homepage": false,
+        "is_current_content_translated": false,
+        "bot_leaderboard_status": "exclude_and_show",
+        "description_preview": "-"
+      }
+    ],
+    "default_project": {
+      "id": 144,
+      "type": "site_main",
+      "name": "Metaculus Community",
+      "slug": null,
+      "header_image": null,
+      "prize_pool": null,
+      "start_date": null,
+      "close_date": null,
+      "forecasting_end_date": null,
+      "html_metadata_json": null,
+      "is_ongoing": null,
+      "user_permission": "forecaster",
+      "order": 0,
+      "created_at": "2023-11-08T16:55:29.484707Z",
+      "edited_at": "2025-12-15T13:27:26.396036Z",
+      "score_type": null,
+      "default_permission": "forecaster",
+      "visibility": "normal",
+      "show_on_homepage": false,
+      "is_current_content_translated": false,
+      "bot_leaderboard_status": "exclude_and_show",
+      "description_preview": "-"
+    },
+    "category": [
+      {
+        "id": 3697,
+        "name": "Environment & Climate",
+        "slug": "environment-climate",
+        "emoji": "\ud83c\udf31",
+        "description": "Environment & Climate",
+        "type": "category"
+      },
+      {
+        "id": 3698,
+        "name": "Economy & Business",
+        "slug": "economy-business",
+        "emoji": "\ud83d\udcbc",
+        "description": "Economy & Business",
+        "type": "category"
+      }
+    ]
+  },
+  "question": {
+    "id": 16402,
+    "title": "What will be the level of anthropogenic methane emissions in 2050?",
+    "created_at": "2023-04-20T00:38:17.840692Z",
+    "open_time": "2023-04-19T00:38:00Z",
+    "cp_reveal_time": "2023-04-21T00:38:00Z",
+    "spot_scoring_time": "2023-04-21T00:38:00Z",
+    "scheduled_resolve_time": "2050-12-31T18:00:00Z",
+    "actual_resolve_time": null,
+    "resolution_set_time": null,
+    "scheduled_close_time": "2050-12-31T18:00:00Z",
+    "actual_close_time": "2050-12-31T18:00:00Z",
+    "type": "numeric",
+    "options": null,
+    "all_options_ever": null,
+    "options_history": null,
+    "group_variable": "",
+    "status": "open",
+    "possibilities": {
+      "low": "tail",
+      "high": "tail",
+      "type": "continuous",
+      "scale": {
+        "max": 20,
+        "min": 0,
+        "deriv_ratio": 1
+      },
+      "format": "num"
+    },
+    "resolution": null,
+    "include_bots_in_aggregates": false,
+    "question_weight": 1.0,
+    "default_score_type": "peer",
+    "default_aggregation_method": "recency_weighted",
+    "label": "",
+    "unit": "GtCO2e/year",
+    "open_upper_bound": true,
+    "open_lower_bound": true,
+    "inbound_outcome_count": null,
+    "scaling": {
+      "range_min": 0.0,
+      "range_max": 20.0,
+      "nominal_min": 0.0,
+      "nominal_max": 20.0,
+      "zero_point": null,
+      "open_upper_bound": true,
+      "open_lower_bound": true,
+      "inbound_outcome_count": null,
+      "continuous_range": [
+        0.0,
+        0.1,
+        0.2,
+        0.3,
+        0.4,
+        0.5,
+        0.6,
+        0.7000000000000001,
+        0.8,
+        0.8999999999999999,
+        1.0,
+        1.1,
+        1.2,
+        1.3,
+        1.4000000000000001,
+        1.5,
+        1.6,
+        1.7000000000000002,
+        1.7999999999999998,
+        1.9,
+        2.0,
+        2.1,
+        2.2,
+        2.3000000000000003,
+        2.4,
+        2.5,
+        2.6,
+        2.7,
+        2.8000000000000003,
+        2.9,
+        3.0,
+        3.1,
+        3.2,
+        3.3000000000000003,
+        3.4000000000000004,
+        3.5000000000000004,
+        3.5999999999999996,
+        3.7,
+        3.8,
+        3.9000000000000004,
+        4.0,
+        4.1000000000000005,
+        4.2,
+        4.3,
+        4.4,
+        4.5,
+        4.6000000000000005,
+        4.7,
+        4.8,
+        4.9,
+        5.0,
+        5.1,
+        5.2,
+        5.300000000000001,
+        5.4,
+        5.5,
+        5.6000000000000005,
+        5.700000000000001,
+        5.8,
+        5.8999999999999995,
+        6.0,
+        6.1,
+        6.2,
+        6.3,
+        6.4,
+        6.5,
+        6.6000000000000005,
+        6.7,
+        6.800000000000001,
+        6.9,
+        7.000000000000001,
+        7.1,
+        7.199999999999999,
+        7.3,
+        7.4,
+        7.5,
+        7.6,
+        7.7,
+        7.800000000000001,
+        7.9,
+        8.0,
+        8.100000000000001,
+        8.200000000000001,
+        8.3,
+        8.4,
+        8.5,
+        8.6,
+        8.7,
+        8.8,
+        8.9,
+        9.0,
+        9.1,
+        9.200000000000001,
+        9.3,
+        9.4,
+        9.5,
+        9.6,
+        9.7,
+        9.8,
+        9.9,
+        10.0,
+        10.1,
+        10.2,
+        10.3,
+        10.4,
+        10.5,
+        10.600000000000001,
+        10.700000000000001,
+        10.8,
+        10.9,
+        11.0,
+        11.100000000000001,
+        11.200000000000001,
+        11.3,
+        11.400000000000002,
+        11.500000000000002,
+        11.6,
+        11.7,
+        11.799999999999999,
+        11.899999999999999,
+        12.0,
+        12.1,
+        12.2,
+        12.3,
+        12.4,
+        12.5,
+        12.6,
+        12.7,
+        12.8,
+        12.9,
+        13.0,
+        13.100000000000001,
+        13.200000000000001,
+        13.3,
+        13.4,
+        13.5,
+        13.600000000000001,
+        13.700000000000001,
+        13.8,
+        13.900000000000002,
+        14.000000000000002,
+        14.1,
+        14.2,
+        14.299999999999999,
+        14.399999999999999,
+        14.5,
+        14.6,
+        14.7,
+        14.8,
+        14.9,
+        15.0,
+        15.1,
+        15.2,
+        15.3,
+        15.4,
+        15.5,
+        15.600000000000001,
+        15.700000000000001,
+        15.8,
+        15.9,
+        16.0,
+        16.1,
+        16.200000000000003,
+        16.3,
+        16.400000000000002,
+        16.5,
+        16.6,
+        16.7,
+        16.8,
+        16.9,
+        17.0,
+        17.1,
+        17.2,
+        17.3,
+        17.4,
+        17.5,
+        17.6,
+        17.7,
+        17.8,
+        17.9,
+        18.0,
+        18.1,
+        18.2,
+        18.3,
+        18.400000000000002,
+        18.5,
+        18.6,
+        18.700000000000003,
+        18.8,
+        18.900000000000002,
+        19.0,
+        19.1,
+        19.2,
+        19.3,
+        19.4,
+        19.5,
+        19.6,
+        19.7,
+        19.8,
+        19.9,
+        20.0
+      ]
+    },
+    "group_rank": null,
+    "coherence_links": null,
+    "coherence_link_aggregations": null,
+    "description": "Anthropogenic methane is methane that is directly emitted into the atmosphere due to human activities. Methane (CH4) is a [potent greenhouse gas](https://energy.ec.europa.eu/topics/oil-gas-and-coal/methane-emissions_en), and while it has a [shorter lifetime in the atmosphere](https://www.iea.org/reports/global-methane-tracker-2022/methane-and-climate-change) compared to carbon dioxide (CO2), it is much more effective at trapping heat. Methane is  [>25 times more potent than carbon dioxide](https://www.epa.gov/gmi/importance-methane#:~:text=Methane%20is%20emitted%20from%20a,treatment%2C%20and%20certain%20industrial%20processes.) at trapping heat in the atmosphere. As a result, understanding and mitigating anthropogenic methane emissions is crucial for addressing climate change.\n\nThe [main sources](https://www.iea.org/data-and-statistics/charts/sources-of-methane-emissions-2) of anthropogenic methane emissions are agriculture, waste management, and the extraction, processing, and distribution of fossil fuels. In [agriculture](https://www.unep.org/news-and-stories/story/methane-emissions-are-driving-climate-change-heres-how-reduce-them), methane is primarily emitted by enteric fermentation in the digestive systems of ruminant animals (e.g., cattle, sheep, and goats) and by anaerobic decomposition in rice paddies. Waste management contributes to methane emissions through the decomposition of organic waste in landfills and the treatment of wastewater. In the energy sector, methane emissions occur during the extraction, processing, and transportation of natural gas, coal, and oil. We do not count methane emitted by wetlands towards this total, except where this is used for agriculture.",
+    "resolution_criteria": "This question will resolve as the gigatons of CO2 equivalent methane emissions for the year 2050 (GtCO2e/year), as reported by the [Climate Watch (CAIT) database](https://www.climatewatchdata.org/ghg-emissions?breakBy=regions&end_year=2019&gases=ch4&start_year=1990).",
+    "fine_print": "CAIT uses IPCC Fourth Assessment Report (AR4) global warming potential values on a 100-year time horizon (GWP100), which give at CO2-equivalent weight of 25x the mass of methane. If CAIT stops publishing, the question will resolve based on an appropriate alternative database, using AR4 conversion values.",
+    "short_title": "Global Methane Emissions in 2050?",
+    "post_id": 16402,
+    "aggregations": {
+      "recency_weighted": {
+        "history": [
+          {
+            "start_time": 1681965508.983871,
+            "end_time": 1682204292.054257,
+            "forecaster_count": 1,
+            "interval_lower_bounds": [
+              0.5283216766808121
+            ],
+            "centers": [
+              0.5642305154399261
+            ],
+            "interval_upper_bounds": [
+              0.6078970722906782
+            ]
+          },
+          {
+            "start_time": 1682204292.054257,
+            "end_time": 1682205996.845088,
+            "forecaster_count": 2,
+            "interval_lower_bounds": [
+              0.49724818611742655
+            ],
+            "centers": [
+              0.5476361958132976
+            ],
+            "interval_upper_bounds": [
+              0.594242004026969
+            ]
+          },
+          {
+            "start_time": 1682205996.845088,
+            "end_time": 1682206000.533231,
+            "forecaster_count": 3,
+            "interval_lower_bounds": [
+              0.36109840843781926
+            ],
+            "centers": [
+              0.48920436499537345
+            ],
+            "interval_upper_bounds": [
+              0.5645696015756699
+            ]
+          },
+          {
+            "start_time": 1682206000.533231,
+            "end_time": 1682622190.513348,
+            "forecaster_count": 3,
+            "interval_lower_bounds": [
+              0.37405803535662735
+            ],
+            "centers": [
+              0.5010697186634272
+            ],
+            "interval_upper_bounds": [
+              0.5728415682718804
+            ]
+          },
+          {
+            "start_time": 1682622190.513348,
+            "end_time": 1682665891.413021,
+            "forecaster_count": 3,
+            "interval_lower_bounds": [
+              0.37405803535662735
+            ],
+            "centers": [
+              0.5010697186634272
+            ],
+            "interval_upper_bounds": [
+              0.5728415682718804
+            ]
+          },
+          {
+            "start_time": 1682665891.413021,
+            "end_time": 1683376586.883022,
+            "forecaster_count": 4,
+            "interval_lower_bounds": [
+              0.3934337747480978
+            ],
+            "centers": [
+              0.512326999511665
+            ],
+            "interval_upper_bounds": [
+              0.5934846925552284
+            ]
+          },
+          {
+            "start_time": 1683376586.883022,
+            "end_time": 1683381025.858654,
+            "forecaster_count": 5,
+            "interval_lower_bounds": [
+              0.4282679148242807
+            ],
+            "centers": [
+              0.5253416118803269
+            ],
+            "interval_upper_bounds": [
+              0.609671598938629
+            ]
+          },
+          {
+            "start_time": 1683381025.858654,
+            "end_time": 1683470462.116508,
+            "forecaster_count": 6,
+            "interval_lower_bounds": [
+              0.45733098774345665
+            ],
+            "centers": [
+              0.5679195658574411
+            ],
+            "interval_upper_bounds": [
+              0.7380901158135422
+            ]
+          },
+          {
+            "start_time": 1683470462.116508,
+            "end_time": 1688093996.437247,
+            "forecaster_count": 6,
+            "interval_lower_bounds": [
+              0.450585161719032
+            ],
+            "centers": [
+              0.558555276993888
+            ],
+            "interval_upper_bounds": [
+              0.7073538867049518
+            ]
+          },
+          {
+            "start_time": 1688093996.437247,
+            "end_time": 1688099867.080005,
+            "forecaster_count": 6,
+            "interval_lower_bounds": [
+              0.4581288037850781
+            ],
+            "centers": [
+              0.5634362744214303
+            ],
+            "interval_upper_bounds": [
+              0.7131876169503206
+            ]
+          },
+          {
+            "start_time": 1688099867.080005,
+            "end_time": 1688099933.486388,
+            "forecaster_count": 7,
+            "interval_lower_bounds": [
+              0.445554333352903
+            ],
+            "centers": [
+              0.5616353637258572
+            ],
+            "interval_upper_bounds": [
+              0.7097794257975707
+            ]
+          },
+          {
+            "start_time": 1688099933.486388,
+            "end_time": 1688104353.573968,
+            "forecaster_count": 7,
+            "interval_lower_bounds": [
+              0.4485362095527281
+            ],
+            "centers": [
+              0.5625765936237836
+            ],
+            "interval_upper_bounds": [
+              0.7085321056879215
+            ]
+          },
+          {
+            "start_time": 1688104353.573968,
+            "end_time": 1688122318.816438,
+            "forecaster_count": 8,
+            "interval_lower_bounds": [
+              0.449371314115275
+            ],
+            "centers": [
+              0.5619248731641264
+            ],
+            "interval_upper_bounds": [
+              0.6815948781287179
+            ]
+          },
+          {
+            "start_time": 1688122318.816438,
+            "end_time": 1688375239.314388,
+            "forecaster_count": 9,
+            "interval_lower_bounds": [
+              0.4762153535715736
+            ],
+            "centers": [
+              0.576368995116067
+            ],
+            "interval_upper_bounds": [
+              0.669765282796932
+            ]
+          },
+          {
+            "start_time": 1688375239.314388,
+            "end_time": 1688651807.883325,
+            "forecaster_count": 9,
+            "interval_lower_bounds": [
+              0.47197306534499306
+            ],
+            "centers": [
+              0.5743292295775121
+            ],
+            "interval_upper_bounds": [
+              0.6695921225171187
+            ]
+          },
+          {
+            "start_time": 1688651807.883325,
+            "end_time": 1688775673.907276,
+            "forecaster_count": 9,
+            "interval_lower_bounds": [
+              0.48794242400001087
+            ],
+            "centers": [
+              0.5267979174792259
+            ],
+            "interval_upper_bounds": [
+              0.6385763746041764
+            ]
+          },
+          {
+            "start_time": 1688775673.907276,
+            "end_time": 1688783043.540873,
+            "forecaster_count": 10,
+            "interval_lower_bounds": [
+              0.48350626307071776
+            ],
+            "centers": [
+              0.5353467846060226
+            ],
+            "interval_upper_bounds": [
+              0.6531953857992966
+            ]
+          },
+          {
+            "start_time": 1688783043.540873,
+            "end_time": 1688786717.064178,
+            "forecaster_count": 10,
+            "interval_lower_bounds": [
+              0.46941980632574704
+            ],
+            "centers": [
+              0.5307159470404258
+            ],
+            "interval_upper_bounds": [
+              0.6510743576558576
+            ]
+          },
+          {
+            "start_time": 1688786717.064178,
+            "end_time": 1688861899.722335,
+            "forecaster_count": 11,
+            "interval_lower_bounds": [
+              0.48522854516482605
+            ],
+            "centers": [
+              0.5089135616907492
+            ],
+            "interval_upper_bounds": [
+              0.6199934459596018
+            ]
+          },
+          {
+            "start_time": 1688861899.722335,
+            "end_time": 1688932852.067763,
+            "forecaster_count": 11,
+            "interval_lower_bounds": [
+              0.48257214740637905
+            ],
+            "centers": [
+              0.5096497335125657
+            ],
+            "interval_upper_bounds": [
+              0.6240077434758543
+            ]
+          },
+          {
+            "start_time": 1688932852.067763,
+            "end_time": 1688984689.608346,
+            "forecaster_count": 11,
+            "interval_lower_bounds": [
+              0.48257214740637905
+            ],
+            "centers": [
+              0.5096497335125657
+            ],
+            "interval_upper_bounds": [
+              0.6240077434758543
+            ]
+          },
+          {
+            "start_time": 1688984689.608346,
+            "end_time": 1688984714.923823,
+            "forecaster_count": 11,
+            "interval_lower_bounds": [
+              0.46886561639280844
+            ],
+            "centers": [
+              0.5091347421564191
+            ],
+            "interval_upper_bounds": [
+              0.6221532125939727
+            ]
+          },
+          {
+            "start_time": 1688984714.923823,
+            "end_time": 1689053877.001643,
+            "forecaster_count": 11,
+            "interval_lower_bounds": [
+              0.4682391947765256
+            ],
+            "centers": [
+              0.5071121740041338
+            ],
+            "interval_upper_bounds": [
+              0.6072734012859474
+            ]
+          },
+          {
+            "start_time": 1689053877.001643,
+            "end_time": 1689195198.253026,
+            "forecaster_count": 11,
+            "interval_lower_bounds": [
+              0.4672032484211491
+            ],
+            "centers": [
+              0.5106634686142972
+            ],
+            "interval_upper_bounds": [
+              0.6183814484233379
+            ]
+          },
+          {
+            "start_time": 1689195198.253026,
+            "end_time": 1720916530.187221,
+            "forecaster_count": 11,
+            "interval_lower_bounds": [
+              0.46425303174420757
+            ],
+            "centers": [
+              0.5100097867740117
+            ],
+            "interval_upper_bounds": [
+              0.6185945997680732
+            ]
+          },
+          {
+            "start_time": 1720916530.187221,
+            "end_time": 1757639536.878426,
+            "forecaster_count": 11,
+            "interval_lower_bounds": [
+              0.46425303174420757
+            ],
+            "centers": [
+              0.5100097867740117
+            ],
+            "interval_upper_bounds": [
+              0.6185945997680732
+            ]
+          },
+          {
+            "start_time": 1757639536.878426,
+            "end_time": 1769391280.983871,
+            "forecaster_count": 11,
+            "interval_lower_bounds": [
+              0.46425303174164184
+            ],
+            "centers": [
+              0.5100097867734216
+            ],
+            "interval_upper_bounds": [
+              0.6185945997651369
+            ]
+          },
+          {
+            "start_time": 1769391280.983871,
+            "end_time": 1770806797.858654,
+            "forecaster_count": 10,
+            "interval_lower_bounds": [
+              0.46086998298018295
+            ],
+            "centers": [
+              0.5087270215496921
+            ],
+            "interval_upper_bounds": [
+              0.6174938341361595
+            ]
+          }
+        ],
+        "latest": {
+          "start_time": 1769391280.983871,
+          "end_time": 1770806797.858654,
+          "forecaster_count": 10,
+          "interval_lower_bounds": [
+            0.46086998298018295
+          ],
+          "centers": [
+            0.5087270215496921
+          ],
+          "interval_upper_bounds": [
+            0.6174938341361595
+          ],
+          "forecast_values": [
+            0.02553162023265834,
+            0.027184388102858947,
+            0.02844531918792349,
+            0.029405464948626177,
+            0.030150284065587837,
+            0.030753680371446827,
+            0.03128114433834356,
+            0.03179817901453435,
+            0.032377377144641326,
+            0.033085277266627404,
+            0.03392598304714941,
+            0.03479269337966873,
+            0.03554740951255378,
+            0.036144048632722414,
+            0.03662081764601881,
+            0.037031702491028336,
+            0.03741477366544719,
+            0.03779143973144622,
+            0.03817280461648256,
+            0.03856460425346609,
+            0.03896997190228751,
+            0.03939082316133886,
+            0.039828519905052116,
+            0.04028418432058452,
+            0.04075884720253847,
+            0.04125351946731037,
+            0.04176922716557252,
+            0.042307029951846375,
+            0.04286803138751971,
+            0.04345338563038027,
+            0.04406430219242877,
+            0.04470204998201509,
+            0.04536796087813422,
+            0.04606343331491167,
+            0.04678993552727607,
+            0.047549009232831785,
+            0.04834227303369332,
+            0.04917142608104746,
+            0.05003825180496209,
+            0.05094462163260999,
+            0.05189249888278279,
+            0.05288394273758161,
+            0.053921112130274965,
+            0.05500626977634691,
+            0.05614178628806448,
+            0.05733014406716729,
+            0.058573941426616295,
+            0.05987589636989182,
+            0.06123885051983481,
+            0.0626657727490148,
+            0.06415976269858616,
+            0.06572405410851082,
+            0.06736201780277204,
+            0.0690771645243078,
+            0.07087314724643443,
+            0.0727537633089845,
+            0.07472295601871563,
+            0.07678481585246134,
+            0.07894358126745035,
+            0.08120363901008999,
+            0.08356952404870743,
+            0.08604591895688,
+            0.08863765302868275,
+            0.09134970101837527,
+            0.0941871814706615,
+            0.09715535477225361,
+            0.10025962106168303,
+            0.10350551754819719,
+            0.10689871569296591,
+            0.11044501759518341,
+            0.11415035170301184,
+            0.11802076707322401,
+            0.12206242581756738,
+            0.12628159260479108,
+            0.13068462047127105,
+            0.13527793122612222,
+            0.14006798887073094,
+            0.14506126436804312,
+            0.15026418912405748,
+            0.15568309551535373,
+            0.1613241470716994,
+            0.16719355429192811,
+            0.17329765121712953,
+            0.17964230616283267,
+            0.18623273966501053,
+            0.19307340897306802,
+            0.20016796482810167,
+            0.20751939086320553,
+            0.21513056201305283,
+            0.22300573357036235,
+            0.23115406824165402,
+            0.23959760023572801,
+            0.24838880473047814,
+            0.25764872881073486,
+            0.26764800461554794,
+            0.2789719224386627,
+            0.2928258630879919,
+            0.3114714590073108,
+            0.3383608865426032,
+            0.37650195651520907,
+            0.42391170442462395,
+            0.47139772950928477,
+            0.5097692147681757,
+            0.5370437670913457,
+            0.5562252837394344,
+            0.5707640213643328,
+            0.5829234156784066,
+            0.5939137808908665,
+            0.6043266305013361,
+            0.6144393092076339,
+            0.6243793152566729,
+            0.634204630841315,
+            0.6439412807097504,
+            0.6536004660052032,
+            0.6631863140840696,
+            0.6726993257741319,
+            0.6821377167889321,
+            0.6914980586416547,
+            0.7007756135908811,
+            0.7099645636814588,
+            0.7190582228096263,
+            0.7280492622672071,
+            0.7369299532980198,
+            0.7456924188372066,
+            0.7543288816643354,
+            0.7628318962422485,
+            0.7711945527693435,
+            0.7794106451549635,
+            0.7874733169172141,
+            0.7953664270724979,
+            0.8030708512415982,
+            0.8105692840243155,
+            0.8178466458138819,
+            0.8248903752742681,
+            0.8316906148057965,
+            0.8382402881296559,
+            0.844535075765106,
+            0.8505733004731745,
+            0.856355737829151,
+            0.861885370714045,
+            0.8671671059296199,
+            0.8722074710888826,
+            0.8770143074699057,
+            0.8815964719392836,
+            0.8859635486439894,
+            0.8901252801985976,
+            0.8940912745927055,
+            0.8978712021522078,
+            0.9014746729726196,
+            0.9049111196592139,
+            0.908189707184474,
+            0.9113192670382332,
+            0.9143082518861629,
+            0.9171647073595133,
+            0.9198962579111858,
+            0.9225101033790662,
+            0.9250130242373972,
+            0.9274113927721594,
+            0.9297111886286229,
+            0.9319180172014823,
+            0.9340371296315464,
+            0.9360734435687593,
+            0.9380315639286985,
+            0.9399158033258203,
+            0.9417302015902718,
+            0.9434785444470898,
+            0.9451643810783473,
+            0.9467910404180749,
+            0.948361646507898,
+            0.9498791324977454,
+            0.9513462538177437,
+            0.9527656000786082,
+            0.9541396063272769,
+            0.9554705631818879,
+            0.9567606263909766,
+            0.9580118254993613,
+            0.9592260719732051,
+            0.9604051666406799,
+            0.961550806728622,
+            0.9626645921977351,
+            0.9637480317486835,
+            0.9648025484578966,
+            0.965829484875077,
+            0.9668301079014736,
+            0.9678056132944141,
+            0.9687571298452128,
+            0.9696857233568285,
+            0.9705924003409651,
+            0.9714781113523634,
+            0.9723437543261623,
+            0.9731901775465681,
+            0.9740181824871451,
+            0.9748285264346578,
+            0.9756219250731141,
+            0.97639905465157,
+            0.9771605544011828,
+            0.9779070284348079,
+            0.9786390477112225,
+            0.9793571519501175,
+            0.9800618512810896,
+            0.9807536279000034
+          ],
+          "means": null,
+          "histogram": null
+        },
+        "score_data": {},
+        "movement": {
+          "divergence": 0.00014506536603034863,
+          "direction": "down",
+          "movement": 0.057110389619751865,
+          "period": "604800.0",
+          "option_index": null
+        }
+      },
+      "metaculus_prediction": {
+        "history": [
+          {
+            "start_time": 1681965509.007139,
+            "end_time": 1682204292.086038,
+            "forecaster_count": 1,
+            "interval_lower_bounds": [
+              0.53588
+            ],
+            "centers": [
+              0.5636
+            ],
+            "interval_upper_bounds": [
+              0.59879
+            ]
+          },
+          {
+            "start_time": 1682204292.086038,
+            "end_time": 1682205996.873484,
+            "forecaster_count": 2,
+            "interval_lower_bounds": [
+              0.49126
+            ],
+            "centers": [
+              0.53507
+            ],
+            "interval_upper_bounds": [
+              0.57532
+            ]
+          },
+          {
+            "start_time": 1682205996.873484,
+            "end_time": 1682206000.569281,
+            "forecaster_count": 3,
+            "interval_lower_bounds": [
+              0.37102
+            ],
+            "centers": [
+              0.4892
+            ],
+            "interval_upper_bounds": [
+              0.55239
+            ]
+          },
+          {
+            "start_time": 1682206000.569281,
+            "end_time": 1682622190.550805,
+            "forecaster_count": 3,
+            "interval_lower_bounds": [
+              0.38687
+            ],
+            "centers": [
+              0.49846
+            ],
+            "interval_upper_bounds": [
+              0.55849
+            ]
+          },
+          {
+            "start_time": 1682622190.550805,
+            "end_time": 1682665891.457729,
+            "forecaster_count": 3,
+            "interval_lower_bounds": [
+              0.39112
+            ],
+            "centers": [
+              0.50012
+            ],
+            "interval_upper_bounds": [
+              0.5593
+            ]
+          },
+          {
+            "start_time": 1682665891.457729,
+            "end_time": 1683376586.922051,
+            "forecaster_count": 4,
+            "interval_lower_bounds": [
+              0.43569
+            ],
+            "centers": [
+              0.52743
+            ],
+            "interval_upper_bounds": [
+              0.60763
+            ]
+          },
+          {
+            "start_time": 1683376586.922051,
+            "end_time": 1683381025.895676,
+            "forecaster_count": 5,
+            "interval_lower_bounds": [
+              0.43123
+            ],
+            "centers": [
+              0.52509
+            ],
+            "interval_upper_bounds": [
+              0.60581
+            ]
+          },
+          {
+            "start_time": 1683381025.895676,
+            "end_time": 1683470462.175518,
+            "forecaster_count": 6,
+            "interval_lower_bounds": [
+              0.45715
+            ],
+            "centers": [
+              0.56041
+            ],
+            "interval_upper_bounds": [
+              0.69115
+            ]
+          },
+          {
+            "start_time": 1683470462.175518,
+            "end_time": 1688093996.485569,
+            "forecaster_count": 6,
+            "interval_lower_bounds": [
+              0.46577
+            ],
+            "centers": [
+              0.56464
+            ],
+            "interval_upper_bounds": [
+              0.69443
+            ]
+          },
+          {
+            "start_time": 1688093996.485569,
+            "end_time": 1688099867.120592,
+            "forecaster_count": 6,
+            "interval_lower_bounds": [
+              0.4374
+            ],
+            "centers": [
+              0.52972
+            ],
+            "interval_upper_bounds": [
+              0.61378
+            ]
+          },
+          {
+            "start_time": 1688099867.120592,
+            "end_time": 1688099933.530114,
+            "forecaster_count": 7,
+            "interval_lower_bounds": [
+              0.4303
+            ],
+            "centers": [
+              0.53697
+            ],
+            "interval_upper_bounds": [
+              0.64259
+            ]
+          },
+          {
+            "start_time": 1688099933.530114,
+            "end_time": 1688104353.621314,
+            "forecaster_count": 7,
+            "interval_lower_bounds": [
+              0.43562
+            ],
+            "centers": [
+              0.53893
+            ],
+            "interval_upper_bounds": [
+              0.64246
+            ]
+          },
+          {
+            "start_time": 1688104353.621314,
+            "end_time": 1688122318.871049,
+            "forecaster_count": 8,
+            "interval_lower_bounds": [
+              0.4363
+            ],
+            "centers": [
+              0.5395
+            ],
+            "interval_upper_bounds": [
+              0.64237
+            ]
+          },
+          {
+            "start_time": 1688122318.871049,
+            "end_time": 1688375239.368096,
+            "forecaster_count": 9,
+            "interval_lower_bounds": [
+              0.444
+            ],
+            "centers": [
+              0.54587
+            ],
+            "interval_upper_bounds": [
+              0.64195
+            ]
+          },
+          {
+            "start_time": 1688375239.368096,
+            "end_time": 1688651807.958433,
+            "forecaster_count": 9,
+            "interval_lower_bounds": [
+              0.43443
+            ],
+            "centers": [
+              0.5418
+            ],
+            "interval_upper_bounds": [
+              0.64472
+            ]
+          },
+          {
+            "start_time": 1688651807.958433,
+            "end_time": 1688775673.965468,
+            "forecaster_count": 9,
+            "interval_lower_bounds": [
+              0.43448
+            ],
+            "centers": [
+              0.54209
+            ],
+            "interval_upper_bounds": [
+              0.64552
+            ]
+          },
+          {
+            "start_time": 1688775673.965468,
+            "end_time": 1688783043.600494,
+            "forecaster_count": 10,
+            "interval_lower_bounds": [
+              0.43949
+            ],
+            "centers": [
+              0.54921
+            ],
+            "interval_upper_bounds": [
+              0.65757
+            ]
+          },
+          {
+            "start_time": 1688783043.600494,
+            "end_time": 1688786717.121908,
+            "forecaster_count": 10,
+            "interval_lower_bounds": [
+              0.43928
+            ],
+            "centers": [
+              0.54905
+            ],
+            "interval_upper_bounds": [
+              0.65743
+            ]
+          },
+          {
+            "start_time": 1688786717.121908,
+            "end_time": 1688861899.784944,
+            "forecaster_count": 11,
+            "interval_lower_bounds": [
+              0.4631
+            ],
+            "centers": [
+              0.51569
+            ],
+            "interval_upper_bounds": [
+              0.63349
+            ]
+          },
+          {
+            "start_time": 1688861899.784944,
+            "end_time": 1688932852.13134,
+            "forecaster_count": 11,
+            "interval_lower_bounds": [
+              0.46288
+            ],
+            "centers": [
+              0.51585
+            ],
+            "interval_upper_bounds": [
+              0.63382
+            ]
+          },
+          {
+            "start_time": 1688932852.13134,
+            "end_time": 1688984689.6837,
+            "forecaster_count": 11,
+            "interval_lower_bounds": [
+              0.46286
+            ],
+            "centers": [
+              0.51584
+            ],
+            "interval_upper_bounds": [
+              0.63381
+            ]
+          },
+          {
+            "start_time": 1688984689.6837,
+            "end_time": 1688984714.988966,
+            "forecaster_count": 11,
+            "interval_lower_bounds": [
+              0.4529
+            ],
+            "centers": [
+              0.51264
+            ],
+            "interval_upper_bounds": [
+              0.63058
+            ]
+          },
+          {
+            "start_time": 1688984714.988966,
+            "end_time": 1689053877.069341,
+            "forecaster_count": 11,
+            "interval_lower_bounds": [
+              0.45472
+            ],
+            "centers": [
+              0.50691
+            ],
+            "interval_upper_bounds": [
+              0.60682
+            ]
+          },
+          {
+            "start_time": 1689053877.069341,
+            "end_time": 1689195198.32624,
+            "forecaster_count": 11,
+            "interval_lower_bounds": [
+              0.45472
+            ],
+            "centers": [
+              0.50692
+            ],
+            "interval_upper_bounds": [
+              0.60684
+            ]
+          },
+          {
+            "start_time": 1689195198.32624,
+            "end_time": 1720916530.246677,
+            "forecaster_count": 11,
+            "interval_lower_bounds": [
+              0.45466
+            ],
+            "centers": [
+              0.50691
+            ],
+            "interval_upper_bounds": [
+              0.60682
+            ]
+          },
+          {
+            "start_time": 1720916530.246677,
+            "end_time": 1728292173.347443,
+            "forecaster_count": 11,
+            "interval_lower_bounds": [
+              0.41669
+            ],
+            "centers": [
+              0.51868
+            ],
+            "interval_upper_bounds": [
+              0.63045
+            ]
+          }
+        ],
+        "latest": {
+          "start_time": 1720916530.246677,
+          "end_time": 1728292173.347443,
+          "forecaster_count": 11,
+          "interval_lower_bounds": [
+            0.41669
+          ],
+          "centers": [
+            0.51868
+          ],
+          "interval_upper_bounds": [
+            0.63045
+          ],
+          "forecast_values": [
+            0.04132028,
+            0.053195877743728304,
+            0.06095013795923639,
+            0.06585494361880945,
+            0.06891094574245439,
+            0.07082078847428007,
+            0.07204710495026424,
+            0.07288659294026083,
+            0.07353065362796932,
+            0.07409935426774039,
+            0.0746424408892515,
+            0.0751384490934015,
+            0.07554459828267232,
+            0.07585587433391378,
+            0.07610132458123738,
+            0.07631187356742185,
+            0.07650762718529608,
+            0.07669974988640638,
+            0.07689431789880664,
+            0.07709476453834858,
+            0.07730328811518171,
+            0.07752146943660466,
+            0.07775059290854755,
+            0.07799181943637026,
+            0.07824623582509056,
+            0.0785149535798403,
+            0.07879915830609341,
+            0.07910010970966594,
+            0.07941911689660203,
+            0.07975756307328796,
+            0.08011697964679426,
+            0.08049899682464756,
+            0.08090536831494476,
+            0.08133802072658099,
+            0.08179900416902162,
+            0.08229051695241626,
+            0.08281495498782684,
+            0.0833749117872276,
+            0.08397317846350508,
+            0.08461276843057226,
+            0.08529689270325438,
+            0.08602903399763114,
+            0.08681297143115073,
+            0.08765273112240175,
+            0.08855263559134127,
+            0.08951732845940895,
+            0.09055177444952683,
+            0.09166128408621368,
+            0.09285153839569878,
+            0.09412858890592203,
+            0.095498882346648,
+            0.09696923594935186,
+            0.09854686214733342,
+            0.10023939327583117,
+            0.10205483217179423,
+            0.10400157687399635,
+            0.10608837122280787,
+            0.10832432956030968,
+            0.11071888733006528,
+            0.11328175167689253,
+            0.1160229014468638,
+            0.11895246368673563,
+            0.12208066424372083,
+            0.12541780306537426,
+            0.12897418009925074,
+            0.13275994709222094,
+            0.1367850581902432,
+            0.1410592205381353,
+            0.14559172137877655,
+            0.15039135395276537,
+            0.15546639279830524,
+            0.1608244702506347,
+            0.16647250234168504,
+            0.17241666409996642,
+            0.17866234015033963,
+            0.18521407531378817,
+            0.19207554990730402,
+            0.19924957974388774,
+            0.20673809143243457,
+            0.21454214707784824,
+            0.22266214188195335,
+            0.2311011139587769,
+            0.23986558413842554,
+            0.2489620979511201,
+            0.25839591652115107,
+            0.2681707201655105,
+            0.2782882131920673,
+            0.28874775339785635,
+            0.29954603096759613,
+            0.31067672267209234,
+            0.32213017076675526,
+            0.3338932100908012,
+            0.3459491433671389,
+            0.3582777659024832,
+            0.3708555631882676,
+            0.38365627900326715,
+            0.39665222451964244,
+            0.40981785981947566,
+            0.4231306830988759,
+            0.436563623032855,
+            0.4500702187069027,
+            0.4635854841209786,
+            0.477047891291008,
+            0.49041470901970075,
+            0.5036600021873143,
+            0.516765468009345,
+            0.5297151996123506,
+            0.5424936606245998,
+            0.5550846230711678,
+            0.5674712908745072,
+            0.5796425736834137,
+            0.5915965201888784,
+            0.6033354769017347,
+            0.6148632476395455,
+            0.6261845501240918,
+            0.6373045466792087,
+            0.648228350228502,
+            0.65896077729421,
+            0.6695061503962896,
+            0.6798681745518469,
+            0.690049986675365,
+            0.7000541802788182,
+            0.7098828054716718,
+            0.7195374677613385,
+            0.7290194268536344,
+            0.7383296954532352,
+            0.747469113364018,
+            0.75643839688929,
+            0.7652364098238057,
+            0.7738567795381424,
+            0.7822899470881663,
+            0.7905271192332795,
+            0.798560688338357,
+            0.8063844052745467,
+            0.8139935029198391,
+            0.8213848443597507,
+            0.8285568981872113,
+            0.8355096150019926,
+            0.8422444027105949,
+            0.8487639783255626,
+            0.8550720962642304,
+            0.8611734248481511,
+            0.8670733734023,
+            0.8727778699540468,
+            0.8782928919309894,
+            0.8836216750480667,
+            0.8887644416063055,
+            0.8937211422054775,
+            0.8984920732469514,
+            0.903077901633806,
+            0.9074796647708311,
+            0.911698770564527,
+            0.9157370962235609,
+            0.9195969388585383,
+            0.9232810154820041,
+            0.926792487708555,
+            0.9301349370547272,
+            0.933312340238881,
+            0.9363290444810874,
+            0.9391897428030146,
+            0.9418993999275844,
+            0.944463227578859,
+            0.9468866350818139,
+            0.9491752046622219,
+            0.9513346173463124,
+            0.9533706035605427,
+            0.9552889184314843,
+            0.9570952676854805,
+            0.9587953076486465,
+            0.9603945958466418,
+            0.9618985663045545,
+            0.963312529546904,
+            0.9646415984972964,
+            0.96589071317854,
+            0.9670646407126442,
+            0.9681679259205931,
+            0.969204891322343,
+            0.9701796618369393,
+            0.9710961894826278,
+            0.9719581792765154,
+            0.9727691139346811,
+            0.9735323032724068,
+            0.9742508595040613,
+            0.9749276972431015,
+            0.9755655582021858,
+            0.9761670111931745,
+            0.9767344768272436,
+            0.9772702028147707,
+            0.9777762886654492,
+            0.9782546856882884,
+            0.9787072216917273,
+            0.9791356256837486,
+            0.9795414784716507,
+            0.9799262620622766,
+            0.9802913596620122,
+            0.9806380556767879,
+            0.9809675357120771,
+            0.9812809112730121,
+            0.9815792197643823,
+            0.9818634491907493,
+            0.9821344887562188,
+            0.9821842399999999
+          ],
+          "means": null,
+          "histogram": null
+        },
+        "score_data": {},
+        "movement": null
+      }
+    },
+    "average_coverage": null,
+    "my_forecasts": {
+      "history": [],
+      "latest": null,
+      "score_data": {}
+    }
+  },
+  "user_permission": "forecaster",
+  "vote": {
+    "score": 3,
+    "user_vote": null
+  },
+  "forecasts_count": 27,
+  "subscriptions": [],
+  "unread_comment_count": 0,
+  "last_viewed_at": "2026-01-27T00:00:49.246218Z",
+  "private_note": null,
+  "key_factors": [],
+  "is_current_content_translated": false
+}
