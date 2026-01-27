@@ -13,8 +13,8 @@ import pytest
 import re
 
 # Import the actual extraction functions/methods
-from src.bot.binary import BinaryForecaster
 from src.bot.extractors import (
+    extract_binary_probability_percent,
     extract_multiple_choice_probabilities as extract_option_probabilities_from_response,
     normalize_probabilities,
     extract_percentiles_from_response,
@@ -30,13 +30,11 @@ from src.bot.exceptions import ExtractionError
 # ============================================================================
 
 class TestBinaryProbabilityExtraction:
-    """Tests for BinaryForecaster._extract_probability()"""
+    """Tests for extract_binary_probability_percent()"""
 
     def _extract(self, text: str) -> float:
-        """Helper to call _extract_probability without full init."""
-        # Create instance without __init__ to avoid needing config
-        forecaster = BinaryForecaster.__new__(BinaryForecaster)
-        return forecaster._extract_probability(text)
+        """Helper to call extraction function."""
+        return extract_binary_probability_percent(text)
 
     def test_standard_format(self, binary_response_standard):
         """Test extraction from standard 'Probability: X%' format."""

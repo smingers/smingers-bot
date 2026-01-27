@@ -1,31 +1,18 @@
 """
 Binary Question Handler - Port from Panshul42's tournament-winning implementation
 
-5-agent ensemble pipeline:
-1. Generate historical + current search queries (in parallel)
-2. Execute searches (historical for outside view, current for inside view)
-3. Run 5 agents on outside view prompt (Step 1)
-4. Cross-pollinate context between agents
-5. Run 5 agents on inside view prompt (Step 2)
-6. Extract and aggregate probabilities with weights
-
-Agent configuration:
-- Forecasters 1-2: Claude (weight 1.0 each)
-- Forecaster 3: GPT-4o-mini (weight 1.0)
-- Forecasters 4-5: GPT-o3 (weight 2.0 each)
+Uses BaseForecaster for the shared 5-agent ensemble pipeline.
+Implements binary-specific extraction and aggregation logic.
 """
 
-import asyncio
 import logging
 from datetime import datetime
-from typing import Optional, List, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 from dataclasses import dataclass, field
-
-import numpy as np
 
 from ..utils.llm import LLMClient
 from ..storage.artifact_store import ArtifactStore
-from .handler_mixin import ForecasterMixin
+from .base_forecaster import BaseForecaster
 from .extractors import extract_binary_probability_percent, AgentResult
 from .exceptions import InsufficientPredictionsError
 from .prompts import (
@@ -33,10 +20,8 @@ from .prompts import (
     BINARY_PROMPT_CURRENT,
     BINARY_PROMPT_1,
     BINARY_PROMPT_2,
-    CLAUDE_CONTEXT,
-    GPT_CONTEXT,
 )
-from .search import SearchPipeline, QuestionDetails
+from .search import QuestionDetails
 
 logger = logging.getLogger(__name__)
 
@@ -53,274 +38,77 @@ class BinaryForecastResult:
     timestamp: str = field(default_factory=lambda: datetime.now().isoformat())
 
 
-class BinaryForecaster(ForecasterMixin):
+class BinaryForecaster(BaseForecaster):
     """
-    Binary question forecaster using Panshul42's 5-agent ensemble.
+    Binary question forecaster using the shared 5-agent ensemble pipeline.
 
-    Pipeline:
-    1. Generate historical and current search queries in parallel
-    2. Execute searches to get context
-    3. Run 5 agents on Step 1 (outside view with historical context)
-    4. Cross-pollinate: each agent gets current context + another agent's step 1 output
-    5. Run 5 agents on Step 2 (inside view)
-    6. Extract probabilities and compute weighted average
+    Implements binary-specific:
+    - Prompt templates (BINARY_PROMPT_*)
+    - Probability extraction (extract_binary_probability_percent)
+    - Weighted average aggregation
     """
 
-    def __init__(
+    def _get_prompt_templates(self) -> Tuple[str, str, str, str]:
+        """Return binary-specific prompt templates."""
+        return (
+            BINARY_PROMPT_HISTORICAL,
+            BINARY_PROMPT_CURRENT,
+            BINARY_PROMPT_1,
+            BINARY_PROMPT_2,
+        )
+
+    def _get_question_details(self, **question_params) -> QuestionDetails:
+        """Build QuestionDetails for search pipeline."""
+        return QuestionDetails(
+            title=question_params.get("question_title", ""),
+            resolution_criteria=question_params.get("resolution_criteria", ""),
+            fine_print=question_params.get("fine_print", ""),
+            description=question_params.get("question_text", ""),
+        )
+
+    def _format_step1_prompt(
         self,
-        config: dict,
-        llm_client: Optional[LLMClient] = None,
-        artifact_store: Optional[ArtifactStore] = None,
-    ):
-        """
-        Initialize the binary forecaster.
-
-        Args:
-            config: Configuration dict with model and agent settings
-            llm_client: Optional LLMClient instance
-            artifact_store: Optional ArtifactStore for saving artifacts
-        """
-        self.config = config
-        self.llm = llm_client or LLMClient()
-        self.artifact_store = artifact_store
-
-    async def forecast(
-        self,
-        question_title: str,
-        question_text: str,
-        resolution_criteria: str,
-        fine_print: str = "",
-        write: callable = print,
-    ) -> BinaryForecastResult:
-        """
-        Generate a forecast for a binary question.
-
-        Args:
-            question_title: The question title
-            question_text: Full question description/background
-            resolution_criteria: How the question resolves
-            fine_print: Additional resolution details
-            write: Logging function (default: print)
-
-        Returns:
-            BinaryForecastResult with final probability and all agent outputs
-        """
-        today = datetime.now().strftime("%Y-%m-%d")
-
-        # Build question details for search
-        question_details = QuestionDetails(
-            title=question_title,
-            resolution_criteria=resolution_criteria,
-            fine_print=fine_print,
-            description=question_text,
-        )
-
-        # =========================================================================
-        # STEP 1: Generate historical and current search queries
-        # =========================================================================
-        write("\n=== Step 1: Generating search queries ===")
-
-        # Format prompts for query generation
-        historical_prompt = BINARY_PROMPT_HISTORICAL.format(
-            title=question_title,
-            today=today,
-            background=question_text,
-            resolution_criteria=resolution_criteria,
-            fine_print=fine_print,
-        )
-        current_prompt = BINARY_PROMPT_CURRENT.format(
-            title=question_title,
-            today=today,
-            background=question_text,
-            resolution_criteria=resolution_criteria,
-            fine_print=fine_print,
-        )
-
-        # Get model for query generation
-        query_model = self._get_model("query_generator", "openrouter/openai/o3")
-
-        # Run both query generations in parallel
-        historical_task = self._call_model(query_model, historical_prompt)
-        current_task = self._call_model(query_model, current_prompt)
-        historical_output, current_output = await asyncio.gather(historical_task, current_task)
-
-        write(f"\nHistorical query output:\n{historical_output[:500]}...")
-        write(f"\nCurrent query output:\n{current_output[:500]}...")
-
-        # Save artifacts
-        if self.artifact_store:
-            self.artifact_store.save_query_generation("historical", historical_prompt, historical_output)
-            self.artifact_store.save_query_generation("current", current_prompt, current_output)
-
-        # =========================================================================
-        # STEP 2: Execute searches
-        # =========================================================================
-        write("\n=== Step 2: Executing searches ===")
-
-        async with SearchPipeline(self.config, self.llm) as search:
-            historical_context, current_context = await asyncio.gather(
-                search.process_search_queries(
-                    historical_output,
-                    forecaster_id="-1",
-                    question_details=question_details,
-                ),
-                search.process_search_queries(
-                    current_output,
-                    forecaster_id="0",
-                    question_details=question_details,
-                ),
-            )
-
-        write(f"\nHistorical context ({len(historical_context)} chars)")
-        write(f"Current context ({len(current_context)} chars)")
-
-        # Save search results
-        if self.artifact_store:
-            self.artifact_store.save_search_results("historical", {"context": historical_context})
-            self.artifact_store.save_search_results("current", {"context": current_context})
-
-        # =========================================================================
-        # STEP 3: Run 5 agents on Step 1 (outside view)
-        # =========================================================================
-        write("\n=== Step 3: Running Step 1 (outside view) ===")
-
-        # Get agent configurations
-        agents = self._get_agents()
-
-        # Format Step 1 prompt (same for all agents)
-        step1_prompt = BINARY_PROMPT_1.format(
-            title=question_title,
-            today=today,
-            resolution_criteria=resolution_criteria,
-            fine_print=fine_print,
+        prompt_template: str,
+        historical_context: str,
+        **question_params,
+    ) -> str:
+        """Format Step 1 prompt with historical context."""
+        return prompt_template.format(
+            title=question_params.get("question_title", ""),
+            today=question_params.get("today", ""),
+            resolution_criteria=question_params.get("resolution_criteria", ""),
+            fine_print=question_params.get("fine_print", ""),
             context=historical_context,
         )
 
-        # Run all agents in parallel
-        step1_tasks = []
-        for agent in agents:
-            model = agent["model"]
-            system_prompt = CLAUDE_CONTEXT if "claude" in model.lower() else GPT_CONTEXT
-            step1_tasks.append(
-                self._call_model(model, step1_prompt, system_prompt=system_prompt)
-            )
+    def _format_step2_prompt(
+        self,
+        prompt_template: str,
+        context: str,
+        **question_params,
+    ) -> str:
+        """Format Step 2 prompt with cross-pollinated context."""
+        return prompt_template.format(
+            title=question_params.get("question_title", ""),
+            today=question_params.get("today", ""),
+            resolution_criteria=question_params.get("resolution_criteria", ""),
+            fine_print=question_params.get("fine_print", ""),
+            context=context,
+        )
 
-        step1_outputs = await asyncio.gather(*step1_tasks, return_exceptions=True)
+    def _extract_prediction(self, output: str, **question_params) -> float:
+        """Extract probability percentage from agent output."""
+        return extract_binary_probability_percent(output)
 
-        # Log outputs
-        for i, output in enumerate(step1_outputs):
-            if isinstance(output, Exception):
-                write(f"\nForecaster_{i+1} step 1 ERROR: {output}")
-                step1_outputs[i] = f"Error: {output}"
-            else:
-                write(f"\nForecaster_{i+1} step 1 output:\n{output[:300]}...")
-
-        # Save step 1 artifacts
-        if self.artifact_store:
-            self.artifact_store.save_step1_prompt(step1_prompt)
-            for i, output in enumerate(step1_outputs):
-                if not isinstance(output, Exception):
-                    self.artifact_store.save_agent_step1(i + 1, output)
-
-        # =========================================================================
-        # STEP 4: Cross-pollinate context
-        # =========================================================================
-        write("\n=== Step 4: Cross-pollinating context ===")
-
-        # Panshul42's cross-pollination logic:
-        # - Agent 1 gets agent 1's step1 output
-        # - Agent 2 gets agent 3's step1 output
-        # - Agent 3 gets agent 2's step1 output
-        # - Agent 4 gets agent 4's step1 output
-        # - Agent 5 gets agent 5's step1 output
-        cross_pollination_map = {
-            0: 0,  # Agent 1 <- Agent 1
-            1: 2,  # Agent 2 <- Agent 3
-            2: 1,  # Agent 3 <- Agent 2
-            3: 3,  # Agent 4 <- Agent 4
-            4: 4,  # Agent 5 <- Agent 5
-        }
-
-        context_map = {}
-        for i in range(5):
-            source_idx = cross_pollination_map[i]
-            source_output = step1_outputs[source_idx] if not isinstance(step1_outputs[source_idx], Exception) else ""
-
-            # First 3 agents get "Outside view prediction", last 2 get "Inside view prediction"
-            label = "Outside view prediction" if i < 3 else "Inside view prediction"
-            context_map[i] = f"Current context: {current_context}\n{label}: {source_output}"
-
-        # =========================================================================
-        # STEP 5: Run 5 agents on Step 2 (inside view)
-        # =========================================================================
-        write("\n=== Step 5: Running Step 2 (inside view) ===")
-
-        step2_tasks = []
-        for i, agent in enumerate(agents):
-            model = agent["model"]
-            system_prompt = CLAUDE_CONTEXT if "claude" in model.lower() else GPT_CONTEXT
-
-            step2_prompt = BINARY_PROMPT_2.format(
-                title=question_title,
-                today=today,
-                resolution_criteria=resolution_criteria,
-                fine_print=fine_print,
-                context=context_map[i],
-            )
-
-            step2_tasks.append(
-                self._call_model(model, step2_prompt, system_prompt=system_prompt)
-            )
-
-        step2_outputs = await asyncio.gather(*step2_tasks, return_exceptions=True)
-
-        # =========================================================================
-        # STEP 6: Extract probabilities and aggregate
-        # =========================================================================
-        write("\n=== Step 6: Extracting and aggregating probabilities ===")
-
-        probabilities = []
-        agent_results = []
-
-        for i, (agent, output) in enumerate(zip(agents, step2_outputs)):
-            if isinstance(output, Exception):
-                write(f"\nForecaster_{i+1} step 2 ERROR: {output}")
-                prob = None
-                error = str(output)
-            else:
-                write(f"\nForecaster_{i+1} step 2 output:\n{output[:300]}...")
-                try:
-                    prob = self._extract_probability(output)
-                    write(f"Forecaster_{i+1} probability: {prob}%")
-                    error = None
-                except Exception as e:
-                    write(f"Forecaster_{i+1} extraction error: {e}")
-                    prob = None
-                    error = str(e)
-
-            probabilities.append(prob)
-            agent_results.append(AgentResult(
-                agent_id=f"forecaster_{i+1}",
-                model=agent["model"],
-                weight=agent["weight"],
-                step1_output=step1_outputs[i] if not isinstance(step1_outputs[i], Exception) else "",
-                step2_output=output if not isinstance(output, Exception) else "",
-                probability=prob,
-                error=error,
-            ))
-
-        # Save step 2 artifacts
-        if self.artifact_store:
-            for i, result in enumerate(agent_results):
-                if result.step2_output:
-                    self.artifact_store.save_agent_step2(i + 1, result.step2_output)
-                self.artifact_store.save_agent_extracted(i + 1, {
-                    "probability": result.probability,
-                    "error": result.error,
-                })
-
-        # Compute weighted average
-        weights = [agent["weight"] for agent in agents]
+    def _aggregate_results(
+        self,
+        agent_results: List[AgentResult],
+        agents: List[Dict],
+        write: callable,
+    ) -> float:
+        """Compute weighted average of probabilities."""
+        probabilities = [r.probability for r in agent_results]
+        weights = [a["weight"] for a in agents]
         valid_probs = [(p, w) for p, w in zip(probabilities, weights) if p is not None]
 
         if not valid_probs:
@@ -344,39 +132,98 @@ class BinaryForecaster(ForecasterMixin):
         write(f"Weights: {weights}")
         write(f"Final probability: {final_prob:.3f} ({final_prob*100:.1f}%)")
 
-        # Save aggregation
-        if self.artifact_store:
-            self.artifact_store.save_aggregation({
-                "individual_probabilities": probabilities,
-                "weights": weights,
-                "method": "weighted_average",
-                "final_probability": final_prob,
-            })
+        return final_prob
 
+    def _build_agent_result(
+        self,
+        agent_id: str,
+        model: str,
+        weight: float,
+        step1_output: str,
+        step2_output: str,
+        prediction: Any,
+        error: Optional[str],
+    ) -> AgentResult:
+        """Build AgentResult with probability field."""
+        return AgentResult(
+            agent_id=agent_id,
+            model=model,
+            weight=weight,
+            step1_output=step1_output,
+            step2_output=step2_output,
+            probability=prediction,
+            error=error,
+        )
+
+    def _build_result(
+        self,
+        final_prediction: float,
+        agent_results: List[AgentResult],
+        historical_context: str,
+        current_context: str,
+        agents: List[Dict],
+        **question_params,
+    ) -> BinaryForecastResult:
+        """Build BinaryForecastResult."""
         return BinaryForecastResult(
-            final_probability=final_prob,
+            final_probability=final_prediction,
             agent_results=agent_results,
             historical_context=historical_context,
             current_context=current_context,
-            probabilities=probabilities,
-            weights=weights,
+            probabilities=[r.probability for r in agent_results],
+            weights=[a["weight"] for a in agents],
         )
 
-    def _extract_probability(self, text: str) -> float:
-        """
-        Extract probability percentage from response.
+    def _get_extracted_data(self, result: AgentResult) -> Dict:
+        """Get data for extracted prediction artifact."""
+        return {
+            "probability": result.probability,
+            "error": result.error,
+        }
 
-        Looks for "Probability: X%" pattern first, then falls back to
-        any percentage in the last 500 characters.
+    def _get_aggregation_data(
+        self,
+        agent_results: List[AgentResult],
+        agents: List[Dict],
+        final_prediction: float,
+    ) -> Dict:
+        """Get data for aggregation artifact."""
+        return {
+            "individual_probabilities": [r.probability for r in agent_results],
+            "weights": [a["weight"] for a in agents],
+            "method": "weighted_average",
+            "final_probability": final_prediction,
+        }
+
+    # Convenience method matching old interface
+    async def forecast(
+        self,
+        question_title: str,
+        question_text: str,
+        resolution_criteria: str,
+        fine_print: str = "",
+        write: callable = print,
+    ) -> BinaryForecastResult:
+        """
+        Generate a forecast for a binary question.
+
+        Args:
+            question_title: The question title
+            question_text: Full question description/background
+            resolution_criteria: How the question resolves
+            fine_print: Additional resolution details
+            write: Logging function (default: print)
 
         Returns:
-            Percentage value clamped to [1, 99]. Caller divides by 100
-            to get final 0-1 probability.
-
-        Raises:
-            ValueError: If no probability can be extracted.
+            BinaryForecastResult with final probability and all agent outputs
         """
-        return extract_binary_probability_percent(text)
+        return await super().forecast(
+            write=write,
+            question_title=question_title,
+            question_text=question_text,
+            resolution_criteria=resolution_criteria,
+            fine_print=fine_print,
+        )
 
 
 # Convenience function for direct use
