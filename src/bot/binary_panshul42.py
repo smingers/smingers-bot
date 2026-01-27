@@ -421,10 +421,17 @@ class BinaryForecaster:
 
     def _extract_probability(self, text: str) -> float:
         """
-        Extract probability from response.
+        Extract probability percentage from response.
 
-        Looks for "Probability: X%" pattern.
-        Returns value clamped to [1, 99].
+        Looks for "Probability: X%" pattern first, then falls back to
+        any percentage in the last 500 characters.
+
+        Returns:
+            Percentage value clamped to [1, 99]. Caller divides by 100
+            to get final 0-1 probability.
+
+        Raises:
+            ValueError: If no probability can be extracted.
         """
         matches = re.findall(r"Probability:\s*([0-9]+(?:\.[0-9]+)?)%", text.strip())
         if matches:
@@ -437,7 +444,8 @@ class BinaryForecaster:
             number = float(matches[-1])
             return min(99, max(1, number))
 
-        raise ValueError(f"Could not extract probability from response")
+        snippet = text[-200:] if len(text) > 200 else text
+        raise ValueError(f"Could not extract probability from response. Last 200 chars: {snippet!r}")
 
 
 # Convenience function for direct use

@@ -71,7 +71,8 @@ def extract_option_probabilities_from_response(
     """
     matches = re.findall(r"Probabilities:\s*\[([0-9.,\s]+)\]", forecast_text)
     if not matches:
-        raise ValueError(f"Could not extract 'Probabilities' list from response")
+        snippet = forecast_text[-200:] if len(forecast_text) > 200 else forecast_text
+        raise ValueError(f"Could not extract 'Probabilities' list from response. Last 200 chars: {snippet!r}")
 
     last_match = matches[-1]
     numbers = [float(n.strip()) for n in last_match.split(",") if n.strip()]
@@ -86,9 +87,10 @@ def normalize_probabilities(probs: List[float]) -> List[float]:
     """
     Normalize probabilities to sum to 1.0.
 
-    Also clamps each probability to [1, 99] before normalizing.
+    Clamps each probability to [1, 99] before normalizing. This is a Metaculus
+    platform constraint - they don't accept 0% or 100% for any option.
     """
-    # Clamp to [1, 99] (as percentages)
+    # Clamp to [1, 99] (Metaculus constraint: no 0% or 100%)
     probs = [max(min(p, 99), 1) for p in probs]
 
     # Normalize
