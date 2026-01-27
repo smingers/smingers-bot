@@ -139,9 +139,8 @@ class Forecaster:
             # Step 1: Save question
             self.artifact_store.save_question(artifacts, question.raw)
 
-            # Step 2: Analyze question
+            # Step 2: Analyze question (saved later in metadata)
             analysis = self._analyze_question(question)
-            self.artifact_store.save_analysis(artifacts, analysis)
 
             # Step 3: Run type-specific forecaster (does research + forecasting)
             if question.question_type == "binary":
@@ -177,6 +176,7 @@ class Forecaster:
                     "end": end_time.isoformat(),
                     "duration_seconds": (end_time - start_time).total_seconds(),
                 },
+                analysis=analysis,
             )
 
             # Save to database
@@ -196,7 +196,7 @@ class Forecaster:
                 "forecast_result": forecast_result,
                 "submission": submission_result,
                 "costs": costs,
-                "artifacts_dir": str(artifacts.base_dir / f"{artifacts.question_id}_{artifacts.timestamp}"),
+                "artifacts_dir": str(artifacts.forecast_dir),
             }
 
             # Add type-specific prediction summary
@@ -367,7 +367,7 @@ class Forecaster:
         if question.question_type == "binary":
             pred = forecast_result["final_prediction"]
             logger.info(f"DRY RUN: Would submit {pred:.1%}")
-            self.artifact_store.save_final_prediction(artifacts, {
+            self.artifact_store.save_prediction(artifacts, {
                 "prediction": pred,
                 "dry_run": True,
             })
@@ -376,7 +376,7 @@ class Forecaster:
             percentiles = forecast_result.get("final_percentiles", {})
             median = percentiles.get("50", percentiles.get(50, 0))
             logger.info(f"DRY RUN: Would submit CDF (median: {median})")
-            self.artifact_store.save_final_prediction(artifacts, {
+            self.artifact_store.save_prediction(artifacts, {
                 "percentiles": percentiles,
                 "cdf": forecast_result.get("final_cdf", []),
                 "dry_run": True,
@@ -387,7 +387,7 @@ class Forecaster:
             if probs:
                 best = max(probs.items(), key=lambda x: x[1])
                 logger.info(f"DRY RUN: Would submit distribution (most likely: {best[0]} at {best[1]:.1%})")
-            self.artifact_store.save_final_prediction(artifacts, {
+            self.artifact_store.save_prediction(artifacts, {
                 "distribution": probs,
                 "dry_run": True,
             })
@@ -426,7 +426,7 @@ class Forecaster:
             if question.question_type == "binary":
                 prediction = forecast_result["final_prediction"]
                 response = await self.metaculus.submit_prediction(question, prediction)
-                self.artifact_store.save_final_prediction(artifacts, {
+                self.artifact_store.save_prediction(artifacts, {
                     "prediction": prediction,
                     "submitted": True,
                 })
@@ -437,7 +437,7 @@ class Forecaster:
                 response = await self.metaculus.submit_numeric_prediction(question.id, cdf)
                 percentiles = forecast_result.get("final_percentiles", {})
                 median = percentiles.get("50", percentiles.get(50, 0))
-                self.artifact_store.save_final_prediction(artifacts, {
+                self.artifact_store.save_prediction(artifacts, {
                     "percentiles": percentiles,
                     "cdf": cdf,
                     "submitted": True,
@@ -448,7 +448,7 @@ class Forecaster:
                 probs = forecast_result["final_probabilities"]
                 response = await self.metaculus.submit_multiple_choice_prediction(question.id, probs)
                 best = max(probs.items(), key=lambda x: x[1])
-                self.artifact_store.save_final_prediction(artifacts, {
+                self.artifact_store.save_prediction(artifacts, {
                     "distribution": probs,
                     "submitted": True,
                 })
@@ -462,7 +462,7 @@ class Forecaster:
 
         except Exception as e:
             logger.error(f"Failed to submit prediction: {e}")
-            self.artifact_store.save_final_prediction(artifacts, {
+            self.artifact_store.save_prediction(artifacts, {
                 "forecast_result": forecast_result,
                 "submitted": False,
                 "error": str(e),
@@ -535,7 +535,7 @@ class ScopedArtifactStore:
     """
     Wraps ArtifactStore to automatically scope saves to a specific forecast.
 
-    The Panshul42 handlers call methods like save_agent_prompt(agent_name, prompt)
+    The handlers call methods like save_query_generation(type, prompt, response)
     without needing to know about ForecastArtifacts.
     """
 
@@ -543,29 +543,29 @@ class ScopedArtifactStore:
         self.store = store
         self.artifacts = artifacts
 
-    def save_research_queries(self, queries: list) -> None:
-        """Save search queries."""
-        self.store.save_research_queries(self.artifacts, queries)
+    def save_query_generation(self, query_type: str, prompt: str, response: str) -> None:
+        """Save query generation prompt and response."""
+        self.store.save_query_generation(self.artifacts, query_type, prompt, response)
 
-    def save_research_source(self, source_name: str, results: dict) -> None:
-        """Save research source results."""
-        self.store.save_research_source(self.artifacts, source_name, results)
+    def save_search_results(self, search_type: str, results: dict) -> None:
+        """Save search results."""
+        self.store.save_search_results(self.artifacts, search_type, results)
 
-    def save_research_synthesis(self, synthesis: str) -> None:
-        """Save research synthesis."""
-        self.store.save_research_synthesis(self.artifacts, synthesis)
+    def save_step1_prompt(self, prompt: str) -> None:
+        """Save the shared step 1 (outside view) prompt."""
+        self.store.save_step1_prompt(self.artifacts, prompt)
 
-    def save_agent_prompt(self, agent_name: str, prompt: str) -> None:
-        """Save agent prompt."""
-        self.store.save_agent_prompt(self.artifacts, agent_name, prompt)
+    def save_agent_step1(self, agent_num: int, response: str) -> None:
+        """Save an agent's step 1 (outside view) response."""
+        self.store.save_agent_step1(self.artifacts, agent_num, response)
 
-    def save_agent_response(self, agent_name: str, response: str) -> None:
-        """Save agent response."""
-        self.store.save_agent_response(self.artifacts, agent_name, response)
+    def save_agent_step2(self, agent_num: int, response: str) -> None:
+        """Save an agent's step 2 (inside view) response."""
+        self.store.save_agent_step2(self.artifacts, agent_num, response)
 
-    def save_agent_extracted(self, agent_name: str, extracted: dict) -> None:
+    def save_agent_extracted(self, agent_num: int, extracted: dict) -> None:
         """Save extracted prediction from agent."""
-        self.store.save_agent_extracted(self.artifacts, agent_name, extracted)
+        self.store.save_agent_extracted(self.artifacts, agent_num, extracted)
 
     def save_aggregation(self, aggregation: dict) -> None:
         """Save aggregation result."""

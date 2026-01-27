@@ -3,6 +3,23 @@ Artifact Storage System
 
 Persists all intermediate outputs from the forecasting pipeline.
 Nothing is ephemeral - every step produces a recorded artifact.
+
+Directory structure per question:
+    data/{question_id}_{timestamp}/
+        question.json          # Full raw question from Metaculus API
+        research/
+            query_historical.md    # LLM-generated historical search queries
+            query_current.md       # LLM-generated current search queries
+            search_historical.json # Search results for outside view
+            search_current.json    # Search results for inside view
+        ensemble/
+            step1_prompt.md        # Shared prompt for step 1 (outside view)
+            agent_{1-5}_step1.md   # Agent responses for step 1
+            agent_{1-5}_step2.md   # Agent responses for step 2 (inside view)
+            agent_{1-5}.json       # Extracted predictions per agent
+            aggregation.json       # Final aggregation of all agents
+        prediction.json        # Final prediction submitted to Metaculus
+        metadata.json          # Config, costs, timing, analysis
 """
 
 import json
@@ -24,77 +41,38 @@ class ForecastArtifacts:
     timestamp: str
     base_dir: Path
 
-    # Paths to artifact directories
+    # Paths to artifact files and directories
+    forecast_dir: Path = field(init=False)
     question_path: Path = field(init=False)
-    analysis_path: Path = field(init=False)
     research_dir: Path = field(init=False)
-    outside_view_dir: Path = field(init=False)
-    inside_view_dir: Path = field(init=False)
-    calibration_dir: Path = field(init=False)
-    submission_dir: Path = field(init=False)
+    ensemble_dir: Path = field(init=False)
+    prediction_path: Path = field(init=False)
     metadata_path: Path = field(init=False)
 
     def __post_init__(self):
         """Set up all artifact paths."""
-        forecast_dir = self.base_dir / f"{self.question_id}_{self.timestamp}"
-        forecast_dir.mkdir(parents=True, exist_ok=True)
+        self.forecast_dir = self.base_dir / f"{self.question_id}_{self.timestamp}"
+        self.forecast_dir.mkdir(parents=True, exist_ok=True)
 
-        self.question_path = forecast_dir / "00_question.json"
-        self.analysis_path = forecast_dir / "01_analysis.json"
-        self.research_dir = forecast_dir / "02_research"
-        self.outside_view_dir = forecast_dir / "03_outside_view"
-        self.inside_view_dir = forecast_dir / "04_inside_view"
-        self.calibration_dir = forecast_dir / "05_calibration"
-        self.submission_dir = forecast_dir / "06_submission"
-        self.metadata_path = forecast_dir / "metadata.json"
+        self.question_path = self.forecast_dir / "question.json"
+        self.research_dir = self.forecast_dir / "research"
+        self.ensemble_dir = self.forecast_dir / "ensemble"
+        self.prediction_path = self.forecast_dir / "prediction.json"
+        self.metadata_path = self.forecast_dir / "metadata.json"
 
         # Create subdirectories
-        for dir_path in [
-            self.research_dir,
-            self.outside_view_dir,
-            self.inside_view_dir,
-            self.calibration_dir,
-            self.submission_dir,
-        ]:
-            dir_path.mkdir(exist_ok=True)
+        self.research_dir.mkdir(exist_ok=True)
+        self.ensemble_dir.mkdir(exist_ok=True)
 
 
 class ArtifactStore:
     """
     Manages storage of all forecasting artifacts.
 
-    Directory structure per question:
-    data/forecasts/{question_id}_{timestamp}/
-        00_question.json
-        01_analysis.json
-        02_research/
-            queries_generated.json
-            google_search.json
-            perplexity.json
-            synthesis.md
-        03_outside_view/
-            prompt.md
-            response.md
-            extracted.json
-        04_inside_view/
-            agent_1/
-                prompt.md
-                response.md
-                extracted.json
-            agent_2/
-                ...
-            aggregation.json
-        05_calibration/
-            checklist.json
-            adjustments.json
-        06_submission/
-            final_prediction.json
-            api_response.json
-            reasoning_report.md
-        metadata.json
+    See module docstring for directory structure.
     """
 
-    def __init__(self, base_dir: str | Path = "./data/forecasts"):
+    def __init__(self, base_dir: str | Path = "./data"):
         self.base_dir = Path(base_dir)
         self.base_dir.mkdir(parents=True, exist_ok=True)
 
@@ -108,122 +86,108 @@ class ArtifactStore:
         )
 
     # =========================================================================
-    # Question & Analysis
+    # Question
     # =========================================================================
 
     def save_question(self, artifacts: ForecastArtifacts, question: dict) -> None:
         """Save the raw question from Metaculus API."""
         self._write_json(artifacts.question_path, question)
 
-    def save_analysis(self, artifacts: ForecastArtifacts, analysis: dict) -> None:
-        """Save question analysis (type, entities, timeframe, etc.)."""
-        self._write_json(artifacts.analysis_path, analysis)
-
     # =========================================================================
     # Research
     # =========================================================================
 
-    def save_research_queries(self, artifacts: ForecastArtifacts, queries: list[dict]) -> None:
-        """Save the search queries that were generated."""
-        self._write_json(artifacts.research_dir / "queries_generated.json", queries)
-
-    def save_research_source(
+    def save_query_generation(
         self,
         artifacts: ForecastArtifacts,
-        source_name: str,
-        results: dict | list
+        query_type: str,
+        prompt: str,
+        response: str,
     ) -> None:
-        """Save results from a research source (google, perplexity, etc.)."""
-        self._write_json(artifacts.research_dir / f"{source_name}.json", results)
+        """
+        Save query generation prompt and response.
 
-    def save_research_synthesis(self, artifacts: ForecastArtifacts, synthesis: str) -> None:
-        """Save the combined research summary."""
-        self._write_text(artifacts.research_dir / "synthesis.md", synthesis)
+        Args:
+            artifacts: ForecastArtifacts container
+            query_type: "historical" or "current"
+            prompt: The prompt sent to generate queries
+            response: The LLM response with generated queries
+        """
+        self._write_text(
+            artifacts.research_dir / f"query_{query_type}_prompt.md",
+            prompt,
+        )
+        self._write_text(
+            artifacts.research_dir / f"query_{query_type}.md",
+            response,
+        )
 
-    # =========================================================================
-    # Outside View
-    # =========================================================================
-
-    def save_outside_view_prompt(self, artifacts: ForecastArtifacts, prompt: str) -> None:
-        """Save the exact prompt sent for outside view estimation."""
-        self._write_text(artifacts.outside_view_dir / "prompt.md", prompt)
-
-    def save_outside_view_response(self, artifacts: ForecastArtifacts, response: str) -> None:
-        """Save the full LLM response for outside view."""
-        self._write_text(artifacts.outside_view_dir / "response.md", response)
-
-    def save_outside_view_extracted(self, artifacts: ForecastArtifacts, extracted: dict) -> None:
-        """Save the parsed outside view data (base_rate, reference_classes, etc.)."""
-        self._write_json(artifacts.outside_view_dir / "extracted.json", extracted)
-
-    # =========================================================================
-    # Inside View (Ensemble)
-    # =========================================================================
-
-    def save_agent_prompt(
+    def save_search_results(
         self,
         artifacts: ForecastArtifacts,
-        agent_name: str,
-        prompt: str
+        search_type: str,
+        results: dict | list,
     ) -> None:
-        """Save the prompt sent to a specific agent."""
-        agent_dir = artifacts.inside_view_dir / agent_name
-        agent_dir.mkdir(exist_ok=True)
-        self._write_text(agent_dir / "prompt.md", prompt)
+        """
+        Save search results.
 
-    def save_agent_response(
+        Args:
+            artifacts: ForecastArtifacts container
+            search_type: "historical" or "current"
+            results: Search results data
+        """
+        self._write_json(artifacts.research_dir / f"search_{search_type}.json", results)
+
+    # =========================================================================
+    # Ensemble
+    # =========================================================================
+
+    def save_step1_prompt(self, artifacts: ForecastArtifacts, prompt: str) -> None:
+        """Save the shared step 1 (outside view) prompt."""
+        self._write_text(artifacts.ensemble_dir / "step1_prompt.md", prompt)
+
+    def save_agent_step1(
         self,
         artifacts: ForecastArtifacts,
-        agent_name: str,
-        response: str
+        agent_num: int,
+        response: str,
     ) -> None:
-        """Save the full response from a specific agent."""
-        agent_dir = artifacts.inside_view_dir / agent_name
-        agent_dir.mkdir(exist_ok=True)
-        self._write_text(agent_dir / "response.md", response)
+        """Save an agent's step 1 (outside view) response."""
+        self._write_text(artifacts.ensemble_dir / f"agent_{agent_num}_step1.md", response)
+
+    def save_agent_step2(
+        self,
+        artifacts: ForecastArtifacts,
+        agent_num: int,
+        response: str,
+    ) -> None:
+        """Save an agent's step 2 (inside view) response."""
+        self._write_text(artifacts.ensemble_dir / f"agent_{agent_num}_step2.md", response)
 
     def save_agent_extracted(
         self,
         artifacts: ForecastArtifacts,
-        agent_name: str,
-        extracted: dict
+        agent_num: int,
+        extracted: dict,
     ) -> None:
         """Save the parsed prediction from a specific agent."""
-        agent_dir = artifacts.inside_view_dir / agent_name
-        agent_dir.mkdir(exist_ok=True)
-        self._write_json(agent_dir / "extracted.json", extracted)
+        self._write_json(artifacts.ensemble_dir / f"agent_{agent_num}.json", extracted)
 
     def save_aggregation(self, artifacts: ForecastArtifacts, aggregation: dict) -> None:
         """Save how individual forecasts were combined."""
-        self._write_json(artifacts.inside_view_dir / "aggregation.json", aggregation)
+        self._write_json(artifacts.ensemble_dir / "aggregation.json", aggregation)
 
     # =========================================================================
-    # Calibration
+    # Prediction
     # =========================================================================
 
-    def save_calibration_checklist(self, artifacts: ForecastArtifacts, checklist: dict) -> None:
-        """Save the calibration checklist responses."""
-        self._write_json(artifacts.calibration_dir / "checklist.json", checklist)
-
-    def save_calibration_adjustments(self, artifacts: ForecastArtifacts, adjustments: dict) -> None:
-        """Save any post-checklist adjustments."""
-        self._write_json(artifacts.calibration_dir / "adjustments.json", adjustments)
-
-    # =========================================================================
-    # Submission
-    # =========================================================================
-
-    def save_final_prediction(self, artifacts: ForecastArtifacts, prediction: dict) -> None:
-        """Save the final prediction that was submitted."""
-        self._write_json(artifacts.submission_dir / "final_prediction.json", prediction)
+    def save_prediction(self, artifacts: ForecastArtifacts, prediction: dict) -> None:
+        """Save the final prediction."""
+        self._write_json(artifacts.prediction_path, prediction)
 
     def save_api_response(self, artifacts: ForecastArtifacts, response: dict) -> None:
         """Save the Metaculus API response."""
-        self._write_json(artifacts.submission_dir / "api_response.json", response)
-
-    def save_reasoning_report(self, artifacts: ForecastArtifacts, report: str) -> None:
-        """Save the human-readable reasoning report."""
-        self._write_text(artifacts.submission_dir / "reasoning_report.md", report)
+        self._write_json(artifacts.forecast_dir / "api_response.json", response)
 
     # =========================================================================
     # Metadata
@@ -235,10 +199,22 @@ class ArtifactStore:
         config: dict,
         costs: dict,
         timing: dict,
+        analysis: dict | None = None,
         errors: list[str] | None = None,
         research_reuse: dict | None = None,
     ) -> None:
-        """Save forecast metadata including config, costs, and timing."""
+        """
+        Save forecast metadata including config, costs, timing, and analysis.
+
+        Args:
+            artifacts: ForecastArtifacts container
+            config: Configuration snapshot
+            costs: Cost breakdown by component
+            timing: Timing breakdown by component
+            analysis: Question analysis (type, status, dates, community_prediction)
+            errors: List of error messages encountered
+            research_reuse: Info about reused research from previous runs
+        """
         metadata = {
             "question_id": artifacts.question_id,
             "timestamp": artifacts.timestamp,
@@ -249,6 +225,10 @@ class ArtifactStore:
             "timing": timing,
             "errors": errors or [],
         }
+
+        # Include question analysis (previously separate 01_analysis.json)
+        if analysis:
+            metadata["analysis"] = analysis
 
         # Add research reuse info if applicable
         if research_reuse:

@@ -160,10 +160,8 @@ class BinaryForecaster(ForecasterMixin):
 
         # Save artifacts
         if self.artifact_store:
-            self.artifact_store.save_agent_prompt("query_historical", historical_prompt)
-            self.artifact_store.save_agent_response("query_historical", historical_output)
-            self.artifact_store.save_agent_prompt("query_current", current_prompt)
-            self.artifact_store.save_agent_response("query_current", current_output)
+            self.artifact_store.save_query_generation("historical", historical_prompt, historical_output)
+            self.artifact_store.save_query_generation("current", current_prompt, current_output)
 
         # =========================================================================
         # STEP 2: Execute searches
@@ -189,8 +187,8 @@ class BinaryForecaster(ForecasterMixin):
 
         # Save search results
         if self.artifact_store:
-            self.artifact_store.save_research_source("historical_search", {"context": historical_context})
-            self.artifact_store.save_research_source("current_search", {"context": current_context})
+            self.artifact_store.save_search_results("historical", {"context": historical_context})
+            self.artifact_store.save_search_results("current", {"context": current_context})
 
         # =========================================================================
         # STEP 3: Run 5 agents on Step 1 (outside view)
@@ -230,10 +228,10 @@ class BinaryForecaster(ForecasterMixin):
 
         # Save step 1 artifacts
         if self.artifact_store:
-            self.artifact_store.save_agent_prompt("step1_shared", step1_prompt)
+            self.artifact_store.save_step1_prompt(step1_prompt)
             for i, output in enumerate(step1_outputs):
                 if not isinstance(output, Exception):
-                    self.artifact_store.save_agent_response(f"forecaster_{i+1}_step1", output)
+                    self.artifact_store.save_agent_step1(i + 1, output)
 
         # =========================================================================
         # STEP 4: Cross-pollinate context
@@ -326,8 +324,8 @@ class BinaryForecaster(ForecasterMixin):
         if self.artifact_store:
             for i, result in enumerate(agent_results):
                 if result.step2_output:
-                    self.artifact_store.save_agent_response(f"forecaster_{i+1}_step2", result.step2_output)
-                self.artifact_store.save_agent_extracted(f"forecaster_{i+1}", {
+                    self.artifact_store.save_agent_step2(i + 1, result.step2_output)
+                self.artifact_store.save_agent_extracted(i + 1, {
                     "probability": result.probability,
                     "error": result.error,
                 })
