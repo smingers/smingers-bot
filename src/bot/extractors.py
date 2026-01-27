@@ -10,6 +10,8 @@ import logging
 import unicodedata
 from typing import Dict, List, Optional, Union
 
+from src.bot.exceptions import ExtractionError
+
 logger = logging.getLogger(__name__)
 
 # ============================================================================
@@ -66,7 +68,7 @@ def extract_binary_probability_percent(text: str) -> float:
         return min(99, max(1, number))
 
     snippet = text[-200:] if len(text) > 200 else text
-    raise ValueError(f"Could not extract probability from response. Last 200 chars: {snippet!r}")
+    raise ExtractionError(f"Could not extract probability from response. Last 200 chars: {snippet!r}")
 
 
 # ============================================================================
@@ -95,13 +97,13 @@ def extract_multiple_choice_probabilities(
     matches = re.findall(r"Probabilities:\s*\[([0-9.,\s]+)\]", text)
     if not matches:
         snippet = text[-200:] if len(text) > 200 else text
-        raise ValueError(f"Could not extract 'Probabilities' list from response. Last 200 chars: {snippet!r}")
+        raise ExtractionError(f"Could not extract 'Probabilities' list from response. Last 200 chars: {snippet!r}")
 
     last_match = matches[-1]
     numbers = [float(n.strip()) for n in last_match.split(",") if n.strip()]
 
     if len(numbers) != num_options:
-        raise ValueError(f"Expected {num_options} probabilities, got {len(numbers)}: {numbers}")
+        raise ExtractionError(f"Expected {num_options} probabilities, got {len(numbers)}: {numbers}")
 
     return numbers
 
@@ -214,7 +216,7 @@ def extract_percentiles_from_response(
 
     if not percentiles:
         snippet = str(text)[-300:] if len(str(text)) > 300 else str(text)
-        raise ValueError(f"No valid percentiles extracted. Last 300 chars: {snippet!r}")
+        raise ExtractionError(f"No valid percentiles extracted. Last 300 chars: {snippet!r}")
 
     return percentiles
 

@@ -28,6 +28,7 @@ from .extractors import (
     enforce_strict_increasing,
     VALID_PERCENTILE_KEYS,
 )
+from .exceptions import CDFGenerationError, InsufficientPredictionsError
 from .prompts import (
     NUMERIC_PROMPT_HISTORICAL,
     NUMERIC_PROMPT_CURRENT,
@@ -118,14 +119,14 @@ def generate_continuous_cdf(
     """
     # Validate inputs
     if not percentile_values:
-        raise ValueError("Empty percentile values dictionary")
+        raise CDFGenerationError("Empty percentile values dictionary")
 
     if upper_bound <= lower_bound:
-        raise ValueError(f"Upper bound ({upper_bound}) must be greater than lower bound ({lower_bound})")
+        raise CDFGenerationError(f"Upper bound ({upper_bound}) must be greater than lower bound ({lower_bound})")
 
     if zero_point is not None:
         if abs(zero_point - lower_bound) < 1e-6 or abs(zero_point - upper_bound) < 1e-6:
-            raise ValueError(f"zero_point ({zero_point}) too close to bounds [{lower_bound}, {upper_bound}]")
+            raise CDFGenerationError(f"zero_point ({zero_point}) too close to bounds [{lower_bound}, {upper_bound}]")
 
     # Clean and validate percentile values
     pv = {}
@@ -145,7 +146,7 @@ def generate_continuous_cdf(
             continue  # Skip non-numeric entries
 
     if len(pv) < 2:
-        raise ValueError(f"Need at least 2 valid percentile points (got {len(pv)})")
+        raise CDFGenerationError(f"Need at least 2 valid percentile points (got {len(pv)})")
 
     # Handle duplicate values by adding small offsets
     vals_seen = {}
@@ -164,7 +165,7 @@ def generate_continuous_cdf(
 
     # Check if values are strictly increasing after de-duplication
     if np.any(np.diff(values) <= 0):
-        raise ValueError("Percentile values must be strictly increasing after de-duplication")
+        raise CDFGenerationError("Percentile values must be strictly increasing after de-duplication")
 
     # Add boundary points if needed
     if not open_lower_bound and lower_bound < values[0] - 1e-9:
@@ -284,7 +285,7 @@ def generate_continuous_cdf(
         required_range = (len(cdf_y) - 1) * min_step
 
         if required_range > available_range:
-            raise ValueError(
+            raise CDFGenerationError(
                 f"Cannot satisfy minimum step requirement: need {required_range:.6f} "
                 f"but only have {available_range:.6f} available in CDF range"
             )
@@ -312,7 +313,7 @@ def generate_continuous_cdf(
     # Final validation
     if np.any(np.diff(cdf_y) < min_step - 1e-10):
         problematic_indices = np.where(np.diff(cdf_y) < min_step - 1e-10)[0]
-        raise RuntimeError(f"Failed to enforce minimum step size at indices: {problematic_indices}")
+        raise CDFGenerationError(f"Failed to enforce minimum step size at indices: {problematic_indices}")
 
     return cdf_y.tolist()
 
@@ -584,14 +585,18 @@ class NumericForecaster(ForecasterMixin):
         write("\n=== Step 6: Aggregating CDFs ===")
 
         if len(all_cdfs) < 3:
-            raise RuntimeError(f"Only {len(all_cdfs)} valid CDFs — need at least 3 to proceed")
+            raise InsufficientPredictionsError(
+                f"Only {len(all_cdfs)} valid CDFs — need at least 3 to proceed",
+                valid_count=len(all_cdfs),
+                total_count=len(agents),
+            )
 
         numer = sum(cdf * weight for cdf, weight in all_cdfs)
         denom = sum(weight for _, weight in all_cdfs)
         combined = (numer / denom).tolist()
 
         if len(combined) != 201:
-            raise RuntimeError(f"Combined CDF malformed: {len(combined)} points")
+            raise CDFGenerationError(f"Combined CDF malformed: {len(combined)} points")
 
         write(f"\nCombined CDF: {combined[:5]}...{combined[-5:]}")
 

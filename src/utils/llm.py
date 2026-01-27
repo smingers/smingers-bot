@@ -15,6 +15,8 @@ from datetime import datetime, timezone
 import litellm
 from litellm import acompletion
 
+from src.bot.exceptions import LLMError
+
 # Configure litellm
 litellm.set_verbose = False
 
@@ -258,7 +260,11 @@ class LLMClient:
             error=last_error,
         )
         self._log_call(call)
-        raise RuntimeError(f"LLM call failed after {self.max_retries} attempts: {last_error}")
+        raise LLMError(
+            f"LLM call failed after {self.max_retries} attempts: {last_error}",
+            attempts=self.max_retries,
+            last_error=last_error,
+        )
 
     def _log_call(self, call: LLMCall) -> None:
         """Log a call and update tracking."""

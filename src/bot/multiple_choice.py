@@ -28,6 +28,7 @@ from .extractors import (
     extract_multiple_choice_probabilities,
     normalize_probabilities,
 )
+from .exceptions import InsufficientPredictionsError
 from .prompts import (
     MULTIPLE_CHOICE_PROMPT_HISTORICAL,
     MULTIPLE_CHOICE_PROMPT_CURRENT,
@@ -308,7 +309,9 @@ class MultipleChoiceForecaster(ForecasterMixin):
             )
             logger.error(error_msg)
             write(f"FATAL ERROR: {error_msg}")
-            raise RuntimeError(error_msg)
+            raise InsufficientPredictionsError(
+                error_msg, valid_count=0, total_count=len(agents)
+            )
 
         # Save step 2 artifacts
         if self.artifact_store:

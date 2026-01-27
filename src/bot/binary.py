@@ -27,6 +27,7 @@ from ..utils.llm import LLMClient
 from ..storage.artifact_store import ArtifactStore
 from .handler_mixin import ForecasterMixin
 from .extractors import extract_binary_probability_percent
+from .exceptions import InsufficientPredictionsError
 from .prompts import (
     BINARY_PROMPT_HISTORICAL,
     BINARY_PROMPT_CURRENT,
@@ -341,7 +342,9 @@ class BinaryForecaster(ForecasterMixin):
             )
             logger.error(error_msg)
             write(f"FATAL ERROR: {error_msg}")
-            raise RuntimeError(error_msg)
+            raise InsufficientPredictionsError(
+                error_msg, valid_count=0, total_count=len(agents)
+            )
 
         weighted_sum = sum(p * w for p, w in valid_probs)
         weight_sum = sum(w for _, w in valid_probs)
