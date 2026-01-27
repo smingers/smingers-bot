@@ -1,5 +1,5 @@
 """
-Content Extractor - Port from Panshul42's tournament-winning implementation
+Content Extractor
 
 Multi-backend HTML content extraction with site-specific configs:
 1. Site-specific CSS selectors (NYT, Reuters, Bloomberg, etc.)
@@ -61,8 +61,6 @@ class ExtractedContent:
 class HTMLContentExtractor:
     """
     Multi-backend HTML content extractor with site-specific configurations.
-
-    Ported from Panshul42's Q2 tournament-winning implementation.
     """
 
     # Site-specific extraction configs

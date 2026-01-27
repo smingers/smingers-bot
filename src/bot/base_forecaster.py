@@ -28,7 +28,7 @@ from .prompts import CLAUDE_CONTEXT, GPT_CONTEXT
 logger = logging.getLogger(__name__)
 
 
-# Cross-pollination map (Panshul42's pattern)
+# Cross-pollination map
 # Maps agent index -> source agent index for step 1 output
 CROSS_POLLINATION_MAP = {
     0: (0, "Outside view prediction"),  # Agent 1 <- Agent 1

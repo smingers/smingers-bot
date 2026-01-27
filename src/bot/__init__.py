@@ -1,4 +1,4 @@
-"""Bot forecasting module - Panshul42 Integration."""
+"""Bot forecasting module."""
 
 
 class ExtractionError(Exception):

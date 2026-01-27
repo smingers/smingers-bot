@@ -1,5 +1,5 @@
 """
-Search Pipeline - Port from Panshul42's tournament-winning implementation
+Search Pipeline
 
 Key differences from previous approach:
 1. Forecasters generate search queries directly in their responses

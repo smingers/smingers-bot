@@ -1,5 +1,5 @@
 """
-Numeric Question Handler - Port from Panshul42's tournament-winning implementation
+Numeric Question Handler
 
 Uses BaseForecaster for the shared 5-agent ensemble pipeline.
 Implements numeric-specific extraction (percentiles → CDF) and aggregation logic.

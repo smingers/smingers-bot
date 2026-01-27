@@ -1,5 +1,5 @@
 """
-Main Forecaster Orchestration - Panshul42 Integration
+Main Forecaster Orchestration
 
 Simplified pipeline that delegates to type-specific handlers:
 1. Fetch question from Metaculus
@@ -31,7 +31,7 @@ logger = logging.getLogger(__name__)
 
 class Forecaster:
     """
-    Main forecaster that orchestrates the Panshul42 pipeline.
+    Main forecaster that orchestrates the pipeline.
 
     Each handler (binary, numeric, multiple_choice) does its own:
     - Research query generation (historical + current)
@@ -239,7 +239,7 @@ class Forecaster:
         question: MetaculusQuestion,
         scoped_store: "ScopedArtifactStore",
     ) -> dict:
-        """Run binary forecasting pipeline with Panshul42's 5-agent ensemble."""
+        """Run binary forecasting pipeline with 5-agent ensemble."""
         forecaster = BinaryForecaster(
             config=self.config,
             llm_client=self.llm,
@@ -266,7 +266,7 @@ class Forecaster:
         question: MetaculusQuestion,
         scoped_store: "ScopedArtifactStore",
     ) -> dict:
-        """Run numeric forecasting pipeline with Panshul42's 5-agent ensemble."""
+        """Run numeric forecasting pipeline with 5-agent ensemble."""
         # Extract bounds - can be at top level or in question.scaling
         scaling = question.raw.get("scaling") or question.raw.get("question", {}).get("scaling", {})
         lower_bound = scaling.get("range_min", 0)
@@ -318,7 +318,7 @@ class Forecaster:
         question: MetaculusQuestion,
         scoped_store: "ScopedArtifactStore",
     ) -> dict:
-        """Run multiple choice forecasting pipeline with Panshul42's 5-agent ensemble."""
+        """Run multiple choice forecasting pipeline with 5-agent ensemble."""
         # Extract options
         raw_options = question.options or question.raw.get("question", {}).get("options", [])
 
@@ -498,7 +498,7 @@ class Forecaster:
             timestamp=artifacts.timestamp,
             question_type=question.question_type,
             question_title=question.title,
-            base_rate=None,  # Panshul42 doesn't use separate base rate
+            base_rate=None,
             final_prediction=final_prediction,
             total_cost=costs.get("total_cost", 0),
             config_hash=self.artifact_store._hash_config(self.config),

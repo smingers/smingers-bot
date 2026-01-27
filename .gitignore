@@ -32,6 +32,7 @@ ENV/
 # IDE
 .idea/
 .vscode/
+.claude/
 *.swp
 *.swo
 *~
@@ -42,7 +43,6 @@ data/forecasts/*
 data/configs/*
 !data/configs/.gitkeep
 data/*.db
-
 
 # Jupyter
 .ipynb_checkpoints/

@@ -50,7 +50,7 @@ python run_bot.py --tournament 32916 --mode reforecast --reforecast-days 7
 
 ## Architecture
 
-### Forecasting Pipeline (Panshul42)
+### Forecasting Pipeline
 
 ```
 Question -> Query Generation -> Search (Historical + Current) -> 5-Agent Ensemble -> Aggregation -> Submit
@@ -215,7 +215,7 @@ AskNews provides news search. Free for Metaculus tournament participants (3k+ ca
 2. Create API credentials with **all scopes**: news, chat, stories, analytics
 3. Add to `.env`: `ASKNEWS_CLIENT_ID` and `ASKNEWS_CLIENT_SECRET`
 
-## Artifacts
+## Artifacts -- NEEDS UPDATING
 
 Every forecast saves artifacts to `data/{question_id}_{timestamp}/`:
 

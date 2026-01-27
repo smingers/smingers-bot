@@ -1,4 +1,4 @@
-"""Custom exceptions for the forecasting pipeline.
+"""Custom exceptions for the forecasting pipeline
 
 This module defines a hierarchy of exceptions for better error handling and debugging.
 All forecasting-related errors inherit from ForecastingError.

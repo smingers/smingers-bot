@@ -1,6 +1,5 @@
 """
-Prompts ported from Panshul42's tournament-winning forecasting bot.
-Source: https://github.com/Panshul42/forecasting-bot-q2
+Prompts
 
 These prompts implement a two-stage research + two-stage forecasting pipeline:
 1. Historical research queries -> Outside view context
@@ -8,7 +7,6 @@ These prompts implement a two-stage research + two-stage forecasting pipeline:
 3. Outside view prediction (PROMPT_1) using historical context
 4. Inside view prediction (PROMPT_2) using current context + outside view
 
-All prompts are used as-is from Panshul42's implementation.
 """
 
 # =============================================================================

@@ -1,5 +1,5 @@
 """
-Binary Question Handler - Port from Panshul42's tournament-winning implementation
+Binary Question Handler
 
 Uses BaseForecaster for the shared 5-agent ensemble pipeline.
 Implements binary-specific extraction and aggregation logic.

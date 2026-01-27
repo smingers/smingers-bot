@@ -1,5 +1,5 @@
 # Metaculus AI Forecasting Bot Configuration
-# Panshul42 Integration - 5-Agent Ensemble Pipeline
+# 5-Agent Ensemble Pipeline
 
 # =============================================================================
 # RUN MODE
@@ -35,21 +35,17 @@ models:
     agentic_search: "openrouter/openai/o3"
 
 # =============================================================================
-# 5-AGENT ENSEMBLE CONFIGURATION (Panshul42 Structure)
+# 5-AGENT ENSEMBLE CONFIGURATION
 # =============================================================================
-# The ensemble uses 5 forecasting agents with equal weights:
-#   - forecaster_1: Claude (weight 1.0)
-#   - forecaster_2: Claude (weight 1.0)
-#   - forecaster_3: o3-mini-high (weight 1.0)
-#   - forecaster_4: o3 (weight 1.0)
-#   - forecaster_5: o3 (weight 1.0)
+# The ensemble uses 5 forecasting agents with configurable weights and model 
+# selection
 #
-# Cross-pollination structure (from Panshul42):
+# Cross-pollination structure:
 #   - Agent 1 receives Agent 1's step 1 output (Outside view)
 #   - Agent 2 receives Agent 3's step 1 output (Outside view)
 #   - Agent 3 receives Agent 2's step 1 output (Outside view)
-#   - Agent 4 receives Agent 4's step 1 output (Inside view)
-#   - Agent 5 receives Agent 5's step 1 output (Inside view)
+#   - Agent 4 receives Agent 4's step 1 output (Inside view) ## please check if this is correct
+#   - Agent 5 receives Agent 5's step 1 output (Inside view) ## please check if this is correct
 
 ensemble:
   # Agents for dry_run mode (all Haiku - cheap, fast)
@@ -99,15 +95,13 @@ ensemble:
   aggregation: "weighted_average"
 
 # =============================================================================
-# RESEARCH CONFIGURATION (Panshul42 Pipeline)
+# RESEARCH CONFIGURATION
 # =============================================================================
 # Research is integrated into each handler. The pipeline:
 # 1. Generate historical queries (outside view context)
 # 2. Generate current queries (inside view context)
 # 3. Execute searches via Google (Serper) and AskNews
 # 4. Extract and summarize content
-#
-# This replaces the previous separate research phase.
 
 research:
   # Google search via Serper API
@@ -168,15 +162,3 @@ logging:
   level: "INFO"
   log_llm_calls: true
   track_costs: true
-
-# =============================================================================
-# API KEYS (Set in .env file)
-# =============================================================================
-# Required:
-#   OPENROUTER_API_KEY - For all model calls
-#   METACULUS_TOKEN - For question fetching and submission
-#
-# For research:
-#   SERPER_API_KEY - Google search (free tier: 2,500/month)
-#   ASKNEWS_CLIENT_ID - AskNews (free for tournament participants)
-#   ASKNEWS_CLIENT_SECRET - AskNews secret

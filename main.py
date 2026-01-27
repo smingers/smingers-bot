@@ -11,6 +11,7 @@ Usage:
 
     # Run in dry-run mode (don't submit)
     python main.py --question 12345 --dry-run
+    python main.py --question 12345 --dry-run-heavy
 
     # List tournament questions
     python main.py --tournament 32721 --list
@@ -94,7 +95,6 @@ async def forecast_question(
             question_type = result['question'].question_type
             if question_type == "binary":
                 print(f"Prediction: {result['prediction']:.1%}")
-                # Panshul42 pipeline doesn't use separate base rate
                 agent_results = result.get('forecast_result', {}).get('agent_results', [])
                 if agent_results:
                     probs = [r.probability for r in agent_results if hasattr(r, 'probability') and r.probability]

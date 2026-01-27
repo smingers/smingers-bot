@@ -1,5 +1,5 @@
 """
-Probability and percentile extraction from LLM responses.
+Probability and percentile extraction from LLM responses
 
 This module consolidates extraction logic from the question handlers,
 making it testable and reusable across all question types.

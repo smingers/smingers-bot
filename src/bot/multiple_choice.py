@@ -1,5 +1,5 @@
 """
-Multiple Choice Question Handler - Port from Panshul42's tournament-winning implementation
+Multiple Choice Question Handler
 
 Uses BaseForecaster for the shared 5-agent ensemble pipeline.
 Implements multiple choice-specific extraction and aggregation logic.
