@@ -290,6 +290,8 @@ def main():
         level=logging.INFO,
         format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
     )
+    # Suppress noisy trafilatura warnings (failed scrapes are handled gracefully)
+    logging.getLogger("trafilatura").setLevel(logging.CRITICAL)
 
     asyncio.run(run_forecast(
         tournament_id=args.tournament,
