@@ -27,7 +27,7 @@ from ..utils.llm import LLMClient
 from ..storage.artifact_store import ArtifactStore
 from .handler_mixin import ForecasterMixin
 from .extractors import extract_binary_probability_percent
-from .prompts_panshul42 import (
+from .prompts import (
     BINARY_PROMPT_HISTORICAL,
     BINARY_PROMPT_CURRENT,
     BINARY_PROMPT_1,
@@ -35,7 +35,7 @@ from .prompts_panshul42 import (
     CLAUDE_CONTEXT,
     GPT_CONTEXT,
 )
-from .search_panshul42 import SearchPipeline, QuestionDetails
+from .search import SearchPipeline, QuestionDetails
 
 logger = logging.getLogger(__name__)
 

@@ -1,7 +1,7 @@
 """
 Tests for CDF generation in numeric forecasting.
 
-Tests the functions in src/bot/numeric_panshul42.py:
+Tests the functions in src/bot/numeric.py:
 - generate_continuous_cdf()
 - _safe_cdf_bounds()
 - enforce_strict_increasing()
@@ -13,7 +13,7 @@ import pytest
 import numpy as np
 from typing import Dict
 
-from src.bot.numeric_panshul42 import (
+from src.bot.numeric import (
     generate_continuous_cdf,
     _safe_cdf_bounds,
     enforce_strict_increasing,

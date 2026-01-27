@@ -28,7 +28,7 @@ from .extractors import (
     enforce_strict_increasing,
     VALID_PERCENTILE_KEYS,
 )
-from .prompts_panshul42 import (
+from .prompts import (
     NUMERIC_PROMPT_HISTORICAL,
     NUMERIC_PROMPT_CURRENT,
     NUMERIC_PROMPT_1,
@@ -36,7 +36,7 @@ from .prompts_panshul42 import (
     CLAUDE_CONTEXT,
     GPT_CONTEXT,
 )
-from .search_panshul42 import SearchPipeline, QuestionDetails
+from .search import SearchPipeline, QuestionDetails
 
 logger = logging.getLogger(__name__)
 

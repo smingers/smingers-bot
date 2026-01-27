@@ -2,9 +2,9 @@
 Tests for probability and percentile extraction from LLM responses.
 
 These tests cover the extraction logic in:
-- src/bot/binary_panshul42.py: _extract_probability()
-- src/bot/multiple_choice_panshul42.py: extract_option_probabilities_from_response()
-- src/bot/numeric_panshul42.py: extract_percentiles_from_response()
+- src/bot/binary.py: _extract_probability()
+- src/bot/multiple_choice.py: extract_option_probabilities_from_response()
+- src/bot/numeric.py: extract_percentiles_from_response()
 
 Testing CURRENT code behavior to establish a safety net before refactoring.
 """
@@ -13,7 +13,7 @@ import pytest
 import re
 
 # Import the actual extraction functions/methods
-from src.bot.binary_panshul42 import BinaryForecaster
+from src.bot.binary import BinaryForecaster
 from src.bot.extractors import (
     extract_multiple_choice_probabilities as extract_option_probabilities_from_response,
     normalize_probabilities,

@@ -22,7 +22,7 @@ import dateparser
 
 from ..utils.llm import LLMClient
 from .content_extractor import FastContentExtractor
-from .prompts_panshul42 import INITIAL_SEARCH_PROMPT, CONTINUATION_SEARCH_PROMPT
+from .prompts import INITIAL_SEARCH_PROMPT, CONTINUATION_SEARCH_PROMPT
 
 logger = logging.getLogger(__name__)
 
