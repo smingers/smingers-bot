@@ -12,8 +12,6 @@ Output: 201-point CDF for Metaculus submission
 """
 
 import asyncio
-import re
-import unicodedata
 import logging
 from datetime import datetime
 from typing import Optional, List, Tuple, Dict, Union
@@ -24,6 +22,11 @@ from scipy.interpolate import PchipInterpolator
 
 from ..utils.llm import LLMClient
 from ..storage.artifact_store import ArtifactStore
+from .extractors import (
+    extract_percentiles_from_response,
+    enforce_strict_increasing,
+    VALID_PERCENTILE_KEYS,
+)
 from .prompts_panshul42 import (
     NUMERIC_PROMPT_HISTORICAL,
     NUMERIC_PROMPT_CURRENT,
@@ -35,21 +38,6 @@ from .prompts_panshul42 import (
 from .search_panshul42 import SearchPipeline, QuestionDetails
 
 logger = logging.getLogger(__name__)
-
-# Valid percentile keys
-VALID_PERCENTILE_KEYS = {1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 99}
-
-# Regex for parsing percentile lines
-NUM_PATTERN = re.compile(
-    r"^(?:percentile\s*)?(\d{1,3})\s*[:\-]\s*([+-]?\d+(?:\.\d+)?(?:e[+-]?\d+)?)\s*$",
-    re.IGNORECASE
-)
-
-# Characters that can start bullet points
-BULLET_CHARS = "•▪●‣–*-"
-
-# Dash normalization pattern
-DASH_RE = re.compile(r"[\u2010\u2011\u2012\u2013\u2014\u2015\u2212]")
 
 
 @dataclass
@@ -73,83 +61,6 @@ class NumericForecastResult:
     historical_context: str
     current_context: str
     timestamp: str = field(default_factory=lambda: datetime.now().isoformat())
-
-
-def clean_line(s: str) -> str:
-    """Clean and normalize a line of text for percentile parsing."""
-    # Normalize compatibility forms
-    s = unicodedata.normalize("NFKC", s)
-    # Replace every dash-like char with ASCII hyphen
-    s = DASH_RE.sub("-", s)
-    # Strip bullets from the start
-    s = s.strip().lstrip(BULLET_CHARS)
-    # Remove thousands-sep commas & NBSPs
-    s = s.replace(",", "").replace("\u00A0", "")
-    return s.lower()
-
-
-def extract_percentiles_from_response(text: Union[str, List], verbose: bool = True) -> Dict[int, float]:
-    """
-    Extract percentiles from LLM response.
-
-    Looks for "Distribution:" anchor then parses lines like:
-    Percentile 1: 15
-    Percentile 5: 20
-    ...
-    """
-    lines = text if isinstance(text, list) else text.splitlines()
-    percentiles = {}
-    collecting = False
-
-    for idx, raw in enumerate(lines, 1):
-        line = clean_line(str(raw))
-
-        if not collecting and "distribution:" in line:
-            collecting = True
-            if verbose:
-                logger.debug(f"Found 'Distribution:' anchor at line {idx}")
-            continue
-
-        if not collecting:
-            continue
-
-        match = NUM_PATTERN.match(line)
-        if not match:
-            if verbose:
-                logger.debug(f"No match on line {idx}: {line}")
-            continue
-
-        key, val_text = match.groups()
-        try:
-            p = int(key)
-            val = float(val_text)
-            if p in VALID_PERCENTILE_KEYS:
-                percentiles[p] = val
-                if verbose:
-                    logger.debug(f"Matched Percentile {p}: {val}")
-        except Exception as e:
-            logger.warning(f"Failed parsing line {idx}: {line} -> {e}")
-
-    if not percentiles:
-        snippet = str(text)[-300:] if len(str(text)) > 300 else str(text)
-        raise ValueError(f"No valid percentiles extracted. Last 300 chars: {snippet!r}")
-
-    return percentiles
-
-
-def enforce_strict_increasing(pct_dict: Dict[int, float]) -> Dict[int, float]:
-    """Ensure strictly increasing values by adding tiny jitter if necessary."""
-    sorted_items = sorted(pct_dict.items())
-    last_val = -float('inf')
-    new_pct_dict = {}
-
-    for p, v in sorted_items:
-        if v <= last_val:
-            v = last_val + 1e-8  # Add a tiny epsilon
-        new_pct_dict[p] = v
-        last_val = v
-
-    return new_pct_dict
 
 
 def _safe_cdf_bounds(cdf: np.ndarray, open_lower: bool, open_upper: bool, step: float) -> np.ndarray:
