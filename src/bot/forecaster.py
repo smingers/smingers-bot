@@ -13,9 +13,10 @@ import asyncio
 import logging
 import yaml
 from pathlib import Path
-from typing import Optional
+from typing import Optional, Union
 from datetime import datetime, timezone
 
+from ..config import ResolvedConfig
 from ..utils.llm import LLMClient, get_cost_tracker, reset_cost_tracker
 from ..utils.metaculus_api import MetaculusClient, MetaculusQuestion
 from ..storage.artifact_store import ArtifactStore, ForecastArtifacts
@@ -44,50 +45,46 @@ class Forecaster:
         result = await forecaster.forecast_question(question_id=12345)
     """
 
-    def __init__(self, config: dict):
-        self.config = config
+    def __init__(self, config: Union[ResolvedConfig, dict]):
+        """
+        Initialize the Forecaster.
 
-        # Apply mode-based config if not already applied
-        if "_active_models" not in config:
-            self._apply_default_mode(config)
+        Args:
+            config: Either a ResolvedConfig object or a raw dict (for backward compatibility).
+                    If a dict is passed, it will be wrapped in ResolvedConfig.
+
+        Note:
+            New code should pass ResolvedConfig directly. The dict option exists for
+            backward compatibility with code that hasn't been migrated yet.
+
+            Internally, we maintain both:
+            - self.resolved_config: The rich ResolvedConfig object (preferred for new code)
+            - self.config: A dict with _active_* keys for legacy handlers that expect them
+        """
+        # Accept either ResolvedConfig or dict for backward compatibility
+        if isinstance(config, ResolvedConfig):
+            self.resolved_config = config
+            self.config = config.to_dict()
+        else:
+            # Dict passed - wrap in ResolvedConfig
+            self.resolved_config = ResolvedConfig.from_dict(config)
+            self.config = self.resolved_config.to_dict()
 
         # Initialize components
         self.metaculus = MetaculusClient()
         self.llm = LLMClient()
         self.artifact_store = ArtifactStore(
-            base_dir=config.get("storage", {}).get("base_dir", "./data")
+            base_dir=self.resolved_config.get("storage", {}).get("base_dir", "./data")
         )
         self.database = ForecastDatabase(
-            db_path=config.get("storage", {}).get("database_path", "./data/forecasts.db")
+            db_path=self.resolved_config.get("storage", {}).get("database_path", "./data/forecasts.db")
         )
 
-        # Configuration
-        self.dry_run = not config.get("_should_submit", False)
+        # Configuration from resolved config
+        self.dry_run = not self.resolved_config.should_submit
 
         # Log the mode
-        mode = config.get("_effective_mode", "dry_run")
-        logger.info(f"Forecaster initialized in '{mode}' mode")
-
-    def _apply_default_mode(self, config: dict):
-        """Apply default mode settings if not already applied by main.py."""
-        mode = config.get("mode", "dry_run")
-        model_tier = "cheap" if mode == "dry_run" else "production"
-
-        # Apply models
-        if "models" in config and model_tier in config["models"]:
-            config["_active_models"] = config["models"][model_tier]
-        else:
-            config["_active_models"] = config.get("models", {})
-
-        # Apply ensemble agents
-        if "ensemble" in config and model_tier in config["ensemble"]:
-            config["_active_agents"] = config["ensemble"][model_tier]
-        else:
-            config["_active_agents"] = config.get("ensemble", {}).get("agents", [])
-
-        # Set submission behavior
-        config["_should_submit"] = (mode == "production")
-        config["_effective_mode"] = mode
+        logger.info(f"Forecaster initialized in '{self.resolved_config.mode}' mode")
 
     async def initialize(self):
         """Initialize database and other async resources."""

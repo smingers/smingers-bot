@@ -30,8 +30,9 @@ from dotenv import load_dotenv
 # Add src to path
 sys.path.insert(0, str(Path(__file__).parent))
 
-from src.bot.forecaster import Forecaster, load_config
+from src.bot.forecaster import Forecaster
 from src.bot import ExtractionError
+from src.config import ResolvedConfig
 from src.utils.metaculus_api import MetaculusClient
 from datetime import datetime, timezone
 
@@ -92,47 +93,6 @@ async def list_questions(tournament_id: int | str):
         print(f"\nTotal: {len(questions)} questions")
 
 
-def apply_mode_to_config(config: dict, mode: str = None, dry_run: bool = False) -> dict:
-    """
-    Apply run mode to config, selecting appropriate models and submission settings.
-
-    Modes:
-    - dry_run: Cheap models, no submission
-    - dry_run_heavy: Production models, no submission
-    - production: Production models, submits to Metaculus
-    """
-    # Determine effective mode
-    if mode:
-        effective_mode = mode
-    elif dry_run:
-        effective_mode = "dry_run"
-    else:
-        effective_mode = config.get("mode", "dry_run")
-
-    # Select model tier based on mode
-    model_tier = "cheap" if effective_mode == "dry_run" else "production"
-
-    # Apply models
-    if "models" in config and model_tier in config["models"]:
-        config["_active_models"] = config["models"][model_tier]
-    else:
-        # Fallback for old config format
-        config["_active_models"] = config.get("models", {})
-
-    # Apply ensemble agents
-    if "ensemble" in config and model_tier in config["ensemble"]:
-        config["_active_agents"] = config["ensemble"][model_tier]
-    else:
-        # Fallback for old config format
-        config["_active_agents"] = config.get("ensemble", {}).get("agents", [])
-
-    # Set submission behavior
-    config["_should_submit"] = (effective_mode == "production")
-    config["_effective_mode"] = effective_mode
-
-    return config
-
-
 async def forecast_question(
     question_id: int = None,
     question_url: str = None,
@@ -141,11 +101,11 @@ async def forecast_question(
     mode: str = None,
 ):
     """Forecast a single question."""
-    config = load_config(config_path)
-    config = apply_mode_to_config(config, mode=mode, dry_run=dry_run)
+    resolved = ResolvedConfig.from_yaml(config_path, mode=mode, dry_run=dry_run)
+    config = resolved.to_dict()
 
     try:
-        async with Forecaster(config) as forecaster:
+        async with Forecaster(resolved) as forecaster:
             result = await forecaster.forecast_question(
                 question_id=question_id,
                 question_url=question_url,
@@ -223,9 +183,10 @@ async def forecast_new_questions(
     limit: int = 10,
 ):
     """Forecast all new questions in a tournament."""
-    config = load_config(config_path)
-    config["submission"]["tournament_id"] = tournament_id
-    config = apply_mode_to_config(config, mode=mode, dry_run=dry_run)
+    resolved = ResolvedConfig.from_yaml(config_path, mode=mode, dry_run=dry_run)
+    # Modify raw config for tournament_id before converting to dict
+    resolved.raw["submission"]["tournament_id"] = tournament_id
+    config = resolved.to_dict()
 
     async with MetaculusClient() as client:
         # Get all open questions
@@ -249,7 +210,7 @@ async def forecast_new_questions(
     extraction_errors = []
     other_errors = []
 
-    async with Forecaster(config) as forecaster:
+    async with Forecaster(resolved) as forecaster:
         for i, question in enumerate(new_questions[:limit]):
             print(f"\n[{i+1}/{min(len(new_questions), limit)}] Forecasting: {question.title}")
 
@@ -291,8 +252,7 @@ async def forecast_new_questions(
     print(f"{'='*60}")
 
     # Write failures to persistent log file
-    effective_mode = config.get("_effective_mode", "unknown")
-    write_failure_log(effective_mode, extraction_errors, other_errors)
+    write_failure_log(resolved.mode, extraction_errors, other_errors)
 
     # Exit with error if any extraction errors occurred
     if extraction_errors:

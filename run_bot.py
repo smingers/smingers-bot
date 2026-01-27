@@ -21,8 +21,9 @@ from dataclasses import dataclass, field
 
 sys.path.insert(0, str(Path(__file__).parent))
 
-from src.bot.forecaster import Forecaster, load_config
+from src.bot.forecaster import Forecaster
 from src.bot import ExtractionError
+from src.config import ResolvedConfig
 from src.utils.metaculus_api import MetaculusClient
 
 logger = logging.getLogger(__name__)
@@ -148,8 +149,7 @@ async def run_forecast(
         reforecast_days: For reforecast mode, re-forecast if older than this
         limit: Maximum questions to forecast per run
     """
-    config = load_config("config.yaml")
-    config["mode"] = "production"
+    resolved = ResolvedConfig.from_yaml("config.yaml", mode="production")
 
     # Convert tournament_id to int if numeric
     tournament_id_parsed: int | str
@@ -213,7 +213,7 @@ async def run_forecast(
 
     summary = RunSummary(tournament_id=tournament_id, mode=mode)
 
-    async with Forecaster(config) as forecaster:
+    async with Forecaster(resolved) as forecaster:
         for i, question in enumerate(questions_to_process):
             logger.info(f"[{i+1}/{len(questions_to_process)}] {question.title[:60]}...")
 
