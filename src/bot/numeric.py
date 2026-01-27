@@ -206,16 +206,34 @@ class NumericForecaster(ForecasterMixin):
                     self.artifact_store.save_agent_step1(i + 1, output)
 
         # =========================================================================
-        # STEP 4: Build context maps and run Step 2
+        # STEP 4: Cross-pollinate context between agents
         # =========================================================================
-        write("\n=== Step 4: Running Step 2 ===")
+        write("\n=== Step 4: Cross-pollinating context ===")
 
-        # Each agent gets current context + their own step 1 output
-        context_map = {
-            i: f"Current context: {current_context}\nPrior: {step1_outputs[i]}"
-            for i in range(5)
-            if not isinstance(step1_outputs[i], Exception)
+        # Panshul42's cross-pollination:
+        # - Agent 1 gets agent 1's step1 output (Outside view)
+        # - Agent 2 gets agent 3's step1 output (Outside view)
+        # - Agent 3 gets agent 2's step1 output (Outside view)
+        # - Agent 4 gets agent 4's step1 output (Inside view)
+        # - Agent 5 gets agent 5's step1 output (Inside view)
+        cross_pollination_map = {
+            0: (0, "Outside view prediction"),
+            1: (2, "Outside view prediction"),
+            2: (1, "Outside view prediction"),
+            3: (3, "Inside view prediction"),
+            4: (4, "Inside view prediction"),
         }
+
+        context_map = {}
+        for i in range(5):
+            source_idx, label = cross_pollination_map[i]
+            source_output = step1_outputs[source_idx] if not isinstance(step1_outputs[source_idx], Exception) else ""
+            context_map[i] = f"Current context: {current_context}\n{label}: {source_output}"
+
+        # =========================================================================
+        # STEP 5: Run 5 agents on Step 2 (inside view)
+        # =========================================================================
+        write("\n=== Step 5: Running Step 2 (inside view) ===")
 
         step2_tasks = []
         for i, agent in enumerate(agents):
@@ -241,9 +259,9 @@ class NumericForecaster(ForecasterMixin):
         step2_outputs = await asyncio.gather(*step2_tasks, return_exceptions=True)
 
         # =========================================================================
-        # STEP 5: Extract percentiles and generate CDFs
+        # STEP 6: Extract percentiles and generate CDFs
         # =========================================================================
-        write("\n=== Step 5: Extracting percentiles and generating CDFs ===")
+        write("\n=== Step 6: Extracting percentiles and generating CDFs ===")
 
         all_cdfs = []
         agent_results = []
@@ -315,9 +333,9 @@ class NumericForecaster(ForecasterMixin):
                 })
 
         # =========================================================================
-        # STEP 6: Aggregate CDFs
+        # STEP 7: Aggregate CDFs
         # =========================================================================
-        write("\n=== Step 6: Aggregating CDFs ===")
+        write("\n=== Step 7: Aggregating CDFs ===")
 
         if len(all_cdfs) < 3:
             raise InsufficientPredictionsError(
