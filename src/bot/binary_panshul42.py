@@ -23,8 +23,9 @@ from dataclasses import dataclass, field
 
 import numpy as np
 
-from ..utils.llm import LLMClient, LLMResponse
+from ..utils.llm import LLMClient
 from ..storage.artifact_store import ArtifactStore
+from .handler_mixin import ForecasterMixin
 from .extractors import extract_binary_probability_percent
 from .prompts_panshul42 import (
     BINARY_PROMPT_HISTORICAL,
@@ -63,7 +64,7 @@ class BinaryForecastResult:
     timestamp: str = field(default_factory=lambda: datetime.now().isoformat())
 
 
-class BinaryForecaster:
+class BinaryForecaster(ForecasterMixin):
     """
     Binary question forecaster using Panshul42's 5-agent ensemble.
 
@@ -371,53 +372,6 @@ class BinaryForecaster:
             probabilities=probabilities,
             weights=weights,
         )
-
-    def _get_agents(self) -> List[dict]:
-        """Get agent configurations from config."""
-        # Check for mode-aware agents
-        agents = self.config.get("_active_agents", [])
-
-        if not agents:
-            # Fallback to ensemble.agents
-            agents = self.config.get("ensemble", {}).get("agents", [])
-
-        if not agents:
-            # Default configuration with equal weights
-            agents = [
-                {"name": "forecaster_1", "model": "openrouter/anthropic/claude-sonnet-4.5", "weight": 1.0},
-                {"name": "forecaster_2", "model": "openrouter/anthropic/claude-sonnet-4.5", "weight": 1.0},
-                {"name": "forecaster_3", "model": "openrouter/openai/o3-mini-high", "weight": 1.0},
-                {"name": "forecaster_4", "model": "openrouter/openai/o3", "weight": 1.0},
-                {"name": "forecaster_5", "model": "openrouter/openai/o3", "weight": 1.0},
-            ]
-
-        return agents[:5]  # Ensure max 5 agents
-
-    def _get_model(self, key: str, default: str) -> str:
-        """Get model from config with fallback."""
-        active_models = self.config.get("_active_models", {})
-        return active_models.get(key, self.config.get("models", {}).get(key, default))
-
-    async def _call_model(
-        self,
-        model: str,
-        prompt: str,
-        system_prompt: Optional[str] = None,
-    ) -> str:
-        """Call a model via LLMClient."""
-        messages = [{"role": "user", "content": prompt}]
-
-        try:
-            response = await self.llm.complete(
-                model=model,
-                messages=messages,
-                system=system_prompt,
-                max_tokens=4000,
-            )
-            return response.content
-        except Exception as e:
-            logger.error(f"Model call failed ({model}): {e}")
-            raise
 
     def _extract_probability(self, text: str) -> float:
         """
