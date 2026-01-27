@@ -6,7 +6,7 @@ class ExtractionError(Exception):
     pass
 
 
-# The Panshul42 handlers are imported directly by forecaster.py
-# from .binary_panshul42, .numeric_panshul42, .multiple_choice_panshul42
+# The handlers are imported directly by forecaster.py
+# from .binary, .numeric, .multiple_choice
 
 __all__ = ["ExtractionError"]

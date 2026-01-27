@@ -22,9 +22,9 @@ from ..utils.metaculus_api import MetaculusClient, MetaculusQuestion
 from ..storage.artifact_store import ArtifactStore, ForecastArtifacts
 from ..storage.database import ForecastDatabase, ForecastRecord, AgentPredictionRecord
 
-from .binary_panshul42 import BinaryForecaster
-from .numeric_panshul42 import NumericForecaster
-from .multiple_choice_panshul42 import MultipleChoiceForecaster
+from .binary import BinaryForecaster
+from .numeric import NumericForecaster
+from .multiple_choice import MultipleChoiceForecaster
 
 logger = logging.getLogger(__name__)
 

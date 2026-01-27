@@ -28,7 +28,7 @@ from .extractors import (
     extract_multiple_choice_probabilities,
     normalize_probabilities,
 )
-from .prompts_panshul42 import (
+from .prompts import (
     MULTIPLE_CHOICE_PROMPT_HISTORICAL,
     MULTIPLE_CHOICE_PROMPT_CURRENT,
     MULTIPLE_CHOICE_PROMPT_1,
@@ -36,7 +36,7 @@ from .prompts_panshul42 import (
     CLAUDE_CONTEXT,
     GPT_CONTEXT,
 )
-from .search_panshul42 import SearchPipeline, QuestionDetails
+from .search import SearchPipeline, QuestionDetails
 
 logger = logging.getLogger(__name__)
 
