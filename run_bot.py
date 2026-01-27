@@ -17,121 +17,16 @@ import logging
 import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
-from dataclasses import dataclass, field
 
 sys.path.insert(0, str(Path(__file__).parent))
 
 from src.bot.forecaster import Forecaster
 from src.bot import ExtractionError
 from src.config import ResolvedConfig
+from src.runner import run_forecasts, format_prediction
 from src.utils.metaculus_api import MetaculusClient
 
 logger = logging.getLogger(__name__)
-
-
-@dataclass
-class ForecastFailure:
-    """Details about a failed forecast."""
-    question_id: int
-    question_title: str
-    error_type: str
-    error_message: str
-    is_extraction_error: bool = False
-
-
-FAILURE_LOG_PATH = Path("data/failed_forecasts.log")
-
-
-@dataclass
-class RunSummary:
-    """Summary of a forecasting run."""
-    tournament_id: str
-    mode: str
-    success_count: int = 0
-    error_count: int = 0
-    extraction_error_count: int = 0
-    failures: list[ForecastFailure] = field(default_factory=list)
-
-    def add_failure(self, question_id: int, question_title: str, error: Exception):
-        is_extraction = isinstance(error, ExtractionError)
-        self.failures.append(ForecastFailure(
-            question_id=question_id,
-            question_title=question_title[:60],
-            error_type=type(error).__name__,
-            error_message=str(error)[:200],
-            is_extraction_error=is_extraction,
-        ))
-        self.error_count += 1
-        if is_extraction:
-            self.extraction_error_count += 1
-
-    def write_failure_log(self):
-        """Append failures to persistent log file."""
-        if not self.failures:
-            return
-
-        FAILURE_LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
-
-        with open(FAILURE_LOG_PATH, "a") as f:
-            f.write(f"\n{'='*70}\n")
-            f.write(f"RUN: {datetime.now(timezone.utc).isoformat()}\n")
-            f.write(f"Tournament: {self.tournament_id} | Mode: {self.mode}\n")
-            f.write(f"Success: {self.success_count} | Failed: {self.error_count}\n")
-            f.write(f"{'='*70}\n")
-
-            for failure in self.failures:
-                marker = "🔴 EXTRACTION" if failure.is_extraction_error else "🟡 OTHER"
-                f.write(f"\n{marker} Q{failure.question_id}: {failure.question_title}\n")
-                f.write(f"  {failure.error_type}: {failure.error_message}\n")
-
-        logger.info(f"Failures logged to: {FAILURE_LOG_PATH}")
-
-    def print_summary(self):
-        """Print a prominent summary of the run."""
-        print("\n" + "=" * 70)
-        print("FORECAST RUN SUMMARY")
-        print("=" * 70)
-        print(f"Tournament: {self.tournament_id}")
-        print(f"Mode: {self.mode}")
-        print(f"Successful: {self.success_count}")
-        print(f"Failed: {self.error_count}")
-
-        if self.extraction_error_count > 0:
-            print()
-            print("!" * 70)
-            print(f"⚠️  EXTRACTION ERRORS: {self.extraction_error_count}")
-            print("These forecasts could not be completed because the LLM response")
-            print("could not be parsed. The question was SKIPPED (not submitted).")
-            print("!" * 70)
-
-        if self.failures:
-            print()
-            print("-" * 70)
-            print("FAILED QUESTIONS (re-run with --question <ID> to retry):")
-            print("-" * 70)
-
-            # Show extraction errors first (most important)
-            extraction_failures = [f for f in self.failures if f.is_extraction_error]
-            other_failures = [f for f in self.failures if not f.is_extraction_error]
-
-            if extraction_failures:
-                print("\n🔴 EXTRACTION FAILURES (LLM output parsing failed):")
-                for f in extraction_failures:
-                    print(f"  Q{f.question_id}: {f.question_title}")
-                    print(f"    Error: {f.error_message[:100]}...")
-
-            if other_failures:
-                print("\n🟡 OTHER FAILURES:")
-                for f in other_failures:
-                    print(f"  Q{f.question_id}: {f.question_title}")
-                    print(f"    {f.error_type}: {f.error_message[:80]}")
-
-        print("=" * 70)
-
-    @property
-    def has_critical_failures(self) -> bool:
-        """Returns True if there are extraction errors (critical failures)."""
-        return self.extraction_error_count > 0
 
 
 async def run_forecast(
@@ -207,52 +102,42 @@ async def run_forecast(
             logger.info("No questions need forecasting. Exiting.")
             return
 
-    # Forecast questions
+    # Forecast questions using shared runner
     questions_to_process = questions_to_forecast[:limit]
     logger.info(f"Processing {len(questions_to_process)} questions (limit: {limit})")
 
-    summary = RunSummary(tournament_id=tournament_id, mode=mode)
+    def on_progress(i, total, question):
+        logger.info(f"[{i}/{total}] {question.title[:60]}...")
+
+    def on_success(question, result):
+        logger.info(f"  ✓ Prediction: {format_prediction(result)}")
+
+    def on_error(question, error):
+        error_type = "EXTRACTION FAILED" if isinstance(error, ExtractionError) else "FAILED"
+        logger.error(f"  ✗ {error_type}: {error}")
 
     async with Forecaster(resolved) as forecaster:
-        for i, question in enumerate(questions_to_process):
-            logger.info(f"[{i+1}/{len(questions_to_process)}] {question.title[:60]}...")
+        result = await run_forecasts(
+            questions=questions_to_process,
+            forecaster=forecaster,
+            on_progress=on_progress,
+            on_success=on_success,
+            on_error=on_error,
+        )
 
-            try:
-                result = await forecaster.forecast_question(question=question)
-                summary.success_count += 1
-
-                # Log prediction based on type
-                pred = result.get('prediction')
-                if isinstance(pred, float):
-                    logger.info(f"  ✓ Prediction: {pred:.1%}")
-                else:
-                    logger.info(f"  ✓ Prediction: {pred}")
-
-            except ExtractionError as e:
-                # Critical error - extraction failed
-                summary.add_failure(question.id, question.title, e)
-                logger.error(f"  ✗ EXTRACTION FAILED: {e}")
-
-            except Exception as e:
-                # Other errors
-                summary.add_failure(question.id, question.title, e)
-                logger.error(f"  ✗ FAILED: {e}")
-
-    # Print prominent summary
-    summary.print_summary()
-
-    # Write failures to persistent log file
-    summary.write_failure_log()
+    # Print summary and log failures
+    result.print_summary(tournament_id=tournament_id, mode=mode)
+    result.write_failure_log(mode=mode, source="run_bot.py", tournament_id=tournament_id)
 
     # Exit codes:
     # 0 = all success
     # 1 = all failed OR any extraction errors (critical)
     # (partial success with non-extraction errors is considered OK)
-    if summary.success_count == 0 and summary.error_count > 0:
+    if result.success_count == 0 and result.error_count > 0:
         logger.error("All forecasts failed!")
         sys.exit(1)
-    elif summary.has_critical_failures:
-        logger.error(f"{summary.extraction_error_count} extraction error(s) - these questions need attention!")
+    elif result.has_extraction_errors:
+        logger.error(f"{result.extraction_error_count} extraction error(s) - these questions need attention!")
         sys.exit(1)
 
 
