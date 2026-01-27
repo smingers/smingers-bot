@@ -16,7 +16,6 @@ Agent configuration:
 """
 
 import asyncio
-import re
 import logging
 from datetime import datetime
 from typing import Optional, List, Tuple
@@ -26,6 +25,7 @@ import numpy as np
 
 from ..utils.llm import LLMClient, LLMResponse
 from ..storage.artifact_store import ArtifactStore
+from .extractors import extract_binary_probability
 from .prompts_panshul42 import (
     BINARY_PROMPT_HISTORICAL,
     BINARY_PROMPT_CURRENT,
@@ -433,19 +433,7 @@ class BinaryForecaster:
         Raises:
             ValueError: If no probability can be extracted.
         """
-        matches = re.findall(r"Probability:\s*([0-9]+(?:\.[0-9]+)?)%", text.strip())
-        if matches:
-            number = float(matches[-1])
-            return min(99, max(1, number))
-
-        # Fallback: look for any percentage near the end
-        matches = re.findall(r"([0-9]+(?:\.[0-9]+)?)\s*%", text[-500:])
-        if matches:
-            number = float(matches[-1])
-            return min(99, max(1, number))
-
-        snippet = text[-200:] if len(text) > 200 else text
-        raise ValueError(f"Could not extract probability from response. Last 200 chars: {snippet!r}")
+        return extract_binary_probability(text)
 
 
 # Convenience function for direct use

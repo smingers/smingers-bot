@@ -14,11 +14,9 @@ import re
 
 # Import the actual extraction functions/methods
 from src.bot.binary_panshul42 import BinaryForecaster
-from src.bot.multiple_choice_panshul42 import (
-    extract_option_probabilities_from_response,
+from src.bot.extractors import (
+    extract_multiple_choice_probabilities as extract_option_probabilities_from_response,
     normalize_probabilities,
-)
-from src.bot.numeric_panshul42 import (
     extract_percentiles_from_response,
     enforce_strict_increasing,
     clean_line,

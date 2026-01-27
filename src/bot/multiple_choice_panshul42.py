@@ -13,7 +13,6 @@ Output: Dict mapping option labels to probabilities that sum to 1.0
 """
 
 import asyncio
-import re
 import json
 import logging
 from datetime import datetime
@@ -24,6 +23,10 @@ import numpy as np
 
 from ..utils.llm import LLMClient
 from ..storage.artifact_store import ArtifactStore
+from .extractors import (
+    extract_multiple_choice_probabilities,
+    normalize_probabilities,
+)
 from .prompts_panshul42 import (
     MULTIPLE_CHOICE_PROMPT_HISTORICAL,
     MULTIPLE_CHOICE_PROMPT_CURRENT,
@@ -58,49 +61,6 @@ class MultipleChoiceForecastResult:
     current_context: str
     options: List[str]
     timestamp: str = field(default_factory=lambda: datetime.now().isoformat())
-
-
-def extract_option_probabilities_from_response(
-    forecast_text: str,
-    num_options: int,
-) -> List[float]:
-    """
-    Extract probabilities from response.
-
-    Looks for "Probabilities: [X, Y, Z]" pattern.
-    """
-    matches = re.findall(r"Probabilities:\s*\[([0-9.,\s]+)\]", forecast_text)
-    if not matches:
-        snippet = forecast_text[-200:] if len(forecast_text) > 200 else forecast_text
-        raise ValueError(f"Could not extract 'Probabilities' list from response. Last 200 chars: {snippet!r}")
-
-    last_match = matches[-1]
-    numbers = [float(n.strip()) for n in last_match.split(",") if n.strip()]
-
-    if len(numbers) != num_options:
-        raise ValueError(f"Expected {num_options} probabilities, got {len(numbers)}: {numbers}")
-
-    return numbers
-
-
-def normalize_probabilities(probs: List[float]) -> List[float]:
-    """
-    Normalize probabilities to sum to 1.0.
-
-    Clamps each probability to [1, 99] before normalizing. This is a Metaculus
-    platform constraint - they don't accept 0% or 100% for any option.
-    """
-    # Clamp to [1, 99] (Metaculus constraint: no 0% or 100%)
-    probs = [max(min(p, 99), 1) for p in probs]
-
-    # Normalize
-    total = sum(probs)
-    normed = [p / total for p in probs]
-
-    # Fix rounding error
-    normed[-1] += 1.0 - sum(normed)
-
-    return normed
 
 
 class MultipleChoiceForecaster:
@@ -316,7 +276,7 @@ class MultipleChoiceForecaster:
             else:
                 write(f"\nForecaster_{i + 1} step 2 output:\n{output[:300]}...")
                 try:
-                    probs = extract_option_probabilities_from_response(output, num_options)
+                    probs = extract_multiple_choice_probabilities(output, num_options)
                     probs = normalize_probabilities(probs)
                     write(f"Forecaster_{i + 1} probabilities: {probs}")
                     error = None
