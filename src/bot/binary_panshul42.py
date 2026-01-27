@@ -25,7 +25,7 @@ import numpy as np
 
 from ..utils.llm import LLMClient, LLMResponse
 from ..storage.artifact_store import ArtifactStore
-from .extractors import extract_binary_probability
+from .extractors import extract_binary_probability_percent
 from .prompts_panshul42 import (
     BINARY_PROMPT_HISTORICAL,
     BINARY_PROMPT_CURRENT,
@@ -433,7 +433,7 @@ class BinaryForecaster:
         Raises:
             ValueError: If no probability can be extracted.
         """
-        return extract_binary_probability(text)
+        return extract_binary_probability_percent(text)
 
 
 # Convenience function for direct use

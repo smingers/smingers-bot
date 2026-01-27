@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 # ============================================================================
 
 # Valid percentile keys for numeric questions
-VALID_PERCENTILE_KEYS = {1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 99}
+VALID_PERCENTILE_KEYS: set[int] = {1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 99}
 
 # Regex for parsing percentile lines
 NUM_PATTERN = re.compile(
@@ -26,7 +26,7 @@ NUM_PATTERN = re.compile(
 )
 
 # Characters that can start bullet points
-BULLET_CHARS = "•▪●‣–*-"
+BULLET_CHARS: str = "•▪●‣–*-"
 
 # Dash normalization pattern
 DASH_RE = re.compile(r"[\u2010\u2011\u2012\u2013\u2014\u2015\u2212]")
@@ -36,7 +36,7 @@ DASH_RE = re.compile(r"[\u2010\u2011\u2012\u2013\u2014\u2015\u2212]")
 # Binary Probability Extraction
 # ============================================================================
 
-def extract_binary_probability(text: str) -> float:
+def extract_binary_probability_percent(text: str) -> float:
     """
     Extract probability percentage from binary forecast response.
 
@@ -150,8 +150,8 @@ def clean_line(s: str) -> str:
     s = unicodedata.normalize("NFKC", s)
     # Replace every dash-like char with ASCII hyphen
     s = DASH_RE.sub("-", s)
-    # Strip bullets from the start
-    s = s.strip().lstrip(BULLET_CHARS)
+    # Strip bullets from the start, then strip any remaining whitespace
+    s = s.strip().lstrip(BULLET_CHARS).strip()
     # Remove thousands-sep commas & NBSPs
     s = s.replace(",", "").replace("\u00A0", "")
     return s.lower()

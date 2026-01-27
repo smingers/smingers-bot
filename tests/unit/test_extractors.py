@@ -315,15 +315,11 @@ class TestCleanLine:
     """Tests for the clean_line() helper function."""
 
     def test_removes_bullets(self):
-        """Test removal of bullet characters - note: leaves leading space."""
-        # clean_line does strip().lstrip(BULLET_CHARS) which strips whitespace first,
-        # then strips bullet from the START only. If bullet is followed by space,
-        # that space remains after the bullet is stripped.
-        assert clean_line("• Percentile 50: 100") == " percentile 50: 100"
-        assert clean_line("* Percentile 50: 100") == " percentile 50: 100"
-        # Dash is handled differently - it becomes hyphen which is then NOT stripped
-        # because BULLET_CHARS includes "-" but the dash normalization runs before lstrip
-        assert clean_line("-Percentile 50: 100") == "percentile 50: 100"  # No space after
+        """Test removal of bullet characters and trailing whitespace."""
+        # clean_line strips whitespace, removes bullets, then strips again
+        assert clean_line("• Percentile 50: 100") == "percentile 50: 100"
+        assert clean_line("* Percentile 50: 100") == "percentile 50: 100"
+        assert clean_line("-Percentile 50: 100") == "percentile 50: 100"
 
     def test_normalizes_dashes(self):
         """Test normalization of various dash characters to ASCII hyphen."""
