@@ -93,11 +93,11 @@ The bot handles three question types with dedicated handlers:
 | `run_bot.py` | Batch/automation entry point (GitHub Actions) |
 | `config.yaml` | All tunable parameters (models, ensemble, research) |
 | `src/bot/forecaster.py` | Main pipeline orchestrator |
-| `src/bot/binary_panshul42.py` | Binary question handler |
-| `src/bot/numeric_panshul42.py` | Numeric/continuous question handler |
-| `src/bot/multiple_choice_panshul42.py` | Multiple choice question handler |
-| `src/bot/prompts_panshul42.py` | All prompt templates |
-| `src/bot/search_panshul42.py` | Search pipeline (Google, AskNews, agentic) |
+| `src/bot/binary.py` | Binary question handler |
+| `src/bot/numeric.py` | Numeric/continuous question handler |
+| `src/bot/multiple_choice.py` | Multiple choice question handler |
+| `src/bot/prompts.py` | All prompt templates |
+| `src/bot/search.py` | Search pipeline (Google, AskNews, agentic) |
 | `src/bot/content_extractor.py` | Web content extraction |
 | `src/utils/llm.py` | LLM client with cost tracking (via litellm) |
 | `src/utils/metaculus_api.py` | Metaculus API wrapper |
@@ -106,7 +106,7 @@ The bot handles three question types with dedicated handlers:
 
 ### Prompts
 
-All prompts are in `src/bot/prompts_panshul42.py`. Key prompts per question type:
+All prompts are in `src/bot/prompts.py`. Key prompts per question type:
 
 **Binary:**
 - `BINARY_PROMPT_HISTORICAL` - Generate historical search queries
@@ -175,19 +175,20 @@ Every forecast saves artifacts to `data/{question_id}_{timestamp}/`:
 
 ```
 data/41594_20260123_203130/
-├── 00_question.json           # Raw question from Metaculus
-├── 01_analysis.json           # Question type classification
-├── 02_research/
-│   ├── historical_search.json
-│   └── current_search.json
-├── 04_inside_view/
-│   ├── forecaster_1_step1.md
-│   ├── forecaster_1_step2.md
-│   ├── ...
-│   └── aggregation.json
-├── 06_submission/
-│   └── final_prediction.json
-└── metadata.json              # Config, costs, timing
+├── question.json              # Raw question from Metaculus API
+├── research/
+│   ├── query_historical.md    # LLM-generated historical search queries
+│   ├── query_current.md       # LLM-generated current search queries
+│   ├── search_historical.json # Search results for outside view
+│   └── search_current.json    # Search results for inside view
+├── ensemble/
+│   ├── step1_prompt.md        # Shared prompt for step 1 (outside view)
+│   ├── agent_{1-5}_step1.md   # Agent responses for step 1
+│   ├── agent_{1-5}_step2.md   # Agent responses for step 2 (inside view)
+│   ├── agent_{1-5}.json       # Extracted predictions per agent
+│   └── aggregation.json       # Final aggregation of all agents
+├── prediction.json            # Final prediction submitted to Metaculus
+└── metadata.json              # Config, costs, timing, analysis
 ```
 
 ## Error Handling
