@@ -8,9 +8,57 @@ making it testable and reusable across all question types.
 import re
 import logging
 import unicodedata
+from dataclasses import dataclass
 from typing import Dict, List, Optional, Union
 
+from src.bot.exceptions import ExtractionError
+
 logger = logging.getLogger(__name__)
+
+
+# ============================================================================
+# Unified Agent Result Type
+# ============================================================================
+
+@dataclass
+class AgentResult:
+    """
+    Result from a single forecasting agent.
+
+    This unified type supports all question types (binary, numeric, multiple choice).
+    Each handler populates only the fields relevant to its question type.
+
+    Common fields (always populated):
+        agent_id: Identifier like "forecaster_1"
+        model: LLM model used (e.g., "openrouter/anthropic/claude-sonnet-4")
+        weight: Agent weight for ensemble aggregation
+        step1_output: Raw LLM response from outside view (step 1)
+        step2_output: Raw LLM response from inside view (step 2)
+        error: Error message if extraction failed, None otherwise
+
+    Type-specific fields (only one set populated per question type):
+        probability: Binary question result (0-1 probability)
+        probabilities: Multiple choice result (list of option probabilities)
+        percentiles: Numeric question percentiles (dict mapping percentile -> value)
+        cdf: Numeric question CDF (201-point list)
+    """
+    # Common fields
+    agent_id: str
+    model: str
+    weight: float
+    step1_output: str
+    step2_output: str
+    error: Optional[str] = None
+
+    # Binary-specific
+    probability: Optional[float] = None
+
+    # Multiple choice-specific
+    probabilities: Optional[List[float]] = None
+
+    # Numeric-specific
+    percentiles: Optional[Dict[int, float]] = None
+    cdf: Optional[List[float]] = None
 
 # ============================================================================
 # Constants
@@ -66,7 +114,7 @@ def extract_binary_probability_percent(text: str) -> float:
         return min(99, max(1, number))
 
     snippet = text[-200:] if len(text) > 200 else text
-    raise ValueError(f"Could not extract probability from response. Last 200 chars: {snippet!r}")
+    raise ExtractionError(f"Could not extract probability from response. Last 200 chars: {snippet!r}")
 
 
 # ============================================================================
@@ -95,13 +143,13 @@ def extract_multiple_choice_probabilities(
     matches = re.findall(r"Probabilities:\s*\[([0-9.,\s]+)\]", text)
     if not matches:
         snippet = text[-200:] if len(text) > 200 else text
-        raise ValueError(f"Could not extract 'Probabilities' list from response. Last 200 chars: {snippet!r}")
+        raise ExtractionError(f"Could not extract 'Probabilities' list from response. Last 200 chars: {snippet!r}")
 
     last_match = matches[-1]
     numbers = [float(n.strip()) for n in last_match.split(",") if n.strip()]
 
     if len(numbers) != num_options:
-        raise ValueError(f"Expected {num_options} probabilities, got {len(numbers)}: {numbers}")
+        raise ExtractionError(f"Expected {num_options} probabilities, got {len(numbers)}: {numbers}")
 
     return numbers
 
@@ -214,7 +262,7 @@ def extract_percentiles_from_response(
 
     if not percentiles:
         snippet = str(text)[-300:] if len(str(text)) > 300 else str(text)
-        raise ValueError(f"No valid percentiles extracted. Last 300 chars: {snippet!r}")
+        raise ExtractionError(f"No valid percentiles extracted. Last 300 chars: {snippet!r}")
 
     return percentiles
 

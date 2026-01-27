@@ -1,56 +1,36 @@
 """
 Multiple Choice Question Handler - Port from Panshul42's tournament-winning implementation
 
-5-agent ensemble pipeline:
-1. Generate historical + current search queries
-2. Execute searches
-3. Run 5 agents on Step 1 (outside view)
-4. Cross-pollinate context between agents
-5. Run 5 agents on Step 2 (inside view)
-6. Extract and aggregate probabilities across options
-
-Output: Dict mapping option labels to probabilities that sum to 1.0
+Uses BaseForecaster for the shared 5-agent ensemble pipeline.
+Implements multiple choice-specific extraction and aggregation logic.
 """
 
-import asyncio
 import json
 import logging
 from datetime import datetime
-from typing import Optional, List, Dict, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 from dataclasses import dataclass, field
 
 import numpy as np
 
 from ..utils.llm import LLMClient
 from ..storage.artifact_store import ArtifactStore
-from .handler_mixin import ForecasterMixin
+from .base_forecaster import BaseForecaster
 from .extractors import (
     extract_multiple_choice_probabilities,
     normalize_probabilities,
+    AgentResult,
 )
+from .exceptions import InsufficientPredictionsError
 from .prompts import (
     MULTIPLE_CHOICE_PROMPT_HISTORICAL,
     MULTIPLE_CHOICE_PROMPT_CURRENT,
     MULTIPLE_CHOICE_PROMPT_1,
     MULTIPLE_CHOICE_PROMPT_2,
-    CLAUDE_CONTEXT,
-    GPT_CONTEXT,
 )
-from .search import SearchPipeline, QuestionDetails
+from .search import QuestionDetails
 
 logger = logging.getLogger(__name__)
-
-
-@dataclass
-class AgentResult:
-    """Result from a single forecasting agent."""
-    agent_id: str
-    model: str
-    weight: float
-    step1_output: str
-    step2_output: str
-    probabilities: Optional[List[float]] = None
-    error: Optional[str] = None
 
 
 @dataclass
@@ -64,23 +44,216 @@ class MultipleChoiceForecastResult:
     timestamp: str = field(default_factory=lambda: datetime.now().isoformat())
 
 
-class MultipleChoiceForecaster(ForecasterMixin):
+class MultipleChoiceForecaster(BaseForecaster):
     """
-    Multiple choice question forecaster using Panshul42's 5-agent ensemble.
+    Multiple choice question forecaster using the shared 5-agent ensemble pipeline.
 
-    Returns probability distribution across options that sums to 1.0.
+    Implements multiple choice-specific:
+    - Prompt templates (MULTIPLE_CHOICE_PROMPT_*)
+    - Probability extraction per option
+    - Weighted average aggregation across options
     """
 
-    def __init__(
+    def _get_prompt_templates(self) -> Tuple[str, str, str, str]:
+        """Return multiple choice-specific prompt templates."""
+        return (
+            MULTIPLE_CHOICE_PROMPT_HISTORICAL,
+            MULTIPLE_CHOICE_PROMPT_CURRENT,
+            MULTIPLE_CHOICE_PROMPT_1,
+            MULTIPLE_CHOICE_PROMPT_2,
+        )
+
+    def _get_question_details(self, **question_params) -> QuestionDetails:
+        """Build QuestionDetails for search pipeline."""
+        return QuestionDetails(
+            title=question_params.get("question_title", ""),
+            resolution_criteria=question_params.get("resolution_criteria", ""),
+            fine_print=question_params.get("fine_print", ""),
+            description=question_params.get("question_text", ""),
+        )
+
+    def _format_query_prompts(
         self,
-        config: dict,
-        llm_client: Optional[LLMClient] = None,
-        artifact_store: Optional[ArtifactStore] = None,
-    ):
-        self.config = config
-        self.llm = llm_client or LLMClient()
-        self.artifact_store = artifact_store
+        prompt_historical: str,
+        prompt_current: str,
+        **question_params,
+    ) -> Tuple[str, str]:
+        """Format query prompts with options parameter."""
+        options = question_params.get("options", [])
+        options_str = str(options)
 
+        historical = prompt_historical.format(
+            title=question_params.get("question_title", ""),
+            today=question_params.get("today", ""),
+            background=question_params.get("question_text", ""),
+            resolution_criteria=question_params.get("resolution_criteria", ""),
+            fine_print=question_params.get("fine_print", ""),
+            options=options_str,
+        )
+        current = prompt_current.format(
+            title=question_params.get("question_title", ""),
+            today=question_params.get("today", ""),
+            background=question_params.get("question_text", ""),
+            resolution_criteria=question_params.get("resolution_criteria", ""),
+            fine_print=question_params.get("fine_print", ""),
+            options=options_str,
+        )
+        return historical, current
+
+    def _format_step1_prompt(
+        self,
+        prompt_template: str,
+        historical_context: str,
+        **question_params,
+    ) -> str:
+        """Format Step 1 prompt with options."""
+        options = question_params.get("options", [])
+        return prompt_template.format(
+            title=question_params.get("question_title", ""),
+            today=question_params.get("today", ""),
+            resolution_criteria=question_params.get("resolution_criteria", ""),
+            fine_print=question_params.get("fine_print", ""),
+            context=historical_context,
+            options=str(options),
+        )
+
+    def _format_step2_prompt(
+        self,
+        prompt_template: str,
+        context: str,
+        **question_params,
+    ) -> str:
+        """Format Step 2 prompt with cross-pollinated context and options."""
+        options = question_params.get("options", [])
+        return prompt_template.format(
+            title=question_params.get("question_title", ""),
+            today=question_params.get("today", ""),
+            resolution_criteria=question_params.get("resolution_criteria", ""),
+            fine_print=question_params.get("fine_print", ""),
+            context=context,
+            options=str(options),
+        )
+
+    def _extract_prediction(self, output: str, **question_params) -> List[float]:
+        """Extract and normalize probabilities from agent output."""
+        options = question_params.get("options", [])
+        num_options = len(options)
+        probs = extract_multiple_choice_probabilities(output, num_options)
+        return normalize_probabilities(probs)
+
+    def _aggregate_results(
+        self,
+        agent_results: List[AgentResult],
+        agents: List[Dict],
+        write: callable,
+    ) -> Dict[str, float]:
+        """Compute weighted average of option probabilities."""
+        options = []  # Will be populated from question_params in _build_result
+
+        # Collect valid predictions
+        all_probs = []
+        all_weights = []
+
+        for result, agent in zip(agent_results, agents):
+            if result.probabilities is not None and len(result.probabilities) > 0:
+                all_probs.append(result.probabilities)
+                all_weights.append(agent["weight"])
+
+        if not all_probs:
+            error_msg = (
+                f"All {len(agents)} agents failed to extract valid probabilities. "
+                f"Errors: {[r.error for r in agent_results]}"
+            )
+            logger.error(error_msg)
+            write(f"FATAL ERROR: {error_msg}")
+            raise InsufficientPredictionsError(
+                error_msg, valid_count=0, total_count=len(agents)
+            )
+
+        # Weighted average across valid agents
+        probs_matrix = np.array(all_probs)
+        weights = np.array(all_weights)
+
+        write(f"\nAggregating {len(all_probs)}/{len(agents)} valid agent predictions")
+
+        weighted_probs = np.average(probs_matrix, axis=0, weights=weights)
+        weighted_probs = weighted_probs / weighted_probs.sum()  # Ensure sums to 1.0
+
+        write(f"Weights: {weights.tolist()}")
+        write(f"Final weighted probabilities: {weighted_probs.tolist()}")
+
+        # Return as list - will be converted to dict in _build_result
+        return weighted_probs.tolist()
+
+    def _build_agent_result(
+        self,
+        agent_id: str,
+        model: str,
+        weight: float,
+        step1_output: str,
+        step2_output: str,
+        prediction: Any,
+        error: Optional[str],
+    ) -> AgentResult:
+        """Build AgentResult with probabilities field."""
+        return AgentResult(
+            agent_id=agent_id,
+            model=model,
+            weight=weight,
+            step1_output=step1_output,
+            step2_output=step2_output,
+            probabilities=prediction if prediction is not None else [],
+            error=error,
+        )
+
+    def _build_result(
+        self,
+        final_prediction: Any,
+        agent_results: List[AgentResult],
+        historical_context: str,
+        current_context: str,
+        agents: List[Dict],
+        **question_params,
+    ) -> MultipleChoiceForecastResult:
+        """Build MultipleChoiceForecastResult with option -> probability mapping."""
+        options = question_params.get("options", [])
+
+        # Convert probability list to option -> probability dict
+        if isinstance(final_prediction, list):
+            final_probabilities = {opt: float(p) for opt, p in zip(options, final_prediction)}
+        else:
+            final_probabilities = final_prediction
+
+        return MultipleChoiceForecastResult(
+            final_probabilities=final_probabilities,
+            agent_results=agent_results,
+            historical_context=historical_context,
+            current_context=current_context,
+            options=options,
+        )
+
+    def _get_extracted_data(self, result: AgentResult) -> Dict:
+        """Get data for extracted prediction artifact."""
+        return {
+            "probabilities": result.probabilities,
+            "error": result.error,
+        }
+
+    def _get_aggregation_data(
+        self,
+        agent_results: List[AgentResult],
+        agents: List[Dict],
+        final_prediction: Any,
+    ) -> Dict:
+        """Get data for aggregation artifact."""
+        return {
+            "individual_probabilities": [r.probabilities for r in agent_results],
+            "weights": [a["weight"] for a in agents],
+            "method": "weighted_average",
+            "final_probabilities": final_prediction,
+        }
+
+    # Convenience method matching old interface
     async def forecast(
         self,
         question_title: str,
@@ -104,253 +277,15 @@ class MultipleChoiceForecaster(ForecasterMixin):
         Returns:
             MultipleChoiceForecastResult with probabilities per option
         """
-        today = datetime.now().strftime("%Y-%m-%d")
-        num_options = len(options)
-
-        # Question details for search
-        question_details = QuestionDetails(
-            title=question_title,
+        return await super().forecast(
+            write=write,
+            question_title=question_title,
+            question_text=question_text,
             resolution_criteria=resolution_criteria,
             fine_print=fine_print,
-            description=question_text,
-        )
-
-        # Format options for prompts
-        options_str = str(options)
-
-        # =========================================================================
-        # STEP 1: Generate historical and current search queries
-        # =========================================================================
-        write("\n=== Step 1: Generating search queries ===")
-
-        historical_prompt = MULTIPLE_CHOICE_PROMPT_HISTORICAL.format(
-            title=question_title,
-            today=today,
-            background=question_text,
-            resolution_criteria=resolution_criteria,
-            fine_print=fine_print,
-            options=options_str,
-        )
-        current_prompt = MULTIPLE_CHOICE_PROMPT_CURRENT.format(
-            title=question_title,
-            today=today,
-            background=question_text,
-            resolution_criteria=resolution_criteria,
-            fine_print=fine_print,
-            options=options_str,
-        )
-
-        query_model = self._get_model("query_generator", "openrouter/openai/o3")
-
-        historical_output, current_output = await asyncio.gather(
-            self._call_model(query_model, historical_prompt),
-            self._call_model(query_model, current_prompt),
-        )
-
-        write(f"\nHistorical query output:\n{historical_output[:500]}...")
-        write(f"\nCurrent query output:\n{current_output[:500]}...")
-
-        if self.artifact_store:
-            self.artifact_store.save_query_generation("historical", historical_prompt, historical_output)
-            self.artifact_store.save_query_generation("current", current_prompt, current_output)
-
-        # =========================================================================
-        # STEP 2: Execute searches
-        # =========================================================================
-        write("\n=== Step 2: Executing searches ===")
-
-        async with SearchPipeline(self.config, self.llm) as search:
-            historical_context, current_context = await asyncio.gather(
-                search.process_search_queries(historical_output, "-1", question_details),
-                search.process_search_queries(current_output, "0", question_details),
-            )
-
-        write(f"\nHistorical context ({len(historical_context)} chars)")
-        write(f"Current context ({len(current_context)} chars)")
-
-        if self.artifact_store:
-            self.artifact_store.save_search_results("historical", {"context": historical_context})
-            self.artifact_store.save_search_results("current", {"context": current_context})
-
-        # =========================================================================
-        # STEP 3: Run 5 agents on Step 1 (outside view)
-        # =========================================================================
-        write("\n=== Step 3: Running Step 1 (outside view) ===")
-
-        agents = self._get_agents()
-
-        step1_prompt = MULTIPLE_CHOICE_PROMPT_1.format(
-            title=question_title,
-            today=today,
-            resolution_criteria=resolution_criteria,
-            fine_print=fine_print,
-            context=historical_context,
-            options=options_str,
-        )
-
-        step1_tasks = []
-        for agent in agents:
-            model = agent["model"]
-            system_prompt = CLAUDE_CONTEXT if "claude" in model.lower() else GPT_CONTEXT
-            step1_tasks.append(self._call_model(model, step1_prompt, system_prompt=system_prompt))
-
-        step1_outputs = await asyncio.gather(*step1_tasks, return_exceptions=True)
-
-        for i, output in enumerate(step1_outputs):
-            if isinstance(output, Exception):
-                write(f"\nForecaster_{i + 1} step 1 ERROR: {output}")
-                step1_outputs[i] = f"Error: {output}"
-            else:
-                write(f"\nForecaster_{i + 1} step 1 output:\n{output[:300]}...")
-
-        if self.artifact_store:
-            self.artifact_store.save_step1_prompt(step1_prompt)
-            for i, output in enumerate(step1_outputs):
-                if not isinstance(output, Exception):
-                    self.artifact_store.save_agent_step1(i + 1, output)
-
-        # =========================================================================
-        # STEP 4: Cross-pollinate context
-        # =========================================================================
-        write("\n=== Step 4: Cross-pollinating context ===")
-
-        # Panshul42's cross-pollination:
-        # - Agent 1 gets agent 1's step1 output (Outside view)
-        # - Agent 2 gets agent 3's step1 output (Outside view)
-        # - Agent 3 gets agent 2's step1 output (Outside view)
-        # - Agent 4 gets agent 4's step1 output (Inside view)
-        # - Agent 5 gets agent 5's step1 output (Inside view)
-        cross_pollination_map = {
-            0: (0, "Outside view prediction"),
-            1: (2, "Outside view prediction"),
-            2: (1, "Outside view prediction"),
-            3: (3, "Inside view prediction"),
-            4: (4, "Inside view prediction"),
-        }
-
-        context_map = {}
-        for i in range(5):
-            source_idx, label = cross_pollination_map[i]
-            source_output = step1_outputs[source_idx] if not isinstance(step1_outputs[source_idx], Exception) else ""
-            context_map[i] = f"Current context: {current_context}\n{label}: {source_output}"
-
-        # =========================================================================
-        # STEP 5: Run 5 agents on Step 2 (inside view)
-        # =========================================================================
-        write("\n=== Step 5: Running Step 2 (inside view) ===")
-
-        step2_tasks = []
-        for i, agent in enumerate(agents):
-            model = agent["model"]
-            system_prompt = CLAUDE_CONTEXT if "claude" in model.lower() else GPT_CONTEXT
-
-            step2_prompt = MULTIPLE_CHOICE_PROMPT_2.format(
-                title=question_title,
-                today=today,
-                resolution_criteria=resolution_criteria,
-                fine_print=fine_print,
-                context=context_map[i],
-                options=options_str,
-            )
-
-            step2_tasks.append(self._call_model(model, step2_prompt, system_prompt=system_prompt))
-
-        step2_outputs = await asyncio.gather(*step2_tasks, return_exceptions=True)
-
-        # =========================================================================
-        # STEP 6: Extract and aggregate probabilities
-        # =========================================================================
-        write("\n=== Step 6: Extracting and aggregating probabilities ===")
-
-        all_probs = []
-        all_weights = []
-        agent_results = []
-        valid_count = 0
-
-        for i, (agent, output) in enumerate(zip(agents, step2_outputs)):
-            if isinstance(output, Exception):
-                write(f"\nForecaster_{i + 1} step 2 ERROR: {output}")
-                probs = None
-                error = str(output)
-            else:
-                write(f"\nForecaster_{i + 1} step 2 output:\n{output[:300]}...")
-                try:
-                    probs = extract_multiple_choice_probabilities(output, num_options)
-                    probs = normalize_probabilities(probs)
-                    write(f"Forecaster_{i + 1} probabilities: {probs}")
-                    error = None
-                    valid_count += 1
-                except Exception as e:
-                    write(f"Forecaster_{i + 1} extraction error: {e}")
-                    probs = None
-                    error = str(e)
-
-            # Only include valid probabilities in aggregation
-            if probs is not None:
-                all_probs.append(probs)
-                all_weights.append(agent["weight"])
-
-            agent_results.append(AgentResult(
-                agent_id=f"forecaster_{i + 1}",
-                model=agent["model"],
-                weight=agent["weight"],
-                step1_output=step1_outputs[i] if not isinstance(step1_outputs[i], Exception) else "",
-                step2_output=output if not isinstance(output, Exception) else "",
-                probabilities=probs if probs is not None else [],
-                error=error,
-            ))
-
-        # Fail loudly if no valid extractions
-        if valid_count == 0:
-            error_msg = (
-                f"All {len(agents)} agents failed to extract valid probabilities. "
-                f"Errors: {[r.error for r in agent_results]}"
-            )
-            logger.error(error_msg)
-            write(f"FATAL ERROR: {error_msg}")
-            raise RuntimeError(error_msg)
-
-        # Save step 2 artifacts
-        if self.artifact_store:
-            for i, result in enumerate(agent_results):
-                if result.step2_output:
-                    self.artifact_store.save_agent_step2(i + 1, result.step2_output)
-                self.artifact_store.save_agent_extracted(i + 1, {
-                    "probabilities": result.probabilities,
-                    "error": result.error,
-                })
-
-        # Compute weighted average across valid agents only
-        probs_matrix = np.array(all_probs)
-        weights = np.array(all_weights)
-
-        write(f"\nAggregating {valid_count}/{len(agents)} valid agent predictions")
-
-        # Weighted average
-        weighted_probs = np.average(probs_matrix, axis=0, weights=weights)
-
-        # Ensure sums to 1.0
-        weighted_probs = weighted_probs / weighted_probs.sum()
-
-        final_probabilities = {opt: float(p) for opt, p in zip(options, weighted_probs)}
-
-        write(f"\nFinal probabilities: {json.dumps(final_probabilities, indent=2)}")
-
-        if self.artifact_store:
-            self.artifact_store.save_aggregation({
-                "method": "weighted_average",
-                "weights": weights.tolist(),
-                "individual_probabilities": [r.probabilities for r in agent_results],
-                "final_probabilities": final_probabilities,
-            })
-
-        return MultipleChoiceForecastResult(
-            final_probabilities=final_probabilities,
-            agent_results=agent_results,
-            historical_context=historical_context,
-            current_context=current_context,
             options=options,
         )
+
 
 # Convenience function
 async def get_multiple_choice_forecast(

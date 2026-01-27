@@ -13,8 +13,8 @@ import pytest
 import re
 
 # Import the actual extraction functions/methods
-from src.bot.binary import BinaryForecaster
 from src.bot.extractors import (
+    extract_binary_probability_percent,
     extract_multiple_choice_probabilities as extract_option_probabilities_from_response,
     normalize_probabilities,
     extract_percentiles_from_response,
@@ -22,6 +22,7 @@ from src.bot.extractors import (
     clean_line,
     VALID_PERCENTILE_KEYS,
 )
+from src.bot.exceptions import ExtractionError
 
 
 # ============================================================================
@@ -29,13 +30,11 @@ from src.bot.extractors import (
 # ============================================================================
 
 class TestBinaryProbabilityExtraction:
-    """Tests for BinaryForecaster._extract_probability()"""
+    """Tests for extract_binary_probability_percent()"""
 
     def _extract(self, text: str) -> float:
-        """Helper to call _extract_probability without full init."""
-        # Create instance without __init__ to avoid needing config
-        forecaster = BinaryForecaster.__new__(BinaryForecaster)
-        return forecaster._extract_probability(text)
+        """Helper to call extraction function."""
+        return extract_binary_probability_percent(text)
 
     def test_standard_format(self, binary_response_standard):
         """Test extraction from standard 'Probability: X%' format."""
@@ -70,8 +69,8 @@ class TestBinaryProbabilityExtraction:
         assert result == 1.0
 
     def test_no_probability_raises(self, binary_response_no_probability):
-        """Test that missing probability raises ValueError."""
-        with pytest.raises(ValueError, match="Could not extract probability"):
+        """Test that missing probability raises ExtractionError."""
+        with pytest.raises(ExtractionError, match="Could not extract probability"):
             self._extract(binary_response_no_probability)
 
     def test_whitespace_handling(self):
@@ -141,13 +140,13 @@ class TestMultipleChoiceExtraction:
         assert result == [33.3, 33.3, 33.4]
 
     def test_wrong_count_raises(self, mc_response_wrong_count):
-        """Test that wrong number of probabilities raises ValueError."""
-        with pytest.raises(ValueError, match="Expected 3 probabilities, got 2"):
+        """Test that wrong number of probabilities raises ExtractionError."""
+        with pytest.raises(ExtractionError, match="Expected 3 probabilities, got 2"):
             extract_option_probabilities_from_response(mc_response_wrong_count, num_options=3)
 
     def test_no_bracket_format_raises(self, mc_response_no_bracket):
-        """Test that missing bracket format raises ValueError."""
-        with pytest.raises(ValueError, match="Could not extract"):
+        """Test that missing bracket format raises ExtractionError."""
+        with pytest.raises(ExtractionError, match="Could not extract"):
             extract_option_probabilities_from_response(mc_response_no_bracket, num_options=3)
 
     def test_uses_last_match(self):
@@ -258,8 +257,8 @@ class TestNumericPercentileExtraction:
         assert result[50] == pytest.approx(25.7)
 
     def test_no_distribution_anchor_raises(self, numeric_response_no_distribution):
-        """Test that missing Distribution: anchor raises ValueError."""
-        with pytest.raises(ValueError, match="No valid percentiles"):
+        """Test that missing Distribution: anchor raises ExtractionError."""
+        with pytest.raises(ExtractionError, match="No valid percentiles"):
             extract_percentiles_from_response(numeric_response_no_distribution, verbose=False)
 
     def test_valid_percentile_keys(self):

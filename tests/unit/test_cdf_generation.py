@@ -1,9 +1,11 @@
 """
 Tests for CDF generation in numeric forecasting.
 
-Tests the functions in src/bot/numeric.py:
+Tests the functions in src/bot/cdf.py:
 - generate_continuous_cdf()
 - _safe_cdf_bounds()
+
+And src/bot/extractors.py:
 - enforce_strict_increasing()
 
 These are critical for Metaculus submission validity.
@@ -13,11 +15,12 @@ import pytest
 import numpy as np
 from typing import Dict
 
-from src.bot.numeric import (
+from src.bot.cdf import (
     generate_continuous_cdf,
     _safe_cdf_bounds,
-    enforce_strict_increasing,
 )
+from src.bot.extractors import enforce_strict_increasing
+from src.bot.exceptions import CDFGenerationError
 
 
 class TestGenerateContinuousCDF:
@@ -124,8 +127,8 @@ class TestGenerateContinuousCDF:
         assert np.all(steps >= min_step - 1e-10), f"Min step violated: {np.min(steps)} < {min_step}"
 
     def test_empty_percentiles_raises(self):
-        """Test that empty percentiles dict raises ValueError."""
-        with pytest.raises(ValueError, match="Empty percentile"):
+        """Test that empty percentiles dict raises CDFGenerationError."""
+        with pytest.raises(CDFGenerationError, match="Empty percentile"):
             generate_continuous_cdf(
                 percentile_values={},
                 open_upper_bound=True,
@@ -135,8 +138,8 @@ class TestGenerateContinuousCDF:
             )
 
     def test_single_percentile_raises(self):
-        """Test that single percentile raises ValueError."""
-        with pytest.raises(ValueError, match="at least 2"):
+        """Test that single percentile raises CDFGenerationError."""
+        with pytest.raises(CDFGenerationError, match="at least 2"):
             generate_continuous_cdf(
                 percentile_values={50: 50},
                 open_upper_bound=True,
@@ -146,8 +149,8 @@ class TestGenerateContinuousCDF:
             )
 
     def test_invalid_bounds_raises(self):
-        """Test that upper_bound <= lower_bound raises ValueError."""
-        with pytest.raises(ValueError, match="must be greater than"):
+        """Test that upper_bound <= lower_bound raises CDFGenerationError."""
+        with pytest.raises(CDFGenerationError, match="must be greater than"):
             generate_continuous_cdf(
                 percentile_values={10: 20, 90: 80},
                 open_upper_bound=True,

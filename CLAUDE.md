@@ -53,7 +53,7 @@ python run_bot.py --tournament 32916 --mode reforecast --reforecast-days 7
 ### Forecasting Pipeline (Panshul42)
 
 ```
-Question → Query Generation → Search (Historical + Current) → 5-Agent Ensemble → Aggregation → Submit
+Question -> Query Generation -> Search (Historical + Current) -> 5-Agent Ensemble -> Aggregation -> Submit
 ```
 
 Each question type handler does its own integrated pipeline:
@@ -81,9 +81,50 @@ Cross-pollination structure:
 ### Question Types
 
 The bot handles three question types with dedicated handlers:
-- **Binary** (`src/bot/binary_panshul42.py`) - Yes/No probability (0-1)
-- **Numeric** (`src/bot/numeric_panshul42.py`) - Continuous values with 201-point CDF
-- **Multiple Choice** (`src/bot/multiple_choice_panshul42.py`) - Probability distributions across options
+- **Binary** (`src/bot/binary.py`) - Yes/No probability (0-1)
+- **Numeric** (`src/bot/numeric.py`) - Continuous values with 201-point CDF
+- **Multiple Choice** (`src/bot/multiple_choice.py`) - Probability distributions across options
+
+### Directory Structure
+
+```
+metaculus-bot/
+├── .github/workflows/
+│   └── run-bot.yaml           # GitHub Actions (30-min schedule)
+├── src/
+│   ├── bot/                   # Core forecasting pipeline
+│   │   ├── forecaster.py      # Main orchestrator
+│   │   ├── binary.py          # Binary question handler
+│   │   ├── numeric.py         # Numeric question handler
+│   │   ├── multiple_choice.py # Multiple choice handler
+│   │   ├── search.py          # Research pipeline
+│   │   ├── prompts.py         # All prompt templates
+│   │   ├── extractors.py      # Probability extraction logic
+│   │   ├── handler_mixin.py   # Shared handler methods
+│   │   └── content_extractor.py # Web scraping
+│   ├── utils/
+│   │   ├── llm.py             # LLM client with cost tracking
+│   │   └── metaculus_api.py   # Metaculus API wrapper
+│   ├── storage/
+│   │   ├── artifact_store.py  # Forecast artifact persistence
+│   │   ├── database.py        # SQLite analytics DB
+│   │   └── report_generator.py # Report generation
+│   ├── research/
+│   │   └── asknews_searcher.py # AskNews integration
+│   └── config.py              # Configuration handling
+├── tests/
+│   ├── conftest.py            # Pytest fixtures
+│   └── unit/
+│       ├── test_extractors.py # Extraction logic tests
+│       ├── test_cdf_generation.py # CDF tests
+│       ├── test_runner.py     # Runner tests
+│       └── test_config.py     # Config tests
+├── data/                      # Forecast artifacts and database
+├── main.py                    # CLI entry point
+├── run_bot.py                 # GitHub Actions entry point
+├── config.yaml                # All tunable parameters
+└── pyproject.toml             # Poetry dependencies
+```
 
 ### Key Files
 
@@ -98,11 +139,14 @@ The bot handles three question types with dedicated handlers:
 | `src/bot/multiple_choice.py` | Multiple choice question handler |
 | `src/bot/prompts.py` | All prompt templates |
 | `src/bot/search.py` | Search pipeline (Google, AskNews, agentic) |
+| `src/bot/extractors.py` | Probability/percentile extraction from LLM responses |
+| `src/bot/handler_mixin.py` | Shared methods for agent config, model selection |
 | `src/bot/content_extractor.py` | Web content extraction |
 | `src/utils/llm.py` | LLM client with cost tracking (via litellm) |
 | `src/utils/metaculus_api.py` | Metaculus API wrapper |
 | `src/storage/artifact_store.py` | Saves all intermediate outputs |
 | `src/storage/database.py` | SQLite analytics database |
+| `src/config.py` | Configuration resolution with mode handling |
 
 ### Prompts
 
@@ -154,10 +198,12 @@ research:
   google_max_results: 10
   asknews_enabled: true
   asknews_max_results: 10
+  asknews_hours_back: 72
   agentic_search_enabled: true
   agentic_search_max_steps: 7
   scraping_enabled: true
   max_articles_to_scrape: 10
+  max_content_length: 15000
 ```
 
 ### AskNews Integration
@@ -174,21 +220,42 @@ AskNews provides news search. Free for Metaculus tournament participants (3k+ ca
 Every forecast saves artifacts to `data/{question_id}_{timestamp}/`:
 
 ```
-data/41594_20260123_203130/
-├── question.json              # Raw question from Metaculus API
-├── research/
-│   ├── query_historical.md    # LLM-generated historical search queries
-│   ├── query_current.md       # LLM-generated current search queries
-│   ├── search_historical.json # Search results for outside view
-│   └── search_current.json    # Search results for inside view
-├── ensemble/
-│   ├── step1_prompt.md        # Shared prompt for step 1 (outside view)
-│   ├── agent_{1-5}_step1.md   # Agent responses for step 1
-│   ├── agent_{1-5}_step2.md   # Agent responses for step 2 (inside view)
-│   ├── agent_{1-5}.json       # Extracted predictions per agent
-│   └── aggregation.json       # Final aggregation of all agents
-├── prediction.json            # Final prediction submitted to Metaculus
-└── metadata.json              # Config, costs, timing, analysis
+data/41594_20260126_230107/
+├── 00_question.json                    # Raw Metaculus API response
+├── 01_analysis.json                    # Question metadata & analysis
+├── 02_research/
+│   ├── query_historical_prompt.md      # Prompt for historical queries
+│   ├── query_historical.md             # Generated historical queries
+│   ├── query_current_prompt.md         # Prompt for current queries
+│   ├── query_current.md                # Generated current queries
+│   ├── historical_search.json          # Search results (Google/AskNews)
+│   └── current_search.json             # Search results (Google/AskNews)
+├── 04_inside_view/
+│   ├── step1_shared/
+│   │   └── prompt.md                   # Shared outside view prompt
+│   ├── forecaster_1_step1/
+│   │   └── response.md                 # Agent 1 outside view response
+│   ├── forecaster_1_step2/
+│   │   └── response.md                 # Agent 1 inside view response
+│   ├── forecaster_1/
+│   │   └── extracted.json              # Extracted: {probability: 0.52}
+│   ├── forecaster_2_step1/response.md
+│   ├── forecaster_2_step2/response.md
+│   ├── forecaster_2/extracted.json
+│   ├── forecaster_3_step1/response.md
+│   ├── forecaster_3_step2/response.md
+│   ├── forecaster_3/extracted.json
+│   ├── forecaster_4_step1/response.md
+│   ├── forecaster_4_step2/response.md
+│   ├── forecaster_4/extracted.json
+│   ├── forecaster_5_step1/response.md
+│   ├── forecaster_5_step2/response.md
+│   ├── forecaster_5/extracted.json
+│   └── aggregation.json                # Final: {final_probability: 0.545}
+├── 06_submission/
+│   ├── final_prediction.json           # Submitted prediction
+│   └── api_response.json               # Metaculus API response
+└── metadata.json                       # Costs, timing, config hash
 ```
 
 ## Error Handling
@@ -203,9 +270,31 @@ This prevents submitting meaningless forecasts.
 ## Development Notes
 
 ### Running Tests
+
 ```bash
+# Run all tests
 pytest tests/
+
+# Run specific test files
+pytest tests/unit/test_extractors.py
+pytest tests/unit/test_cdf_generation.py
+
+# Run with verbose output
+pytest tests/ -v
 ```
+
+### Test Infrastructure
+
+Test files in `tests/unit/`:
+- `test_extractors.py` - Probability/percentile extraction (100+ tests)
+- `test_cdf_generation.py` - 201-point CDF generation
+- `test_runner.py` - Batch runner error handling
+- `test_config.py` - Configuration resolution
+
+Fixtures in `conftest.py` provide sample LLM responses for:
+- Binary responses (standard, decimal, extreme, missing)
+- Multiple choice responses (3-option, 4-option)
+- Numeric percentile responses
 
 ### GitHub Actions
 
@@ -223,9 +312,18 @@ The bot runs automatically via `.github/workflows/run-bot.yaml`:
 
 ### Database
 
-SQLite at `data/forecasts.db` for analytics:
-- `forecasts` - main predictions table
-- `agent_predictions` - individual agent outputs
+SQLite at `data/forecasts.db` for analytics with three tables:
+
+**forecasts** - Main predictions:
+- `id`, `question_id`, `timestamp`, `question_type`, `question_title`
+- `final_prediction`, `actual_outcome`, `brier_score`
+- `total_cost`, `config_hash`, `tournament_id`
+
+**agent_predictions** - Individual agent outputs:
+- `forecast_id`, `agent_name`, `model`, `weight`, `prediction`, `reasoning_length`
+
+**research_sources** - Research tracking:
+- `forecast_id`, `source_type`, `query`, `num_results`
 
 ### Common Issues
 
@@ -244,6 +342,33 @@ SQLite at `data/forecasts.db` for analytics:
 **Optional:**
 - `SERPER_API_KEY` - Google search (free tier: 2,500/month)
 - `ASKNEWS_CLIENT_ID` / `ASKNEWS_CLIENT_SECRET` - AskNews (free via Metaculus tournament)
+
+## Code Conventions
+
+### Adding New Question Types
+
+1. Create handler in `src/bot/` inheriting from `ForecasterMixin`
+2. Add prompts to `src/bot/prompts.py` (HISTORICAL, CURRENT, PROMPT_1, PROMPT_2)
+3. Add extraction logic to `src/bot/extractors.py`
+4. Register in `src/bot/forecaster.py`
+
+### LLM Calls
+
+All LLM calls go through `src/utils/llm.py`:
+```python
+from src.utils.llm import LLMClient
+client = LLMClient(cost_tracker)
+response = await client.generate(prompt, model="openrouter/anthropic/claude-sonnet-4.5")
+```
+
+### Artifact Storage
+
+Use `ArtifactStore` to save intermediate outputs:
+```python
+store = ArtifactStore(base_dir)
+store.save_text("02_research/query_historical.md", queries)
+store.save_json("04_inside_view/aggregation.json", results)
+```
 
 ## Legacy Code
 
