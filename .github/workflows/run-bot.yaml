@@ -74,10 +74,11 @@ jobs:
             --question ${{ github.event.inputs.test_question_id }} \
             --mode ${{ github.event.inputs.mode || 'production' }}
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           METACULUS_TOKEN: ${{ secrets.METACULUS_TOKEN }}
           ASKNEWS_CLIENT_ID: ${{ secrets.ASKNEWS_CLIENT_ID }}
           ASKNEWS_CLIENT_SECRET: ${{ secrets.ASKNEWS_CLIENT_SECRET }}
+          SERPER_API_KEY: ${{ secrets.SERPER_API_KEY }}
 
       # ============================================================
       # AIB TOURNAMENTS (ENABLED)
@@ -92,10 +93,11 @@ jobs:
             --mode aib \
             --limit 50
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           METACULUS_TOKEN: ${{ secrets.METACULUS_TOKEN }}
           ASKNEWS_CLIENT_ID: ${{ secrets.ASKNEWS_CLIENT_ID }}
           ASKNEWS_CLIENT_SECRET: ${{ secrets.ASKNEWS_CLIENT_SECRET }}
+          SERPER_API_KEY: ${{ secrets.SERPER_API_KEY }}
 
       # ============================================================
       # FAILURE NOTIFICATION
@@ -118,7 +120,7 @@ jobs:
       #       --mode aib \
       #       --limit 50
       #   env:
-      #     ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      #     OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
       #     METACULUS_TOKEN: ${{ secrets.METACULUS_TOKEN }}
       #     ASKNEWS_CLIENT_ID: ${{ secrets.ASKNEWS_CLIENT_ID }}
       #     ASKNEWS_CLIENT_SECRET: ${{ secrets.ASKNEWS_CLIENT_SECRET }}
@@ -136,7 +138,7 @@ jobs:
       #       --reforecast-days 7 \
       #       --limit 20
       #   env:
-      #     ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      #     OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
       #     METACULUS_TOKEN: ${{ secrets.METACULUS_TOKEN }}
       #     ASKNEWS_CLIENT_ID: ${{ secrets.ASKNEWS_CLIENT_ID }}
       #     ASKNEWS_CLIENT_SECRET: ${{ secrets.ASKNEWS_CLIENT_SECRET }}
@@ -149,7 +151,7 @@ jobs:
       #       --reforecast-days 7 \
       #       --limit 10
       #   env:
-      #     ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      #     OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
       #     METACULUS_TOKEN: ${{ secrets.METACULUS_TOKEN }}
       #     ASKNEWS_CLIENT_ID: ${{ secrets.ASKNEWS_CLIENT_ID }}
       #     ASKNEWS_CLIENT_SECRET: ${{ secrets.ASKNEWS_CLIENT_SECRET }}
