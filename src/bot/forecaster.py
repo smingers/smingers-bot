@@ -52,6 +52,14 @@ class Forecaster:
         Args:
             config: Either a ResolvedConfig object or a raw dict (for backward compatibility).
                     If a dict is passed, it will be wrapped in ResolvedConfig.
+
+        Note:
+            New code should pass ResolvedConfig directly. The dict option exists for
+            backward compatibility with code that hasn't been migrated yet.
+
+            Internally, we maintain both:
+            - self.resolved_config: The rich ResolvedConfig object (preferred for new code)
+            - self.config: A dict with _active_* keys for legacy handlers that expect them
         """
         # Accept either ResolvedConfig or dict for backward compatibility
         if isinstance(config, ResolvedConfig):

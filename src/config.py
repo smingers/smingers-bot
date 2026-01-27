@@ -12,7 +12,7 @@ Usage:
 """
 
 from dataclasses import dataclass, field
-from typing import Literal
+from typing import Any, Literal
 from pathlib import Path
 import yaml
 
@@ -39,10 +39,10 @@ class ResolvedConfig:
         should_submit: Whether to submit predictions to Metaculus
     """
 
-    raw: dict
+    raw: dict[str, Any]
     mode: Mode
-    active_models: dict
-    active_agents: list[dict]
+    active_models: dict[str, Any]
+    active_agents: list[dict[str, Any]]
     should_submit: bool
 
     @classmethod
