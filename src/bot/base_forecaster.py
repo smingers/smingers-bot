@@ -34,8 +34,8 @@ CROSS_POLLINATION_MAP = {
     0: (0, "Outside view prediction"),  # Agent 1 <- Agent 1
     1: (2, "Outside view prediction"),  # Agent 2 <- Agent 3
     2: (1, "Outside view prediction"),  # Agent 3 <- Agent 2
-    3: (3, "Inside view prediction"),   # Agent 4 <- Agent 4
-    4: (4, "Inside view prediction"),   # Agent 5 <- Agent 5
+    3: (3, "Outside view prediction"),  # Agent 4 <- Agent 4
+    4: (4, "Outside view prediction"),  # Agent 5 <- Agent 5
 }
 
 
@@ -185,7 +185,14 @@ class BaseForecaster(ForecasterMixin, ABC):
         context_map = {}
         for i in range(5):
             source_idx, label = CROSS_POLLINATION_MAP[i]
-            source_output = step1_outputs[source_idx] if not isinstance(step1_outputs[source_idx], Exception) else ""
+            if isinstance(step1_outputs[source_idx], Exception):
+                logger.warning(
+                    f"Cross-pollination source agent {source_idx + 1} failed; "
+                    f"agent {i + 1} will receive empty context"
+                )
+                source_output = ""
+            else:
+                source_output = step1_outputs[source_idx]
             context_map[i] = f"Current context: {current_context}\n{label}: {source_output}"
 
         # =========================================================================

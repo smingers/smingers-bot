@@ -71,7 +71,8 @@ class NumericForecaster(BaseForecaster):
             description=question_params.get("question_text", ""),
         )
 
-    def _build_bound_messages(self, **question_params) -> Dict[str, str]:
+    @staticmethod
+    def _build_bound_messages(**question_params) -> Dict[str, str]:
         """Build bound-related strings for prompt formatting."""
         open_lower = question_params.get("open_lower_bound", True)
         open_upper = question_params.get("open_upper_bound", True)
