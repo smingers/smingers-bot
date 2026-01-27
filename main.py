@@ -33,35 +33,8 @@ sys.path.insert(0, str(Path(__file__).parent))
 from src.bot.forecaster import Forecaster
 from src.bot import ExtractionError
 from src.config import ResolvedConfig
+from src.runner import run_forecasts, format_prediction
 from src.utils.metaculus_api import MetaculusClient
-from datetime import datetime, timezone
-
-FAILURE_LOG_PATH = Path("data/failed_forecasts.log")
-
-
-def write_failure_log(mode: str, extraction_errors: list, other_errors: list):
-    """Write failures to persistent log file."""
-    if not extraction_errors and not other_errors:
-        return
-
-    FAILURE_LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
-
-    with open(FAILURE_LOG_PATH, "a") as f:
-        f.write(f"\n{'='*70}\n")
-        f.write(f"RUN: {datetime.now(timezone.utc).isoformat()}\n")
-        f.write(f"Mode: {mode} | Via: main.py\n")
-        f.write(f"Extraction errors: {len(extraction_errors)} | Other: {len(other_errors)}\n")
-        f.write(f"{'='*70}\n")
-
-        for qid, title, err in extraction_errors:
-            f.write(f"\n🔴 EXTRACTION Q{qid}: {title[:60]}\n")
-            f.write(f"  {err[:200]}\n")
-
-        for qid, title, err in other_errors:
-            f.write(f"\n🟡 OTHER Q{qid}: {title[:60]}\n")
-            f.write(f"  {err[:200]}\n")
-
-    print(f"Failures logged to: {FAILURE_LOG_PATH}")
 
 
 def setup_logging(verbose: bool = False):
@@ -186,7 +159,6 @@ async def forecast_new_questions(
     resolved = ResolvedConfig.from_yaml(config_path, mode=mode, dry_run=dry_run)
     # Modify raw config for tournament_id before converting to dict
     resolved.raw["submission"]["tournament_id"] = tournament_id
-    config = resolved.to_dict()
 
     async with MetaculusClient() as client:
         # Get all open questions
@@ -205,57 +177,34 @@ async def forecast_new_questions(
             print("No new questions to forecast!")
             return
 
-    # Forecast each new question
-    success_count = 0
-    extraction_errors = []
-    other_errors = []
+    # Use shared runner for forecast loop
+    questions_to_process = new_questions[:limit]
+
+    def on_progress(i, total, question):
+        print(f"\n[{i}/{total}] Forecasting: {question.title}")
+
+    def on_success(question, result):
+        print(f"  ✓ Prediction: {format_prediction(result)}")
+
+    def on_error(question, error):
+        error_type = "EXTRACTION FAILED" if isinstance(error, ExtractionError) else "FAILED"
+        print(f"  ✗ {error_type}: {error}")
 
     async with Forecaster(resolved) as forecaster:
-        for i, question in enumerate(new_questions[:limit]):
-            print(f"\n[{i+1}/{min(len(new_questions), limit)}] Forecasting: {question.title}")
+        result = await run_forecasts(
+            questions=questions_to_process,
+            forecaster=forecaster,
+            on_progress=on_progress,
+            on_success=on_success,
+            on_error=on_error,
+        )
 
-            try:
-                result = await forecaster.forecast_question(question=question)
-                pred = result.get('prediction')
-                if isinstance(pred, float):
-                    print(f"  ✓ Prediction: {pred:.1%}")
-                else:
-                    print(f"  ✓ Prediction: {pred}")
-                success_count += 1
-            except ExtractionError as e:
-                print(f"  ✗ EXTRACTION FAILED: {e}")
-                extraction_errors.append((question.id, question.title, str(e)))
-            except Exception as e:
-                print(f"  ✗ FAILED: {e}")
-                other_errors.append((question.id, question.title, str(e)))
-
-    # Print summary
-    print(f"\n{'='*60}")
-    print("BATCH FORECAST SUMMARY")
-    print(f"{'='*60}")
-    print(f"Successful: {success_count}")
-    print(f"Failed: {len(extraction_errors) + len(other_errors)}")
-
-    if extraction_errors:
-        print(f"\n{'!'*60}")
-        print(f"🔴 EXTRACTION ERRORS: {len(extraction_errors)}")
-        print("These questions were SKIPPED (not submitted):")
-        for qid, title, err in extraction_errors:
-            print(f"  Q{qid}: {title[:50]}")
-        print(f"{'!'*60}")
-
-    if other_errors:
-        print(f"\n🟡 Other errors: {len(other_errors)}")
-        for qid, title, err in other_errors:
-            print(f"  Q{qid}: {title[:50]} - {err[:60]}")
-
-    print(f"{'='*60}")
-
-    # Write failures to persistent log file
-    write_failure_log(resolved.mode, extraction_errors, other_errors)
+    # Print summary and log failures
+    result.print_summary(tournament_id=str(tournament_id), mode=resolved.mode)
+    result.write_failure_log(mode=resolved.mode, source="main.py", tournament_id=str(tournament_id))
 
     # Exit with error if any extraction errors occurred
-    if extraction_errors:
+    if result.has_extraction_errors:
         sys.exit(1)
 
 
