@@ -27,6 +27,7 @@ from .handler_mixin import ForecasterMixin
 from .extractors import (
     extract_multiple_choice_probabilities,
     normalize_probabilities,
+    AgentResult,
 )
 from .exceptions import InsufficientPredictionsError
 from .prompts import (
@@ -40,18 +41,6 @@ from .prompts import (
 from .search import SearchPipeline, QuestionDetails
 
 logger = logging.getLogger(__name__)
-
-
-@dataclass
-class AgentResult:
-    """Result from a single forecasting agent."""
-    agent_id: str
-    model: str
-    weight: float
-    step1_output: str
-    step2_output: str
-    probabilities: Optional[List[float]] = None
-    error: Optional[str] = None
 
 
 @dataclass

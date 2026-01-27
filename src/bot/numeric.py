@@ -27,6 +27,7 @@ from .extractors import (
     extract_percentiles_from_response,
     enforce_strict_increasing,
     VALID_PERCENTILE_KEYS,
+    AgentResult,
 )
 from .exceptions import CDFGenerationError, InsufficientPredictionsError
 from .prompts import (
@@ -40,19 +41,6 @@ from .prompts import (
 from .search import SearchPipeline, QuestionDetails
 
 logger = logging.getLogger(__name__)
-
-
-@dataclass
-class AgentResult:
-    """Result from a single forecasting agent."""
-    agent_id: str
-    model: str
-    weight: float
-    step1_output: str
-    step2_output: str
-    percentiles: Optional[Dict[int, float]] = None
-    cdf: Optional[List[float]] = None
-    error: Optional[str] = None
 
 
 @dataclass

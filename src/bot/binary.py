@@ -26,7 +26,7 @@ import numpy as np
 from ..utils.llm import LLMClient
 from ..storage.artifact_store import ArtifactStore
 from .handler_mixin import ForecasterMixin
-from .extractors import extract_binary_probability_percent
+from .extractors import extract_binary_probability_percent, AgentResult
 from .exceptions import InsufficientPredictionsError
 from .prompts import (
     BINARY_PROMPT_HISTORICAL,
@@ -39,18 +39,6 @@ from .prompts import (
 from .search import SearchPipeline, QuestionDetails
 
 logger = logging.getLogger(__name__)
-
-
-@dataclass
-class AgentResult:
-    """Result from a single forecasting agent."""
-    agent_id: str
-    model: str
-    weight: float
-    step1_output: str
-    step2_output: str
-    probability: Optional[float] = None
-    error: Optional[str] = None
 
 
 @dataclass
