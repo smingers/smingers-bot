@@ -10,7 +10,6 @@ Then open http://localhost:8000 in your browser.
 
 import argparse
 import json
-import os
 import re
 from datetime import datetime
 from http.server import HTTPServer, BaseHTTPRequestHandler
@@ -38,6 +37,13 @@ def read_json_safe(path: Path) -> dict | None:
         return None
 
 
+def detect_structure(run_dir: Path) -> str:
+    """Detect which artifact structure is used: 'old' or 'new'."""
+    if (run_dir / "01_analysis.json").exists():
+        return "new"
+    return "old"
+
+
 def list_forecast_runs(data_dir: Path) -> list[dict]:
     """List all forecast runs with metadata."""
     runs = []
@@ -51,25 +57,50 @@ def list_forecast_runs(data_dir: Path) -> list[dict]:
 
         question_id, timestamp = match.groups()
         metadata = read_json_safe(entry / "metadata.json")
-        prediction = read_json_safe(entry / "prediction.json")
 
         if metadata is None:
             continue
 
-        analysis = metadata.get("analysis", {})
+        structure = detect_structure(entry)
+
+        # Get analysis data (location differs by structure)
+        if structure == "new":
+            analysis = read_json_safe(entry / "01_analysis.json") or {}
+            final_pred = read_json_safe(entry / "06_submission" / "final_prediction.json")
+        else:
+            analysis = metadata.get("analysis", {})
+            final_pred = read_json_safe(entry / "prediction.json")
+
         costs = metadata.get("costs", {})
+        question_type = analysis.get("type", "unknown")
+
+        # Extract prediction based on question type
+        prediction = None
+        if final_pred:
+            if question_type == "binary":
+                prediction = final_pred.get("prediction")
+            elif question_type == "numeric":
+                # For numeric, show median (50th percentile)
+                percentiles = final_pred.get("percentiles", {})
+                prediction = percentiles.get("50") or percentiles.get(50)
+            elif question_type == "multiple_choice":
+                # For MC, just indicate it exists
+                prediction = "distribution"
+
+        dry_run = final_pred.get("dry_run", True) if final_pred else True
 
         runs.append({
             "folder": entry.name,
             "question_id": question_id,
             "timestamp": timestamp,
             "title": analysis.get("title", "Unknown"),
-            "type": analysis.get("type", "unknown"),
-            "prediction": prediction.get("prediction") if prediction else None,
+            "type": question_type,
+            "prediction": prediction,
             "community_prediction": analysis.get("community_prediction"),
-            "dry_run": prediction.get("dry_run", True) if prediction else True,
+            "dry_run": dry_run,
             "total_cost": costs.get("total_cost", 0),
             "mode": metadata.get("config_snapshot", {}).get("_effective_mode", "unknown"),
+            "structure": structure,
         })
 
     # Sort by timestamp descending (most recent first)
@@ -84,10 +115,75 @@ def load_forecast_detail(data_dir: Path, folder: str) -> dict[str, Any]:
     if not run_dir.exists():
         return {"error": f"Folder not found: {folder}"}
 
+    structure = detect_structure(run_dir)
+    metadata = read_json_safe(run_dir / "metadata.json")
+
+    if structure == "new":
+        return load_new_structure(run_dir, folder, metadata)
+    else:
+        return load_old_structure(run_dir, folder, metadata)
+
+
+def load_new_structure(run_dir: Path, folder: str, metadata: dict) -> dict[str, Any]:
+    """Load forecast from new artifact structure (02_research, 04_inside_view, etc.)."""
+    analysis = read_json_safe(run_dir / "01_analysis.json") or {}
+    final_pred = read_json_safe(run_dir / "06_submission" / "final_prediction.json")
+
     data = {
         "folder": folder,
-        "metadata": read_json_safe(run_dir / "metadata.json"),
-        "prediction": read_json_safe(run_dir / "prediction.json"),
+        "structure": "new",
+        "metadata": metadata,
+        "analysis": analysis,
+        "question_type": analysis.get("type", "unknown"),
+        "prediction": final_pred,
+        "question": read_json_safe(run_dir / "00_question.json"),
+        "research": {
+            "query_historical_prompt": read_file_safe(run_dir / "04_inside_view" / "query_historical" / "prompt.md"),
+            "query_historical": read_file_safe(run_dir / "04_inside_view" / "query_historical" / "response.md"),
+            "query_current_prompt": read_file_safe(run_dir / "04_inside_view" / "query_current" / "prompt.md"),
+            "query_current": read_file_safe(run_dir / "04_inside_view" / "query_current" / "response.md"),
+            "search_historical": read_json_safe(run_dir / "02_research" / "historical_search.json"),
+            "search_current": read_json_safe(run_dir / "02_research" / "current_search.json"),
+        },
+        "ensemble": {
+            "step1_prompt": read_file_safe(run_dir / "04_inside_view" / "step1_shared" / "prompt.md"),
+            "aggregation": read_json_safe(run_dir / "04_inside_view" / "aggregation.json"),
+            "agents": [],
+        },
+    }
+
+    # Load agent data (1-5)
+    for i in range(1, 6):
+        agent_data = {
+            "name": f"Agent {i}",
+            "step1": read_file_safe(run_dir / "04_inside_view" / f"forecaster_{i}_step1" / "response.md"),
+            "step2": read_file_safe(run_dir / "04_inside_view" / f"forecaster_{i}_step2" / "response.md"),
+            "result": read_json_safe(run_dir / "04_inside_view" / f"forecaster_{i}" / "extracted.json"),
+        }
+
+        # Get model from metadata
+        if metadata:
+            agents = metadata.get("config_snapshot", {}).get("_active_agents", [])
+            if i <= len(agents):
+                agent_data["model"] = agents[i - 1].get("model", "unknown")
+
+        data["ensemble"]["agents"].append(agent_data)
+
+    return data
+
+
+def load_old_structure(run_dir: Path, folder: str, metadata: dict) -> dict[str, Any]:
+    """Load forecast from old artifact structure (research, ensemble directories)."""
+    prediction = read_json_safe(run_dir / "prediction.json")
+    analysis = metadata.get("analysis", {}) if metadata else {}
+
+    data = {
+        "folder": folder,
+        "structure": "old",
+        "metadata": metadata,
+        "analysis": analysis,
+        "question_type": analysis.get("type", "unknown"),
+        "prediction": prediction,
         "question": read_json_safe(run_dir / "question.json"),
         "research": {
             "query_historical_prompt": read_file_safe(run_dir / "research" / "query_historical_prompt.md"),
@@ -114,53 +210,14 @@ def load_forecast_detail(data_dir: Path, folder: str) -> dict[str, Any]:
         }
 
         # Get model from metadata
-        if data["metadata"]:
-            agents = data["metadata"].get("config_snapshot", {}).get("_active_agents", [])
+        if metadata:
+            agents = metadata.get("config_snapshot", {}).get("_active_agents", [])
             if i <= len(agents):
                 agent_data["model"] = agents[i - 1].get("model", "unknown")
 
         data["ensemble"]["agents"].append(agent_data)
 
     return data
-
-
-def escape_html(text: str) -> str:
-    """Escape HTML special characters."""
-    return (
-        text.replace("&", "&amp;")
-        .replace("<", "&lt;")
-        .replace(">", "&gt;")
-        .replace('"', "&quot;")
-        .replace("'", "&#x27;")
-    )
-
-
-def format_probability(prob: float | None) -> str:
-    """Format probability for display."""
-    if prob is None:
-        return "N/A"
-    if isinstance(prob, (int, float)):
-        # Handle both 0-1 and 0-100 ranges
-        if prob > 1:
-            return f"{prob:.1f}%"
-        return f"{prob * 100:.1f}%"
-    return str(prob)
-
-
-def format_cost(cost: float | None) -> str:
-    """Format cost for display."""
-    if cost is None:
-        return "N/A"
-    return f"${cost:.4f}"
-
-
-def format_timestamp(ts: str) -> str:
-    """Format timestamp for display."""
-    try:
-        dt = datetime.strptime(ts, "%Y%m%d_%H%M%S")
-        return dt.strftime("%Y-%m-%d %H:%M:%S")
-    except ValueError:
-        return ts
 
 
 HTML_TEMPLATE = """<!DOCTYPE html>
@@ -184,6 +241,12 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         .markdown-content pre { background: #1f2937; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; margin: 0.5rem 0; }
         .markdown-content pre code { background: none; padding: 0; }
         .markdown-content blockquote { border-left: 4px solid #4b5563; padding-left: 1rem; margin: 0.5rem 0; color: #9ca3af; }
+        .bar-chart { display: flex; flex-direction: column; gap: 0.5rem; }
+        .bar-row { display: flex; align-items: center; gap: 0.5rem; }
+        .bar-label { width: 200px; font-size: 0.875rem; text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .bar-container { flex: 1; background: #374151; border-radius: 0.25rem; height: 1.5rem; }
+        .bar-fill { height: 100%; border-radius: 0.25rem; transition: width 0.3s; }
+        .bar-value { width: 60px; font-size: 0.875rem; font-family: monospace; }
     </style>
 </head>
 <body class="bg-gray-900 text-gray-100 min-h-screen">
@@ -257,6 +320,19 @@ HTML_TEMPLATE = """<!DOCTYPE html>
             }
         }
 
+        function formatListPrediction(run) {
+            if (run.prediction === null || run.prediction === undefined) return 'N/A';
+            if (run.type === 'numeric') {
+                return 'median: ' + run.prediction.toLocaleString();
+            }
+            if (run.type === 'multiple_choice') {
+                return 'distribution';
+            }
+            // Binary
+            const p = run.prediction;
+            return (p > 1 ? p.toFixed(1) : (p * 100).toFixed(1)) + '%';
+        }
+
         function renderList(runs) {
             const app = document.getElementById('app');
 
@@ -267,28 +343,33 @@ HTML_TEMPLATE = """<!DOCTYPE html>
             `;
 
             for (const run of runs) {
-                const predDisplay = run.prediction !== null
-                    ? (run.prediction > 1 ? run.prediction.toFixed(1) + '%' : (run.prediction * 100).toFixed(1) + '%')
-                    : 'N/A';
+                const predDisplay = formatListPrediction(run);
                 const communityDisplay = run.community_prediction !== null
                     ? (run.community_prediction * 100).toFixed(1) + '%'
                     : 'N/A';
                 const costDisplay = run.total_cost ? '$' + run.total_cost.toFixed(4) : '';
                 const modeColor = run.dry_run ? 'text-yellow-500' : 'text-green-500';
                 const modeBadge = run.dry_run ? 'DRY RUN' : 'SUBMITTED';
+                const typeColor = {
+                    'binary': 'bg-blue-900 text-blue-300',
+                    'numeric': 'bg-purple-900 text-purple-300',
+                    'multiple_choice': 'bg-orange-900 text-orange-300'
+                }[run.type] || 'bg-gray-700 text-gray-300';
 
                 html += `
                     <div class="bg-gray-800 rounded-lg p-4 hover:bg-gray-750 cursor-pointer border border-gray-700 hover:border-gray-600 transition-colors"
                          onclick="navigateTo('detail', '${run.folder}')">
                         <div class="flex justify-between items-start mb-2">
-                            <span class="text-sm text-gray-400">${run.timestamp.replace('_', ' ')}</span>
+                            <div class="flex items-center gap-2">
+                                <span class="text-sm text-gray-400">${run.timestamp.replace('_', ' ')}</span>
+                                <span class="text-xs px-2 py-0.5 rounded ${typeColor}">${run.type}</span>
+                            </div>
                             <span class="text-xs ${modeColor} font-mono">${modeBadge}</span>
                         </div>
                         <h2 class="text-lg font-medium mb-2 text-blue-400 hover:text-blue-300">${escapeHtml(run.title)}</h2>
                         <div class="flex gap-6 text-sm">
-                            <span class="text-gray-400">Type: <span class="text-gray-200">${run.type}</span></span>
                             <span class="text-gray-400">Prediction: <span class="text-green-400 font-mono">${predDisplay}</span></span>
-                            <span class="text-gray-400">Community: <span class="text-blue-400 font-mono">${communityDisplay}</span></span>
+                            ${run.type === 'binary' ? `<span class="text-gray-400">Community: <span class="text-blue-400 font-mono">${communityDisplay}</span></span>` : ''}
                             ${costDisplay ? `<span class="text-gray-400">Cost: <span class="text-gray-200">${costDisplay}</span></span>` : ''}
                         </div>
                     </div>
@@ -316,15 +397,12 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         function renderDetail(data) {
             const app = document.getElementById('app');
             const meta = data.metadata || {};
-            const analysis = meta.analysis || {};
+            const analysis = data.analysis || {};
             const costs = meta.costs || {};
             const timing = meta.timing || {};
             const prediction = data.prediction || {};
             const agg = data.ensemble?.aggregation || {};
-
-            const predDisplay = prediction.prediction !== undefined
-                ? (prediction.prediction > 1 ? prediction.prediction.toFixed(1) + '%' : (prediction.prediction * 100).toFixed(1) + '%')
-                : 'N/A';
+            const questionType = data.question_type || 'binary';
 
             let html = `
                 <button onclick="navigateTo('list')" class="text-blue-400 hover:text-blue-300 mb-4 flex items-center gap-2">
@@ -334,31 +412,17 @@ HTML_TEMPLATE = """<!DOCTYPE html>
                 <!-- Question Header -->
                 <div class="bg-gray-800 rounded-lg p-6 mb-6 border border-gray-700">
                     <div class="flex justify-between items-start mb-4">
-                        <span class="text-sm text-gray-400">${data.folder}</span>
+                        <div class="flex items-center gap-2">
+                            <span class="text-sm text-gray-400">${data.folder}</span>
+                            <span class="text-xs px-2 py-0.5 rounded ${getTypeColor(questionType)}">${questionType}</span>
+                        </div>
                         <span class="text-xs ${prediction.dry_run ? 'text-yellow-500' : 'text-green-500'} font-mono">
                             ${prediction.dry_run ? 'DRY RUN' : 'SUBMITTED'}
                         </span>
                     </div>
                     <h1 class="text-2xl font-bold mb-4">${escapeHtml(analysis.title || 'Unknown Question')}</h1>
 
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-                        <div>
-                            <span class="text-gray-400">Type</span>
-                            <div class="text-lg">${analysis.type || 'unknown'}</div>
-                        </div>
-                        <div>
-                            <span class="text-gray-400">Final Prediction</span>
-                            <div class="text-lg text-green-400 font-mono">${predDisplay}</div>
-                        </div>
-                        <div>
-                            <span class="text-gray-400">Community</span>
-                            <div class="text-lg text-blue-400 font-mono">${analysis.community_prediction ? (analysis.community_prediction * 100).toFixed(1) + '%' : 'N/A'}</div>
-                        </div>
-                        <div>
-                            <span class="text-gray-400">Cost</span>
-                            <div class="text-lg">$${(costs.total_cost || 0).toFixed(4)}</div>
-                        </div>
-                    </div>
+                    ${renderPredictionHeader(questionType, prediction, analysis, costs)}
 
                     ${timing.duration_seconds ? `
                     <div class="mt-4 text-sm text-gray-400">
@@ -392,29 +456,163 @@ HTML_TEMPLATE = """<!DOCTYPE html>
                     ${renderCollapsible('step1-prompt', 'Step 1 Prompt (Outside View)', data.ensemble?.step1_prompt, false)}
 
                     <!-- Agents -->
-                    ${(data.ensemble?.agents || []).map((agent, i) => renderAgent(agent, i, agg)).join('')}
+                    ${(data.ensemble?.agents || []).map((agent, i) => renderAgent(agent, i, questionType)).join('')}
                 </div>
 
                 <!-- Aggregation -->
-                <div class="bg-gray-800 rounded-lg mb-6 border border-gray-700 p-4">
-                    <h2 class="text-xl font-bold mb-4">Aggregation</h2>
-                    <div class="grid grid-cols-5 gap-4 mb-4">
-                        ${(agg.individual_probabilities || []).map((p, i) => `
-                            <div class="text-center">
-                                <div class="text-sm text-gray-400">Agent ${i + 1}</div>
-                                <div class="text-lg font-mono ${getAgentColor(i)}">${p > 1 ? p.toFixed(1) : (p * 100).toFixed(1)}%</div>
-                                <div class="text-xs text-gray-500">weight: ${(agg.weights || [])[i] || 1}</div>
-                            </div>
-                        `).join('')}
-                    </div>
-                    <div class="text-center pt-4 border-t border-gray-700">
-                        <div class="text-sm text-gray-400">Final (${agg.method || 'weighted_average'})</div>
-                        <div class="text-3xl font-mono text-green-400">${predDisplay}</div>
-                    </div>
-                </div>
+                ${renderAggregation(questionType, agg, prediction)}
             `;
 
             app.innerHTML = html;
+        }
+
+        function getTypeColor(type) {
+            return {
+                'binary': 'bg-blue-900 text-blue-300',
+                'numeric': 'bg-purple-900 text-purple-300',
+                'multiple_choice': 'bg-orange-900 text-orange-300'
+            }[type] || 'bg-gray-700 text-gray-300';
+        }
+
+        function renderPredictionHeader(type, prediction, analysis, costs) {
+            if (type === 'binary') {
+                const prob = prediction.prediction;
+                const probDisplay = prob !== undefined
+                    ? (prob > 1 ? prob.toFixed(1) + '%' : (prob * 100).toFixed(1) + '%')
+                    : 'N/A';
+                return `
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                        <div>
+                            <span class="text-gray-400">Type</span>
+                            <div class="text-lg">${type}</div>
+                        </div>
+                        <div>
+                            <span class="text-gray-400">Final Prediction</span>
+                            <div class="text-lg text-green-400 font-mono">${probDisplay}</div>
+                        </div>
+                        <div>
+                            <span class="text-gray-400">Community</span>
+                            <div class="text-lg text-blue-400 font-mono">${analysis.community_prediction ? (analysis.community_prediction * 100).toFixed(1) + '%' : 'N/A'}</div>
+                        </div>
+                        <div>
+                            <span class="text-gray-400">Cost</span>
+                            <div class="text-lg">$${(costs.total_cost || 0).toFixed(4)}</div>
+                        </div>
+                    </div>
+                `;
+            } else if (type === 'numeric') {
+                const percentiles = prediction.percentiles || {};
+                return `
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm mb-4">
+                        <div>
+                            <span class="text-gray-400">Type</span>
+                            <div class="text-lg">${type}</div>
+                        </div>
+                        <div>
+                            <span class="text-gray-400">Median (P50)</span>
+                            <div class="text-lg text-green-400 font-mono">${percentiles['50'] !== undefined ? percentiles['50'].toLocaleString() : 'N/A'}</div>
+                        </div>
+                        <div>
+                            <span class="text-gray-400">Cost</span>
+                            <div class="text-lg">$${(costs.total_cost || 0).toFixed(4)}</div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-750 rounded p-4">
+                        <div class="text-sm text-gray-400 mb-2">Percentile Distribution</div>
+                        <div class="grid grid-cols-5 gap-2 text-center text-sm">
+                            ${['1', '5', '10', '25', '50', '75', '90', '95', '99'].map(p => `
+                                <div>
+                                    <div class="text-gray-500">P${p}</div>
+                                    <div class="font-mono ${p === '50' ? 'text-green-400' : 'text-gray-300'}">${percentiles[p] !== undefined ? percentiles[p].toLocaleString() : '-'}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            } else if (type === 'multiple_choice') {
+                return `
+                    <div class="grid grid-cols-2 gap-4 text-sm mb-4">
+                        <div>
+                            <span class="text-gray-400">Type</span>
+                            <div class="text-lg">${type}</div>
+                        </div>
+                        <div>
+                            <span class="text-gray-400">Cost</span>
+                            <div class="text-lg">$${(costs.total_cost || 0).toFixed(4)}</div>
+                        </div>
+                    </div>
+                `;
+            }
+            return '';
+        }
+
+        function renderAggregation(type, agg, prediction) {
+            if (type === 'binary') {
+                const prob = prediction.prediction;
+                const probDisplay = prob !== undefined
+                    ? (prob > 1 ? prob.toFixed(1) + '%' : (prob * 100).toFixed(1) + '%')
+                    : 'N/A';
+                return `
+                    <div class="bg-gray-800 rounded-lg mb-6 border border-gray-700 p-4">
+                        <h2 class="text-xl font-bold mb-4">Aggregation</h2>
+                        <div class="grid grid-cols-5 gap-4 mb-4">
+                            ${(agg.individual_probabilities || []).map((p, i) => `
+                                <div class="text-center">
+                                    <div class="text-sm text-gray-400">Agent ${i + 1}</div>
+                                    <div class="text-lg font-mono ${getAgentColor(i)}">${p > 1 ? p.toFixed(1) : (p * 100).toFixed(1)}%</div>
+                                    <div class="text-xs text-gray-500">weight: ${(agg.weights || [])[i] || 1}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div class="text-center pt-4 border-t border-gray-700">
+                            <div class="text-sm text-gray-400">Final (${agg.method || 'weighted_average'})</div>
+                            <div class="text-3xl font-mono text-green-400">${probDisplay}</div>
+                        </div>
+                    </div>
+                `;
+            } else if (type === 'numeric') {
+                return `
+                    <div class="bg-gray-800 rounded-lg mb-6 border border-gray-700 p-4">
+                        <h2 class="text-xl font-bold mb-4">Aggregation</h2>
+                        <div class="text-sm text-gray-400 mb-2">
+                            ${agg.num_valid_cdfs || 0} valid CDFs aggregated using ${agg.method || 'weighted_average'}
+                        </div>
+                        <div class="text-sm text-gray-400">
+                            Final CDF has ${agg.final_cdf_length || 0} points
+                        </div>
+                    </div>
+                `;
+            } else if (type === 'multiple_choice') {
+                const finalProbs = agg.final_probabilities || {};
+                const entries = Object.entries(finalProbs).sort((a, b) => b[1] - a[1]);
+                const maxProb = Math.max(...Object.values(finalProbs), 0.01);
+
+                return `
+                    <div class="bg-gray-800 rounded-lg mb-6 border border-gray-700 p-4">
+                        <h2 class="text-xl font-bold mb-4">Final Distribution</h2>
+                        <div class="bar-chart">
+                            ${entries.map(([option, prob], i) => `
+                                <div class="bar-row">
+                                    <div class="bar-label text-gray-300" title="${escapeHtml(option)}">${escapeHtml(option)}</div>
+                                    <div class="bar-container">
+                                        <div class="bar-fill ${getBarColor(i)}" style="width: ${(prob / maxProb * 100).toFixed(1)}%"></div>
+                                    </div>
+                                    <div class="bar-value text-gray-300">${(prob * 100).toFixed(1)}%</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div class="mt-4 text-sm text-gray-400">
+                            Aggregated using ${agg.method || 'weighted_average'} across ${(agg.weights || []).length} agents
+                        </div>
+                    </div>
+                `;
+            }
+            return '';
+        }
+
+        function getBarColor(index) {
+            const colors = ['bg-blue-500', 'bg-green-500', 'bg-yellow-500', 'bg-purple-500', 'bg-pink-500', 'bg-indigo-500', 'bg-red-500', 'bg-orange-500'];
+            return colors[index % colors.length];
         }
 
         function renderCollapsible(id, title, content, startOpen = false) {
@@ -435,11 +633,29 @@ HTML_TEMPLATE = """<!DOCTYPE html>
             `;
         }
 
-        function renderAgent(agent, index, agg) {
-            const prob = agent.result?.probability;
-            const probDisplay = prob !== undefined ? (prob > 1 ? prob.toFixed(1) + '%' : (prob * 100).toFixed(1) + '%') : 'N/A';
-            const error = agent.result?.error;
+        function renderAgent(agent, index, questionType) {
+            const result = agent.result || {};
+            const error = result.error;
             const modelShort = agent.model ? agent.model.split('/').pop() : 'unknown';
+
+            let resultDisplay;
+            if (error) {
+                resultDisplay = `<span class="text-red-400">Error: ${escapeHtml(error)}</span>`;
+            } else if (questionType === 'binary') {
+                const prob = result.probability;
+                const probDisplay = prob !== undefined ? (prob > 1 ? prob.toFixed(1) + '%' : (prob * 100).toFixed(1) + '%') : 'N/A';
+                resultDisplay = `<span class="font-mono ${getAgentColor(index)}">${probDisplay}</span>`;
+            } else if (questionType === 'numeric') {
+                const percentiles = result.percentiles || {};
+                const median = percentiles['50'] || percentiles[50];
+                resultDisplay = `<span class="font-mono ${getAgentColor(index)}">P50: ${median !== undefined ? median.toLocaleString() : 'N/A'}</span>`;
+            } else if (questionType === 'multiple_choice') {
+                const probs = result.probabilities || [];
+                const max = Math.max(...probs);
+                resultDisplay = `<span class="font-mono ${getAgentColor(index)}">max: ${(max * 100).toFixed(1)}%</span>`;
+            } else {
+                resultDisplay = '<span class="text-gray-500">N/A</span>';
+            }
 
             return `
                 <div class="border-b border-gray-700">
@@ -450,10 +666,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
                                 <span class="text-gray-400 text-sm ml-2">${modelShort}</span>
                             </div>
                             <div class="text-right">
-                                ${error
-                                    ? `<span class="text-red-400">Error: ${escapeHtml(error)}</span>`
-                                    : `<span class="font-mono ${getAgentColor(index)}">${probDisplay}</span>`
-                                }
+                                ${resultDisplay}
                             </div>
                         </div>
                     </div>
