@@ -571,6 +571,10 @@ class ScopedArtifactStore:
         """Save aggregation result."""
         self.store.save_aggregation(self.artifacts, aggregation)
 
+    def save_tool_usage(self, tool_usage: dict) -> None:
+        """Save tool usage tracking data."""
+        self.store.save_tool_usage(self.artifacts, tool_usage)
+
 
 def load_config(config_path: str = "config.yaml") -> dict:
     """Load configuration from YAML file."""

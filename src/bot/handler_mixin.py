@@ -109,3 +109,42 @@ class ForecasterMixin:
         except Exception as e:
             logger.error(f"Model call failed ({model}): {e}")
             raise
+
+    async def _call_model_with_metadata(
+        self,
+        model: str,
+        prompt: str,
+        system_prompt: Optional[str] = None,
+    ) -> tuple[str, dict]:
+        """
+        Call a model via LLMClient and return content + metadata.
+
+        Args:
+            model: Model identifier
+            prompt: User prompt text
+            system_prompt: Optional system prompt
+
+        Returns:
+            Tuple of (content_string, metadata_dict)
+
+        Raises:
+            Exception: If model call fails
+        """
+        messages = [{"role": "user", "content": prompt}]
+
+        try:
+            response = await self.llm.complete(
+                model=model,
+                messages=messages,
+                system=system_prompt,
+                max_tokens=4000,
+            )
+            metadata = {
+                "input_tokens": response.input_tokens,
+                "output_tokens": response.output_tokens,
+                "cost": response.cost,
+            }
+            return response.content, metadata
+        except Exception as e:
+            logger.error(f"Model call failed ({model}): {e}")
+            raise

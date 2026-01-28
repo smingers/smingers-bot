@@ -178,6 +178,20 @@ class ArtifactStore:
         self._write_json(artifacts.ensemble_dir / "aggregation.json", aggregation)
 
     # =========================================================================
+    # Tool Usage
+    # =========================================================================
+
+    def save_tool_usage(self, artifacts: ForecastArtifacts, tool_usage: dict) -> None:
+        """
+        Save tool usage tracking data.
+
+        Args:
+            artifacts: ForecastArtifacts container
+            tool_usage: Dict containing centralized_research and agents sections
+        """
+        self._write_json(artifacts.forecast_dir / "tool_usage.json", tool_usage)
+
+    # =========================================================================
     # Prediction
     # =========================================================================
 

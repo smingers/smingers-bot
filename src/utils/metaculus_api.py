@@ -270,14 +270,18 @@ class MetaculusClient:
                 # Try to get my latest forecast timestamp
                 my_forecasts = item.get("my_forecasts", {})
                 latest = my_forecasts.get("latest") if my_forecasts else None
+
+                # Only count as forecasted if we actually have forecast data
+                if not latest:
+                    continue
+
                 timestamp = None
-                if latest:
-                    timestamp_str = latest.get("start_time") or latest.get("created_at")
-                    if timestamp_str:
-                        try:
-                            timestamp = datetime.fromisoformat(timestamp_str.replace("Z", "+00:00"))
-                        except (ValueError, TypeError):
-                            pass
+                timestamp_str = latest.get("start_time") or latest.get("created_at")
+                if timestamp_str:
+                    try:
+                        timestamp = datetime.fromisoformat(timestamp_str.replace("Z", "+00:00"))
+                    except (ValueError, TypeError):
+                        pass
 
                 forecasts[question_id] = MyForecast(
                     question_id=question_id,

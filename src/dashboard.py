@@ -115,9 +115,11 @@ def list_forecast_runs(data_dir: Path) -> list[dict]:
         if structure == "new":
             analysis = read_json_safe(entry / "01_analysis.json") or {}
             final_pred = read_json_safe(entry / "06_submission" / "final_prediction.json")
+            question = read_json_safe(entry / "00_question.json")
         else:
             analysis = metadata.get("analysis", {})
             final_pred = read_json_safe(entry / "prediction.json")
+            question = read_json_safe(entry / "question.json")
 
         costs = metadata.get("costs", {})
         question_type = analysis.get("type", "unknown")
@@ -128,9 +130,17 @@ def list_forecast_runs(data_dir: Path) -> list[dict]:
             if question_type == "binary":
                 prediction = final_pred.get("prediction")
             elif question_type == "numeric":
-                # For numeric, show median (50th percentile)
-                percentiles = final_pred.get("percentiles", {})
-                prediction = percentiles.get("50") or percentiles.get(50)
+                # For numeric, compute actual median value from CDF
+                cdf = final_pred.get("cdf", [])
+                if cdf and question:
+                    scaling = question.get("question", {}).get("scaling", {})
+                    if scaling:
+                        computed = compute_percentiles_from_cdf(cdf, scaling)
+                        prediction = computed.get("50")
+                # Fallback to raw percentile if computation failed
+                if prediction is None:
+                    percentiles = final_pred.get("percentiles", {})
+                    prediction = percentiles.get("50") or percentiles.get(50)
             elif question_type == "multiple_choice":
                 # For MC, just indicate it exists
                 prediction = "distribution"
@@ -235,6 +245,16 @@ def load_old_structure(run_dir: Path, folder: str, metadata: dict) -> dict[str, 
     """Load forecast from old artifact structure (research, ensemble directories)."""
     prediction = read_json_safe(run_dir / "prediction.json")
     analysis = metadata.get("analysis", {}) if metadata else {}
+    question = read_json_safe(run_dir / "question.json")
+
+    # For numeric questions, compute actual percentile values from CDF
+    computed_percentiles = None
+    if analysis.get("type") == "numeric" and prediction and question:
+        cdf = prediction.get("cdf", [])
+        # Get scaling from nested question structure
+        scaling = question.get("question", {}).get("scaling", {})
+        if cdf and scaling:
+            computed_percentiles = compute_percentiles_from_cdf(cdf, scaling)
 
     data = {
         "folder": folder,
@@ -243,7 +263,8 @@ def load_old_structure(run_dir: Path, folder: str, metadata: dict) -> dict[str, 
         "analysis": analysis,
         "question_type": analysis.get("type", "unknown"),
         "prediction": prediction,
-        "question": read_json_safe(run_dir / "question.json"),
+        "computed_percentiles": computed_percentiles,  # Actual values at percentiles
+        "question": question,
         "research": {
             "query_historical_prompt": read_file_safe(run_dir / "research" / "query_historical_prompt.md"),
             "query_historical": read_file_safe(run_dir / "research" / "query_historical.md"),
@@ -643,15 +664,62 @@ HTML_TEMPLATE = """<!DOCTYPE html>
                     </div>
                 `;
             } else if (type === 'numeric') {
+                // Get individual agent medians from the data
+                const agents = forecastData?.ensemble?.agents || [];
+                const agentMedians = agents.map(agent => {
+                    const percentiles = agent.result?.percentiles || {};
+                    // Agents use P40 and P60, interpolate for median
+                    let median = percentiles['50'] || percentiles[50];
+                    if (median === undefined) {
+                        const p40 = percentiles['40'] || percentiles[40];
+                        const p60 = percentiles['60'] || percentiles[60];
+                        if (p40 !== undefined && p60 !== undefined) {
+                            median = (p40 + p60) / 2;
+                        } else {
+                            median = p40 || p60;
+                        }
+                    }
+                    return median;
+                });
+
+                const formatValue = (val) => {
+                    if (val === undefined || val === null) return 'N/A';
+                    if (Math.abs(val) >= 100) return Math.round(val).toLocaleString();
+                    if (Math.abs(val) >= 10) return val.toFixed(1);
+                    if (Math.abs(val) >= 1) return val.toFixed(2);
+                    return val.toFixed(3);
+                };
+
+                // Get final median from computed percentiles if available
+                const finalMedian = forecastData?.computed_percentiles?.['50'] ||
+                                  prediction.percentiles?.['50'] ||
+                                  prediction.percentiles?.[50];
+
                 return `
                     <div class="bg-gray-800 rounded-lg mb-6 border border-gray-700 p-4">
                         <h2 class="text-xl font-bold mb-4">Aggregation</h2>
-                        <div class="text-sm text-gray-400 mb-2">
-                            ${agg.num_valid_cdfs || 0} valid CDFs aggregated using ${agg.method || 'weighted_average'}
-                        </div>
-                        <div class="text-sm text-gray-400">
-                            Final CDF has ${agg.final_cdf_length || 0} points
-                        </div>
+                        ${agentMedians.length > 0 ? `
+                            <div class="grid grid-cols-5 gap-4 mb-4">
+                                ${agentMedians.map((median, i) => `
+                                    <div class="text-center">
+                                        <div class="text-sm text-gray-400">Agent ${i + 1}</div>
+                                        <div class="text-lg font-mono ${getAgentColor(i)}">${formatValue(median)}</div>
+                                        <div class="text-xs text-gray-500">~P50</div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            <div class="text-center pt-4 border-t border-gray-700">
+                                <div class="text-sm text-gray-400">Final Median (${agg.method || 'weighted_average'})</div>
+                                <div class="text-3xl font-mono text-green-400">${formatValue(finalMedian)}</div>
+                            </div>
+                        ` : `
+                            <div class="text-sm text-gray-400 mb-2">
+                                ${agg.num_valid_cdfs || 0} valid CDFs aggregated using ${agg.method || 'weighted_average'}
+                            </div>
+                            <div class="text-sm text-gray-400">
+                                Final CDF has ${agg.final_cdf_length || 0} points
+                            </div>
+                        `}
                     </div>
                 `;
             } else if (type === 'multiple_choice') {
@@ -719,8 +787,28 @@ HTML_TEMPLATE = """<!DOCTYPE html>
                 resultDisplay = `<span class="font-mono ${getAgentColor(index)}">${probDisplay}</span>`;
             } else if (questionType === 'numeric') {
                 const percentiles = result.percentiles || {};
-                const median = percentiles['50'] || percentiles[50];
-                resultDisplay = `<span class="font-mono ${getAgentColor(index)}">P50: ${median !== undefined ? median.toLocaleString() : 'N/A'}</span>`;
+                // Agents use different percentile points (40, 60) not (50)
+                // Use 40 and 60 to approximate median, or fall back to any available percentile
+                let median = percentiles['50'] || percentiles[50];
+                if (median === undefined) {
+                    // Interpolate between P40 and P60
+                    const p40 = percentiles['40'] || percentiles[40];
+                    const p60 = percentiles['60'] || percentiles[60];
+                    if (p40 !== undefined && p60 !== undefined) {
+                        median = (p40 + p60) / 2;
+                    } else {
+                        // Fallback to any available percentile
+                        median = p40 || p60 || percentiles['20'] || percentiles[20];
+                    }
+                }
+                const formatValue = (val) => {
+                    if (val === undefined || val === null) return 'N/A';
+                    if (Math.abs(val) >= 100) return Math.round(val).toLocaleString();
+                    if (Math.abs(val) >= 10) return val.toFixed(1);
+                    if (Math.abs(val) >= 1) return val.toFixed(2);
+                    return val.toFixed(3);
+                };
+                resultDisplay = `<span class="font-mono ${getAgentColor(index)}">~P50: ${formatValue(median)}</span>`;
             } else if (questionType === 'multiple_choice') {
                 const probs = result.probabilities || [];
                 const max = Math.max(...probs);

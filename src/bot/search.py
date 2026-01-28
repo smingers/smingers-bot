@@ -126,7 +126,7 @@ class SearchPipeline:
         response: str,
         forecaster_id: str,
         question_details: QuestionDetails,
-    ) -> str:
+    ) -> Tuple[str, Dict[str, Any]]:
         """
         Parse search queries from forecaster's response and execute them.
 
@@ -143,8 +143,15 @@ class SearchPipeline:
             question_details: Question context for summarization
 
         Returns:
-            Formatted string with search results
+            Tuple of (formatted_results_string, metadata_dict)
         """
+        metadata = {
+            "forecaster_id": forecaster_id,
+            "searched": False,
+            "num_queries": 0,
+            "queries": [],
+            "tools_used": set(),
+        }
         try:
             # Extract the "Search queries:" block
             search_queries_block = re.search(
@@ -154,7 +161,7 @@ class SearchPipeline:
             )
             if not search_queries_block:
                 logger.info(f"Forecaster {forecaster_id}: No search queries block found")
-                return ""
+                return "", metadata
 
             queries_text = search_queries_block.group(1).strip()
 
@@ -174,9 +181,12 @@ class SearchPipeline:
 
             if not search_queries:
                 logger.info(f"Forecaster {forecaster_id}: No valid search queries found:\n{queries_text}")
-                return ""
+                return "", metadata
 
             logger.info(f"Forecaster {forecaster_id}: Processing {len(search_queries)} search queries")
+
+            metadata["searched"] = True
+            metadata["num_queries"] = len(search_queries)
 
             # Build tasks for each query
             tasks = []
@@ -200,6 +210,10 @@ class SearchPipeline:
                 logger.info(f"Forecaster {forecaster_id}: Query='{query}' Source={source}")
                 query_sources.append((query, source))
 
+                # Track query and tool usage in metadata
+                metadata["queries"].append({"query": query, "tool": source})
+                metadata["tools_used"].add(source)
+
                 if source in ("Google", "Google News"):
                     tasks.append(
                         self._google_search_and_scrape(
@@ -216,16 +230,20 @@ class SearchPipeline:
 
             if not tasks:
                 logger.info(f"Forecaster {forecaster_id}: No tasks generated")
-                return ""
+                return "", metadata
 
             # Execute all tasks
             results = await asyncio.gather(*tasks, return_exceptions=True)
 
-            # Format outputs
+            # Format outputs and count results
             formatted_results = ""
-            for (query, source), result in zip(query_sources, results):
+            for i, ((query, source), result) in enumerate(zip(query_sources, results)):
                 if isinstance(result, Exception):
                     logger.error(f"Forecaster {forecaster_id}: Error for '{query}' → {result}")
+                    metadata["queries"][i]["success"] = False
+                    metadata["queries"][i]["error"] = str(result)
+                    metadata["queries"][i]["num_results"] = 0
+
                     if source == "Assistant":
                         formatted_results += f"\n<Asknews_articles>\nQuery: {query}\nError retrieving results: {result}\n</Asknews_articles>\n"
                     elif source == "Agent":
@@ -235,19 +253,32 @@ class SearchPipeline:
                 else:
                     logger.info(f"Forecaster {forecaster_id}: Query '{query}' processed successfully")
 
+                    # Count results by looking for tags in the result string
                     if source == "Assistant":
+                        num_results = result.count("**") // 2  # AskNews articles have ** in titles
                         formatted_results += f"\n<Asknews_articles>\nQuery: {query}\n{result}</Asknews_articles>\n"
                     elif source == "Agent":
+                        # Agent returns 1 synthesized analysis (not multiple raw contents)
+                        # Count as 1 if substantial content exists, 0 if error or empty
+                        num_results = 1 if len(result) > 500 and "Error:" not in result[:100] else 0
                         formatted_results += f"\n<Agent_report>\nQuery: {query}\n{result}</Agent_report>\n"
                     else:
+                        num_results = result.count("<Summary")
                         formatted_results += result
 
-            return formatted_results
+                    metadata["queries"][i]["success"] = True
+                    metadata["queries"][i]["num_results"] = num_results
+
+            # Convert set to list for JSON serialization
+            metadata["tools_used"] = list(metadata["tools_used"])
+
+            return formatted_results, metadata
 
         except Exception as e:
             logger.error(f"Forecaster {forecaster_id}: Error processing search queries: {e}")
             traceback.print_exc()
-            return "Error processing some search queries. Partial results may be available."
+            metadata["error"] = str(e)
+            return "Error processing some search queries. Partial results may be available.", metadata
 
     # -------------------------------------------------------------------------
     # Google Search + Scrape
@@ -741,7 +772,7 @@ async def process_forecaster_queries(
     question_details: dict,
     config: dict,
     llm_client: Optional[LLMClient] = None,
-) -> str:
+) -> Tuple[str, Dict[str, Any]]:
     """
     Convenience function to process search queries from a forecaster response.
 
@@ -753,7 +784,7 @@ async def process_forecaster_queries(
         llm_client: Optional LLMClient instance
 
     Returns:
-        Formatted search results string
+        Tuple of (formatted_search_results_string, metadata_dict)
     """
     qd = QuestionDetails(
         title=question_details.get("title", ""),

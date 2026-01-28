@@ -14,6 +14,7 @@ Subclasses implement type-specific logic by overriding abstract methods.
 
 import asyncio
 import logging
+import time
 from abc import ABC, abstractmethod
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Tuple
@@ -122,8 +123,17 @@ class BaseForecaster(ForecasterMixin, ABC):
         # =========================================================================
         write("\n=== Step 2: Executing searches ===")
 
+        # Initialize tool usage tracking
+        tool_usage = {
+            "centralized_research": {
+                "historical": {},
+                "current": {},
+            },
+            "agents": {},
+        }
+
         async with SearchPipeline(self.config, self.llm) as search:
-            historical_context, current_context = await asyncio.gather(
+            results = await asyncio.gather(
                 search.process_search_queries(
                     historical_output,
                     forecaster_id="-1",
@@ -135,9 +145,14 @@ class BaseForecaster(ForecasterMixin, ABC):
                     question_details=question_details,
                 ),
             )
+            (historical_context, historical_metadata), (current_context, current_metadata) = results
 
         write(f"\nHistorical context ({len(historical_context)} chars)")
         write(f"Current context ({len(current_context)} chars)")
+
+        # Store metadata
+        tool_usage["centralized_research"]["historical"] = historical_metadata
+        tool_usage["centralized_research"]["current"] = current_metadata
 
         if self.artifact_store:
             self.artifact_store.save_search_results("historical", {"context": historical_context})
@@ -150,31 +165,63 @@ class BaseForecaster(ForecasterMixin, ABC):
 
         agents = self._get_agents()
 
+        # Initialize agent tracking
+        for i, agent in enumerate(agents):
+            agent_name = f"forecaster_{i+1}"
+            tool_usage["agents"][agent_name] = {
+                "model": agent["model"],
+                "weight": agent["weight"],
+                "step1": {"searched": False, "queries": []},
+                "step2": {"searched": False, "queries": []},
+            }
+
         step1_prompt = self._format_step1_prompt(
             prompt_step1, historical_context, **question_params
         )
 
         step1_tasks = []
-        for agent in agents:
+        step1_timings = []
+        for i, agent in enumerate(agents):
             model = agent["model"]
             system_prompt = CLAUDE_CONTEXT if "claude" in model.lower() else GPT_CONTEXT
+
+            # Record start time for this agent
+            start_time = time.time()
+            step1_timings.append(start_time)
+
             step1_tasks.append(
-                self._call_model(model, step1_prompt, system_prompt=system_prompt)
+                self._call_model_with_metadata(model, step1_prompt, system_prompt=system_prompt)
             )
 
-        step1_outputs = await asyncio.gather(*step1_tasks, return_exceptions=True)
+        step1_results = await asyncio.gather(*step1_tasks, return_exceptions=True)
+        step1_outputs = []
 
-        for i, output in enumerate(step1_outputs):
-            if isinstance(output, Exception):
-                write(f"\nForecaster_{i+1} step 1 ERROR: {output}")
-                step1_outputs[i] = f"Error: {output}"
+        for i, result in enumerate(step1_results):
+            agent_name = f"forecaster_{i+1}"
+            duration = time.time() - step1_timings[i]
+
+            if isinstance(result, Exception):
+                write(f"\nForecaster_{i+1} step 1 ERROR: {result}")
+                step1_outputs.append(f"Error: {result}")
+                tool_usage["agents"][agent_name]["step1"]["error"] = str(result)
+                tool_usage["agents"][agent_name]["step1"]["duration_seconds"] = duration
             else:
+                output, response_metadata = result
                 write(f"\nForecaster_{i+1} step 1 output:\n{output[:300]}...")
+                step1_outputs.append(output)
+
+                # Track LLM metrics
+                tool_usage["agents"][agent_name]["step1"].update({
+                    "token_input": response_metadata.get("input_tokens", 0),
+                    "token_output": response_metadata.get("output_tokens", 0),
+                    "cost": response_metadata.get("cost", 0.0),
+                    "duration_seconds": duration,
+                })
 
         if self.artifact_store:
             self.artifact_store.save_step1_prompt(step1_prompt)
             for i, output in enumerate(step1_outputs):
-                if not isinstance(output, Exception):
+                if not isinstance(output, Exception) and not output.startswith("Error:"):
                     self.artifact_store.save_agent_step1(i + 1, output)
 
         # =========================================================================
@@ -201,6 +248,7 @@ class BaseForecaster(ForecasterMixin, ABC):
         write("\n=== Step 5: Running Step 2 (inside view) ===")
 
         step2_tasks = []
+        step2_timings = []
         for i, agent in enumerate(agents):
             model = agent["model"]
             system_prompt = CLAUDE_CONTEXT if "claude" in model.lower() else GPT_CONTEXT
@@ -209,11 +257,36 @@ class BaseForecaster(ForecasterMixin, ABC):
                 prompt_step2, context_map[i], **question_params
             )
 
+            # Record start time for this agent
+            start_time = time.time()
+            step2_timings.append(start_time)
+
             step2_tasks.append(
-                self._call_model(model, step2_prompt, system_prompt=system_prompt)
+                self._call_model_with_metadata(model, step2_prompt, system_prompt=system_prompt)
             )
 
-        step2_outputs = await asyncio.gather(*step2_tasks, return_exceptions=True)
+        step2_results = await asyncio.gather(*step2_tasks, return_exceptions=True)
+        step2_outputs = []
+
+        for i, result in enumerate(step2_results):
+            agent_name = f"forecaster_{i+1}"
+            duration = time.time() - step2_timings[i]
+
+            if isinstance(result, Exception):
+                step2_outputs.append(result)
+                tool_usage["agents"][agent_name]["step2"]["error"] = str(result)
+                tool_usage["agents"][agent_name]["step2"]["duration_seconds"] = duration
+            else:
+                output, response_metadata = result
+                step2_outputs.append(output)
+
+                # Track LLM metrics
+                tool_usage["agents"][agent_name]["step2"].update({
+                    "token_input": response_metadata.get("input_tokens", 0),
+                    "token_output": response_metadata.get("output_tokens", 0),
+                    "cost": response_metadata.get("cost", 0.0),
+                    "duration_seconds": duration,
+                })
 
         # =========================================================================
         # STEP 6: Extract predictions and aggregate
@@ -264,6 +337,8 @@ class BaseForecaster(ForecasterMixin, ABC):
             self.artifact_store.save_aggregation(
                 self._get_aggregation_data(agent_results, agents, final_prediction)
             )
+            # Save tool usage tracking
+            self.artifact_store.save_tool_usage(tool_usage)
 
         return self._build_result(
             final_prediction=final_prediction,
