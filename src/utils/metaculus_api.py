@@ -242,6 +242,12 @@ class MetaculusClient:
 
         return questions
 
+    async def get_current_user_id(self) -> int:
+        """Get the current authenticated user's ID."""
+        response = await self.client.get("/users/me/")
+        response.raise_for_status()
+        return response.json()["id"]
+
     async def get_my_forecasts(
         self,
         tournament_id: Optional[int | str] = None,
@@ -249,13 +255,19 @@ class MetaculusClient:
         """
         Get questions I've already forecasted on.
 
+        Uses forecaster_id parameter (matching official Metaculus library)
+        rather than the undocumented forecast_by_me parameter.
+
         Args:
             tournament_id: Optional tournament ID or slug to filter by
 
         Returns:
             Dict mapping question_id to MyForecast object with timestamp
         """
-        params = {"forecast_by_me": True, "limit": 500}
+        # Get current user ID (required for forecaster_id filter)
+        user_id = await self.get_current_user_id()
+
+        params = {"forecaster_id": user_id, "limit": 500}
         if tournament_id:
             params["tournaments"] = tournament_id
 
@@ -263,29 +275,15 @@ class MetaculusClient:
         response.raise_for_status()
         data = response.json()
 
+        # With forecaster_id filter, all returned posts are ones we've forecasted
+        # The my_forecasts field may be None in list responses, so we trust the filter
         forecasts = {}
         for item in data.get("results", []):
             question_id = item.get("id")
             if question_id:
-                # Try to get my latest forecast timestamp
-                my_forecasts = item.get("my_forecasts", {})
-                latest = my_forecasts.get("latest") if my_forecasts else None
-
-                # Only count as forecasted if we actually have forecast data
-                if not latest:
-                    continue
-
-                timestamp = None
-                timestamp_str = latest.get("start_time") or latest.get("created_at")
-                if timestamp_str:
-                    try:
-                        timestamp = datetime.fromisoformat(timestamp_str.replace("Z", "+00:00"))
-                    except (ValueError, TypeError):
-                        pass
-
                 forecasts[question_id] = MyForecast(
                     question_id=question_id,
-                    timestamp=timestamp,
+                    timestamp=None,  # Timestamp not available in list response
                 )
 
         return forecasts
