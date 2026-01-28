@@ -44,6 +44,54 @@ def detect_structure(run_dir: Path) -> str:
     return "old"
 
 
+def compute_percentiles_from_cdf(cdf: list[float], scaling: dict) -> dict[str, float]:
+    """
+    Compute actual percentile values from CDF and question scaling.
+
+    For numeric questions, the CDF array contains cumulative probabilities,
+    and scaling.continuous_range contains the corresponding actual values.
+    """
+    if not cdf or not scaling:
+        return {}
+
+    continuous_range = scaling.get("continuous_range", [])
+    if not continuous_range:
+        # Try to compute range from min/max
+        range_min = scaling.get("range_min") or scaling.get("nominal_min")
+        range_max = scaling.get("range_max") or scaling.get("nominal_max")
+        if range_min is not None and range_max is not None:
+            # Create linear range with same number of points as CDF
+            n = len(cdf)
+            continuous_range = [range_min + (range_max - range_min) * i / (n - 1) for i in range(n)]
+        else:
+            return {}
+
+    percentile_targets = [1, 5, 10, 25, 50, 75, 90, 95, 99]
+    result = {}
+
+    for p in percentile_targets:
+        target = p / 100.0
+        # Find index where CDF crosses this threshold
+        for i, cdf_val in enumerate(cdf):
+            if cdf_val >= target:
+                # Linear interpolation for better accuracy
+                if i > 0 and cdf[i-1] < target:
+                    # Interpolate between i-1 and i
+                    frac = (target - cdf[i-1]) / (cdf_val - cdf[i-1]) if cdf_val != cdf[i-1] else 0
+                    if i < len(continuous_range) and i-1 < len(continuous_range):
+                        val = continuous_range[i-1] + frac * (continuous_range[i] - continuous_range[i-1])
+                        result[str(p)] = val
+                elif i < len(continuous_range):
+                    result[str(p)] = continuous_range[i]
+                break
+        else:
+            # CDF never reached target, use max value
+            if continuous_range:
+                result[str(p)] = continuous_range[-1]
+
+    return result
+
+
 def list_forecast_runs(data_dir: Path) -> list[dict]:
     """List all forecast runs with metadata."""
     runs = []
@@ -128,6 +176,16 @@ def load_new_structure(run_dir: Path, folder: str, metadata: dict) -> dict[str, 
     """Load forecast from new artifact structure (02_research, 04_inside_view, etc.)."""
     analysis = read_json_safe(run_dir / "01_analysis.json") or {}
     final_pred = read_json_safe(run_dir / "06_submission" / "final_prediction.json")
+    question = read_json_safe(run_dir / "00_question.json")
+
+    # For numeric questions, compute actual percentile values from CDF
+    computed_percentiles = None
+    if analysis.get("type") == "numeric" and final_pred and question:
+        cdf = final_pred.get("cdf", [])
+        # Get scaling from nested question structure
+        scaling = question.get("question", {}).get("scaling", {})
+        if cdf and scaling:
+            computed_percentiles = compute_percentiles_from_cdf(cdf, scaling)
 
     data = {
         "folder": folder,
@@ -136,7 +194,8 @@ def load_new_structure(run_dir: Path, folder: str, metadata: dict) -> dict[str, 
         "analysis": analysis,
         "question_type": analysis.get("type", "unknown"),
         "prediction": final_pred,
-        "question": read_json_safe(run_dir / "00_question.json"),
+        "computed_percentiles": computed_percentiles,  # Actual values at percentiles
+        "question": question,
         "research": {
             "query_historical_prompt": read_file_safe(run_dir / "04_inside_view" / "query_historical" / "prompt.md"),
             "query_historical": read_file_safe(run_dir / "04_inside_view" / "query_historical" / "response.md"),
@@ -403,6 +462,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
             const prediction = data.prediction || {};
             const agg = data.ensemble?.aggregation || {};
             const questionType = data.question_type || 'binary';
+            const computedPercentiles = data.computed_percentiles || null;
 
             let html = `
                 <button onclick="navigateTo('list')" class="text-blue-400 hover:text-blue-300 mb-4 flex items-center gap-2">
@@ -422,7 +482,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
                     </div>
                     <h1 class="text-2xl font-bold mb-4">${escapeHtml(analysis.title || 'Unknown Question')}</h1>
 
-                    ${renderPredictionHeader(questionType, prediction, analysis, costs)}
+                    ${renderPredictionHeader(questionType, prediction, analysis, costs, computedPercentiles)}
 
                     ${timing.duration_seconds ? `
                     <div class="mt-4 text-sm text-gray-400">
@@ -474,7 +534,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
             }[type] || 'bg-gray-700 text-gray-300';
         }
 
-        function renderPredictionHeader(type, prediction, analysis, costs) {
+        function renderPredictionHeader(type, prediction, analysis, costs, computedPercentiles) {
             if (type === 'binary') {
                 const prob = prediction.prediction;
                 const probDisplay = prob !== undefined
@@ -501,7 +561,19 @@ HTML_TEMPLATE = """<!DOCTYPE html>
                     </div>
                 `;
             } else if (type === 'numeric') {
-                const percentiles = prediction.percentiles || {};
+                // Use computed percentiles (actual values) if available, fall back to raw percentiles
+                const percentiles = computedPercentiles || prediction.percentiles || {};
+                const hasComputedPercentiles = computedPercentiles !== null;
+
+                // Format numbers nicely - use integers for large values, decimals for small
+                const formatValue = (val) => {
+                    if (val === undefined || val === null) return '-';
+                    if (Math.abs(val) >= 100) return Math.round(val).toLocaleString();
+                    if (Math.abs(val) >= 10) return val.toFixed(1);
+                    if (Math.abs(val) >= 1) return val.toFixed(2);
+                    return val.toFixed(3);
+                };
+
                 return `
                     <div class="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm mb-4">
                         <div>
@@ -510,7 +582,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
                         </div>
                         <div>
                             <span class="text-gray-400">Median (P50)</span>
-                            <div class="text-lg text-green-400 font-mono">${percentiles['50'] !== undefined ? percentiles['50'].toLocaleString() : 'N/A'}</div>
+                            <div class="text-lg text-green-400 font-mono">${formatValue(percentiles['50'])}</div>
                         </div>
                         <div>
                             <span class="text-gray-400">Cost</span>
@@ -518,12 +590,12 @@ HTML_TEMPLATE = """<!DOCTYPE html>
                         </div>
                     </div>
                     <div class="bg-gray-750 rounded p-4">
-                        <div class="text-sm text-gray-400 mb-2">Percentile Distribution</div>
+                        <div class="text-sm text-gray-400 mb-2">Percentile Distribution${hasComputedPercentiles ? '' : ' <span class="text-yellow-500">(raw CDF values - scaling unavailable)</span>'}</div>
                         <div class="grid grid-cols-5 gap-2 text-center text-sm">
                             ${['1', '5', '10', '25', '50', '75', '90', '95', '99'].map(p => `
                                 <div>
                                     <div class="text-gray-500">P${p}</div>
-                                    <div class="font-mono ${p === '50' ? 'text-green-400' : 'text-gray-300'}">${percentiles[p] !== undefined ? percentiles[p].toLocaleString() : '-'}</div>
+                                    <div class="font-mono ${p === '50' ? 'text-green-400' : 'text-gray-300'}">${formatValue(percentiles[p])}</div>
                                 </div>
                             `).join('')}
                         </div>
