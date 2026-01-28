@@ -6,7 +6,6 @@ These prompts implement a two-stage research + two-stage forecasting pipeline:
 2. Current research queries -> Inside view context
 3. Outside view prediction (PROMPT_1) using historical context
 4. Inside view prediction (PROMPT_2) using current context + outside view
-
 """
 
 # =============================================================================
@@ -27,7 +26,7 @@ For each question, you also consider (depending on question type)
 In each of your analyses, you write your rationale clearly and spare little detail so your colleagues can understand the nuances that governed your thoughtful forecast.
 """
 
-GPT_CONTEXT = """ Position yourself as a professional forecaster placing in the top 1% of forecasters who participated in the Good Judgement Project. Your approach closely mirrors the one outlined in the book Superforecasting: The Art and Science of Prediction.
+GPT_CONTEXT = """Position yourself as a professional forecaster placing in the top 1% of forecasters who participated in the Good Judgement Project. Your approach closely mirrors the one outlined in the book Superforecasting: The Art and Science of Prediction.
 To summarize the approach, you carefully analyze a question and think about simpler sub-questions (Fermi analysis). Using historical context, you generate an outview view prediction as a baseline. Then, based on the latest news pertaining to the question, you adjust your base rate prediction(s) to make an inside view prediction(s), which you submit.
 For each question, you also consider (depending on question type)
 (a) The time left until the outcome to the question is known.
@@ -61,7 +60,7 @@ This question's outcome will be determined by the specific criteria below. These
 Additional fine-print:
 {fine_print}
 
-IMPORTANT: Today's date is {today}. All dates before this are in the PAST. Use this date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
+IMPORTANT: Today's date is {today}. All dates before this date are in the PAST. All dates after this date are in the FUTURE. Use this date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
 Your task is to analyze the forecasting question and write a series of search queries that will be used by your assistant to find relevant historical context. For each query, indicate whether you wish to utlize google, google news or perplexity to retrieve information.
 
@@ -99,7 +98,7 @@ This question's outcome will be determined by the specific criteria below. These
 Additional fine-print:
 {fine_print}
 
-IMPORTANT: Today's date is {today}. All dates before this are in the PAST. Use this date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
+IMPORTANT: Today's date is {today}. All dates before this date are in the PAST. All dates after this date are in the FUTURE. Use this date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
 For google/google news:
 Your query for google and google news are processed by classical search engines, so please phrase the queries in a way optimal for keyword optimized search (i.e., the phrase you search is likely to appear on desired web pages). Avoid writing overly specific queries. Limit to six words.
@@ -137,7 +136,7 @@ This question's outcome will be determined by the specific criteria below. These
 Additional fine-print:
 {fine_print}
 
-IMPORTANT: Today's date is {today}. All dates before this are in the PAST. Use this date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
+IMPORTANT: Today's date is {today}. All dates before this date are in the PAST. All dates after this date are in the FUTURE. Use this date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
 Historical context:
 {context}
@@ -183,7 +182,7 @@ This question's outcome will be determined by the specific criteria below. These
 Additional fine-print:
 {fine_print}
 
-IMPORTANT: Today's date is {today}. All dates before this are in the PAST. Use this date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
+IMPORTANT: Today's date is {today}. All dates before this date are in the PAST. All dates after this date are in the FUTURE. Use this date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
 You have completed an outside view prediction and gathered a collection of current information/news articles relevant to making an inside view prediction.
 
@@ -285,7 +284,7 @@ This question's outcome will be determined by the specific criteria below. These
 Additional fine-print:
 {fine_print}
 
-IMPORTANT: Today's date is {today}. All dates before this are in the PAST. Use this date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
+IMPORTANT: Today's date is {today}. All dates before this date are in the PAST. All dates after this date are in the FUTURE. Use this date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
 For google/google news:
 Your query for google and google news are processed by classical search engines, so please phrase the queries in a way optimal for keyword optimized search (i.e., the phrase you search is likely to appear on desired web pages). Avoid writing overly specific queries. Limit to six words.
@@ -323,7 +322,7 @@ This question's outcome will be determined by the specific criteria below. These
 Additional fine-print:
 {fine_print}
 
-IMPORTANT: Today's date is {today}. All dates before this are in the PAST. Use this date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
+IMPORTANT: Today's date is {today}. All dates before this date are in the PAST. All dates after this date are in the FUTURE. Use this date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
 Your task is to analyze the forecasting question and write a series of search queries that will be used by your assistant to find current information/news articles relevant to the question. For each query, indicate whether you wish to utlize google, google news or your assistant directly to retrieve information.
 Your query for google and google news are processed by classical search engines, so please phrase the queries in a way optimal for keyword optimized search. Avoid writing overly specific queries. Limit to six words.
@@ -362,7 +361,7 @@ This question's outcome will be determined by the specific criteria below. These
 Additional fine-print:
 {fine_print}
 
-IMPORTANT: Today's date is {today}. All dates before this are in the PAST. Use this date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
+IMPORTANT: Today's date is {today}. All dates before this date are in the PAST. All dates after this date are in the FUTURE. Use this date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
 Historical context:
 {context}
@@ -412,7 +411,7 @@ This question's outcome will be determined by the specific criteria below. These
 Additional fine-print:
 {fine_print}
 
-IMPORTANT: Today's date is {today}. All dates before this are in the PAST. Use this date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
+IMPORTANT: Today's date is {today}. All dates before this date are in the PAST. All dates after this date are in the FUTURE. Use this date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
 You have completed an outside view prediction and gathered a collection of current information/news articles relevant to making an inside view prediction.
 
@@ -513,7 +512,7 @@ Additional fine-print:
 
 Units for answer: {units}
 
-IMPORTANT: Today's date is {today}. All dates before this are in the PAST. Use this date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
+IMPORTANT: Today's date is {today}. All dates before this date are in the PAST. All dates after this date are in the FUTURE. Use this date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
 {lower_bound_message}
 {upper_bound_message}
@@ -555,7 +554,7 @@ This question's outcome will be determined by the specific criteria below. These
 Additional fine-print:
 {fine_print}
 
-IMPORTANT: Today's date is {today}. All dates before this are in the PAST. Use this date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
+IMPORTANT: Today's date is {today}. All dates before this date are in the PAST. All dates after this date are in the FUTURE. Use this date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
 {lower_bound_message}
 {upper_bound_message}
@@ -599,7 +598,7 @@ Additional fine-print:
 
 Units for answer: {units}
 
-IMPORTANT: Today's date is {today}. All dates before this are in the PAST. Use this date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
+IMPORTANT: Today's date is {today}. All dates before this date are in the PAST. All dates after this date are in the FUTURE. Use this date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
 {lower_bound_message}
 {upper_bound_message}
@@ -665,7 +664,7 @@ Your interview question is:
 
 Units for answer: {units}
 
-IMPORTANT: Today's date is {today}. All dates before this are in the PAST. Use this date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
+IMPORTANT: Today's date is {today}. All dates before this date are in the PAST. All dates after this date are in the FUTURE. Use this date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
 {lower_bound_message}
 {upper_bound_message}
