@@ -249,6 +249,7 @@ class Forecaster:
         result = await forecaster.forecast(
             question_title=question.title,
             question_text=question.description,
+            background_info=question.background_info or "",
             resolution_criteria=question.resolution_criteria or "",
             fine_print=question.raw.get("fine_print", ""),
             open_time=question.open_time or "",
@@ -286,13 +287,17 @@ class Forecaster:
         result = await forecaster.forecast(
             question_title=question.title,
             question_text=question.description,
+            background_info=question.background_info or "",
             resolution_criteria=question.resolution_criteria or "",
             fine_print=question.raw.get("fine_print", ""),
+            unit_of_measure=question.unit_of_measure or "",
             lower_bound=lower_bound,
             upper_bound=upper_bound,
             open_lower_bound=open_lower_bound,
             open_upper_bound=open_upper_bound,
             zero_point=zero_point,
+            nominal_lower_bound=question.nominal_lower_bound,
+            nominal_upper_bound=question.nominal_upper_bound,
             open_time=question.open_time or "",
             scheduled_resolve_time=question.scheduled_resolve_time or "",
             write=lambda msg: logger.info(msg),
@@ -347,6 +352,7 @@ class Forecaster:
         result = await forecaster.forecast(
             question_title=question.title,
             question_text=question.description,
+            background_info=question.background_info or "",
             resolution_criteria=question.resolution_criteria or "",
             fine_print=question.raw.get("fine_print", ""),
             options=options,

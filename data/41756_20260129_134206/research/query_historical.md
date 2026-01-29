@@ -1,0 +1,7 @@
+Analysis:
+To judge the likelihood of a future U.S. accusation, we first need a clear picture of the public record to date. Key context includes: 1) every occasion U.S. officials have referenced China and “lethal aid” to Russia; 2) whether those remarks were warnings (“don’t do it”) or outright accusations of delivery; 3) the evidence or intelligence snippets the U.S. has been willing to reveal; and 4) how media and think-tank reporting have characterized these statements. Establishing that, up to 29 Jan 2026, Washington has only issued warnings—not definitive accusations—will anchor an outside-view baseline that the bar for an official accusation remains high. We therefore want search queries that surface past U.S. statements (Blinken, Sullivan, Kirby, DoD, State Dept press briefings), any classified-to-public leaks, and authoritative media coverage analyzing them.
+
+Search queries:
+1. US accusation China lethal aid Russia (Google)  
+2. Blinken warns China weapons Russia Ukraine (Google News)  
+3. List all public statements by U.S. officials since 2022 that accuse China of supplying lethal military aid to Russia, distinguishing warnings from confirmed accusations, with dates, evidence cited, and media coverage; summarize whether any explicit accusation occurred before 29 Jan 2026. (Agent)

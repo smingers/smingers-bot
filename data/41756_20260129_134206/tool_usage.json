@@ -1,0 +1,166 @@
+{
+  "centralized_research": {
+    "historical": {
+      "forecaster_id": "-1",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "US accusation China lethal aid Russia",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Blinken warns China weapons Russia Ukraine",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "List all public statements by U.S. officials since 2022 that accuse China of supplying lethal military aid to Russia, distinguishing warnings from confirmed accusations, with dates, evidence cited, and media coverage; summarize whether any explicit accusation occurred before 29 Jan 2026.",
+          "tool": "Agent",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "Agent"
+      ]
+    },
+    "current": {
+      "forecaster_id": "0",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "US accuses China lethal aid Russia",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "China arms Russia US accusation",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Please list any January 2026 statements by US officials accusing China of supplying lethal weapons to Russia for the Ukraine war.",
+          "tool": "Assistant",
+          "success": true,
+          "num_results": 26
+        }
+      ],
+      "tools_used": [
+        "Assistant",
+        "Google News",
+        "Google"
+      ]
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5942,
+        "token_output": 2210,
+        "cost": 0.050976,
+        "duration_seconds": 55.1385133266449
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17638,
+        "token_output": 2180,
+        "cost": 0.085614,
+        "duration_seconds": 56.625107765197754
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5942,
+        "token_output": 2097,
+        "cost": 0.049281,
+        "duration_seconds": 55.13877511024475
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16879,
+        "token_output": 2059,
+        "cost": 0.08152200000000001,
+        "duration_seconds": 56.625115156173706
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/o3-mini-high",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5296,
+        "token_output": 2016,
+        "cost": 0.014696,
+        "duration_seconds": 55.138827085494995
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15594,
+        "token_output": 1507,
+        "cost": 0.023784200000000005,
+        "duration_seconds": 56.62509107589722
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5296,
+        "token_output": 1918,
+        "cost": 0.025936,
+        "duration_seconds": 55.13891577720642
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14746,
+        "token_output": 2016,
+        "cost": 0.04562,
+        "duration_seconds": 56.625044107437134
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5296,
+        "token_output": 1921,
+        "cost": 0.02596,
+        "duration_seconds": 55.13901686668396
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14989,
+        "token_output": 1707,
+        "cost": 0.043634,
+        "duration_seconds": 56.62501287460327
+      }
+    }
+  }
+}

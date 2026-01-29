@@ -204,7 +204,8 @@ class BinaryForecaster(BaseForecaster):
         self,
         question_title: str,
         question_text: str,
-        resolution_criteria: str,
+        background_info: str = "",
+        resolution_criteria: str = "",
         fine_print: str = "",
         open_time: str = "",
         scheduled_resolve_time: str = "",
@@ -216,6 +217,7 @@ class BinaryForecaster(BaseForecaster):
         Args:
             question_title: The question title
             question_text: Full question description/background
+            background_info: Additional background information
             resolution_criteria: How the question resolves
             fine_print: Additional resolution details
             open_time: When the question opened for forecasting
@@ -229,6 +231,7 @@ class BinaryForecaster(BaseForecaster):
             write=write,
             question_title=question_title,
             question_text=question_text,
+            background_info=background_info,
             resolution_criteria=resolution_criteria,
             fine_print=fine_print,
             open_time=open_time,

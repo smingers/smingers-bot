@@ -266,9 +266,10 @@ class MultipleChoiceForecaster(BaseForecaster):
         self,
         question_title: str,
         question_text: str,
-        resolution_criteria: str,
-        fine_print: str,
-        options: List[str],
+        background_info: str = "",
+        resolution_criteria: str = "",
+        fine_print: str = "",
+        options: List[str] = None,
         open_time: str = "",
         scheduled_resolve_time: str = "",
         write: callable = print,
@@ -279,6 +280,7 @@ class MultipleChoiceForecaster(BaseForecaster):
         Args:
             question_title: The question title
             question_text: Full question description/background
+            background_info: Additional background information
             resolution_criteria: How the question resolves
             fine_print: Additional resolution details
             options: List of option labels
@@ -293,9 +295,10 @@ class MultipleChoiceForecaster(BaseForecaster):
             write=write,
             question_title=question_title,
             question_text=question_text,
+            background_info=background_info,
             resolution_criteria=resolution_criteria,
             fine_print=fine_print,
-            options=options,
+            options=options or [],
             open_time=open_time,
             scheduled_resolve_time=scheduled_resolve_time,
         )

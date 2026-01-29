@@ -26,9 +26,10 @@ class MetaculusQuestion:
     id: int  # Post ID (used in URLs)
     question_id: int  # Question ID (used for forecasting API)
     title: str
-    description: str
+    description: str  # Question background/context
     resolution_criteria: str
     fine_print: str
+    background_info: str  # Additional background information
     question_type: Literal["binary", "numeric", "multiple_choice", "date"]
     created_at: str
     open_time: Optional[str]  # When question opened for forecasting
@@ -39,6 +40,16 @@ class MetaculusQuestion:
     # Type-specific fields
     possibilities: Optional[dict] = None  # For numeric: min, max, etc.
     options: Optional[list[dict]] = None  # For multiple choice
+
+    # Numeric question bounds
+    unit_of_measure: Optional[str] = None  # Units for numeric questions
+    upper_bound: Optional[float] = None  # Hard upper bound
+    lower_bound: Optional[float] = None  # Hard lower bound
+    open_upper_bound: Optional[bool] = None  # True if upper bound is soft (can exceed)
+    open_lower_bound: Optional[bool] = None  # True if lower bound is soft (can go below)
+    zero_point: Optional[float] = None  # For log-scale questions
+    nominal_upper_bound: Optional[float] = None  # Suggested upper bound (may be tighter)
+    nominal_lower_bound: Optional[float] = None  # Suggested lower bound (may be tighter)
 
     # Community data
     community_prediction: Optional[float] = None
@@ -84,6 +95,36 @@ class MetaculusQuestion:
         post_id = data.get("id")
         question_id = question_data.get("id", post_id)  # Nested question has the actual question ID
 
+        # Extract numeric question bounds from scaling object
+        scaling = question_data.get("scaling", {}) or {}
+        upper_bound = scaling.get("range_max")
+        lower_bound = scaling.get("range_min")
+        nominal_upper_bound = scaling.get("nominal_max")
+        nominal_lower_bound = scaling.get("nominal_min")
+        zero_point = scaling.get("zero_point")
+
+        # Convert bounds to float if present
+        if upper_bound is not None:
+            try:
+                upper_bound = float(upper_bound)
+            except (TypeError, ValueError):
+                upper_bound = None
+        if lower_bound is not None:
+            try:
+                lower_bound = float(lower_bound)
+            except (TypeError, ValueError):
+                lower_bound = None
+        if nominal_upper_bound is not None:
+            try:
+                nominal_upper_bound = float(nominal_upper_bound)
+            except (TypeError, ValueError):
+                nominal_upper_bound = None
+        if nominal_lower_bound is not None:
+            try:
+                nominal_lower_bound = float(nominal_lower_bound)
+            except (TypeError, ValueError):
+                nominal_lower_bound = None
+
         return cls(
             id=post_id,
             question_id=question_id,
@@ -91,6 +132,7 @@ class MetaculusQuestion:
             description=data.get("description") or question_data.get("description") or "",  # Handle None, check nested
             resolution_criteria=data.get("resolution_criteria") or question_data.get("resolution_criteria") or "",
             fine_print=data.get("fine_print") or question_data.get("fine_print") or "",
+            background_info=question_data.get("description") or "",  # Background is in nested question.description
             question_type=question_type,
             created_at=data.get("created_at", ""),
             open_time=data.get("open_time") or question_data.get("open_time"),
@@ -99,6 +141,16 @@ class MetaculusQuestion:
             status=status,
             possibilities=question_data.get("possibilities"),
             options=question_data.get("options"),
+            # Numeric question fields
+            unit_of_measure=question_data.get("unit") or None,
+            upper_bound=upper_bound,
+            lower_bound=lower_bound,
+            open_upper_bound=question_data.get("open_upper_bound"),
+            open_lower_bound=question_data.get("open_lower_bound"),
+            zero_point=zero_point,
+            nominal_upper_bound=nominal_upper_bound,
+            nominal_lower_bound=nominal_lower_bound,
+            # Community data
             community_prediction=community_pred,
             num_forecasters=data.get("nr_forecasters"),
             raw=data,

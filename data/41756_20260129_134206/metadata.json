@@ -1,7 +1,7 @@
 {
   "question_id": 41756,
-  "timestamp": "20260129_133738",
-  "created_at": "2026-01-29T13:37:38.497545+00:00",
+  "timestamp": "20260129_134206",
+  "created_at": "2026-01-29T13:45:22.982101+00:00",
   "config_hash": "39ede1c66935",
   "config_snapshot": {
     "mode": "dry_run",
@@ -158,17 +158,27 @@
     "_effective_mode": "dry_run_heavy"
   },
   "costs": {
-    "total_calls": 0,
-    "successful_calls": 0,
+    "total_calls": 26,
+    "successful_calls": 26,
     "failed_calls": 0,
-    "total_input_tokens": 0,
-    "total_output_tokens": 0,
-    "total_cost": 0.0
+    "total_input_tokens": 149358,
+    "total_output_tokens": 29429,
+    "total_cost": 0.6605932000000001
   },
   "timing": {
-    "error": "BinaryForecaster.forecast() got an unexpected keyword argument 'open_time'"
+    "start": "2026-01-29T13:42:05.385668+00:00",
+    "end": "2026-01-29T13:45:22.981646+00:00",
+    "duration_seconds": 197.595978
   },
-  "errors": [
-    "BinaryForecaster.forecast() got an unexpected keyword argument 'open_time'"
-  ]
+  "errors": [],
+  "analysis": {
+    "id": 41756,
+    "title": "Before May 1, 2026, will the United States publicly accuse China of supplying lethal military aid to Russia?",
+    "type": "binary",
+    "status": "closed",
+    "scheduled_close": "2026-01-29T06:00:00Z",
+    "scheduled_resolve": "2026-05-01T00:00:00Z",
+    "community_prediction": null,
+    "num_forecasters": 107
+  }
 }

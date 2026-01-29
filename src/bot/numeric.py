@@ -97,12 +97,15 @@ class NumericForecaster(BaseForecaster):
     ) -> Tuple[str, str]:
         """Format query prompts with numeric-specific parameters."""
         bound_msgs = self._build_bound_messages(**question_params)
-        unit = question_params.get("unit", "(unknown)")
+        # Support both old 'unit' key and new 'unit_of_measure' key
+        unit = question_params.get("unit_of_measure") or question_params.get("unit", "(unknown)")
+        # Use background_info if available, fall back to question_text
+        background = question_params.get("background_info", "") or question_params.get("question_text", "")
 
         historical = prompt_historical.format(
             title=question_params.get("question_title", ""),
             today=question_params.get("today", ""),
-            background=question_params.get("question_text", ""),
+            background=background,
             resolution_criteria=question_params.get("resolution_criteria", ""),
             fine_print=question_params.get("fine_print", ""),
             open_time=question_params.get("open_time", ""),
@@ -115,7 +118,7 @@ class NumericForecaster(BaseForecaster):
         current = prompt_current.format(
             title=question_params.get("question_title", ""),
             today=question_params.get("today", ""),
-            background=question_params.get("question_text", ""),
+            background=background,
             resolution_criteria=question_params.get("resolution_criteria", ""),
             fine_print=question_params.get("fine_print", ""),
             open_time=question_params.get("open_time", ""),
@@ -135,6 +138,8 @@ class NumericForecaster(BaseForecaster):
     ) -> str:
         """Format Step 1 prompt with numeric-specific parameters."""
         bound_msgs = self._build_bound_messages(**question_params)
+        # Support both old 'unit' key and new 'unit_of_measure' key
+        unit = question_params.get("unit_of_measure") or question_params.get("unit", "(unknown)")
         return prompt_template.format(
             title=question_params.get("question_title", ""),
             today=question_params.get("today", ""),
@@ -143,7 +148,7 @@ class NumericForecaster(BaseForecaster):
             open_time=question_params.get("open_time", ""),
             scheduled_resolve_time=question_params.get("scheduled_resolve_time", ""),
             context=historical_context,
-            units=question_params.get("unit", "(unknown)"),
+            units=unit,
             lower_bound_message=bound_msgs["lower_bound_message"],
             upper_bound_message=bound_msgs["upper_bound_message"],
             hint=bound_msgs["hint"],
@@ -157,6 +162,8 @@ class NumericForecaster(BaseForecaster):
     ) -> str:
         """Format Step 2 prompt with cross-pollinated context."""
         bound_msgs = self._build_bound_messages(**question_params)
+        # Support both old 'unit' key and new 'unit_of_measure' key
+        unit = question_params.get("unit_of_measure") or question_params.get("unit", "(unknown)")
         return prompt_template.format(
             title=question_params.get("question_title", ""),
             today=question_params.get("today", ""),
@@ -165,7 +172,7 @@ class NumericForecaster(BaseForecaster):
             open_time=question_params.get("open_time", ""),
             scheduled_resolve_time=question_params.get("scheduled_resolve_time", ""),
             context=context,
-            units=question_params.get("unit", "(unknown)"),
+            units=unit,
             lower_bound_message=bound_msgs["lower_bound_message"],
             upper_bound_message=bound_msgs["upper_bound_message"],
             hint=bound_msgs["hint"],
@@ -300,14 +307,17 @@ class NumericForecaster(BaseForecaster):
         self,
         question_title: str,
         question_text: str,
-        resolution_criteria: str,
-        fine_print: str,
-        open_upper_bound: bool,
-        open_lower_bound: bool,
-        upper_bound: float,
-        lower_bound: float,
+        background_info: str = "",
+        resolution_criteria: str = "",
+        fine_print: str = "",
+        unit_of_measure: str = "",
+        open_upper_bound: bool = False,
+        open_lower_bound: bool = False,
+        upper_bound: float = 100,
+        lower_bound: float = 0,
         zero_point: Optional[float] = None,
-        unit: str = "(unknown)",
+        nominal_upper_bound: Optional[float] = None,
+        nominal_lower_bound: Optional[float] = None,
         open_time: str = "",
         scheduled_resolve_time: str = "",
         write: callable = print,
@@ -318,14 +328,17 @@ class NumericForecaster(BaseForecaster):
         Args:
             question_title: The question title
             question_text: Full question description/background
+            background_info: Additional background information
             resolution_criteria: How the question resolves
             fine_print: Additional resolution details
-            open_upper_bound: Whether upper bound is open
-            open_lower_bound: Whether lower bound is open
-            upper_bound: Maximum possible value
-            lower_bound: Minimum possible value
+            unit_of_measure: Unit of measurement
+            open_upper_bound: Whether upper bound is open (can exceed)
+            open_lower_bound: Whether lower bound is open (can go below)
+            upper_bound: Hard maximum value
+            lower_bound: Hard minimum value
             zero_point: Reference point for non-linear scaling
-            unit: Unit of measurement
+            nominal_upper_bound: Suggested upper bound (may be tighter than hard bound)
+            nominal_lower_bound: Suggested lower bound (may be tighter than hard bound)
             open_time: When the question opened for forecasting
             scheduled_resolve_time: When the question resolves
             write: Logging function
@@ -337,14 +350,17 @@ class NumericForecaster(BaseForecaster):
             write=write,
             question_title=question_title,
             question_text=question_text,
+            background_info=background_info,
             resolution_criteria=resolution_criteria,
             fine_print=fine_print,
+            unit_of_measure=unit_of_measure,
             open_upper_bound=open_upper_bound,
             open_lower_bound=open_lower_bound,
             upper_bound=upper_bound,
             lower_bound=lower_bound,
             zero_point=zero_point,
-            unit=unit,
+            nominal_upper_bound=nominal_upper_bound,
+            nominal_lower_bound=nominal_lower_bound,
             open_time=open_time,
             scheduled_resolve_time=scheduled_resolve_time,
         )

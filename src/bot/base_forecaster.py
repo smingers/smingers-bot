@@ -361,10 +361,13 @@ class BaseForecaster(ForecasterMixin, ABC):
 
         Default implementation uses common fields. Override for custom formatting.
         """
+        # Use background_info if available, fall back to question_text
+        background = question_params.get("background_info", "") or question_params.get("question_text", "")
+
         historical = prompt_historical.format(
             title=question_params.get("question_title", ""),
             today=question_params.get("today", ""),
-            background=question_params.get("question_text", ""),
+            background=background,
             resolution_criteria=question_params.get("resolution_criteria", ""),
             fine_print=question_params.get("fine_print", ""),
             open_time=question_params.get("open_time", ""),
@@ -373,7 +376,7 @@ class BaseForecaster(ForecasterMixin, ABC):
         current = prompt_current.format(
             title=question_params.get("question_title", ""),
             today=question_params.get("today", ""),
-            background=question_params.get("question_text", ""),
+            background=background,
             resolution_criteria=question_params.get("resolution_criteria", ""),
             fine_print=question_params.get("fine_print", ""),
             open_time=question_params.get("open_time", ""),
