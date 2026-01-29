@@ -308,6 +308,8 @@ class NumericForecaster(BaseForecaster):
         lower_bound: float,
         zero_point: Optional[float] = None,
         unit: str = "(unknown)",
+        open_time: str = "",
+        scheduled_resolve_time: str = "",
         write: callable = print,
     ) -> NumericForecastResult:
         """
@@ -324,6 +326,8 @@ class NumericForecaster(BaseForecaster):
             lower_bound: Minimum possible value
             zero_point: Reference point for non-linear scaling
             unit: Unit of measurement
+            open_time: When the question opened for forecasting
+            scheduled_resolve_time: When the question resolves
             write: Logging function
 
         Returns:
@@ -341,6 +345,8 @@ class NumericForecaster(BaseForecaster):
             lower_bound=lower_bound,
             zero_point=zero_point,
             unit=unit,
+            open_time=open_time,
+            scheduled_resolve_time=scheduled_resolve_time,
         )
 
 

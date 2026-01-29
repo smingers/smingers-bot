@@ -206,6 +206,8 @@ class BinaryForecaster(BaseForecaster):
         question_text: str,
         resolution_criteria: str,
         fine_print: str = "",
+        open_time: str = "",
+        scheduled_resolve_time: str = "",
         write: callable = print,
     ) -> BinaryForecastResult:
         """
@@ -216,6 +218,8 @@ class BinaryForecaster(BaseForecaster):
             question_text: Full question description/background
             resolution_criteria: How the question resolves
             fine_print: Additional resolution details
+            open_time: When the question opened for forecasting
+            scheduled_resolve_time: When the question resolves
             write: Logging function (default: print)
 
         Returns:
@@ -227,6 +231,8 @@ class BinaryForecaster(BaseForecaster):
             question_text=question_text,
             resolution_criteria=resolution_criteria,
             fine_print=fine_print,
+            open_time=open_time,
+            scheduled_resolve_time=scheduled_resolve_time,
         )
 
 

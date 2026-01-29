@@ -269,6 +269,8 @@ class MultipleChoiceForecaster(BaseForecaster):
         resolution_criteria: str,
         fine_print: str,
         options: List[str],
+        open_time: str = "",
+        scheduled_resolve_time: str = "",
         write: callable = print,
     ) -> MultipleChoiceForecastResult:
         """
@@ -280,6 +282,8 @@ class MultipleChoiceForecaster(BaseForecaster):
             resolution_criteria: How the question resolves
             fine_print: Additional resolution details
             options: List of option labels
+            open_time: When the question opened for forecasting
+            scheduled_resolve_time: When the question resolves
             write: Logging function
 
         Returns:
@@ -292,6 +296,8 @@ class MultipleChoiceForecaster(BaseForecaster):
             resolution_criteria=resolution_criteria,
             fine_print=fine_print,
             options=options,
+            open_time=open_time,
+            scheduled_resolve_time=scheduled_resolve_time,
         )
 
 
