@@ -35,6 +35,7 @@ class ForecastRecord:
     prediction_data: str = (
         ""  # JSON: full prediction (percentiles for numeric, probabilities for MC)
     )
+    source: str = "metaculus"  # Question source identifier
 
 
 @dataclass
@@ -99,7 +100,8 @@ class ForecastDatabase:
                     config_hash TEXT,
                     tournament_id INTEGER,
                     created_at TEXT NOT NULL,
-                    mode TEXT
+                    mode TEXT,
+                    source TEXT DEFAULT 'metaculus'
                 );
 
                 -- Agent predictions within each forecast
@@ -147,6 +149,9 @@ class ForecastDatabase:
             if "prediction_data" not in forecast_columns:
                 await db.execute("ALTER TABLE forecasts ADD COLUMN prediction_data TEXT")
 
+            if "source" not in forecast_columns:
+                await db.execute("ALTER TABLE forecasts ADD COLUMN source TEXT DEFAULT 'metaculus'")
+
             # Check agent_predictions table columns
             cursor = await db.execute("PRAGMA table_info(agent_predictions)")
             agent_columns = {row[1] for row in await cursor.fetchall()}
@@ -168,8 +173,8 @@ class ForecastDatabase:
                 INSERT OR REPLACE INTO forecasts
                 (id, question_id, timestamp, question_type, question_title,
                  base_rate, final_prediction, actual_outcome, brier_score,
-                 total_cost, config_hash, tournament_id, created_at, mode, prediction_data)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                 total_cost, config_hash, tournament_id, created_at, mode, prediction_data, source)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """,
                 (
                     record.id,
@@ -187,6 +192,7 @@ class ForecastDatabase:
                     datetime.now(UTC).isoformat(),
                     record.mode,
                     record.prediction_data,
+                    record.source,
                 ),
             )
             await db.commit()

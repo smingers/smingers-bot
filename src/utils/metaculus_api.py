@@ -5,10 +5,14 @@ Handles all interactions with the Metaculus API:
 - Fetching questions from tournaments
 - Submitting predictions
 - Getting question details
+
+Note: The generic source abstraction is in src/sources/. This module is maintained
+for backward compatibility. New code should use src.sources.MetaculusSource.
 """
 
 import logging
 import os
+import re
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from typing import Any, Literal
@@ -269,6 +273,102 @@ class MetaculusQuestion:
                 pass
         return None
 
+    def to_generic_question(self) -> "Question":
+        """
+        Convert to generic Question type.
+
+        This enables interoperability with the source abstraction layer.
+        """
+        from ..sources.base import Question
+
+        # Extract options as strings if present
+        options = None
+        if self.options:
+            options = [
+                opt.get("label", f"Option {i+1}") if isinstance(opt, dict) else str(opt)
+                for i, opt in enumerate(self.options)
+            ]
+
+        return Question(
+            id=str(self.id),
+            source="metaculus",
+            title=self.title,
+            description=self.description,
+            resolution_criteria=self.resolution_criteria,
+            fine_print=self.fine_print,
+            background_info=self.background_info,
+            question_type=self.question_type,
+            created_at=self.created_at,
+            open_time=self.open_time,
+            scheduled_close_time=self.scheduled_close_time,
+            scheduled_resolve_time=self.scheduled_resolve_time,
+            status=self.status,
+            options=options,
+            unit_of_measure=self.unit_of_measure,
+            lower_bound=self.lower_bound,
+            upper_bound=self.upper_bound,
+            open_lower_bound=self.open_lower_bound or False,
+            open_upper_bound=self.open_upper_bound or False,
+            zero_point=self.zero_point,
+            nominal_lower_bound=self.nominal_lower_bound,
+            nominal_upper_bound=self.nominal_upper_bound,
+            community_prediction=self.community_prediction,
+            num_forecasters=self.num_forecasters,
+            raw={
+                "post_id": self.id,
+                "question_id": self.question_id,
+                "full_response": self.raw,
+            },
+            collection_id=self._extract_tournament_id(),
+        )
+
+    def _extract_tournament_id(self) -> str | None:
+        """Extract tournament ID from raw data."""
+        if not self.raw:
+            return None
+        default_project = self.raw.get("projects", {}).get("default_project", {})
+        project_id = default_project.get("id")
+        return str(project_id) if project_id else None
+
+    @classmethod
+    def from_generic_question(cls, question: "Question") -> "MetaculusQuestion":
+        """
+        Convert from generic Question type.
+
+        This enables interoperability with the source abstraction layer.
+        """
+        raw = question.raw.get("full_response", question.raw) if question.raw else {}
+        question_data = raw.get("question", raw) if raw else {}
+
+        return cls(
+            id=int(question.id),
+            question_id=int(question.raw.get("question_id", question.id)) if question.raw else int(question.id),
+            title=question.title,
+            description=question.description,
+            resolution_criteria=question.resolution_criteria,
+            fine_print=question.fine_print,
+            background_info=question.background_info,
+            question_type=question.question_type,
+            created_at=question.created_at or "",
+            open_time=question.open_time,
+            scheduled_close_time=question.scheduled_close_time,
+            scheduled_resolve_time=question.scheduled_resolve_time,
+            status=question.status,
+            possibilities=question_data.get("possibilities"),
+            options=question_data.get("options"),
+            unit_of_measure=question.unit_of_measure,
+            upper_bound=question.upper_bound,
+            lower_bound=question.lower_bound,
+            open_upper_bound=question.open_upper_bound,
+            open_lower_bound=question.open_lower_bound,
+            zero_point=question.zero_point,
+            nominal_upper_bound=question.nominal_upper_bound,
+            nominal_lower_bound=question.nominal_lower_bound,
+            community_prediction=question.community_prediction,
+            num_forecasters=question.num_forecasters,
+            raw=raw,
+        )
+
 
 @dataclass
 class MyForecast:
@@ -342,8 +442,6 @@ class MetaculusClient:
         """Get a question from its URL."""
         # Extract question ID from URL
         # URLs look like: https://www.metaculus.com/questions/12345/...
-        import re
-
         match = re.search(r"/questions/(\d+)", url)
         if not match:
             raise ValueError(f"Could not extract question ID from URL: {url}")

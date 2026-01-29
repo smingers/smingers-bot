@@ -1,0 +1,159 @@
+{
+  "centralized_research": {
+    "historical": {
+      "forecaster_id": "-1",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "US military interventions Middle East history",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "US Iran tensions 2026 escalation",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Analyze geopolitical factors that could trigger US military action against Iran, including historical precedents of preemptive strikes, current diplomatic relations, economic sanctions, and potential strategic motivations for military intervention.",
+          "tool": "Agent",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Agent",
+        "Google News"
+      ]
+    },
+    "current": {
+      "forecaster_id": "0",
+      "searched": true,
+      "num_queries": 2,
+      "queries": [
+        {
+          "query": "US Iran military strike potential 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Trump Iran intervention plans 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Google News"
+      ]
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-3.5-haiku",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4018,
+        "token_output": 716,
+        "cost": 0.006078399999999999,
+        "duration_seconds": 17.07569694519043
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4513,
+        "token_output": 705,
+        "cost": 0.006430399999999999,
+        "duration_seconds": 17.307934045791626
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-3.5-haiku",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4018,
+        "token_output": 712,
+        "cost": 0.0060624,
+        "duration_seconds": 17.075883865356445
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4493,
+        "token_output": 661,
+        "cost": 0.0062384,
+        "duration_seconds": 17.307913064956665
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/anthropic/claude-3.5-haiku",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4018,
+        "token_output": 758,
+        "cost": 0.0062464,
+        "duration_seconds": 17.075929641723633
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4508,
+        "token_output": 706,
+        "cost": 0.0064304,
+        "duration_seconds": 17.30790114402771
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/anthropic/claude-3.5-haiku",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4018,
+        "token_output": 697,
+        "cost": 0.0060024,
+        "duration_seconds": 17.07598376274109
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4555,
+        "token_output": 656,
+        "cost": 0.006268,
+        "duration_seconds": 17.30788564682007
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/anthropic/claude-3.5-haiku",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4018,
+        "token_output": 825,
+        "cost": 0.0065144,
+        "duration_seconds": 17.07603883743286
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4622,
+        "token_output": 658,
+        "cost": 0.0063296,
+        "duration_seconds": 17.307865142822266
+      }
+    }
+  }
+}

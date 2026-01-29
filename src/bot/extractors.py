@@ -129,8 +129,10 @@ def extract_binary_probability_percent(text: str) -> float:
         text: LLM response text
 
     Returns:
-        Probability as percentage in range [1, 99] (not 0-1 probability).
+        Probability as percentage in range [0, 100] (not 0-1 probability).
         Caller should divide by 100 to get actual probability.
+        Platform-specific bounds (e.g., Metaculus [1, 99]) are applied
+        during submission, not extraction.
 
     Raises:
         ValueError: If no probability found
@@ -139,13 +141,13 @@ def extract_binary_probability_percent(text: str) -> float:
     matches = re.findall(r"Probability:\s*([0-9]+(?:\.[0-9]+)?)%", text.strip())
     if matches:
         number = float(matches[-1])
-        return min(99, max(1, number))
+        return min(100, max(0, number))
 
     # Fallback: look for any percentage near the end
     matches = re.findall(r"([0-9]+(?:\.[0-9]+)?)\s*%", text[-500:])
     if matches:
         number = float(matches[-1])
-        return min(99, max(1, number))
+        return min(100, max(0, number))
 
     snippet = text[-200:] if len(text) > 200 else text
     raise ExtractionError(
@@ -199,20 +201,24 @@ def normalize_probabilities(probs: list[float]) -> list[float]:
     """
     Normalize probabilities to sum to 1.0.
 
-    Clamps each probability to [1, 99] before normalizing. This is a Metaculus
-    platform constraint - they don't accept 0% or 100% for any option.
-
     Args:
         probs: List of raw probability values (as percentages)
 
     Returns:
-        List of normalized probabilities summing to 1.0
+        List of normalized probabilities summing to 1.0.
+        Platform-specific bounds (e.g., Metaculus [1, 99]) are applied
+        during submission, not normalization.
     """
-    # Clamp to [1, 99] (Metaculus constraint: no 0% or 100%)
-    probs = [max(min(p, 99), 1) for p in probs]
+    # Clamp to [0, 100] (valid percentage range)
+    probs = [max(min(p, 100), 0) for p in probs]
 
     # Normalize
     total = sum(probs)
+    if total == 0:
+        # Avoid division by zero - return uniform distribution
+        n = len(probs)
+        return [1.0 / n] * n
+
     normed = [p / total for p in probs]
 
     # Fix rounding error

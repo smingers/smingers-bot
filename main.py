@@ -39,6 +39,7 @@ from src.bot import ExtractionError, SubmissionError
 from src.bot.forecaster import Forecaster
 from src.config import ResolvedConfig
 from src.runner import format_prediction, run_forecasts
+from src.sources import get_source, list_sources
 from src.utils.metaculus_api import MetaculusClient
 
 
@@ -78,13 +79,17 @@ async def forecast_question(
     question_url: str = None,
     config_path: str = "config.yaml",
     mode: str = None,
+    source_name: str = "metaculus",
 ):
     """Forecast a single question."""
     resolved = ResolvedConfig.from_yaml(config_path, mode=mode)
     config = resolved.to_dict()
 
+    # Get the source (defaults to Metaculus)
+    source = get_source(source_name) if source_name else None
+
     try:
-        async with Forecaster(resolved) as forecaster:
+        async with Forecaster(resolved, source=source) as forecaster:
             result = await forecaster.forecast_question(
                 question_id=question_id,
                 question_url=question_url,
@@ -175,11 +180,15 @@ async def forecast_unforecasted_questions(
     config_path: str = "config.yaml",
     mode: str = None,
     limit: int = 10,
+    source_name: str = "metaculus",
 ):
     """Forecast questions in a tournament that I haven't forecasted yet."""
     resolved = ResolvedConfig.from_yaml(config_path, mode=mode)
     # Modify raw config for tournament_id before converting to dict
     resolved.source["submission"]["tournament_id"] = tournament_id
+
+    # Get the source (defaults to Metaculus)
+    source = get_source(source_name) if source_name else None
 
     async with MetaculusClient() as client:
         # Get all open questions
@@ -211,7 +220,7 @@ async def forecast_unforecasted_questions(
         error_type = "EXTRACTION FAILED" if isinstance(error, ExtractionError) else "FAILED"
         print(f"  ✗ {error_type}: {error}")
 
-    async with Forecaster(resolved) as forecaster:
+    async with Forecaster(resolved, source=source) as forecaster:
         result = await run_forecasts(
             questions=questions_to_process,
             forecaster=forecaster,
@@ -265,6 +274,13 @@ def main():
         default=10,
         help="Maximum questions to forecast with --forecast-unforecasted",
     )
+    parser.add_argument(
+        "--source", "-s",
+        type=str,
+        default="metaculus",
+        choices=list_sources(),
+        help="Question source (default: metaculus)"
+    )
 
     args = parser.parse_args()
 
@@ -291,6 +307,7 @@ def main():
                 config_path=args.config,
                 mode=args.mode,
                 limit=args.limit,
+                source_name=args.source,
             )
         )
 
@@ -301,6 +318,7 @@ def main():
                 question_url=args.url,
                 config_path=args.config,
                 mode=args.mode,
+                source_name=args.source,
             )
         )
 

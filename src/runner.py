@@ -20,13 +20,17 @@ from collections.abc import Callable
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from pathlib import Path
-from typing import Any
+from typing import Any, Union
 
 from .bot import ExtractionError, SubmissionError
 from .bot.forecaster import Forecaster
+from .sources.base import Question
 from .utils.metaculus_api import MetaculusQuestion
 
 logger = logging.getLogger(__name__)
+
+# Type alias for questions - supports both legacy MetaculusQuestion and new Question
+QuestionLike = Union[MetaculusQuestion, Question]
 
 FAILURE_LOG_PATH = Path("data/failed_forecasts.log")
 
@@ -35,7 +39,7 @@ FAILURE_LOG_PATH = Path("data/failed_forecasts.log")
 class ForecastFailure:
     """Details about a failed forecast."""
 
-    question_id: int
+    question_id: str  # String to support different ID formats
     question_title: str
     error_type: str
     error_message: str
@@ -63,13 +67,13 @@ class RunResult:
         self.success_count += 1
         self.successful_results.append(result)
 
-    def add_failure(self, question_id: int, question_title: str, error: Exception) -> None:
+    def add_failure(self, question_id: Union[int, str], question_title: str, error: Exception) -> None:
         """Record a failed forecast."""
         is_extraction = isinstance(error, ExtractionError)
         is_submission = isinstance(error, SubmissionError)
         self.failures.append(
             ForecastFailure(
-                question_id=question_id,
+                question_id=str(question_id),  # Normalize to string
                 question_title=question_title[:60],
                 error_type=type(error).__name__,
                 error_message=str(error)[:200],
@@ -216,14 +220,14 @@ class RunResult:
         print("=" * 70)
 
 
-# Type alias for progress callback
-ProgressCallback = Callable[[int, int, MetaculusQuestion], None]
-SuccessCallback = Callable[[MetaculusQuestion, dict[str, Any]], None]
-ErrorCallback = Callable[[MetaculusQuestion, Exception], None]
+# Type alias for progress callback - supports both question types
+ProgressCallback = Callable[[int, int, QuestionLike], None]
+SuccessCallback = Callable[[QuestionLike, dict[str, Any]], None]
+ErrorCallback = Callable[[QuestionLike, Exception], None]
 
 
 async def run_forecasts(
-    questions: list[MetaculusQuestion],
+    questions: list[QuestionLike],
     forecaster: Forecaster,
     on_progress: ProgressCallback | None = None,
     on_success: SuccessCallback | None = None,
