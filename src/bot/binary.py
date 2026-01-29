@@ -78,6 +78,8 @@ class BinaryForecaster(BaseForecaster):
             today=question_params.get("today", ""),
             resolution_criteria=question_params.get("resolution_criteria", ""),
             fine_print=question_params.get("fine_print", ""),
+            open_time=question_params.get("open_time", ""),
+            scheduled_resolve_time=question_params.get("scheduled_resolve_time", ""),
             context=historical_context,
         )
 
@@ -93,6 +95,8 @@ class BinaryForecaster(BaseForecaster):
             today=question_params.get("today", ""),
             resolution_criteria=question_params.get("resolution_criteria", ""),
             fine_print=question_params.get("fine_print", ""),
+            open_time=question_params.get("open_time", ""),
+            scheduled_resolve_time=question_params.get("scheduled_resolve_time", ""),
             context=context,
         )
 

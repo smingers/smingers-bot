@@ -60,7 +60,11 @@ This question's outcome will be determined by the specific criteria below. These
 Additional fine-print:
 {fine_print}
 
-IMPORTANT: Today's date is {today}. All dates before this date are in the PAST. All dates after this date are in the FUTURE. Use this date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
+Question metadata:
+- Opened for forecasting: {open_time}
+- Resolves: {scheduled_resolve_time}
+
+IMPORTANT: Today's date is {today}. All dates before today's date are in the PAST. All dates after today's date are in the FUTURE. Use today's date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
 Your task is to analyze the forecasting question and write a series of search queries that will be used by your assistant to find relevant historical context. For each query, indicate whether you wish to utilize google, google news or the agent to retrieve information.
 
@@ -98,7 +102,11 @@ This question's outcome will be determined by the specific criteria below. These
 Additional fine-print:
 {fine_print}
 
-IMPORTANT: Today's date is {today}. All dates before this date are in the PAST. All dates after this date are in the FUTURE. Use this date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
+Question metadata:
+- Opened for forecasting: {open_time}
+- Resolves: {scheduled_resolve_time}
+
+IMPORTANT: Today's date is {today}. All dates before today's date are in the PAST. All dates after today's date are in the FUTURE. Use today's date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
 For google/google news:
 Your query for google and google news are processed by classical search engines, so please phrase the queries in a way optimal for keyword optimized search (i.e., the phrase you search is likely to appear on desired web pages). Avoid writing overly specific queries. Limit to six words.
@@ -136,7 +144,11 @@ This question's outcome will be determined by the specific criteria below. These
 Additional fine-print:
 {fine_print}
 
-IMPORTANT: Today's date is {today}. All dates before this date are in the PAST. All dates after this date are in the FUTURE. Use this date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
+Question metadata:
+- Opened for forecasting: {open_time}
+- Resolves: {scheduled_resolve_time}
+
+IMPORTANT: Today's date is {today}. All dates before today's date are in the PAST. All dates after today's date are in the FUTURE. Use today's date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
 Historical context:
 {context}
@@ -182,7 +194,11 @@ This question's outcome will be determined by the specific criteria below. These
 Additional fine-print:
 {fine_print}
 
-IMPORTANT: Today's date is {today}. All dates before this date are in the PAST. All dates after this date are in the FUTURE. Use this date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
+Question metadata:
+- Opened for forecasting: {open_time}
+- Resolves: {scheduled_resolve_time}
+
+IMPORTANT: Today's date is {today}. All dates before today's date are in the PAST. All dates after today's date are in the FUTURE. Use today's date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
 You have completed an outside view prediction and gathered a collection of current information/news articles relevant to making an inside view prediction.
 
@@ -284,7 +300,11 @@ This question's outcome will be determined by the specific criteria below. These
 Additional fine-print:
 {fine_print}
 
-IMPORTANT: Today's date is {today}. All dates before this date are in the PAST. All dates after this date are in the FUTURE. Use this date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
+Question metadata:
+- Opened for forecasting: {open_time}
+- Resolves: {scheduled_resolve_time}
+
+IMPORTANT: Today's date is {today}. All dates before today's date are in the PAST. All dates after today's date are in the FUTURE. Use today's date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
 For google/google news:
 Your query for google and google news are processed by classical search engines, so please phrase the queries in a way optimal for keyword optimized search (i.e., the phrase you search is likely to appear on desired web pages). Avoid writing overly specific queries. Limit to six words.
@@ -322,7 +342,11 @@ This question's outcome will be determined by the specific criteria below. These
 Additional fine-print:
 {fine_print}
 
-IMPORTANT: Today's date is {today}. All dates before this date are in the PAST. All dates after this date are in the FUTURE. Use this date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
+Question metadata:
+- Opened for forecasting: {open_time}
+- Resolves: {scheduled_resolve_time}
+
+IMPORTANT: Today's date is {today}. All dates before today's date are in the PAST. All dates after today's date are in the FUTURE. Use today's date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
 Your task is to analyze the forecasting question and write a series of search queries that will be used by your assistant to find current information/news articles relevant to the question. For each query, indicate whether you wish to utlize google, google news or your assistant directly to retrieve information.
 Your query for google and google news are processed by classical search engines, so please phrase the queries in a way optimal for keyword optimized search. Avoid writing overly specific queries. Limit to six words.
@@ -361,7 +385,11 @@ This question's outcome will be determined by the specific criteria below. These
 Additional fine-print:
 {fine_print}
 
-IMPORTANT: Today's date is {today}. All dates before this date are in the PAST. All dates after this date are in the FUTURE. Use this date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
+Question metadata:
+- Opened for forecasting: {open_time}
+- Resolves: {scheduled_resolve_time}
+
+IMPORTANT: Today's date is {today}. All dates before today's date are in the PAST. All dates after today's date are in the FUTURE. Use today's date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
 Historical context:
 {context}
@@ -411,7 +439,11 @@ This question's outcome will be determined by the specific criteria below. These
 Additional fine-print:
 {fine_print}
 
-IMPORTANT: Today's date is {today}. All dates before this date are in the PAST. All dates after this date are in the FUTURE. Use this date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
+Question metadata:
+- Opened for forecasting: {open_time}
+- Resolves: {scheduled_resolve_time}
+
+IMPORTANT: Today's date is {today}. All dates before today's date are in the PAST. All dates after today's date are in the FUTURE. Use today's date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
 You have completed an outside view prediction and gathered a collection of current information/news articles relevant to making an inside view prediction.
 
@@ -512,7 +544,11 @@ Additional fine-print:
 
 Units for answer: {units}
 
-IMPORTANT: Today's date is {today}. All dates before this date are in the PAST. All dates after this date are in the FUTURE. Use this date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
+Question metadata:
+- Opened for forecasting: {open_time}
+- Resolves: {scheduled_resolve_time}
+
+IMPORTANT: Today's date is {today}. All dates before today's date are in the PAST. All dates after today's date are in the FUTURE. Use today's date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
 {lower_bound_message}
 {upper_bound_message}
@@ -554,7 +590,11 @@ This question's outcome will be determined by the specific criteria below. These
 Additional fine-print:
 {fine_print}
 
-IMPORTANT: Today's date is {today}. All dates before this date are in the PAST. All dates after this date are in the FUTURE. Use this date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
+Question metadata:
+- Opened for forecasting: {open_time}
+- Resolves: {scheduled_resolve_time}
+
+IMPORTANT: Today's date is {today}. All dates before today's date are in the PAST. All dates after today's date are in the FUTURE. Use today's date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
 {lower_bound_message}
 {upper_bound_message}
@@ -598,7 +638,11 @@ Additional fine-print:
 
 Units for answer: {units}
 
-IMPORTANT: Today's date is {today}. All dates before this date are in the PAST. All dates after this date are in the FUTURE. Use this date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
+Question metadata:
+- Opened for forecasting: {open_time}
+- Resolves: {scheduled_resolve_time}
+
+IMPORTANT: Today's date is {today}. All dates before today's date are in the PAST. All dates after today's date are in the FUTURE. Use today's date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
 {lower_bound_message}
 {upper_bound_message}
@@ -664,7 +708,11 @@ Your interview question is:
 
 Units for answer: {units}
 
-IMPORTANT: Today's date is {today}. All dates before this date are in the PAST. All dates after this date are in the FUTURE. Use this date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
+Question metadata:
+- Opened for forecasting: {open_time}
+- Resolves: {scheduled_resolve_time}
+
+IMPORTANT: Today's date is {today}. All dates before today's date are in the PAST. All dates after today's date are in the FUTURE. Use today's date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
 {lower_bound_message}
 {upper_bound_message}

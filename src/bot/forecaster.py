@@ -251,6 +251,8 @@ class Forecaster:
             question_text=question.description,
             resolution_criteria=question.resolution_criteria or "",
             fine_print=question.raw.get("fine_print", ""),
+            open_time=question.open_time or "",
+            scheduled_resolve_time=question.scheduled_resolve_time or "",
             write=lambda msg: logger.info(msg),
         )
 
@@ -291,6 +293,8 @@ class Forecaster:
             open_lower_bound=open_lower_bound,
             open_upper_bound=open_upper_bound,
             zero_point=zero_point,
+            open_time=question.open_time or "",
+            scheduled_resolve_time=question.scheduled_resolve_time or "",
             write=lambda msg: logger.info(msg),
         )
 
@@ -346,6 +350,8 @@ class Forecaster:
             resolution_criteria=question.resolution_criteria or "",
             fine_print=question.raw.get("fine_print", ""),
             options=options,
+            open_time=question.open_time or "",
+            scheduled_resolve_time=question.scheduled_resolve_time or "",
             write=lambda msg: logger.info(msg),
         )
 

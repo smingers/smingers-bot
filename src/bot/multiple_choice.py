@@ -88,6 +88,8 @@ class MultipleChoiceForecaster(BaseForecaster):
             background=question_params.get("question_text", ""),
             resolution_criteria=question_params.get("resolution_criteria", ""),
             fine_print=question_params.get("fine_print", ""),
+            open_time=question_params.get("open_time", ""),
+            scheduled_resolve_time=question_params.get("scheduled_resolve_time", ""),
             options=options_str,
         )
         current = prompt_current.format(
@@ -96,6 +98,8 @@ class MultipleChoiceForecaster(BaseForecaster):
             background=question_params.get("question_text", ""),
             resolution_criteria=question_params.get("resolution_criteria", ""),
             fine_print=question_params.get("fine_print", ""),
+            open_time=question_params.get("open_time", ""),
+            scheduled_resolve_time=question_params.get("scheduled_resolve_time", ""),
             options=options_str,
         )
         return historical, current
@@ -113,6 +117,8 @@ class MultipleChoiceForecaster(BaseForecaster):
             today=question_params.get("today", ""),
             resolution_criteria=question_params.get("resolution_criteria", ""),
             fine_print=question_params.get("fine_print", ""),
+            open_time=question_params.get("open_time", ""),
+            scheduled_resolve_time=question_params.get("scheduled_resolve_time", ""),
             context=historical_context,
             options=str(options),
         )
@@ -130,6 +136,8 @@ class MultipleChoiceForecaster(BaseForecaster):
             today=question_params.get("today", ""),
             resolution_criteria=question_params.get("resolution_criteria", ""),
             fine_print=question_params.get("fine_print", ""),
+            open_time=question_params.get("open_time", ""),
+            scheduled_resolve_time=question_params.get("scheduled_resolve_time", ""),
             context=context,
             options=str(options),
         )

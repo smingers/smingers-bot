@@ -367,6 +367,8 @@ class BaseForecaster(ForecasterMixin, ABC):
             background=question_params.get("question_text", ""),
             resolution_criteria=question_params.get("resolution_criteria", ""),
             fine_print=question_params.get("fine_print", ""),
+            open_time=question_params.get("open_time", ""),
+            scheduled_resolve_time=question_params.get("scheduled_resolve_time", ""),
         )
         current = prompt_current.format(
             title=question_params.get("question_title", ""),
@@ -374,6 +376,8 @@ class BaseForecaster(ForecasterMixin, ABC):
             background=question_params.get("question_text", ""),
             resolution_criteria=question_params.get("resolution_criteria", ""),
             fine_print=question_params.get("fine_print", ""),
+            open_time=question_params.get("open_time", ""),
+            scheduled_resolve_time=question_params.get("scheduled_resolve_time", ""),
         )
         return historical, current
 

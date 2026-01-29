@@ -31,6 +31,7 @@ class MetaculusQuestion:
     fine_print: str
     question_type: Literal["binary", "numeric", "multiple_choice", "date"]
     created_at: str
+    open_time: Optional[str]  # When question opened for forecasting
     scheduled_close_time: Optional[str]
     scheduled_resolve_time: Optional[str]
     status: str  # open, closed, resolved, etc.
@@ -92,6 +93,7 @@ class MetaculusQuestion:
             fine_print=data.get("fine_print") or question_data.get("fine_print") or "",
             question_type=question_type,
             created_at=data.get("created_at", ""),
+            open_time=data.get("open_time") or question_data.get("open_time"),
             scheduled_close_time=data.get("scheduled_close_time") or question_data.get("scheduled_close_time"),
             scheduled_resolve_time=data.get("scheduled_resolve_time") or question_data.get("scheduled_resolve_time"),
             status=status,
