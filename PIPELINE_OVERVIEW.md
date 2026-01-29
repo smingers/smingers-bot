@@ -7,11 +7,25 @@ This document describes the end-to-end forecasting pipeline used to generate pro
 ## High-Level Flow
 
 ```
-Question → Historical Research → Step 1 (Outside View) → Current Research → Step 2 (Inside View) → Aggregation → Submit
-              ↓                        ↓                       ↓                      ↓
-         Google/News/Agent        5 Agents              Google/News/AskNews      5 Agents
-         (base rates)             reason                (recent signals)         refine
+Fetch Question → Historical Research → Step 1 (Outside View) → Current Research → Step 2 (Inside View) → Aggregation → Submit → Save
+       ↓                ↓                      ↓                      ↓                      ↓                              ↓
+  Metaculus API    Google/News/Agent      5 Agents            Google/News/AskNews      5 Agents                      Database
+                   (base rates)           reason              (recent signals)         refine
 ```
+
+---
+
+## Phase 0: Question Fetching
+
+**Purpose:** Retrieve question details from Metaculus API.
+
+**Process:** The pipeline fetches the question by ID or URL, extracting:
+- Title, description, resolution criteria, fine print
+- Question type (binary, numeric, multiple choice)
+- Bounds and options (for numeric/MC questions)
+- Community prediction and forecaster count
+
+**Output:** Raw question data saved to `question.json`.
 
 ---
 
@@ -27,7 +41,16 @@ Question → Historical Research → Step 1 (Outside View) → Current Research 
 | Google News | Serper API | Keyword-optimized, ≤6 words |
 | Agent | Agentic search (o3 in production) | Natural language, up to 4 sentences |
 
-**Agentic Search:** An LLM iteratively searches the web, reads pages, and synthesizes a research report. The model reasons about what to search next based on what it has learned. Limited to 7 steps.
+**Agentic Search:** An LLM performs iterative research in a loop:
+1. Initial prompt analyzes the query and generates up to 5 Google/Google News searches
+2. Searches are executed and results scraped
+3. Continuation prompt asks the LLM to synthesize findings and decide if more research is needed
+4. If the LLM includes a "Search queries:" section, the loop continues; otherwise it terminates
+5. Maximum 7 iterations to prevent runaway costs
+
+The agentic search model (o3 in production) generates a comprehensive ~1000-word research report as its final output.
+
+**Article Summarization:** After Google/Google News searches return URLs, the pipeline scrapes each article's content and uses an LLM (Sonnet 4.5 in production) to summarize it into a concise digest. This runs in parallel across all scraped articles.
 
 **Output:** Combined research saved to `research/search_historical.json`. This context feeds into Step 1.
 
@@ -36,6 +59,12 @@ Question → Historical Research → Step 1 (Outside View) → Current Research 
 ## Phase 2: Step 1 — Outside View Prediction
 
 **Purpose:** Each of 5 agents independently analyzes the historical research to form an initial probability estimate based on base rates and reference classes.
+
+**System Prompt:** Each agent receives a "superforecaster" system prompt that positions them as a top-1% forecaster from the Good Judgment Project. The prompt instructs them to:
+- Use Fermi analysis to break down questions
+- Generate an outside view baseline from historical context
+- Consider time remaining, status quo, sub-factors for Yes/No outcomes
+- Write detailed rationale for colleagues to understand
 
 **Input:** The historical research context (from Phase 1) is inserted into a shared prompt template.
 
@@ -63,6 +92,14 @@ Question → Historical Research → Step 1 (Outside View) → Current Research 
 
 **Note:** The "Assistant" tool maps to AskNews, which specializes in recent news aggregation. This differs from Phase 1's "Agent" tool (agentic search).
 
+**AskNews Dual Strategy:** AskNews actually runs two searches per query:
+1. "latest news" strategy — Most recent articles (hot news)
+2. "news knowledge" strategy — Historical news context
+
+Both are combined and sorted by publication date. A 12-second rate limit delay is enforced between calls (AskNews Pro tier limitation).
+
+**Article Summarization:** Same as Phase 1 — scraped articles are summarized in parallel using Sonnet 4.5 (production) or Haiku (dry run).
+
 **Output:** Combined research saved to `research/search_current.json`. This context feeds into Step 2.
 
 ---
@@ -80,8 +117,6 @@ Question → Historical Research → Step 1 (Outside View) → Current Research 
 | #3 | o3-mini-high | Agent #2 (Sonnet 4.5) |
 | #4 | o3 | Agent #3 (o3-mini-high) |
 | #5 | o3 | Agent #5 (itself) |
-
-This creates a cross-model cycle: Sonnet 4.5 → o3-mini-high → o3 → Sonnet 4.5, while agents #1 and #5 remain anchored to their own reasoning.
 
 **Input:** Each agent receives:
 1. The current research context (from Phase 3)
@@ -126,6 +161,21 @@ Final = (P₁ + P₂ + P₃ + P₄ + P₅) / 5
 - `production` — Uses production models, submits to Metaculus
 
 **Output:** API response saved to `submission/api_response.json`.
+
+---
+
+## Phase 7: Storage & Analytics
+
+**Purpose:** Persist forecast data for analysis and debugging.
+
+**Artifacts:** All intermediate outputs are saved to disk (see Artifact Directory Structure below).
+
+**Database:** Key metrics are written to SQLite (`data/forecasts.db`) with three tables:
+- `forecasts` — Question ID, timestamp, type, final prediction, total cost, config hash
+- `agent_predictions` — Per-agent model, weight, prediction, reasoning length
+- `research_sources` — Query, tool used, number of results
+
+**Cost Tracking:** Every LLM call is tracked with input/output tokens and cost. The total cost breakdown is saved to `metadata.json`.
 
 ---
 
@@ -174,8 +224,10 @@ data/{question_id}_{timestamp}/
 │   ├── ... (agents 2-5)
 │   └── aggregation.json       # {final_probability: 0.545}
 ├── submission/
+│   ├── final_prediction.json  # Submitted prediction value
 │   └── api_response.json      # Metaculus API response
-└── metadata.json              # Costs, timing, config
+├── tool_usage.json            # Detailed tracking of all tools/queries used
+└── metadata.json              # Costs, timing, config hash
 ```
 
 ---
@@ -203,3 +255,41 @@ The pipeline supports three question types, each with specialized prompts and ex
 4. **Equal weights:** All 5 agents contribute equally to the final forecast. No agent is privileged.
 
 5. **Fresh instances:** Each Step 2 is a fresh API call with no conversation memory. The only "memory" is the Step 1 output explicitly included in the prompt.
+
+6. **Parallel execution:** Historical and current query generation run in parallel. All 5 agents run Step 1 in parallel, then all 5 run Step 2 in parallel. Article summarization is parallelized across all scraped URLs.
+
+7. **Context-aware summarization:** Article summaries are generated with the specific forecasting question in mind, extracting facts/statistics/expert opinions relevant to that question rather than generic summaries.
+
+---
+
+## Research Output Format
+
+Search results are combined into a single context string with XML-like tags:
+
+```
+<Summary source="https://example.com/article1">
+[LLM-generated summary of article 1, focused on the forecasting question]
+</Summary>
+
+<Summary source="https://example.com/article2">
+[LLM-generated summary of article 2]
+</Summary>
+
+<Agent_report>
+Query: [original agentic search query]
+[~1000 word comprehensive research report synthesized by the agentic search model]
+</Agent_report>
+
+<Asknews_articles>
+Query: [original AskNews query]
+**Article Title 1**
+[Summary from AskNews]
+Publish date: January 28, 2026
+Source: [source_id](url)
+
+**Article Title 2**
+...
+</Asknews_articles>
+```
+
+This combined context is what the ensemble agents receive in their prompts.

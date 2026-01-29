@@ -56,6 +56,18 @@ pytest tests/unit/test_cdf_generation.py
 pytest tests/ -v
 ```
 
+## Viewing Forecasts
+
+```bash
+# Launch the forecast dashboard (browser-based viewer)
+python -m src.dashboard
+
+# Custom port and data directory
+python -m src.dashboard --port 8080 --data-dir ./data
+```
+
+Then open http://localhost:8000 in your browser to browse and inspect forecast artifacts.
+
 ## Useful Commands
 
 ### Check OpenRouter Credits

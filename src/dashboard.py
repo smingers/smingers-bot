@@ -145,7 +145,15 @@ def list_forecast_runs(data_dir: Path) -> list[dict]:
                 # For MC, just indicate it exists
                 prediction = "distribution"
 
-        dry_run = final_pred.get("dry_run", True) if final_pred else True
+        # Check both dry_run flag and submitted flag
+        # submitted=true means it was actually submitted (not a dry run)
+        if final_pred:
+            if final_pred.get("submitted", False):
+                dry_run = False
+            else:
+                dry_run = final_pred.get("dry_run", True)
+        else:
+            dry_run = True
 
         runs.append({
             "folder": entry.name,

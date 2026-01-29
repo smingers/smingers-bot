@@ -87,9 +87,9 @@ class MetaculusQuestion:
             id=post_id,
             question_id=question_id,
             title=data.get("title", ""),
-            description=data.get("description") or "",  # Handle None
-            resolution_criteria=data.get("resolution_criteria") or "",
-            fine_print=data.get("fine_print") or "",
+            description=data.get("description") or question_data.get("description") or "",  # Handle None, check nested
+            resolution_criteria=data.get("resolution_criteria") or question_data.get("resolution_criteria") or "",
+            fine_print=data.get("fine_print") or question_data.get("fine_print") or "",
             question_type=question_type,
             created_at=data.get("created_at", ""),
             scheduled_close_time=data.get("scheduled_close_time") or question_data.get("scheduled_close_time"),
