@@ -59,9 +59,6 @@ MODEL_COSTS = {
     "openrouter/openai/o3": {"input": 2.0, "output": 8.0},
     "openrouter/openai/o3-mini": {"input": 1.10, "output": 4.40},
     "openrouter/openai/o3-mini-high": {"input": 1.10, "output": 4.40},
-    # Perplexity
-    "perplexity/sonar-reasoning-pro": {"input": 2.0, "output": 8.0},
-    "perplexity/sonar-pro": {"input": 1.0, "output": 4.0},
 }
 
 

@@ -56,6 +56,45 @@ pytest tests/unit/test_cdf_generation.py
 pytest tests/ -v
 ```
 
+## Useful Commands
+
+### Check OpenRouter Credits
+
+```bash
+# Check remaining credits (limit_remaining is the key field)
+poetry run python -c "
+import httpx, os
+from dotenv import load_dotenv
+load_dotenv(override=True)
+resp = httpx.get('https://openrouter.ai/api/v1/auth/key',
+    headers={'Authorization': f'Bearer {os.getenv(\"OPENROUTER_API_KEY\")}'})
+data = resp.json().get('data', {})
+print(f'Remaining: \${data.get(\"limit_remaining\", 0):.2f} / \${data.get(\"limit\", 0):.2f}')
+print(f'Used: \${data.get(\"limit\", 0) - data.get(\"limit_remaining\", 0):.2f}')
+"
+```
+
+### Check My Forecasts on Metaculus
+
+```bash
+# List questions I've forecasted in a tournament
+poetry run python -c "
+import asyncio
+from dotenv import load_dotenv
+load_dotenv(override=True)
+from src.utils.metaculus_api import MetaculusClient
+
+async def check():
+    async with MetaculusClient() as client:
+        forecasts = await client.get_my_forecasts(32916)  # Change tournament ID
+        print(f'Forecasted {len(forecasts)} questions: {list(forecasts.keys())}')
+asyncio.run(check())
+"
+
+# List all open questions in a tournament
+poetry run python main.py --tournament 32916 --list
+```
+
 ## Configuration
 
 All tunable parameters are in `config.yaml`.

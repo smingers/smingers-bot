@@ -1,0 +1,166 @@
+{
+  "centralized_research": {
+    "historical": {
+      "forecaster_id": "-1",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Brazil Selic rate history 2025",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Copom March 2026 Selic expectations",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide recent Copom decisions, Selic path since 2023, inflation outlook, consensus forecast for March 2026 rate",
+          "tool": "Agent",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "Agent"
+      ]
+    },
+    "current": {
+      "forecaster_id": "0",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "March 2026 Selic rate forecast",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Copom March 2026 rate projection",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Please gather the latest analyst and news reports on market expectations for Brazil\u2019s Selic rate at the March 2026 Copom meeting.",
+          "tool": "Assistant",
+          "success": true,
+          "num_results": 26
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "Assistant"
+      ]
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6755,
+        "token_output": 2108,
+        "cost": 0.051885,
+        "duration_seconds": 73.44325685501099
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 20729,
+        "token_output": 3138,
+        "cost": 0.109257,
+        "duration_seconds": 104.60620403289795
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6755,
+        "token_output": 2768,
+        "cost": 0.061785,
+        "duration_seconds": 73.44335794448853
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 19488,
+        "token_output": 2386,
+        "cost": 0.094254,
+        "duration_seconds": 104.60616612434387
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/o3-mini-high",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5882,
+        "token_output": 1486,
+        "cost": 0.0130086,
+        "duration_seconds": 73.44339871406555
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 19124,
+        "token_output": 2493,
+        "cost": 0.0320056,
+        "duration_seconds": 104.60614132881165
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5882,
+        "token_output": 1631,
+        "cost": 0.024812,
+        "duration_seconds": 73.44345593452454
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17586,
+        "token_output": 2342,
+        "cost": 0.053908,
+        "duration_seconds": 104.6061201095581
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5882,
+        "token_output": 2489,
+        "cost": 0.031675999999999996,
+        "duration_seconds": 73.44350695610046
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17860,
+        "token_output": 2319,
+        "cost": 0.054272,
+        "duration_seconds": 104.60610604286194
+      }
+    }
+  }
+}

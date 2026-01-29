@@ -168,14 +168,14 @@ class SearchPipeline:
             # Parse queries with sources
             # Format: 1. "text" (Source) or 1. text (Source)
             search_queries = re.findall(
-                r'(?:\d+\.\s*)?(["\']?(.*?)["\']?)\s*\((Google|Google News|Assistant|Agent|Perplexity)\)',
+                r'(?:\d+\.\s*)?(["\']?(.*?)["\']?)\s*\((Google|Google News|Assistant|Agent)\)',
                 queries_text
             )
 
             # Fallback to unquoted queries
             if not search_queries:
                 search_queries = re.findall(
-                    r'(?:\d+\.\s*)?([^(\n]+)\s*\((Google|Google News|Assistant|Agent|Perplexity)\)',
+                    r'(?:\d+\.\s*)?([^(\n]+)\s*\((Google|Google News|Assistant|Agent)\)',
                     queries_text
                 )
 
@@ -202,10 +202,6 @@ class SearchPipeline:
                 if not query:
                     continue
 
-                # Map Perplexity to Agent for backward compatibility
-                if source == "Perplexity":
-                    source = "Agent"
-                    logger.info(f"Forecaster {forecaster_id}: Mapping Perplexity → Agent for query='{query}'")
 
                 logger.info(f"Forecaster {forecaster_id}: Query='{query}' Source={source}")
                 query_sources.append((query, source))

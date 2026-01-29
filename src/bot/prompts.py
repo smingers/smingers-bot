@@ -62,16 +62,16 @@ Additional fine-print:
 
 IMPORTANT: Today's date is {today}. All dates before this date are in the PAST. All dates after this date are in the FUTURE. Use this date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
-Your task is to analyze the forecasting question and write a series of search queries that will be used by your assistant to find relevant historical context. For each query, indicate whether you wish to utlize google, google news or perplexity to retrieve information.
+Your task is to analyze the forecasting question and write a series of search queries that will be used by your assistant to find relevant historical context. For each query, indicate whether you wish to utilize google, google news or the agent to retrieve information.
 
 For google/google news:
 Your query for google and google news are processed by classical search engines, so please phrase the queries in a way optimal for keyword optimized search (i.e., the phrase you search is likely to appear on desired web pages). Avoid writing overly specific queries. Limit to six words.
 
-For perplexity:
+For agent:
 Your query will be processed by a reasoning model equipped with capable web crawlers and designed to generate lengthy, detailed responses. As such, you may use a longer query with detailed instructions. It is possible to ask multiple questions.
 Nonetheless, you are advised to keep your query to at most four sentences.
 
-You should format your answer exactly as below, always formatting the source in brackets () **on the same line as and after** the query. Do not wrap your query in quotes. Be sure to include two queries for Google/Google News and one for Perplexity.
+You should format your answer exactly as below, always formatting the source in brackets () **on the same line as and after** the query. Do not wrap your query in quotes. Be sure to include two queries for Google/Google News and one for Agent.
 
 Analysis:
 {{Your initial impression/analysis of the forecasting question followed by reasoning about the most relevant historical context needed to generate an outside view.}}
@@ -79,7 +79,7 @@ Analysis:
 Search queries:
 1. [Query details] (Google)
 2. [Query details] (Google News)
-3. [Query details] (Perplexity)
+3. [Query details] (Agent)
 
 """
 
@@ -141,10 +141,10 @@ IMPORTANT: Today's date is {today}. All dates before this date are in the PAST. 
 Historical context:
 {context}
 
-The information has been sourced from the internet/language models (for perplexity), so it is advisable to exercise healthy skepticism at your discretion.
+The information has been sourced from the internet/language models (for agent reports), so it is advisable to exercise healthy skepticism at your discretion.
 
 Your analysis should have the following components, refering the above historical context:
-(a) Source analysis: Briefly summarize each information source (either web article or Perplexity report), evaluate source quality and data.
+(a) Source analysis: Briefly summarize each information source (either web article or Agent report), evaluate source quality and data.
 **Opinions are commonplace in writing. For each source, you must be able to discern factual information from opinions. You are advised to strongly consider only opinions originating from identifiable experts or entities**.
 (b) Reference class analysis: Identify a few possible reference classes and evaluate respective suitabilities to the forecasting question. If applicable, choose the most suitable one.
 (c) Timeframe analysis: State the prediction timeframe (e.g., how many days/months from now?) and examine historical patterns over similar periods
@@ -289,11 +289,11 @@ IMPORTANT: Today's date is {today}. All dates before this date are in the PAST. 
 For google/google news:
 Your query for google and google news are processed by classical search engines, so please phrase the queries in a way optimal for keyword optimized search (i.e., the phrase you search is likely to appear on desired web pages). Avoid writing overly specific queries. Limit to six words.
 
-For perplexity:
+For agent:
 Your query will be processed by a reasoning model equipped with capable web crawlers and designed to generate lengthy, detailed responses. As such, you may use a longer query with detailed instructions. It is possible to ask multiple questions.
 Nonetheless, you are advised to keep your query to at most four sentences.
 
-You should format your answer exactly as below, always formatting the source in brackets () **on the same line as and after** the query. Do not wrap your query in quotes. Be sure to include two queries for Google/Google News and one for Perplexity.
+You should format your answer exactly as below, always formatting the source in brackets () **on the same line as and after** the query. Do not wrap your query in quotes. Be sure to include two queries for Google/Google News and one for Agent.
 
 Analysis:
 {{Your initial impression/analysis of the forecasting question followed by reasoning about the most relevant historical context needed to generate an outside view.}}
@@ -301,7 +301,7 @@ Analysis:
 Search queries:
 1. [Query details] (Google)
 2. [Query details] (Google News)
-3. [Query details] (Perplexity)
+3. [Query details] (Agent)
 """
 
 MULTIPLE_CHOICE_PROMPT_CURRENT = """
@@ -365,10 +365,10 @@ IMPORTANT: Today's date is {today}. All dates before this date are in the PAST. 
 
 Historical context:
 {context}
-The information has been sourced from the internet/language models (for perplexity), so it is advisable to exercise healthy skepticism at your discretion.
+The information has been sourced from the internet/language models (for agent reports), so it is advisable to exercise healthy skepticism at your discretion.
 
 Your analysis should have the following components, refering the above historical context:
-(a) Source analysis: Briefly summarize each information source (either web article or Perplexity report), evaluate source quality and date.
+(a) Source analysis: Briefly summarize each information source (either web article or Agent report), evaluate source quality and date.
 **Opinions are commonplace in writing. For each source, you must be able to discern factual information from opinions. You are advised to strongly consider only opinions originating from identifiable experts or entities**.
 (b) Reference class analysis: Identify a few possible reference classes and evaluate respective suitabilities to the forecasting question. If applicable, choose the most suitable one.
 (c) Timeframe analysis: State the prediction timeframe (e.g., how many days/months from now?) and examine historical patterns over similar periods
@@ -522,11 +522,11 @@ Note that this is a numeric question, with expected answer format as a discrete 
 For google/google news:
 Your query for google and google news are processed by classical search engines, so please phrase the queries in a way optimal for keyword optimized search (i.e., the phrase you search is likely to appear on desired web pages). Avoid writing overly specific queries. Limit to six words.
 
-For perplexity:
+For agent:
 Your query will be processed by a reasoning model equipped with capable web crawlers and designed to generate lengthy, detailed responses. As such, you may use a longer query with detailed instructions. It is possible to ask multiple questions.
 Nonetheless, you are advised to keep your query to at most three sentences.
 
-You should format your answer exactly as below, always formatting the source in brackets () **on the same line as and after** the query. Do not wrap your query in quotes or brackets. Be sure to include two queries for Google/Google News and one for Perplexity.
+You should format your answer exactly as below, always formatting the source in brackets () **on the same line as and after** the query. Do not wrap your query in quotes or brackets. Be sure to include two queries for Google/Google News and one for Agent.
 
 Analysis:
 {{Your initial impression/analysis of the forecasting question followed by reasoning about the most relevant historical context needed to generate an outside view.}}
@@ -534,7 +534,7 @@ Analysis:
 Search queries:
 1. [Query details] (Google)
 2. [Query details] (Google News)
-3. [Query details] (Perplexity)
+3. [Query details] (Agent)
 """
 
 
@@ -609,11 +609,11 @@ You should consider the following hint regarding the interval the answer is expe
 Outside view analysis + current information/news articles:
 {context}
 
-The information has been sourced from the internet/language models (for perplexity), so it is advisable to exercise healthy skepticism at your discretion.
+The information has been sourced from the internet/language models (for agent reports), so it is advisable to exercise healthy skepticism at your discretion.
 
 
 Your analysis should have the following components, refering the above historical context:
-(a) Source analysis: Briefly summarize each information source (either web article or Perplexity report), evaluate source quality and date.
+(a) Source analysis: Briefly summarize each information source (either web article or Agent report), evaluate source quality and date.
 **Opinions are commonplace in writing. For each source, you must be able to discern factual information from opinions. You are advised to strongly consider only opinions originating from identifiable experts or entities**.
 (b) Reference class analysis: Identify a few possible reference classes and evaluate respective suitabilities to the forecasting question. If applicable, choose the most suitable one.
 (c) Timeframe analysis: State the prediction timeframe (e.g., how many days/months from now?) and examine historical patterns over similar periods

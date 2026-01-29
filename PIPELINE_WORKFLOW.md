@@ -182,11 +182,11 @@ Multiple search sources execute concurrently (based on config):
 - Returns: news articles with titles, URLs, snippets, publish dates
 - Saved to: `data/.../02_research/google_news.json`
 
-**3. Perplexity API** - if enabled (`searcher.py:212-272`)
-- Sends full question to Perplexity reasoning model
-- Model: `sonar-reasoning-pro`
+**3. Agentic Search** - if enabled (`search.py:560-696`)
+- Iterative LLM-based search using reasoning model
+- Generates Google/Google News queries, analyzes results, iterates up to 7 steps
 - Returns: AI-synthesized research with citations
-- Saved to: `data/.../02_research/perplexity.json`
+- Output included in `<Agent_report>` tags in search results
 
 **4. AskNews API** - if enabled (`searcher.py:405-490`)
 - OAuth authentication flow
@@ -222,8 +222,8 @@ Combines all search results into structured markdown:
 2. X recent developments 2026
 3. expert analysis X probability
 
-## AI-Synthesized Research (Perplexity)
-[Perplexity's analysis...]
+## AI-Synthesized Research (Agent)
+[Agent's analysis...]
 
 ## Google News Results
 ### [News Article Title](URL) (2026-01-20)
@@ -241,7 +241,7 @@ Combines all search results into structured markdown:
 - `data/.../02_research/queries_generated.json` - Generated queries
 - `data/.../02_research/web_search.json` - Web search results
 - `data/.../02_research/google_news.json` - News results
-- `data/.../02_research/perplexity.json` - Perplexity synthesis
+- Agent reports included inline in search results
 - `data/.../02_research/asknews.json` - AskNews results
 - `data/.../02_research/synthesis.md` - Combined research markdown
 
@@ -813,7 +813,7 @@ ForecastData(
     question_type="binary",
     timestamp="2026-01-24 14:35:22 UTC",
     research_sources_count=47,
-    research_summary="[Perplexity synthesis or research artifact preview]",
+    research_summary="[Agent synthesis or research artifact preview]",
     base_rate=0.35,
     reference_classes=["Historical events of type X", "Similar situations..."],
     outside_view_reasoning="[Full outside view LLM response]",
@@ -1055,7 +1055,7 @@ INSERT INTO research_sources (
 ) VALUES
     ('41594_20260124_143022', 'web_search', 'X event historical precedents', 10),
     ('41594_20260124_143022', 'google_news', 'X recent developments 2026', 15),
-    ('41594_20260124_143022', 'perplexity', 'Will X happen?', 1),
+    ('41594_20260124_143022', 'agent', 'Will X happen?', 1),
     -- ... 44 more rows
 ```
 
@@ -1129,7 +1129,7 @@ data/41594_20260124_143022/
 │   ├── queries_generated.json          # LLM-generated search queries
 │   ├── web_search.json                 # Google search results via Serper
 │   ├── google_news.json                # Google News results via Serper
-│   ├── perplexity.json                 # Perplexity synthesis
+│   ├── agent_report.json               # Agentic search synthesis (if enabled)
 │   ├── asknews.json                    # AskNews articles (if enabled)
 │   └── synthesis.md                    # Combined research markdown
 ├── 03_outside_view/
@@ -1216,7 +1216,7 @@ research:
       enabled: true
     - type: "article_scraping"     # Free, uses Trafilatura
       enabled: true
-    - type: "perplexity"           # Requires PERPLEXITY_API_KEY
+    - type: "agentic_search"       # Uses configured agentic_search model
       enabled: true
     - type: "asknews"              # Requires ASKNEWS credentials
       enabled: true
@@ -1324,7 +1324,7 @@ ensemble:
   - Web search: 10 seconds
   - News search: 10 seconds
   - Article scraping: 20-40 seconds
-  - Perplexity: 20 seconds
+  - Agentic search: 20-60 seconds
 - Outside view: 20-30 seconds
 - Inside view (5 agents parallel): 60-90 seconds
 - Aggregation: <1 second
@@ -1341,7 +1341,7 @@ ensemble:
 - Inside view agents (5x Sonnet 4): $0.025-0.04
 - Research APIs:
   - Serper (web + news): $0.001 (2,500 free/month)
-  - Perplexity: $0.01 (if enabled)
+  - Agentic search: $0.02-0.10 (depends on iterations)
   - AskNews: Free for tournament participants
   - Article scraping: Free
 
@@ -1378,7 +1378,7 @@ Forecaster.__init__: Initialize components
 │     ├→ Execute searches (parallel)                          │
 │     │   ├→ Web search (Serper)                              │
 │     │   ├→ Google News (Serper)                             │
-│     │   ├→ Perplexity (if enabled)                          │
+│     │   ├→ Agentic search (if enabled)                      │
 │     │   ├→ AskNews (if enabled)                             │
 │     │   └→ Scrape articles                                  │
 │     └→ Synthesize results                                   │

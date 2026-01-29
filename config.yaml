@@ -40,12 +40,12 @@ models:
 # The ensemble uses 5 forecasting agents with configurable weights and model 
 # selection
 #
-# Cross-pollination structure:
-#   - Agent 1 receives Agent 1's step 1 output (Outside view)
-#   - Agent 2 receives Agent 3's step 1 output (Outside view)
-#   - Agent 3 receives Agent 2's step 1 output (Outside view)
-#   - Agent 4 receives Agent 4's step 1 output (Inside view) ## please check if this is correct
-#   - Agent 5 receives Agent 5's step 1 output (Inside view) ## please check if this is correct
+# Cross-pollination structure (creates cross-model diversity):
+#   - Agent 1 (Sonnet 4.5) receives Agent 1's step 1 output (Sonnet 4.5)
+#   - Agent 2 (Sonnet 4.5) receives Agent 4's step 1 output (o3)
+#   - Agent 3 (o3-mini-high) receives Agent 2's step 1 output (Sonnet 4.5)
+#   - Agent 4 (o3) receives Agent 3's step 1 output (o3-mini-high)
+#   - Agent 5 (o3) receives Agent 5's step 1 output (o3)
 
 ensemble:
   # Agents for dry_run mode (all Haiku - cheap, fast)

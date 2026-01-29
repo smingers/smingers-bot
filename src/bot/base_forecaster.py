@@ -31,12 +31,13 @@ logger = logging.getLogger(__name__)
 
 # Cross-pollination map
 # Maps agent index -> source agent index for step 1 output
+# Creates cross-model diversity: Sonnet 4.5 -> o3-mini-high -> o3 -> Sonnet 4.5
 CROSS_POLLINATION_MAP = {
-    0: (0, "Outside view prediction"),  # Agent 1 <- Agent 1
-    1: (2, "Outside view prediction"),  # Agent 2 <- Agent 3
-    2: (1, "Outside view prediction"),  # Agent 3 <- Agent 2
-    3: (3, "Outside view prediction"),  # Agent 4 <- Agent 4
-    4: (4, "Outside view prediction"),  # Agent 5 <- Agent 5
+    0: (0, "Outside view prediction"),  # Agent 1 <- Agent 1 (Sonnet 4.5 <- Sonnet 4.5)
+    1: (3, "Outside view prediction"),  # Agent 2 <- Agent 4 (Sonnet 4.5 <- o3)
+    2: (1, "Outside view prediction"),  # Agent 3 <- Agent 2 (o3-mini-high <- Sonnet 4.5)
+    3: (2, "Outside view prediction"),  # Agent 4 <- Agent 3 (o3 <- o3-mini-high)
+    4: (4, "Outside view prediction"),  # Agent 5 <- Agent 5 (o3 <- o3)
 }
 
 

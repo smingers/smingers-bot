@@ -46,7 +46,7 @@ class AgentPredictionRecord:
 class ResearchSourceRecord:
     """Research source used in a forecast."""
     forecast_id: str
-    source_type: str  # google_search, perplexity, asknews, etc.
+    source_type: str  # google, google_news, agent, asknews, etc.
     query: str
     num_results: int
 
