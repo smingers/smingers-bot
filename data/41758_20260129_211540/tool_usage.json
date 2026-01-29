@@ -1,0 +1,166 @@
+{
+  "centralized_research": {
+    "historical": {
+      "forecaster_id": "-1",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "North Korea nuclear test history timeline",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Punggye-ri satellite imagery 2025 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Summarize DPRK nuclear tests, test-site activity since 2018, and current expert assessments of likelihood of a new test before May 2026, citing CTBTO, IAEA, 38 North, and think-tank reports",
+          "tool": "Agent",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Agent",
+        "Google"
+      ]
+    },
+    "current": {
+      "forecaster_id": "0",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "North Korea nuclear test preparations 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "North Korea Punggye-ri January 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Summarize latest January 2026 assessments on North Korea nuclear test preparations including satellite imagery and officials' statements",
+          "tool": "Assistant",
+          "success": true,
+          "num_results": 25
+        }
+      ],
+      "tools_used": [
+        "Assistant",
+        "Google News",
+        "Google"
+      ]
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6343,
+        "token_output": 2471,
+        "cost": 0.056094,
+        "duration_seconds": 61.25825524330139
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16935,
+        "token_output": 2816,
+        "cost": 0.09304499999999999,
+        "duration_seconds": 67.86149144172668
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6343,
+        "token_output": 1962,
+        "cost": 0.048459,
+        "duration_seconds": 61.25830554962158
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15657,
+        "token_output": 1853,
+        "cost": 0.074766,
+        "duration_seconds": 67.86146926879883
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/o3-mini-high",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5632,
+        "token_output": 2645,
+        "cost": 0.017833200000000004,
+        "duration_seconds": 61.258338928222656
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14838,
+        "token_output": 1085,
+        "cost": 0.0210958,
+        "duration_seconds": 67.86144590377808
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5632,
+        "token_output": 2553,
+        "cost": 0.031688,
+        "duration_seconds": 61.258370876312256
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14460,
+        "token_output": 2161,
+        "cost": 0.046208,
+        "duration_seconds": 67.86142659187317
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5632,
+        "token_output": 2022,
+        "cost": 0.02744,
+        "duration_seconds": 61.25839924812317
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14336,
+        "token_output": 1406,
+        "cost": 0.03992,
+        "duration_seconds": 67.86140418052673
+      }
+    }
+  }
+}
