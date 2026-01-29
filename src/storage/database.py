@@ -28,7 +28,13 @@ class ForecastRecord:
     brier_score: Optional[float] = None  # Calculated after resolution
     total_cost: float = 0.0
     config_hash: str = ""
-    tournament_id: Optional[int] = None
+    tournament_id: Optional[int] = None  # Legacy: use collection_id for new code
+    source: str = "metaculus"  # Question source identifier
+
+    @property
+    def collection_id(self) -> Optional[str]:
+        """Generic collection ID (alias for tournament_id)."""
+        return str(self.tournament_id) if self.tournament_id else None
 
 
 @dataclass
@@ -78,6 +84,7 @@ class ForecastDatabase:
                     total_cost REAL DEFAULT 0.0,
                     config_hash TEXT,
                     tournament_id INTEGER,
+                    source TEXT DEFAULT 'metaculus',
                     created_at TEXT NOT NULL
                 );
 
@@ -113,6 +120,13 @@ class ForecastDatabase:
             """)
             await db.commit()
 
+            # Migration: Add source column if it doesn't exist (for existing databases)
+            cursor = await db.execute("PRAGMA table_info(forecasts)")
+            columns = [row[1] for row in await cursor.fetchall()]
+            if "source" not in columns:
+                await db.execute("ALTER TABLE forecasts ADD COLUMN source TEXT DEFAULT 'metaculus'")
+                await db.commit()
+
     # =========================================================================
     # Insert Operations
     # =========================================================================
@@ -124,8 +138,8 @@ class ForecastDatabase:
                 INSERT OR REPLACE INTO forecasts
                 (id, question_id, timestamp, question_type, question_title,
                  base_rate, final_prediction, actual_outcome, brier_score,
-                 total_cost, config_hash, tournament_id, created_at)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                 total_cost, config_hash, tournament_id, source, created_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """, (
                 record.id,
                 record.question_id,
@@ -139,6 +153,7 @@ class ForecastDatabase:
                 record.total_cost,
                 record.config_hash,
                 record.tournament_id,
+                record.source,
                 datetime.now(timezone.utc).isoformat(),
             ))
             await db.commit()

@@ -52,7 +52,7 @@ class TestRunResult:
         assert result.error_count == 1
         assert result.extraction_error_count == 0
         assert len(result.failures) == 1
-        assert result.failures[0].question_id == 123
+        assert result.failures[0].question_id == "123"  # Normalized to string
         assert result.failures[0].is_extraction_error is False
 
     def test_add_failure_extraction_error(self):

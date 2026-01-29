@@ -24,6 +24,7 @@ from src.bot.forecaster import Forecaster
 from src.bot import ExtractionError
 from src.config import ResolvedConfig
 from src.runner import run_forecasts, format_prediction
+from src.sources import get_source, list_sources
 from src.utils.metaculus_api import MetaculusClient
 
 logger = logging.getLogger(__name__)
@@ -34,6 +35,7 @@ async def run_forecast(
     mode: str = "aib",
     reforecast_days: int = 7,
     limit: int = 50,
+    source_name: str = "metaculus",
 ):
     """
     Run automated forecasting for a tournament.
@@ -43,8 +45,12 @@ async def run_forecast(
         mode: "aib" (new only) or "reforecast" (new + old)
         reforecast_days: For reforecast mode, re-forecast if older than this
         limit: Maximum questions to forecast per run
+        source_name: Question source (default: "metaculus")
     """
     resolved = ResolvedConfig.from_yaml("config.yaml", mode="production")
+
+    # Get the source (defaults to Metaculus)
+    source = get_source(source_name) if source_name else None
 
     # Convert tournament_id to int if numeric
     tournament_id_parsed: int | str
@@ -116,7 +122,7 @@ async def run_forecast(
         error_type = "EXTRACTION FAILED" if isinstance(error, ExtractionError) else "FAILED"
         logger.error(f"  ✗ {error_type}: {error}")
 
-    async with Forecaster(resolved) as forecaster:
+    async with Forecaster(resolved, source=source) as forecaster:
         result = await run_forecasts(
             questions=questions_to_process,
             forecaster=forecaster,
@@ -168,6 +174,13 @@ def main():
         default=50,
         help="Maximum questions to forecast per run"
     )
+    parser.add_argument(
+        "--source", "-s",
+        type=str,
+        default="metaculus",
+        choices=list_sources(),
+        help="Question source (default: metaculus)"
+    )
 
     args = parser.parse_args()
 
@@ -183,6 +196,7 @@ def main():
         mode=args.mode,
         reforecast_days=args.reforecast_days,
         limit=args.limit,
+        source_name=args.source,
     ))
 
 

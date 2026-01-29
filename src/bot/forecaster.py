@@ -2,7 +2,7 @@
 Main Forecaster Orchestration
 
 Simplified pipeline that delegates to type-specific handlers:
-1. Fetch question from Metaculus
+1. Fetch question from source (Metaculus or other)
 2. Route to appropriate handler (binary/numeric/multiple_choice)
 3. Handler does all research + forecasting internally
 4. Save final prediction
@@ -19,6 +19,8 @@ from datetime import datetime, timezone
 from ..config import ResolvedConfig
 from ..utils.llm import LLMClient, get_cost_tracker, reset_cost_tracker
 from ..utils.metaculus_api import MetaculusClient, MetaculusQuestion
+from ..sources.base import Question, Prediction, QuestionSource
+from ..sources import get_source
 from ..storage.artifact_store import ArtifactStore, ForecastArtifacts
 from ..storage.database import ForecastDatabase, ForecastRecord, AgentPredictionRecord
 
@@ -27,6 +29,9 @@ from .numeric import NumericForecaster
 from .multiple_choice import MultipleChoiceForecaster
 
 logger = logging.getLogger(__name__)
+
+# Type alias for questions - supports both legacy MetaculusQuestion and new Question
+QuestionLike = Union[MetaculusQuestion, Question]
 
 
 class Forecaster:
@@ -45,13 +50,20 @@ class Forecaster:
         result = await forecaster.forecast_question(question_id=12345)
     """
 
-    def __init__(self, config: Union[ResolvedConfig, dict]):
+    def __init__(
+        self,
+        config: Union[ResolvedConfig, dict],
+        source: Optional[QuestionSource] = None,
+    ):
         """
         Initialize the Forecaster.
 
         Args:
             config: Either a ResolvedConfig object or a raw dict (for backward compatibility).
                     If a dict is passed, it will be wrapped in ResolvedConfig.
+            source: Optional QuestionSource for fetching questions and submitting predictions.
+                    If not provided, defaults to MetaculusSource (via MetaculusClient for
+                    backward compatibility).
 
         Note:
             New code should pass ResolvedConfig directly. The dict option exists for
@@ -70,8 +82,9 @@ class Forecaster:
             self.resolved_config = ResolvedConfig.from_dict(config)
             self.config = self.resolved_config.to_dict()
 
-        # Initialize components
-        self.metaculus = MetaculusClient()
+        # Initialize source - use provided source or default to Metaculus
+        self.source = source
+        self.metaculus = MetaculusClient() if source is None else None
         self.llm = LLMClient()
         self.artifact_store = ArtifactStore(
             base_dir=self.resolved_config.get("storage", {}).get("base_dir", "./data")
@@ -84,7 +97,8 @@ class Forecaster:
         self.dry_run = not self.resolved_config.should_submit
 
         # Log the mode
-        logger.info(f"Forecaster initialized in '{self.resolved_config.mode}' mode")
+        source_name = source.name if source else "metaculus"
+        logger.info(f"Forecaster initialized in '{self.resolved_config.mode}' mode (source: {source_name})")
 
     async def initialize(self):
         """Initialize database and other async resources."""
@@ -92,7 +106,10 @@ class Forecaster:
 
     async def close(self):
         """Clean up resources."""
-        await self.metaculus.close()
+        if self.source:
+            await self.source.close()
+        if self.metaculus:
+            await self.metaculus.close()
 
     async def __aenter__(self):
         await self.initialize()
@@ -105,12 +122,13 @@ class Forecaster:
         self,
         question_id: Optional[int] = None,
         question_url: Optional[str] = None,
-        question: Optional[MetaculusQuestion] = None,
+        question: Optional[QuestionLike] = None,
     ) -> dict:
         """
         Run the full forecasting pipeline for a question.
 
         Provide either question_id, question_url, or question object.
+        The question can be either a MetaculusQuestion or generic Question.
 
         Returns dict with all results and artifacts.
         """
@@ -118,14 +136,29 @@ class Forecaster:
         reset_cost_tracker()
         start_time = datetime.now(timezone.utc)
 
-        # Get question
+        # Get question using source or legacy metaculus client
         if question is None:
-            if question_url:
-                question = await self.metaculus.get_question_by_url(question_url)
-            elif question_id:
-                question = await self.metaculus.get_question(question_id)
+            if self.source:
+                # Use new source abstraction
+                if question_url:
+                    generic_question = await self.source.get_question_by_url(question_url)
+                elif question_id:
+                    generic_question = await self.source.get_question(str(question_id))
+                else:
+                    raise ValueError("Must provide question_id, question_url, or question object")
+                # Convert to MetaculusQuestion for internal compatibility
+                question = MetaculusQuestion.from_generic_question(generic_question)
             else:
-                raise ValueError("Must provide question_id, question_url, or question object")
+                # Use legacy MetaculusClient
+                if question_url:
+                    question = await self.metaculus.get_question_by_url(question_url)
+                elif question_id:
+                    question = await self.metaculus.get_question(question_id)
+                else:
+                    raise ValueError("Must provide question_id, question_url, or question object")
+        elif isinstance(question, Question):
+            # Convert generic Question to MetaculusQuestion for internal compatibility
+            question = MetaculusQuestion.from_generic_question(question)
 
         logger.info(f"Forecasting: {question.title} (ID: {question.id}, Type: {question.question_type})")
 
@@ -433,35 +466,59 @@ class Forecaster:
         forecast_result: dict,
         artifacts: ForecastArtifacts,
     ) -> dict:
-        """Submit prediction to Metaculus."""
+        """Submit prediction to the source (Metaculus or other)."""
         try:
+            # Determine prediction value based on question type
             if question.question_type == "binary":
-                prediction = forecast_result["final_prediction"]
-                response = await self.metaculus.submit_prediction(question, prediction)
+                prediction_value = forecast_result["final_prediction"]
+            elif question.question_type == "numeric":
+                prediction_value = forecast_result["final_cdf"]
+            elif question.question_type == "multiple_choice":
+                prediction_value = forecast_result["final_probabilities"]
+            else:
+                raise ValueError(f"Unknown question type: {question.question_type}")
+
+            # Submit via source or legacy client
+            if self.source:
+                # Use new source abstraction
+                generic_question = question.to_generic_question()
+                prediction = Prediction(
+                    question_id=generic_question.id,
+                    question_type=question.question_type,
+                    value=prediction_value,
+                )
+                response = await self.source.submit_prediction(generic_question, prediction)
+            else:
+                # Use legacy MetaculusClient
+                if question.question_type == "binary":
+                    response = await self.metaculus.submit_prediction(question, prediction_value)
+                elif question.question_type == "numeric":
+                    response = await self.metaculus.submit_numeric_prediction(question.id, prediction_value)
+                elif question.question_type == "multiple_choice":
+                    response = await self.metaculus.submit_multiple_choice_prediction(question.id, prediction_value)
+
+            # Log and save artifacts based on question type
+            if question.question_type == "binary":
                 self.artifact_store.save_prediction(artifacts, {
-                    "prediction": prediction,
+                    "prediction": prediction_value,
                     "submitted": True,
                 })
-                logger.info(f"Prediction submitted successfully: {prediction:.1%}")
+                logger.info(f"Prediction submitted successfully: {prediction_value:.1%}")
 
             elif question.question_type == "numeric":
-                cdf = forecast_result["final_cdf"]
-                response = await self.metaculus.submit_numeric_prediction(question.id, cdf)
                 percentiles = forecast_result.get("final_percentiles", {})
                 median = percentiles.get("50", percentiles.get(50, 0))
                 self.artifact_store.save_prediction(artifacts, {
                     "percentiles": percentiles,
-                    "cdf": cdf,
+                    "cdf": prediction_value,
                     "submitted": True,
                 })
                 logger.info(f"CDF submitted successfully (median: {median})")
 
             elif question.question_type == "multiple_choice":
-                probs = forecast_result["final_probabilities"]
-                response = await self.metaculus.submit_multiple_choice_prediction(question.id, probs)
-                best = max(probs.items(), key=lambda x: x[1])
+                best = max(prediction_value.items(), key=lambda x: x[1])
                 self.artifact_store.save_prediction(artifacts, {
-                    "distribution": probs,
+                    "distribution": prediction_value,
                     "submitted": True,
                 })
                 logger.info(f"Distribution submitted successfully (most likely: {best[0]} at {best[1]:.1%})")
@@ -503,6 +560,9 @@ class Forecaster:
         else:
             final_prediction = None
 
+        # Determine source name
+        source_name = self.source.name if self.source else "metaculus"
+
         # Save main forecast record
         record = ForecastRecord(
             id=forecast_id,
@@ -515,6 +575,7 @@ class Forecaster:
             total_cost=costs.get("total_cost", 0),
             config_hash=self.artifact_store._hash_config(self.config),
             tournament_id=self.config.get("submission", {}).get("tournament_id"),
+            source=source_name,
         )
         await self.database.insert_forecast(record)
 

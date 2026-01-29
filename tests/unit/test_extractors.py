@@ -58,15 +58,15 @@ class TestBinaryProbabilityExtraction:
         # Should use the labeled "Probability: 52%" not earlier percentages
         assert result == 52.0
 
-    def test_clamping_high(self, binary_response_extreme_high):
-        """Test that probabilities > 99% are clamped to 99."""
+    def test_extreme_high(self, binary_response_extreme_high):
+        """Test that 100% is returned as-is (platform bounds applied during submission)."""
         result = self._extract(binary_response_extreme_high)
-        assert result == 99.0
+        assert result == 100.0
 
-    def test_clamping_low(self, binary_response_extreme_low):
-        """Test that probabilities < 1% are clamped to 1."""
+    def test_extreme_low(self, binary_response_extreme_low):
+        """Test that 0% is returned as-is (platform bounds applied during submission)."""
         result = self._extract(binary_response_extreme_low)
-        assert result == 1.0
+        assert result == 0.0
 
     def test_no_probability_raises(self, binary_response_no_probability):
         """Test that missing probability raises ExtractionError."""
@@ -186,20 +186,20 @@ class TestNormalizeProbabilities:
         assert sum(result) == pytest.approx(1.0)
         assert all(p == pytest.approx(1/3) for p in result)
 
-    def test_clamping_high_values(self):
-        """Test that values > 99 are clamped before normalizing."""
-        result = normalize_probabilities([150.0, 50.0])  # 150 should become 99
+    def test_high_values_clamped_to_100(self):
+        """Test that values > 100 are clamped to 100 (platform bounds applied during submission)."""
+        result = normalize_probabilities([150.0, 50.0])  # 150 should become 100
         assert sum(result) == pytest.approx(1.0)
-        # 99/(99+50) and 50/(99+50)
-        assert result[0] == pytest.approx(99/149)
-        assert result[1] == pytest.approx(50/149)
+        # 100/(100+50) and 50/(100+50)
+        assert result[0] == pytest.approx(100/150)
+        assert result[1] == pytest.approx(50/150)
 
-    def test_clamping_low_values(self):
-        """Test that values < 1 are clamped to 1 before normalizing."""
-        result = normalize_probabilities([0.0, 100.0])  # 0 should become 1
-        # 1/(1+99) and 99/(1+99)
-        assert result[0] == pytest.approx(1/100)
-        assert result[1] == pytest.approx(99/100)
+    def test_zero_values_allowed(self):
+        """Test that 0% values are allowed (platform bounds applied during submission)."""
+        result = normalize_probabilities([0.0, 100.0])  # 0 is allowed
+        # 0/(0+100) and 100/(0+100)
+        assert result[0] == pytest.approx(0.0)
+        assert result[1] == pytest.approx(1.0)
 
     def test_rounding_correction(self):
         """Test that sum is exactly 1.0 after rounding correction."""
