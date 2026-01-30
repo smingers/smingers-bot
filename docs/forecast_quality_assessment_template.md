@@ -28,7 +28,12 @@ Cross-pollination structure:
 - Agent 4 (o3): receives Agent 3's Step 1
 - Agent 5 (o3): receives own Step 1
 
-Produce an assessment report following the structure below. Use specific evidence and quotes from the artifacts. Be analytical and critical - identify both strengths and weaknesses.
+Follow the assessment template in docs/forecast_quality_assessment_template.md.
+
+Use specific evidence and quotes from the artifacts. Be analytical and critical - identify both strengths and weaknesses.
+
+When complete, write the finished assessment to:
+docs/assessments/{QUESTION_ID}_{TIMESTAMP}_assessment.md
 
 ---
 
