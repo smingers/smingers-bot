@@ -97,21 +97,21 @@ class ResolvedConfig:
         Returns:
             ResolvedConfig with resolved mode settings
         """
-        # Determine effective mode (priority: mode arg > dry_run flag > config > default)
+        # Determine mode (priority: mode arg > dry_run flag > config > default)
         if mode:
-            effective_mode = mode
+            resolved_mode = mode
         elif dry_run:
-            effective_mode = "test"
+            resolved_mode = "test"
         else:
-            effective_mode = raw.get("mode", "test")
+            resolved_mode = raw.get("mode", "test")
 
         # Validate mode
         valid_modes = ("test", "preview", "live")
-        if effective_mode not in valid_modes:
-            raise ValueError(f"Invalid mode '{effective_mode}'. Must be one of: {valid_modes}")
+        if resolved_mode not in valid_modes:
+            raise ValueError(f"Invalid mode '{resolved_mode}'. Must be one of: {valid_modes}")
 
         # Select model tier based on mode
-        model_tier = "cheap" if effective_mode == "test" else "production"
+        model_tier = "cheap" if resolved_mode == "test" else "production"
 
         # Resolve active models
         if "models" in raw and model_tier in raw["models"]:
@@ -133,11 +133,11 @@ class ResolvedConfig:
         active_agents = active_agents[:5]
 
         # Submission only in live mode
-        should_submit = effective_mode == "live"
+        should_submit = resolved_mode == "live"
 
         return cls(
             raw=raw,
-            mode=effective_mode,
+            mode=resolved_mode,
             active_models=active_models,
             active_agents=active_agents,
             should_submit=should_submit,
@@ -149,14 +149,14 @@ class ResolvedConfig:
 
         The returned dict includes:
         - All raw config values (models, ensemble, research, etc.)
-        - "mode" is OVERWRITTEN with the effective mode (not the config file default)
+        - "mode" is set to the resolved mode (CLI override > config file)
         - Resolved values for handlers: _active_models, _active_agents, _should_submit
 
         Returns:
             Dictionary ready for serialization with unambiguous mode
         """
         result = self.raw.copy()
-        # Overwrite mode with effective mode (removes ambiguity in saved metadata)
+        # Set mode to resolved value
         result["mode"] = self.mode
         # Resolved values for handlers
         result["_active_models"] = self.active_models

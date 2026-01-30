@@ -128,14 +128,14 @@ class TestResolvedConfigToDict:
         assert "ensemble" in result
         assert "mode" in result
 
-    def test_to_dict_mode_is_effective_mode(self, sample_config):
-        """Test that to_dict() sets mode to the effective mode, not config default."""
+    def test_to_dict_mode_uses_cli_override(self, sample_config):
+        """Test that to_dict() uses CLI override, not config default."""
         # Config has mode="test" but we override with "live"
         sample_config["mode"] = "test"
         resolved = ResolvedConfig.from_dict(sample_config, mode="live")
         result = resolved.to_dict()
 
-        # mode should be the EFFECTIVE mode, not the config default
+        # mode should be the CLI override, not the config default
         assert result["mode"] == "live"
         assert result["_should_submit"] is True
 
