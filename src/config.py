@@ -5,8 +5,13 @@ Provides a single source of truth for mode resolution, model selection,
 and submission behavior. Replaces the duplicated apply_mode_to_config()
 logic that was previously split across main.py, run_bot.py, and forecaster.py.
 
+Modes:
+    - "test": Cheap models (Haiku), no submission - for testing pipeline
+    - "preview": Production models, no submission - for evaluating quality
+    - "live": Production models, submits to Metaculus
+
 Usage:
-    config = ResolvedConfig.from_yaml("config.yaml", mode="production")
+    config = ResolvedConfig.from_yaml("config.yaml", mode="live")
     print(config.should_submit)  # True
     print(config.active_models)  # Production model dict
 """
@@ -17,7 +22,7 @@ from pathlib import Path
 import yaml
 
 
-Mode = Literal["dry_run", "dry_run_heavy", "production"]
+Mode = Literal["test", "preview", "live"]
 
 
 @dataclass
@@ -57,17 +62,17 @@ class ResolvedConfig:
 
         Args:
             path: Path to the YAML configuration file
-            mode: Explicit mode override ("dry_run", "dry_run_heavy", "production")
-            dry_run: Shortcut for mode="dry_run" (mode= takes precedence)
+            mode: Explicit mode override ("test", "preview", "live")
+            dry_run: Shortcut for mode="test" (mode= takes precedence)
 
         Returns:
             ResolvedConfig with resolved mode settings
 
         Mode resolution priority:
             1. Explicit `mode` argument
-            2. `dry_run=True` argument (equivalent to mode="dry_run")
+            2. `dry_run=True` argument (equivalent to mode="test")
             3. `mode` key in config file
-            4. Default to "dry_run"
+            4. Default to "test"
         """
         with open(path) as f:
             raw = yaml.safe_load(f)
@@ -87,26 +92,26 @@ class ResolvedConfig:
         Args:
             raw: Configuration dictionary (typically loaded from YAML)
             mode: Explicit mode override
-            dry_run: Shortcut for mode="dry_run"
+            dry_run: Shortcut for mode="test"
 
         Returns:
             ResolvedConfig with resolved mode settings
         """
-        # Determine effective mode (priority: mode arg > dry_run flag > config > default)
+        # Determine mode (priority: mode arg > dry_run flag > config > default)
         if mode:
-            effective_mode = mode
+            resolved_mode = mode
         elif dry_run:
-            effective_mode = "dry_run"
+            resolved_mode = "test"
         else:
-            effective_mode = raw.get("mode", "dry_run")
+            resolved_mode = raw.get("mode", "test")
 
         # Validate mode
-        valid_modes = ("dry_run", "dry_run_heavy", "production")
-        if effective_mode not in valid_modes:
-            raise ValueError(f"Invalid mode '{effective_mode}'. Must be one of: {valid_modes}")
+        valid_modes = ("test", "preview", "live")
+        if resolved_mode not in valid_modes:
+            raise ValueError(f"Invalid mode '{resolved_mode}'. Must be one of: {valid_modes}")
 
         # Select model tier based on mode
-        model_tier = "cheap" if effective_mode == "dry_run" else "production"
+        model_tier = "cheap" if resolved_mode == "test" else "production"
 
         # Resolve active models
         if "models" in raw and model_tier in raw["models"]:
@@ -127,12 +132,12 @@ class ResolvedConfig:
             active_agents = []
         active_agents = active_agents[:5]
 
-        # Submission only in production mode
-        should_submit = effective_mode == "production"
+        # Submission only in live mode
+        should_submit = resolved_mode == "live"
 
         return cls(
             raw=raw,
-            mode=effective_mode,
+            mode=resolved_mode,
             active_models=active_models,
             active_agents=active_agents,
             should_submit=should_submit,
@@ -140,22 +145,23 @@ class ResolvedConfig:
 
     def to_dict(self) -> dict:
         """
-        Convert to dictionary with _active_* keys for backward compatibility.
+        Convert to dictionary for serialization and backward compatibility.
 
-        This preserves compatibility with handlers that expect:
-        - config["_active_models"]
-        - config["_active_agents"]
-        - config["_should_submit"]
-        - config["_effective_mode"]
+        The returned dict includes:
+        - All raw config values (models, ensemble, research, etc.)
+        - "mode" is set to the resolved mode (CLI override > config file)
+        - Resolved values for handlers: _active_models, _active_agents, _should_submit
 
         Returns:
-            Dictionary combining raw config with resolved _active_* keys
+            Dictionary ready for serialization with unambiguous mode
         """
         result = self.raw.copy()
+        # Set mode to resolved value
+        result["mode"] = self.mode
+        # Resolved values for handlers
         result["_active_models"] = self.active_models
         result["_active_agents"] = self.active_agents
         result["_should_submit"] = self.should_submit
-        result["_effective_mode"] = self.mode
         return result
 
     def get(self, key: str, default=None):

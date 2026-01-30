@@ -23,14 +23,14 @@ cp .env.template .env
 # Required: OPENROUTER_API_KEY, METACULUS_TOKEN
 # Optional: SERPER_API_KEY, ASKNEWS_CLIENT_ID, ASKNEWS_CLIENT_SECRET
 
-# Run a forecast (dry run with cheap models)
-python main.py --question 41594 --mode dry_run
+# Run a forecast (test mode: cheap models, no submission)
+python main.py --question 41594 --mode test
 
-# Run a forecast (dry run with production models)
-python main.py --question 41594 --mode dry_run_heavy
+# Run a forecast (preview mode: production models, no submission)
+python main.py --question 41594 --mode preview
 
-# Run a forecast (submit with production models)
-python main.py --question 41594 --mode production
+# Run a forecast (live mode: production models, submits to Metaculus)
+python main.py --question 41594 --mode live
 
 # List tournament questions
 python main.py --tournament 32721 --list
@@ -39,7 +39,7 @@ python main.py --tournament 32721 --list
 python main.py --tournament 32721 --forecast-new --limit 5
 
 # Verbose logging
-python main.py --question 41594 --mode dry_run --verbose
+python main.py --question 41594 --mode test --verbose
 ```
 
 ## Running Tests

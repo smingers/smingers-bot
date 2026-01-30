@@ -4,7 +4,7 @@
   "created_at": "2026-01-26T21:26:30.553902+00:00",
   "config_hash": "4bcb3074e181",
   "config_snapshot": {
-    "mode": "dry_run",
+    "mode": "test",
     "models": {
       "cheap": {
         "query_generator": "openrouter/anthropic/claude-3.5-haiku",
@@ -151,8 +151,7 @@
         "weight": 2.0
       }
     ],
-    "_should_submit": false,
-    "_effective_mode": "dry_run"
+    "_should_submit": false
   },
   "costs": {
     "total_calls": 26,

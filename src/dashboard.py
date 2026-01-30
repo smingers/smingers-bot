@@ -165,7 +165,7 @@ def list_forecast_runs(data_dir: Path) -> list[dict]:
             "community_prediction": analysis.get("community_prediction"),
             "dry_run": dry_run,
             "total_cost": costs.get("total_cost", 0),
-            "mode": metadata.get("config_snapshot", {}).get("_effective_mode", "unknown"),
+            "mode": metadata.get("config_snapshot", {}).get("mode", "unknown"),
             "structure": structure,
         })
 
@@ -436,8 +436,8 @@ HTML_TEMPLATE = """<!DOCTYPE html>
                     ? (run.community_prediction * 100).toFixed(1) + '%'
                     : 'N/A';
                 const costDisplay = run.total_cost ? '$' + run.total_cost.toFixed(4) : '';
-                const modeColor = run.dry_run ? 'text-yellow-500' : 'text-green-500';
-                const modeBadge = run.dry_run ? 'DRY RUN' : 'SUBMITTED';
+                const modeColor = getModeColor(run.mode);
+                const modeBadge = (run.mode || 'unknown').toUpperCase();
                 const typeColor = {
                     'binary': 'bg-blue-900 text-blue-300',
                     'numeric': 'bg-purple-900 text-purple-300',
@@ -505,8 +505,8 @@ HTML_TEMPLATE = """<!DOCTYPE html>
                             <span class="text-sm text-gray-400">${data.folder}</span>
                             <span class="text-xs px-2 py-0.5 rounded ${getTypeColor(questionType)}">${questionType}</span>
                         </div>
-                        <span class="text-xs ${prediction.dry_run ? 'text-yellow-500' : 'text-green-500'} font-mono">
-                            ${prediction.dry_run ? 'DRY RUN' : 'SUBMITTED'}
+                        <span class="text-xs ${getModeColor(meta.config_snapshot?.mode)} font-mono">
+                            ${(meta.config_snapshot?.mode || 'unknown').toUpperCase()}
                         </span>
                     </div>
                     <h1 class="text-2xl font-bold mb-4">${escapeHtml(analysis.title || 'Unknown Question')}</h1>
@@ -561,6 +561,14 @@ HTML_TEMPLATE = """<!DOCTYPE html>
                 'numeric': 'bg-purple-900 text-purple-300',
                 'multiple_choice': 'bg-orange-900 text-orange-300'
             }[type] || 'bg-gray-700 text-gray-300';
+        }
+
+        function getModeColor(mode) {
+            return {
+                'test': 'text-yellow-500',
+                'preview': 'text-blue-500',
+                'live': 'text-green-500'
+            }[mode] || 'text-gray-500';
         }
 
         function renderPredictionHeader(type, prediction, analysis, costs, computedPercentiles) {

@@ -88,17 +88,17 @@ class RunResult:
 
     def write_failure_log(
         self,
-        mode: str,
         source: str = "runner",
         tournament_id: Optional[str] = None,
+        strategy: Optional[str] = None,
     ) -> None:
         """
         Append failures to persistent log file.
 
         Args:
-            mode: The run mode (e.g., "dry_run", "production", "aib")
             source: Identifier for the calling entry point (e.g., "main.py", "run_bot.py")
             tournament_id: Optional tournament ID for context
+            strategy: Optional run strategy (e.g., "new-only", "reforecast") - only for run_bot.py
         """
         if not self.failures:
             return
@@ -108,10 +108,13 @@ class RunResult:
         with open(FAILURE_LOG_PATH, "a") as f:
             f.write(f"\n{'='*70}\n")
             f.write(f"RUN: {datetime.now(timezone.utc).isoformat()}\n")
+            header_parts = []
             if tournament_id:
-                f.write(f"Tournament: {tournament_id} | Mode: {mode} | Via: {source}\n")
-            else:
-                f.write(f"Mode: {mode} | Via: {source}\n")
+                header_parts.append(f"Tournament: {tournament_id}")
+            if strategy:
+                header_parts.append(f"Strategy: {strategy}")
+            header_parts.append(f"Via: {source}")
+            f.write(" | ".join(header_parts) + "\n")
             f.write(f"Success: {self.success_count} | Failed: {self.error_count}\n")
             f.write(f"{'='*70}\n")
 
@@ -122,21 +125,21 @@ class RunResult:
 
         logger.info(f"Failures logged to: {FAILURE_LOG_PATH}")
 
-    def print_summary(self, tournament_id: Optional[str] = None, mode: Optional[str] = None) -> None:
+    def print_summary(self, tournament_id: Optional[str] = None, strategy: Optional[str] = None) -> None:
         """
         Print a summary of the run to stdout.
 
         Args:
             tournament_id: Optional tournament ID to include in summary
-            mode: Optional mode to include in summary
+            strategy: Optional strategy (e.g., "new-only", "reforecast") to include in summary
         """
         print("\n" + "=" * 70)
         print("FORECAST RUN SUMMARY")
         print("=" * 70)
         if tournament_id:
             print(f"Tournament: {tournament_id}")
-        if mode:
-            print(f"Mode: {mode}")
+        if strategy:
+            print(f"Strategy: {strategy}")
         print(f"Successful: {self.success_count}")
         print(f"Failed: {self.error_count}")
 

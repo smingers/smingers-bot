@@ -1,0 +1,3607 @@
+{
+  "id": 41597,
+  "title": "How many US banks will fail from January through April 2026?",
+  "short_title": "How many US bank failures early 2026?",
+  "url_title": "How many US bank failures early 2026?",
+  "slug": "how-many-us-bank-failures-early-2026",
+  "author_id": 168191,
+  "author_username": "ADQ",
+  "coauthors": [],
+  "created_at": "2026-01-17T20:14:51.053116Z",
+  "published_at": "2026-01-19T22:54:42Z",
+  "edited_at": "2026-01-29T20:53:59.048115Z",
+  "curation_status": "approved",
+  "curation_status_updated_at": "2026-01-19T22:56:00.023465Z",
+  "comment_count": 3,
+  "status": "open",
+  "resolved": false,
+  "actual_close_time": null,
+  "scheduled_close_time": "2026-04-30T23:00:00Z",
+  "scheduled_resolve_time": "2026-05-01T01:00:00Z",
+  "actual_resolve_time": null,
+  "open_time": "2026-01-21T17:00:00Z",
+  "nr_forecasters": 76,
+  "html_metadata_json": null,
+  "projects": {
+    "tournament": [
+      {
+        "id": 32921,
+        "type": "tournament",
+        "name": "Metaculus Cup Spring 2026",
+        "slug": "metaculus-cup-spring-2026",
+        "header_image": "https://cdn.metaculus.com/cup-cover.jpg",
+        "prize_pool": "5000.00",
+        "start_date": "2026-01-07T17:00:00Z",
+        "close_date": "2026-05-01T00:00:00Z",
+        "forecasting_end_date": "2026-05-01T00:00:00Z",
+        "html_metadata_json": {
+          "image_url": "https://cdn.metaculus.com/user_uploaded/image_8.png"
+        },
+        "is_ongoing": true,
+        "user_permission": null,
+        "order": 0,
+        "created_at": "2025-12-29T12:43:16.555925Z",
+        "edited_at": "2026-01-29T23:19:09.140163Z",
+        "score_type": "peer_tournament",
+        "default_permission": "forecaster",
+        "visibility": "normal",
+        "show_on_homepage": true,
+        "is_current_content_translated": false,
+        "bot_leaderboard_status": "exclude_and_show",
+        "description_preview": "<p>Welcome to the Metaculus Cup! Forecasting novices and veterans are invited to make predictions on new topical questions each week while c"
+      }
+    ],
+    "default_project": {
+      "id": 32921,
+      "type": "tournament",
+      "name": "Metaculus Cup Spring 2026",
+      "slug": "metaculus-cup-spring-2026",
+      "header_image": "https://cdn.metaculus.com/cup-cover.jpg",
+      "prize_pool": "5000.00",
+      "start_date": "2026-01-07T17:00:00Z",
+      "close_date": "2026-05-01T00:00:00Z",
+      "forecasting_end_date": "2026-05-01T00:00:00Z",
+      "html_metadata_json": {
+        "image_url": "https://cdn.metaculus.com/user_uploaded/image_8.png"
+      },
+      "is_ongoing": true,
+      "user_permission": null,
+      "order": 0,
+      "created_at": "2025-12-29T12:43:16.555925Z",
+      "edited_at": "2026-01-29T23:19:09.140163Z",
+      "score_type": "peer_tournament",
+      "default_permission": "forecaster",
+      "visibility": "normal",
+      "show_on_homepage": true,
+      "is_current_content_translated": false,
+      "bot_leaderboard_status": "exclude_and_show",
+      "description_preview": "<p>Welcome to the Metaculus Cup! Forecasting novices and veterans are invited to make predictions on new topical questions each week while c"
+    },
+    "category": [
+      {
+        "id": 3698,
+        "name": "Economy & Business",
+        "slug": "economy-business",
+        "emoji": "\ud83d\udcbc",
+        "description": "Economy & Business",
+        "type": "category"
+      }
+    ]
+  },
+  "question": {
+    "id": 41343,
+    "title": "How many US banks will fail from January through April 2026?",
+    "created_at": "2026-01-17T20:14:51.053490Z",
+    "open_time": "2026-01-21T17:00:00Z",
+    "cp_reveal_time": "2026-01-26T17:00:00Z",
+    "spot_scoring_time": "2026-01-26T17:00:00Z",
+    "scheduled_resolve_time": "2026-05-01T01:00:00Z",
+    "actual_resolve_time": null,
+    "resolution_set_time": null,
+    "scheduled_close_time": "2026-04-30T23:00:00Z",
+    "actual_close_time": "2026-04-30T23:00:00Z",
+    "type": "multiple_choice",
+    "options": [
+      "0",
+      "1",
+      "2",
+      "3+"
+    ],
+    "all_options_ever": [
+      "0",
+      "1",
+      "2",
+      "3+"
+    ],
+    "options_history": [
+      [
+        "0001-01-01T00:00:00",
+        [
+          "0",
+          "1",
+          "2",
+          "3+"
+        ]
+      ]
+    ],
+    "group_variable": "banks",
+    "status": "open",
+    "possibilities": null,
+    "resolution": null,
+    "include_bots_in_aggregates": false,
+    "question_weight": 1.0,
+    "default_score_type": "peer",
+    "default_aggregation_method": "recency_weighted",
+    "label": "",
+    "unit": "",
+    "open_upper_bound": false,
+    "open_lower_bound": false,
+    "inbound_outcome_count": null,
+    "scaling": {
+      "range_min": null,
+      "range_max": null,
+      "nominal_min": null,
+      "nominal_max": null,
+      "zero_point": null,
+      "open_upper_bound": false,
+      "open_lower_bound": false,
+      "inbound_outcome_count": null,
+      "continuous_range": null
+    },
+    "group_rank": null,
+    "coherence_links": null,
+    "coherence_link_aggregations": null,
+    "description": "A [bank failure](https://www.investopedia.com/terms/b/bank-failure.asp) occurs when a bank is unable to meet its financial obligations because it lacks sufficient assets or liquidity. In the United States, the vast majority of banks are insured by the [Federal Deposit Insurance Corporation](https://en.wikipedia.org/wiki/Federal_Deposit_Insurance_Corporation) (FDIC), which guarantees deposits up to \\$250,000 and supervises the stability of the banking system.\n\nSince October 1, 2000, the FDIC has comprehensively tracked failed banks under its insurance in the [FDIC Failed Bank List](https://www.fdic.gov/bank-failures/failed-bank-list). As of January 2026, 572 insured bank failures appear on the list.",
+    "resolution_criteria": "This question will resolve as the number of United States bank failures that occur on or after January 1, 2026, and before May 1, 2026.\n\nThe primary source for this question will be the [FDIC Failed Bank List](https://www.fdic.gov/bank-failures/failed-bank-list); however, credible sources may also be used if the FDIC's list appears to be incomplete.",
+    "fine_print": "This question refers only to FDIC insured banks; other banks will have no impact on this question.",
+    "short_title": "How many US bank failures early 2026?",
+    "post_id": 41597,
+    "aggregations": {
+      "recency_weighted": {
+        "history": [
+          {
+            "start_time": 1769014884.216753,
+            "end_time": 1769015931.233488,
+            "forecaster_count": 1,
+            "interval_lower_bounds": [
+              0.51,
+              0.26,
+              0.13,
+              0.10000000000000002
+            ],
+            "centers": [
+              0.51,
+              0.26,
+              0.13,
+              0.1
+            ],
+            "interval_upper_bounds": [
+              0.51,
+              0.26,
+              0.13,
+              0.10000000000000002
+            ]
+          },
+          {
+            "start_time": 1769015931.233488,
+            "end_time": 1769018882.285655,
+            "forecaster_count": 2,
+            "interval_lower_bounds": [
+              0.444,
+              0.26,
+              0.13,
+              0.048
+            ],
+            "centers": [
+              0.477,
+              0.3105,
+              0.1385,
+              0.07400000000000001
+            ],
+            "interval_upper_bounds": [
+              0.51,
+              0.361,
+              0.147,
+              0.1
+            ]
+          },
+          {
+            "start_time": 1769018882.285655,
+            "end_time": 1769018923.985991,
+            "forecaster_count": 3,
+            "interval_lower_bounds": [
+              0.32848380388147613,
+              0.34877885548011645,
+              0.13528128031037828,
+              0.04638861946330424
+            ],
+            "centers": [
+              0.42896120271580995,
+              0.34877885548011645,
+              0.13528128031037828,
+              0.08697866149369544
+            ],
+            "interval_upper_bounds": [
+              0.42896120271580995,
+              0.41544295805110826,
+              0.14204534432589716,
+              0.08697866149369544
+            ]
+          },
+          {
+            "start_time": 1769018923.985991,
+            "end_time": 1769020006.222061,
+            "forecaster_count": 4,
+            "interval_lower_bounds": [
+              0.34,
+              0.255,
+              0.102,
+              0.08999999999999998
+            ],
+            "centers": [
+              0.51,
+              0.26,
+              0.13,
+              0.1
+            ],
+            "interval_upper_bounds": [
+              0.541,
+              0.43,
+              0.14,
+              0.10200000000000001
+            ]
+          },
+          {
+            "start_time": 1769020006.222061,
+            "end_time": 1769020152.829887,
+            "forecaster_count": 5,
+            "interval_lower_bounds": [
+              0.14341232963773745,
+              0.19118574488618978,
+              0.12181661807580176,
+              0.10743838711955371
+            ],
+            "centers": [
+              0.4063349339735895,
+              0.30470228091236495,
+              0.16719927971188478,
+              0.12176350540216087
+            ],
+            "interval_upper_bounds": [
+              0.6465505861167997,
+              0.4313628368994657,
+              0.22691330818041505,
+              0.632692724148483
+            ]
+          },
+          {
+            "start_time": 1769020152.829887,
+            "end_time": 1769022219.458224,
+            "forecaster_count": 6,
+            "interval_lower_bounds": [
+              0.3300779727095517,
+              0.24756871345029238,
+              0.12622807017543858,
+              0.009710851202079273
+            ],
+            "centers": [
+              0.4951169590643275,
+              0.29125730994152044,
+              0.12622807017543858,
+              0.08739766081871345
+            ],
+            "interval_upper_bounds": [
+              0.5436578374039676,
+              0.29125730994152044,
+              0.14273481781376515,
+              0.09905068226120857
+            ]
+          },
+          {
+            "start_time": 1769022219.458224,
+            "end_time": 1769022382.711604,
+            "forecaster_count": 7,
+            "interval_lower_bounds": [
+              0.3953307496283711,
+              0.3054629963898916,
+              0.1556366806650458,
+              0.011944193742478942
+            ],
+            "centers": [
+              0.4073104693140794,
+              0.35936823104693133,
+              0.17598916967509023,
+              0.057332129963898915
+            ],
+            "interval_upper_bounds": [
+              0.6481028349968145,
+              0.3953050541516245,
+              0.3950777278420394,
+              0.12183077617328518
+            ]
+          },
+          {
+            "start_time": 1769022382.711604,
+            "end_time": 1769026297.538348,
+            "forecaster_count": 8,
+            "interval_lower_bounds": [
+              0.33,
+              0.26,
+              0.13,
+              0.01
+            ],
+            "centers": [
+              0.491,
+              0.305,
+              0.132,
+              0.072
+            ],
+            "interval_upper_bounds": [
+              0.541,
+              0.33,
+              0.19,
+              0.1
+            ]
+          },
+          {
+            "start_time": 1769026297.538348,
+            "end_time": 1769029679.005846,
+            "forecaster_count": 8,
+            "interval_lower_bounds": [
+              0.33,
+              0.286,
+              0.132,
+              0.01
+            ],
+            "centers": [
+              0.491,
+              0.3,
+              0.147,
+              0.062
+            ],
+            "interval_upper_bounds": [
+              0.499,
+              0.33,
+              0.19,
+              0.072
+            ]
+          },
+          {
+            "start_time": 1769029679.005846,
+            "end_time": 1769032386.42596,
+            "forecaster_count": 9,
+            "interval_lower_bounds": [
+              0.34909287638153624,
+              0.2936408450228156,
+              0.1355150192035577,
+              0.04926872852233677
+            ],
+            "centers": [
+              0.45587422680412376,
+              0.31314845360824745,
+              0.15707422680412372,
+              0.07390309278350514
+            ],
+            "interval_upper_bounds": [
+              0.5123451332776076,
+              0.3593506844684807,
+              0.18479320800485144,
+              0.1231718213058419
+            ]
+          },
+          {
+            "start_time": 1769032386.42596,
+            "end_time": 1769032389.360724,
+            "forecaster_count": 10,
+            "interval_lower_bounds": [
+              0.35,
+              0.25,
+              0.13,
+              0.02
+            ],
+            "centers": [
+              0.491,
+              0.3,
+              0.147,
+              0.062
+            ],
+            "interval_upper_bounds": [
+              0.56,
+              0.35,
+              0.18,
+              0.1
+            ]
+          },
+          {
+            "start_time": 1769032389.360724,
+            "end_time": 1769037581.115888,
+            "forecaster_count": 10,
+            "interval_lower_bounds": [
+              0.35,
+              0.25,
+              0.13,
+              0.02
+            ],
+            "centers": [
+              0.491,
+              0.3,
+              0.147,
+              0.062
+            ],
+            "interval_upper_bounds": [
+              0.56,
+              0.35,
+              0.18,
+              0.1
+            ]
+          },
+          {
+            "start_time": 1769037581.115888,
+            "end_time": 1769040194.404828,
+            "forecaster_count": 11,
+            "interval_lower_bounds": [
+              0.373586078910232,
+              0.2774948845366852,
+              0.08536100555393161,
+              0.010641479099678459
+            ],
+            "centers": [
+              0.5326270096463023,
+              0.3052443729903537,
+              0.14084565916398717,
+              0.021282958199356918
+            ],
+            "interval_upper_bounds": [
+              0.6938027179761452,
+              0.3522050457581004,
+              0.19206226249634611,
+              0.09577331189710613
+            ]
+          },
+          {
+            "start_time": 1769040194.404828,
+            "end_time": 1769042123.169457,
+            "forecaster_count": 12,
+            "interval_lower_bounds": [
+              0.3499999999999999,
+              0.25999999999999995,
+              0.052,
+              0.009999999999999998
+            ],
+            "centers": [
+              0.5599999999999999,
+              0.2899999999999999,
+              0.13,
+              0.019999999999999997
+            ],
+            "interval_upper_bounds": [
+              0.6499999999999999,
+              0.30499999999999994,
+              0.153,
+              0.07199999999999998
+            ]
+          },
+          {
+            "start_time": 1769042123.169457,
+            "end_time": 1769042164.220972,
+            "forecaster_count": 13,
+            "interval_lower_bounds": [
+              0.49297610316494206,
+              0.2610447214076246,
+              0.05220808895405669,
+              0.02007896505376344
+            ],
+            "centers": [
+              0.532133064516129,
+              0.287149193548387,
+              0.1325282258064516,
+              0.04818951612903225
+            ],
+            "interval_upper_bounds": [
+              0.6425757760194765,
+              0.3062255385743289,
+              0.15361226173020526,
+              0.06224479166666665
+            ]
+          },
+          {
+            "start_time": 1769042164.220972,
+            "end_time": 1769044392.75023,
+            "forecaster_count": 13,
+            "interval_lower_bounds": [
+              0.4959711303070575,
+              0.262627824019025,
+              0.052521523551949514,
+              0.020196078431372555
+            ],
+            "centers": [
+              0.5858722109533469,
+              0.29293103448275865,
+              0.0909026369168357,
+              0.03029411764705883
+            ],
+            "interval_upper_bounds": [
+              0.646479681051969,
+              0.3080826397146255,
+              0.1545344827586207,
+              0.06260784313725491
+            ]
+          },
+          {
+            "start_time": 1769044392.75023,
+            "end_time": 1769045160.711197,
+            "forecaster_count": 14,
+            "interval_lower_bounds": [
+              0.5092077798191069,
+              0.2551052854720181,
+              0.051013205828779606,
+              0.020389344262295085
+            ],
+            "centers": [
+              0.5918647540983607,
+              0.295922131147541,
+              0.09182377049180328,
+              0.020389344262295085
+            ],
+            "interval_upper_bounds": [
+              0.6918694884115321,
+              0.30612634256642174,
+              0.1428369763205829,
+              0.06320696721311475
+            ]
+          },
+          {
+            "start_time": 1769045160.711197,
+            "end_time": 1769050294.980389,
+            "forecaster_count": 15,
+            "interval_lower_bounds": [
+              0.504052126320207,
+              0.262627824019025,
+              0.052521523551949514,
+              0.020196078431372555
+            ],
+            "centers": [
+              0.5858722109533469,
+              0.29293103448275865,
+              0.0909026369168357,
+              0.03029411764705883
+            ],
+            "interval_upper_bounds": [
+              0.656580926068406,
+              0.33333531510107023,
+              0.13332386747802571,
+              0.05049019607843138
+            ]
+          },
+          {
+            "start_time": 1769050294.980389,
+            "end_time": 1769052226.834988,
+            "forecaster_count": 16,
+            "interval_lower_bounds": [
+              0.3895169133192389,
+              0.2736962649753348,
+              0.05472551092318533,
+              0.021021846370683578
+            ],
+            "centers": [
+              0.5263742071881606,
+              0.3158033826638478,
+              0.12628964059196615,
+              0.03153276955602537
+            ],
+            "interval_upper_bounds": [
+              0.6842864693446089,
+              0.3473837209302326,
+              0.15786205073995768,
+              0.052554615926708945
+            ]
+          },
+          {
+            "start_time": 1769052226.834988,
+            "end_time": 1769054800.463356,
+            "forecaster_count": 17,
+            "interval_lower_bounds": [
+              0.4959711303070575,
+              0.22222354340071346,
+              0.052521523551949514,
+              0.020196078431372555
+            ],
+            "centers": [
+              0.5858722109533469,
+              0.29293103448275865,
+              0.0909026369168357,
+              0.03029411764705883
+            ],
+            "interval_upper_bounds": [
+              0.6848644121144297,
+              0.33333531510107023,
+              0.15150439486139283,
+              0.05049019607843138
+            ]
+          },
+          {
+            "start_time": 1769054800.463356,
+            "end_time": 1769058227.469117,
+            "forecaster_count": 17,
+            "interval_lower_bounds": [
+              0.5225652309710466,
+              0.26179022082018927,
+              0.05443778478794252,
+              0.020923839567372694
+            ],
+            "centers": [
+              0.5288485804416404,
+              0.3141482649842271,
+              0.11306309148264986,
+              0.043940063091482656
+            ],
+            "interval_upper_bounds": [
+              0.7100184901770935,
+              0.34556309148264985,
+              0.1381882229232387,
+              0.060679134745380815
+            ]
+          },
+          {
+            "start_time": 1769058227.469117,
+            "end_time": 1769063460.994769,
+            "forecaster_count": 18,
+            "interval_lower_bounds": [
+              0.5050622508218507,
+              0.1757586206896552,
+              0.05050146495379762,
+              0.020196078431372555
+            ],
+            "centers": [
+              0.5858722109533469,
+              0.29293103448275865,
+              0.0909026369168357,
+              0.03029411764705883
+            ],
+            "interval_upper_bounds": [
+              0.8313324648527664,
+              0.33232520808561244,
+              0.12120351588911425,
+              0.05049019607843138
+            ]
+          },
+          {
+            "start_time": 1769063460.994769,
+            "end_time": 1769063618.084499,
+            "forecaster_count": 19,
+            "interval_lower_bounds": [
+              0.5280461556229854,
+              0.23232357723577235,
+              0.054893361611876995,
+              0.02109730848861284
+            ],
+            "centers": [
+              0.5333266171792153,
+              0.3168048780487805,
+              0.1055641569459173,
+              0.044304347826086964
+            ],
+            "interval_upper_bounds": [
+              0.7709473872095586,
+              0.3696056910569106,
+              0.12667698833510074,
+              0.05274327122153209
+            ]
+          },
+          {
+            "start_time": 1769063618.084499,
+            "end_time": 1769064924.088022,
+            "forecaster_count": 20,
+            "interval_lower_bounds": [
+              0.5040413533834586,
+              0.2217752338405696,
+              0.05241684210526315,
+              0.020158087526508578
+            ],
+            "centers": [
+              0.5645263157894737,
+              0.29234008097165987,
+              0.10080161943319838,
+              0.042331983805668015
+            ],
+            "interval_upper_bounds": [
+              0.6834800751879698,
+              0.33266285076085433,
+              0.10886574898785424,
+              0.050395218816271445
+            ]
+          },
+          {
+            "start_time": 1769064924.088022,
+            "end_time": 1769065687.795523,
+            "forecaster_count": 21,
+            "interval_lower_bounds": [
+              0.5141874316769216,
+              0.27226182965299683,
+              0.05443596214511041,
+              0.020927444794952687
+            ],
+            "centers": [
+              0.5288485804416404,
+              0.3141482649842271,
+              0.10468454258675079,
+              0.05231861198738171
+            ],
+            "interval_upper_bounds": [
+              0.680696192647656,
+              0.36650630914826493,
+              0.15702681388012618,
+              0.06068958990536279
+            ]
+          },
+          {
+            "start_time": 1769065687.795523,
+            "end_time": 1769066822.439846,
+            "forecaster_count": 22,
+            "interval_lower_bounds": [
+              0.4849344484629295,
+              0.2773933284598515,
+              0.04850584225900682,
+              0.009705336857235592
+            ],
+            "centers": [
+              0.5431265822784811,
+              0.3190993184031159,
+              0.09701168451801365,
+              0.04076241480038949
+            ],
+            "interval_upper_bounds": [
+              0.6207160940325498,
+              0.3549858678891806,
+              0.12611518987341774,
+              0.048526684286177964
+            ]
+          },
+          {
+            "start_time": 1769066822.439846,
+            "end_time": 1769066849.195922,
+            "forecaster_count": 23,
+            "interval_lower_bounds": [
+              0.406104096648197,
+              0.2944208136409971,
+              0.05278715596330275,
+              0.020299694189602445
+            ],
+            "centers": [
+              0.5127064220183487,
+              0.33503058103975536,
+              0.10151376146788992,
+              0.050749235474006116
+            ],
+            "interval_upper_bounds": [
+              0.5888509401398856,
+              0.4060976739875823,
+              0.12181651376146789,
+              0.09134862385321099
+            ]
+          },
+          {
+            "start_time": 1769066849.195922,
+            "end_time": 1769066860.607342,
+            "forecaster_count": 23,
+            "interval_lower_bounds": [
+              0.406104096648197,
+              0.2944208136409971,
+              0.05278715596330275,
+              0.020299694189602445
+            ],
+            "centers": [
+              0.5127064220183487,
+              0.33503058103975536,
+              0.10151376146788992,
+              0.050749235474006116
+            ],
+            "interval_upper_bounds": [
+              0.5888509401398856,
+              0.4060976739875823,
+              0.12181651376146789,
+              0.09134862385321099
+            ]
+          },
+          {
+            "start_time": 1769066860.607342,
+            "end_time": 1769070005.909293,
+            "forecaster_count": 23,
+            "interval_lower_bounds": [
+              0.42640930148060685,
+              0.2944208136409971,
+              0.05278715596330275,
+              0.020299694189602445
+            ],
+            "centers": [
+              0.5127064220183487,
+              0.33503058103975536,
+              0.10151376146788992,
+              0.050749235474006116
+            ],
+            "interval_upper_bounds": [
+              0.5888509401398856,
+              0.3857927902882032,
+              0.12181651376146789,
+              0.09134862385321099
+            ]
+          },
+          {
+            "start_time": 1769070005.909293,
+            "end_time": 1769070842.487592,
+            "forecaster_count": 24,
+            "interval_lower_bounds": [
+              0.40734493670886074,
+              0.213379483430655,
+              0.04850584225900682,
+              0.009705336857235592
+            ],
+            "centers": [
+              0.5431265822784811,
+              0.3190993184031159,
+              0.09701168451801365,
+              0.04076241480038949
+            ],
+            "interval_upper_bounds": [
+              0.708004294755877,
+              0.3549858678891806,
+              0.10477261927945473,
+              0.05629095377196643
+            ]
+          },
+          {
+            "start_time": 1769070842.487592,
+            "end_time": 1769071565.005547,
+            "forecaster_count": 24,
+            "interval_lower_bounds": [
+              0.49397057332911,
+              0.24144969696969698,
+              0.05029966329966331,
+              0.010058585858585859
+            ],
+            "centers": [
+              0.5774727272727274,
+              0.3018121212121212,
+              0.09053939393939395,
+              0.030175757575757578
+            ],
+            "interval_upper_bounds": [
+              0.7042350332594236,
+              0.36821078787878786,
+              0.10864727272727275,
+              0.058339797979797985
+            ]
+          },
+          {
+            "start_time": 1769071565.005547,
+            "end_time": 1769083009.784814,
+            "forecaster_count": 25,
+            "interval_lower_bounds": [
+              0.4994993894338988,
+              0.2397601079099367,
+              0.04995035105315949,
+              0.009990170511534604
+            ],
+            "centers": [
+              0.5604383149448345,
+              0.28971013039117355,
+              0.09990070210631896,
+              0.049950852557673016
+            ],
+            "interval_upper_bounds": [
+              0.6992991452074583,
+              0.3656341645626535,
+              0.10189871614844533,
+              0.06094004012036107
+            ]
+          },
+          {
+            "start_time": 1769083009.784814,
+            "end_time": 1769084897.150128,
+            "forecaster_count": 26,
+            "interval_lower_bounds": [
+              0.4154202932414276,
+              0.23738709036742806,
+              0.04945928500496525,
+              0.009892949354518371
+            ],
+            "centers": [
+              0.5548828202581927,
+              0.29673386295928506,
+              0.0989185700099305,
+              0.04946474677259186
+            ],
+            "interval_upper_bounds": [
+              0.6923671554023794,
+              0.34618950678583255,
+              0.12859414101290964,
+              0.09892949354518372
+            ]
+          },
+          {
+            "start_time": 1769084897.150128,
+            "end_time": 1769087762.879929,
+            "forecaster_count": 27,
+            "interval_lower_bounds": [
+              0.4444997422165171,
+              0.25397925904210483,
+              0.0528931987247609,
+              0.010572794899043572
+            ],
+            "centers": [
+              0.5344580233793838,
+              0.3068916046758767,
+              0.1057863974495218,
+              0.05286397449521786
+            ],
+            "interval_upper_bounds": [
+              0.7175495838638063,
+              0.3703864194364029,
+              0.14810095642933052,
+              0.10572794899043572
+            ]
+          },
+          {
+            "start_time": 1769087762.879929,
+            "end_time": 1769087820.315722,
+            "forecaster_count": 28,
+            "interval_lower_bounds": [
+              0.4742780748663101,
+              0.2724532132001737,
+              0.05045136778115501,
+              0.020178723404255312
+            ],
+            "centers": [
+              0.5661063829787234,
+              0.2825440729483283,
+              0.10090273556231003,
+              0.05044680851063829
+            ],
+            "interval_upper_bounds": [
+              0.6256434179087494,
+              0.3430892314372558,
+              0.14126382978723404,
+              0.1008936170212766
+            ]
+          },
+          {
+            "start_time": 1769087820.315722,
+            "end_time": 1769087910.120989,
+            "forecaster_count": 29,
+            "interval_lower_bounds": [
+              0.4990048497010744,
+              0.28663752665245196,
+              0.05518319829424306,
+              0.02120722916032084
+            ],
+            "centers": [
+              0.5414733475479744,
+              0.30786993603411505,
+              0.10612153518123667,
+              0.04453518123667377
+            ],
+            "interval_upper_bounds": [
+              0.6582617166269492,
+              0.38855309168443486,
+              0.14857014925373133,
+              0.10603614580160423
+            ]
+          },
+          {
+            "start_time": 1769087910.120989,
+            "end_time": 1769090397.755625,
+            "forecaster_count": 30,
+            "interval_lower_bounds": [
+              0.5000691302161889,
+              0.2872458791208791,
+              0.0744423076923077,
+              0.03188461538461538
+            ],
+            "centers": [
+              0.5426282051282051,
+              0.29788461538461536,
+              0.10634615384615384,
+              0.053141025641025644
+            ],
+            "interval_upper_bounds": [
+              0.6596656611362494,
+              0.37235576923076913,
+              0.1488846153846154,
+              0.10628205128205129
+            ]
+          },
+          {
+            "start_time": 1769090397.755625,
+            "end_time": 1769095049.401485,
+            "forecaster_count": 31,
+            "interval_lower_bounds": [
+              0.5043721264367816,
+              0.25752339901477833,
+              0.053627155172413794,
+              0.01071531198686371
+            ],
+            "centers": [
+              0.5472974137931035,
+              0.3004439655172414,
+              0.10725431034482759,
+              0.04500431034482758
+            ],
+            "interval_upper_bounds": [
+              0.7511925287356321,
+              0.3755549568965517,
+              0.15015603448275863,
+              0.10715311986863711
+            ]
+          },
+          {
+            "start_time": 1769095049.401485,
+            "end_time": 1769097885.500473,
+            "forecaster_count": 32,
+            "interval_lower_bounds": [
+              0.44687028657616884,
+              0.2872458791208791,
+              0.05317307692307692,
+              0.010628205128205129
+            ],
+            "centers": [
+              0.5426282051282051,
+              0.29788461538461536,
+              0.10634615384615384,
+              0.053141025641025644
+            ],
+            "interval_upper_bounds": [
+              0.6596656611362494,
+              0.36171703296703295,
+              0.1488846153846154,
+              0.10628205128205129
+            ]
+          },
+          {
+            "start_time": 1769097885.500473,
+            "end_time": 1769101448.855587,
+            "forecaster_count": 33,
+            "interval_lower_bounds": [
+              0.47141740397065157,
+              0.17452377512150263,
+              0.05215552870090634,
+              0.030089148630577975
+            ],
+            "centers": [
+              0.5616888217522659,
+              0.27683081570996976,
+              0.10029909365558912,
+              0.06118126888217522
+            ],
+            "interval_upper_bounds": [
+              0.7081291217091065,
+              0.3410234686282236,
+              0.14041873111782477,
+              0.10029716210192659
+            ]
+          },
+          {
+            "start_time": 1769101448.855587,
+            "end_time": 1769103389.53303,
+            "forecaster_count": 33,
+            "interval_lower_bounds": [
+              0.4416891732405739,
+              0.23134266103484688,
+              0.07358574445617741,
+              0.03152682327280281
+            ],
+            "centers": [
+              0.5363368532206969,
+              0.2944361140443506,
+              0.10512249208025344,
+              0.06410454065469905
+            ],
+            "interval_upper_bounds": [
+              0.7424584673996314,
+              0.34491087645195356,
+              0.14717148891235482,
+              0.1050894109093427
+            ]
+          },
+          {
+            "start_time": 1769103389.53303,
+            "end_time": 1769105253.527512,
+            "forecaster_count": 34,
+            "interval_lower_bounds": [
+              0.3929960210974369,
+              0.24819593941347085,
+              0.072375236699041,
+              0.031013351134846465
+            ],
+            "centers": [
+              0.5222710280373832,
+              0.29990342679127724,
+              0.10546105919003115,
+              0.07236448598130843
+            ],
+            "interval_upper_bounds": [
+              0.7239400388636995,
+              0.378498807605543,
+              0.18610775151181969,
+              0.10337783711615489
+            ]
+          },
+          {
+            "start_time": 1769105253.527512,
+            "end_time": 1769106757.623208,
+            "forecaster_count": 35,
+            "interval_lower_bounds": [
+              0.3996235376938526,
+              0.28392053854276667,
+              0.05256124604012672,
+              0.02101788218186854
+            ],
+            "centers": [
+              0.5363368532206969,
+              0.2944361140443506,
+              0.10512249208025344,
+              0.06410454065469905
+            ],
+            "interval_upper_bounds": [
+              0.6940829865209018,
+              0.3680451425554382,
+              0.18922048574445618,
+              0.10088583447296899
+            ]
+          },
+          {
+            "start_time": 1769106757.623208,
+            "end_time": 1769108682.310878,
+            "forecaster_count": 36,
+            "interval_lower_bounds": [
+              0.39878254337551766,
+              0.2623365938211084,
+              0.05245201347135272,
+              0.020976366099653768
+            ],
+            "centers": [
+              0.5299610115911485,
+              0.2896195995785037,
+              0.10700210748155953,
+              0.0734172813487882
+            ],
+            "interval_upper_bounds": [
+              0.6926223121785307,
+              0.34523495746857863,
+              0.15735604041405815,
+              0.10488183049826884
+            ]
+          },
+          {
+            "start_time": 1769108682.310878,
+            "end_time": 1769108920.315779,
+            "forecaster_count": 37,
+            "interval_lower_bounds": [
+              0.44215433403805493,
+              0.26316633947447904,
+              0.07366279069767442,
+              0.03156297191180912
+            ],
+            "centers": [
+              0.5263742071881606,
+              0.29474630021141657,
+              0.10523255813953489,
+              0.07364693446088796
+            ],
+            "interval_upper_bounds": [
+              0.694813953488372,
+              0.3452742373905165,
+              0.15784883720930232,
+              0.10520990637269709
+            ]
+          },
+          {
+            "start_time": 1769108920.315779,
+            "end_time": 1769113043.404141,
+            "forecaster_count": 37,
+            "interval_lower_bounds": [
+              0.4330173913043478,
+              0.2577362466725821,
+              0.07215579710144927,
+              0.030918367346938775
+            ],
+            "centers": [
+              0.5154968944099378,
+              0.288664596273292,
+              0.12369565217391304,
+              0.07214285714285715
+            ],
+            "interval_upper_bounds": [
+              0.6804559006211179,
+              0.33814995563442773,
+              0.15461956521739129,
+              0.10306122448979592
+            ]
+          },
+          {
+            "start_time": 1769113043.404141,
+            "end_time": 1769114531.979516,
+            "forecaster_count": 38,
+            "interval_lower_bounds": [
+              0.4896259414225941,
+              0.2500046490004649,
+              0.07290446304044632,
+              0.03123729826658697
+            ],
+            "centers": [
+              0.5208786610878661,
+              0.28125523012552306,
+              0.12497907949790796,
+              0.07288702928870294
+            ],
+            "interval_upper_bounds": [
+              0.6875598326359832,
+              0.34167302030063545,
+              0.18746861924686192,
+              0.10412432755528991
+            ]
+          },
+          {
+            "start_time": 1769114531.979516,
+            "end_time": 1769119470.10098,
+            "forecaster_count": 39,
+            "interval_lower_bounds": [
+              0.4284243233532934,
+              0.2485083404619333,
+              0.08946492728828058,
+              0.02982244812700181
+            ],
+            "centers": [
+              0.4970119760479042,
+              0.2783293413173653,
+              0.1391676646706587,
+              0.08549101796407185
+            ],
+            "interval_upper_bounds": [
+              0.6162948502994012,
+              0.30815034217279724,
+              0.17892985457656116,
+              0.10139632363180616
+            ]
+          },
+          {
+            "start_time": 1769119470.10098,
+            "end_time": 1769132593.212555,
+            "forecaster_count": 40,
+            "interval_lower_bounds": [
+              0.43536245436105475,
+              0.252527045300879,
+              0.09797557471264369,
+              0.030299913068675743
+            ],
+            "centers": [
+              0.5050608519269777,
+              0.30303245436105475,
+              0.12120689655172413,
+              0.07069979716024341
+            ],
+            "interval_upper_bounds": [
+              0.5798098580121703,
+              0.3131335361730899,
+              0.1666594827586207,
+              0.10099971022891915
+            ]
+          },
+          {
+            "start_time": 1769132593.212555,
+            "end_time": 1769141226.739381,
+            "forecaster_count": 41,
+            "interval_lower_bounds": [
+              0.48059478439425046,
+              0.2556279945242984,
+              0.09201403148528406,
+              0.03066793781167498
+            ],
+            "centers": [
+              0.511271047227926,
+              0.3067535934291581,
+              0.11041683778234086,
+              0.07155852156057496
+            ],
+            "interval_upper_bounds": [
+              0.5930744147843942,
+              0.31697871321013005,
+              0.1686923910563541,
+              0.10222645937224994
+            ]
+          },
+          {
+            "start_time": 1769141226.739381,
+            "end_time": 1769155057.167511,
+            "forecaster_count": 42,
+            "interval_lower_bounds": [
+              0.4840669493278179,
+              0.2780702171664943,
+              0.09267453229293972,
+              0.030884940749656697
+            ],
+            "centers": [
+              0.5149648397104446,
+              0.30896690796277143,
+              0.11326887280248189,
+              0.06279937952430195
+            ],
+            "interval_upper_bounds": [
+              0.5973592140641157,
+              0.3378038193726301,
+              0.16990330920372285,
+              0.10294980249885567
+            ]
+          },
+          {
+            "start_time": 1769155057.167511,
+            "end_time": 1769161518.345332,
+            "forecaster_count": 43,
+            "interval_lower_bounds": [
+              0.4937498734177214,
+              0.28362531645569616,
+              0.09451228592702904,
+              0.031488607594936706
+            ],
+            "centers": [
+              0.52526582278481,
+              0.3151392405063291,
+              0.1071139240506329,
+              0.05248101265822785
+            ],
+            "interval_upper_bounds": [
+              0.6513296202531644,
+              0.3256438818565401,
+              0.15752047654504836,
+              0.10496202531645571
+            ]
+          },
+          {
+            "start_time": 1769161518.345332,
+            "end_time": 1769188258.437452,
+            "forecaster_count": 44,
+            "interval_lower_bounds": [
+              0.4933363164426059,
+              0.2780702171664943,
+              0.09267453229293972,
+              0.030884940749656697
+            ],
+            "centers": [
+              0.5149648397104446,
+              0.30896690796277143,
+              0.11326887280248189,
+              0.06279937952430195
+            ],
+            "interval_upper_bounds": [
+              0.5973592140641157,
+              0.31926580489486384,
+              0.1544575538215662,
+              0.10294980249885567
+            ]
+          },
+          {
+            "start_time": 1769188258.437452,
+            "end_time": 1769206541.444711,
+            "forecaster_count": 44,
+            "interval_lower_bounds": [
+              0.43536245436105475,
+              0.27272920892494934,
+              0.0909051724137931,
+              0.030299913068675743
+            ],
+            "centers": [
+              0.5050608519269777,
+              0.30303245436105475,
+              0.12120689655172413,
+              0.07069979716024341
+            ],
+            "interval_upper_bounds": [
+              0.585870588235294,
+              0.3232346179851251,
+              0.1666594827586207,
+              0.10099971022891915
+            ]
+          },
+          {
+            "start_time": 1769206541.444711,
+            "end_time": 1769221984.888698,
+            "forecaster_count": 44,
+            "interval_lower_bounds": [
+              0.3807630334854657,
+              0.25050134138162305,
+              0.09017957746478873,
+              0.030059660287305223
+            ],
+            "centers": [
+              0.4929879275653924,
+              0.30060160965794763,
+              0.12023943661971831,
+              0.08617102615694164
+            ],
+            "interval_upper_bounds": [
+              0.5811646300567634,
+              0.3206417169684775,
+              0.18035915492957746,
+              0.12023864114922089
+            ]
+          },
+          {
+            "start_time": 1769221984.888698,
+            "end_time": 1769232261.559459,
+            "forecaster_count": 45,
+            "interval_lower_bounds": [
+              0.38,
+              0.27,
+              0.089,
+              0.042
+            ],
+            "centers": [
+              0.49,
+              0.3,
+              0.12,
+              0.09
+            ],
+            "interval_upper_bounds": [
+              0.574,
+              0.328,
+              0.18,
+              0.114
+            ]
+          },
+          {
+            "start_time": 1769232261.559459,
+            "end_time": 1769238245.997031,
+            "forecaster_count": 46,
+            "interval_lower_bounds": [
+              0.336,
+              0.25,
+              0.09,
+              0.042
+            ],
+            "centers": [
+              0.49,
+              0.3,
+              0.12,
+              0.09
+            ],
+            "interval_upper_bounds": [
+              0.55,
+              0.32,
+              0.18,
+              0.12
+            ]
+          },
+          {
+            "start_time": 1769238245.997031,
+            "end_time": 1769249274.260749,
+            "forecaster_count": 46,
+            "interval_lower_bounds": [
+              0.3753760976070331,
+              0.250250418760469,
+              0.09008969849246232,
+              0.04204178894472362
+            ],
+            "centers": [
+              0.47948040201005027,
+              0.3003005025125628,
+              0.12011959798994976,
+              0.10009949748743721
+            ],
+            "interval_upper_bounds": [
+              0.5505516098236486,
+              0.3203205360134003,
+              0.18017939698492463,
+              0.12011939698492465
+            ]
+          },
+          {
+            "start_time": 1769249274.260749,
+            "end_time": 1769251485.907335,
+            "forecaster_count": 47,
+            "interval_lower_bounds": [
+              0.3221310845502236,
+              0.26503944046400546,
+              0.09173858751279426,
+              0.05096264073694985
+            ],
+            "centers": [
+              0.4393623336745138,
+              0.3058147389969294,
+              0.15289764585465712,
+              0.1019252814738997
+            ],
+            "interval_upper_bounds": [
+              0.5198951048120698,
+              0.3363962128966224,
+              0.19367035141589903,
+              0.1325028659160696
+            ]
+          },
+          {
+            "start_time": 1769251485.907335,
+            "end_time": 1769261291.360876,
+            "forecaster_count": 48,
+            "interval_lower_bounds": [
+              0.3163169249168599,
+              0.250250418760469,
+              0.08908870184254607,
+              0.03002984924623116
+            ],
+            "centers": [
+              0.47948040201005027,
+              0.3003005025125628,
+              0.12011959798994976,
+              0.10009949748743721
+            ],
+            "interval_upper_bounds": [
+              0.5805816976322111,
+              0.3203205360134003,
+              0.19018936348408713,
+              0.12011939698492465
+            ]
+          },
+          {
+            "start_time": 1769261291.360876,
+            "end_time": 1769261385.034678,
+            "forecaster_count": 49,
+            "interval_lower_bounds": [
+              0.33266714605981135,
+              0.24752319416832338,
+              0.08911175802328884,
+              0.04158667992047714
+            ],
+            "centers": [
+              0.46533797216699796,
+              0.29702783300198804,
+              0.13861829025844932,
+              0.09901590457256462
+            ],
+            "interval_upper_bounds": [
+              0.5544452434330189,
+              0.31682968853545396,
+              0.17822351604657768,
+              0.11881908548707754
+            ]
+          },
+          {
+            "start_time": 1769261385.034678,
+            "end_time": 1769261672.386218,
+            "forecaster_count": 48,
+            "interval_lower_bounds": [
+              0.3163169249168599,
+              0.250250418760469,
+              0.08908870184254607,
+              0.03002984924623116
+            ],
+            "centers": [
+              0.47948040201005027,
+              0.3003005025125628,
+              0.12011959798994976,
+              0.10009949748743721
+            ],
+            "interval_upper_bounds": [
+              0.5805816976322111,
+              0.3203205360134003,
+              0.19018936348408713,
+              0.12011939698492465
+            ]
+          },
+          {
+            "start_time": 1769261672.386218,
+            "end_time": 1769267314.059613,
+            "forecaster_count": 49,
+            "interval_lower_bounds": [
+              0.3380319174275506,
+              0.251510101010101,
+              0.09054171855541719,
+              0.042251717171717176
+            ],
+            "centers": [
+              0.460769696969697,
+              0.3018121212121212,
+              0.1468787878787879,
+              0.09053939393939393
+            ],
+            "interval_upper_bounds": [
+              0.5633865290459177,
+              0.346077898989899,
+              0.18108343711083438,
+              0.12071919191919192
+            ]
+          },
+          {
+            "start_time": 1769267314.059613,
+            "end_time": 1769271786.364703,
+            "forecaster_count": 50,
+            "interval_lower_bounds": [
+              0.37462469285586014,
+              0.2497500835840856,
+              0.08991034748079856,
+              0.04195830791343102
+            ],
+            "centers": [
+              0.4575416248746239,
+              0.2997001003009027,
+              0.14585456369107322,
+              0.09690371113340021
+            ],
+            "interval_upper_bounds": [
+              0.5494495495219283,
+              0.34365611501170173,
+              0.1798206949615971,
+              0.11988087975266004
+            ]
+          },
+          {
+            "start_time": 1769271786.364703,
+            "end_time": 1769271887.014584,
+            "forecaster_count": 51,
+            "interval_lower_bounds": [
+              0.382298001852587,
+              0.24647989898989897,
+              0.089535699460357,
+              0.043257710437710435
+            ],
+            "centers": [
+              0.460769696969697,
+              0.3018121212121212,
+              0.1468787878787879,
+              0.09053939393939393
+            ],
+            "interval_upper_bounds": [
+              0.5835074765118433,
+              0.33098729292929296,
+              0.18108343711083438,
+              0.11468323232323233
+            ]
+          },
+          {
+            "start_time": 1769271887.014584,
+            "end_time": 1769271892.426764,
+            "forecaster_count": 51,
+            "interval_lower_bounds": [
+              0.392181769013597,
+              0.25800431778929195,
+              0.09183524179620037,
+              0.04126661732050334
+            ],
+            "centers": [
+              0.49435544041450785,
+              0.3096051813471503,
+              0.12382279792746116,
+              0.07221658031088085
+            ],
+            "interval_upper_bounds": [
+              0.5985932263891743,
+              0.3333415785837652,
+              0.1826386269430052,
+              0.11760985936343452
+            ]
+          },
+          {
+            "start_time": 1769271892.426764,
+            "end_time": 1769271911.131514,
+            "forecaster_count": 51,
+            "interval_lower_bounds": [
+              0.392181769013597,
+              0.2683244905008636,
+              0.09286709844559587,
+              0.04126661732050334
+            ],
+            "centers": [
+              0.49435544041450785,
+              0.3096051813471503,
+              0.12382279792746116,
+              0.07221658031088085
+            ],
+            "interval_upper_bounds": [
+              0.5985932263891743,
+              0.3333415785837652,
+              0.1826386269430052,
+              0.11760985936343452
+            ]
+          },
+          {
+            "start_time": 1769271911.131514,
+            "end_time": 1769271998.965263,
+            "forecaster_count": 51,
+            "interval_lower_bounds": [
+              0.392181769013597,
+              0.2683244905008636,
+              0.09286709844559587,
+              0.047456609918578835
+            ],
+            "centers": [
+              0.49435544041450785,
+              0.3096051813471503,
+              0.12382279792746116,
+              0.07221658031088085
+            ],
+            "interval_upper_bounds": [
+              0.5985932263891743,
+              0.3333415785837652,
+              0.1826386269430052,
+              0.11760985936343452
+            ]
+          },
+          {
+            "start_time": 1769271998.965263,
+            "end_time": 1769276445.422515,
+            "forecaster_count": 52,
+            "interval_lower_bounds": [
+              0.418952762984108,
+              0.2598834377174669,
+              0.09250085247042449,
+              0.043633932872972535
+            ],
+            "centers": [
+              0.5093966597077243,
+              0.3118601252609603,
+              0.12472025052192065,
+              0.05402296450939456
+            ],
+            "interval_upper_bounds": [
+              0.6279093519662561,
+              0.33576940153096724,
+              0.18396236951983294,
+              0.10596812269150471
+            ]
+          },
+          {
+            "start_time": 1769276445.422515,
+            "end_time": 1769278370.564326,
+            "forecaster_count": 53,
+            "interval_lower_bounds": [
+              0.4146337107438017,
+              0.25720730027548205,
+              0.09258161157024791,
+              0.030851080737444372
+            ],
+            "centers": [
+              0.5144338842975207,
+              0.3086487603305785,
+              0.12344214876033056,
+              0.05347520661157024
+            ],
+            "interval_upper_bounds": [
+              0.6214361322314049,
+              0.33231183195592284,
+              0.18207716942148758,
+              0.10283693579148125
+            ]
+          },
+          {
+            "start_time": 1769278370.564326,
+            "end_time": 1769290550.054469,
+            "forecaster_count": 54,
+            "interval_lower_bounds": [
+              0.41124231557377044,
+              0.20408469945355193,
+              0.07142138599105811,
+              0.030602459016393444
+            ],
+            "centers": [
+              0.5306352459016392,
+              0.30612704918032785,
+              0.11223360655737703,
+              0.05100409836065574
+            ],
+            "interval_upper_bounds": [
+              0.663294057377049,
+              0.32653551912568307,
+              0.1734519374068554,
+              0.10200819672131149
+            ]
+          },
+          {
+            "start_time": 1769290550.054469,
+            "end_time": 1769348069.813,
+            "forecaster_count": 54,
+            "interval_lower_bounds": [
+              0.44332835642618246,
+              0.2577380952380952,
+              0.09173633540372671,
+              0.030913043478260863
+            ],
+            "centers": [
+              0.5361180124223602,
+              0.3092857142857142,
+              0.10307453416149068,
+              0.05152173913043478
+            ],
+            "interval_upper_bounds": [
+              0.6227216913521261,
+              0.332997619047619,
+              0.17522670807453417,
+              0.10304347826086956
+            ]
+          },
+          {
+            "start_time": 1769348069.813,
+            "end_time": 1769358912.034953,
+            "forecaster_count": 53,
+            "interval_lower_bounds": [
+              0.4154914596273292,
+              0.20619047619047617,
+              0.09173633540372671,
+              0.030913043478260863
+            ],
+            "centers": [
+              0.5361180124223602,
+              0.3092857142857142,
+              0.10307453416149068,
+              0.05152173913043478
+            ],
+            "interval_upper_bounds": [
+              0.639217630195891,
+              0.332997619047619,
+              0.17522670807453417,
+              0.10304347826086956
+            ]
+          },
+          {
+            "start_time": 1769358912.034953,
+            "end_time": 1769363619.343579,
+            "forecaster_count": 54,
+            "interval_lower_bounds": [
+              0.44332835642618246,
+              0.16495238095238093,
+              0.077305900621118,
+              0.030913043478260863
+            ],
+            "centers": [
+              0.5361180124223602,
+              0.3092857142857142,
+              0.10307453416149068,
+              0.05152173913043478
+            ],
+            "interval_upper_bounds": [
+              0.7216973244147157,
+              0.32990476190476187,
+              0.17522670807453417,
+              0.10304347826086956
+            ]
+          },
+          {
+            "start_time": 1769363619.343579,
+            "end_time": 1769368214.955321,
+            "forecaster_count": 55,
+            "interval_lower_bounds": [
+              0.4470253558550009,
+              0.207904450697407,
+              0.07690266759452562,
+              0.03116411001179994
+            ],
+            "centers": [
+              0.571776617954071,
+              0.2869081419624217,
+              0.09353027139874738,
+              0.04778496868475991
+            ],
+            "interval_upper_bounds": [
+              0.7048446308597456,
+              0.33264712111585126,
+              0.17147216423103687,
+              0.10076395570481982
+            ]
+          },
+          {
+            "start_time": 1769368214.955321,
+            "end_time": 1769377580.327783,
+            "forecaster_count": 56,
+            "interval_lower_bounds": [
+              0.4448208715766098,
+              0.16408906223310368,
+              0.0722237190558434,
+              0.0010314259968461363
+            ],
+            "centers": [
+              0.5779575129533678,
+              0.2817378238341969,
+              0.09285906735751294,
+              0.04744559585492227
+            ],
+            "interval_upper_bounds": [
+              0.7368958290155438,
+              0.33024213782763,
+              0.1444474381116868,
+              0.10004832169407524
+            ]
+          },
+          {
+            "start_time": 1769377580.327783,
+            "end_time": 1769383391.007791,
+            "forecaster_count": 57,
+            "interval_lower_bounds": [
+              0.4938487295313382,
+              0.1639202528837622,
+              0.07214975845410627,
+              0.010304347826086954
+            ],
+            "centers": [
+              0.5670496894409938,
+              0.28866459627329194,
+              0.0927639751552795,
+              0.05152173913043478
+            ],
+            "interval_upper_bounds": [
+              0.7216996047430829,
+              0.3299023957409051,
+              0.16388302277432712,
+              0.09892173913043478
+            ]
+          },
+          {
+            "start_time": 1769383391.007791,
+            "end_time": 1769384033.973819,
+            "forecaster_count": 58,
+            "interval_lower_bounds": [
+              0.5116377053179378,
+              0.16842645726366656,
+              0.0778720930232558,
+              0.021035940803382662
+            ],
+            "centers": [
+              0.547431289640592,
+              0.29474630021141646,
+              0.10523255813953487,
+              0.05258985200845666
+            ],
+            "interval_upper_bounds": [
+              0.736926736054643,
+              0.326326260948354,
+              0.16731976744186045,
+              0.09466173361522198
+            ]
+          },
+          {
+            "start_time": 1769384033.973819,
+            "end_time": 1769384069.638421,
+            "forecaster_count": 59,
+            "interval_lower_bounds": [
+              0.5052426115012335,
+              0.16528403830443858,
+              0.0727457666434702,
+              0.0010388036670599982
+            ],
+            "centers": [
+              0.571776617954071,
+              0.2869081419624217,
+              0.09353027139874738,
+              0.04778496868475991
+            ],
+            "interval_upper_bounds": [
+              0.7422700094894665,
+              0.32225189858098086,
+              0.1652368128044537,
+              0.07271625669419987
+            ]
+          },
+          {
+            "start_time": 1769384069.638421,
+            "end_time": 1769387914.908659,
+            "forecaster_count": 59,
+            "interval_lower_bounds": [
+              0.48117703777335985,
+              0.15742533686768279,
+              0.06931190633973935,
+              0.000990258449304175
+            ],
+            "centers": [
+              0.5940457256461232,
+              0.26732604373757457,
+              0.08911530815109343,
+              0.049512922465208754
+            ],
+            "interval_upper_bounds": [
+              0.7069144135188866,
+              0.30692990206906706,
+              0.15743704440026507,
+              0.06931809145129225
+            ]
+          },
+          {
+            "start_time": 1769387914.908659,
+            "end_time": 1769400780.329526,
+            "forecaster_count": 59,
+            "interval_lower_bounds": [
+              0.4948797289666855,
+              0.1639202528837622,
+              0.07214975845410627,
+              0.0010304347826086955
+            ],
+            "centers": [
+              0.5670496894409938,
+              0.28866459627329194,
+              0.0927639751552795,
+              0.05152173913043478
+            ],
+            "interval_upper_bounds": [
+              0.7361335968379445,
+              0.3195929458740018,
+              0.16491373360938577,
+              0.0721304347826087
+            ]
+          },
+          {
+            "start_time": 1769400780.329526,
+            "end_time": 1769415359.765522,
+            "forecaster_count": 59,
+            "interval_lower_bounds": [
+              0.479274519703626,
+              0.15680420242024204,
+              0.06904048404840483,
+              0.0009864158415841583
+            ],
+            "centers": [
+              0.5956415841584158,
+              0.2662712871287129,
+              0.08876633663366336,
+              0.04932079207920792
+            ],
+            "interval_upper_bounds": [
+              0.7041193561077962,
+              0.30571888522185553,
+              0.15682052805280527,
+              0.0690491089108911
+            ]
+          },
+          {
+            "start_time": 1769415359.765522,
+            "end_time": 1769442373.64835,
+            "forecaster_count": 59,
+            "interval_lower_bounds": [
+              0.4909205077988389,
+              0.16060660356096462,
+              0.07070205093531666,
+              0.0010099391480730222
+            ],
+            "centers": [
+              0.5858722109533469,
+              0.27272819472616633,
+              0.09090263691683569,
+              0.050496957403651115
+            ],
+            "interval_upper_bounds": [
+              0.7212288941736028,
+              0.31313237172263536,
+              0.1605946585530764,
+              0.07069574036511156
+            ]
+          },
+          {
+            "start_time": 1769442373.64835,
+            "end_time": 1769444215.725471,
+            "forecaster_count": 60,
+            "interval_lower_bounds": [
+              0.5000328816992792,
+              0.16358207625426283,
+              0.06068764921946739,
+              0.0010283471074380166
+            ],
+            "centers": [
+              0.5792561983471074,
+              0.2767520661157025,
+              0.09257438016528925,
+              0.051417355371900834
+            ],
+            "interval_upper_bounds": [
+              0.734616208916225,
+              0.31893360779133,
+              0.14400459136822774,
+              0.09974966942148761
+            ]
+          },
+          {
+            "start_time": 1769444215.725471,
+            "end_time": 1769449354.499432,
+            "forecaster_count": 60,
+            "interval_lower_bounds": [
+              0.5000328816992792,
+              0.16358207625426283,
+              0.06068764921946739,
+              0.0010283471074380166
+            ],
+            "centers": [
+              0.5792561983471074,
+              0.2767520661157025,
+              0.09257438016528925,
+              0.051417355371900834
+            ],
+            "interval_upper_bounds": [
+              0.734616208916225,
+              0.31893360779133,
+              0.14400459136822774,
+              0.09974966942148761
+            ]
+          },
+          {
+            "start_time": 1769449354.499432,
+            "end_time": 1769449448.572443,
+            "forecaster_count": 61,
+            "interval_lower_bounds": [
+              0.4796140407069853,
+              0.16326654523375833,
+              0.06019655230691228,
+              0.0010200819672131149
+            ],
+            "centers": [
+              0.5745163934426228,
+              0.27551229508196723,
+              0.0989672131147541,
+              0.05100409836065574
+            ],
+            "interval_upper_bounds": [
+              0.7143187840316804,
+              0.32653309046751666,
+              0.16222460706439074,
+              0.09792786885245902
+            ]
+          },
+          {
+            "start_time": 1769449448.572443,
+            "end_time": 1769450068.36524,
+            "forecaster_count": 61,
+            "interval_lower_bounds": [
+              0.4796140407069853,
+              0.16326654523375833,
+              0.06019655230691228,
+              0.0010200819672131149
+            ],
+            "centers": [
+              0.5745163934426228,
+              0.27551229508196723,
+              0.0989672131147541,
+              0.05100409836065574
+            ],
+            "interval_upper_bounds": [
+              0.7143187840316804,
+              0.32653309046751666,
+              0.16222460706439074,
+              0.09792786885245902
+            ]
+          },
+          {
+            "start_time": 1769450068.36524,
+            "end_time": 1769454064.508831,
+            "forecaster_count": 62,
+            "interval_lower_bounds": [
+              0.5041926287744226,
+              0.18465018587360596,
+              0.0560025,
+              0.0010366071428571427
+            ],
+            "centers": [
+              0.5840749999999999,
+              0.27905,
+              0.0933375,
+              0.0435375
+            ],
+            "interval_upper_bounds": [
+              0.7407274422735346,
+              0.32158178438661705,
+              0.16489625000000002,
+              0.08914821428571428
+            ]
+          },
+          {
+            "start_time": 1769454064.508831,
+            "end_time": 1769454633.212658,
+            "forecaster_count": 62,
+            "interval_lower_bounds": [
+              0.4442485057081579,
+              0.1652914590692437,
+              0.06093674504379899,
+              0.001032473389861086
+            ],
+            "centers": [
+              0.5816556016597509,
+              0.277896265560166,
+              0.09295435684647303,
+              0.04749377593360996
+            ],
+            "interval_upper_bounds": [
+              0.7376591466874994,
+              0.32025220194665965,
+              0.17558045182111573,
+              0.10014991881652537
+            ]
+          },
+          {
+            "start_time": 1769454633.212658,
+            "end_time": 1769456252.261731,
+            "forecaster_count": 62,
+            "interval_lower_bounds": [
+              0.443444798379402,
+              0.16461089434391227,
+              0.06068764921946739,
+              0.0010283471074380166
+            ],
+            "centers": [
+              0.5792561983471074,
+              0.2767520661157025,
+              0.09257438016528925,
+              0.051417355371900834
+            ],
+            "interval_upper_bounds": [
+              0.734616208916225,
+              0.31893360779133,
+              0.16354807162534435,
+              0.09974966942148761
+            ]
+          },
+          {
+            "start_time": 1769456252.261731,
+            "end_time": 1769466593.712305,
+            "forecaster_count": 62,
+            "interval_lower_bounds": [
+              0.4894339074648722,
+              0.17522703585595395,
+              0.05941295360071902,
+              0.0010069362992922144
+            ],
+            "centers": [
+              0.584098078867543,
+              0.27492517694641055,
+              0.0906299292214358,
+              0.05034681496461072
+            ],
+            "interval_upper_bounds": [
+              0.7049459572539312,
+              0.3021155790619896,
+              0.1601128749578699,
+              0.0906242669362993
+            ]
+          },
+          {
+            "start_time": 1769466593.712305,
+            "end_time": 1769474363.409314,
+            "forecaster_count": 62,
+            "interval_lower_bounds": [
+              0.4909205077988389,
+              0.1797985876342874,
+              0.059591728645481165,
+              0.0010099391480730222
+            ],
+            "centers": [
+              0.5858722109533469,
+              0.27272819472616633,
+              0.09090263691683569,
+              0.050496957403651115
+            ],
+            "interval_upper_bounds": [
+              0.7070871511505911,
+              0.3030313274735181,
+              0.1605946585530764,
+              0.08685476673427991
+            ]
+          },
+          {
+            "start_time": 1769474363.409314,
+            "end_time": 1769476709.378863,
+            "forecaster_count": 62,
+            "interval_lower_bounds": [
+              0.4909205077988389,
+              0.1797985876342874,
+              0.059591728645481165,
+              0.0010099391480730222
+            ],
+            "centers": [
+              0.5858722109533469,
+              0.27272819472616633,
+              0.09090263691683569,
+              0.050496957403651115
+            ],
+            "interval_upper_bounds": [
+              0.7070871511505911,
+              0.3030313274735181,
+              0.1605946585530764,
+              0.08685476673427991
+            ]
+          },
+          {
+            "start_time": 1769476709.378863,
+            "end_time": 1769486718.490208,
+            "forecaster_count": 62,
+            "interval_lower_bounds": [
+              0.4894339074648722,
+              0.1792552435767805,
+              0.07048994495000563,
+              0.0010069362992922144
+            ],
+            "centers": [
+              0.584098078867543,
+              0.27492517694641055,
+              0.0906299292214358,
+              0.05034681496461072
+            ],
+            "interval_upper_bounds": [
+              0.6646633311251351,
+              0.3121860983640559,
+              0.1601128749578699,
+              0.070485540950455
+            ]
+          },
+          {
+            "start_time": 1769486718.490208,
+            "end_time": 1769494170.484311,
+            "forecaster_count": 63,
+            "interval_lower_bounds": [
+              0.486,
+              0.178,
+              0.054,
+              0.001
+            ],
+            "centers": [
+              0.58,
+              0.28,
+              0.09,
+              0.05
+            ],
+            "interval_upper_bounds": [
+              0.652,
+              0.302,
+              0.12,
+              0.07
+            ]
+          },
+          {
+            "start_time": 1769494170.484311,
+            "end_time": 1769499384.931324,
+            "forecaster_count": 63,
+            "interval_lower_bounds": [
+              0.49200000000000005,
+              0.2,
+              0.059,
+              0.001
+            ],
+            "centers": [
+              0.58,
+              0.28,
+              0.09,
+              0.05
+            ],
+            "interval_upper_bounds": [
+              0.65,
+              0.32,
+              0.12,
+              0.07
+            ]
+          },
+          {
+            "start_time": 1769499384.931324,
+            "end_time": 1769501342.070706,
+            "forecaster_count": 64,
+            "interval_lower_bounds": [
+              0.487302897254421,
+              0.25432566029476145,
+              0.060013131313131324,
+              0.0010170173646578142
+            ],
+            "centers": [
+              0.572758937691522,
+              0.28484473953013284,
+              0.09154545454545455,
+              0.05085086823289071
+            ],
+            "interval_upper_bounds": [
+              0.6602496457580778,
+              0.32553684517729464,
+              0.16173030303030306,
+              0.09763366700715016
+            ]
+          },
+          {
+            "start_time": 1769501342.070706,
+            "end_time": 1769501938.37941,
+            "forecaster_count": 64,
+            "interval_lower_bounds": [
+              0.4894339074648722,
+              0.251762982551658,
+              0.07048994495000563,
+              0.0010069362992922144
+            ],
+            "centers": [
+              0.584098078867543,
+              0.27492517694641055,
+              0.0906299292214358,
+              0.05034681496461072
+            ],
+            "interval_upper_bounds": [
+              0.6535856089397163,
+              0.3121860983640559,
+              0.1601128749578699,
+              0.070485540950455
+            ]
+          },
+          {
+            "start_time": 1769501938.37941,
+            "end_time": 1769515429.439245,
+            "forecaster_count": 64,
+            "interval_lower_bounds": [
+              0.4909205077988389,
+              0.24242506197881447,
+              0.07070205093531666,
+              0.0010099391480730222
+            ],
+            "centers": [
+              0.5858722109533469,
+              0.27272819472616633,
+              0.09090263691683569,
+              0.050496957403651115
+            ],
+            "interval_upper_bounds": [
+              0.6555708015667623,
+              0.31313237172263536,
+              0.1515043948613928,
+              0.07069574036511156
+            ]
+          },
+          {
+            "start_time": 1769515429.439245,
+            "end_time": 1769517855.749665,
+            "forecaster_count": 64,
+            "interval_lower_bounds": [
+              0.4984935692164224,
+              0.24415263388297095,
+              0.07120202020202022,
+              0.020340347293156282
+            ],
+            "centers": [
+              0.572758937691522,
+              0.28484473953013284,
+              0.09154545454545455,
+              0.05085086823289071
+            ],
+            "interval_upper_bounds": [
+              0.6602496457580778,
+              0.32553684517729464,
+              0.12206060606060608,
+              0.071191215526047
+            ]
+          },
+          {
+            "start_time": 1769517855.749665,
+            "end_time": 1769520073.982868,
+            "forecaster_count": 65,
+            "interval_lower_bounds": [
+              0.43435326716893646,
+              0.2424253839466821,
+              0.07070283975659229,
+              0.030298174442190667
+            ],
+            "centers": [
+              0.5656693711967545,
+              0.2828296146044625,
+              0.10100405679513184,
+              0.050496957403651115
+            ],
+            "interval_upper_bounds": [
+              0.6101148217907851,
+              0.32626416256157637,
+              0.1373655172413793,
+              0.10099391480730223
+            ]
+          },
+          {
+            "start_time": 1769520073.982868,
+            "end_time": 1769529631.537787,
+            "forecaster_count": 65,
+            "interval_lower_bounds": [
+              0.48238427139026624,
+              0.2517631445904955,
+              0.07049049544994944,
+              0.03020808897876643
+            ],
+            "centers": [
+              0.5669777553083922,
+              0.281974721941355,
+              0.10070070778564207,
+              0.05034681496461072
+            ],
+            "interval_upper_bounds": [
+              0.6042391708437573,
+              0.3252779828109202,
+              0.1369529625884732,
+              0.09666588473205258
+            ]
+          },
+          {
+            "start_time": 1769529631.537787,
+            "end_time": 1769530831.883626,
+            "forecaster_count": 65,
+            "interval_lower_bounds": [
+              0.487465702019399,
+              0.25075258955545965,
+              0.07422126016133553,
+              0.030088821752265862
+            ],
+            "centers": [
+              0.5717190332326284,
+              0.28084290030211484,
+              0.09729003021148036,
+              0.05014803625377644
+            ],
+            "interval_upper_bounds": [
+              0.6018095086659246,
+              0.3239723457056539,
+              0.12035880026162518,
+              0.07020725075528701
+            ]
+          },
+          {
+            "start_time": 1769530831.883626,
+            "end_time": 1769558981.635222,
+            "forecaster_count": 65,
+            "interval_lower_bounds": [
+              0.48894028708133963,
+              0.25150974025974027,
+              0.07444371373307543,
+              0.030178181818181812
+            ],
+            "centers": [
+              0.5734484848484848,
+              0.2816909090909091,
+              0.09456363636363638,
+              0.050296969696969694
+            ],
+            "interval_upper_bounds": [
+              0.652926432748538,
+              0.3249505844155844,
+              0.12071953578336557,
+              0.07041575757575758
+            ]
+          },
+          {
+            "start_time": 1769558981.635222,
+            "end_time": 1769560687.893129,
+            "forecaster_count": 65,
+            "interval_lower_bounds": [
+              0.49900195090577765,
+              0.25355142566191446,
+              0.0709868748585653,
+              0.010139466926414594
+            ],
+            "centers": [
+              0.5781120162932789,
+              0.2839775967413442,
+              0.09126883910386965,
+              0.046641547861507135
+            ],
+            "interval_upper_bounds": [
+              0.6998198091971273,
+              0.3245458248472505,
+              0.11155080334917403,
+              0.06083680155848755
+            ]
+          },
+          {
+            "start_time": 1769560687.893129,
+            "end_time": 1769561076.285575,
+            "forecaster_count": 65,
+            "interval_lower_bounds": [
+              0.496981103875307,
+              0.2525264416111272,
+              0.07070205093531666,
+              0.010099391480730222
+            ],
+            "centers": [
+              0.5757707910750507,
+              0.2828296146044625,
+              0.09090263691683569,
+              0.050496957403651115
+            ],
+            "interval_upper_bounds": [
+              0.655570602469663,
+              0.3232338452622428,
+              0.12120351588911424,
+              0.06059634888438133
+            ]
+          },
+          {
+            "start_time": 1769561076.285575,
+            "end_time": 1769582422.932297,
+            "forecaster_count": 65,
+            "interval_lower_bounds": [
+              0.492,
+              0.25,
+              0.07,
+              0.03
+            ],
+            "centers": [
+              0.57,
+              0.28,
+              0.1,
+              0.05
+            ],
+            "interval_upper_bounds": [
+              0.604,
+              0.31,
+              0.12,
+              0.06
+            ]
+          },
+          {
+            "start_time": 1769582422.932297,
+            "end_time": 1769588380.021598,
+            "forecaster_count": 65,
+            "interval_lower_bounds": [
+              0.49698125480870115,
+              0.25252610622793176,
+              0.059591728645481165,
+              0.0010099391480730222
+            ],
+            "centers": [
+              0.5858722109533469,
+              0.27272819472616633,
+              0.09090263691683569,
+              0.050496957403651115
+            ],
+            "interval_upper_bounds": [
+              0.6586011750716935,
+              0.3030313274735181,
+              0.12120351588911424,
+              0.06059634888438133
+            ]
+          },
+          {
+            "start_time": 1769588380.021598,
+            "end_time": 1769605220.996655,
+            "forecaster_count": 65,
+            "interval_lower_bounds": [
+              0.49698125480870115,
+              0.23232401772969724,
+              0.059591728645481165,
+              0.0010099391480730222
+            ],
+            "centers": [
+              0.5858722109533469,
+              0.27272819472616633,
+              0.09090263691683569,
+              0.050496957403651115
+            ],
+            "interval_upper_bounds": [
+              0.656580926068406,
+              0.3030313274735181,
+              0.12120351588911424,
+              0.06059634888438133
+            ]
+          },
+          {
+            "start_time": 1769605220.996655,
+            "end_time": 1769617303.251888,
+            "forecaster_count": 66,
+            "interval_lower_bounds": [
+              0.5188000808707081,
+              0.22772188298778756,
+              0.04950850452838525,
+              0.000990258449304175
+            ],
+            "centers": [
+              0.5841451292246521,
+              0.27722664015904575,
+              0.08911530815109343,
+              0.049512922465208754
+            ],
+            "interval_upper_bounds": [
+              0.6930535431478922,
+              0.29702854302754894,
+              0.11882041086812457,
+              0.051493439363817096
+            ]
+          },
+          {
+            "start_time": 1769617303.251888,
+            "end_time": 1769619314.60944,
+            "forecaster_count": 66,
+            "interval_lower_bounds": [
+              0.5188000808707081,
+              0.21782093155353596,
+              0.04950850452838525,
+              0.000990258449304175
+            ],
+            "centers": [
+              0.5841451292246521,
+              0.27722664015904575,
+              0.08911530815109343,
+              0.049512922465208754
+            ],
+            "interval_upper_bounds": [
+              0.6930535431478922,
+              0.29702854302754894,
+              0.1000071791473382,
+              0.05941550695825052
+            ]
+          },
+          {
+            "start_time": 1769619314.60944,
+            "end_time": 1769619317.021379,
+            "forecaster_count": 67,
+            "interval_lower_bounds": [
+              0.5229516499665998,
+              0.21956075113189344,
+              0.04890289467824537,
+              0.0009980437064605401
+            ],
+            "centers": [
+              0.5987995991983968,
+              0.26946092184368736,
+              0.08982164328657313,
+              0.04191783567134268
+            ],
+            "interval_upper_bounds": [
+              0.7055855277221108,
+              0.2994010242707637,
+              0.10079984413270987,
+              0.0598826223876324
+            ]
+          },
+          {
+            "start_time": 1769619317.021379,
+            "end_time": 1769619321.894273,
+            "forecaster_count": 67,
+            "interval_lower_bounds": [
+              0.5229516499665998,
+              0.21956075113189344,
+              0.04890289467824537,
+              0.0009980437064605401
+            ],
+            "centers": [
+              0.5987995991983968,
+              0.26946092184368736,
+              0.08982164328657313,
+              0.04191783567134268
+            ],
+            "interval_upper_bounds": [
+              0.7055855277221108,
+              0.2994010242707637,
+              0.10079984413270987,
+              0.0598826223876324
+            ]
+          },
+          {
+            "start_time": 1769619321.894273,
+            "end_time": 1769619412.330687,
+            "forecaster_count": 67,
+            "interval_lower_bounds": [
+              0.5229516499665998,
+              0.21956075113189344,
+              0.04890289467824537,
+              0.0009980437064605401
+            ],
+            "centers": [
+              0.5987995991983968,
+              0.26946092184368736,
+              0.08982164328657313,
+              0.04191783567134268
+            ],
+            "interval_upper_bounds": [
+              0.7055855277221108,
+              0.2994010242707637,
+              0.10079984413270987,
+              0.0598826223876324
+            ]
+          },
+          {
+            "start_time": 1769619412.330687,
+            "end_time": 1769619414.611153,
+            "forecaster_count": 67,
+            "interval_lower_bounds": [
+              0.5229516499665998,
+              0.21956075113189344,
+              0.04890289467824537,
+              0.0009980437064605401
+            ],
+            "centers": [
+              0.5987995991983968,
+              0.26946092184368736,
+              0.08982164328657313,
+              0.04191783567134268
+            ],
+            "interval_upper_bounds": [
+              0.7055855277221108,
+              0.2994010242707637,
+              0.10079984413270987,
+              0.0598826223876324
+            ]
+          },
+          {
+            "start_time": 1769619414.611153,
+            "end_time": 1769619417.254864,
+            "forecaster_count": 67,
+            "interval_lower_bounds": [
+              0.5229516499665998,
+              0.21956075113189344,
+              0.04890289467824537,
+              0.0009980437064605401
+            ],
+            "centers": [
+              0.5987995991983968,
+              0.26946092184368736,
+              0.08982164328657313,
+              0.04191783567134268
+            ],
+            "interval_upper_bounds": [
+              0.7055855277221108,
+              0.2994010242707637,
+              0.10079984413270987,
+              0.0598826223876324
+            ]
+          },
+          {
+            "start_time": 1769619417.254864,
+            "end_time": 1769619903.336942,
+            "forecaster_count": 67,
+            "interval_lower_bounds": [
+              0.5229516499665998,
+              0.21956075113189344,
+              0.04890289467824537,
+              0.0009980437064605401
+            ],
+            "centers": [
+              0.5987995991983968,
+              0.26946092184368736,
+              0.08982164328657313,
+              0.04191783567134268
+            ],
+            "interval_upper_bounds": [
+              0.7055855277221108,
+              0.2994010242707637,
+              0.10079984413270987,
+              0.0598826223876324
+            ]
+          },
+          {
+            "start_time": 1769619903.336942,
+            "end_time": 1769621208.640443,
+            "forecaster_count": 67,
+            "interval_lower_bounds": [
+              0.5229516499665998,
+              0.21956075113189344,
+              0.04890289467824537,
+              0.0009980437064605401
+            ],
+            "centers": [
+              0.5987995991983968,
+              0.26946092184368736,
+              0.08982164328657313,
+              0.04191783567134268
+            ],
+            "interval_upper_bounds": [
+              0.7055855277221108,
+              0.2994010242707637,
+              0.10079984413270987,
+              0.0598826223876324
+            ]
+          },
+          {
+            "start_time": 1769621208.640443,
+            "end_time": 1769624163.032431,
+            "forecaster_count": 67,
+            "interval_lower_bounds": [
+              0.5229516499665998,
+              0.21956075113189344,
+              0.04890289467824537,
+              0.0009980437064605401
+            ],
+            "centers": [
+              0.5987995991983968,
+              0.26946092184368736,
+              0.08982164328657313,
+              0.04191783567134268
+            ],
+            "interval_upper_bounds": [
+              0.7055855277221108,
+              0.2994010242707637,
+              0.10079984413270987,
+              0.0598826223876324
+            ]
+          },
+          {
+            "start_time": 1769624163.032431,
+            "end_time": 1769624705.401505,
+            "forecaster_count": 67,
+            "interval_lower_bounds": [
+              0.5229516499665998,
+              0.21956075113189344,
+              0.04890289467824537,
+              0.0009980437064605401
+            ],
+            "centers": [
+              0.5987995991983968,
+              0.26946092184368736,
+              0.08982164328657313,
+              0.04191783567134268
+            ],
+            "interval_upper_bounds": [
+              0.7055855277221108,
+              0.2994010242707637,
+              0.10079984413270987,
+              0.0598826223876324
+            ]
+          },
+          {
+            "start_time": 1769624705.401505,
+            "end_time": 1769624886.281778,
+            "forecaster_count": 67,
+            "interval_lower_bounds": [
+              0.5229516499665998,
+              0.21956075113189344,
+              0.04890289467824537,
+              0.0009980437064605401
+            ],
+            "centers": [
+              0.5987995991983968,
+              0.26946092184368736,
+              0.08982164328657313,
+              0.04191783567134268
+            ],
+            "interval_upper_bounds": [
+              0.7055855277221108,
+              0.2994010242707637,
+              0.10079984413270987,
+              0.0598826223876324
+            ]
+          },
+          {
+            "start_time": 1769624886.281778,
+            "end_time": 1769625402.479194,
+            "forecaster_count": 67,
+            "interval_lower_bounds": [
+              0.5229516499665998,
+              0.21956075113189344,
+              0.04890289467824537,
+              0.0009980437064605401
+            ],
+            "centers": [
+              0.5987995991983968,
+              0.26946092184368736,
+              0.08982164328657313,
+              0.04191783567134268
+            ],
+            "interval_upper_bounds": [
+              0.7055855277221108,
+              0.2994010242707637,
+              0.10079984413270987,
+              0.0598826223876324
+            ]
+          },
+          {
+            "start_time": 1769625402.479194,
+            "end_time": 1769628965.250723,
+            "forecaster_count": 67,
+            "interval_lower_bounds": [
+              0.53,
+              0.22000000000000006,
+              0.049,
+              0.001
+            ],
+            "centers": [
+              0.59,
+              0.28,
+              0.09,
+              0.04
+            ],
+            "interval_upper_bounds": [
+              0.707,
+              0.31,
+              0.10000000000000002,
+              0.05999999999999999
+            ]
+          },
+          {
+            "start_time": 1769628965.250723,
+            "end_time": 1769632162.803515,
+            "forecaster_count": 67,
+            "interval_lower_bounds": [
+              0.5295540511952613,
+              0.18126394001363325,
+              0.049891820040899794,
+              0.0010179666958808065
+            ],
+            "centers": [
+              0.5906564417177914,
+              0.2749509202453988,
+              0.09163803680981594,
+              0.04275460122699387
+            ],
+            "interval_upper_bounds": [
+              0.7128612227628517,
+              0.3075376959781868,
+              0.11200204498977503,
+              0.0610780017528484
+            ]
+          },
+          {
+            "start_time": 1769632162.803515,
+            "end_time": 1769641930.613602,
+            "forecaster_count": 67,
+            "interval_lower_bounds": [
+              0.4949608554855699,
+              0.22222326861779199,
+              0.050501464953797606,
+              0.0010099391480730222
+            ],
+            "centers": [
+              0.5757707910750507,
+              0.2828296146044625,
+              0.09090263691683569,
+              0.050496957403651115
+            ],
+            "interval_upper_bounds": [
+              0.7070869364079571,
+              0.3030317299333526,
+              0.1373639846743295,
+              0.07069574036511156
+            ]
+          },
+          {
+            "start_time": 1769641930.613602,
+            "end_time": 1769644586.394256,
+            "forecaster_count": 67,
+            "interval_lower_bounds": [
+              0.4949608554855699,
+              0.2525264416111272,
+              0.050501464953797606,
+              0.0010099391480730222
+            ],
+            "centers": [
+              0.5757707910750507,
+              0.2828296146044625,
+              0.09090263691683569,
+              0.050496957403651115
+            ],
+            "interval_upper_bounds": [
+              0.7070869364079571,
+              0.3030317299333526,
+              0.13130380887987378,
+              0.07069574036511156
+            ]
+          },
+          {
+            "start_time": 1769644586.394256,
+            "end_time": 1769647391.387269,
+            "forecaster_count": 67,
+            "interval_lower_bounds": [
+              0.5072517221908525,
+              0.2577352196917414,
+              0.05566024844720496,
+              0.016486956521739128
+            ],
+            "centers": [
+              0.5670496894409938,
+              0.27835403726708075,
+              0.10307453416149068,
+              0.05152173913043478
+            ],
+            "interval_upper_bounds": [
+              0.7216996047430829,
+              0.30928226363008965,
+              0.13399689440993787,
+              0.0721304347826087
+            ]
+          },
+          {
+            "start_time": 1769647391.387269,
+            "end_time": 1769650539.032801,
+            "forecaster_count": 67,
+            "interval_lower_bounds": [
+              0.496981103875307,
+              0.23232401772969724,
+              0.0545421906693712,
+              0.016159026369168356
+            ],
+            "centers": [
+              0.5757707910750507,
+              0.27272819472616633,
+              0.10100405679513186,
+              0.050496957403651115
+            ],
+            "interval_upper_bounds": [
+              0.7070869364079571,
+              0.3030313274735181,
+              0.12120486815415822,
+              0.07069574036511156
+            ]
+          },
+          {
+            "start_time": 1769650539.032801,
+            "end_time": 1769652782.835272,
+            "forecaster_count": 68,
+            "interval_lower_bounds": [
+              0.5102282362916902,
+              0.23469498738965952,
+              0.060195582877959924,
+              0.016321311475409838
+            ],
+            "centers": [
+              0.5918647540983606,
+              0.26530737704918034,
+              0.09182377049180328,
+              0.05100409836065574
+            ],
+            "interval_upper_bounds": [
+              0.6632967071791972,
+              0.30612389659520806,
+              0.12243169398907104,
+              0.07140573770491804
+            ]
+          },
+          {
+            "start_time": 1769652782.835272,
+            "end_time": 1769667373.114531,
+            "forecaster_count": 69,
+            "interval_lower_bounds": [
+              0.524525740567243,
+              0.2302302667182064,
+              0.07006964113496778,
+              0.0010009849246231156
+            ],
+            "centers": [
+              0.5905919597989949,
+              0.2602603015075377,
+              0.09909849246231156,
+              0.05004924623115578
+            ],
+            "interval_upper_bounds": [
+              0.6506521591005877,
+              0.3003003478933127,
+              0.12011938480280188,
+              0.07006894472361809
+            ]
+          },
+          {
+            "start_time": 1769667373.114531,
+            "end_time": 1769670487.626,
+            "forecaster_count": 69,
+            "interval_lower_bounds": [
+              0.5359085769298092,
+              0.25278114017961734,
+              0.07481804850535814,
+              0.001010944162436548
+            ],
+            "centers": [
+              0.5864659898477157,
+              0.262892385786802,
+              0.10009441624365482,
+              0.05054720812182741
+            ],
+            "interval_upper_bounds": [
+              0.6572463679327849,
+              0.3033373682155408,
+              0.121326565143824,
+              0.060656649746192906
+            ]
+          },
+          {
+            "start_time": 1769670487.626,
+            "end_time": 1769671412.931541,
+            "forecaster_count": 68,
+            "interval_lower_bounds": [
+              0.5359085769298092,
+              0.25278114017961734,
+              0.07481804850535814,
+              0.001010944162436548
+            ],
+            "centers": [
+              0.5864659898477157,
+              0.262892385786802,
+              0.10009441624365482,
+              0.05054720812182741
+            ],
+            "interval_upper_bounds": [
+              0.6572463679327849,
+              0.3033373682155408,
+              0.121326565143824,
+              0.060656649746192906
+            ]
+          },
+          {
+            "start_time": 1769671412.931541,
+            "end_time": 1769675058.934461,
+            "forecaster_count": 69,
+            "interval_lower_bounds": [
+              0.496981103875307,
+              0.25252610622793176,
+              0.08080324543610548,
+              0.016159026369168356
+            ],
+            "centers": [
+              0.5757707910750507,
+              0.27272819472616633,
+              0.10100405679513186,
+              0.050496957403651115
+            ],
+            "interval_upper_bounds": [
+              0.6565807266645316,
+              0.3030313274735181,
+              0.12120486815415822,
+              0.07069574036511156
+            ]
+          },
+          {
+            "start_time": 1769675058.934461,
+            "end_time": 1769698577.715604,
+            "forecaster_count": 69,
+            "interval_lower_bounds": [
+              0.496981103875307,
+              0.25252610622793176,
+              0.08080324543610548,
+              0.016159026369168356
+            ],
+            "centers": [
+              0.5757707910750507,
+              0.27272819472616633,
+              0.10100405679513186,
+              0.050496957403651115
+            ],
+            "interval_upper_bounds": [
+              0.6565807266645316,
+              0.3030313274735181,
+              0.1313052738336714,
+              0.08079513184584178
+            ]
+          },
+          {
+            "start_time": 1769698577.715604,
+            "end_time": 1769702523.415804,
+            "forecaster_count": 69,
+            "interval_lower_bounds": [
+              0.5205216962002998,
+              0.2502503589375449,
+              0.08208157961524797,
+              0.01601575879396985
+            ],
+            "centers": [
+              0.5705718592964824,
+              0.2802804020100503,
+              0.09909849246231156,
+              0.05004924623115578
+            ],
+            "interval_upper_bounds": [
+              0.649651116988451,
+              0.30030043072505386,
+              0.1301293335363687,
+              0.08007879396984924
+            ]
+          },
+          {
+            "start_time": 1769702523.415804,
+            "end_time": 1769703531.288155,
+            "forecaster_count": 70,
+            "interval_lower_bounds": [
+              0.505062097434255,
+              0.25252610622793176,
+              0.08282332657200812,
+              0.030298174442190667
+            ],
+            "centers": [
+              0.5757707910750507,
+              0.27272819472616633,
+              0.10100405679513186,
+              0.050496957403651115
+            ],
+            "interval_upper_bounds": [
+              0.6111251378954486,
+              0.3030313274735181,
+              0.1414056795131846,
+              0.090894523326572
+            ]
+          },
+          {
+            "start_time": 1769703531.288155,
+            "end_time": 1769704026.014694,
+            "forecaster_count": 71,
+            "interval_lower_bounds": [
+              0.5005016309618266,
+              0.2502503589375449,
+              0.07006964113496778,
+              0.010009849246231155
+            ],
+            "centers": [
+              0.5705718592964824,
+              0.2802804020100503,
+              0.09909849246231156,
+              0.05004924623115578
+            ],
+            "interval_upper_bounds": [
+              0.6436450974169091,
+              0.30030043072505386,
+              0.13613530277650882,
+              0.0900886432160804
+            ]
+          },
+          {
+            "start_time": 1769704026.014694,
+            "end_time": 1769707715.27504,
+            "forecaster_count": 71,
+            "interval_lower_bounds": [
+              0.4955301080802883,
+              0.24776918976545845,
+              0.07334400723654455,
+              0.00991223880597015
+            ],
+            "centers": [
+              0.5748149253731344,
+              0.2775014925373135,
+              0.09812238805970151,
+              0.04956119402985076
+            ],
+            "interval_upper_bounds": [
+              0.6372517189912508,
+              0.2973230277185501,
+              0.1347943916779738,
+              0.06938567164179106
+            ]
+          },
+          {
+            "start_time": 1769707715.27504,
+            "end_time": 1769708876.841123,
+            "forecaster_count": 71,
+            "interval_lower_bounds": [
+              0.5005016461618437,
+              0.23023029964638003,
+              0.05405372316126084,
+              0.010009849246231155
+            ],
+            "centers": [
+              0.5805819095477386,
+              0.270270351758794,
+              0.09909849246231156,
+              0.05004924623115578
+            ],
+            "interval_upper_bounds": [
+              0.6506521400103967,
+              0.29729738693467334,
+              0.12011938480280188,
+              0.07006894472361809
+            ]
+          },
+          {
+            "start_time": 1769708876.841123,
+            "end_time": 1769710299.00176,
+            "forecaster_count": 72,
+            "interval_lower_bounds": [
+              0.4974849431122002,
+              0.23255864896524792,
+              0.05965222786238014,
+              0.010109441624365483
+            ],
+            "centers": [
+              0.5864659898477157,
+              0.262892385786802,
+              0.10009441624365482,
+              0.05054720812182741
+            ],
+            "interval_upper_bounds": [
+              0.6562352196744268,
+              0.30030399453338535,
+              0.14154765933446137,
+              0.09098497461928932
+            ]
+          },
+          {
+            "start_time": 1769710299.00176,
+            "end_time": 1769716792.028815,
+            "forecaster_count": 73,
+            "interval_lower_bounds": [
+              0.5055741291790653,
+              0.23255864896524792,
+              0.07077382966723068,
+              0.010109441624365483
+            ],
+            "centers": [
+              0.5864659898477157,
+              0.262892385786802,
+              0.10009441624365482,
+              0.05054720812182741
+            ],
+            "interval_upper_bounds": [
+              0.6511794783826361,
+              0.30030399453338535,
+              0.14154765933446137,
+              0.09098497461928932
+            ]
+          },
+          {
+            "start_time": 1769716792.028815,
+            "end_time": 1769718068.853783,
+            "forecaster_count": 74,
+            "interval_lower_bounds": [
+              0.5050623990098669,
+              0.23232368544234666,
+              0.08080234392607617,
+              0.016159026369168356
+            ],
+            "centers": [
+              0.595973630831643,
+              0.26262677484787017,
+              0.09090263691683569,
+              0.050496957403651115
+            ],
+            "interval_upper_bounds": [
+              0.6505203699247087,
+              0.29393996723357774,
+              0.1373639846743295,
+              0.07069574036511156
+            ]
+          },
+          {
+            "start_time": 1769718068.853783,
+            "end_time": 1769720028.854741,
+            "forecaster_count": 74,
+            "interval_lower_bounds": [
+              0.5050623990098669,
+              0.2141418317990326,
+              0.07171208023439259,
+              0.020198782961460444
+            ],
+            "centers": [
+              0.595973630831643,
+              0.26262677484787017,
+              0.09090263691683569,
+              0.050496957403651115
+            ],
+            "interval_upper_bounds": [
+              0.6565811187128271,
+              0.29393996723357774,
+              0.12120351588911424,
+              0.07069574036511156
+            ]
+          },
+          {
+            "start_time": 1769720028.854741,
+            "end_time": 1770122655.527,
+            "forecaster_count": 75,
+            "interval_lower_bounds": [
+              0.5402452345255944,
+              0.23711428571428567,
+              0.07318046928916494,
+              0.03091304347826087
+            ],
+            "centers": [
+              0.5979813664596273,
+              0.25773291925465835,
+              0.09276397515527951,
+              0.051521739130434785
+            ],
+            "interval_upper_bounds": [
+              0.6639655172413793,
+              0.29587739130434776,
+              0.14429951690821258,
+              0.07213043478260871
+            ]
+          }
+        ],
+        "latest": {
+          "start_time": 1769720028.854741,
+          "end_time": 1770122655.527,
+          "forecaster_count": 75,
+          "interval_lower_bounds": [
+            0.5402452345255944,
+            0.23711428571428567,
+            0.07318046928916494,
+            0.03091304347826087
+          ],
+          "centers": [
+            0.5979813664596273,
+            0.25773291925465835,
+            0.09276397515527951,
+            0.051521739130434785
+          ],
+          "interval_upper_bounds": [
+            0.6639655172413793,
+            0.29587739130434776,
+            0.14429951690821258,
+            0.07213043478260871
+          ],
+          "forecast_values": [
+            0.5979813664596273,
+            0.25773291925465835,
+            0.09276397515527951,
+            0.051521739130434785
+          ],
+          "means": [
+            0.5678796474513582,
+            0.24857915424232424,
+            0.11731158731574864,
+            0.06622961099056897
+          ],
+          "histogram": null
+        },
+        "score_data": {},
+        "movement": {
+          "divergence": 0.052950769095007365,
+          "direction": "up",
+          "movement": 0.0929205145326496,
+          "period": "604800.0",
+          "option_index": 0
+        }
+      }
+    },
+    "average_coverage": null,
+    "my_forecasts": {
+      "history": [],
+      "latest": null,
+      "score_data": {}
+    }
+  },
+  "user_permission": "forecaster",
+  "vote": {
+    "score": 4,
+    "user_vote": null
+  },
+  "forecasts_count": 289,
+  "subscriptions": [],
+  "unread_comment_count": 0,
+  "last_viewed_at": "2026-01-29T23:15:20.453622Z",
+  "private_note": null,
+  "key_factors": [
+    {
+      "id": 1341,
+      "author": {
+        "id": 289806,
+        "username": "YMitchell",
+        "is_bot": false,
+        "is_staff": false,
+        "metadata": null
+      },
+      "comment_id": 631415,
+      "vote": {
+        "score": 2.0,
+        "aggregated_data": [],
+        "user_vote": null,
+        "count": 0
+      },
+      "question_id": null,
+      "question": null,
+      "question_option": "",
+      "freshness": 2.0,
+      "driver": {
+        "text": "Low recession risk in early 2026",
+        "impact_direction": -1,
+        "certainty": null
+      },
+      "base_rate": null,
+      "news": null,
+      "post": {
+        "id": 41597,
+        "question_type": "multiple_choice",
+        "unit": ""
+      }
+    },
+    {
+      "id": 1342,
+      "author": {
+        "id": 289806,
+        "username": "YMitchell",
+        "is_bot": false,
+        "is_staff": false,
+        "metadata": null
+      },
+      "comment_id": 631415,
+      "vote": {
+        "score": 2.0,
+        "aggregated_data": [],
+        "user_vote": null,
+        "count": 0
+      },
+      "question_id": null,
+      "question": null,
+      "question_option": "",
+      "freshness": 2.0,
+      "driver": {
+        "text": "Increased liquidity in regional banks",
+        "impact_direction": -1,
+        "certainty": null
+      },
+      "base_rate": null,
+      "news": null,
+      "post": {
+        "id": 41597,
+        "question_type": "multiple_choice",
+        "unit": ""
+      }
+    }
+  ],
+  "is_current_content_translated": false
+}

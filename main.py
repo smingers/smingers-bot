@@ -9,9 +9,13 @@ Usage:
     # Forecast a question by URL
     python main.py --url "https://www.metaculus.com/questions/12345/..."
 
-    # Run in dry-run mode (don't submit)
-    python main.py --question 12345 --dry-run
-    python main.py --question 12345 --dry-run-heavy
+    # Run modes:
+    #   test    - cheap models (Haiku), no submission
+    #   preview - production models, no submission
+    #   live    - production models, submits to Metaculus
+    python main.py --question 12345 --mode test
+    python main.py --question 12345 --mode preview
+    python main.py --question 12345 --mode live
 
     # List tournament questions
     python main.py --tournament 32721 --list
@@ -119,11 +123,11 @@ async def forecast_question(
             print(f"Artifacts: {result['artifacts_dir']}")
 
             submission = result.get('submission') or {}
-            effective_mode = config.get("_effective_mode", "dry_run")
+            mode = config.get("mode", "test")
             if submission.get('success'):
                 print("Status: SUBMITTED")
-            elif effective_mode in ("dry_run", "dry_run_heavy"):
-                mode_label = "DRY RUN" if effective_mode == "dry_run" else "DRY RUN (heavy models)"
+            elif mode in ("test", "preview"):
+                mode_label = "TEST" if mode == "test" else "PREVIEW"
                 print(f"Status: {mode_label} (not submitted)")
             else:
                 print(f"Status: FAILED - {submission.get('error', 'Unknown error')}")
@@ -200,8 +204,8 @@ async def forecast_new_questions(
         )
 
     # Print summary and log failures
-    result.print_summary(tournament_id=str(tournament_id), mode=resolved.mode)
-    result.write_failure_log(mode=resolved.mode, source="main.py", tournament_id=str(tournament_id))
+    result.print_summary(tournament_id=str(tournament_id))
+    result.write_failure_log(source="main.py", tournament_id=str(tournament_id))
 
     # Exit with error if any extraction errors occurred
     if result.has_extraction_errors:
@@ -244,13 +248,13 @@ def main():
     parser.add_argument(
         "--dry-run",
         action="store_true",
-        help="Don't actually submit predictions (shortcut for --mode dry_run)"
+        help="Don't actually submit predictions (shortcut for --mode test)"
     )
     parser.add_argument(
         "--mode", "-m",
         type=str,
-        choices=["dry_run", "dry_run_heavy", "production"],
-        help="Run mode: dry_run (cheap models, no submit), dry_run_heavy (production models, no submit), production (production models, submits)"
+        choices=["test", "preview", "live"],
+        help="Run mode: test (cheap models, no submit), preview (production models, no submit), live (production models, submits)"
     )
     parser.add_argument(
         "--config", "-c",

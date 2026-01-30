@@ -2,13 +2,13 @@
 """
 GitHub Actions entry point for automated forecasting.
 
-Modes:
-  - aib: Forecast new questions only (skip already forecasted)
+Strategies:
+  - new-only: Forecast new questions only (skip already forecasted)
   - reforecast: Forecast new + re-forecast old questions
 
 Usage:
-  python run_bot.py --tournament 32916 --mode aib
-  python run_bot.py --tournament 32917 --mode reforecast --reforecast-days 7
+  python run_bot.py --tournament 32916 --strategy new-only
+  python run_bot.py --tournament 32917 --strategy reforecast --reforecast-days 7
 """
 
 import asyncio
@@ -31,7 +31,7 @@ logger = logging.getLogger(__name__)
 
 async def run_forecast(
     tournament_id: str,
-    mode: str = "aib",
+    strategy: str = "new-only",
     reforecast_days: int = 7,
     limit: int = 50,
 ):
@@ -40,11 +40,11 @@ async def run_forecast(
 
     Args:
         tournament_id: Tournament ID or slug (e.g., "32916", "minibench")
-        mode: "aib" (new only) or "reforecast" (new + old)
-        reforecast_days: For reforecast mode, re-forecast if older than this
+        strategy: "new-only" (new questions only) or "reforecast" (new + old)
+        reforecast_days: For reforecast strategy, re-forecast if older than this
         limit: Maximum questions to forecast per run
     """
-    resolved = ResolvedConfig.from_yaml("config.yaml", mode="production")
+    resolved = ResolvedConfig.from_yaml("config.yaml", mode="live")
 
     # Convert tournament_id to int if numeric
     tournament_id_parsed: int | str
@@ -67,18 +67,18 @@ async def run_forecast(
         forecasted_ids = set(my_forecasts.keys()) if my_forecasts else set()
         logger.info(f"Already forecasted: {len(forecasted_ids)} questions")
 
-        # Filter questions based on mode
+        # Filter questions based on strategy
         questions_to_forecast = []
 
-        if mode == "aib":
-            # AIB mode: only forecast new questions (skip already forecasted)
+        if strategy == "new-only":
+            # New-only strategy: only forecast new questions (skip already forecasted)
             for q in questions:
                 if q.id not in forecasted_ids:
                     questions_to_forecast.append(q)
-            logger.info(f"AIB mode: {len(questions_to_forecast)} new questions to forecast")
+            logger.info(f"new-only strategy: {len(questions_to_forecast)} new questions to forecast")
 
-        elif mode == "reforecast":
-            # Reforecast mode: new questions + old forecasts needing update
+        elif strategy == "reforecast":
+            # Reforecast strategy: new questions + old forecasts needing update
             cutoff = datetime.now(timezone.utc) - timedelta(days=reforecast_days)
 
             for q in questions:
@@ -95,7 +95,7 @@ async def run_forecast(
                         # No timestamp available, include to be safe
                         questions_to_forecast.append(q)
 
-            logger.info(f"Reforecast mode: {len(questions_to_forecast)} questions "
+            logger.info(f"reforecast strategy: {len(questions_to_forecast)} questions "
                        f"(new + older than {reforecast_days} days)")
 
         if not questions_to_forecast:
@@ -126,8 +126,8 @@ async def run_forecast(
         )
 
     # Print summary and log failures
-    result.print_summary(tournament_id=tournament_id, mode=mode)
-    result.write_failure_log(mode=mode, source="run_bot.py", tournament_id=tournament_id)
+    result.print_summary(tournament_id=tournament_id, strategy=strategy)
+    result.write_failure_log(strategy=strategy, source="run_bot.py", tournament_id=tournament_id)
 
     # Exit codes:
     # 0 = all success
@@ -148,19 +148,19 @@ def main():
     parser.add_argument(
         "--tournament", "-t",
         required=True,
-        help="Tournament ID or slug (e.g., 32916, minibench, main-site)"
+        help="Tournament ID or slug (e.g., 32916, spring-aib-2026)"
     )
     parser.add_argument(
-        "--mode", "-m",
-        choices=["aib", "reforecast"],
-        default="aib",
-        help="aib=new only, reforecast=new+refresh old"
+        "--strategy", "-s",
+        choices=["new-only", "reforecast"],
+        default="new-only",
+        help="new-only=forecast new questions only, reforecast=new+refresh old"
     )
     parser.add_argument(
         "--reforecast-days",
         type=int,
         default=7,
-        help="Re-forecast if older than this many days (reforecast mode only)"
+        help="Re-forecast if older than this many days (reforecast strategy only)"
     )
     parser.add_argument(
         "--limit",
@@ -180,7 +180,7 @@ def main():
 
     asyncio.run(run_forecast(
         tournament_id=args.tournament,
-        mode=args.mode,
+        strategy=args.strategy,
         reforecast_days=args.reforecast_days,
         limit=args.limit,
     ))

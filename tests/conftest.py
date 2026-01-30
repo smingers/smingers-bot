@@ -233,7 +233,7 @@ Percentile 99: 30
 def sample_config():
     """Sample configuration dictionary."""
     return {
-        "mode": "dry_run",
+        "mode": "test",
         "models": {
             "cheap": {
                 "utility": "openrouter/anthropic/claude-3-5-haiku-latest",
@@ -261,8 +261,7 @@ def sample_config():
 def sample_config_with_active():
     """Config with _active_* keys already set (post mode application)."""
     return {
-        "mode": "dry_run",
-        "_effective_mode": "dry_run",
+        "mode": "test",
         "_active_models": {
             "utility": "openrouter/anthropic/claude-3-5-haiku-latest",
             "summarization": "openrouter/anthropic/claude-3-5-haiku-latest",

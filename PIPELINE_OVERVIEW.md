@@ -98,7 +98,7 @@ The agentic search model (o3 in production) generates a comprehensive ~1000-word
 
 Both are combined and sorted by publication date. A 12-second rate limit delay is enforced between calls (AskNews Pro tier limitation).
 
-**Article Summarization:** Same as Phase 1 — scraped articles are summarized in parallel using Sonnet 4.5 (production) or Haiku (dry run).
+**Article Summarization:** Same as Phase 1 — scraped articles are summarized in parallel using Sonnet 4.5 (preview/live) or Haiku (test mode).
 
 **Output:** Combined research saved to `research/search_current.json`. This context feeds into Step 2.
 
@@ -156,9 +156,9 @@ Final = (P₁ + P₂ + P₃ + P₄ + P₅) / 5
 **Purpose:** Submit the final prediction to Metaculus.
 
 **Modes:**
-- `dry_run` — Uses cheap models (Haiku), does not submit
-- `dry_run_heavy` — Uses production models, does not submit
-- `production` — Uses production models, submits to Metaculus
+- `test` — Uses cheap models (Haiku), does not submit
+- `preview` — Uses production models, does not submit
+- `live` — Uses production models, submits to Metaculus
 
 **Output:** API response saved to `submission/api_response.json`.
 
@@ -183,15 +183,15 @@ Final = (P₁ + P₂ + P₃ + P₄ + P₅) / 5
 
 ### Utility Tasks (Research Phase)
 
-| Task | Dry Run Model | Production Model |
-|------|---------------|------------------|
+| Task | Test Mode Model | Preview/Live Mode Model |
+|------|-----------------|-------------------------|
 | Query Generation | claude-3.5-haiku | o3 |
 | Article Summarization | claude-3.5-haiku | claude-sonnet-4.5 |
 | Agentic Search | claude-3.5-haiku | o3 |
 
 ### Ensemble Agents (Forecasting Phases)
 
-| Agent | Dry Run Model | Production Model |
+| Agent | Test Mode Model | Preview/Live Mode Model |
 |-------|---------------|------------------|
 | #1 | claude-3.5-haiku | claude-sonnet-4.5 |
 | #2 | claude-3.5-haiku | claude-sonnet-4.5 |
