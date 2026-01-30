@@ -301,13 +301,23 @@ class TestEnforceStrictIncreasing:
         for i in range(len(sorted_values) - 1):
             assert sorted_values[i] < sorted_values[i + 1]
 
-    def test_decreasing_values(self):
-        """Test fixing decreasing values."""
-        pct = {1: 100, 50: 50, 99: 10}  # Decreasing - wrong
+    def test_inverted_values_raises(self):
+        """Test that fully inverted percentiles raise an error."""
+        import pytest
+        from src.bot.exceptions import ExtractionError
+
+        pct = {1: 100, 50: 50, 99: 10}  # Inverted - P1 > P99
+        with pytest.raises(ExtractionError, match="Percentiles are inverted"):
+            enforce_strict_increasing(pct)
+
+    def test_minor_decrease_fixed_with_jitter(self):
+        """Test that minor flat/decreasing spots are fixed with jitter."""
+        # P40 and P60 are equal (flat), but overall trend is increasing
+        pct = {1: 10, 40: 50, 60: 50, 99: 100}
         result = enforce_strict_increasing(pct)
 
-        # Should be strictly increasing
-        assert result[1] < result[50] < result[99]
+        # Should be strictly increasing after jitter
+        assert result[1] < result[40] < result[60] < result[99]
 
 
 class TestCleanLine:

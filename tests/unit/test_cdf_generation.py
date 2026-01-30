@@ -270,14 +270,14 @@ class TestEnforceStrictIncreasing:
         for i in range(len(sorted_values) - 1):
             assert sorted_values[i] < sorted_values[i + 1]
 
-    def test_fixes_decreasing_values(self):
-        """Test that decreasing values are fixed."""
-        pct = {1: 100, 50: 50, 99: 10}  # Decreasing
-        result = enforce_strict_increasing(pct)
-        sorted_values = [result[k] for k in sorted(result.keys())]
-        # Should be strictly increasing
-        for i in range(len(sorted_values) - 1):
-            assert sorted_values[i] < sorted_values[i + 1]
+    def test_inverted_values_raises_error(self):
+        """Test that fully inverted percentiles raise an error."""
+        import pytest
+        from src.bot.exceptions import ExtractionError
+
+        pct = {1: 100, 50: 50, 99: 10}  # Inverted - P1 > P99
+        with pytest.raises(ExtractionError, match="Percentiles are inverted"):
+            enforce_strict_increasing(pct)
 
     def test_preserves_key_order(self):
         """Test that percentile keys are preserved."""

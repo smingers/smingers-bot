@@ -112,7 +112,7 @@ For google/google news:
 Your query for google and google news are processed by classical search engines, so please phrase the queries in a way optimal for keyword optimized search (i.e., the phrase you search is likely to appear on desired web pages). Avoid writing overly specific queries. Limit to six words.
 
 For assistant:
-Your query for your assistant will be processed more naturally, so feel free to to write a sentence-long query in natural language. If desired, you can indicate multiple kinds of news articles you're looking for in your query. Keep your query to a maximum of two sentences. Important note: Do not prefix your query with 'Assistant:' or something similar. Please add the word 'Assistant' enclosed in brackets at the end of the query, referring closely to the example below.
+Your query for your assistant will be processed more naturally, so feel free to write a sentence-long query in natural language. Avoid using ambiguous acronyms. Specify relevant criteria (e.g., geography, industry, time period) to ensure the correct scope. If desired, you can indicate multiple kinds of news articles you're looking for in your query. Keep your query to a maximum of two sentences. Important note: Do not prefix your query with 'Assistant:' or something similar. Please add the word 'Assistant' enclosed in brackets at the end of the query, referring closely to the example below.
 
 You should format your answer exactly as below, always formatting the source in brackets () (NOT curly brackets, NOT square brackets [], you need to use normal brackets ()) **on the same line as and after** the query, applicable for Google, Google News and Assistant. Do not wrap your query in quotes. Be sure to include two queries for Google/Google News and one for your assistant.
 
@@ -351,7 +351,7 @@ IMPORTANT: Today's date is {today}. All dates before today's date are in the PAS
 Your task is to analyze the forecasting question and write a series of search queries that will be used by your assistant to find current information/news articles relevant to the question. For each query, indicate whether you wish to utlize google, google news or your assistant directly to retrieve information.
 Your query for google and google news are processed by classical search engines, so please phrase the queries in a way optimal for keyword optimized search. Avoid writing overly specific queries. Limit to six words.
 
-Your query for your assistant will be processed more naturally, so feel free to to write a sentence-long query in natural language. If desired, you can indicate multiple kinds of news articles you're looking for in your query. Keep your query to a maximum of two sentences.
+Your query for your assistant will be processed more naturally, so feel free to write a sentence-long query in natural language. Avoid using ambiguous acronyms. Specify relevant criteria (e.g., geography, industry, time period) to ensure the correct scope. If desired, you can indicate multiple kinds of news articles you're looking for in your query. Keep your query to a maximum of two sentences. Important note: Do not prefix your query with 'Assistant:' or something similar. Please add the word 'Assistant' enclosed in brackets at the end of the query, referring closely to the example below.
 
 You should format your answer exactly as below, always formatting the source in brackets () (NOT curly brackets, NOT square brackets [], you need to use normal brackets ()) **on the same line as and after** the query, applicable for Google, Google News and Assistant. Do not wrap your query in quotes. Be sure to include two queries for Google/Google News and one for your assistant.
 
@@ -604,7 +604,7 @@ For google/google news:
 Your query for google and google news are processed by classical search engines, so please phrase the queries in a way optimal for keyword optimized search (i.e., the phrase you search is likely to appear on desired web pages). Avoid writing overly specific queries. Limit to six words.
 
 For assistant:
-Your query for your assistant will be processed more naturally, so feel free to to write a sentence-long query in natural language. If desired, you can indicate multiple kinds of news articles you're looking for in your query. Keep your query to a maximum of two sentences.
+Your query for your assistant will be processed more naturally, so feel free to write a sentence-long query in natural language. Avoid using ambiguous acronyms. Specify relevant criteria (e.g., geography, industry, time period) to ensure the correct scope. If desired, you can indicate multiple kinds of news articles you're looking for in your query. Keep your query to a maximum of two sentences. Important note: Do not prefix your query with 'Assistant:' or something similar. Please add the word 'Assistant' enclosed in brackets at the end of the query, referring closely to the example below.
 
 You should format your answer exactly as below, always formatting the source in brackets () (NOT curly brackets, NOT squared brackets [], you need to use normal brackets ()) **on the same line as and after** the query, applicable for Google, Google News and Assistant. Do not wrap your query in quotes. Be sure to include two queries for Google/Google News and one for your assistant.
 
@@ -676,7 +676,11 @@ It might be a good idea to set a wide 90/10 confidence intervals to account for 
 For your final outside view prediction, please keep in mind the following:
 - Please notice the units requested (e.g. whether you represent a number as 1,000,000 or 1m).
 - Never use scientific notation.
-- Always start with a smaller number (more negative if negative) and then increase from there
+
+**CRITICAL: Percentile values MUST be strictly increasing.**
+- Percentile 10 = low value (only 10% of outcomes fall below this)
+- Percentile 90 = high value (90% of outcomes fall below this)
+- Each percentile value must be GREATER than the previous one
 
 Format your answer as below:
 
@@ -788,6 +792,11 @@ You are suggested to use the below checklist to verify the quality of your forec
 **Essential formatting requirements**
 (a) For large numbers, please DO NOT output commas between numbers like 1,000,000. Instead, just write 1000000. If not, this will cause a parsing error.
 (b) You MUST prefix the final percentiles with Distribution: as a regex will be programmed to read text below 'Distribution:'.
+
+**CRITICAL: Percentile values MUST be strictly increasing.**
+- Percentile 1 = lowest value (only 1% of outcomes fall below this)
+- Percentile 99 = highest value (99% of outcomes fall below this)
+- Each percentile value must be GREATER than the previous one
 
 Format your answer as below.
 

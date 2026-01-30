@@ -271,15 +271,34 @@ def enforce_strict_increasing(pct_dict: Dict[int, float]) -> Dict[int, float]:
     """
     Ensure strictly increasing values by adding tiny jitter if necessary.
 
-    This fixes cases where the LLM outputs flat or decreasing percentile values.
+    This fixes cases where the LLM outputs flat percentile values (e.g., P40=10.0, P60=10.0).
+
+    However, if the distribution is fully INVERTED (P1 > P99), this indicates the model
+    misunderstood CDF semantics and we raise an error rather than silently corrupting the data.
 
     Args:
         pct_dict: Dictionary mapping percentile keys to values
 
     Returns:
         New dictionary with strictly increasing values
+
+    Raises:
+        ExtractionError: If percentiles are inverted (P1 > P99)
     """
     sorted_items = sorted(pct_dict.items())
+
+    # Check for inverted distribution (model misunderstood percentile semantics)
+    if len(sorted_items) >= 2:
+        first_key, first_val = sorted_items[0]
+        last_key, last_val = sorted_items[-1]
+
+        if first_val > last_val:
+            raise ExtractionError(
+                f"Percentiles are inverted: P{first_key}={first_val} > P{last_key}={last_val}. "
+                f"Percentile values must increase (P1 should be lowest, P99 highest)."
+            )
+
+    # Apply jitter for minor flat spots (e.g., P40=10.0, P60=10.0)
     last_val = -float('inf')
     new_pct_dict = {}
 

@@ -1,0 +1,166 @@
+{
+  "centralized_research": {
+    "historical": {
+      "forecaster_id": "-1",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Pakistan monetary policy rate trends",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "State Bank of Pakistan economic forecast",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Analyze historical State Bank of Pakistan policy rate decisions, current economic challenges, and potential future monetary policy scenarios for 2026",
+          "tool": "Agent",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google",
+        "Google News"
+      ]
+    },
+    "current": {
+      "forecaster_id": "0",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Pakistan monetary policy inflation trends",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "State Bank of Pakistan economic forecast",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "What are the current economic challenges and monetary policy directions for Pakistan in 2026?",
+          "tool": "Assistant",
+          "success": true,
+          "num_results": 26
+        }
+      ],
+      "tools_used": [
+        "Assistant",
+        "Google",
+        "Google News"
+      ]
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-3.5-haiku",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4282,
+        "token_output": 741,
+        "cost": 0.0063896000000000005,
+        "duration_seconds": 17.136096954345703
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17348,
+        "token_output": 824,
+        "cost": 0.0171744,
+        "duration_seconds": 20.43798303604126
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-3.5-haiku",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4282,
+        "token_output": 739,
+        "cost": 0.0063816,
+        "duration_seconds": 17.136369943618774
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17384,
+        "token_output": 852,
+        "cost": 0.017315200000000003,
+        "duration_seconds": 20.437958002090454
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/anthropic/claude-3.5-haiku",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4282,
+        "token_output": 781,
+        "cost": 0.006549600000000001,
+        "duration_seconds": 17.136441946029663
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17346,
+        "token_output": 743,
+        "cost": 0.0168488,
+        "duration_seconds": 20.437813997268677
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/anthropic/claude-3.5-haiku",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4282,
+        "token_output": 777,
+        "cost": 0.0065336000000000005,
+        "duration_seconds": 17.136500120162964
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17388,
+        "token_output": 816,
+        "cost": 0.017174400000000003,
+        "duration_seconds": 20.43777370452881
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/anthropic/claude-3.5-haiku",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4282,
+        "token_output": 762,
+        "cost": 0.0064736,
+        "duration_seconds": 17.13657307624817
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17368,
+        "token_output": 854,
+        "cost": 0.0173104,
+        "duration_seconds": 20.437570095062256
+      }
+    }
+  }
+}

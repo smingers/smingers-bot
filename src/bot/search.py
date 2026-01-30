@@ -166,16 +166,16 @@ class SearchPipeline:
             queries_text = search_queries_block.group(1).strip()
 
             # Parse queries with sources
-            # Format: 1. "text" (Source) or 1. text (Source)
+            # Format: 1. "text" (Source) or 1. text (Source) or 1. text [Source]
             search_queries = re.findall(
-                r'(?:\d+\.\s*)?(["\']?(.*?)["\']?)\s*\((Google|Google News|Assistant|Agent)\)',
+                r'(?:\d+\.\s*)?(["\']?(.*?)["\']?)\s*[\(\[](Google|Google News|Assistant|Agent|Deep Research|Deep Research Medium|Deep Research High)[\)\]]',
                 queries_text
             )
 
             # Fallback to unquoted queries
             if not search_queries:
                 search_queries = re.findall(
-                    r'(?:\d+\.\s*)?([^(\n]+)\s*\((Google|Google News|Assistant|Agent)\)',
+                    r'(?:\d+\.\s*)?([^(\[\n]+)\s*[\(\[](Google|Google News|Assistant|Agent|Deep Research|Deep Research Medium|Deep Research High)[\)\]]',
                     queries_text
                 )
 
@@ -223,6 +223,12 @@ class SearchPipeline:
                     tasks.append(self._call_asknews(query))
                 elif source == "Agent":
                     tasks.append(self._agentic_search(query))
+                elif source == "Deep Research":
+                    tasks.append(self._call_asknews_deep_research(query, preset="low-depth"))
+                elif source == "Deep Research Medium":
+                    tasks.append(self._call_asknews_deep_research(query, preset="medium-depth"))
+                elif source == "Deep Research High":
+                    tasks.append(self._call_asknews_deep_research(query, preset="high-depth"))
 
             if not tasks:
                 logger.info(f"Forecaster {forecaster_id}: No tasks generated")
@@ -461,9 +467,13 @@ class SearchPipeline:
 
     async def _call_asknews(self, query: str) -> str:
         """
-        Search AskNews for relevant articles.
+        Search AskNews for relevant articles and run Deep Research.
 
-        Uses dual strategy: latest news + historical news.
+        Uses three strategies:
+        1. Latest news (recent/hot articles)
+        2. Historical news (news knowledge archive)
+        3. Deep Research (AI-synthesized analysis)
+
         Uses semaphore to respect AskNews free tier concurrency limits.
         """
         if not self.asknews_client_id or not self.asknews_secret:
@@ -472,6 +482,9 @@ class SearchPipeline:
 
         # Use semaphore to limit concurrent AskNews calls (free tier limit)
         async with self._asknews_semaphore:
+            formatted_articles = ""
+
+            # Part 1: News search (latest + historical)
             try:
                 from asknews_sdk import AskNewsSDK
 
@@ -507,7 +520,7 @@ class SearchPipeline:
                     strategy="news knowledge"
                 )
 
-                # Format results
+                # Format news results
                 formatted_articles = "Here are the relevant news articles:\n\n"
 
                 hot_articles = hot_response.as_dicts
@@ -543,11 +556,136 @@ class SearchPipeline:
                 if not hot_articles and not historical_articles:
                     formatted_articles += "No articles were found.\n\n"
 
-                return formatted_articles
+            except Exception as e:
+                logger.error(f"[call_asknews] News search error: {e}")
+                formatted_articles = f"Error retrieving news articles: {e}\n\n"
+
+            # Part 2: Deep Research
+            try:
+                logger.debug(f"[call_asknews] Waiting {rate_limit_delay}s before deep research...")
+                await asyncio.sleep(rate_limit_delay)
+
+                logger.info(f"[call_asknews] Running deep research for: {query[:50]}...")
+                deep_research_result = await self._call_asknews_deep_research(query, preset="low-depth", _skip_semaphore=True)
+
+                formatted_articles += f"\n--- Deep Research Analysis ---\n{deep_research_result}\n"
+                logger.info(f"[call_asknews] Deep research complete, got {len(deep_research_result)} chars")
 
             except Exception as e:
-                logger.error(f"[call_asknews] Error: {e}")
-                return f"Error retrieving news articles: {e}"
+                logger.error(f"[call_asknews] Deep research error: {e}")
+                formatted_articles += f"\n--- Deep Research Analysis ---\nError: {e}\n"
+
+            return formatted_articles
+
+    async def _call_asknews_deep_research(
+        self,
+        query: str,
+        preset: str = "low-depth",
+        _skip_semaphore: bool = False,
+    ) -> str:
+        """
+        Use AskNews Deep Research for AI-synthesized research.
+
+        Matches the template bot's implementation with three depth presets.
+
+        Args:
+            query: Research query/question
+            preset: One of "low-depth", "medium-depth", "high-depth"
+            _skip_semaphore: Internal flag to skip semaphore when called from _call_asknews
+
+        Returns:
+            Formatted research text
+        """
+        if not self.asknews_client_id or not self.asknews_secret:
+            logger.warning("AskNews credentials not set")
+            return "AskNews credentials not configured."
+
+        async def _do_deep_research():
+            try:
+                from asknews_sdk import AsyncAskNewsSDK
+                from asknews_sdk.dto.deepnews import CreateDeepNewsResponse
+            except ImportError:
+                logger.error("asknews_sdk not installed or outdated. Run: poetry add asknews@0.11.6")
+                return "AskNews SDK not available for deep research."
+
+            # Configure based on preset
+            # Metaculus plan only allows asknews as source
+            if preset == "low-depth":
+                sources = ["asknews"]
+                search_depth = 1
+                max_depth = 1
+                filter_params = None
+            elif preset == "medium-depth":
+                sources = ["asknews"]
+                search_depth = 2
+                max_depth = 4
+                filter_params = None
+            elif preset == "high-depth":
+                sources = ["asknews"]
+                search_depth = 4
+                max_depth = 6
+                filter_params = None
+            else:
+                logger.warning(f"Unknown preset '{preset}', using low-depth")
+                sources = ["asknews"]
+                search_depth = 1
+                max_depth = 1
+                filter_params = None
+
+            model = "deepseek-basic"  # Default model matching template
+
+            logger.info(
+                f"[asknews_deep_research] Starting {preset} research: {query[:50]}... "
+                f"(sources={sources}, depth={search_depth}/{max_depth})"
+            )
+
+            try:
+                async with AsyncAskNewsSDK(
+                    client_id=self.asknews_client_id,
+                    client_secret=self.asknews_secret,
+                    scopes={"chat", "news", "stories", "analytics"},
+                ) as sdk:
+                    response = await sdk.chat.get_deep_news(
+                        messages=[{"role": "user", "content": query}],
+                        search_depth=search_depth,
+                        max_depth=max_depth,
+                        sources=sources,
+                        stream=False,
+                        return_sources=False,
+                        model=model,
+                        inline_citations="numbered",
+                        filter_params=filter_params,
+                    )
+
+                    if not isinstance(response, CreateDeepNewsResponse):
+                        raise ValueError("Response is not a CreateDeepNewsResponse")
+
+                    text = response.choices[0].message.content
+
+                    # Extract content from <final_answer> tags if present
+                    start_tag = "<final_answer>"
+                    end_tag = "</final_answer>"
+                    start_index = text.find(start_tag)
+
+                    if start_index != -1:
+                        start_index += len(start_tag)
+                        end_index = text.find(end_tag, start_index)
+                        if end_index != -1:
+                            text = text[start_index:end_index].strip()
+
+                    logger.info(f"[asknews_deep_research] Complete, got {len(text)} chars")
+                    return text
+
+            except Exception as e:
+                logger.error(f"[asknews_deep_research] Error: {e}")
+                return f"Error running deep research: {e}"
+
+        # If called from _call_asknews, semaphore is already held
+        if _skip_semaphore:
+            return await _do_deep_research()
+        else:
+            async with self._asknews_semaphore:
+                return await _do_deep_research()
 
     # -------------------------------------------------------------------------
     # Agentic Search
