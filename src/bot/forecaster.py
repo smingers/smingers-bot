@@ -90,6 +90,7 @@ class Forecaster:
     async def initialize(self):
         """Initialize database and other async resources."""
         await self.database.initialize()
+        await self.database.migrate_schema()
 
     async def close(self):
         """Clean up resources."""
