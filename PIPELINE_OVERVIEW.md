@@ -183,15 +183,15 @@ Final = (P₁ + P₂ + P₃ + P₄ + P₅) / 5
 
 ### Utility Tasks (Research Phase)
 
-| Task | Dry Run Model | Production Model |
-|------|---------------|------------------|
+| Task | Test Mode Model | Preview/Live Mode Model |
+|------|-----------------|-------------------------|
 | Query Generation | claude-3.5-haiku | o3 |
 | Article Summarization | claude-3.5-haiku | claude-sonnet-4.5 |
 | Agentic Search | claude-3.5-haiku | o3 |
 
 ### Ensemble Agents (Forecasting Phases)
 
-| Agent | Dry Run Model | Production Model |
+| Agent | Test Mode Model | Preview/Live Mode Model |
 |-------|---------------|------------------|
 | #1 | claude-3.5-haiku | claude-sonnet-4.5 |
 | #2 | claude-3.5-haiku | claude-sonnet-4.5 |

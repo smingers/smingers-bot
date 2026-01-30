@@ -204,8 +204,8 @@ async def forecast_new_questions(
         )
 
     # Print summary and log failures
-    result.print_summary(tournament_id=str(tournament_id), strategy="new-only")
-    result.write_failure_log(strategy="new-only", source="main.py", tournament_id=str(tournament_id))
+    result.print_summary(tournament_id=str(tournament_id))
+    result.write_failure_log(strategy="batch", source="main.py", tournament_id=str(tournament_id))
 
     # Exit with error if any extraction errors occurred
     if result.has_extraction_errors:

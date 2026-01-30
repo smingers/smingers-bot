@@ -698,7 +698,7 @@ final_pred = max(0.001, min(0.999, 0.386))
 - `forecast_result`: Contains `final_prediction` (0.386)
 - `dry_run`: False (in live mode)
 
-### Process (Production Mode)
+### Process (Live Mode)
 
 #### 8A. Submit to Metaculus API (`metaculus_api.py`)
 
@@ -1333,7 +1333,7 @@ ensemble:
 - Report generation: 5 seconds
 - Database persistence: 1 second
 
-### Cost Breakdown (Production Mode)
+### Cost Breakdown (Live Mode)
 
 **Per forecast (~$0.03-0.05):**
 - Query generation (Haiku): $0.0002
