@@ -326,7 +326,7 @@ class TestRunResultWriteFailureLog:
         result = RunResult()
 
         with patch("src.runner.FAILURE_LOG_PATH", tmp_path / "test.log"):
-            result.write_failure_log(strategy="new-only")
+            result.write_failure_log()
 
         assert not (tmp_path / "test.log").exists()
 
@@ -337,7 +337,7 @@ class TestRunResultWriteFailureLog:
 
         log_path = tmp_path / "test.log"
         with patch("src.runner.FAILURE_LOG_PATH", log_path):
-            result.write_failure_log(strategy="new-only", source="test", tournament_id="12345")
+            result.write_failure_log(source="test", tournament_id="12345", strategy="new-only")
 
         assert log_path.exists()
         content = log_path.read_text()
