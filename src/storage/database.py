@@ -29,6 +29,8 @@ class ForecastRecord:
     total_cost: float = 0.0
     config_hash: str = ""
     tournament_id: Optional[int] = None
+    mode: str = "unknown"  # test, preview, live
+    prediction_data: str = ""  # JSON: full prediction (percentiles for numeric, probabilities for MC)
 
 
 @dataclass
@@ -40,6 +42,7 @@ class AgentPredictionRecord:
     weight: float
     prediction: float
     reasoning_length: int  # Character count of reasoning
+    prediction_data: str = ""  # JSON: full prediction data for this agent
 
 
 @dataclass
@@ -78,7 +81,8 @@ class ForecastDatabase:
                     total_cost REAL DEFAULT 0.0,
                     config_hash TEXT,
                     tournament_id INTEGER,
-                    created_at TEXT NOT NULL
+                    created_at TEXT NOT NULL,
+                    mode TEXT
                 );
 
                 -- Agent predictions within each forecast
@@ -113,6 +117,28 @@ class ForecastDatabase:
             """)
             await db.commit()
 
+    async def migrate_schema(self) -> None:
+        """Run schema migrations to add new columns."""
+        async with aiosqlite.connect(self.db_path) as db:
+            # Check forecasts table columns
+            cursor = await db.execute("PRAGMA table_info(forecasts)")
+            forecast_columns = {row[1] for row in await cursor.fetchall()}
+
+            if "mode" not in forecast_columns:
+                await db.execute("ALTER TABLE forecasts ADD COLUMN mode TEXT")
+
+            if "prediction_data" not in forecast_columns:
+                await db.execute("ALTER TABLE forecasts ADD COLUMN prediction_data TEXT")
+
+            # Check agent_predictions table columns
+            cursor = await db.execute("PRAGMA table_info(agent_predictions)")
+            agent_columns = {row[1] for row in await cursor.fetchall()}
+
+            if "prediction_data" not in agent_columns:
+                await db.execute("ALTER TABLE agent_predictions ADD COLUMN prediction_data TEXT")
+
+            await db.commit()
+
     # =========================================================================
     # Insert Operations
     # =========================================================================
@@ -124,8 +150,8 @@ class ForecastDatabase:
                 INSERT OR REPLACE INTO forecasts
                 (id, question_id, timestamp, question_type, question_title,
                  base_rate, final_prediction, actual_outcome, brier_score,
-                 total_cost, config_hash, tournament_id, created_at)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                 total_cost, config_hash, tournament_id, created_at, mode, prediction_data)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """, (
                 record.id,
                 record.question_id,
@@ -140,6 +166,8 @@ class ForecastDatabase:
                 record.config_hash,
                 record.tournament_id,
                 datetime.now(timezone.utc).isoformat(),
+                record.mode,
+                record.prediction_data,
             ))
             await db.commit()
 
@@ -148,8 +176,8 @@ class ForecastDatabase:
         async with aiosqlite.connect(self.db_path) as db:
             await db.execute("""
                 INSERT INTO agent_predictions
-                (forecast_id, agent_name, model, weight, prediction, reasoning_length)
-                VALUES (?, ?, ?, ?, ?, ?)
+                (forecast_id, agent_name, model, weight, prediction, reasoning_length, prediction_data)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
             """, (
                 record.forecast_id,
                 record.agent_name,
@@ -157,6 +185,7 @@ class ForecastDatabase:
                 record.weight,
                 record.prediction,
                 record.reasoning_length,
+                record.prediction_data,
             ))
             await db.commit()
 
@@ -345,3 +374,90 @@ class ForecastDatabase:
             """, (limit,))
             rows = await cursor.fetchall()
             return [dict(row) for row in rows]
+
+    async def get_forecasts_with_agents(
+        self,
+        mode: Optional[str] = None,
+        question_type: Optional[str] = None,
+        limit: int = 100
+    ) -> list[dict]:
+        """
+        Get forecasts with agent predictions for dashboard display.
+        Returns forecasts with agent predictions pivoted into columns.
+        """
+        async with aiosqlite.connect(self.db_path) as db:
+            db.row_factory = aiosqlite.Row
+
+            # Build WHERE clause
+            conditions = []
+            params: list[Any] = []
+            if mode:
+                conditions.append("f.mode = ?")
+                params.append(mode)
+            if question_type:
+                conditions.append("f.question_type = ?")
+                params.append(question_type)
+
+            where_clause = "WHERE " + " AND ".join(conditions) if conditions else ""
+            params.append(limit)
+
+            cursor = await db.execute(f"""
+                SELECT
+                    f.id,
+                    f.question_id,
+                    f.timestamp,
+                    f.mode,
+                    f.question_type,
+                    f.question_title,
+                    f.final_prediction,
+                    f.prediction_data,
+                    f.total_cost,
+                    f.created_at,
+                    MAX(CASE WHEN ap.agent_name IN ('forecaster_1', 'agent_1') THEN ap.prediction END) as agent_1,
+                    MAX(CASE WHEN ap.agent_name IN ('forecaster_2', 'agent_2') THEN ap.prediction END) as agent_2,
+                    MAX(CASE WHEN ap.agent_name IN ('forecaster_3', 'agent_3') THEN ap.prediction END) as agent_3,
+                    MAX(CASE WHEN ap.agent_name IN ('forecaster_4', 'agent_4') THEN ap.prediction END) as agent_4,
+                    MAX(CASE WHEN ap.agent_name IN ('forecaster_5', 'agent_5') THEN ap.prediction END) as agent_5,
+                    MAX(CASE WHEN ap.agent_name IN ('forecaster_1', 'agent_1') THEN ap.prediction_data END) as agent_1_data,
+                    MAX(CASE WHEN ap.agent_name IN ('forecaster_2', 'agent_2') THEN ap.prediction_data END) as agent_2_data,
+                    MAX(CASE WHEN ap.agent_name IN ('forecaster_3', 'agent_3') THEN ap.prediction_data END) as agent_3_data,
+                    MAX(CASE WHEN ap.agent_name IN ('forecaster_4', 'agent_4') THEN ap.prediction_data END) as agent_4_data,
+                    MAX(CASE WHEN ap.agent_name IN ('forecaster_5', 'agent_5') THEN ap.prediction_data END) as agent_5_data
+                FROM forecasts f
+                LEFT JOIN agent_predictions ap ON f.id = ap.forecast_id
+                {where_clause}
+                GROUP BY f.id
+                ORDER BY f.timestamp DESC
+                LIMIT ?
+            """, params)
+            rows = await cursor.fetchall()
+            return [dict(row) for row in rows]
+
+    async def update_forecast_mode(self, forecast_id: str, mode: str) -> None:
+        """Update the mode for a specific forecast."""
+        async with aiosqlite.connect(self.db_path) as db:
+            await db.execute(
+                "UPDATE forecasts SET mode = ? WHERE id = ?",
+                (mode, forecast_id)
+            )
+            await db.commit()
+
+    async def update_forecast_prediction_data(self, forecast_id: str, prediction_data: str) -> None:
+        """Update the prediction_data JSON for a specific forecast."""
+        async with aiosqlite.connect(self.db_path) as db:
+            await db.execute(
+                "UPDATE forecasts SET prediction_data = ? WHERE id = ?",
+                (prediction_data, forecast_id)
+            )
+            await db.commit()
+
+    async def update_agent_prediction_data(
+        self, forecast_id: str, agent_name: str, prediction_data: str
+    ) -> None:
+        """Update the prediction_data JSON for a specific agent prediction."""
+        async with aiosqlite.connect(self.db_path) as db:
+            await db.execute(
+                "UPDATE agent_predictions SET prediction_data = ? WHERE forecast_id = ? AND agent_name = ?",
+                (prediction_data, forecast_id, agent_name)
+            )
+            await db.commit()

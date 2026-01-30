@@ -10,6 +10,7 @@ Simplified pipeline that delegates to type-specific handlers:
 """
 
 import asyncio
+import json
 import logging
 import yaml
 from pathlib import Path
@@ -491,17 +492,21 @@ class Forecaster:
         """Save forecast data to database for analytics."""
         forecast_id = f"{artifacts.question_id}_{artifacts.timestamp}"
 
-        # Extract prediction value based on question type
+        # Extract prediction value and full prediction data based on question type
         if question.question_type == "binary":
             final_prediction = forecast_result.get("final_prediction")
+            prediction_data = json.dumps({"probability": final_prediction})
         elif question.question_type == "numeric":
             percentiles = forecast_result.get("final_percentiles", {})
             final_prediction = percentiles.get("50", percentiles.get(50))
+            prediction_data = json.dumps({"percentiles": percentiles})
         elif question.question_type == "multiple_choice":
             probs = forecast_result.get("final_probabilities", {})
             final_prediction = max(probs.values()) if probs else None
+            prediction_data = json.dumps({"probabilities": probs})
         else:
             final_prediction = None
+            prediction_data = "{}"
 
         # Save main forecast record
         record = ForecastRecord(
@@ -515,22 +520,29 @@ class Forecaster:
             total_cost=costs.get("total_cost", 0),
             config_hash=self.artifact_store._hash_config(self.config),
             tournament_id=self.config.get("submission", {}).get("tournament_id"),
+            mode=self.resolved_config.mode,
+            prediction_data=prediction_data,
         )
         await self.database.insert_forecast(record)
 
         # Save agent predictions
         for agent_result in forecast_result.get("agent_results", []):
-            # Get prediction value based on question type
+            # Get prediction value and full data based on question type
             # Binary: probability, Numeric: median from percentiles, Multiple Choice: max prob
             pred_value = None
+            agent_pred_data = "{}"
+
             if hasattr(agent_result, 'probability') and agent_result.probability is not None:
                 pred_value = agent_result.probability
+                agent_pred_data = json.dumps({"probability": agent_result.probability})
             elif hasattr(agent_result, 'percentiles') and agent_result.percentiles:
-                # Use median for numeric
+                # Use median for numeric, store all percentiles
                 pred_value = agent_result.percentiles.get(50, agent_result.percentiles.get("50"))
+                agent_pred_data = json.dumps({"percentiles": agent_result.percentiles})
             elif hasattr(agent_result, 'probabilities') and agent_result.probabilities:
-                # Use max for multiple choice
+                # Use max for multiple choice, store full distribution
                 pred_value = max(agent_result.probabilities) if agent_result.probabilities else None
+                agent_pred_data = json.dumps({"probabilities": agent_result.probabilities})
 
             agent_record = AgentPredictionRecord(
                 forecast_id=forecast_id,
@@ -539,6 +551,7 @@ class Forecaster:
                 weight=agent_result.weight,
                 prediction=pred_value or 0.0,  # Default to 0 if no prediction
                 reasoning_length=len(agent_result.step2_output) if agent_result.step2_output else 0,
+                prediction_data=agent_pred_data,
             )
             await self.database.insert_agent_prediction(agent_record)
 

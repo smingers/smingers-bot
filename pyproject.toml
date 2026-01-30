@@ -23,6 +23,7 @@ dependencies = [
     "trafilatura>=1.6.0",
     "lxml>=5.0.0",
     "asknews (>=0.13.10,<0.14.0)",
+    "streamlit>=1.40.0",
 ]
 
 [project.scripts]
