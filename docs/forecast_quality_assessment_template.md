@@ -2,308 +2,220 @@
 
 ## Overview
 
-This template provides a standardized framework for evaluating AI forecasting agent performance. Use it to assess individual forecast runs and enable cross-forecast comparison to identify trends.
+This template produces a narrative analysis of AI forecasting agent performance, focusing on research quality, reasoning soundness, and superforecasting principles. The goal is consistent, comparable assessments across forecast runs.
 
 ---
 
-## Usage Instructions
+## Prompt Template
 
-Start a new conversation with:
+Copy and paste this to start a new assessment conversation:
 
 ```
-Analyze the forecast run for {QUESTION_ID}_{TIMESTAMP} using the Forecast Quality Assessment template located at docs/forecast_quality_assessment_template.md
+Analyze the forecast run for {QUESTION_ID}_{TIMESTAMP}
 
-Path: data/{QUESTION_ID}_{TIMESTAMP}/
+Read all artifacts in data/{QUESTION_ID}_{TIMESTAMP}/ including:
+- question.json, metadata.json, prediction.json
+- research/query_historical.md, query_current.md
+- research/search_historical.json, search_current.json
+- ensemble/agent_*_step1.md (outside view)
+- ensemble/agent_*_step2.md (inside view)
+- ensemble/aggregation.json
 
-Cross-pollination structure for this run:
-- Agent 1 receives: Self
-- Agent 2 receives: Agent 4's Step 1
-- Agent 3 receives: Agent 2's Step 1
-- Agent 4 receives: Agent 3's Step 1
-- Agent 5 receives: Self
+Cross-pollination structure:
+- Agent 1 (Sonnet 4.5): receives own Step 1
+- Agent 2 (Sonnet 4.5): receives Agent 4's Step 1
+- Agent 3 (o3-mini): receives Agent 2's Step 1
+- Agent 4 (o3): receives Agent 3's Step 1
+- Agent 5 (o3): receives own Step 1
 
-Please complete all sections of the assessment template with specific evidence from the artifacts.
-```
-
----
-
-## Scoring Guide
-
-Score each criterion 0-2:
-- **0** = Missing, incorrect, or poor
-- **1** = Present but partial or inconsistent
-- **2** = Fully demonstrated, high quality
+Produce an assessment report following the structure below. Use specific evidence and quotes from the artifacts. Be analytical and critical - identify both strengths and weaknesses.
 
 ---
 
-# ASSESSMENT REPORT
+# FORECAST QUALITY ASSESSMENT REPORT
 
-## Metadata
+## Summary
 
-| Field | Value |
-|-------|-------|
-| Question ID | |
-| Question Title | |
-| Question Type | binary / numeric / multiple_choice |
-| Forecast Date | |
-| Resolution Date | |
-| Forecast Window | X days |
-| Final Prediction | |
-| Agent Predictions | A1: %, A2: %, A3: %, A4: %, A5: % |
-| Spread (Max - Min) | |
-| Total Cost | $ |
-| Duration | seconds |
+Provide a brief overview:
+- Question ID and title
+- Final prediction (aggregated) and individual agent predictions
+- Forecast timeframe
+- One-sentence assessment of overall quality
 
 ---
 
-## Section 1: Research Quality
+## 1. Research Query Analysis: Historical vs. Current
 
-### 1.1 Query Generation
+### Query Discreteness
 
-| Criterion | Score (0-2) | Evidence/Notes |
-|-----------|-------------|----------------|
-| Historical queries target base rates | | |
-| Current queries target recent developments | | |
-| Queries are discrete (minimal overlap) | | |
-| Queries cover key aspects of question | | |
-| No hallucinated search terms | | |
-| **Subtotal** | /10 | |
+List the actual queries generated for historical and current research. Then assess:
 
-### 1.2 Research Output Quality
+**Historical Queries:**
+- List each query
 
-| Criterion | Score (0-2) | Evidence/Notes |
-|-----------|-------------|----------------|
-| Surfaced decision-relevant information | | |
-| Identified critical recent events | | |
-| Sources are credible/authoritative | | |
-| Research is factual (no forecasts embedded) | | |
-| Gaps/limitations acknowledged | | |
-| **Subtotal** | /10 | |
+**Current Queries:**
+- List each query
 
-**Research Quality Score: /20**
+**Assessment Table:**
 
-### Key Information Surfaced
+| Aspect | Historical | Current |
+|--------|------------|---------|
+| Temporal focus | | |
+| Content type | | |
+| Unique contribution | | |
+
+Evaluate:
+- How discrete vs. overlapping are the query sets?
+- Did historical queries target base rate establishment?
+- Did current queries surface recent decision-relevant events?
+- What critical information gaps exist in the queries?
+
+### Do Research Outputs Offer Forecasts?
+
+Assess whether the research outputs remain factual or inappropriately include probability estimates. Research should inform, not forecast.
+
+### Research Quality Summary
+
+- Key information successfully surfaced
+- Critical information missed
+- Source quality assessment
+
+---
+
+## 2. Agent Reasoning Analysis
+
+For each agent, analyze BOTH Step 1 (outside view) and Step 2 (inside view):
+
+### Agent 1 ({model}): Step 1 X% → Step 2 Y%
+
+**Step 1 (Outside View):**
+- Base rate methodology used
+- Reference class selection
+- Key reasoning points
+
+**Step 2 (Inside View):**
+- How did they update from Step 1?
+- Key evidence they incorporated
+- Adjustment rationale
+
+**Strengths:**
+-
+
+**Weaknesses:**
+-
+
+**Superforecasting Principles:**
+- Base rate anchoring: Strong/Moderate/Weak
+- Evidence integration: Strong/Moderate/Weak
+- Calibration discipline: Strong/Moderate/Weak
+
+[Repeat for Agents 2-5]
+
+---
+
+## 3. Cross-Pollination Effectiveness
+
+### Cross-Pollination Flow
+
+| Agent | Receives From | Input Probability | Own Step 1 | Final Step 2 | Delta |
+|-------|---------------|-------------------|------------|--------------|-------|
+| A1 | Self | | | | |
+| A2 | A4 | | | | |
+| A3 | A2 | | | | |
+| A4 | A3 | | | | |
+| A5 | Self | | | | |
+
+### Assessment
+
+For each cross-pollinated agent (A2, A3, A4):
+- Did they meaningfully engage with the received input?
+- Did they over-weight or under-weight the input?
+- Did cross-pollination improve diversity of perspectives?
+
+**Pattern Analysis:**
+- Did self-pollinated agents (A1, A5) move in different directions than cross-pollinated agents?
+- Is there evidence that cross-pollination is improving update discipline?
+
+---
+
+## 4. Factual Accuracy & Comprehension
+
+### Question Understanding
+
+- Did all agents correctly understand the resolution criteria?
+- Did they accurately identify the forecast timeframe?
+- Did they correctly assess the current status/state of affairs?
+
+### Factual Consensus
+
+List facts that all/most agents correctly identified:
 1.
 2.
 3.
 
-### Critical Information Missed (if any)
--
+### Factual Errors or Ambiguities
+
+| Agent | Error/Ambiguity | Description | Impact |
+|-------|-----------------|-------------|--------|
+| | | | High/Medium/Low |
+
+### Hallucinations
+
+Were there any invented facts, dates, events, or sources?
 
 ---
 
-## Section 2: Base Rate Reasoning
-
-| Criterion | A1 | A2 | A3 | A4 | A5 | Notes |
-|-----------|----|----|----|----|----| ------|
-| Anchors on historical frequency | | | | | | |
-| Reference class is appropriate | | | | | | |
-| Calculation is mathematically correct | | | | | | |
-| Time period properly defined | | | | | | |
-| Acknowledges base rate uncertainty | | | | | | |
-| **Agent Subtotals** | /10 | /10 | /10 | /10 | /10 | |
-
-**Base Rate Reasoning Score: /50**
-
-### Base Rates Used
-
-| Agent | Base Rate | Calculation Method | Reference Period |
-|-------|-----------|-------------------|------------------|
-| A1 | | | |
-| A2 | | | |
-| A3 | | | |
-| A4 | | | |
-| A5 | | | |
-
-### Base Rate Consistency Assessment
-- **Agreement level:** High / Medium / Low
-- **Divergence explanation:**
-
----
-
-## Section 3: Evidence Handling
-
-| Criterion | A1 | A2 | A3 | A4 | A5 | Notes |
-|-----------|----|----|----|----|----| ------|
-| Assesses source quality/reliability | | | | | | |
-| Triangulates across multiple sources | | | | | | |
-| Distinguishes fact from opinion | | | | | | |
-| Identifies most decision-relevant facts | | | | | | |
-| Notes conflicting information | | | | | | |
-| Resolves factual ambiguities | | | | | | |
-| **Agent Subtotals** | /12 | /12 | /12 | /12 | /12 | |
-
-**Evidence Handling Score: /60**
-
-### Key Factual Consensus Across Agents
-1.
-2.
-3.
-
-### Factual Disagreements/Ambiguities
--
-
----
-
-## Section 4: Reasoning Quality
-
-| Criterion | A1 | A2 | A3 | A4 | A5 | Notes |
-|-----------|----|----|----|----|----| ------|
-| Inside/outside view properly integrated | | | | | | |
-| Update direction matches evidence | | | | | | |
-| Update magnitude is proportional | | | | | | |
-| Causal mechanisms identified | | | | | | |
-| Counterfactuals considered | | | | | | |
-| Avoids anchoring on salient details | | | | | | |
-| Resists narrative seduction | | | | | | |
-| **Agent Subtotals** | /14 | /14 | /14 | /14 | /14 | |
-
-**Reasoning Quality Score: /70**
+## 5. Update Direction Analysis
 
 ### Step 1 → Step 2 Movement
 
-| Agent | Step 1 | Step 2 | Delta | Direction Justified? |
-|-------|--------|--------|-------|---------------------|
-| A1 | | | | Yes / No / Partial |
-| A2 | | | | Yes / No / Partial |
-| A3 | | | | Yes / No / Partial |
-| A4 | | | | Yes / No / Partial |
-| A5 | | | | Yes / No / Partial |
+| Agent | Step 1 | Step 2 | Delta | New Evidence | Direction Justified? |
+|-------|--------|--------|-------|--------------|---------------------|
+| A1 | | | | | Yes/No/Partial |
+| A2 | | | | | Yes/No/Partial |
+| A3 | | | | | Yes/No/Partial |
+| A4 | | | | | Yes/No/Partial |
+| A5 | | | | | Yes/No/Partial |
 
-### Reasoning Errors Observed
--
+### Assessment
 
----
-
-## Section 5: Cross-Pollination Effectiveness
-
-### Cross-Pollination Structure
-
-| Agent | Receives From | Input Probability | Own Step 1 | Output Step 2 |
-|-------|---------------|-------------------|------------|---------------|
-| A1 | Self | | | |
-| A2 | A4 | | | |
-| A3 | A2 | | | |
-| A4 | A3 | | | |
-| A5 | Self | | | |
-
-### Cross-Pollination Scoring
-
-| Criterion | A2 | A3 | A4 | Notes |
-|-----------|----|----|----| ------|
-| Engages with received input | | | | |
-| Appropriate weight given to input | | | | |
-| Maintains independent judgment | | | | |
-| Identifies areas of agreement/disagreement | | | | |
-| **Agent Subtotals** | /8 | /8 | /8 | |
-
-**Cross-Pollination Score: /24**
-
-### Cross-Pollination Assessment
-- **Diversity introduced:** High / Medium / Low
-- **Over-reliance on input observed:** Yes / No
-- **Under-utilization of input observed:** Yes / No
+- Did agents who received positive news (e.g., repairs completed) appropriately lower their estimates?
+- Did agents who received negative news appropriately raise their estimates?
+- Were there agents who moved in counterintuitive directions? Explain.
 
 ---
 
-## Section 6: Question Comprehension
+## 6. Superforecasting Principles Assessment
 
-| Criterion | A1 | A2 | A3 | A4 | A5 | Notes |
-|-----------|----|----|----|----|----| ------|
-| Resolution criteria correctly understood | | | | | | |
-| Timeline/dates accurate | | | | | | |
-| Current status correctly identified | | | | | | |
-| No hallucinated facts | | | | | | |
-| Key terms properly interpreted | | | | | | |
-| **Agent Subtotals** | /10 | /10 | /10 | /10 | /10 | |
-
-**Question Comprehension Score: /50**
-
-### Comprehension Errors
--
+| Principle | Overall Assessment | Notes |
+|-----------|-------------------|-------|
+| Base rate anchoring | Strong/Moderate/Weak | Did agents start from historical frequency? |
+| Reference class reasoning | Strong/Moderate/Weak | Was the comparison class appropriate? |
+| Inside/outside view integration | Strong/Moderate/Weak | Did Step 2 properly combine both views? |
+| Granular estimates | Strong/Moderate/Weak | Avoiding round numbers, false precision? |
+| Updating on evidence | Strong/Moderate/Weak | Proportional updates in correct direction? |
+| Fermi estimation | Strong/Moderate/Weak | Breaking down into components? |
+| Considering alternatives | Strong/Moderate/Weak | Counterfactuals, blind spots identified? |
+| Epistemic humility | Strong/Moderate/Weak | Acknowledging uncertainty appropriately? |
+| Avoiding cognitive biases | Strong/Moderate/Weak | Anchoring, narrative seduction, recency? |
 
 ---
 
-## Section 7: Calibration & Consistency
+## 7. Agent Rankings
 
-| Criterion | A1 | A2 | A3 | A4 | A5 | Notes |
-|-----------|----|----|----|----|----| ------|
-| Explicit calibration check performed | | | | | | |
-| Reasoning supports final probability | | | | | | |
-| Avoids false precision | | | | | | |
-| Sensitivity analysis conducted | | | | | | |
-| Blind spots identified | | | | | | |
-| Status quo bias addressed | | | | | | |
-| **Agent Subtotals** | /12 | /12 | /12 | /12 | /12 | |
-
-**Calibration Score: /60**
-
-### Probability Distribution Analysis
-- **Mean:** %
-- **Median:** %
-- **Std Dev:**
-- **Range:** % to %
-- **Outliers (>1.5 SD from mean):**
+| Rank | Agent | Model | Score Estimate | Key Strength | Key Weakness |
+|------|-------|-------|----------------|--------------|--------------|
+| 1 | | | /100 | | |
+| 2 | | | /100 | | |
+| 3 | | | /100 | | |
+| 4 | | | /100 | | |
+| 5 | | | /100 | | |
 
 ---
 
-## Section 8: Process Quality
+## 8. Overall Assessment
 
-| Criterion | A1 | A2 | A3 | A4 | A5 | Notes |
-|-----------|----|----|----|----|----| ------|
-| Follows structured methodology | | | | | | |
-| Shows work transparently | | | | | | |
-| Adjustments are explicit and traceable | | | | | | |
-| Appropriate epistemic humility | | | | | | |
-| **Agent Subtotals** | /8 | /8 | /8 | /8 | /8 | |
-
-**Process Quality Score: /40**
-
----
-
-## Summary Scores
-
-| Section | Max Score | Actual Score | Percentage |
-|---------|-----------|--------------|------------|
-| 1. Research Quality | 20 | | % |
-| 2. Base Rate Reasoning | 50 | | % |
-| 3. Evidence Handling | 60 | | % |
-| 4. Reasoning Quality | 70 | | % |
-| 5. Cross-Pollination | 24 | | % |
-| 6. Question Comprehension | 50 | | % |
-| 7. Calibration & Consistency | 60 | | % |
-| 8. Process Quality | 40 | | % |
-| **TOTAL** | **374** | | **%** |
-
-### Overall Quality Grade
-
-| Grade | Score Range | Assessment |
-|-------|-------------|------------|
-| A | 90-100% | Excellent - production ready |
-| B | 80-89% | Good - minor improvements needed |
-| C | 70-79% | Adequate - notable weaknesses |
-| D | 60-69% | Below standard - significant issues |
-| F | <60% | Poor - major problems |
-
-**This Forecast Grade: [ ]**
-
----
-
-## Agent Rankings
-
-| Rank | Agent | Model | Total Score | Key Strength | Key Weakness |
-|------|-------|-------|-------------|--------------|--------------|
-| 1 | | | /74 | | |
-| 2 | | | /74 | | |
-| 3 | | | /74 | | |
-| 4 | | | /74 | | |
-| 5 | | | /74 | | |
-
----
-
-## Key Findings
-
-### Strengths
+### Strengths of This Forecast Run
 1.
 2.
 3.
@@ -313,107 +225,112 @@ Score each criterion 0-2:
 2.
 3.
 
-### Factual/Logical Errors
+### Overall Quality Grade
 
-| Agent | Error Type | Description | Impact |
-|-------|------------|-------------|--------|
-| | Factual / Logical / Calculation | | High / Medium / Low |
+| Grade | Criteria |
+|-------|----------|
+| A (90-100) | Excellent research, sound reasoning, appropriate calibration, no major errors |
+| B (80-89) | Good overall, minor issues in reasoning or evidence handling |
+| C (70-79) | Adequate, notable weaknesses but core reasoning intact |
+| D (60-69) | Below standard, significant reasoning or factual issues |
+| F (<60) | Poor, major errors, unreliable output |
 
-### Superforecasting Principles Adherence
-
-| Principle | Observed | Notes |
-|-----------|----------|-------|
-| Base rate anchoring | Strong / Moderate / Weak | |
-| Inside/outside view integration | Strong / Moderate / Weak | |
-| Granular probability estimates | Strong / Moderate / Weak | |
-| Updating on new evidence | Strong / Moderate / Weak | |
-| Awareness of cognitive biases | Strong / Moderate / Weak | |
-| Epistemic humility | Strong / Moderate / Weak | |
+**This Forecast Grade: [ ]**
 
 ---
 
-## Recommendations
-
-### Immediate (This Question Type)
-1.
-2.
-
-### Systemic (Pipeline Improvements)
-1.
-2.
+## 9. Recommendations
 
 ### Research Improvements
-1.
+-
 
-### Prompt Improvements
-1.
+### Prompt/Pipeline Improvements
+-
+
+### Agent-Specific Feedback
+-
 
 ---
 
-## Comparison Flags
+## 10. Comparison Flags
 
-Use these flags to enable cross-forecast comparison:
+Quick reference flags for cross-forecast trend analysis:
 
 | Flag | Value | Notes |
 |------|-------|-------|
-| High agent disagreement (spread >30pp) | Yes / No | |
-| Update direction errors observed | Yes / No | |
-| Factual errors present | Yes / No | |
-| Cross-pollination effective | Yes / No | |
-| Base rate calculation errors | Yes / No | |
-| Critical information missed | Yes / No | |
-| Hallucinations detected | Yes / No | |
-| Outlier agent present | Yes / No | Agent: |
+| Agent spread >30pp | Yes/No | |
+| Update direction errors | Yes/No | Which agents? |
+| Factual errors present | Yes/No | |
+| Hallucinations detected | Yes/No | |
+| Cross-pollination effective | Yes/No | |
+| Critical info missed in research | Yes/No | What? |
+| Base rate calculation errors | Yes/No | |
+| Outlier agent (>1.5 SD) | Yes/No | Which? |
 
 ---
 
-## Raw Data Appendix
+## Appendix: Raw Data
 
 ### Agent Probability Summary
-
 ```
-Agent 1 ({model}): Step 1: %, Step 2: %, Delta:
-Agent 2 ({model}): Step 1: %, Step 2: %, Delta:
-Agent 3 ({model}): Step 1: %, Step 2: %, Delta:
-Agent 4 ({model}): Step 1: %, Step 2: %, Delta:
-Agent 5 ({model}): Step 1: %, Step 2: %, Delta:
+Agent 1 ({model}): Step 1: %  →  Step 2: %  (Δ )
+Agent 2 ({model}): Step 1: %  →  Step 2: %  (Δ )
+Agent 3 ({model}): Step 1: %  →  Step 2: %  (Δ )
+Agent 4 ({model}): Step 1: %  →  Step 2: %  (Δ )
+Agent 5 ({model}): Step 1: %  →  Step 2: %  (Δ )
 Final Aggregated: %
 ```
 
-### Key Dates
+### Metadata
 - Forecast generated:
 - Question closes:
 - Question resolves:
-- Key event dates mentioned:
+- Total cost: $
+- Duration: seconds
+
+### Key Dates Mentioned in Research
+-
 
 ---
 
-## Post-Resolution Analysis (Complete After Resolution)
+## Post-Resolution Analysis (Complete Later)
 
 | Field | Value |
 |-------|-------|
-| Actual Outcome | Yes / No / Value |
-| Prediction | % |
+| Actual Outcome | |
+| Final Prediction | % |
 | Brier Score | |
-| Calibration Error | |
 
-### Retrospective Assessment
-- Was the probability well-calibrated?
-- What did agents get right?
-- What did agents miss?
-- Would different research have helped?
+### Retrospective
+- Was the forecast well-calibrated given the outcome?
+- What did the agents get right?
+- What did they miss that was knowable at the time?
+- What was genuinely unknowable?
 
 ---
 
-## Trend Analysis CSV Schema
-
-For aggregating across multiple forecasts, export to CSV with these columns:
-
-```
-question_id, timestamp, question_type, forecast_window_days, final_prediction, agent_spread, total_score, research_score, base_rate_score, reasoning_score, cross_poll_score, comprehension_score, calibration_score, process_score, grade, high_disagreement, update_errors, factual_errors, cross_poll_effective, outlier_agent, resolution, brier_score
+_Template version: 2.0_
+_Style: Narrative analysis with structured summaries_
 ```
 
 ---
 
-_Template version: 1.0_
-_Last updated: 2026-01-30_
+## Tips for Consistent Assessments
+
+1. **Always read the actual artifacts** - don't summarize from memory
+2. **Quote specific passages** from agent reasoning to support assessments
+3. **Compare agents against each other** - who handled evidence best?
+4. **Check the math** - verify base rate calculations are correct
+5. **Trace the logic** - does the final probability follow from the stated reasoning?
+6. **Look for the critical fact** - was there one piece of information that should have dominated?
+7. **Assess update direction** - did new evidence move probabilities the right way?
+
+---
+
+## CSV Export Schema
+
+For trend analysis across forecasts:
+
+```
+question_id, timestamp, question_type, forecast_window_days, final_prediction, agent_spread, grade, research_quality, reasoning_quality, cross_poll_effective, update_errors, factual_errors, hallucinations, critical_info_missed, outlier_agent, best_agent, worst_agent, resolution, brier_score
+```
