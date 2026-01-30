@@ -446,7 +446,7 @@ class Forecaster:
 
             elif question.question_type == "numeric":
                 cdf = forecast_result["final_cdf"]
-                response = await self.metaculus.submit_numeric_prediction(question.id, cdf)
+                response = await self.metaculus.submit_numeric_prediction(question.question_id, cdf)
                 percentiles = forecast_result.get("final_percentiles", {})
                 median = percentiles.get("50", percentiles.get(50, 0))
                 self.artifact_store.save_prediction(artifacts, {
@@ -458,7 +458,7 @@ class Forecaster:
 
             elif question.question_type == "multiple_choice":
                 probs = forecast_result["final_probabilities"]
-                response = await self.metaculus.submit_multiple_choice_prediction(question.id, probs)
+                response = await self.metaculus.submit_multiple_choice_prediction(question.question_id, probs)
                 best = max(probs.items(), key=lambda x: x[1])
                 self.artifact_store.save_prediction(artifacts, {
                     "distribution": probs,
