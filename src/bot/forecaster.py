@@ -448,7 +448,12 @@ class Forecaster:
 
             elif question.question_type == "numeric":
                 cdf = forecast_result["final_cdf"]
-                response = await self.metaculus.submit_numeric_prediction(question.question_id, cdf)
+                response = await self.metaculus.submit_numeric_prediction(
+                    question.question_id,
+                    cdf,
+                    open_lower_bound=question.open_lower_bound or False,
+                    open_upper_bound=question.open_upper_bound or False,
+                )
                 percentiles = forecast_result.get("final_percentiles", {})
                 median = percentiles.get("50", percentiles.get(50, 0))
                 self.artifact_store.save_prediction(artifacts, {

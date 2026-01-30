@@ -384,6 +384,8 @@ class MetaculusClient:
         self,
         question_id: int,
         cdf: list[float],
+        open_lower_bound: bool = True,
+        open_upper_bound: bool = True,
     ) -> dict:
         """
         Submit a numeric prediction as a CDF.
@@ -391,6 +393,8 @@ class MetaculusClient:
         Args:
             question_id: Question ID
             cdf: List of 201 CDF values (cumulative probabilities)
+            open_lower_bound: Whether the lower bound is open (can go below range)
+            open_upper_bound: Whether the upper bound is open (can exceed range)
 
         Returns:
             API response dict
@@ -399,7 +403,7 @@ class MetaculusClient:
             raise ValueError(f"CDF must have exactly 201 values, got {len(cdf)}")
 
         # Ensure CDF is valid (monotonic, bounded)
-        cdf = self._validate_cdf(cdf)
+        cdf = self._validate_cdf(cdf, open_lower_bound, open_upper_bound)
 
         # Use the batch forecast endpoint (same as metaculus-forecasting-tools)
         payload = [
@@ -472,28 +476,86 @@ class MetaculusClient:
         if question.question_type == "binary":
             return await self.submit_binary_prediction(question.question_id, prediction)
         elif question.question_type == "numeric":
-            return await self.submit_numeric_prediction(question.question_id, prediction)
+            return await self.submit_numeric_prediction(
+                question.question_id,
+                prediction,
+                open_lower_bound=question.open_lower_bound or False,
+                open_upper_bound=question.open_upper_bound or False,
+            )
         elif question.question_type == "multiple_choice":
             return await self.submit_multiple_choice_prediction(question.question_id, prediction)
         else:
             raise ValueError(f"Unsupported question type: {question.question_type}")
 
-    def _validate_cdf(self, cdf: list[float]) -> list[float]:
-        """Validate and fix a CDF to ensure it's monotonic and bounded."""
-        # Ensure bounds
-        cdf = [max(0.001, min(0.999, v)) for v in cdf]
+    def _validate_cdf(
+        self,
+        cdf: list[float],
+        open_lower_bound: bool = True,
+        open_upper_bound: bool = True,
+    ) -> list[float]:
+        """
+        Validate and fix a CDF to ensure it meets Metaculus requirements.
 
-        # Ensure monotonicity (each value >= previous)
+        Requirements:
+        - 201 values, monotonically increasing
+        - Minimum step of 5e-05 between consecutive values
+        - For open bounds: first value >= 0.001, last value <= 0.999
+        - For closed bounds: first value = 0.0 (closed lower), last value = 1.0 (closed upper)
+        - No single step exceeds 0.59
+        """
+        import numpy as np
+
+        cdf = np.array(cdf, dtype=float)
+        min_step = 5e-05
+
+        # Determine boundary values based on open/closed bounds
+        lower_val = 0.001 if open_lower_bound else 0.0
+        upper_val = 0.999 if open_upper_bound else 1.0
+
+        # Clamp interior values (not the boundaries yet)
+        cdf[1:-1] = np.clip(cdf[1:-1], lower_val + min_step, upper_val - min_step)
+
+        # Set boundary values
+        cdf[0] = lower_val
+        cdf[-1] = upper_val
+
+        # Ensure monotonically increasing with minimum step size
+        # Work forward, ensuring each value is at least min_step greater than previous
         for i in range(1, len(cdf)):
-            if cdf[i] < cdf[i - 1]:
-                cdf[i] = cdf[i - 1]
+            min_allowed = cdf[i - 1] + min_step
+            if cdf[i] < min_allowed:
+                cdf[i] = min_allowed
 
-        # Ensure no single step is too large (max 0.59)
+        # If we exceeded upper_val, we need to redistribute
+        if cdf[-1] > upper_val:
+            # Calculate how much space we have
+            available_range = upper_val - lower_val
+            required_range = (len(cdf) - 1) * min_step
+
+            if required_range > available_range:
+                # This shouldn't happen with 201 points and 5e-05 step (requires 0.01 range)
+                # but handle gracefully by using smaller steps
+                actual_step = available_range / (len(cdf) - 1)
+                cdf = np.array([lower_val + i * actual_step for i in range(len(cdf))])
+            else:
+                # Rescale to fit within bounds while maintaining relative distribution
+                # Preserve the shape but compress to fit
+                cdf_normalized = (cdf - cdf[0]) / (cdf[-1] - cdf[0])  # Normalize to [0, 1]
+                cdf = lower_val + cdf_normalized * (upper_val - lower_val)
+
+                # Re-enforce minimum steps after rescaling
+                for i in range(1, len(cdf)):
+                    if cdf[i] < cdf[i - 1] + min_step:
+                        cdf[i] = cdf[i - 1] + min_step
+
+            cdf[-1] = upper_val
+
+        # Ensure no single step exceeds 0.59
         for i in range(1, len(cdf)):
             if cdf[i] - cdf[i - 1] > 0.59:
                 cdf[i] = cdf[i - 1] + 0.59
 
-        return cdf
+        return cdf.tolist()
 
     # =========================================================================
     # Tournaments
