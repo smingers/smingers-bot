@@ -8,14 +8,14 @@ on:
         required: false
         type: string
       mode:
-        description: 'Run mode'
+        description: 'Run mode for single question test'
         required: false
         type: choice
-        default: 'production'
+        default: 'live'
         options:
-          - production
-          - dry_run_heavy
-          - dry_run
+          - live
+          - preview
+          - test
   schedule:
     - cron: "*/30 * * * *"  # Every 30 minutes
 
@@ -72,7 +72,7 @@ jobs:
         run: |
           poetry run python main.py \
             --question ${{ github.event.inputs.test_question_id }} \
-            --mode ${{ github.event.inputs.mode || 'production' }}
+            --mode ${{ github.event.inputs.mode || 'live' }}
         env:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           METACULUS_TOKEN: ${{ secrets.METACULUS_TOKEN }}
@@ -84,13 +84,13 @@ jobs:
       # AIB TOURNAMENTS (ENABLED)
       # ============================================================
 
-      - name: Forecast Seasonal AIB
+      - name: Forecast spring-aib-2026
         if: ${{ github.event_name == 'schedule' || github.event.inputs.test_question_id == '' }}
-        id: forecast_aib
+        id: forecast_spring_aib
         run: |
           poetry run python run_bot.py \
             --tournament 32916 \
-            --mode aib \
+            --strategy new-only \
             --limit 50
         env:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
@@ -111,13 +111,13 @@ jobs:
           echo "::error::Look for 'EXTRACTION ERRORS' or 'FAILED QUESTIONS' in the output."
           echo ""
           echo "To retry failed questions manually:"
-          echo "  python main.py --question <QUESTION_ID> --mode production"
+          echo "  python main.py --question <QUESTION_ID> --mode live"
 
       # - name: Forecast MiniBench
       #   run: |
       #     poetry run python run_bot.py \
       #       --tournament minibench \
-      #       --mode aib \
+      #       --strategy new-only \
       #       --limit 50
       #   env:
       #     OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
@@ -134,7 +134,7 @@ jobs:
       #   run: |
       #     poetry run python run_bot.py \
       #       --tournament 32917 \
-      #       --mode reforecast \
+      #       --strategy reforecast \
       #       --reforecast-days 7 \
       #       --limit 20
       #   env:
@@ -147,7 +147,7 @@ jobs:
       #   run: |
       #     poetry run python run_bot.py \
       #       --tournament main-site \
-      #       --mode reforecast \
+      #       --strategy reforecast \
       #       --reforecast-days 7 \
       #       --limit 10
       #   env:

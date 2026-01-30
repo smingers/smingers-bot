@@ -17,14 +17,14 @@ cp .env.template .env
 # Required: OPENROUTER_API_KEY, METACULUS_TOKEN
 # Optional: SERPER_API_KEY, ASKNEWS_CLIENT_ID, ASKNEWS_CLIENT_SECRET
 
-# Run a forecast (dry run with cheap models)
-python main.py --question 41594 --mode dry_run
+# Run a forecast (test mode: cheap models, no submission)
+python main.py --question 41594 --mode test
 
-# Run a forecast (dry run with production models)
-python main.py --question 41594 --mode dry_run_heavy
+# Run a forecast (preview mode: production models, no submission)
+python main.py --question 41594 --mode preview
 
-# Run a forecast (submit with production models)
-python main.py --question 41594 --mode production
+# Run a forecast (live mode: production models, submits to Metaculus)
+python main.py --question 41594 --mode live
 
 # List tournament questions
 python main.py --tournament 32721 --list
@@ -33,7 +33,7 @@ python main.py --tournament 32721 --list
 python main.py --tournament 32721 --forecast-new --limit 5
 
 # Verbose logging
-python main.py --question 41594 --mode dry_run --verbose
+python main.py --question 41594 --mode test --verbose
 ```
 
 ### Automated Forecasting (GitHub Actions)
@@ -41,11 +41,11 @@ python main.py --question 41594 --mode dry_run --verbose
 The bot runs automatically via `.github/workflows/run-bot.yaml` every 30 minutes using `run_bot.py`:
 
 ```bash
-# Forecast new AIB tournament questions only
-python run_bot.py --tournament 32916 --mode aib
+# Forecast new tournament questions only (always uses live mode)
+python run_bot.py --tournament 32916 --strategy new-only
 
 # Re-forecast questions older than N days
-python run_bot.py --tournament 32916 --mode reforecast --reforecast-days 7
+python run_bot.py --tournament 32916 --strategy reforecast --reforecast-days 7
 ```
 
 ## Architecture
@@ -71,12 +71,12 @@ All agents have equal weight (1.0). Production models:
 - **Forecaster 3**: o3-mini-high
 - **Forecaster 4-5**: o3
 
-Cross-pollination structure:
-- Agent 1 receives Agent 1's step 1 output
-- Agent 2 receives Agent 3's step 1 output
-- Agent 3 receives Agent 2's step 1 output
-- Agent 4 receives Agent 4's step 1 output
-- Agent 5 receives Agent 5's step 1 output
+Cross-pollination structure (creates cross-model diversity):
+- Agent 1 receives Agent 1's step 1 output (Sonnet 4.5 ← self)
+- Agent 2 receives Agent 4's step 1 output (Sonnet 4.5 ← o3)
+- Agent 3 receives Agent 2's step 1 output (o3-mini-high ← Sonnet 4.5)
+- Agent 4 receives Agent 3's step 1 output (o3 ← o3-mini-high)
+- Agent 5 receives Agent 5's step 1 output (o3 ← self)
 
 ### Question Types
 
@@ -178,9 +178,9 @@ The `--mode` flag controls model tier and submission behavior:
 
 | Mode | Models | Submits | Use Case |
 |------|--------|---------|----------|
-| `dry_run` | cheap (Haiku) | No | Quick testing (~$0.09/forecast) |
-| `dry_run_heavy` | production | No | Quality testing |
-| `production` | production | Yes | Live forecasting (~$0.70/forecast) |
+| `test` | cheap (Haiku) | No | Quick testing (~$0.09/forecast) |
+| `preview` | production | No | Quality testing |
+| `live` | production | Yes | Live forecasting (~$0.70/forecast) |
 
 ### Research Pipeline
 
@@ -301,8 +301,8 @@ Fixtures in `conftest.py` provide sample LLM responses for:
 The bot runs automatically via `.github/workflows/run-bot.yaml`:
 - **Schedule**: Every 30 minutes
 - **Entry point**: `run_bot.py`
-- **Mode**: `aib` for new questions only
-- **Tournament**: 32916 (Seasonal AIB)
+- **Strategy**: `new-only` (forecasts new questions only)
+- **Tournament**: 32916 (spring-aib-2026)
 
 **Required secrets:**
 - `OPENROUTER_API_KEY` - For all LLM calls

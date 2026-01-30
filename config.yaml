@@ -5,13 +5,13 @@
 # RUN MODE
 # =============================================================================
 # Controls model selection and submission behavior:
-#   - "dry_run": Cheap models (Haiku), no submission - for testing pipeline
-#   - "dry_run_heavy": Production models, no submission - for evaluating quality
-#   - "production": Production models, submits to Metaculus
+#   - "test": Cheap models (Haiku), no submission - for testing pipeline
+#   - "preview": Production models, no submission - for evaluating quality
+#   - "live": Production models, submits to Metaculus
 #
-# Override with --mode flag: python main.py --question 12345 --mode production
+# Override with --mode flag: python main.py --question 12345 --mode live
 
-mode: "dry_run"
+mode: "test"
 
 # =============================================================================
 # MODEL CONFIGURATION
@@ -22,13 +22,13 @@ mode: "dry_run"
 # The 5-agent ensemble is configured separately below.
 
 models:
-  # Models for dry_run mode (cheap, fast)
+  # Models for test mode (cheap, fast)
   cheap:
     query_generator: "openrouter/anthropic/claude-3.5-haiku"
     article_summarizer: "openrouter/anthropic/claude-3.5-haiku"
     agentic_search: "openrouter/anthropic/claude-3.5-haiku"
 
-  # Models for dry_run_heavy and production modes
+  # Models for preview and live modes
   production:
     query_generator: "openrouter/openai/o3"
     article_summarizer: "openrouter/anthropic/claude-sonnet-4.5"
@@ -48,7 +48,7 @@ models:
 #   - Agent 5 (o3) receives Agent 5's step 1 output (o3)
 
 ensemble:
-  # Agents for dry_run mode (all Haiku - cheap, fast)
+  # Agents for test mode (all Haiku - cheap, fast)
   cheap:
     - name: "forecaster_1"
       model: "openrouter/anthropic/claude-3.5-haiku"
@@ -70,7 +70,7 @@ ensemble:
       model: "openrouter/anthropic/claude-3.5-haiku"
       weight: 1.0
 
-  # Agents for production
+  # Agents for preview and live modes
   production:
     - name: "forecaster_1"
       model: "openrouter/anthropic/claude-sonnet-4.5"

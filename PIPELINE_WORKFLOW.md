@@ -26,7 +26,7 @@ The pipeline implements a structured forecasting methodology:
 
 **User executes:**
 ```bash
-python main.py --question 41594 --mode production
+python main.py --question 41594 --mode live
 ```
 
 **Initialization sequence:**
@@ -696,7 +696,7 @@ final_pred = max(0.001, min(0.999, 0.386))
 ### Inputs
 - `question`: MetaculusQuestion (id=41594)
 - `forecast_result`: Contains `final_prediction` (0.386)
-- `dry_run`: False (in production mode)
+- `dry_run`: False (in live mode)
 
 ### Process (Production Mode)
 
@@ -755,9 +755,9 @@ response = await metaculus.submit_multiple_choice_prediction(
 )
 ```
 
-### Process (Dry Run Mode)
+### Process (Test/Preview Mode)
 
-**If `dry_run=True`:**
+**If `dry_run=True` (test or preview mode):**
 ```python
 logger.info(f"DRY RUN: Would submit 38.6%")
 # No API call made
@@ -995,7 +995,7 @@ timing = {
     "created_at": "2026-01-24T14:35:22Z",
     "config_hash": "a3f5e9b2c1d4",
     "config_snapshot": {
-      "mode": "production",
+      "mode": "live",
       "models": {...},
       "ensemble": {...}
     },
@@ -1226,9 +1226,9 @@ research:
 
 ### Model Selection by Mode
 
-**Dry run mode** (cheap, fast testing):
+**Test mode** (cheap, fast testing):
 ```yaml
-mode: "dry_run"
+mode: "test"
 models:
   cheap:
     base_rate_estimator: "claude-3-haiku-20240307"
@@ -1240,9 +1240,9 @@ ensemble:
 - Speed: ~30 seconds
 - No submission to Metaculus
 
-**Production mode** (high quality, submits):
+**Live mode** (high quality, submits):
 ```yaml
-mode: "production"
+mode: "live"
 models:
   production:
     base_rate_estimator: "claude-sonnet-4-20250514"
@@ -1490,19 +1490,19 @@ Print summary to console
 python main.py --question 41594
 ```
 
-**Production forecast (submits):**
+**Live forecast (submits):**
 ```bash
-python main.py --question 41594 --mode production
+python main.py --question 41594 --mode live
 ```
 
-**Test with production models, don't submit:**
+**Preview with production models, don't submit:**
 ```bash
-python main.py --question 41594 --mode dry_run_heavy
+python main.py --question 41594 --mode preview
 ```
 
 **Forecast all new questions in tournament:**
 ```bash
-python main.py --tournament 32721 --forecast-new --limit 5 --mode production
+python main.py --tournament 32721 --forecast-new --limit 5 --mode live
 ```
 
 **List tournament questions:**
