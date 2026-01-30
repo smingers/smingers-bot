@@ -1,0 +1,7 @@
+Analysis:
+The SBP’s current policy rate (as announced in the January 2026 Monetary Policy Statement) is the starting point for any May 2026 forecast. Relevant information now includes: 1) official SBP statements about the policy stance, 2) January-to-April 2026 inflation data and projections, 3) commentary from IMF programme reviews (which often dictate monetary tightening or easing), 4) market expectations signalled by secondary-market T-bill/KIBOR yields, 5) forecasts from local banks and global research houses on the next three Monetary Policy Committee (MPC) meetings scheduled before 1 May 2026. Articles or reports addressing these topics—especially post-January 2026 MPC minutes, analyst notes, and press coverage—will give the best inside view for estimating where the rate will stand on May 1. Therefore, the searches should retrieve (a) the exact current rate, (b) any guidance in the January statement, and (c) forward-looking analyst commentary issued over the last few days.
+
+Search queries:
+1. SBP policy rate January 2026 (Google)  
+2. Pakistan interest rate outlook 2026 (Google News)  
+3. What is SBP's current policy rate and recent analyst forecasts for upcoming monetary policy decisions through May 2026? (Assistant)
