@@ -520,40 +520,50 @@ class SearchPipeline:
                     strategy="news knowledge"
                 )
 
+                # Combine and deduplicate articles by URL
+                hot_articles = hot_response.as_dicts or []
+                historical_articles = historical_response.as_dicts or []
+
+                seen_urls = set()
+                unique_articles = []
+
+                # Process hot articles first (they're more recent)
+                for article in hot_articles:
+                    article_dict = article.__dict__
+                    url = article_dict.get('article_url', '')
+                    if url and url not in seen_urls:
+                        seen_urls.add(url)
+                        unique_articles.append(article_dict)
+
+                # Then add historical articles that aren't duplicates
+                for article in historical_articles:
+                    article_dict = article.__dict__
+                    url = article_dict.get('article_url', '')
+                    if url and url not in seen_urls:
+                        seen_urls.add(url)
+                        unique_articles.append(article_dict)
+
+                # Sort by date (newest first)
+                unique_articles = sorted(unique_articles, key=lambda x: x["pub_date"], reverse=True)
+
+                duplicates_removed = (len(hot_articles) + len(historical_articles)) - len(unique_articles)
+                if duplicates_removed > 0:
+                    logger.info(f"[call_asknews] Removed {duplicates_removed} duplicate articles")
+
                 # Format news results
                 formatted_articles = "Here are the relevant news articles:\n\n"
 
-                hot_articles = hot_response.as_dicts
-                if hot_articles:
-                    hot_articles = [article.__dict__ for article in hot_articles]
-                    hot_articles = sorted(hot_articles, key=lambda x: x["pub_date"], reverse=True)
+                for article in unique_articles:
+                    pub_date = article["pub_date"].strftime("%B %d, %Y %I:%M %p")
+                    formatted_articles += (
+                        f"**{article['eng_title']}**\n"
+                        f"{article['summary']}\n"
+                        f"Original language: {article['language']}\n"
+                        f"Publish date: {pub_date}\n"
+                        f"Source:[{article['source_id']}]({article['article_url']})\n\n"
+                    )
 
-                    for article in hot_articles:
-                        pub_date = article["pub_date"].strftime("%B %d, %Y %I:%M %p")
-                        formatted_articles += (
-                            f"**{article['eng_title']}**\n"
-                            f"{article['summary']}\n"
-                            f"Original language: {article['language']}\n"
-                            f"Publish date: {pub_date}\n"
-                            f"Source:[{article['source_id']}]({article['article_url']})\n\n"
-                        )
-
-                historical_articles = historical_response.as_dicts
-                if historical_articles:
-                    historical_articles = [article.__dict__ for article in historical_articles]
-                    historical_articles = sorted(historical_articles, key=lambda x: x["pub_date"], reverse=True)
-
-                    for article in historical_articles:
-                        pub_date = article["pub_date"].strftime("%B %d, %Y %I:%M %p")
-                        formatted_articles += (
-                            f"**{article['eng_title']}**\n"
-                            f"{article['summary']}\n"
-                            f"Original language: {article['language']}\n"
-                            f"Publish date: {pub_date}\n"
-                            f"Source:[{article['source_id']}]({article['article_url']})\n\n"
-                        )
-
-                if not hot_articles and not historical_articles:
+                if not unique_articles:
                     formatted_articles += "No articles were found.\n\n"
 
             except Exception as e:

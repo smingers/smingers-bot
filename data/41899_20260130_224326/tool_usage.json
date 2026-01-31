@@ -1,0 +1,166 @@
+{
+  "centralized_research": {
+    "historical": {
+      "forecaster_id": "-1",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Rivian quarterly deliveries history",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Rivian Q4 2025 deliveries",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Rivian 2026 delivery guidance R2 impact",
+          "tool": "Agent",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "Agent"
+      ]
+    },
+    "current": {
+      "forecaster_id": "0",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "Rivian Q1 2026 deliveries forecast",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Rivian production guidance 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Latest analyst estimates of Rivian first-quarter 2026 vehicle deliveries and any official company guidance since January 2026",
+          "tool": "Assistant",
+          "success": true,
+          "num_results": 28
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "Assistant"
+      ]
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6329,
+        "token_output": 1987,
+        "cost": 0.048792,
+        "duration_seconds": 53.31809091567993
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 18602,
+        "token_output": 3365,
+        "cost": 0.106281,
+        "duration_seconds": 75.74851512908936
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6329,
+        "token_output": 2134,
+        "cost": 0.050997,
+        "duration_seconds": 53.31828498840332
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17700,
+        "token_output": 3184,
+        "cost": 0.10086,
+        "duration_seconds": 75.74851393699646
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/o3-mini-high",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5481,
+        "token_output": 3649,
+        "cost": 0.0220847,
+        "duration_seconds": 53.3183319568634
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16497,
+        "token_output": 1996,
+        "cost": 0.026929100000000004,
+        "duration_seconds": 75.74847483634949
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5481,
+        "token_output": 1794,
+        "cost": 0.025314,
+        "duration_seconds": 53.318426847457886
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15622,
+        "token_output": 1547,
+        "cost": 0.04362,
+        "duration_seconds": 75.7484540939331
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5481,
+        "token_output": 1781,
+        "cost": 0.02521,
+        "duration_seconds": 53.318506956100464
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15702,
+        "token_output": 1638,
+        "cost": 0.044508,
+        "duration_seconds": 75.74843788146973
+      }
+    }
+  }
+}

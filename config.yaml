@@ -43,8 +43,8 @@ models:
 # Cross-pollination structure (creates cross-model diversity):
 #   - Agent 1 (Sonnet 4.5) receives Agent 1's step 1 output (Sonnet 4.5)
 #   - Agent 2 (Sonnet 4.5) receives Agent 4's step 1 output (o3)
-#   - Agent 3 (o3-mini-high) receives Agent 2's step 1 output (Sonnet 4.5)
-#   - Agent 4 (o3) receives Agent 3's step 1 output (o3-mini-high)
+#   - Agent 3 (GPT-5.2) receives Agent 2's step 1 output (Sonnet 4.5)
+#   - Agent 4 (o3) receives Agent 3's step 1 output (GPT-5.2)
 #   - Agent 5 (o3) receives Agent 5's step 1 output (o3)
 
 ensemble:
@@ -81,7 +81,7 @@ ensemble:
       weight: 1.0
 
     - name: "forecaster_3"
-      model: "openrouter/openai/o3-mini-high"
+      model: "openrouter/openai/gpt-5.2"
       weight: 1.0
 
     - name: "forecaster_4"

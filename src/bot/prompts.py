@@ -792,6 +792,7 @@ You are suggested to use the below checklist to verify the quality of your forec
 **Essential formatting requirements**
 (a) For large numbers, please DO NOT output commas between numbers like 1,000,000. Instead, just write 1000000. If not, this will cause a parsing error.
 (b) You MUST prefix the final percentiles with Distribution: as a regex will be programmed to read text below 'Distribution:'.
+(c) Do NOT include % symbols after percentile values - just write the number (e.g., "Percentile 1: 8.5" not "Percentile 1: 8.5%").
 
 **CRITICAL: Percentile values MUST be strictly increasing.**
 - Percentile 1 = lowest value (only 1% of outcomes fall below this)
