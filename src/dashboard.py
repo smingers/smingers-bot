@@ -680,62 +680,66 @@ HTML_TEMPLATE = """<!DOCTYPE html>
                     </div>
                 `;
             } else if (type === 'numeric') {
-                // Get individual agent medians from the data
+                // Get individual agent percentiles from the data
                 const agents = forecastData?.ensemble?.agents || [];
-                const agentMedians = agents.map(agent => {
-                    const percentiles = agent.result?.percentiles || {};
-                    // Agents use P40 and P60, interpolate for median
-                    let median = percentiles['50'] || percentiles[50];
-                    if (median === undefined) {
-                        const p40 = percentiles['40'] || percentiles[40];
-                        const p60 = percentiles['60'] || percentiles[60];
-                        if (p40 !== undefined && p60 !== undefined) {
-                            median = (p40 + p60) / 2;
-                        } else {
-                            median = p40 || p60;
-                        }
-                    }
-                    return median;
-                });
+                const percentileKeys = ['1', '5', '10', '20', '40', '60', '80', '90', '95', '99'];
 
+                // Format value for display - use B/M/K suffixes for large numbers
                 const formatValue = (val) => {
-                    if (val === undefined || val === null) return 'N/A';
-                    if (Math.abs(val) >= 100) return Math.round(val).toLocaleString();
-                    if (Math.abs(val) >= 10) return val.toFixed(1);
-                    if (Math.abs(val) >= 1) return val.toFixed(2);
+                    if (val === undefined || val === null) return '-';
+                    const absVal = Math.abs(val);
+                    if (absVal >= 1e9) return (val / 1e9).toFixed(1) + 'B';
+                    if (absVal >= 1e6) return (val / 1e6).toFixed(1) + 'M';
+                    if (absVal >= 1e3) return (val / 1e3).toFixed(1) + 'K';
+                    if (absVal >= 100) return Math.round(val).toLocaleString();
+                    if (absVal >= 10) return val.toFixed(1);
+                    if (absVal >= 1) return val.toFixed(2);
                     return val.toFixed(3);
                 };
 
-                // Get final median from computed percentiles if available
-                const finalMedian = forecastData?.computed_percentiles?.['50'] ||
-                                  prediction.percentiles?.['50'] ||
-                                  prediction.percentiles?.[50];
+                // Get final percentiles from computed percentiles if available
+                const finalPercentiles = forecastData?.computed_percentiles || {};
+
+                // Build table rows
+                const tableRows = percentileKeys.map(p => {
+                    const agentValues = agents.map(agent => {
+                        const percentiles = agent.result?.percentiles || {};
+                        return percentiles[p] || percentiles[parseInt(p)];
+                    });
+                    const finalVal = finalPercentiles[p];
+                    return { percentile: p, agentValues, finalVal };
+                });
 
                 return `
                     <div class="bg-gray-800 rounded-lg mb-6 border border-gray-700 p-4">
                         <h2 class="text-xl font-bold mb-4">Aggregation</h2>
-                        ${agentMedians.length > 0 ? `
-                            <div class="grid grid-cols-5 gap-4 mb-4">
-                                ${agentMedians.map((median, i) => `
-                                    <div class="text-center">
-                                        <div class="text-sm text-gray-400">Agent ${i + 1}</div>
-                                        <div class="text-lg font-mono ${getAgentColor(i)}">${formatValue(median)}</div>
-                                        <div class="text-xs text-gray-500">~P50</div>
-                                    </div>
-                                `).join('')}
-                            </div>
-                            <div class="text-center pt-4 border-t border-gray-700">
-                                <div class="text-sm text-gray-400">Final Median (${agg.method || 'weighted_average'})</div>
-                                <div class="text-3xl font-mono text-green-400">${formatValue(finalMedian)}</div>
-                            </div>
-                        ` : `
-                            <div class="text-sm text-gray-400 mb-2">
-                                ${agg.num_valid_cdfs || 0} valid CDFs aggregated using ${agg.method || 'weighted_average'}
-                            </div>
-                            <div class="text-sm text-gray-400">
-                                Final CDF has ${agg.final_cdf_length || 0} points
-                            </div>
-                        `}
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm">
+                                <thead>
+                                    <tr class="border-b border-gray-600">
+                                        <th class="text-left py-2 px-3 text-gray-400 font-medium">Percentile</th>
+                                        ${agents.map((_, i) => `
+                                            <th class="text-right py-2 px-3 ${getAgentColor(i)} font-medium">Agent ${i + 1}</th>
+                                        `).join('')}
+                                        <th class="text-right py-2 px-3 text-green-400 font-medium">Final</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${tableRows.map(row => `
+                                        <tr class="border-b border-gray-700 hover:bg-gray-750">
+                                            <td class="py-2 px-3 text-gray-300">P${row.percentile}</td>
+                                            ${row.agentValues.map((val, i) => `
+                                                <td class="text-right py-2 px-3 font-mono ${getAgentColor(i)}">${formatValue(val)}</td>
+                                            `).join('')}
+                                            <td class="text-right py-2 px-3 font-mono text-green-400 font-semibold">${formatValue(row.finalVal)}</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="mt-4 text-sm text-gray-400 text-center">
+                            ${agg.num_valid_cdfs || agents.length} CDFs aggregated using ${agg.method || 'weighted_average'}
+                        </div>
                     </div>
                 `;
             } else if (type === 'multiple_choice') {
