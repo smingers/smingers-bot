@@ -219,16 +219,18 @@ class SearchPipeline:
                             date_before=question_details.resolution_date,
                         )
                     )
-                elif source == "Assistant":
-                    tasks.append(self._call_asknews(query))
                 elif source == "Agent":
                     tasks.append(self._agentic_search(query))
-                elif source == "Deep Research":
-                    tasks.append(self._call_asknews_deep_research(query, preset="low-depth"))
-                elif source == "Deep Research Medium":
-                    tasks.append(self._call_asknews_deep_research(query, preset="medium-depth"))
-                elif source == "Deep Research High":
-                    tasks.append(self._call_asknews_deep_research(query, preset="high-depth"))
+                # NOTE: (Assistant) tag is no longer used - AskNews is called automatically below.
+                # NOTE: These three Deep Research tags are not currently used - prompts don't tell LLMs to output them.
+                # Deep Research runs via _call_asknews() which is called automatically below.
+
+            # Always call AskNews with question title (not LLM-generated query)
+            logger.info(f"Forecaster {forecaster_id}: Adding AskNews search with question title")
+            tasks.append(self._call_asknews(question_details.title))
+            query_sources.append((question_details.title, "Assistant"))
+            metadata["queries"].append({"query": question_details.title, "tool": "Assistant"})
+            metadata["tools_used"].add("Assistant")
 
             if not tasks:
                 logger.info(f"Forecaster {forecaster_id}: No tasks generated")
