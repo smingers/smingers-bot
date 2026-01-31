@@ -541,8 +541,7 @@ Question metadata:
 
 IMPORTANT: Today's date is {today}. All dates before today's date are in the PAST. All dates after today's date are in the FUTURE. Use today's date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
-{lower_bound_message}
-{upper_bound_message}
+{bounds_info}
 
 Note that this is a numeric question, with expected answer format as a discrete CDF (not required for this answer).
 
@@ -587,9 +586,7 @@ Question metadata:
 
 IMPORTANT: Today's date is {today}. All dates before today's date are in the PAST. All dates after today's date are in the FUTURE. Use today's date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
-{lower_bound_message}
-{upper_bound_message}
-
+{bounds_info}
 
 For google/google news:
 Your query for google and google news are processed by classical search engines, so please phrase the queries in a way optimal for keyword optimized search (i.e., the phrase you search is likely to appear on desired web pages). Avoid writing overly specific queries. Limit to six words.
@@ -630,11 +627,7 @@ Question metadata:
 
 IMPORTANT: Today's date is {today}. All dates before today's date are in the PAST. All dates after today's date are in the FUTURE. Use today's date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
-{lower_bound_message}
-{upper_bound_message}
-
-You should consider the following hint regarding the interval the answer is expected to lie in:
-{hint}
+{bounds_info}
 
 Outside view analysis + current information/news articles:
 {context}
@@ -704,11 +697,7 @@ Question metadata:
 
 IMPORTANT: Today's date is {today}. All dates before today's date are in the PAST. All dates after today's date are in the FUTURE. Use today's date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
-{lower_bound_message}
-{upper_bound_message}
-
-You should consider the following hint regarding the interval the answer is expected to lie in:
-{hint}
+{bounds_info}
 
 Current Context (outside view + relevant evidence):
 {context}

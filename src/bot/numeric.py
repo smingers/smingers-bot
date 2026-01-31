@@ -78,15 +78,43 @@ class NumericForecaster(BaseForecaster):
         open_upper = question_params.get("open_upper_bound", True)
         lower_bound = question_params.get("lower_bound", 0)
         upper_bound = question_params.get("upper_bound", 100)
+        zero_point = question_params.get("zero_point")
 
-        lower_bound_msg = "" if open_lower else f"Cannot go below {lower_bound}."
-        upper_bound_msg = "" if open_upper else f"Cannot go above {upper_bound}."
-        hint = f"The answer is expected to be above {lower_bound} and below {upper_bound}. Think carefully, and reconsider your sources, if your projections are outside this range."
+        lines = [
+            f"The lower bound is {lower_bound} and the upper bound is {upper_bound}.",
+        ]
+
+        # Explain what open/closed bounds mean for this specific question
+        if open_lower and open_upper:
+            lines.append(
+                "Both bounds are OPEN: outcomes can fall below the lower bound or above the upper bound. "
+                "Your percentile estimates may extend beyond this range if well-supported by evidence."
+            )
+        elif not open_lower and not open_upper:
+            lines.append(
+                "Both bounds are CLOSED: outcomes cannot fall outside this range. "
+                "The true value will definitely be between the lower and upper bounds."
+            )
+        elif not open_lower and open_upper:
+            lines.append(
+                f"The lower bound is CLOSED (outcome cannot be below {lower_bound}), "
+                f"but the upper bound is OPEN (outcome can exceed {upper_bound}). "
+                "Your upper percentiles may extend beyond the upper bound if evidence supports it."
+            )
+        else:  # open_lower and not open_upper
+            lines.append(
+                f"The lower bound is OPEN (outcome can be below {lower_bound}), "
+                f"but the upper bound is CLOSED (outcome cannot exceed {upper_bound}). "
+                "Your lower percentiles may extend below the lower bound if evidence supports it."
+            )
+
+        if zero_point is not None:
+            lines.append(
+                f"Zero point: {zero_point} (logarithmic scale - think in terms of ratios/multipliers rather than absolute differences)."
+            )
 
         return {
-            "lower_bound_message": lower_bound_msg,
-            "upper_bound_message": upper_bound_msg,
-            "hint": hint,
+            "bounds_info": "\n".join(lines),
         }
 
     def _format_query_prompts(
