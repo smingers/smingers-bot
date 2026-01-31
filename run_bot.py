@@ -14,6 +14,7 @@ Usage:
 import asyncio
 import argparse
 import logging
+import os
 import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -43,6 +44,10 @@ async def run_forecast(
         strategy: "new-only" (new questions only) or "reforecast" (new + old)
         reforecast_days: For reforecast strategy, re-forecast if older than this
         limit: Maximum questions to forecast per run
+
+    Returns:
+        Number of new/unforecasted questions that were available (0 if none or early exit).
+        Used by CI to decide whether to run lower-priority tournaments.
     """
     resolved = ResolvedConfig.from_yaml("config.yaml", mode="live")
 
@@ -60,7 +65,7 @@ async def run_forecast(
 
         if not questions:
             logger.info("No open questions found. Exiting.")
-            return
+            return 0
 
         # Get my past forecasts
         my_forecasts = await client.get_my_forecasts(tournament_id_parsed)
@@ -100,9 +105,10 @@ async def run_forecast(
 
         if not questions_to_forecast:
             logger.info("No questions need forecasting. Exiting.")
-            return
+            return 0
 
     # Forecast questions using shared runner
+    new_questions_count = len(questions_to_forecast)
     questions_to_process = questions_to_forecast[:limit]
     logger.info(f"Processing {len(questions_to_process)} questions (limit: {limit})")
 

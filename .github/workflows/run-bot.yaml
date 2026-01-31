@@ -113,17 +113,19 @@ jobs:
           echo "To retry failed questions manually:"
           echo "  python main.py --question <QUESTION_ID> --mode live"
 
-      # - name: Forecast MiniBench
-      #   run: |
-      #     poetry run python run_bot.py \
-      #       --tournament minibench \
-      #       --strategy new-only \
-      #       --limit 50
-      #   env:
-      #     OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
-      #     METACULUS_TOKEN: ${{ secrets.METACULUS_TOKEN }}
-      #     ASKNEWS_CLIENT_ID: ${{ secrets.ASKNEWS_CLIENT_ID }}
-      #     ASKNEWS_CLIENT_SECRET: ${{ secrets.ASKNEWS_CLIENT_SECRET }}
+      - name: Forecast MiniBench
+        if: ${{ github.event_name == 'schedule' || github.event.inputs.test_question_id == '' }}
+        run: |
+          poetry run python run_bot.py \
+            --tournament minibench \
+            --strategy new-only \
+            --limit 50
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          METACULUS_TOKEN: ${{ secrets.METACULUS_TOKEN }}
+          ASKNEWS_CLIENT_ID: ${{ secrets.ASKNEWS_CLIENT_ID }}
+          ASKNEWS_CLIENT_SECRET: ${{ secrets.ASKNEWS_CLIENT_SECRET }}
+          SERPER_API_KEY: ${{ secrets.SERPER_API_KEY }}
 
       # ============================================================
       # OPTIONAL TOURNAMENTS (DISABLED - uncomment to enable)

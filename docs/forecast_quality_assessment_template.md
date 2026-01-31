@@ -33,6 +33,8 @@ When asked to analyze a forecast run using this template:
 
 **Complete this section FIRST after reading all artifacts. List the most significant problems that affected forecast quality.**
 
+**Note:** Methodological diversity and forecast spread are NOT inherently issues. Only flag instances where reasoning is flawed, evidence is misinterpreted, or analytical tools are misapplied to the specific question.
+
 | Issue | Severity | Location | Description |
 |-------|----------|----------|-------------|
 | | Critical/High/Med/Low | Research / S1-X / S2-X / Aggregation | |
