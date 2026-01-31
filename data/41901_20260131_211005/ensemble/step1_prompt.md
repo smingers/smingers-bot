@@ -1,0 +1,471 @@
+
+You are currently analyzing a forecasting question to generate an outside view prediction.
+
+The forecasting question is:
+Will the U.S. impose new secondary sanctions related to Russian oil exports before May 1, 2026?
+
+This question's outcome will be determined by the specific criteria below. These criteria have not yet been satisfied:
+This resolves as "Yes" if the U.S. government announces new sanctions that explicitly target non-Russian persons, entities, or countries for their role in purchasing, financing, insuring, or transporting Russian crude oil or petroleum products. The announcement must be made by an official body of the U.S. government, such as the Department of the Treasury's Office of Foreign Assets Control (OFAC) (see for example OFAC's [Recent Actions](https://ofac.treasury.gov/recent-actions) portal, the White House, or through enacted legislation. Renewals or expansions of existing primary sanctions against Russian entities do not count. The new measures must be secondary in nature, penalizing third parties for engaging with Russia's energy sector.
+
+Additional fine-print:
+
+
+Question metadata:
+- Opened for forecasting: 2026-01-31T21:00:00Z
+- Resolves: 2026-05-01T00:00:00Z
+
+IMPORTANT: Today's date is 2026-01-31. All dates before today's date are in the PAST. All dates after today's date are in the FUTURE. Use today's date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of 2026-01-31 should not be considered as speculative but rather an historical document.
+
+Historical context:
+
+<Summary source="https://freepolicybriefs.org/2025/12/08/eu-russia-oil-sanctions/">
+# Summary of Article: U.S. Sanctions on Rosneft and Lukoil: Pressure on Moscow, Strains on Europe
+
+**Source:** FREE NETWORK  
+**Date:** December 07, 2025  
+**Author:** ln
+
+## Key Facts and Statistics:
+
+1. **Sanctions Timeline:** U.S. sanctions on Rosneft and Lukoil were announced on October 22, 2025, and came into effect on November 21, 2025, after a wind-down period.
+
+2. **Secondary Sanctions Mechanism:** The sanctions include a secondary sanctions clause that affects counterparties worldwide. OFAC can bar foreign banks from accessing the U.S. financial system if they knowingly carry out significant transactions for sanctioned entities.
+
+3. **Market Reactions:** Following the October announcement:
+   - Lukoil's share price fell approximately 9.4%
+   - Rosneft's share price declined approximately 7%
+
+4. **Impact on Oil Imports:**
+   - **India:** Russian oil imports reached 1.855 million barrels per day (bpd) in November (a five-month high), but are projected to drop to 600,000-650,000 bpd in December (a three-year low)
+   - **China:** About 40-45% of China's oil imports from Russia are affected by these sanctions
+
+5. **Oil Price Discounts:** The Urals-Brent discount widened significantly:
+   - From USD 11-12/barrel before October 22 sanctions
+   - To USD 19-20/barrel by early November
+   - As wide as USD 20-23.5/barrel by mid-November
+
+6. **Revenue Impact:** According to CREA's fossil fuel tracker for October 2025:
+   - Russia's monthly fossil fuel export revenues declined 4% month-on-month to EUR 524 million per day (lowest since the full-scale invasion of Ukraine)
+   - 15% year-on-year drop in fossil fuel export revenues
+   - 26% year-on-year drop in tax revenues from oil and gas exports
+
+## Key Contextual Information:
+
+- These were the first sanctions package introduced by the Trump administration and were coordinated with the EU's 19th sanctions package
+- The announcement reportedly caught Putin off guard
+- Hungary received a one-year exemption from U.S. measures after Viktor Orbán secured guarantees in Washington
+- Bulgaria moved to take control of Lukoil's Burgas refinery to maintain fuel security
+- Swiss trader Gunvor withdrew its bid to acquire Lukoil's international business due to sanctions exposure
+
+**Note:** The article appears to be cut off at the end, so some information about medium to long-term impacts may be incomplete.
+</Summary>
+
+<Summary source="https://home.treasury.gov/news/press-releases/sb0290">
+# Summary of Treasury Department Announcement (December 23, 2025)
+
+## Key Facts and Actions:
+
+**Primary Sanctions Announced:**
+- The U.S. Department of the Treasury's Office of Foreign Assets Control (OFAC) designated Russia's two largest oil companies on December 23, 2025:
+  - Open Joint Stock Company Rosneft Oil Company (Rosneft)
+  - Public Joint-Stock Company Oil Company Lukoil (Lukoil)
+- Both companies were designated pursuant to Executive Order 14024 for operating in the energy sector of the Russian Federation economy
+- Rosneft is described as a vertically integrated energy company specializing in exploration, extraction, production, refining, transport, and sale of petroleum, natural gas, and petroleum products
+- Lukoil engages in exploration, production, refining, marketing, and distribution of oil and gas in Russia and internationally
+- OFAC also designated numerous Russia-based Rosneft and Lukoil subsidiaries
+- All entities owned 50% or more by Rosneft and Lukoil are automatically blocked
+
+**Secondary Sanctions Warning:**
+- The announcement explicitly states: "Furthermore, engaging in certain transactions involving the persons designated today may risk the imposition of secondary sanctions on participating foreign financial institutions."
+- OFAC can prohibit or impose strict conditions on opening or maintaining correspondent accounts or payable-through accounts in the U.S. for foreign financial institutions that "knowingly conduct or facilitate any significant transaction on behalf of a person who is designated pursuant to the relevant authority."
+
+**Official Statement:**
+- Treasury Secretary Scott Bessent stated the sanctions target companies that "fund the Kremlin's war machine" and are a response to "President Putin's refusal to end this senseless war"
+- Bessent indicated "Treasury is prepared to take further action if necessary" and encouraged allies to join and adhere to these sanctions
+
+## Relevance to Forecasting Question:
+
+This announcement includes language about potential secondary sanctions ("may risk the imposition of secondary sanctions") but appears to describe existing legal authorities rather than announcing new secondary sanctions specifically. The document warns that foreign financial institutions engaging in transactions with the newly designated entities may face secondary sanctions under existing frameworks.
+</Summary>
+
+<Summary source="https://www.arnoldporter.com/en/perspectives/advisories/2025/10/uk-and-us-impose-major-new-sanctions-on-russian-oil-sector">
+# Summary of Article: UK and U.S. Impose Major New Sanctions on Russian Oil Sector
+
+**Key Facts and Timeline:**
+
+- **October 15, 2025**: The United Kingdom imposed major new sanctions on Russia's oil industry, including asset freezes on Rosneft and Lukoil (Russia's two largest oil companies)
+
+- **October 22, 2025**: The United States issued parallel sanctions on both entities, despite an ongoing government shutdown
+
+- **October 23, 2025**: The European Union announced a complementary sanctions package including a full transaction ban on Rosneft and Gazprom Neft
+
+**Nature of the Sanctions:**
+
+- The UK package comprises around 90 new designations, including asset freezes on oil refineries in India and China that facilitate Russian oil flows to global markets
+
+- These are **primary sanctions** targeting Russian entities (Rosneft and Lukoil) and their majority-owned subsidiaries
+
+- The sanctions prohibit transactions with designated entities and require U.S. and UK persons/financial institutions to freeze property belonging to sanctioned parties
+
+- General licenses were issued authorizing a winding-down period for existing transactions with certain Rosneft and Lukoil subsidiaries into November
+
+**Secondary Sanctions Possibility:**
+
+- **"The United States has also left open the possibility of imposing secondary sanctions on foreign financial institutions and others that conduct significant business with Rosneft and Lukoil. This could potentially include banks and others in countries such as China, India, and Turkey that facilitate Russian oil sales, who are exposed to the risk of being cut off from the U.S. financial system."**
+
+**Context:**
+
+- These are the first new Russia measures introduced under the second Trump administration
+
+- The sanctions followed a lack of progress in U.S.-led peace talks
+
+- President Trump publicly criticized President Putin for refusing to compromise in peace negotiations, including rejecting a proposed ceasefire
+
+- President Trump expressed hope that the sanctions will be short-lived, with their future depending on Russia's willingness to engage in genuine peace talks
+
+**Important Note:** As of the article's date (October 2025), secondary sanctions had NOT yet been imposed but were left as an open possibility by the U.S. government.
+</Summary>
+
+<Summary source="https://united24media.com/latest-news/trump-weighs-500-tariff-on-russian-oil-possible-global-embargo-9824">
+# Summary of "Trump Weighs 500% Tariff on Russian Oil, Possible Global Embargo"
+
+**Source:** UNITED24 Media  
+**Date:** July 11, 2025
+
+## Key Facts and Developments:
+
+1. **Proposed Sanctions/Tariffs:**
+   - President Trump is "closely studying" a bill that would introduce a 500% tariff on Russian oil imports
+   - The tariff would target not only Russia but also nations purchasing Russian energy, specifically naming China, India, and Turkey
+   - Trump previously described the bill as "too strong" but is now reconsidering
+
+2. **Reason for Reconsideration:**
+   - Trump's reported frustration with Vladimir Putin's refusal to engage in peace talks
+   - Continued Russian attacks on civilian infrastructure in Ukraine
+
+3. **Legislative Dynamics:**
+   - The White House is reportedly seeking to keep authority to lift such sanctions in presidential hands
+   - Some in Congress are pushing for more limited executive power on this matter
+
+## Expert Opinion (Named Source):
+
+**Maximilian Hess, Fellow at the Foreign Policy Research Institute:**
+- Stated the proposed 500% tariff "would be equivalent to a global embargo on Russian oil"
+- Expressed doubt Trump would fully implement this, citing risk of sharply rising global energy prices
+- Quoted: "Unless Trump comes out and says, 'We need to face the risk that Russia poses to Europe and the globe and accept oil prices of $100 or higher,' it's hard to see him endorsing this fully"
+- However, noted that expanding US sanctions and introducing a credible secondary tariff threat could have substantial deterrent effect
+- Called current EU proposals "too cautious" and advocated for stronger enforcement, particularly denying access to British and European financial and insurance markets for ports not adhering to inspection standards
+
+## Related Context:
+- EU's 18th sanctions package is stalled, blocked by Hungary and Slovakia
+- That package includes proposals to lower the price cap on Russian oil from $60 to $45 per barrel
+
+**Note:** This is a Ukrainian media source (UNITED24 Media), which should be considered when evaluating potential bias in coverage of this topic.
+</Summary>
+
+<Summary source="https://financialpost.com/pmn/business-pmn/us-holds-back-china-trade-threats-as-it-weighs-russia-sanctions">
+## Summary of Article: "US Holds Back China Trade Threats as It Weighs Russia Sanctions"
+
+**Source:** Financial Post (Bloomberg)
+
+### Key Facts and Statements:
+
+1. **US Position on Secondary Sanctions:**
+   - The US has held back from imposing secondary sanctions on China over its support for Russia's war on Ukraine because broader trade negotiations are continuing, according to US Ambassador to NATO Matthew Whitaker (statement made Tuesday in Bled, Slovenia).
+
+2. **Current Tariff Status:**
+   - President Trump has threatened to impose sanctions on buyers of Russian oil unless a Ukraine-Russia peace agreement is reached.
+   - The White House has imposed tariffs on India over its purchases of Russian crude, but **not on China**.
+   - Ambassador Whitaker stated Trump "has not put tariffs on China because those negotiations are ongoing. And the war in Ukraine is certainly part of that discussion."
+
+3. **Impact of India Tariffs:**
+   - Whitaker noted the tariffs on India "have changed their calculation" about purchases of Russian energy, but are "probably not going to foster a closer relationship in trade with India."
+
+4. **China Trade Context:**
+   - Whitaker referenced previous US-China tariff battles that culminated in 145% duties on both sides.
+   - Trump extended a trade truce with China for 90 days last month as the two sides discuss a potential leaders' meeting.
+   - Whitaker emphasized Trump "certainly knows that he has those cards to play" and may impose tariffs if deemed necessary.
+
+5. **European Pressure:**
+   - France and Germany are pushing for secondary sanctions as their leaders lose patience with Trump's reluctance to openly confront Putin.
+   - French President Macron will host an in-person summit Thursday with Ukrainian President Zelenskiy and allies.
+
+6. **Peace Deal Timeline:**
+   - Trump's latest two-week deadline is close to expiring with little clear progress toward a peace deal.
+   - Trump's August Alaska summit with Putin appeared to falter as Russian officials rejected robust security guarantees for Ukraine.
+
+### Analysis Note:
+The article describes **threats and considerations** of secondary sanctions but does not report any **actual announcement** of new secondary sanctions being imposed.
+</Summary>
+
+<Summary source="https://www.ft.com/content/54586120-fc60-4e0b-8280-b47788bd33d2">
+**Disclaimer**: The extracted content appears to be incomplete, showing primarily subscription/paywall information rather than the full article text. The headline suggests relevant content about EU sanctions on China for Russian energy imports, but the substantive article content is not available in the extraction.
+
+**Article Headline**: "EU weighs sanctions on China for Russian energy imports"
+
+**Key Information Extractable**:
+- The article title indicates that the European Union (EU) is considering sanctions on China related to Russian energy imports
+- No additional facts, statistics, or quotes are available in the extracted content
+- The actual article content discussing the details of potential EU sanctions, their scope, timeline, or relationship to U.S. sanctions policy is not accessible in this extraction
+
+**Relevance to Forecasting Question**: 
+While the headline suggests discussion of sanctions related to Russian energy exports, the question specifically asks about U.S. secondary sanctions, not EU sanctions. If the full article discusses U.S. policy coordination with the EU or provides context about the broader sanctions environment, that information is not available in this extraction.
+</Summary>
+
+<Agent_report>
+Query: Provide a concise timeline of U.S. sanctions on Russian oil 2022-Jan 2026, highlighting any secondary sanctions announcements or threats, details of the Nov 2025 Rosneft and Lukoil measures, and comparisons with Iran secondary sanctions precedents.
+Below is an integrated, source-backed chronology of U.S. oil-related sanctions on Russia from the start of 2022 through January 2026, followed by the requested discussion of secondary-sanctions milestones, the November 2025 Rosneft-Lukoil package, and a concise comparison with past U.S. secondary sanctions on Iran.  All dates are “U.S. action dates” unless otherwise noted.
+
+A.  Chronology  2022 – Jan 2026 (oil sector only)
+
+1.  8 Mar 2022 – Import ban.  President Biden announces “banning all imports of Russian oil, gas and energy” and other fossil fuels; the step is implemented through Executive Order 14066 and Public Law 117-109, the Ending Importation of Russian Oil Act. [U.S. Embassy Italy, 08 Mar 2022].
+
+2.  6 Apr 2022 – Executive Order 14071.  Prohibits (i) any new U.S. investment in the Russian energy sector and (ii) any category of services that Treasury may later determine should be barred from Russia. [Federal Register, 08 Apr 2022].
+
+3.  22 Nov 2022 (effective 5 Dec 2022) – “Price-Cap Determination.”  Acting under §1(a)(ii) of E.O. 14071, Treasury/OFAC bars U.S. persons from providing trading, financing, brokering, shipping, insurance, flagging or customs-brokerage services for seaborne Russian crude sold above US $60 per barrel; three general licences (GL 55-57) create safe harbours.  The determination expressly states it does not, at this stage, impose secondary sanctions.  [Morgan Lewis, 08 Dec 2022; Federal Register summary quoted in later 2024 notice].
+
+4.  22 Dec 2023 – Executive Order 14114.  Amends E.O. 14024 to authorise secondary sanctions (blocking or correspondent-account bans) on any foreign financial institution (FFI) that “facilitates significant transactions” for Russia’s military-industrial base.  OFAC FAQs 886-889 flag Russian-oil trade as a principal risk channel.  (Text referenced in Federal Register 22 Dec 2023 and in subsequent OFAC guidance.)
+
+5.  8 Feb 2024 – First price-cap enforcement designations.  OFAC names four UAE-based companies and the tanker NS Leader as SDNs for shipping Russian Urals crude at > $80/bbl, signalling that price-cap violations can now trigger blocking actions even without a dedicated secondary-sanctions authority. [gCaptain, 08 Feb 2024].
+
+6.  Feb-Oct 2024 – Public secondary-sanction warnings.  Treasury officials (multiple press briefings summarised in BBC 11 Oct 2024 and gCaptain 08 Feb 2024) warn that continued evasion may expose banks, insurers and ship-owners worldwide to E.O. 14114 penalties.  No CAPTA orders on FFIs are publicly announced in 2024, but the enforcement tempo against shipowners rises (two OFAC actions, January and October 2024).
+
+7.  10 Jan 2025 – Two pivotal determinations:  
+    a)  “Petroleum Services Determination.”  Under §1(a)(ii) E.O. 14071, OFAC bans, effective 27 Feb 2025, the export, re-export or supply by U.S. persons of virtually all petroleum-related services to any person in Russia. [OFAC FAQ page updated 17 Dec 2025].  
+    b)  “Energy-Sector Secondary-Sanctions Determination.”  Simultaneously, Treasury uses its new E.O. 14114 authority to make any non-U.S. person that “operates in, or has operated in” Russia’s energy sector—including routine crude purchases, transport or financing—subject to blocking.  Treasury accompanies the move with the first major SDN listings of Gazprom Neft, Surgutneftegas, two Russian insurers and more than 180 tankers. [Federal Register notice, 22 Jan 2025].
+
+8.  22 Oct 2025 – Rosneft & Lukoil SDN designations.  Treasury places Russia’s two largest oil companies, plus dozens of subsidiaries and trading arms, on the SDN list and grants a 30-day wind-down (until 21 Nov 2025).  The action automatically exposes any continuing foreign buyer, shipper, insurer or bank to secondary sanctions under E.O. 14114. [CEPA, 28 Oct 2025; CityNews Halifax/Associated Press, 23 Oct 2025].
+
+9.  17 Dec 2025 – Refinements and carve-outs.  OFAC GL 124 A allows transactions with Rosneft/Lukoil that relate solely to the Caspian Pipeline Consortium or Tengizchevroil; GL 55 E extends similar Sakhalin-2 authorisations through June 2026. [OFAC FAQ update, 17 Dec 2025].
+
+10.  Jan 2026 – Market impact.  The Centre for Research on Energy and Clean Air (CREA) reports a 13 % drop in Indian liftings and 69 % fall in Lukoil cargoes to Turkey and China since November, while Russia accelerates the build-out of its “shadow fleet.”  These data underpin Washington debate over whether to replace the price cap with a full maritime-services embargo. (Statistical summary in CREA 13 Jan 2026, cited in earlier research round.)
+
+B.  Evolution of U.S. secondary-sanctions posture
+
+• Statutory baseline – CAATSA §228 (2017) already authorised secondary sanctions for “significant” energy transactions with Russia but required discretionary use; it remained largely dormant.
+
+• E.O. 14114 (22 Dec 2023) – First Russia-specific presidential authority aimed squarely at FFIs worldwide; comparable to Iran’s CISADA §104(c) banking sanctions (2010).
+
+• 10 Jan 2025 Energy-Sector Determination – Expands exposure to “any person” operating in Russia’s energy sector, sweeping routine crude trading, shipping and insurance into the secondary-sanctions net—structurally similar to Iran Freedom & Counter-Proliferation Act §1244 (2013) that targeted any dealings in Iran’s energy, shipping or ship-building sectors.
+
+• 22 Oct 2025 Rosneft/Lukoil SDNs – For the first time, dealing with half of Russia’s upstream output becomes sanctionable per se, replicating the effect of the 2019 SDN listing of Iran’s National Iranian Oil Company (NIOC).
+
+C.  November 2025 Rosneft & Lukoil package—key details
+
+Scope:  Parent companies plus trading subsidiaries and c. 40 downstream or logistics affiliates are moved from “sectoral” SSI status to full blocking status. [CEPA, 28 Oct 2025].
+
+Wind-down:  30 days (to 21 Nov 2025) for non-U.S. persons to halt transactions, shorter than the 90-day grace period Treasury gave when designating Gazprom Neft in Jan 2025.
+
+Secondary-sanctions trigger:  Any post-21 Nov 2025 transaction involving Rosneft/Lukoil or their property is automatically a “significant transaction” under E.O. 14114, exposing the counter-party (bank, insurer, trader, shipper) to blocking or correspondent-account denial.
+
+Market reaction:  
+• Indian refiners cut December liftings by 13 %.  
+• Chinese state-owned traders pause spot purchases; smaller independents step in.  
+• CREA records a 69 % contraction in Lukoil shipments to STAR (Turkey) and to China by mid-December.  
+• Brent briefly rises 9 % but stabilises, reflecting wide anticipation and Russia’s ability to re-route via “shadow fleet.” [CEPA; CityNews/AP, 23 Oct 2025].
+
+Carve-outs:  GL 124 A (22 Oct 2025) permits otherwise-prohibited dealings related to CPC or Tengizchevroil, recognising the interests of Kazakhstan, Chevron and Exxon.
+
+D.  Comparison with Iran secondary-sanctions precedent
+
+1.  Objectives  
+   • Iran programme (2010-19): Suppress export volume to near-zero to compel nuclear concessions.  
+   • Russia programme (2022-26): Limit revenue (price cap) while avoiding supply-shock; only late 2025 do U.S. measures begin to threaten volume.
+
+2.  Legal architecture  
+   • Iran: Built largely on congressionally-mandated statutes—CISADA (2010), NDAA §1245 (2011), IFCA (2013)—that require the President to sanction purchasers, insurers and shippers.  
+   • Russia: Relies mostly on presidential emergency powers (E.O.s 14066, 14071, 14024, 14114) with wide discretion; Congress’s CAATSA authorities remain optional.
+
+3.  Escalatory tempo  
+   • Iran: Nine years from first oil-banking sanctions (2010) to SDN listing of NIOC (2019).  
+   • Russia: < three years from initial import ban (Mar 2022) to SDN listing of Rosneft/Lukoil (Oct 2025).
+
+4.  Extraterritorial mechanics  
+   • Both programmes ultimately apply “blocking” or “correspondent-account” penalties to non-U.S. banks and firms.  
+   • Russia’s E.O. 14114 mirrors Iran’s NDAA §1245 by targeting FFIs that facilitate significant transactions—but is narrower, limited (so far) to Russia’s military-industrial base and energy trade.
+
+5.  Mitigation devices  
+   • Iran: “Significant reduction” waivers let importers taper purchases.  
+   • Russia: Price-cap safe harbours allow continued trade under $60/bbl; GLs 124 A and 55 E create project-specific exemptions.
+
+E.  Remaining information gaps
+
+1.  Primary-source link for the 22 Nov 2022 price-cap determination itself (Treasury public notice) to replace secondary references.
+
+2.  Full public text of the 10 Jan 2025 “Energy-Sector Secondary-Sanctions Determination”; current sources (Federal Register notice, OFAC FAQ) summarise but do not reproduce the determination.
+
+3.  Quantitative enforcement data for 2024 (number of investigations, warning letters, or closed cases) analogous to the UK statistics quoted by BBC (11 Oct 2024); OFAC does not yet publish annual Russia-specific metrics.
+
+4.  Independent trade-flow statistics for Jan 2026 to corroborate CREA’s figures on post-sanctions volume shifts.
+
+If those documents or data become essential—for instance, for a legal memorandum or economic impact model—fresh targeted searches (e.g., “OFAC determination 10 January 2025 energy sector Russia pdf”) or FOIA requests to Treasury may be warranted.  For the purposes of a concise public-domain timeline, however, the existing sources provide sufficient granularity.
+
+With these caveats, the timeline and analysis above fully address the original query.</Agent_report>
+
+<Asknews_articles>
+Query: Will the U.S. impose new secondary sanctions related to Russian oil exports before May 1, 2026?
+Here are the relevant news articles:
+
+**EU Considers Sanctions Against Kyrgyzstan Over Alleged Support for Russia**
+The European Union is considering imposing sanctions on Kyrgyzstan due to allegations of aiding Russia by serving as a key conduit for European exports that ultimately reach Russia. According to the Brookings Institution, exports from several EU countries to Kyrgyzstan have surged dramatically: Estonia’s exports rose by 10,000%, Finland’s by 3,100%, Poland’s and Greece’s by 2,200% and 2,100% respectively, while exports from Norway, the UK, Germany, and the Czech Republic increased by over 1,000%. Economist Robin Brooks of Brookings Institution stated that Kyrgyzstan has become a de facto major destination for European exports that end up in Russia. In response, the EU has already added two Kyrgyz banks—'Tolubay' and Eurasian Savings Bank—to its sanctions list in October 2025, and in February 2025, 'Keremet Bank' was sanctioned by the UK, having previously been listed by the US. The EU plans to finalize the 20th package of sanctions against Russia on February 24, 2026, which may include restrictions on services critical for the maritime transport of Russian oil. These measures are part of broader efforts to counter evasion of sanctions on Russia.
+Original language: ru
+Publish date: January 31, 2026 08:39 AM
+Source:[inbusiness.kz](https://inbusiness.kz/ru/last/evrosoyuz-dumaet-o-sankciyah-protiv-soseda-kazahstana)
+
+**EU Preparing Stricter Measures Against Russian Oil – Bloomberg**
+The European Union is discussing more stringent measures against Russian oil exports, potentially replacing the current price cap mechanism with a full ban on maritime services related to the transport of Russian crude oil. According to Bloomberg, the proposed restrictions would prohibit EU-based companies from providing services such as insurance, freight, and shipping, which are essential for sea-based oil exports. If adopted by all EU member states, this measure would make Russian oil exports by sea effectively impossible regardless of price. Sources indicate the change would simplify sanctions enforcement and increase their effectiveness. The current price cap, set at $44.10 per barrel since February 1, 2026, is calculated as 15% below the average market price of Urals crude and is reviewed every six months. EU officials believe the existing mechanism is administratively complex and inconsistently effective. Member states have been briefed on the potential content of the 20th sanctions package against Russia, with the EU aiming to adopt it by the end of February 2026. However, consensus is required, and several capitals have expressed reservations about replacing the price cap with a total service ban. Meanwhile, Russia has reportedly offered record discounts on oil to India, selling its crude at prices comparable to those from 25 years ago.
+Original language: ru
+Publish date: January 31, 2026 07:48 AM
+Source:[Диалог.UA](https://www.dialog.ua/business/327978_1769845103)
+
+**Are the West's tightening oil sanctions finally taking their toll on Russia's economy?**
+Russian oil and gas revenue fell by a fifth in 2025 to its lowest level in five years, driven by a combination of global oil oversupply, a strong rouble, and increasingly stringent Western sanctions. The United States, under President Donald Trump, imposed secondary sanctions on Rosneft and Lukoil—Russia’s two largest oil exporters—and expanded them to cover four-fifths of Russia’s oil production. These measures have forced Russia to sell crude at steep discounts, with Urals crude falling below $40 a barrel in December, its lowest since the early days of the Covid-19 pandemic. The price cap on Russian seaborne oil exports, initially set at $60 a barrel and set to fall to under $44 by February 2026, has driven a wedge between global oil prices and what Russia receives. As a result, Russia has increasingly relied on a 'shadow fleet' of aging, often unregistered tankers to transport oil, prompting increased enforcement by France and other Western nations, including ship seizures and detentions. Buyers in India and China, previously eager to purchase discounted Russian crude, have become more cautious—India reduced volumes and China demanded higher discounts. Lukoil has agreed to sell $22 billion in overseas assets, excluding those in Kazakhstan, to the Carlyle Group, a move likely to boost Russia’s foreign reserves but reduce long-term oil and gas profits. The declining revenue has strained the Russian budget: oil and gas accounted for less than 23% of federal revenue by the end of 2025, the lowest in 20 years, contributing to a 2.6% GDP deficit. To compensate, Russia has raised VAT to 22% and cut social spending from 38% in 2021 to 25% in 2026. Despite economic pressures, including high interest rates and slowing growth, analysts such as Alexander Kolyandr and Daniel Spiro argue that these measures are unlikely to alter President Putin’s determination to continue the war in Ukraine, as geopolitical goals remain prioritized over economic stability. According to Catherine Wolfram of MIT, the current situation reflects a 'cat-and-mouse game' where sanctions are forcing Russia to make short-term financial sacrifices—such as selling assets at a discount—while attempting to sustain its war effort.
+Original language: en
+Publish date: January 31, 2026 06:56 AM
+Source:[France 24](https://www.france24.com/en/europe/20260131-are-the-west-tightening-oil-sanctions-finally-taking-toll-russia-economy)
+
+**EU Prepares 20th Sanctions Package Targeting Russia’s Oil Sector, Banks, Shadow Fleet, and Evasion Schemes**
+The European Union is preparing its 20th package of sanctions against Russia, aiming to intensify pressure on Moscow's oil revenues and expand restrictions on banks, Russia's shadow fleet, and schemes to circumvent sanctions. According to Bloomberg, if approved, the package could ban European companies from providing critical services—such as insurance and transportation—for the export of Russian oil regardless of its value. This full ban would significantly strengthen existing oil restrictions and simplify enforcement. The European Commission has not commented. The proposed measures also include new limitations on Russian banks, oil companies, cryptocurrency services, and financial institutions in third countries aiding Russia’s evasion efforts, along with an expanded list of shadow fleet vessels. For the first time, the EU may invoke a mechanism to counter sanctions evasion by banning exports of certain machinery and radio equipment to Kyrgyzstan, a transit route used for supplying goods to Russia. The package also proposes new trade restrictions on additional companies and goods essential for Russia’s weapons production, as well as reduced imports of specific Russian metals. High-level EU official Kaja Kallas stated on January 29, 2026, that the 20th package is expected to be adopted on February 24, 2026, though consensus among member states has not yet been reached. The European Council’s conclusion from December 18, 2025, indicated that the 20th package would be adopted at the beginning of 2026. On December 18, 2025, the EU had already imposed sanctions restricting 41 vessels linked to Russia’s shadow fleet, including oil tankers generating revenue for Russia’s energy sector.
+Original language: uk
+Publish date: January 31, 2026 05:54 AM
+Source:[Новое Время](https://nv.ua/ukr/world/geopolitics/20-y-paket-sankciy-yes-planuyetsya-zaprovaditi-novi-obmezhennya-na-naftu-banki-ta-tinoviy-flot-rf-50579920.html)
+
+**EU Preparing 20th Sanctions Package Targeting Russia’s Oil Sector, Banks, Shadow Fleet, and Sanctions Evasion Mechanisms**
+The European Union is preparing its 20th package of sanctions against Russia, targeting the country's oil sector, banks, shadow fleet, and evasion schemes. According to Bloomberg, if approved by EU member states, the package could ban European companies from providing critical services—such as insurance and transportation—for the export of Russian oil regardless of price. This full ban would significantly strengthen existing restrictions and simplify enforcement. The European Commission declined to comment. The proposed measures also include new restrictions on Russian banks, oil companies, cryptocurrency services, and financial institutions in third countries aiding evasion. The list of shadow fleet vessels is expected to expand. For the first time, the EU may activate a mechanism to counter sanctions circumvention by banning exports of machine tools and specific radio equipment to Kyrgyzstan, a transit route for goods to Russia. Additional trade restrictions will target companies and goods essential for Russian weapons production, and the import of certain Russian metals will be reduced. High-level EU official Kaja Kallas stated on January 29, 2026, that the 20th package is expected to be adopted on February 24, 2026, though consensus remains pending. The European Council’s December 18, 2025, conclusions confirmed the plan to adopt the 20th sanctions package in early 2026. On December 18, 2025, the EU imposed sanctions restricting 41 vessels, including oil tankers, part of Russia’s shadow fleet, which generate revenue for its energy sector.
+Original language: ru
+Publish date: January 31, 2026 05:54 AM
+Source:[Новое Время](https://nv.ua/world/geopolitics/20-y-paket-sankciy-es-planiruetsya-vvesti-novye-ogranicheniya-na-neft-banki-i-tenevoy-flot-rf-50579920.html)
+
+**EU Preparing Hard Blow to Russian Oil Exports Without Insurance and Transport Services**
+The European Union is preparing its 20th sanctions package targeting Russian oil exports, with plans to replace the existing price cap mechanism with a comprehensive ban on critical maritime services such as insurance and transportation. The proposed restrictions, expected to be approved by the end of February 2026, would prohibit EU companies from providing these essential services, effectively blocking sea shipments of Russian oil. The current price cap, set at $44.10 per barrel as of February 1, 2026, is established at 15% below the average market price of Urals crude and is reviewed every six months. Some EU member states have expressed opposition to abandoning the price cap in favor of a full service ban. The new package may also include restrictions on Russian banks, oil companies, cryptocurrency services, and financial institutions in third countries aiding sanctions evasion. Additional measures could target Russia’s so-called 'shadow fleet' and introduce export controls on machinery and electronic equipment to Kyrgyzstan. The EU may also impose new trade restrictions on companies and goods used in Russian military production, as well as limit imports of certain Russian metals. Since the introduction of the price cap in December 2022, Russian oil prices have dropped to $41.73 per barrel—close to early 2000s levels—well below Russia’s 2026 budget assumption of $59 per barrel. According to Reuters, Russia’s federal budget missed one-fifth of its oil and gas revenues from January to November 2025, with a 49% year-on-year decline in December. India has reduced Russian oil purchases by 28%, and Turkish refineries are increasingly sourcing Kazakh oil instead. The sanctions are part of broader G7 efforts to restrict Russian energy revenue.
+Original language: ru
+Publish date: January 31, 2026 05:36 AM
+Source:[inbusiness.kz](https://inbusiness.kz/ru/last/neft-bez-strahovki-i-perevozok-es-gotovit-zhestkij-udar-po-eksportu-iz-rossii)
+
+**Bloomberg: EU to Include Banks in New Sanctions Package Against Russia**
+The European Union plans to include additional restrictions on Russian banks and oil companies in its 20th sanctions package against Russia, according to Bloomberg, citing sources. The package may also impose sanctions on cryptocurrency services and financial institutions in third countries allegedly helping Russia circumvent restrictions. New vessels from Russia's 'shadow fleet' are expected to be added to the sanctions list. Sources indicate the EU may for the first time invoke its mechanism to counter sanctions evasion, potentially banning the export of machine tools and certain radio equipment to Kyrgyzstan. The package could also include new trade restrictions on companies and goods critical to Russia’s weapons production, as well as a ban on importing certain metals from Russia. On January 29, 2026, EU foreign policy chief Kaja Kallas stated the package is scheduled for adoption on February 24, 2026. Euractiv reported that proposed measures include a ban on servicing Russian oil tankers, a prohibition on exporting luxury goods to Russia, and a reduction in EU import quotas for Russian fertilizers—initiatives backed by Finland and Sweden. The previous 19th package was approved in late October 2025 and aimed to reduce Russia’s energy revenues, intensify financial pressure, and strengthen oversight of sanctions circumvention via third countries.
+Original language: ru
+Publish date: January 30, 2026 08:21 PM
+Source:[Радио Свобода](https://www.svoboda.org/a/bloomberg-es-vklyuchit-v-novyy-paket-sanktsiy-protiv-rossii-banki/33665086.html)
+
+**Bloomberg Reveals New Possible EU Plan to Sanction Russia by Banning Oil Transport Services**
+The European Union is evaluating a potential shift from its current price cap on Russian oil to a full ban on services related to the transportation of Russian crude oil, according to Bloomberg, citing sources familiar with the discussions. If approved by all EU member states, European companies could be prohibited from providing essential services such as insurance and maritime transport for Russian oil, regardless of price. This proposal, previously discussed with the G7 in December, is expected to be finalized by the end of February 2026, pending unanimous support. However, some member states have already signaled opposition to replacing the price cap with service restrictions. The proposed 20th sanctions package may also include new measures targeting Russian banks, oil companies, cryptocurrency services, and financial institutions in third countries suspected of aiding sanctions evasion. Additionally, restrictions could be extended to new vessels classified as part of Russia’s so-called shadow fleet. The EU is also considering using its new sanctions evasion countermeasure tool for the first time—prohibiting exports to Kyrgyzstan of certain machine tools and radio equipment. The package includes expanded trade restrictions on dual-use goods and new sanctions on imports of Russian metals. The EU originally introduced a price cap on Russian crude oil due to ongoing military actions in Ukraine, with the cap set at $44.1 per barrel starting 1 February 2026. The previous caps were $100 per barrel for diesel and $45 for fuel oil. Russia has responded with retaliatory measures, including a ban on oil and petroleum product exports under contracts tied to the price cap, extended until 30 June 2026. Moscow deems Western sanctions illegal.
+Original language: ru
+Publish date: January 30, 2026 06:06 PM
+Source:[НОВОСТИ Mail.Ru](https://news.mail.ru/politics/69628808/)
+
+**Media: EU May Impose Sanctions on Russian Banks and Oil Companies**
+According to Bloomberg, citing informed sources, the European Union may introduce new sanctions in its next package targeting Russian banks, oil companies, cryptocurrency services, and financial institutions in third countries. The proposed measures are expected to focus on organizations allegedly helping Russia circumvent existing EU sanctions. The package will also include additional trade restrictions on a broader range of companies and goods critical to Russia’s military production, as well as import restrictions on certain Russian metals. The announcement was reported on January 30, 2026, by PRIME.
+Original language: ru
+Publish date: January 30, 2026 05:17 PM
+Source:[ПРАЙМ](https://1prime.ru/20260130/sanktsii-867061576.html)
+
+**Trump Signs Emergency Declaration: Imposing Tariffs on Countries Supplying Oil to Cuba**
+On January 30, 2026, U.S. President Donald Trump signed an executive order declaring a state of emergency regarding Cuba, authorizing Washington to impose secondary tariffs on countries that directly or indirectly supply oil to Cuba. According to the White House- published order, Cuba poses an 'unusual and extraordinary threat' to U.S. national security by collaborating with 'numerous hostile countries, transnational terrorist groups, and malicious actors,' including Russia, China, Iran, Hamas, and Hezbollah. The order cites Cuba as hosting the largest foreign Russian electronic intelligence facility, which attempts to steal confidential U.S. national security information, and notes ongoing deepening defense and intelligence cooperation between Cuba and China. Secondary tariffs will be applied to goods from nations that supply oil to Cuba, with final decisions on tariff implementation to be made by the U.S. Secretary of Commerce and the Secretary of State. This follows a similar bill introduced by U.S. senators last year targeting Russia. According to media reports, Trump is prepared to sign additional sanctions against Russia if he retains final authority over such measures.
+Original language: uk
+Publish date: January 30, 2026 05:56 AM
+Source:[Європейська правда](https://www.eurointegration.com.ua/news/2026/01/30/7230123/)
+
+**US Sanctions Targeting Russia's Oil Giants Heighten Biz Risks**
+On October 22, 2025, the U.S. Department of the Treasury’s Office of Foreign Assets Control (OFAC) imposed sanctions on Rosneft Oil Co. and Lukoil OAO, two of Russia’s largest oil companies, under Executive Order No. 14024, which authorizes blocking property of persons operating in key sectors of the Russian economy, including energy. As a result, all U.S. property and interests in property of these entities are blocked, and U.S. persons are prohibited from engaging in transactions with them unless authorized. Subsidiaries in which Rosneft, Lukoil, or other blocked persons hold 50% or more ownership are automatically blocked under OFAC’s 50% rule. Export controls now require a license for any items subject to the Export Administration Regulations (EAR) to be exported or reexported to these entities due to a presumption of denial. Secondary sanctions may apply to non-U.S. persons engaging in significant transactions with them or providing material support. The U.S. action followed similar sanctions by the U.K. and the EU’s 19th round of sanctions, which include a ban on Russian liquefied natural gas imports and further restrictions on Rosneft. OFAC issued temporary general licenses allowing certain activities, including maintenance of operations and contract negotiations (but not execution) for entities owned by Lukoil International GmbH until January 17, 2026, with actual sales requiring specific authorization. Rosneft and Lukoil together account for roughly half of Russia’s oil production and a major share of its seaborne exports, making these sanctions a critical blow to Russia’s energy revenue. Prior to the sanctions, Russia’s oil and gas revenues had already declined by 21% in the first 10 months of 2025 compared to the same period in 2024. Third-country importers—such as India, China, and certain EU states—face reputational, financial, and potential secondary sanction risks by continuing to import from these companies; reports indicate Chinese and Indian importers have already reduced or suspended purchases. U.S. companies with exposure to Rosneft or Lukoil must wind down such activities except where authorized by general licenses. Non-U.S. entities in the energy sector must review operations for any ties to these companies, as even indirect involvement may trigger U.S. jurisdiction—especially through U.S. financial institutions or transactions. Financial institutions and businesses globally face potential sanctions for maintaining relationships with these entities. Section 744.8 of the EAR mandates a license for exports of any item subject to U.S. export controls to Rosneft or Lukoil, regardless of origin, if the item contains controlled U.S. content or is a product of U.S. technology. The previously adopted but suspended affiliates rule—restricting exports to foreign affiliates with 50%+ ownership by sanctioned entities—was suspended by the U.S. Department of Commerce on November 10, 2025, through November 9, 2026, but exporters should prepare for its potential reinstatement.
+Original language: en
+Publish date: January 08, 2026 01:22 AM
+Source:[The National Law Review - A Free To Use Nationwide Database of Legal Publications](https://natlawreview.com/article/us-sanctions-targeting-russias-oil-giants-heighten-biz-risks)
+
+**US Sanctions Threaten to Cripple Russia's Shadow Oil Fleet**
+The United States is preparing to impose sweeping sanctions on Russia's two largest oil companies, marking the first direct targeting of Russian oil exports by Washington, as reported by NewsMax on November 4, 2025. The sanctions, set to take effect later that month, threaten secondary penalties on banks and financial institutions facilitating payments for Russian crude, a move analysts say could severely disrupt Moscow's global trade. Maritime intelligence firm Windward AI reported a 510% increase in GPS-jamming incidents since January and over 1,000 ships currently operating under false flags—key indicators of evasion efforts. These vessels form part of Russia’s 'shadow fleet,' consisting of hundreds of older tankers that conduct ship-to-ship transfers in international waters—off Cyprus, near the Suez Canal, and off Oman—to conceal the origin of oil before delivering it to buyers in India, China, and Turkey. While the U.K. and EU have expanded their blacklists to include over 1,000 vessels, the Trump administration had previously refrained from new designations, allowing some Russian-linked ships to operate freely. Data from Kpler shows U.S.-sanctioned vessels experience a 74% drop in activity, compared to 31% for those sanctioned by the U.K. or EU. As a result, major Indian refineries and Chinese state oil firms have suspended purchases of seaborne Russian oil due to compliance risks. Analysts warn that if the U.S. enforces secondary sanctions, it could paralyze half of Russia’s oil export system. With oil prices stable and global supply abundant, Washington appears willing to test the limits of pressure on Moscow’s wartime economy without destabilizing markets. According to Kimberly Donovan of the Atlantic Council, 'If the U.S. follows through on secondary sanctions, it could paralyze half of Russia's oil export system.'
+Original language: en
+Publish date: November 04, 2025 07:58 PM
+Source:[NewsMax](https://www.newsmax.com/world/globaltalk/russia-sanctions-oil/2025/11/04/id/1233188/)
+
+**India should halt Russian oil imports, press US to withdraw punitive tariffs: GTRI**
+The Global Trade Research Initiative (GTRI) has urged India to halt imports from sanctioned Russian oil firms, press the United States to withdraw the 25% 'Russian oil' tariff imposed on Indian exports, and resume bilateral trade talks only on fair and equitable terms. According to GTRI, ending these imports would prevent exposure to secondary sanctions and allow India to demand tariff removal. The 25% tariff, introduced on July 31, 2024, has doubled total duties on Indian exports to 50%, contributing to a 37% decline in shipments between May and September 2024. GTRI warns that secondary sanctions could restrict access to critical infrastructure such as SWIFT, freeze dollar transactions, and disrupt digital services used by refineries, ports, and banks. The think tank also recommends that India seek parity with key partners like the European Union by targeting average industrial tariffs of around 15% and securing duty-free access for priority sectors including textiles, gems and jewellery, and pharmaceuticals. Removing the 'Russian oil' tariff would reduce India’s overall US duty burden from 50% to 25%, restoring export competitiveness. This call follows the US October 22 sanctions on Rosneft and Lukoil, which account for 57% of Russia’s crude output, and comes amid reports that India and the US were 'very near' to finalizing the first tranche of the Bilateral Trade Agreement (BTA) on October 24, 2024.
+Original language: en
+Publish date: November 01, 2025 07:58 AM
+Source:[ETEnergyworld.com](https://energy.economictimes.indiatimes.com/news/oil-and-gas/india-urged-to-halt-russian-oil-imports-and-negotiate-tariff-withdrawal-with-us/125012021)
+
+**Secondary sanctions on China, India key to US efforts to clamp down on Russian oil exports**
+The United States imposed new sanctions on Russian oil giants Rosneft and LUKoil on October 22, 2025, blocking their access to the US financial system and threatening secondary sanctions against third-party countries or companies conducting business with them. These measures aim to restrict Russia’s access to foreign currency and cut off energy revenues funding its war in Ukraine. The sanctions have disrupted global energy markets and prompted major Chinese importers, including state-owned firms PetroChina, Sinopec, CNOOC, and Zhenhua Oil, to temporarily suspend seaborne purchases of Russian crude linked to the sanctioned entities. China, which has become one of Russia’s largest oil buyers since 2022, imported approximately 2 million barrels per day (bpd) of Russian crude in the first nine months of 2025—accounting for about a fifth of its total imports. To mitigate supply risks, China has stockpiled an estimated 1.25 billion barrels of oil, with projections indicating this could rise to 1.5 billion by 2026. Pipeline deliveries under a long-term contract between Rosneft and China National Petroleum Corporation, totaling about 900,000 bpd, are expected to continue, though they may face scrutiny if sanctions expand. Moscow is likely to rely more on its 'shadow fleet' of aging tankers operating under opaque ownership to maintain exports. China has publicly condemned the US actions as unilateral and legally unfounded, while also protesting EU penalties on two Chinese refiners. The US faces a delicate balancing act: enforcing sanctions to maintain credibility without provoking a broader confrontation with China, the world’s second-largest economy. Analysts predict Washington will target high-profile cases to signal resolve while leaving room for diplomatic flexibility if Russia signals willingness to negotiate on Ukraine. In the short term, China’s strategic reserves and past experience with sanctions (e.g., on Iran) allow it to absorb the disruption, but in the long term, Beijing must navigate energy security and economic interests without triggering Western punitive measures.
+Original language: en
+Publish date: October 27, 2025 08:51 AM
+Source:[Newsbase](https://newsbase.com/story/secondary-sanctions-on-china-india-key-to-us-efforts-to-clamp-down-on-russian-oil-exports-408209)
+
+**Crude Oil: US Sanctions on Russian Exports Threaten to Reroute Millions of Barrels | Investing.com**
+The U.S. has imposed new sanctions on Russian oil giants Rosneft and Lukoil, disrupting a critical flow of over three million barrels per day from Siberia to South Asia. Unlike the 2022 sanctions, this round is more targeted and consequential, signaling a broader message to global traders, shippers, and refiners in markets such as Mumbai and Istanbul. The threat of secondary sanctions—penalties for those engaging with sanctioned entities—has already triggered market anxiety, prompting voluntary rerouting of tankers even before enforcement begins. While China’s major refiners (PetroChina, Sinopec, CNOOC) have publicly stepped back from seaborne Russian crude, independent 'teapot' refiners in Shandong continue to access discounted backdoor cargoes, and pipeline oil remains unaffected. India, reliant on cheap Russian crude for its refining boom, faces a geopolitical dilemma: maintaining supply while avoiding U.S. backlash, likely through creative use of ship registries and insurance routes. Enforcement remains a challenge, as the 'shadow fleet'—sanctioned tankers with deactivated transponders—continues to transport millions of barrels daily, evading detection despite efforts by Europe and the U.K. Even partial disruption, such as the potential removal of two million barrels from the open market, could drive Brent crude prices upward, especially given thin inventories and OPEC+'s reluctance to increase output. The sanctions are not just punitive but strategic: the U.S. aims to reshape global oil power dynamics, leveraging its status as the world’s top producer and most aggressive regulator. This dual role—market sheriff and speculator—creates a paradoxical environment where transparency erodes, premiums rise, and traders adept at navigating sanctions' gray zones stand to profit. As Brent fluctuates around mid-$60s, the key question is not whether the sanctions will work, but what kind of market they will leave behind: a darker, thinner, and more opaque one where barrels hide, risk premiums soar, and the rule of law in energy trade becomes increasingly ambiguous.
+Original language: en
+Publish date: October 24, 2025 08:59 AM
+Source:[Investing.com](https://www.investing.com/analysis/crude-oil-us-sanctions-on-russian-exports-threaten-to-reroute-millions-of-barrels-200669024)
+
+**Trump’s New Oil Sanctions on Russia: Why the Real Test Begins Now**
+On October 22, 2025, the U.S. administration under President Donald Trump imposed new sanctions on two major Russian oil companies, Rosneft and Lukoil, which together account for 55% of Russia’s oil production. This marks the first time Trump has authorized sanctions against Moscow since his return to the White House in January 2025, contrasting with the 140 sanction packages issued by his predecessor over three years of war. The sanctions target 34 subsidiaries of the two firms and include secondary sanctions, threatening financial institutions that facilitate transactions with the designated companies—giving them until November 21 to comply or face exclusion from the U.S. financial system. This move is aimed at disrupting Russia’s ability to circumvent Western restrictions, particularly through offshore 'ghost fleets' and shadow trade networks. Economists like Elina Ribakova of Bruegel note that targeting foreign banks is the most effective way to enforce sanctions. As a result, several Indian and Chinese refineries have already suspended Russian oil imports. The market reacted with a 5.6% spike in Brent crude prices, reaching over $66 per barrel, though analysts expect this to be short-lived. Experts emphasize that while Russia has adapted to sanctions since 2022—relying on oil exports for 30–50% of its budget—its ability to sustain exports depends on new pricing discounts and alternative shipping routes. However, challenges remain: U.S. sanctions enforcement has been weakened since Trump’s inauguration, with key departments like the State Department’s sanctions coordination unit and Justice Department’s financial oversight units dismantled or downsized. Only the Office of Foreign Assets Control (OFAC) remains fully operational. As Ribakova cautions, real impact will depend on consistent enforcement, not just announcements. The true test of these sanctions lies ahead, in their implementation and global compliance.
+Original language: fr
+Publish date: October 24, 2025 08:20 AM
+Source:[LExpress.fr](https://www.lexpress.fr/monde/amerique/sanctions-de-donald-trump-sur-le-petrole-russe-pourquoi-le-vrai-test-commence-maintenant-5TNYSEANIRDNRKL4SNFIRR4QKU/)
+
+**IMF Warns of Global Oil Market Disruptions from Potential U.S. Secondary Sanctions on Russian Exports**
+The International Monetary Fund (IMF) warned that potential secondary U.S. sanctions on Russian oil exports could disrupt global supply chains, posing a significant risk of driving up energy prices. According to the IMF's report released on Tuesday, October 14, 2025, 'potential disruptions in Russian supplies represent a risk that cannot be ignored and could lead to price increases.' The warning comes amid U.S. threats to impose 100% tariffs on Russian goods and secondary sanctions on countries importing Russian oil, unless a ceasefire agreement is reached between Moscow and Kyiv. Despite these risks, the IMF projected a 12.9% decline in the average oil price in 2025, falling to $68.92 per barrel from $79.17 in 2024, with an additional 4.5% drop expected in 2026, bringing the price down to $65.84 per barrel.
+Original language: ar
+Publish date: October 14, 2025 02:43 PM
+Source:[RT Arabic](https://arabic.rt.com/business/1720679-%D8%B5%D9%86%D8%AF%D9%88%D9%82-%D8%A7%D9%84%D9%86%D9%82%D8%AF-%D8%A7%D9%84%D8%AF%D9%88%D9%84%D9%8A-%D9%8A%D8%AD%D8%B0%D8%B1-%D9%85%D9%86-%D8%AA%D8%AF%D8%A7%D8%B9%D9%8A%D8%A7%D8%AA-%D8%A7%D9%84%D8%B9%D9%82%D9%88%D8%A8%D8%A7%D8%AA-%D8%A7%D9%84%D8%A3%D9%85%D8%B1%D9%8A%D9%83%D9%8A%D8%A9-%D8%B9%D9%84%D9%89-%D8%A3%D8%B3%D9%88%D8%A7%D9%82-%D8%A7%D9%84%D9%86%D9%81%D8%B7/)
+
+**US Urges G7 to Impose Secondary Sanctions on China and India and Seize Frozen Russian Assets**
+Bloomberg and UNN report that the United States will ask its G7 allies to impose tariffs of up to 100 % on China and India for purchases of Russian oil, in an effort to pressure President Vladimir Putin to end the war in Ukraine. The proposal also calls for the G7 to begin direct confiscation of Russia’s frozen gold‑and‑currency reserves, which total about $300 billion and are largely held in Europe, and to use the proceeds to finance Ukraine’s defence. The U.S. plan would introduce secondary tariffs ranging from 50 % to 100 % on imports and exports to China and India, and impose trade restrictions to curb the flow of Russian energy and dual‑use technologies. The article quotes: 'Пропозиція США передбачає запровадження вторинних тарифів від 50% до 100% для Китаю та Індії, а також обмежувальних торговельних заходів…' The EU Council extended sanctions on more than 2,500 individuals and organisations until 15 March 2026, including entry bans and asset freezes.
+Original language: uk
+Publish date: September 14, 2025 05:43 AM
+Source:[newsyou.info](https://newsyou.info/2025/09/ssha-tisnut-na-g7-shhodo-vtorinnix-sankcij-proti-kitayu-ta-indi%D1%97-ta-konfiskaci%D1%97-zamorozhenix-aktiviv-rf-bloomberg)
+
+
+--- Deep Research Analysis ---
+Based on my research of recent developments up to January 31, 2026, it appears **unlikely that the U.S. will impose new secondary sanctions related to Russian oil exports before May 1, 2026**. Here's a comprehensive analysis:
+
+### Key Findings:
+1. **Legislative Stalemate in the U.S.**: 
+   - In late 2025, Senator Lindsey Graham proposed a bill (S. Res. XX) calling for 500% tariffs on countries importing Russian oil, gas, or uranium [20]. However, this bill has been paused since November 2025 due to lack of presidential support. President Trump explicitly stated that the bill's fate "depends entirely on his personal decision" [20]. As of January 2026, there is no indication Trump has endorsed it, and no further legislative progress is reported.
+
+2. **Trump's Unpredictability and Priorities**:
+   - President Trump has focused on other trade disputes, such as threatening Mexico over oil sales to Cuba and Canada over aircraft tariffs [9][10]. His direct diplomacy with Russia (e.g., negotiating a temporary pause in attacks on Ukrainian infrastructure [6]) suggests a preference for personal deal-making over systemic sanctions. His alleged erratic behavior, as reported by European leaders [10], further complicates predictions, but there is no evidence he is prioritizing new Russian oil sanctions.
+
+3. **EU-Led Sanctions as a Precedent**:
+   - The EU is advancing its 20th sanctions package, which may replace the Russian oil price cap with a full maritime services ban by late February 2026 [4][8]. While this is unrelated to U.S. policy, it reflects Western unity. However, **secondary sanctions** (targeting third countries aiding Russia) are being considered by the EU for entities in Kyrgyzstan [5][7], not by the U.S. specifically for oil.
+
+4. **Market Realities**:
+   - Russian oil revenues are declining due to existing sanctions [2], and the EU has slashed imports to 1-2% [14]. Secondary sanctions would primarily affect third-party buyers (e.g., India, China), but the U.S. has not signaled plans to escalate pressure here. French interception of a Russian oil tanker [15][16] shows enforcement of existing sanctions, not new secondary measures.
+
+### Limitations and Caveats:
+- **Trump's Volatility**: If Russia escalates actions in Ukraine or elsewhere, Trump could abruptly support sanctions. However, his past reluctance and focus on other issues make this improbable before May 2026.
+- **Congressional Dynamics**: The Graham bill could be revived if bipartisan pressure mounts, but this is unlikely in a divided Congress.
+- **EU-U.S. Coordination**: While the EU is tightening sanctions, U.S. alignment is not guaranteed. The U.S. may wait to see the EU's move first.
+
+### Conclusion:
+Given the absence of active U.S. legislative efforts, Trump's non-committal stance, and competing priorities, new U.S. secondary sanctions on Russian oil exports before May 1, 2026, are improbable. However, the situation remains fluid, and unexpected geopolitical events could alter this outlook.
+
+**Sources**: [2][4][5][6][8][9][10][14][15][16][20]
+</Asknews_articles>
+
+
+The information has been sourced from the internet/language models (for agent reports), so it is advisable to exercise healthy skepticism at your discretion.
+
+Your analysis should have the following components, refering the above historical context:
+(a) Source analysis: Briefly summarize each information source (either web article or Agent report), evaluate source quality and data.
+**Opinions are commonplace in writing. For each source, you must be able to discern factual information from opinions. You are advised to strongly consider only opinions originating from identifiable experts or entities**.
+(b) Reference class analysis: Identify a few possible reference classes and evaluate respective suitabilities to the forecasting question. If applicable, choose the most suitable one.
+(c) Timeframe analysis: State the prediction timeframe (e.g., how many days/months from now?) and examine historical patterns over similar periods
+(d) Justification: Integrate the above factors with other points you found relevant to write a justification for your outside view prediction.
+
+You are free to include other components to deepen the analysis, at your discretion.
+
+Subsequently, calibrate your outside view prediction, considering:
+(a) You aim to predict the true probability of an event occuring, not a hedged or overconfident projection of your beliefs.
+(b) Is there a rough figure in the sources you can tether your prediction to?
+(c) Small differences in probabilities can be significant: 90% is a 9:1 odds and 99% is a 99:1 odds.
+
+Format you answer as below:
+
+Analysis:
+{Insert your analysis here}
+
+Outside view calibration:
+{Insert your calibration of your outside view prediction here.}
+
+Outside View Prediction:
+[Provide your outside view prediction here to a 1% significance. It is not necessary for the prediction to be a neat multiple of 5%.]
