@@ -139,11 +139,13 @@ class BaseForecaster(ForecasterMixin, ABC):
                     historical_output,
                     forecaster_id="-1",
                     question_details=question_details,
+                    include_asknews=False,
                 ),
                 search.process_search_queries(
                     current_output,
                     forecaster_id="0",
                     question_details=question_details,
+                    include_asknews=True,
                 ),
             )
             (historical_context, historical_metadata), (current_context, current_metadata) = results

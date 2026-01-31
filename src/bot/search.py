@@ -3,9 +3,10 @@ Search Pipeline
 
 Key differences from previous approach:
 1. Forecasters generate search queries directly in their responses
-2. Queries are tagged with source (Google, Google News, Assistant, Agent)
-3. Agentic search uses GPT to iteratively research
-4. Articles are summarized with question context
+2. Queries are tagged with source (Google, Google News, Agent)
+3. AskNews is called programmatically for current search (not LLM-controlled)
+4. Agentic search uses GPT to iteratively research
+5. Articles are summarized with question context
 """
 
 import asyncio
@@ -84,7 +85,7 @@ class SearchPipeline:
     Supports multiple search sources:
     - Google (web search via Serper)
     - Google News (news search via Serper)
-    - Assistant (AskNews)
+    - AskNews (news + deep research, called programmatically for current search)
     - Agent (agentic search with iterative GPT analysis)
     """
 
@@ -126,6 +127,7 @@ class SearchPipeline:
         response: str,
         forecaster_id: str,
         question_details: QuestionDetails,
+        include_asknews: bool = False,
     ) -> Tuple[str, Dict[str, Any]]:
         """
         Parse search queries from forecaster's response and execute them.
@@ -134,13 +136,13 @@ class SearchPipeline:
         Search queries:
         1. "query text" (Google)
         2. "query text" (Google News)
-        3. "query text" (Assistant)
-        4. "query text" (Agent)
+        3. "query text" (Agent)
 
         Args:
             response: The forecaster's response containing search queries
             forecaster_id: ID for logging
             question_details: Question context for summarization
+            include_asknews: If True, also call AskNews with question title (for current search)
 
         Returns:
             Tuple of (formatted_results_string, metadata_dict)
@@ -168,14 +170,14 @@ class SearchPipeline:
             # Parse queries with sources
             # Format: 1. "text" (Source) or 1. text (Source) or 1. text [Source]
             search_queries = re.findall(
-                r'(?:\d+\.\s*)?(["\']?(.*?)["\']?)\s*[\(\[](Google|Google News|Assistant|Agent|Deep Research|Deep Research Medium|Deep Research High)[\)\]]',
+                r'(?:\d+\.\s*)?(["\']?(.*?)["\']?)\s*[\(\[](Google|Google News|Agent)[\)\]]',
                 queries_text
             )
 
             # Fallback to unquoted queries
             if not search_queries:
                 search_queries = re.findall(
-                    r'(?:\d+\.\s*)?([^(\[\n]+)\s*[\(\[](Google|Google News|Assistant|Agent|Deep Research|Deep Research Medium|Deep Research High)[\)\]]',
+                    r'(?:\d+\.\s*)?([^(\[\n]+)\s*[\(\[](Google|Google News|Agent)[\)\]]',
                     queries_text
                 )
 
@@ -221,16 +223,14 @@ class SearchPipeline:
                     )
                 elif source == "Agent":
                     tasks.append(self._agentic_search(query))
-                # NOTE: (Assistant) tag is no longer used - AskNews is called automatically below.
-                # NOTE: These three Deep Research tags are not currently used - prompts don't tell LLMs to output them.
-                # Deep Research runs via _call_asknews() which is called automatically below.
 
-            # Always call AskNews with question title (not LLM-generated query)
-            logger.info(f"Forecaster {forecaster_id}: Adding AskNews search with question title")
-            tasks.append(self._call_asknews(question_details.title))
-            query_sources.append((question_details.title, "Assistant"))
-            metadata["queries"].append({"query": question_details.title, "tool": "Assistant"})
-            metadata["tools_used"].add("Assistant")
+            # Programmatically add AskNews for current search (not dependent on LLM output)
+            if include_asknews:
+                logger.info(f"Forecaster {forecaster_id}: Adding AskNews search with question title")
+                tasks.append(self._call_asknews(question_details.title))
+                query_sources.append((question_details.title, "AskNews"))
+                metadata["queries"].append({"query": question_details.title, "tool": "AskNews"})
+                metadata["tools_used"].add("AskNews")
 
             if not tasks:
                 logger.info(f"Forecaster {forecaster_id}: No tasks generated")
@@ -248,7 +248,7 @@ class SearchPipeline:
                     metadata["queries"][i]["error"] = str(result)
                     metadata["queries"][i]["num_results"] = 0
 
-                    if source == "Assistant":
+                    if source == "AskNews":
                         formatted_results += f"\n<Asknews_articles>\nQuery: {query}\nError retrieving results: {result}\n</Asknews_articles>\n"
                     elif source == "Agent":
                         formatted_results += f"\n<Agent_report>\nQuery: {query}\nError: {result}\n</Agent_report>\n"
@@ -258,7 +258,7 @@ class SearchPipeline:
                     logger.info(f"Forecaster {forecaster_id}: Query '{query}' processed successfully")
 
                     # Count results by looking for tags in the result string
-                    if source == "Assistant":
+                    if source == "AskNews":
                         num_results = result.count("**") // 2  # AskNews articles have ** in titles
                         formatted_results += f"\n<Asknews_articles>\nQuery: {query}\n{result}</Asknews_articles>\n"
                     elif source == "Agent":

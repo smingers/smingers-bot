@@ -344,6 +344,8 @@ Question metadata:
 IMPORTANT: Today's date is {today}. All dates before today's date are in the PAST. All dates after today's date are in the FUTURE. Use today's date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
 Your task is to analyze the forecasting question and write a series of search queries that will be used to find current information/news articles relevant to the question. For each query, indicate whether you wish to utilize google or google news to retrieve information.
+
+For google/google news:
 Your query for google and google news are processed by classical search engines, so please phrase the queries in a way optimal for keyword optimized search. Avoid writing overly specific queries. Limit to six words.
 
 You should format your answer exactly as below, always formatting the source in brackets () (NOT curly brackets, NOT square brackets [], you need to use normal brackets ()) **on the same line as and after** the query, applicable for Google and Google News. Do not wrap your query in quotes. Be sure to include one query for Google and one for Google News.
