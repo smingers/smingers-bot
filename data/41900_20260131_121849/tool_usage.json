@@ -1,0 +1,166 @@
+{
+  "centralized_research": {
+    "historical": {
+      "forecaster_id": "-1",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "OpenAI GPT-6 timeline 2025 interview",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Sam Altman on GPT-6 release",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide a timeline of OpenAI model releases from GPT-3 onward with announcement and general availability dates; then list and cite every public statement since 2024 in which OpenAI leadership discussed GPT-6 development or release expectations. Include source URLs.",
+          "tool": "Agent",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Agent",
+        "Google"
+      ]
+    },
+    "current": {
+      "forecaster_id": "0",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "OpenAI GPT-6 public release",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "GPT-6 general availability OpenAI",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Search recent OpenAI documentation or Newsroom posts from January 2026 confirming whether GPT-6 is listed as a generally available model.",
+          "tool": "Assistant",
+          "success": true,
+          "num_results": 22
+        }
+      ],
+      "tools_used": [
+        "Assistant",
+        "Google News",
+        "Google"
+      ]
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6333,
+        "token_output": 2798,
+        "cost": 0.060969,
+        "duration_seconds": 69.97019147872925
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15745,
+        "token_output": 3098,
+        "cost": 0.093705,
+        "duration_seconds": 72.56849932670593
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6333,
+        "token_output": 2259,
+        "cost": 0.05288400000000001,
+        "duration_seconds": 69.97024083137512
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14089,
+        "token_output": 2312,
+        "cost": 0.07694699999999999,
+        "duration_seconds": 72.56847715377808
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5367,
+        "token_output": 3306,
+        "cost": 0.05567625,
+        "duration_seconds": 69.9702730178833
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13039,
+        "token_output": 2256,
+        "cost": 0.05440225,
+        "duration_seconds": 72.56845307350159
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5367,
+        "token_output": 2043,
+        "cost": 0.027078,
+        "duration_seconds": 69.97030448913574
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12971,
+        "token_output": 1679,
+        "cost": 0.039374,
+        "duration_seconds": 72.56842994689941
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5367,
+        "token_output": 2284,
+        "cost": 0.029006,
+        "duration_seconds": 69.97033071517944
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12223,
+        "token_output": 1603,
+        "cost": 0.03727,
+        "duration_seconds": 72.5684084892273
+      }
+    }
+  }
+}
