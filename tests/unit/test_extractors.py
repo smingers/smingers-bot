@@ -18,6 +18,8 @@ from src.bot.extractors import (
     extract_multiple_choice_probabilities as extract_option_probabilities_from_response,
     normalize_probabilities,
     extract_percentiles_from_response,
+    extract_date_percentiles_from_response,
+    parse_date_to_timestamp,
     enforce_strict_increasing,
     clean_line,
     VALID_PERCENTILE_KEYS,
@@ -344,3 +346,96 @@ class TestCleanLine:
     def test_lowercase(self):
         """Test conversion to lowercase."""
         assert clean_line("PERCENTILE 50: 100") == "percentile 50: 100"
+
+
+# ============================================================================
+# Date Percentile Extraction Tests
+# ============================================================================
+
+class TestDatePercentileExtraction:
+    """Tests for extract_date_percentiles_from_response()"""
+
+    def test_standard_date_format(self, date_response_standard):
+        """Test extraction from standard YYYY-MM-DD format."""
+        result = extract_date_percentiles_from_response(date_response_standard, verbose=False)
+        assert 1 in result
+        assert 50 in result
+        assert 99 in result
+        # Verify timestamps are reasonable (all should be positive and in the 2020s)
+        for key, timestamp in result.items():
+            assert timestamp > 1700000000  # After 2023
+            assert timestamp < 2000000000  # Before 2033
+
+    def test_iso_format(self, date_response_iso_format):
+        """Test extraction with full ISO format (YYYY-MM-DDTHH:MM:SSZ)."""
+        result = extract_date_percentiles_from_response(date_response_iso_format, verbose=False)
+        assert 10 in result
+        assert 50 in result
+        assert 90 in result
+
+    def test_mixed_format(self, date_response_mixed_format):
+        """Test extraction with mixed date formats."""
+        result = extract_date_percentiles_from_response(date_response_mixed_format, verbose=False)
+        assert len(result) == 3
+        # Should be strictly increasing timestamps
+        sorted_values = [result[k] for k in sorted(result.keys())]
+        for i in range(len(sorted_values) - 1):
+            assert sorted_values[i] < sorted_values[i + 1]
+
+    def test_no_distribution_anchor_raises(self, date_response_no_distribution):
+        """Test that missing Distribution: anchor raises ExtractionError."""
+        with pytest.raises(ExtractionError, match="No valid date percentiles"):
+            extract_date_percentiles_from_response(date_response_no_distribution, verbose=False)
+
+    def test_invalid_percentile_key_ignored(self):
+        """Test that invalid percentile keys (like 2, 3, etc.) are ignored."""
+        text = """
+        Distribution:
+        Percentile 2: 2026-03-15
+        Percentile 5: 2026-04-15
+        Percentile 50: 2026-09-15
+        """
+        result = extract_date_percentiles_from_response(text, verbose=False)
+        assert 2 not in result
+        assert 5 in result
+        assert 50 in result
+
+
+class TestParseDateToTimestamp:
+    """Tests for parse_date_to_timestamp()"""
+
+    def test_simple_date(self):
+        """Test parsing YYYY-MM-DD format."""
+        timestamp = parse_date_to_timestamp("2026-06-15")
+        assert timestamp is not None
+        # Should be roughly mid-2026
+        assert timestamp > 1750000000  # After 2025
+        assert timestamp < 1800000000  # Before 2027
+
+    def test_iso_format_with_z(self):
+        """Test parsing YYYY-MM-DDTHH:MM:SSZ format."""
+        timestamp = parse_date_to_timestamp("2026-06-15T12:00:00Z")
+        assert timestamp is not None
+
+    def test_iso_format_without_z(self):
+        """Test parsing YYYY-MM-DDTHH:MM:SS format (no Z)."""
+        timestamp = parse_date_to_timestamp("2026-06-15T12:00:00")
+        assert timestamp is not None
+
+    def test_specific_date_values(self):
+        """Test that specific dates produce expected timestamps."""
+        # 2026-01-01 00:00:00 UTC
+        timestamp = parse_date_to_timestamp("2026-01-01")
+        # Unix timestamp for 2026-01-01 is approximately 1767225600
+        assert 1767200000 < timestamp < 1767300000
+
+    def test_invalid_date_returns_none(self):
+        """Test that invalid dates return None."""
+        assert parse_date_to_timestamp("not-a-date") is None
+        assert parse_date_to_timestamp("2026-13-01") is None  # Invalid month
+        assert parse_date_to_timestamp("2026-01-32") is None  # Invalid day
+
+    def test_whitespace_handling(self):
+        """Test that whitespace is stripped."""
+        timestamp = parse_date_to_timestamp("  2026-06-15  ")
+        assert timestamp is not None

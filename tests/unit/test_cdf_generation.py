@@ -286,6 +286,146 @@ class TestEnforceStrictIncreasing:
         assert set(result.keys()) == {1, 50, 99}
 
 
+class TestDiscreteCDF:
+    """Tests for discrete question CDF generation (102 points instead of 201)."""
+
+    @pytest.fixture
+    def simple_percentiles(self) -> Dict[int, float]:
+        """Simple increasing percentiles for testing."""
+        return {
+            1: 10,
+            10: 20,
+            50: 50,
+            90: 80,
+            99: 100,
+        }
+
+    def test_returns_102_points(self, simple_percentiles):
+        """Test that output CDF has exactly 102 points for discrete questions."""
+        cdf = generate_continuous_cdf(
+            percentile_values=simple_percentiles,
+            open_upper_bound=True,
+            open_lower_bound=True,
+            upper_bound=120,
+            lower_bound=0,
+            num_points=102,
+        )
+        assert len(cdf) == 102
+
+    def test_monotonically_increasing(self, simple_percentiles):
+        """Test that discrete CDF is strictly non-decreasing."""
+        cdf = generate_continuous_cdf(
+            percentile_values=simple_percentiles,
+            open_upper_bound=True,
+            open_lower_bound=True,
+            upper_bound=120,
+            lower_bound=0,
+            num_points=102,
+        )
+        for i in range(len(cdf) - 1):
+            assert cdf[i] <= cdf[i + 1], f"CDF not monotonic at index {i}"
+
+    def test_values_in_valid_range(self, simple_percentiles):
+        """Test that all discrete CDF values are in [0, 1]."""
+        cdf = generate_continuous_cdf(
+            percentile_values=simple_percentiles,
+            open_upper_bound=True,
+            open_lower_bound=True,
+            upper_bound=120,
+            lower_bound=0,
+            num_points=102,
+        )
+        assert all(0 <= v <= 1 for v in cdf), "CDF values outside [0, 1]"
+
+    def test_min_step_constraint_102(self, simple_percentiles):
+        """Test that minimum step size is enforced with 102 points."""
+        min_step = 5.0e-5
+        cdf = generate_continuous_cdf(
+            percentile_values=simple_percentiles,
+            open_upper_bound=True,
+            open_lower_bound=True,
+            upper_bound=120,
+            lower_bound=0,
+            min_step=min_step,
+            num_points=102,
+        )
+        steps = np.diff(cdf)
+        assert np.all(steps >= min_step - 1e-10), f"Min step violated: {np.min(steps)} < {min_step}"
+
+    def test_max_step_constraint_102(self, simple_percentiles):
+        """Test that no single step exceeds 0.59 with 102 points."""
+        cdf = generate_continuous_cdf(
+            percentile_values=simple_percentiles,
+            open_upper_bound=True,
+            open_lower_bound=True,
+            upper_bound=120,
+            lower_bound=0,
+            num_points=102,
+        )
+        steps = np.diff(cdf)
+        assert np.all(steps <= 0.59), f"Max step exceeded: {np.max(steps)} > 0.59"
+
+    def test_open_bounds_constraints_102(self, simple_percentiles):
+        """Test that open bounds satisfy Metaculus requirements for 102 points."""
+        cdf = generate_continuous_cdf(
+            percentile_values=simple_percentiles,
+            open_upper_bound=True,
+            open_lower_bound=True,
+            upper_bound=120,
+            lower_bound=0,
+            num_points=102,
+        )
+        assert cdf[0] >= 0.001, f"Open lower bound violated: {cdf[0]} < 0.001"
+        assert cdf[-1] <= 0.999, f"Open upper bound violated: {cdf[-1]} > 0.999"
+
+
+class TestDateCDF:
+    """Tests for date question CDF generation (using timestamps)."""
+
+    def test_date_cdf_with_timestamps(self):
+        """Test CDF generation with Unix timestamp percentiles (date questions)."""
+        # Example timestamps for dates in 2026
+        percentiles = {
+            10: 1767225600,  # ~2026-01-01
+            50: 1777660800,  # ~2026-06-01
+            90: 1790697600,  # ~2026-10-01
+        }
+        # Bounds as timestamps
+        lower_bound = 1735689600  # ~2025-01-01
+        upper_bound = 1798761600  # ~2027-01-01
+
+        cdf = generate_continuous_cdf(
+            percentile_values=percentiles,
+            open_upper_bound=True,
+            open_lower_bound=True,
+            upper_bound=upper_bound,
+            lower_bound=lower_bound,
+            num_points=201,
+        )
+        assert len(cdf) == 201
+        assert all(0 <= v <= 1 for v in cdf)
+
+    def test_date_cdf_monotonicity(self):
+        """Test that date CDFs are monotonically increasing."""
+        percentiles = {
+            1: 1767225600,
+            50: 1777660800,
+            99: 1798761600,
+        }
+        lower_bound = 1735689600
+        upper_bound = 1830297600  # ~2028-01-01
+
+        cdf = generate_continuous_cdf(
+            percentile_values=percentiles,
+            open_upper_bound=True,
+            open_lower_bound=True,
+            upper_bound=upper_bound,
+            lower_bound=lower_bound,
+        )
+        for i in range(len(cdf) - 1):
+            assert cdf[i] <= cdf[i + 1], f"Date CDF not monotonic at index {i}"
+
+
 class TestCDFEdgeCases:
     """Tests for edge cases and real-world scenarios."""
 

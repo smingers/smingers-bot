@@ -75,8 +75,9 @@ NUM_PATTERN = re.compile(
 )
 
 # Regex for parsing percentile lines with date values (YYYY-MM-DD or YYYY-MM-DDTHH:MM:SSZ)
+# Note: clean_line() lowercases input, so T/Z become t/z
 DATE_PATTERN = re.compile(
-    r"^(?:percentile\s*)?(\d{1,3})\s*[:\-]\s*(\d{4}-\d{2}-\d{2}(?:T\d{2}:\d{2}:\d{2}Z?)?)\s*$",
+    r"^(?:percentile\s*)?(\d{1,3})\s*[:\-]\s*(\d{4}-\d{2}-\d{2}(?:[tT]\d{2}:\d{2}:\d{2}[zZ]?)?)\s*$",
     re.IGNORECASE
 )
 
@@ -342,7 +343,7 @@ def parse_date_to_timestamp(date_str: str) -> Optional[float]:
 
     Supports formats:
     - YYYY-MM-DD (assumes midnight UTC)
-    - YYYY-MM-DDTHH:MM:SSZ (full ISO format)
+    - YYYY-MM-DDTHH:MM:SSZ (full ISO format, case-insensitive T/Z)
 
     Args:
         date_str: Date string to parse
@@ -352,13 +353,15 @@ def parse_date_to_timestamp(date_str: str) -> Optional[float]:
     """
     date_str = date_str.strip()
 
-    # Try full ISO format first
-    if "T" in date_str:
+    # Try full ISO format first (handle both uppercase and lowercase T/Z from clean_line)
+    if "T" in date_str or "t" in date_str:
         try:
+            # Normalize to uppercase for parsing
+            normalized = date_str.upper()
             # Handle with or without trailing Z
-            if date_str.endswith("Z"):
-                date_str = date_str[:-1] + "+00:00"
-            dt = datetime.fromisoformat(date_str)
+            if normalized.endswith("Z"):
+                normalized = normalized[:-1] + "+00:00"
+            dt = datetime.fromisoformat(normalized)
             if dt.tzinfo is None:
                 dt = dt.replace(tzinfo=timezone.utc)
             return dt.timestamp()

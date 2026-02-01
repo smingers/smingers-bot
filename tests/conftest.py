@@ -229,6 +229,62 @@ Percentile 99: 30
 # Config Fixtures
 # ============================================================================
 
+# ============================================================================
+# Date Percentile Extraction Fixtures
+# ============================================================================
+
+@pytest.fixture
+def date_response_standard():
+    """Standard date response with YYYY-MM-DD format."""
+    return """
+## Analysis
+
+Based on historical data and current trends for this date-based question:
+
+Distribution:
+Percentile 1: 2026-03-01
+Percentile 5: 2026-04-15
+Percentile 10: 2026-06-01
+Percentile 50: 2026-09-15
+Percentile 90: 2027-03-01
+Percentile 99: 2027-12-31
+"""
+
+
+@pytest.fixture
+def date_response_iso_format():
+    """Date response with full ISO format (YYYY-MM-DDTHH:MM:SSZ)."""
+    return """
+Distribution:
+Percentile 10: 2026-06-01T12:00:00Z
+Percentile 50: 2026-09-15T00:00:00Z
+Percentile 90: 2027-03-01T18:30:00Z
+"""
+
+
+@pytest.fixture
+def date_response_mixed_format():
+    """Date response with mixed date formats."""
+    return """
+Distribution:
+Percentile 10: 2026-06-01
+Percentile 50: 2026-09-15T12:00:00Z
+Percentile 90: 2027-03-01
+"""
+
+
+@pytest.fixture
+def date_response_no_distribution():
+    """Date response without Distribution: anchor."""
+    return """
+I think the event will occur around mid-2026, possibly 2026-06-15.
+"""
+
+
+# ============================================================================
+# Config Fixtures
+# ============================================================================
+
 @pytest.fixture
 def sample_config():
     """Sample configuration dictionary."""
