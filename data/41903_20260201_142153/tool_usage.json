@@ -1,0 +1,184 @@
+{
+  "centralized_research": {
+    "historical": {
+      "forecaster_id": "-1",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Russia Ukraine past ceasefire agreements",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Paris peace talks Ukraine 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide detailed timeline of ceasefire negotiations between Russia and Ukraine from Nov 2023 to Feb 1 2026, include roles of U.S., EU, China, Turkey, and summarize official statements on long-term truce prospects.",
+          "tool": "Agent",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google News",
+        "Google"
+      ],
+      "llm_cost": 0.5412,
+      "llm_cost_summarization": 0.1626,
+      "llm_cost_agentic": 0.3785
+    },
+    "current": {
+      "forecaster_id": "0",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "Russia Ukraine ceasefire agreement draft 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Trump Putin Budapest summit ceasefire",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Latest negotiations toward Russia-Ukraine 30-day ceasefire agreement early 2026 developments",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 28
+        },
+        {
+          "query": "Will Russia and Ukraine sign a ceasefire agreement before May 1, 2026?",
+          "tool": "AskNews",
+          "deep_research_query": "Latest negotiations toward Russia-Ukraine 30-day ceasefire agreement early 2026 developments"
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "AskNews"
+      ],
+      "llm_cost": 0.2276,
+      "llm_cost_summarization": 0.1626,
+      "llm_cost_agentic": 0.065
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8643,
+        "token_output": 2637,
+        "cost": 0.065484,
+        "duration_seconds": 75.44765424728394
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14985,
+        "token_output": 4000,
+        "cost": 0.10495499999999999,
+        "duration_seconds": 105.53230810165405
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8643,
+        "token_output": 2931,
+        "cost": 0.069894,
+        "duration_seconds": 75.44770431518555
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13613,
+        "token_output": 3547,
+        "cost": 0.09404399999999999,
+        "duration_seconds": 105.53228759765625
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7557,
+        "token_output": 2505,
+        "cost": 0.04829475,
+        "duration_seconds": 75.44773650169373
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13577,
+        "token_output": 3049,
+        "cost": 0.06644575,
+        "duration_seconds": 105.53226494789124
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7557,
+        "token_output": 2428,
+        "cost": 0.034538,
+        "duration_seconds": 75.4477710723877
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12696,
+        "token_output": 1279,
+        "cost": 0.035624,
+        "duration_seconds": 105.53224277496338
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7557,
+        "token_output": 2251,
+        "cost": 0.033122,
+        "duration_seconds": 75.44780087471008
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12129,
+        "token_output": 2011,
+        "cost": 0.040346,
+        "duration_seconds": 105.53221940994263
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0119,
+    "step2_search": 0.5412,
+    "step3_outside_view": 0.2513,
+    "step5_inside_view": 0.3414
+  },
+  "total_pipeline_cost": 1.1458
+}
