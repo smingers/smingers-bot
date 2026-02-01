@@ -1,0 +1,7 @@
+Analysis:
+The key to judging the likelihood that New START will be renewed before 5 Feb 2026 is understanding (a) the formal status of the treaty since its February 2021 five-year extension, (b) Russia’s February 2023 “suspension” and whether that legally blocks extension, (c) the state of U.S.–Russian strategic-stability talks since the Ukraine invasion, (d) any public negotiating proposals, draft agreements, or congressional activity that could enable a successor accord, and (e) what the Arms Control Association or comparable sources have reported about concrete steps toward prolonging or replacing the treaty to at least 5 Feb 2027. A concise chronology of diplomatic statements, meetings, and legal analyses from 2021-2026 will give the best outside view.
+
+Search queries:
+1. New START suspension Russia 2023 (Google)  
+2. New START renewal negotiations 2025 (Google News)  
+3. Provide a detailed timeline (2021-2026) of official U.S. and Russian statements, negotiations, or proposals concerning extending or replacing New START, including any Arms Control Association or State Department reports discussing an extension to 2027 or a successor treaty lasting that long. Highlight legal obstacles raised after Russia’s 2023 suspension and summarize congressional or Kremlin positions impacting renewal prospects. (Agent)
