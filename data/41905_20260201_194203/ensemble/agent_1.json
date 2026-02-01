@@ -1,0 +1,5 @@
+{
+  "percentiles": null,
+  "cdf_length": 0,
+  "error": "No valid percentiles extracted. Last 300 chars: ' baseline $3.588B; historical QoQ growth 1.4%-52%; recent trend 6%; expected Q1-26 range $3.9-5.2B centered $4.2-4.5B.\\n\\n3. **Consistency Check:** Implied median = $4.1B; mean = $4.15B. Reasonable given Q3-25 base $3.588B and 14% growth over 2 quarters accounting for deceleration and seasonal offset.'"
+}

@@ -1,0 +1,184 @@
+{
+  "centralized_research": {
+    "historical": {
+      "forecaster_id": "-1",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Eli Lilly Zepbound quarterly sales",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Q4 2025 Eli Lilly earnings Zepbound revenues",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Compile tirzepatide (Mounjaro & Zepbound) quarterly revenues 2023-2025 and capacity expansion timelines; summarize in table",
+          "tool": "Agent",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Google News",
+        "Agent"
+      ],
+      "llm_cost": 0.3579,
+      "llm_cost_summarization": 0.1699,
+      "llm_cost_agentic": 0.188
+    },
+    "current": {
+      "forecaster_id": "0",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Zepbound 2025 sales guidance",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Lilly Q4 2025 results Zepbound",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Analyst forecasts Zepbound Q1 2026 revenue and Lilly production capacity updates",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 25
+        },
+        {
+          "query": "What will be the reported Q1 2026 global revenue for Zepbound (tirzepatide)?",
+          "tool": "AskNews",
+          "deep_research_query": "Analyst forecasts Zepbound Q1 2026 revenue and Lilly production capacity updates"
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Google News",
+        "AskNews"
+      ],
+      "llm_cost": 0.1751,
+      "llm_cost_summarization": 0.1699,
+      "llm_cost_agentic": 0.0052
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6953,
+        "token_output": 2328,
+        "cost": 0.05577900000000001,
+        "duration_seconds": 90.47619009017944
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 18517,
+        "token_output": 4000,
+        "cost": 0.11555099999999999,
+        "duration_seconds": 90.09981226921082
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6953,
+        "token_output": 2294,
+        "cost": 0.055269,
+        "duration_seconds": 90.4762692451477
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17472,
+        "token_output": 3415,
+        "cost": 0.10364100000000001,
+        "duration_seconds": 90.09978365898132
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5958,
+        "token_output": 3193,
+        "cost": 0.0551285,
+        "duration_seconds": 90.47634959220886
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16128,
+        "token_output": 2251,
+        "cost": 0.059738,
+        "duration_seconds": 90.09969091415405
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5958,
+        "token_output": 1999,
+        "cost": 0.027908,
+        "duration_seconds": 90.47638583183289
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16211,
+        "token_output": 2151,
+        "cost": 0.04963,
+        "duration_seconds": 90.09965705871582
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5958,
+        "token_output": 2737,
+        "cost": 0.033811999999999995,
+        "duration_seconds": 90.47642350196838
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15210,
+        "token_output": 2583,
+        "cost": 0.051084,
+        "duration_seconds": 90.0995614528656
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0139,
+    "step2_search": 0.3579,
+    "step3_outside_view": 0.2279,
+    "step5_inside_view": 0.3796
+  },
+  "total_pipeline_cost": 0.9793
+}
