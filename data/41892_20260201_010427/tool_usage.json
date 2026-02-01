@@ -1,0 +1,166 @@
+{
+  "centralized_research": {
+    "historical": {
+      "forecaster_id": "-1",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "LDP historical seat totals elections",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Japan poll Liberal Democratic majority 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide latest January 2026 Japanese national polls, any reputable seat projections for Feb 8 snap election, and summarize LDP performance in 1993, 2009, 2024 general elections. Explain Japan\u2019s mixed electoral system\u2019s impact on translating vote share to seats.",
+          "tool": "Agent",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Google News",
+        "Agent"
+      ]
+    },
+    "current": {
+      "forecaster_id": "0",
+      "searched": true,
+      "num_queries": 2,
+      "queries": [
+        {
+          "query": "2026 Japan election opinion polls",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "LDP majority projections 2026 election",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Will the Liberal Democratic Party win a majority in the 2026 Japanese general election?",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 44
+        }
+      ],
+      "tools_used": [
+        "AskNews",
+        "Google",
+        "Google News"
+      ]
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6846,
+        "token_output": 2783,
+        "cost": 0.062283,
+        "duration_seconds": 90.61520576477051
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17926,
+        "token_output": 3007,
+        "cost": 0.098883,
+        "duration_seconds": 72.98285961151123
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6846,
+        "token_output": 4000,
+        "cost": 0.080538,
+        "duration_seconds": 90.61526346206665
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16777,
+        "token_output": 2457,
+        "cost": 0.087186,
+        "duration_seconds": 72.9828372001648
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6082,
+        "token_output": 3576,
+        "cost": 0.060707500000000005,
+        "duration_seconds": 90.6152937412262
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17087,
+        "token_output": 2555,
+        "cost": 0.06567225,
+        "duration_seconds": 72.98281264305115
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6082,
+        "token_output": 2452,
+        "cost": 0.03178,
+        "duration_seconds": 90.61532926559448
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15867,
+        "token_output": 1397,
+        "cost": 0.04291,
+        "duration_seconds": 72.98278737068176
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6082,
+        "token_output": 2486,
+        "cost": 0.032052,
+        "duration_seconds": 90.61536264419556
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14568,
+        "token_output": 1971,
+        "cost": 0.044904,
+        "duration_seconds": 72.98276472091675
+      }
+    }
+  }
+}
