@@ -162,6 +162,34 @@ class BaseForecaster(ForecasterMixin, ABC):
             self.artifact_store.save_search_results("current", {"context": current_context})
 
         # =========================================================================
+        # STEP 2.5: Validate research for factual conflicts (if enabled)
+        # =========================================================================
+        if self.config.get("research", {}).get("validation_enabled", False):
+            write("\n=== Step 2.5: Validating research for factual conflicts ===")
+
+            from .research_validator import ResearchValidator
+
+            validator = ResearchValidator(self.config, self.llm)
+            historical_context, current_context, validation_metadata = await validator.validate(
+                historical_context,
+                current_context,
+                question_details,
+            )
+            tool_usage["research_validation"] = validation_metadata
+
+            if validation_metadata.get("conflict_found"):
+                write(f"Conflict detected: {validation_metadata['conflict']['topic']}")
+                if validation_metadata.get("resolved"):
+                    write(f"Resolved: {validation_metadata['resolution']['claim'][:100]}...")
+                else:
+                    write("Unable to resolve conflict, passing through unchanged")
+            else:
+                write("No factual conflicts detected")
+
+            if self.artifact_store:
+                self.artifact_store.save_validation_results(validation_metadata)
+
+        # =========================================================================
         # STEP 3: Run 5 agents on Step 1 (outside view)
         # =========================================================================
         write("\n=== Step 3: Running Step 1 (outside view) ===")

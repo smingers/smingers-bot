@@ -138,6 +138,20 @@ class ArtifactStore:
         """
         self._write_json(artifacts.research_dir / f"search_{search_type}.json", results)
 
+    def save_validation_results(
+        self,
+        artifacts: ForecastArtifacts,
+        metadata: dict,
+    ) -> None:
+        """
+        Save research validation results.
+
+        Args:
+            artifacts: ForecastArtifacts container
+            metadata: Validation metadata including conflict info and resolution
+        """
+        self._write_json(artifacts.research_dir / "validation.json", metadata)
+
     # =========================================================================
     # Ensemble
     # =========================================================================

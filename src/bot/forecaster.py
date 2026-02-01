@@ -606,6 +606,10 @@ class ScopedArtifactStore:
         """Save tool usage tracking data."""
         self.store.save_tool_usage(self.artifacts, tool_usage)
 
+    def save_validation_results(self, metadata: dict) -> None:
+        """Save research validation results."""
+        self.store.save_validation_results(self.artifacts, metadata)
+
 
 def load_config(config_path: str = "config.yaml") -> dict:
     """Load configuration from YAML file."""

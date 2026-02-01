@@ -122,6 +122,12 @@ research:
   max_articles_to_scrape: 10
   max_content_length: 15000
 
+  # Research validation (detects and resolves factual conflicts)
+  # When enabled, an agent reviews research for mutually exclusive claims
+  # and attempts to resolve them through targeted verification searches
+  validation_enabled: false  # Set to true to enable
+  validation_model: "openrouter/anthropic/claude-sonnet-4.5"
+
   # Legacy settings (for backward compatibility)
   sources:
     - type: "llm_knowledge"
