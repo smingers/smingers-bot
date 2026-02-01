@@ -26,7 +26,7 @@ from ..storage.database import ForecastDatabase, ForecastRecord, AgentPrediction
 from .binary import BinaryForecaster
 from .numeric import NumericForecaster
 from .multiple_choice import MultipleChoiceForecaster
-from .exceptions import QuestionTypeError
+from .exceptions import QuestionTypeError, SubmissionError
 
 logger = logging.getLogger(__name__)
 
@@ -74,7 +74,8 @@ class Forecaster:
 
         # Initialize components
         self.metaculus = MetaculusClient()
-        self.llm = LLMClient()
+        llm_timeout = self.resolved_config.get("llm", {}).get("timeout_seconds")
+        self.llm = LLMClient(timeout_seconds=llm_timeout)
         self.artifact_store = ArtifactStore(
             base_dir=self.resolved_config.get("storage", {}).get("base_dir", "./data")
         )
@@ -456,7 +457,14 @@ class Forecaster:
         forecast_result: dict,
         artifacts: ForecastArtifacts,
     ) -> dict:
-        """Submit prediction to Metaculus."""
+        """Submit prediction to Metaculus.
+
+        Raises:
+            SubmissionError: If the API returns an error during submission.
+            QuestionTypeError: If the question type is not supported.
+        """
+        import httpx
+
         try:
             if question.question_type == "binary":
                 prediction = forecast_result["final_prediction"]
@@ -501,17 +509,19 @@ class Forecaster:
                     question_type=question.question_type,
                 )
 
-            self.artifact_store.save_api_response(artifacts, response)
-            return {"success": True, "response": response}
-
-        except Exception as e:
-            logger.error(f"Failed to submit prediction: {e}")
+        except httpx.HTTPStatusError as e:
             self.artifact_store.save_prediction(artifacts, {
                 "forecast_result": forecast_result,
                 "submitted": False,
                 "error": str(e),
             })
-            return {"success": False, "error": str(e)}
+            raise SubmissionError(
+                f"API returned {e.response.status_code}: {e}",
+                status_code=e.response.status_code,
+            ) from e
+
+        self.artifact_store.save_api_response(artifacts, response)
+        return {"success": True, "response": response}
 
     async def _save_to_database(
         self,

@@ -162,3 +162,12 @@ logging:
   level: "INFO"
   log_llm_calls: true
   track_costs: true
+
+# =============================================================================
+# LLM CONFIGURATION
+# =============================================================================
+llm:
+  # Timeout for individual LLM calls (seconds)
+  # Most calls complete in <2 min; this catches hung requests from OpenRouter/providers
+  # If a call times out, the agent is skipped and remaining agents are aggregated
+  timeout_seconds: 240  # 4 minutes

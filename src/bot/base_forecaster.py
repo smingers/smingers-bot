@@ -70,7 +70,11 @@ class BaseForecaster(ForecasterMixin, ABC):
             artifact_store: Optional ArtifactStore for saving artifacts
         """
         self.config = config
-        self.llm = llm_client or LLMClient()
+        if llm_client:
+            self.llm = llm_client
+        else:
+            llm_timeout = config.get("llm", {}).get("timeout_seconds")
+            self.llm = LLMClient(timeout_seconds=llm_timeout)
         self.artifact_store = artifact_store
 
     async def forecast(

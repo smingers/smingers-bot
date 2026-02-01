@@ -98,7 +98,11 @@ class SearchPipeline:
             llm_client: Optional LLMClient instance (creates one if not provided)
         """
         self.config = config
-        self.llm = llm_client or LLMClient()
+        if llm_client:
+            self.llm = llm_client
+        else:
+            llm_timeout = config.get("llm", {}).get("timeout_seconds")
+            self.llm = LLMClient(timeout_seconds=llm_timeout)
         self.http_client: Optional[httpx.AsyncClient] = None
 
         # API keys

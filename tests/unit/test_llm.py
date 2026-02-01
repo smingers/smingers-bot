@@ -592,3 +592,65 @@ class TestLLMClientAdditional:
             for call in client.call_history:
                 assert call.response is not None
                 assert call.error is None
+
+
+class TestLLMClientTimeout:
+    """Tests for LLMClient timeout behavior."""
+
+    def test_default_timeout(self):
+        """Client has sensible default timeout."""
+        client = LLMClient()
+        assert client.timeout_seconds == LLMClient.DEFAULT_TIMEOUT_SECONDS
+        assert client.timeout_seconds == 240  # 4 minutes
+
+    def test_custom_timeout(self):
+        """Custom timeout can be set."""
+        client = LLMClient(timeout_seconds=60)
+        assert client.timeout_seconds == 60
+
+    @pytest.mark.asyncio
+    async def test_timeout_triggers_retry(self):
+        """Timeout triggers retry logic."""
+        import asyncio
+
+        async def slow_completion(*args, **kwargs):
+            await asyncio.sleep(10)  # Would time out
+
+        mock_response = MagicMock()
+        mock_response.choices = [MagicMock(message=MagicMock(content="Success"))]
+        mock_response.usage = MagicMock(prompt_tokens=10, completion_tokens=20)
+        mock_response.model_dump = MagicMock(return_value={})
+
+        # First call times out, second succeeds
+        call_count = 0
+
+        async def mock_acompletion(*args, **kwargs):
+            nonlocal call_count
+            call_count += 1
+            if call_count == 1:
+                await asyncio.sleep(10)  # Will timeout
+            return mock_response
+
+        with patch('src.utils.llm.acompletion', mock_acompletion):
+            client = LLMClient(timeout_seconds=0.1, max_retries=2, retry_delay=0.01)
+            response = await client.complete(model="test-model", messages=[{"role": "user", "content": "Hi"}])
+
+            assert response.content == "Success"
+            assert call_count == 2  # First timed out, second succeeded
+
+    @pytest.mark.asyncio
+    async def test_timeout_raises_after_max_retries(self):
+        """Timeout raises LLMError after all retries exhausted."""
+        import asyncio
+
+        async def always_slow(*args, **kwargs):
+            await asyncio.sleep(10)
+
+        with patch('src.utils.llm.acompletion', always_slow):
+            client = LLMClient(timeout_seconds=0.05, max_retries=2, retry_delay=0.01)
+
+            with pytest.raises(LLMError) as exc_info:
+                await client.complete(model="test-model", messages=[{"role": "user", "content": "Hi"}])
+
+            assert "Timeout after" in str(exc_info.value.last_error)
+            assert exc_info.value.attempts == 2

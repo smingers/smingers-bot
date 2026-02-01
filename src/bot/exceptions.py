@@ -82,3 +82,15 @@ class QuestionTypeError(ForecastingError):
     def __init__(self, message: str, question_type: str | None = None):
         super().__init__(message)
         self.question_type = question_type
+
+
+class SubmissionError(ForecastingError):
+    """Failed to submit prediction to Metaculus API.
+
+    Raised when the API returns an error (4xx, 5xx) during submission.
+    The forecast was generated but not successfully submitted.
+    """
+
+    def __init__(self, message: str, status_code: int | None = None):
+        super().__init__(message)
+        self.status_code = status_code

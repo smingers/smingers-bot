@@ -62,7 +62,17 @@ jobs:
           key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
 
       - name: Install dependencies
+        id: install_deps
+        continue-on-error: true
         run: poetry install --no-interaction --no-root
+
+      - name: Retry install on failure (clear cache)
+        if: steps.install_deps.outcome == 'failure'
+        run: |
+          echo "First install failed, clearing cache and retrying..."
+          rm -rf .venv
+          poetry cache clear --all -n
+          poetry install --no-interaction --no-root
 
       # ============================================================
       # TEST MODE: Single question forecast
@@ -87,6 +97,7 @@ jobs:
       - name: Forecast spring-aib-2026
         if: ${{ github.event_name == 'schedule' || github.event.inputs.test_question_id == '' }}
         id: forecast_spring_aib
+        continue-on-error: true
         run: |
           poetry run python run_bot.py \
             --tournament 32916 \
@@ -99,22 +110,10 @@ jobs:
           ASKNEWS_CLIENT_SECRET: ${{ secrets.ASKNEWS_CLIENT_SECRET }}
           SERPER_API_KEY: ${{ secrets.SERPER_API_KEY }}
 
-      # ============================================================
-      # FAILURE NOTIFICATION
-      # If any forecasts failed due to extraction errors, this step
-      # creates a visible annotation in the GitHub Actions UI
-      # ============================================================
-      - name: Check for failures
-        if: failure()
-        run: |
-          echo "::error::One or more forecasts failed! Check the logs above for details."
-          echo "::error::Look for 'EXTRACTION ERRORS' or 'FAILED QUESTIONS' in the output."
-          echo ""
-          echo "To retry failed questions manually:"
-          echo "  python main.py --question <QUESTION_ID> --mode live"
-
       - name: Forecast MiniBench
         if: ${{ github.event_name == 'schedule' || github.event.inputs.test_question_id == '' }}
+        id: forecast_minibench
+        continue-on-error: true
         run: |
           poetry run python run_bot.py \
             --tournament minibench \
@@ -177,3 +176,24 @@ jobs:
             git pull --rebase
             git push
           fi
+
+      # ============================================================
+      # FAIL IF ANY FORECASTS HAD ERRORS
+      # This runs after data is committed, so we preserve artifacts
+      # but still get a red X on the workflow
+      # ============================================================
+      - name: Check for forecast failures
+        if: ${{ steps.forecast_spring_aib.outcome == 'failure' || steps.forecast_minibench.outcome == 'failure' }}
+        run: |
+          echo "::error::One or more forecast steps failed!"
+          echo ""
+          if [ "${{ steps.forecast_spring_aib.outcome }}" == "failure" ]; then
+            echo "::error::spring-aib-2026 had failures - check logs for SUBMISSION ERRORS or EXTRACTION ERRORS"
+          fi
+          if [ "${{ steps.forecast_minibench.outcome }}" == "failure" ]; then
+            echo "::error::MiniBench had failures - check logs for SUBMISSION ERRORS or EXTRACTION ERRORS"
+          fi
+          echo ""
+          echo "To retry failed questions manually:"
+          echo "  python main.py --question <QUESTION_ID> --mode live"
+          exit 1

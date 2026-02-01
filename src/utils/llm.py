@@ -156,17 +156,23 @@ class LLMClient:
         print(response.content)
     """
 
+    # Default timeout for LLM calls (4 minutes)
+    # Most calls complete in <2 min; this catches hung requests
+    DEFAULT_TIMEOUT_SECONDS = 240
+
     def __init__(
         self,
         log_calls: bool = True,
         track_costs: bool = True,
         max_retries: int = 3,
         retry_delay: float = 1.0,
+        timeout_seconds: Optional[float] = None,
     ):
         self.log_calls = log_calls
         self.track_costs = track_costs
         self.max_retries = max_retries
         self.retry_delay = retry_delay
+        self.timeout_seconds = timeout_seconds or self.DEFAULT_TIMEOUT_SECONDS
         self.call_history: list[LLMCall] = []
 
     async def complete(
@@ -202,13 +208,16 @@ class LLMClient:
             try:
                 start_time = time.time()
 
-                # Make the API call via litellm
-                response = await acompletion(
-                    model=model,
-                    messages=messages,
-                    temperature=temperature,
-                    max_tokens=max_tokens,
-                    **kwargs
+                # Make the API call via litellm with timeout
+                response = await asyncio.wait_for(
+                    acompletion(
+                        model=model,
+                        messages=messages,
+                        temperature=temperature,
+                        max_tokens=max_tokens,
+                        **kwargs
+                    ),
+                    timeout=self.timeout_seconds,
                 )
 
                 latency_ms = int((time.time() - start_time) * 1000)
@@ -241,6 +250,16 @@ class LLMClient:
                 self._log_call(call)
 
                 return llm_response
+
+            except asyncio.TimeoutError:
+                last_error = f"Timeout after {self.timeout_seconds}s"
+                logger.warning(
+                    f"LLM call timed out (attempt {attempt + 1}/{self.max_retries}): "
+                    f"model={model}, timeout={self.timeout_seconds}s"
+                )
+
+                if attempt < self.max_retries - 1:
+                    await asyncio.sleep(self.retry_delay * (attempt + 1))
 
             except Exception as e:
                 last_error = str(e)

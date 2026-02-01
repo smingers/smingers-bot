@@ -22,7 +22,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 
 from src.bot.forecaster import Forecaster
-from src.bot import ExtractionError
+from src.bot import ExtractionError, SubmissionError
 from src.config import ResolvedConfig
 from src.runner import run_forecasts, format_prediction
 from src.utils.metaculus_api import MetaculusClient
@@ -119,7 +119,12 @@ async def run_forecast(
         logger.info(f"  ✓ Prediction: {format_prediction(result)}")
 
     def on_error(question, error):
-        error_type = "EXTRACTION FAILED" if isinstance(error, ExtractionError) else "FAILED"
+        if isinstance(error, ExtractionError):
+            error_type = "EXTRACTION FAILED"
+        elif isinstance(error, SubmissionError):
+            error_type = "SUBMISSION FAILED"
+        else:
+            error_type = "FAILED"
         logger.error(f"  ✗ {error_type}: {error}")
 
     async with Forecaster(resolved) as forecaster:
@@ -137,13 +142,16 @@ async def run_forecast(
 
     # Exit codes:
     # 0 = all success
-    # 1 = all failed OR any extraction errors (critical)
-    # (partial success with non-extraction errors is considered OK)
+    # 1 = all failed OR any critical errors (extraction or submission)
+    # (partial success with non-critical errors is considered OK)
     if result.success_count == 0 and result.error_count > 0:
         logger.error("All forecasts failed!")
         sys.exit(1)
-    elif result.has_extraction_errors:
-        logger.error(f"{result.extraction_error_count} extraction error(s) - these questions need attention!")
+    elif result.has_critical_errors:
+        if result.has_extraction_errors:
+            logger.error(f"{result.extraction_error_count} extraction error(s) - these questions need attention!")
+        if result.has_submission_errors:
+            logger.error(f"{result.submission_error_count} submission error(s) - forecasts generated but NOT submitted!")
         sys.exit(1)
 
 

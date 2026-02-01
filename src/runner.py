@@ -21,7 +21,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Callable, Optional
 
-from .bot import ExtractionError
+from .bot import ExtractionError, SubmissionError
 from .bot.forecaster import Forecaster
 from .utils.metaculus_api import MetaculusQuestion
 
@@ -39,6 +39,7 @@ class ForecastFailure:
     error_type: str
     error_message: str
     is_extraction_error: bool = False
+    is_submission_error: bool = False
 
 
 @dataclass
@@ -52,6 +53,7 @@ class RunResult:
     success_count: int = 0
     error_count: int = 0
     extraction_error_count: int = 0
+    submission_error_count: int = 0
     failures: list[ForecastFailure] = field(default_factory=list)
     successful_results: list[dict[str, Any]] = field(default_factory=list)
 
@@ -63,6 +65,7 @@ class RunResult:
     def add_failure(self, question_id: int, question_title: str, error: Exception) -> None:
         """Record a failed forecast."""
         is_extraction = isinstance(error, ExtractionError)
+        is_submission = isinstance(error, SubmissionError)
         self.failures.append(
             ForecastFailure(
                 question_id=question_id,
@@ -70,16 +73,29 @@ class RunResult:
                 error_type=type(error).__name__,
                 error_message=str(error)[:200],
                 is_extraction_error=is_extraction,
+                is_submission_error=is_submission,
             )
         )
         self.error_count += 1
         if is_extraction:
             self.extraction_error_count += 1
+        if is_submission:
+            self.submission_error_count += 1
 
     @property
     def has_extraction_errors(self) -> bool:
         """Returns True if there are extraction errors (critical failures)."""
         return self.extraction_error_count > 0
+
+    @property
+    def has_submission_errors(self) -> bool:
+        """Returns True if there are submission errors (API failures)."""
+        return self.submission_error_count > 0
+
+    @property
+    def has_critical_errors(self) -> bool:
+        """Returns True if there are any critical errors (extraction or submission)."""
+        return self.has_extraction_errors or self.has_submission_errors
 
     @property
     def total_count(self) -> int:
@@ -119,7 +135,12 @@ class RunResult:
             f.write(f"{'='*70}\n")
 
             for failure in self.failures:
-                marker = "🔴 EXTRACTION" if failure.is_extraction_error else "🟡 OTHER"
+                if failure.is_extraction_error:
+                    marker = "🔴 EXTRACTION"
+                elif failure.is_submission_error:
+                    marker = "🔴 SUBMISSION"
+                else:
+                    marker = "🟡 OTHER"
                 f.write(f"\n{marker} Q{failure.question_id}: {failure.question_title}\n")
                 f.write(f"  {failure.error_type}: {failure.error_message}\n")
 
@@ -151,19 +172,33 @@ class RunResult:
             print("could not be parsed. The question was SKIPPED (not submitted).")
             print("!" * 70)
 
+        if self.submission_error_count > 0:
+            print()
+            print("!" * 70)
+            print(f"⚠️  SUBMISSION ERRORS: {self.submission_error_count}")
+            print("These forecasts were generated but FAILED to submit to Metaculus.")
+            print("!" * 70)
+
         if self.failures:
             print()
             print("-" * 70)
             print("FAILED QUESTIONS (re-run with --question <ID> to retry):")
             print("-" * 70)
 
-            # Show extraction errors first (most important)
+            # Show critical errors first (extraction, submission), then other
             extraction_failures = [f for f in self.failures if f.is_extraction_error]
-            other_failures = [f for f in self.failures if not f.is_extraction_error]
+            submission_failures = [f for f in self.failures if f.is_submission_error]
+            other_failures = [f for f in self.failures if not f.is_extraction_error and not f.is_submission_error]
 
             if extraction_failures:
                 print("\n🔴 EXTRACTION FAILURES (LLM output parsing failed):")
                 for f in extraction_failures:
+                    print(f"  Q{f.question_id}: {f.question_title}")
+                    print(f"    Error: {f.error_message[:100]}...")
+
+            if submission_failures:
+                print("\n🔴 SUBMISSION FAILURES (API error - forecast NOT submitted):")
+                for f in submission_failures:
                     print(f"  Q{f.question_id}: {f.question_title}")
                     print(f"    Error: {f.error_message[:100]}...")
 
