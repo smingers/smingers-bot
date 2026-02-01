@@ -1,0 +1,719 @@
+"""
+Tests for BaseForecaster abstract base class.
+
+Tests cover:
+- CROSS_POLLINATION_MAP constant structure
+- Initialization with different config combinations
+- _get_extracted_data and _get_aggregation_data default implementations
+- Cross-pollination logic for context assembly
+- Cost tracking snapshot function
+- System prompt selection (Claude vs GPT context)
+
+Note: _format_query_prompts is tested in test_prompts.py via concrete subclasses.
+"""
+
+import pytest
+from unittest.mock import MagicMock, AsyncMock, patch
+
+from src.bot.base_forecaster import BaseForecaster, CROSS_POLLINATION_MAP
+from src.bot.extractors import AgentResult
+from src.bot.search import QuestionDetails
+from src.bot.prompts import CLAUDE_CONTEXT, GPT_CONTEXT
+from src.utils.llm import LLMClient, LLMResponse
+from src.storage.artifact_store import ArtifactStore
+
+
+# ============================================================================
+# Concrete Test Implementation
+# ============================================================================
+
+class ConcreteForecaster(BaseForecaster):
+    """Minimal concrete implementation for testing base class logic."""
+
+    def _get_prompt_templates(self):
+        return (
+            "historical: {title}",
+            "current: {title}",
+            "step1: {context}",
+            "step2: {context}",
+        )
+
+    def _get_question_details(self, **params):
+        return QuestionDetails(
+            title=params.get("question_title", ""),
+            resolution_criteria=params.get("resolution_criteria", ""),
+            fine_print=params.get("fine_print", ""),
+            description=params.get("question_text", ""),
+            resolution_date=params.get("scheduled_resolve_time"),
+        )
+
+    def _format_step1_prompt(self, template, context, **params):
+        return template.format(context=context)
+
+    def _format_step2_prompt(self, template, context, **params):
+        return template.format(context=context)
+
+    def _extract_prediction(self, output, **params):
+        return 50.0  # Always return 50%
+
+    def _aggregate_results(self, results, agents, write):
+        valid = [r for r in results if r.probability is not None]
+        if not valid:
+            raise RuntimeError("No valid predictions")
+        return sum(r.probability for r in valid) / len(valid)
+
+    def _build_agent_result(self, agent_id, model, weight, step1_output, step2_output, prediction, error):
+        return AgentResult(
+            agent_id=agent_id,
+            model=model,
+            weight=weight,
+            step1_output=step1_output,
+            step2_output=step2_output,
+            probability=prediction,
+            error=error,
+        )
+
+    def _build_result(self, final_prediction, agent_results, **params):
+        return {"prediction": final_prediction}
+
+
+# ============================================================================
+# CROSS_POLLINATION_MAP Tests
+# ============================================================================
+
+class TestCrossPolllinationMap:
+    """Tests for the CROSS_POLLINATION_MAP constant."""
+
+    def test_has_five_entries(self):
+        """Map covers all 5 agent indices (0-4)."""
+        assert len(CROSS_POLLINATION_MAP) == 5
+        assert set(CROSS_POLLINATION_MAP.keys()) == {0, 1, 2, 3, 4}
+
+    def test_valid_source_indices(self):
+        """All source indices are valid (0-4)."""
+        for agent_idx, (source_idx, label) in CROSS_POLLINATION_MAP.items():
+            assert 0 <= source_idx <= 4, f"Agent {agent_idx} has invalid source {source_idx}"
+            assert isinstance(label, str)
+            assert len(label) > 0
+
+    def test_creates_cross_model_diversity(self):
+        """Middle agents receive context from different models."""
+        # Agent 1 (idx 1) should get context from Agent 4 (idx 3) - different models
+        source_for_agent_1 = CROSS_POLLINATION_MAP[1][0]
+        assert source_for_agent_1 == 3  # Gets from o3
+
+        # Agent 2 (idx 2) should get context from Agent 2 (idx 1)
+        source_for_agent_2 = CROSS_POLLINATION_MAP[2][0]
+        assert source_for_agent_2 == 1  # Gets from Sonnet 4.5
+
+        # Agent 3 (idx 3) should get context from Agent 3 (idx 2)
+        source_for_agent_3 = CROSS_POLLINATION_MAP[3][0]
+        assert source_for_agent_3 == 2  # Gets from o3-mini-high
+
+
+# ============================================================================
+# Initialization Tests
+# ============================================================================
+
+class TestBaseForecasterInit:
+    """Tests for BaseForecaster initialization."""
+
+    def test_init_with_config_only(self):
+        """Creates default LLM client when none provided."""
+        config = {"test": "value"}
+        forecaster = ConcreteForecaster(config)
+
+        assert forecaster.config == config
+        assert forecaster.llm is not None
+        assert isinstance(forecaster.llm, LLMClient)
+        assert forecaster.artifact_store is None
+
+    def test_init_with_llm_client(self):
+        """Uses provided LLM client."""
+        config = {}
+        mock_llm = MagicMock(spec=LLMClient)
+
+        forecaster = ConcreteForecaster(config, llm_client=mock_llm)
+
+        assert forecaster.llm is mock_llm
+
+    def test_init_with_artifact_store(self):
+        """Stores artifact_store when provided."""
+        config = {}
+        mock_store = MagicMock(spec=ArtifactStore)
+
+        forecaster = ConcreteForecaster(config, artifact_store=mock_store)
+
+        assert forecaster.artifact_store is mock_store
+
+
+# ============================================================================
+# Data Extraction Methods Tests
+# ============================================================================
+
+class TestGetExtractedData:
+    """Tests for _get_extracted_data default implementation."""
+
+    @pytest.fixture
+    def forecaster(self):
+        return ConcreteForecaster({})
+
+    def test_with_probability(self, forecaster):
+        """Returns dict with probability and error."""
+        result = AgentResult(
+            agent_id="forecaster_1",
+            model="test",
+            weight=1.0,
+            step1_output="",
+            step2_output="",
+            probability=65.0,
+            error=None,
+        )
+
+        # Call the actual base class method
+        data = forecaster._get_extracted_data(result)
+
+        assert data == {"probability": 65.0, "error": None}
+
+    def test_with_error(self, forecaster):
+        """Returns None probability with error message."""
+        result = AgentResult(
+            agent_id="forecaster_1",
+            model="test",
+            weight=1.0,
+            step1_output="",
+            step2_output="",
+            probability=None,
+            error="Extraction failed",
+        )
+
+        # Call the actual base class method
+        data = forecaster._get_extracted_data(result)
+
+        assert data == {"probability": None, "error": "Extraction failed"}
+
+
+class TestGetAggregationData:
+    """Tests for _get_aggregation_data default implementation."""
+
+    @pytest.fixture
+    def forecaster(self):
+        return ConcreteForecaster({})
+
+    def test_structure(self, forecaster):
+        """Returns dict with correct keys."""
+        results = [
+            AgentResult(
+                agent_id=f"forecaster_{i+1}",
+                model="test",
+                weight=1.0,
+                step1_output="",
+                step2_output="",
+                probability=50.0 + i * 5,
+            )
+            for i in range(5)
+        ]
+        agents = [{"name": f"f{i+1}", "model": "test", "weight": 1.0} for i in range(5)]
+
+        data = forecaster._get_aggregation_data(results, agents, 0.60)
+
+        assert "individual_probabilities" in data
+        assert "weights" in data
+        assert "method" in data
+        assert "final_prediction" in data
+
+        assert len(data["individual_probabilities"]) == 5
+        assert len(data["weights"]) == 5
+        assert data["method"] == "weighted_average"
+        assert data["final_prediction"] == 0.60
+
+
+# ============================================================================
+# Cross-Pollination Logic Tests
+# ============================================================================
+
+class TestCrossPolllinationLogic:
+    """Tests for cross-pollination context assembly."""
+
+    @pytest.fixture
+    def forecaster(self):
+        config = {
+            "_active_agents": [
+                {"name": f"forecaster_{i+1}", "model": "test-model", "weight": 1.0}
+                for i in range(5)
+            ]
+        }
+        return ConcreteForecaster(config)
+
+    def test_assembles_context_format(self):
+        """Cross-pollinated context has correct format."""
+        step1_outputs = [f"Output from agent {i+1}" for i in range(5)]
+        current_context = "Current news context"
+
+        # Simulate cross-pollination logic from forecast()
+        context_map = {}
+        for i in range(5):
+            source_idx, label = CROSS_POLLINATION_MAP[i]
+            source_output = step1_outputs[source_idx]
+            context_map[i] = f"Current context: {current_context}\n{label}: {source_output}"
+
+        # Check format
+        assert "Current context: Current news context" in context_map[0]
+        assert "Outside view prediction:" in context_map[0]
+
+    def test_handles_failed_source_agent(self):
+        """Uses empty string when source agent failed."""
+        step1_outputs = [
+            "Output 1",
+            "Output 2",
+            "Output 3",
+            Exception("Agent 4 failed"),  # Agent 4 (idx 3) failed
+            "Output 5",
+        ]
+        current_context = "Current context"
+
+        # Simulate cross-pollination logic with exception handling
+        context_map = {}
+        for i in range(5):
+            source_idx, label = CROSS_POLLINATION_MAP[i]
+            if isinstance(step1_outputs[source_idx], Exception):
+                source_output = ""
+            else:
+                source_output = step1_outputs[source_idx]
+            context_map[i] = f"Current context: {current_context}\n{label}: {source_output}"
+
+        # Agent 2 (idx 1) gets from Agent 4 (idx 3) which failed
+        assert context_map[1].endswith("Outside view prediction: ")
+
+    def test_uses_correct_source_agent(self):
+        """Each agent receives context from correct source per map."""
+        step1_outputs = [f"UNIQUE_OUTPUT_{i}" for i in range(5)]
+
+        context_map = {}
+        for i in range(5):
+            source_idx, label = CROSS_POLLINATION_MAP[i]
+            context_map[i] = step1_outputs[source_idx]
+
+        # Verify based on CROSS_POLLINATION_MAP
+        assert "UNIQUE_OUTPUT_0" in context_map[0]  # Agent 1 <- Agent 1
+        assert "UNIQUE_OUTPUT_3" in context_map[1]  # Agent 2 <- Agent 4
+        assert "UNIQUE_OUTPUT_1" in context_map[2]  # Agent 3 <- Agent 2
+        assert "UNIQUE_OUTPUT_2" in context_map[3]  # Agent 4 <- Agent 3
+        assert "UNIQUE_OUTPUT_4" in context_map[4]  # Agent 5 <- Agent 5
+
+
+# ============================================================================
+# Cost Tracking Snapshot Tests
+# ============================================================================
+
+class TestCostTrackingSnapshot:
+    """Tests for the cost tracking snapshot function."""
+
+    def test_records_delta(self):
+        """Snapshot correctly calculates cost delta."""
+        step_costs = {}
+
+        # Simulate the snapshot_cost closure
+        class MockCostTracker:
+            total_cost = 0.0
+
+        cost_tracker = MockCostTracker()
+
+        def snapshot_cost(step_name: str, start_cost: float) -> float:
+            current_cost = cost_tracker.total_cost
+            step_costs[step_name] = round(current_cost - start_cost, 4)
+            return current_cost
+
+        # Simulate cost accumulation
+        start = 0.0
+        cost_tracker.total_cost = 0.05
+        result = snapshot_cost("step1", start)
+
+        assert step_costs["step1"] == 0.05
+        assert result == 0.05
+
+    def test_returns_new_total_for_next_step(self):
+        """Snapshot returns current total for chaining."""
+        step_costs = {}
+
+        class MockCostTracker:
+            total_cost = 0.0
+
+        cost_tracker = MockCostTracker()
+
+        def snapshot_cost(step_name: str, start_cost: float) -> float:
+            current_cost = cost_tracker.total_cost
+            step_costs[step_name] = round(current_cost - start_cost, 4)
+            return current_cost
+
+        # Step 1
+        cost_tracker.total_cost = 0.05
+        step1_end = snapshot_cost("step1", 0.0)
+
+        # Step 2
+        cost_tracker.total_cost = 0.12
+        step2_end = snapshot_cost("step2", step1_end)
+
+        assert step_costs["step1"] == 0.05
+        assert step_costs["step2"] == 0.07  # 0.12 - 0.05
+        assert step2_end == 0.12
+
+
+# ============================================================================
+# System Prompt Selection Tests
+# ============================================================================
+
+class TestSystemPromptSelection:
+    """Tests for system prompt selection based on model name."""
+
+    def test_selects_claude_context_for_claude_models(self):
+        """CLAUDE_CONTEXT selected for claude-* models."""
+        models = [
+            "openrouter/anthropic/claude-sonnet-4.5",
+            "anthropic/claude-3-opus",
+            "claude-3-haiku",
+            "CLAUDE-3.5-sonnet",  # Case insensitive
+        ]
+
+        for model in models:
+            # Simulate the logic from forecast()
+            system_prompt = CLAUDE_CONTEXT if "claude" in model.lower() else GPT_CONTEXT
+            assert system_prompt == CLAUDE_CONTEXT, f"Failed for model: {model}"
+
+    def test_selects_gpt_context_for_other_models(self):
+        """GPT_CONTEXT selected for non-claude models."""
+        models = [
+            "openrouter/openai/o3",
+            "openai/gpt-4",
+            "o3-mini-high",
+            "gemini-pro",
+            "mistral-large",
+        ]
+
+        for model in models:
+            # Simulate the logic from forecast()
+            system_prompt = CLAUDE_CONTEXT if "claude" in model.lower() else GPT_CONTEXT
+            assert system_prompt == GPT_CONTEXT, f"Failed for model: {model}"
+
+
+# ============================================================================
+# Full Pipeline Tests with Mocked LLM
+# ============================================================================
+
+class TestForecastPipeline:
+    """Tests for full forecast() pipeline with mocked externals."""
+
+    @pytest.fixture
+    def config(self):
+        return {
+            "_active_agents": [
+                {"name": f"forecaster_{i+1}", "model": "test-model", "weight": 1.0}
+                for i in range(5)
+            ],
+            "_active_models": {
+                "query_generator": "test-model",
+            },
+        }
+
+    @pytest.fixture
+    def mock_llm_response(self):
+        return LLMResponse(
+            content="Test LLM output with prediction",
+            model="test-model",
+            input_tokens=100,
+            output_tokens=50,
+            cost=0.01,
+            latency_ms=100,
+            timestamp="2026-01-01T00:00:00Z",
+        )
+
+    @pytest.fixture
+    def mock_search_pipeline(self):
+        """Create a properly mocked SearchPipeline async context manager."""
+        mock_search = MagicMock()
+        mock_search.process_search_queries = AsyncMock(
+            return_value=("Mocked search context", {"tools_used": ["google"]})
+        )
+        return mock_search
+
+    @pytest.fixture
+    def mock_artifact_store(self):
+        """Mock artifact store to avoid KeyError on total_pipeline_cost."""
+        return MagicMock(spec=ArtifactStore)
+
+    @pytest.mark.asyncio
+    async def test_pipeline_completes_successfully(self, config, mock_llm_response, mock_search_pipeline, mock_artifact_store):
+        """Full pipeline completes with all mocked externals."""
+        # Mock LLM client
+        mock_llm = MagicMock(spec=LLMClient)
+        mock_llm.complete = AsyncMock(return_value=mock_llm_response)
+
+        # Mock cost tracker
+        mock_tracker = MagicMock()
+        mock_tracker.total_cost = 0.5
+
+        with patch('src.bot.base_forecaster.SearchPipeline') as MockSearchPipeline, \
+             patch('src.bot.base_forecaster.get_cost_tracker', return_value=mock_tracker):
+
+            # Setup async context manager
+            MockSearchPipeline.return_value.__aenter__ = AsyncMock(return_value=mock_search_pipeline)
+            MockSearchPipeline.return_value.__aexit__ = AsyncMock(return_value=None)
+
+            forecaster = ConcreteForecaster(config, llm_client=mock_llm, artifact_store=mock_artifact_store)
+            result = await forecaster.forecast(
+                write=MagicMock(),
+                question_title="Test Question?",
+                question_text="Background info",
+                resolution_criteria="Resolves YES if X",
+                fine_print="",
+                scheduled_close_time="2026-12-31",
+                scheduled_resolve_time="2027-01-15",
+            )
+
+            assert result is not None
+            assert "prediction" in result
+            assert result["prediction"] == 50.0  # ConcreteForecaster always returns 50
+
+    @pytest.mark.asyncio
+    async def test_pipeline_calls_llm_for_query_generation(self, config, mock_llm_response, mock_search_pipeline, mock_artifact_store):
+        """Pipeline calls LLM for historical and current query generation."""
+        mock_llm = MagicMock(spec=LLMClient)
+        mock_llm.complete = AsyncMock(return_value=mock_llm_response)
+
+        mock_tracker = MagicMock()
+        mock_tracker.total_cost = 0.5
+
+        with patch('src.bot.base_forecaster.SearchPipeline') as MockSearchPipeline, \
+             patch('src.bot.base_forecaster.get_cost_tracker', return_value=mock_tracker):
+
+            MockSearchPipeline.return_value.__aenter__ = AsyncMock(return_value=mock_search_pipeline)
+            MockSearchPipeline.return_value.__aexit__ = AsyncMock(return_value=None)
+
+            forecaster = ConcreteForecaster(config, llm_client=mock_llm, artifact_store=mock_artifact_store)
+            await forecaster.forecast(
+                write=MagicMock(),
+                question_title="Test?",
+                question_text="Background",
+                resolution_criteria="Criteria",
+                fine_print="",
+                scheduled_close_time="2026-12-31",
+                scheduled_resolve_time="2027-01-15",
+            )
+
+            # Should have called LLM multiple times:
+            # 2 for query generation + 5 for step1 + 5 for step2 = 12 calls
+            assert mock_llm.complete.call_count == 12
+
+    @pytest.mark.asyncio
+    async def test_pipeline_calls_search_for_both_contexts(self, config, mock_llm_response, mock_search_pipeline, mock_artifact_store):
+        """Pipeline calls search for historical and current contexts."""
+        mock_llm = MagicMock(spec=LLMClient)
+        mock_llm.complete = AsyncMock(return_value=mock_llm_response)
+
+        mock_tracker = MagicMock()
+        mock_tracker.total_cost = 0.5
+
+        with patch('src.bot.base_forecaster.SearchPipeline') as MockSearchPipeline, \
+             patch('src.bot.base_forecaster.get_cost_tracker', return_value=mock_tracker):
+
+            MockSearchPipeline.return_value.__aenter__ = AsyncMock(return_value=mock_search_pipeline)
+            MockSearchPipeline.return_value.__aexit__ = AsyncMock(return_value=None)
+
+            forecaster = ConcreteForecaster(config, llm_client=mock_llm, artifact_store=mock_artifact_store)
+            await forecaster.forecast(
+                write=MagicMock(),
+                question_title="Test?",
+                question_text="Background",
+                resolution_criteria="Criteria",
+                fine_print="",
+                scheduled_close_time="2026-12-31",
+                scheduled_resolve_time="2027-01-15",
+            )
+
+            # Search should be called twice (historical + current)
+            assert mock_search_pipeline.process_search_queries.call_count == 2
+
+    @pytest.mark.asyncio
+    async def test_pipeline_handles_step1_agent_errors(self, config, mock_search_pipeline, mock_artifact_store):
+        """Pipeline handles errors from step 1 agents gracefully."""
+        call_count = 0
+
+        async def mock_complete_with_errors(*args, **kwargs):
+            nonlocal call_count
+            call_count += 1
+            # First 2 calls succeed (query generation)
+            # Then some step1 agents fail
+            if call_count <= 2:
+                return LLMResponse(
+                    content="Query output",
+                    model="test", input_tokens=10, output_tokens=10,
+                    cost=0.001, latency_ms=50, timestamp="2026-01-01T00:00:00Z"
+                )
+            elif call_count in [3, 5]:  # Agents 1 and 3 fail in step1
+                raise RuntimeError("LLM API error")
+            else:
+                return LLMResponse(
+                    content="Agent output",
+                    model="test", input_tokens=10, output_tokens=10,
+                    cost=0.001, latency_ms=50, timestamp="2026-01-01T00:00:00Z"
+                )
+
+        mock_llm = MagicMock(spec=LLMClient)
+        mock_llm.complete = mock_complete_with_errors
+
+        mock_tracker = MagicMock()
+        mock_tracker.total_cost = 0.5
+
+        with patch('src.bot.base_forecaster.SearchPipeline') as MockSearchPipeline, \
+             patch('src.bot.base_forecaster.get_cost_tracker', return_value=mock_tracker):
+
+            MockSearchPipeline.return_value.__aenter__ = AsyncMock(return_value=mock_search_pipeline)
+            MockSearchPipeline.return_value.__aexit__ = AsyncMock(return_value=None)
+
+            forecaster = ConcreteForecaster(config, llm_client=mock_llm, artifact_store=mock_artifact_store)
+            result = await forecaster.forecast(
+                write=MagicMock(),
+                question_title="Test?",
+                question_text="Background",
+                resolution_criteria="Criteria",
+                fine_print="",
+                scheduled_close_time="2026-12-31",
+                scheduled_resolve_time="2027-01-15",
+            )
+
+            # Should still produce a result despite some agent failures
+            assert result is not None
+            assert "prediction" in result
+
+    @pytest.mark.asyncio
+    async def test_pipeline_saves_artifacts_when_store_provided(self, config, mock_llm_response, mock_search_pipeline):
+        """Pipeline saves artifacts when artifact_store is provided."""
+        mock_llm = MagicMock(spec=LLMClient)
+        mock_llm.complete = AsyncMock(return_value=mock_llm_response)
+
+        mock_tracker = MagicMock()
+        mock_tracker.total_cost = 0.5
+
+        mock_store = MagicMock(spec=ArtifactStore)
+
+        with patch('src.bot.base_forecaster.SearchPipeline') as MockSearchPipeline, \
+             patch('src.bot.base_forecaster.get_cost_tracker', return_value=mock_tracker):
+
+            MockSearchPipeline.return_value.__aenter__ = AsyncMock(return_value=mock_search_pipeline)
+            MockSearchPipeline.return_value.__aexit__ = AsyncMock(return_value=None)
+
+            forecaster = ConcreteForecaster(config, llm_client=mock_llm, artifact_store=mock_store)
+            await forecaster.forecast(
+                write=MagicMock(),
+                question_title="Test?",
+                question_text="Background",
+                resolution_criteria="Criteria",
+                fine_print="",
+                scheduled_close_time="2026-12-31",
+                scheduled_resolve_time="2027-01-15",
+            )
+
+            # Verify artifact store methods were called
+            assert mock_store.save_query_generation.called
+            assert mock_store.save_search_results.called
+            assert mock_store.save_step1_prompt.called
+            assert mock_store.save_agent_step1.called
+            assert mock_store.save_agent_step2.called
+            assert mock_store.save_agent_extracted.called
+            assert mock_store.save_aggregation.called
+            assert mock_store.save_tool_usage.called
+
+    @pytest.mark.asyncio
+    async def test_pipeline_tracks_costs_per_step(self, config, mock_llm_response, mock_search_pipeline, mock_artifact_store):
+        """Pipeline tracks costs for each step."""
+        mock_llm = MagicMock(spec=LLMClient)
+        mock_llm.complete = AsyncMock(return_value=mock_llm_response)
+
+        # Simulate increasing costs
+        cost_values = [0.0, 0.05, 0.10, 0.50, 0.80]
+        cost_index = [0]
+
+        def get_cost():
+            return cost_values[min(cost_index[0], len(cost_values) - 1)]
+
+        mock_tracker = MagicMock()
+        type(mock_tracker).total_cost = property(lambda self: get_cost())
+
+        # Track write calls to verify cost logging
+        write_calls = []
+
+        def mock_write(msg):
+            write_calls.append(msg)
+            # Advance cost after certain steps
+            if "Step" in msg and "===" in msg:
+                cost_index[0] += 1
+
+        with patch('src.bot.base_forecaster.SearchPipeline') as MockSearchPipeline, \
+             patch('src.bot.base_forecaster.get_cost_tracker', return_value=mock_tracker):
+
+            MockSearchPipeline.return_value.__aenter__ = AsyncMock(return_value=mock_search_pipeline)
+            MockSearchPipeline.return_value.__aexit__ = AsyncMock(return_value=None)
+
+            forecaster = ConcreteForecaster(config, llm_client=mock_llm, artifact_store=mock_artifact_store)
+            await forecaster.forecast(
+                write=mock_write,
+                question_title="Test?",
+                question_text="Background",
+                resolution_criteria="Criteria",
+                fine_print="",
+                scheduled_close_time="2026-12-31",
+                scheduled_resolve_time="2027-01-15",
+            )
+
+            # Verify cost breakdown was logged
+            cost_breakdown_logged = any("Cost Breakdown" in str(call) for call in write_calls)
+            assert cost_breakdown_logged
+
+    @pytest.mark.asyncio
+    async def test_pipeline_uses_correct_system_prompts(self, mock_llm_response, mock_search_pipeline, mock_artifact_store):
+        """Pipeline uses CLAUDE_CONTEXT for claude models, GPT_CONTEXT for others."""
+        config = {
+            "_active_agents": [
+                {"name": "forecaster_1", "model": "anthropic/claude-3", "weight": 1.0},
+                {"name": "forecaster_2", "model": "openai/gpt-4", "weight": 1.0},
+                {"name": "forecaster_3", "model": "anthropic/claude-3.5", "weight": 1.0},
+                {"name": "forecaster_4", "model": "openai/o3", "weight": 1.0},
+                {"name": "forecaster_5", "model": "openai/gpt-4o", "weight": 1.0},
+            ],
+            "_active_models": {"query_generator": "test-model"},
+        }
+
+        captured_calls = []
+
+        async def capture_complete(*args, **kwargs):
+            captured_calls.append(kwargs)
+            return mock_llm_response
+
+        mock_llm = MagicMock(spec=LLMClient)
+        mock_llm.complete = capture_complete
+
+        mock_tracker = MagicMock()
+        mock_tracker.total_cost = 0.5
+
+        with patch('src.bot.base_forecaster.SearchPipeline') as MockSearchPipeline, \
+             patch('src.bot.base_forecaster.get_cost_tracker', return_value=mock_tracker):
+
+            MockSearchPipeline.return_value.__aenter__ = AsyncMock(return_value=mock_search_pipeline)
+            MockSearchPipeline.return_value.__aexit__ = AsyncMock(return_value=None)
+
+            forecaster = ConcreteForecaster(config, llm_client=mock_llm, artifact_store=mock_artifact_store)
+            await forecaster.forecast(
+                write=MagicMock(),
+                question_title="Test?",
+                question_text="Background",
+                resolution_criteria="Criteria",
+                fine_print="",
+                scheduled_close_time="2026-12-31",
+                scheduled_resolve_time="2027-01-15",
+            )
+
+            # Check that both CLAUDE_CONTEXT and GPT_CONTEXT were used
+            system_prompts = [call.get("system", "") for call in captured_calls if "system" in call]
+            assert any(CLAUDE_CONTEXT in str(sp) for sp in system_prompts), "CLAUDE_CONTEXT not used"
+            assert any(GPT_CONTEXT in str(sp) for sp in system_prompts), "GPT_CONTEXT not used"
+
