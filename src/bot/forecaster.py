@@ -149,7 +149,7 @@ class Forecaster:
                 forecast_result = await self._forecast_binary(question, scoped_store)
             elif question.question_type == "multiple_choice":
                 forecast_result = await self._forecast_multiple_choice(question, scoped_store)
-            elif question.question_type == "numeric":
+            elif question.question_type in ("numeric", "discrete"):
                 forecast_result = await self._forecast_numeric(question, scoped_store)
             else:
                 raise ValueError(f"Unknown question type: {question.question_type}")
@@ -204,7 +204,7 @@ class Forecaster:
             # Add type-specific prediction summary
             if question.question_type == "binary":
                 result["prediction"] = forecast_result["final_prediction"]
-            elif question.question_type == "numeric":
+            elif question.question_type in ("numeric", "discrete"):
                 result["prediction"] = forecast_result["final_percentiles"]
                 result["cdf"] = forecast_result["final_cdf"]
             elif question.question_type == "multiple_choice":
@@ -302,16 +302,18 @@ class Forecaster:
             nominal_upper_bound=question.nominal_upper_bound,
             open_time=question.open_time or "",
             scheduled_resolve_time=question.scheduled_resolve_time or "",
+            cdf_size=question.cdf_size,
             write=lambda msg: logger.info(msg),
         )
 
         # Derive percentiles from CDF if needed (for logging/display)
         # The CDF is the primary output for Metaculus submission
         final_percentiles = {}
-        if result.final_cdf and len(result.final_cdf) == 201:
+        cdf_size = question.cdf_size
+        if result.final_cdf and len(result.final_cdf) == cdf_size:
             # CDF maps [0,1] to values - extract key percentiles
             for pct in [1, 5, 10, 25, 50, 75, 90, 95, 99]:
-                idx = int(pct * 2)  # 201 points from 0-100
+                idx = int(pct * (cdf_size - 1) / 100)  # Scale index based on CDF size
                 if idx < len(result.final_cdf):
                     # Approximate value from CDF position
                     final_percentiles[str(pct)] = result.final_cdf[idx]
@@ -386,7 +388,7 @@ class Forecaster:
                 "dry_run": True,
             })
 
-        elif question.question_type == "numeric":
+        elif question.question_type in ("numeric", "discrete"):
             percentiles = forecast_result.get("final_percentiles", {})
             median = percentiles.get("50", percentiles.get(50, 0))
             logger.info(f"DRY RUN: Would submit CDF (median: {median})")
@@ -416,7 +418,7 @@ class Forecaster:
         if question.question_type == "binary":
             logger.info(f"Forecast complete: {forecast_result['final_prediction']:.1%}")
 
-        elif question.question_type == "numeric":
+        elif question.question_type in ("numeric", "discrete"):
             percentiles = forecast_result.get("final_percentiles", {})
             median = percentiles.get("50", percentiles.get(50, 0))
             logger.info(f"Forecast complete: median = {median}")
@@ -446,13 +448,14 @@ class Forecaster:
                 })
                 logger.info(f"Prediction submitted successfully: {prediction:.1%}")
 
-            elif question.question_type == "numeric":
+            elif question.question_type in ("numeric", "discrete"):
                 cdf = forecast_result["final_cdf"]
                 response = await self.metaculus.submit_numeric_prediction(
                     question.question_id,
                     cdf,
                     open_lower_bound=question.open_lower_bound or False,
                     open_upper_bound=question.open_upper_bound or False,
+                    expected_cdf_size=question.cdf_size,
                 )
                 percentiles = forecast_result.get("final_percentiles", {})
                 median = percentiles.get("50", percentiles.get(50, 0))
@@ -502,7 +505,7 @@ class Forecaster:
         if question.question_type == "binary":
             final_prediction = forecast_result.get("final_prediction")
             prediction_data = json.dumps({"probability": final_prediction})
-        elif question.question_type == "numeric":
+        elif question.question_type in ("numeric", "discrete"):
             percentiles = forecast_result.get("final_percentiles", {})
             final_prediction = percentiles.get("50", percentiles.get(50))
             prediction_data = json.dumps({"percentiles": percentiles})
@@ -641,7 +644,7 @@ async def main():
         print(f"Question: {result['question'].title}")
         if result['question'].question_type == "binary":
             print(f"Prediction: {result['prediction']:.1%}")
-        elif result['question'].question_type == "numeric":
+        elif result['question'].question_type in ("numeric", "discrete"):
             print(f"Prediction (median): {result['prediction'].get(50, 'N/A')}")
         elif result['question'].question_type == "multiple_choice":
             print(f"Prediction: {result['prediction']}")

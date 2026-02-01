@@ -1,11 +1,11 @@
 """
 CDF generation utilities for numeric question forecasting.
 
-This module contains functions for generating 201-point CDFs that satisfy
-Metaculus requirements for numeric question submissions.
+This module contains functions for generating CDFs that satisfy
+Metaculus requirements for numeric/discrete question submissions.
 
 Key constraints enforced:
-- 201 exactly spaced points
+- Configurable number of points (201 for numeric, 102 for discrete)
 - Monotonically increasing
 - No single step exceeds 0.59
 - Minimum step size enforced
@@ -60,7 +60,7 @@ def generate_continuous_cdf(
     num_points: int = 201,
 ) -> List[float]:
     """
-    Generate a 201-point continuous CDF with strict enforcement of Metaculus requirements.
+    Generate a continuous CDF with strict enforcement of Metaculus requirements.
 
     Args:
         percentile_values: Dictionary mapping percentiles (1-99) to values
@@ -70,10 +70,10 @@ def generate_continuous_cdf(
         lower_bound: Minimum possible value
         zero_point: Reference point for non-linear scaling
         min_step: Minimum step size between adjacent CDF points
-        num_points: Number of points in the output CDF (default: 201)
+        num_points: Number of points in the output CDF (201 for numeric, 102 for discrete)
 
     Returns:
-        List of CDF values (length 201)
+        List of CDF values (length num_points)
 
     Raises:
         CDFGenerationError: If CDF cannot be generated with given constraints

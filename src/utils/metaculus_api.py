@@ -30,7 +30,7 @@ class MetaculusQuestion:
     resolution_criteria: str
     fine_print: str
     background_info: str  # Additional background information
-    question_type: Literal["binary", "numeric", "multiple_choice", "date"]
+    question_type: Literal["binary", "numeric", "discrete", "multiple_choice", "date"]
     created_at: str
     open_time: Optional[str]  # When question opened for forecasting
     scheduled_close_time: Optional[str]
@@ -50,6 +50,7 @@ class MetaculusQuestion:
     zero_point: Optional[float] = None  # For log-scale questions
     nominal_upper_bound: Optional[float] = None  # Suggested upper bound (may be tighter)
     nominal_lower_bound: Optional[float] = None  # Suggested lower bound (may be tighter)
+    cdf_size: int = 201  # CDF size: 201 for numeric, 102 for discrete
 
     # Community data
     community_prediction: Optional[float] = None
@@ -69,10 +70,20 @@ class MetaculusQuestion:
             question_type = "multiple_choice"
         elif q_type == "numeric" or q_type == "continuous":
             question_type = "numeric"
+        elif q_type == "discrete":
+            question_type = "discrete"
         elif q_type == "date":
             question_type = "date"
         else:
             question_type = "binary"
+
+        # Get CDF size from inbound_outcome_count (201 for numeric, 102 for discrete)
+        scaling = question_data.get("scaling", {}) or {}
+        inbound_outcome_count = scaling.get("inbound_outcome_count")
+        if inbound_outcome_count is not None:
+            cdf_size = inbound_outcome_count + 1
+        else:
+            cdf_size = 201  # Default for numeric
 
         # Get status from nested question object if not at top level
         status = data.get("status") or question_data.get("status", "")
@@ -95,8 +106,7 @@ class MetaculusQuestion:
         post_id = data.get("id")
         question_id = question_data.get("id", post_id)  # Nested question has the actual question ID
 
-        # Extract numeric question bounds from scaling object
-        scaling = question_data.get("scaling", {}) or {}
+        # Extract numeric question bounds from scaling object (scaling already defined above)
         upper_bound = scaling.get("range_max")
         lower_bound = scaling.get("range_min")
         nominal_upper_bound = scaling.get("nominal_max")
@@ -150,6 +160,7 @@ class MetaculusQuestion:
             zero_point=zero_point,
             nominal_upper_bound=nominal_upper_bound,
             nominal_lower_bound=nominal_lower_bound,
+            cdf_size=cdf_size,
             # Community data
             community_prediction=community_pred,
             num_forecasters=data.get("nr_forecasters"),
@@ -386,21 +397,23 @@ class MetaculusClient:
         cdf: list[float],
         open_lower_bound: bool = True,
         open_upper_bound: bool = True,
+        expected_cdf_size: int = 201,
     ) -> dict:
         """
         Submit a numeric prediction as a CDF.
 
         Args:
             question_id: Question ID
-            cdf: List of 201 CDF values (cumulative probabilities)
+            cdf: List of CDF values (cumulative probabilities)
             open_lower_bound: Whether the lower bound is open (can go below range)
             open_upper_bound: Whether the upper bound is open (can exceed range)
+            expected_cdf_size: Expected CDF size (201 for numeric, 102 for discrete)
 
         Returns:
             API response dict
         """
-        if len(cdf) != 201:
-            raise ValueError(f"CDF must have exactly 201 values, got {len(cdf)}")
+        if len(cdf) != expected_cdf_size:
+            raise ValueError(f"CDF must have exactly {expected_cdf_size} values, got {len(cdf)}")
 
         # Ensure CDF is valid (monotonic, bounded)
         cdf = self._validate_cdf(cdf, open_lower_bound, open_upper_bound)
@@ -475,12 +488,13 @@ class MetaculusClient:
         # Use question_id (not post id) for the forecast API
         if question.question_type == "binary":
             return await self.submit_binary_prediction(question.question_id, prediction)
-        elif question.question_type == "numeric":
+        elif question.question_type in ("numeric", "discrete"):
             return await self.submit_numeric_prediction(
                 question.question_id,
                 prediction,
                 open_lower_bound=question.open_lower_bound or False,
                 open_upper_bound=question.open_upper_bound or False,
+                expected_cdf_size=question.cdf_size,
             )
         elif question.question_type == "multiple_choice":
             return await self.submit_multiple_choice_prediction(question.question_id, prediction)

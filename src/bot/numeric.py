@@ -53,6 +53,10 @@ class NumericForecaster(BaseForecaster):
     - Weighted CDF aggregation
     """
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._cdf_size = 201  # Default, updated per-question in _get_question_details
+
     def _get_prompt_templates(self) -> Tuple[str, str, str, str]:
         """Return numeric-specific prompt templates."""
         return (
@@ -64,6 +68,8 @@ class NumericForecaster(BaseForecaster):
 
     def _get_question_details(self, **question_params) -> QuestionDetails:
         """Build QuestionDetails for search pipeline."""
+        # Capture cdf_size for this question (used by _aggregate_results)
+        self._cdf_size = question_params.get("cdf_size", 201)
         return QuestionDetails(
             title=question_params.get("question_title", ""),
             resolution_criteria=question_params.get("resolution_criteria", ""),
@@ -222,6 +228,7 @@ class NumericForecaster(BaseForecaster):
             question_params.get("upper_bound", 100),
             question_params.get("lower_bound", 0),
             question_params.get("zero_point"),
+            num_points=question_params.get("cdf_size", 201),
         )
 
         return {
@@ -236,10 +243,11 @@ class NumericForecaster(BaseForecaster):
         write: callable,
     ) -> List[float]:
         """Compute weighted average of CDFs."""
+        expected_cdf_size = self._cdf_size
         all_cdfs = []
 
         for result, agent in zip(agent_results, agents):
-            if result.cdf is not None and len(result.cdf) == 201:
+            if result.cdf is not None and len(result.cdf) == expected_cdf_size:
                 all_cdfs.append((np.array(result.cdf), agent["weight"]))
 
         if len(all_cdfs) < 3:
@@ -253,8 +261,8 @@ class NumericForecaster(BaseForecaster):
         denom = sum(weight for _, weight in all_cdfs)
         combined = (numer / denom).tolist()
 
-        if len(combined) != 201:
-            raise CDFGenerationError(f"Combined CDF malformed: {len(combined)} points")
+        if len(combined) != expected_cdf_size:
+            raise CDFGenerationError(f"Combined CDF malformed: {len(combined)} points (expected {expected_cdf_size})")
 
         write(f"\nAggregating {len(all_cdfs)}/{len(agents)} valid CDFs")
         write(f"Combined CDF: {combined[:5]}...{combined[-5:]}")
