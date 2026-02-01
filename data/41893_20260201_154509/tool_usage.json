@@ -1,0 +1,184 @@
+{
+  "centralized_research": {
+    "historical": {
+      "forecaster_id": "-1",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Nepal 2026 election opinion poll",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Nepali Communist Party merger 2025 reaction",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Opinion polling, by-election results and party alliances for 2026 Nepali general election; comparative seat/vote conversion in 2017 and 2022; impact of 2025 Gen Z protests on party popularity",
+          "tool": "Agent",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google",
+        "Google News"
+      ],
+      "llm_cost": 0.3179,
+      "llm_cost_summarization": 0.178,
+      "llm_cost_agentic": 0.1399
+    },
+    "current": {
+      "forecaster_id": "0",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "2026 Nepal election opinion polls",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Nepal 2026 election seat projection",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide the newest polling, alliances and seat forecast reports for Nepal\u2019s 2026 House of Representatives election, highlighting major parties\u2019 chances.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "Which party will win the most seats in the 2026 Nepali House of Representatives election?",
+          "tool": "AskNews",
+          "deep_research_query": "Provide the newest polling, alliances and seat forecast reports for Nepal\u2019s 2026 House of Representatives election, highlighting major parties\u2019 chances."
+        }
+      ],
+      "tools_used": [
+        "AskNews",
+        "Google",
+        "Google News"
+      ],
+      "llm_cost": 0.1848,
+      "llm_cost_summarization": 0.178,
+      "llm_cost_agentic": 0.0067
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6946,
+        "token_output": 2420,
+        "cost": 0.057137999999999994,
+        "duration_seconds": 77.70371222496033
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16104,
+        "token_output": 1,
+        "cost": 0.048327,
+        "duration_seconds": 78.92883920669556
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6946,
+        "token_output": 2375,
+        "cost": 0.056463,
+        "duration_seconds": 77.70376110076904
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14928,
+        "token_output": 1,
+        "cost": 0.044799000000000005,
+        "duration_seconds": 78.92881226539612
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6045,
+        "token_output": 3327,
+        "cost": 0.05715675,
+        "duration_seconds": 77.70379185676575
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14029,
+        "token_output": 2979,
+        "cost": 0.06625675,
+        "duration_seconds": 78.92878413200378
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6045,
+        "token_output": 1952,
+        "cost": 0.027706,
+        "duration_seconds": 77.70382475852966
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14240,
+        "token_output": 2103,
+        "cost": 0.045304,
+        "duration_seconds": 78.92875814437866
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6045,
+        "token_output": 3004,
+        "cost": 0.036122,
+        "duration_seconds": 77.703852891922
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13683,
+        "token_output": 2018,
+        "cost": 0.04351,
+        "duration_seconds": 78.92873048782349
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0187,
+    "step2_search": 0.3179,
+    "step3_outside_view": 0.2346,
+    "step5_inside_view": 0.2482
+  },
+  "total_pipeline_cost": 0.8194
+}
