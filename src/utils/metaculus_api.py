@@ -442,8 +442,7 @@ class MetaculusClient:
             "/questions/forecast/",
             json=payload,
         )
-        response.raise_for_status()
-        return response.json()
+        return self._handle_response(response, f"submitting binary prediction for Q{question_id}")
 
     async def submit_numeric_prediction(
         self,
@@ -485,8 +484,7 @@ class MetaculusClient:
             "/questions/forecast/",
             json=payload,
         )
-        response.raise_for_status()
-        return response.json()
+        return self._handle_response(response, f"submitting numeric prediction for Q{question_id}")
 
     async def submit_multiple_choice_prediction(
         self,
@@ -521,8 +519,7 @@ class MetaculusClient:
             "/questions/forecast/",
             json=payload,
         )
-        response.raise_for_status()
-        return response.json()
+        return self._handle_response(response, f"submitting multiple choice prediction for Q{question_id}")
 
     async def submit_prediction(
         self,
@@ -555,6 +552,21 @@ class MetaculusClient:
             return await self.submit_multiple_choice_prediction(question.question_id, prediction)
         else:
             raise ValueError(f"Unsupported question type: {question.question_type}")
+
+    def _handle_response(self, response: httpx.Response, context: str = "") -> dict:
+        """Handle API response, logging detailed error info on failure."""
+        try:
+            response.raise_for_status()
+            return response.json()
+        except httpx.HTTPStatusError as e:
+            # Log the actual response body from Metaculus
+            error_body = ""
+            try:
+                error_body = e.response.text
+            except Exception:
+                pass
+            logger.error(f"API error {context}: {e.response.status_code} - {error_body}")
+            raise
 
     def _validate_cdf(
         self,
