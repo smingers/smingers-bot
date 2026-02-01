@@ -327,3 +327,253 @@ def sample_config_with_active():
         ],
         "_should_submit": False,
     }
+
+
+# ============================================================================
+# Metaculus API Response Fixtures
+# ============================================================================
+
+@pytest.fixture
+def binary_api_response():
+    """Sample binary question API response."""
+    return {
+        "id": 12345,
+        "title": "Will X happen by 2026?",
+        "description": "This question asks whether X will happen.",
+        "resolution_criteria": "Resolves YES if X occurs before Dec 31, 2026.",
+        "fine_print": "Edge cases handled as follows...",
+        "created_at": "2025-01-01T00:00:00Z",
+        "open_time": "2025-01-01T00:00:00Z",
+        "scheduled_close_time": "2026-12-31T00:00:00Z",
+        "scheduled_resolve_time": "2027-01-15T00:00:00Z",
+        "status": "open",
+        "nr_forecasters": 42,
+        "question": {
+            "id": 67890,
+            "type": "binary",
+            "description": "Background info about the question.",
+            "aggregations": {
+                "recency_weighted": {
+                    "history": [
+                        {"centers": [0.65]}
+                    ]
+                }
+            }
+        },
+    }
+
+
+@pytest.fixture
+def numeric_api_response():
+    """Sample numeric question with bounds."""
+    return {
+        "id": 12346,
+        "title": "How many X will there be?",
+        "description": "This question asks for a numeric estimate.",
+        "resolution_criteria": "Resolves to the official count.",
+        "status": "open",
+        "question": {
+            "id": 67891,
+            "type": "numeric",
+            "description": "Background info.",
+            "unit": "units",
+            "scaling": {
+                "range_min": 0,
+                "range_max": 1000,
+                "nominal_min": 100,
+                "nominal_max": 500,
+                "zero_point": None,
+                "inbound_outcome_count": 200,
+            },
+            "open_lower_bound": True,
+            "open_upper_bound": True,
+        },
+    }
+
+
+@pytest.fixture
+def discrete_api_response():
+    """Sample discrete question (CDF size 102)."""
+    return {
+        "id": 12347,
+        "title": "How many discrete events?",
+        "description": "Count of discrete events.",
+        "status": "open",
+        "question": {
+            "id": 67892,
+            "type": "discrete",
+            "description": "Background info.",
+            "scaling": {
+                "range_min": 0,
+                "range_max": 100,
+                "inbound_outcome_count": 101,
+            },
+            "open_lower_bound": False,
+            "open_upper_bound": False,
+        },
+    }
+
+
+@pytest.fixture
+def date_api_response():
+    """Sample date question with timestamp bounds."""
+    return {
+        "id": 12348,
+        "title": "When will X happen?",
+        "description": "This question asks for a date.",
+        "status": "open",
+        "question": {
+            "id": 67893,
+            "type": "date",
+            "description": "Background info.",
+            "scaling": {
+                "range_min": 1767225600,  # 2026-01-01 UTC
+                "range_max": 1798761600,  # 2027-01-01 UTC
+                "inbound_outcome_count": 200,
+            },
+            "open_lower_bound": False,
+            "open_upper_bound": True,
+        },
+    }
+
+
+@pytest.fixture
+def multiple_choice_api_response():
+    """Sample multiple choice with options."""
+    return {
+        "id": 12349,
+        "title": "Which option will occur?",
+        "description": "Choose the most likely option.",
+        "status": "open",
+        "question": {
+            "id": 67894,
+            "type": "multiple_choice",
+            "description": "Background info.",
+            "options": [
+                {"label": "Option A"},
+                {"label": "Option B"},
+                {"label": "Option C"},
+            ],
+        },
+    }
+
+
+@pytest.fixture
+def unsupported_type_api_response():
+    """API response with unsupported question type."""
+    return {
+        "id": 12350,
+        "title": "Unsupported question",
+        "question": {
+            "id": 67895,
+            "type": "conditional",  # Not supported
+        },
+    }
+
+
+# ============================================================================
+# Agent Result Fixtures
+# ============================================================================
+
+@pytest.fixture
+def valid_agent_results():
+    """List of 5 AgentResult objects with valid probabilities."""
+    from src.bot.extractors import AgentResult
+    return [
+        AgentResult(
+            agent_id=f"forecaster_{i+1}",
+            model="test-model",
+            weight=1.0,
+            step1_output="Step 1 analysis...",
+            step2_output="Step 2 analysis...",
+            probability=50.0 + i * 5,  # 50, 55, 60, 65, 70
+        )
+        for i in range(5)
+    ]
+
+
+@pytest.fixture
+def partial_agent_results():
+    """List with 2 valid, 3 None probabilities."""
+    from src.bot.extractors import AgentResult
+    results = []
+    for i in range(5):
+        prob = 55.0 if i < 2 else None
+        error = None if i < 2 else "Extraction failed"
+        results.append(AgentResult(
+            agent_id=f"forecaster_{i+1}",
+            model="test-model",
+            weight=1.0,
+            step1_output="Step 1 analysis...",
+            step2_output="Step 2 analysis..." if i < 2 else "",
+            probability=prob,
+            error=error,
+        ))
+    return results
+
+
+@pytest.fixture
+def all_failed_agent_results():
+    """List where all 5 agents failed to extract probabilities."""
+    from src.bot.extractors import AgentResult
+    return [
+        AgentResult(
+            agent_id=f"forecaster_{i+1}",
+            model="test-model",
+            weight=1.0,
+            step1_output="Step 1 analysis...",
+            step2_output="",
+            probability=None,
+            error="Extraction failed",
+        )
+        for i in range(5)
+    ]
+
+
+# ============================================================================
+# Search Query Fixtures
+# ============================================================================
+
+@pytest.fixture
+def llm_search_queries_response():
+    """LLM response with Search queries: block."""
+    return '''
+Based on my analysis of the question, I need to gather more information.
+
+Search queries:
+1. "climate change policy 2026" (Google)
+2. "renewable energy news January 2026" (Google News)
+3. "energy transition deep analysis trends" (Agent)
+'''
+
+
+@pytest.fixture
+def llm_search_queries_with_asknews():
+    """LLM response including AskNews query for deep research."""
+    return '''
+I'll search for relevant information.
+
+Search queries:
+1. "policy update 2026" (Google)
+2. "What are the latest developments in renewable energy policy?" (AskNews)
+'''
+
+
+@pytest.fixture
+def llm_search_queries_empty():
+    """LLM response with no search queries block."""
+    return '''
+I have enough information from the provided context to make my forecast.
+No additional research is needed.
+'''
+
+
+@pytest.fixture
+def llm_search_queries_malformed():
+    """LLM response with malformed search queries."""
+    return '''
+Search queries:
+1. Some query without parentheses
+2. Another query (unknown source)
+3. "valid query" (Google)
+'''
