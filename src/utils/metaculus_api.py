@@ -15,6 +15,8 @@ from datetime import datetime, timezone
 
 import httpx
 
+from ..bot.exceptions import QuestionTypeError
+
 logger = logging.getLogger(__name__)
 
 METACULUS_API_BASE = "https://www.metaculus.com/api"
@@ -82,9 +84,10 @@ class MetaculusQuestion:
         elif q_type == "binary":
             question_type = "binary"
         else:
-            raise ValueError(
+            raise QuestionTypeError(
                 f"Unsupported question type: '{q_type}'. "
-                f"Supported types: binary, numeric, discrete, multiple_choice, date"
+                f"Supported types: binary, numeric, discrete, multiple_choice, date",
+                question_type=q_type,
             )
 
         # Get CDF size from inbound_outcome_count (201 for numeric, 102 for discrete)

@@ -26,6 +26,7 @@ from ..storage.database import ForecastDatabase, ForecastRecord, AgentPrediction
 from .binary import BinaryForecaster
 from .numeric import NumericForecaster
 from .multiple_choice import MultipleChoiceForecaster
+from .exceptions import QuestionTypeError
 
 logger = logging.getLogger(__name__)
 
@@ -152,7 +153,10 @@ class Forecaster:
             elif question.question_type in ("numeric", "discrete", "date"):
                 forecast_result = await self._forecast_numeric(question, scoped_store)
             else:
-                raise ValueError(f"Unknown question type: {question.question_type}")
+                raise QuestionTypeError(
+                    f"Unknown question type: {question.question_type}",
+                    question_type=question.question_type,
+                )
 
             # Step 4: Submit prediction (unless dry run)
             submission_result = None
@@ -492,7 +496,10 @@ class Forecaster:
                 logger.info(f"Distribution submitted successfully (most likely: {best[0]} at {best[1]:.1%})")
 
             else:
-                raise ValueError(f"Unknown question type: {question.question_type}")
+                raise QuestionTypeError(
+                    f"Unknown question type: {question.question_type}",
+                    question_type=question.question_type,
+                )
 
             self.artifact_store.save_api_response(artifacts, response)
             return {"success": True, "response": response}
