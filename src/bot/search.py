@@ -170,14 +170,14 @@ class SearchPipeline:
             # Parse queries with sources
             # Format: 1. "text" (Source) or 1. text (Source) or 1. text [Source]
             search_queries = re.findall(
-                r'(?:\d+\.\s*)?(["\']?(.*?)["\']?)\s*[\(\[](Google|Google News|Agent)[\)\]]',
+                r'(?:\d+\.\s*)?(["\']?(.*?)["\']?)\s*[\(\[](Google|Google News|Agent|AskNews)[\)\]]',
                 queries_text
             )
 
             # Fallback to unquoted queries
             if not search_queries:
                 search_queries = re.findall(
-                    r'(?:\d+\.\s*)?([^(\[\n]+)\s*[\(\[](Google|Google News|Agent)[\)\]]',
+                    r'(?:\d+\.\s*)?([^(\[\n]+)\s*[\(\[](Google|Google News|Agent|AskNews)[\)\]]',
                     queries_text
                 )
 
@@ -194,6 +194,9 @@ class SearchPipeline:
             tasks = []
             query_sources = []
 
+            # Track LLM-generated AskNews query for Deep Research
+            asknews_deep_research_query: Optional[str] = None
+
             for match in search_queries:
                 if len(match) == 3:
                     _, raw_query, source = match
@@ -204,15 +207,14 @@ class SearchPipeline:
                 if not query:
                     continue
 
-
                 logger.info(f"Forecaster {forecaster_id}: Query='{query}' Source={source}")
-                query_sources.append((query, source))
 
                 # Track query and tool usage in metadata
                 metadata["queries"].append({"query": query, "tool": source})
                 metadata["tools_used"].add(source)
 
                 if source in ("Google", "Google News"):
+                    query_sources.append((query, source))
                     tasks.append(
                         self._google_search_and_scrape(
                             query=query,
@@ -222,14 +224,30 @@ class SearchPipeline:
                         )
                     )
                 elif source == "Agent":
+                    query_sources.append((query, source))
                     tasks.append(self._agentic_search(query))
+                elif source == "AskNews":
+                    # Store the LLM-generated query for Deep Research
+                    # The actual AskNews call will be added below with include_asknews
+                    asknews_deep_research_query = query
+                    logger.info(f"Forecaster {forecaster_id}: Found AskNews Deep Research query: {query[:50]}...")
 
-            # Programmatically add AskNews for current search (not dependent on LLM output)
+            # Programmatically add AskNews for current search
+            # Uses question title for news search, LLM-generated query for Deep Research
             if include_asknews:
                 logger.info(f"Forecaster {forecaster_id}: Adding AskNews search with question title")
-                tasks.append(self._call_asknews(question_details.title))
+                if asknews_deep_research_query:
+                    logger.info(f"Forecaster {forecaster_id}: Deep Research will use LLM-generated query")
+                tasks.append(self._call_asknews(
+                    news_query=question_details.title,
+                    deep_research_query=asknews_deep_research_query,
+                ))
                 query_sources.append((question_details.title, "AskNews"))
-                metadata["queries"].append({"query": question_details.title, "tool": "AskNews"})
+                # Track in metadata (include both queries if Deep Research query exists)
+                asknews_metadata = {"query": question_details.title, "tool": "AskNews"}
+                if asknews_deep_research_query:
+                    asknews_metadata["deep_research_query"] = asknews_deep_research_query
+                metadata["queries"].append(asknews_metadata)
                 metadata["tools_used"].add("AskNews")
 
             if not tasks:
@@ -467,14 +485,23 @@ class SearchPipeline:
     # AskNews
     # -------------------------------------------------------------------------
 
-    async def _call_asknews(self, query: str) -> str:
+    async def _call_asknews(
+        self,
+        news_query: str,
+        deep_research_query: Optional[str] = None,
+    ) -> str:
         """
         Search AskNews for relevant articles and run Deep Research.
 
         Uses three strategies:
-        1. Latest news (recent/hot articles)
-        2. Historical news (news knowledge archive)
-        3. Deep Research (AI-synthesized analysis)
+        1. Latest news (recent/hot articles) - uses news_query
+        2. Historical news (news knowledge archive) - uses news_query
+        3. Deep Research (AI-synthesized analysis) - uses deep_research_query if provided
+
+        Args:
+            news_query: Query for news search (typically question title)
+            deep_research_query: Query for Deep Research (LLM-generated, should request
+                information rather than ask a yes/no forecasting question)
 
         Uses semaphore to respect AskNews free tier concurrency limits.
         """
@@ -500,10 +527,10 @@ class SearchPipeline:
                 # AskNews Pro tier (via Metaculus): 1 request per 10 seconds, add 2s buffer
                 rate_limit_delay = 12
 
-                logger.debug(f"[call_asknews] Searching latest news for: {query[:50]}...")
+                logger.debug(f"[call_asknews] Searching latest news for: {news_query[:50]}...")
                 hot_response = await asyncio.to_thread(
                     ask.news.search_news,
-                    query=query,
+                    query=news_query,
                     n_articles=8,
                     return_type="both",
                     strategy="latest news"
@@ -513,10 +540,10 @@ class SearchPipeline:
                 logger.debug(f"[call_asknews] Waiting {rate_limit_delay}s for rate limit...")
                 await asyncio.sleep(rate_limit_delay)
 
-                logger.debug(f"[call_asknews] Searching historical news for: {query[:50]}...")
+                logger.debug(f"[call_asknews] Searching historical news for: {news_query[:50]}...")
                 historical_response = await asyncio.to_thread(
                     ask.news.search_news,
-                    query=query,
+                    query=news_query,
                     n_articles=8,
                     return_type="both",
                     strategy="news knowledge"
@@ -572,20 +599,23 @@ class SearchPipeline:
                 logger.error(f"[call_asknews] News search error: {e}")
                 formatted_articles = f"Error retrieving news articles: {e}\n\n"
 
-            # Part 2: Deep Research
-            try:
-                logger.debug(f"[call_asknews] Waiting {rate_limit_delay}s before deep research...")
-                await asyncio.sleep(rate_limit_delay)
+            # Part 2: Deep Research (only if deep_research_query provided)
+            if deep_research_query:
+                try:
+                    logger.debug(f"[call_asknews] Waiting {rate_limit_delay}s before deep research...")
+                    await asyncio.sleep(rate_limit_delay)
 
-                logger.info(f"[call_asknews] Running deep research for: {query[:50]}...")
-                deep_research_result = await self._call_asknews_deep_research(query, preset="low-depth", _skip_semaphore=True)
+                    logger.info(f"[call_asknews] Running deep research for: {deep_research_query[:50]}...")
+                    deep_research_result = await self._call_asknews_deep_research(deep_research_query, preset="low-depth", _skip_semaphore=True)
 
-                formatted_articles += f"\n--- Deep Research Analysis ---\n{deep_research_result}\n"
-                logger.info(f"[call_asknews] Deep research complete, got {len(deep_research_result)} chars")
+                    formatted_articles += f"\n--- Deep Research Analysis ---\n{deep_research_result}\n"
+                    logger.info(f"[call_asknews] Deep research complete, got {len(deep_research_result)} chars")
 
-            except Exception as e:
-                logger.error(f"[call_asknews] Deep research error: {e}")
-                formatted_articles += f"\n--- Deep Research Analysis ---\nError: {e}\n"
+                except Exception as e:
+                    logger.error(f"[call_asknews] Deep research error: {e}")
+                    formatted_articles += f"\n--- Deep Research Analysis ---\nError: {e}\n"
+            else:
+                logger.info("[call_asknews] Skipping deep research (no deep_research_query provided)")
 
             return formatted_articles
 
