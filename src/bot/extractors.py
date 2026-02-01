@@ -9,6 +9,7 @@ import re
 import logging
 import unicodedata
 from dataclasses import dataclass
+from datetime import datetime, timezone
 from typing import Dict, List, Optional, Union
 
 from src.bot.exceptions import ExtractionError
@@ -67,9 +68,15 @@ class AgentResult:
 # Valid percentile keys for numeric questions
 VALID_PERCENTILE_KEYS: set[int] = {1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 99}
 
-# Regex for parsing percentile lines
+# Regex for parsing percentile lines (numeric values)
 NUM_PATTERN = re.compile(
     r"^(?:percentile\s*)?(\d{1,3})\s*[:\-]\s*([+-]?\d+(?:\.\d+)?(?:e[+-]?\d+)?)\s*$",
+    re.IGNORECASE
+)
+
+# Regex for parsing percentile lines with date values (YYYY-MM-DD or YYYY-MM-DDTHH:MM:SSZ)
+DATE_PATTERN = re.compile(
+    r"^(?:percentile\s*)?(\d{1,3})\s*[:\-]\s*(\d{4}-\d{2}-\d{2}(?:T\d{2}:\d{2}:\d{2}Z?)?)\s*$",
     re.IGNORECASE
 )
 
@@ -265,6 +272,108 @@ def extract_percentiles_from_response(
         raise ExtractionError(f"No valid percentiles extracted. Last 300 chars: {snippet!r}")
 
     return percentiles
+
+
+def extract_date_percentiles_from_response(
+    text: Union[str, List],
+    verbose: bool = True
+) -> Dict[int, float]:
+    """
+    Extract date percentiles from forecast response and convert to timestamps.
+
+    Looks for "Distribution:" anchor then parses lines like:
+    - Percentile 10: 2026-03-15
+    - Percentile 50: 2026-06-01T12:00:00Z
+
+    Args:
+        text: LLM response text (or list of lines)
+        verbose: Whether to log debug info
+
+    Returns:
+        Dictionary mapping percentile keys to Unix timestamps (float)
+
+    Raises:
+        ExtractionError: If no valid percentiles extracted
+    """
+    lines = text if isinstance(text, list) else text.splitlines()
+    percentiles = {}
+    collecting = False
+
+    for idx, raw in enumerate(lines, 1):
+        line = clean_line(str(raw))
+
+        if not collecting and "distribution:" in line:
+            collecting = True
+            if verbose:
+                logger.debug(f"Found 'Distribution:' anchor at line {idx}")
+            continue
+
+        if not collecting:
+            continue
+
+        match = DATE_PATTERN.match(line)
+        if not match:
+            if verbose:
+                logger.debug(f"No date match on line {idx}: {line}")
+            continue
+
+        key, date_text = match.groups()
+        try:
+            p = int(key)
+            # Parse date string to timestamp
+            timestamp = parse_date_to_timestamp(date_text)
+            if p in VALID_PERCENTILE_KEYS and timestamp is not None:
+                percentiles[p] = timestamp
+                if verbose:
+                    logger.debug(f"Matched Percentile {p}: {date_text} -> {timestamp}")
+        except Exception as e:
+            logger.warning(f"Failed parsing date line {idx}: {line} -> {e}")
+
+    if not percentiles:
+        snippet = str(text)[-300:] if len(str(text)) > 300 else str(text)
+        raise ExtractionError(f"No valid date percentiles extracted. Last 300 chars: {snippet!r}")
+
+    return percentiles
+
+
+def parse_date_to_timestamp(date_str: str) -> Optional[float]:
+    """
+    Parse a date string to Unix timestamp.
+
+    Supports formats:
+    - YYYY-MM-DD (assumes midnight UTC)
+    - YYYY-MM-DDTHH:MM:SSZ (full ISO format)
+
+    Args:
+        date_str: Date string to parse
+
+    Returns:
+        Unix timestamp as float, or None if parsing fails
+    """
+    date_str = date_str.strip()
+
+    # Try full ISO format first
+    if "T" in date_str:
+        try:
+            # Handle with or without trailing Z
+            if date_str.endswith("Z"):
+                date_str = date_str[:-1] + "+00:00"
+            dt = datetime.fromisoformat(date_str)
+            if dt.tzinfo is None:
+                dt = dt.replace(tzinfo=timezone.utc)
+            return dt.timestamp()
+        except ValueError:
+            pass
+
+    # Try simple YYYY-MM-DD format
+    try:
+        dt = datetime.strptime(date_str, "%Y-%m-%d")
+        dt = dt.replace(tzinfo=timezone.utc)
+        return dt.timestamp()
+    except ValueError:
+        pass
+
+    return None
 
 
 def enforce_strict_increasing(pct_dict: Dict[int, float]) -> Dict[int, float]:

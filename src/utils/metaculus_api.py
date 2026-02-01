@@ -11,7 +11,7 @@ import os
 import logging
 from typing import Optional, Any, Literal
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import datetime, timezone
 
 import httpx
 
@@ -51,6 +51,10 @@ class MetaculusQuestion:
     nominal_upper_bound: Optional[float] = None  # Suggested upper bound (may be tighter)
     nominal_lower_bound: Optional[float] = None  # Suggested lower bound (may be tighter)
     cdf_size: int = 201  # CDF size: 201 for numeric, 102 for discrete
+
+    # Date question fields (human-readable strings for prompts)
+    upper_bound_date_str: Optional[str] = None  # e.g., "2026-12-31"
+    lower_bound_date_str: Optional[str] = None  # e.g., "2025-01-01"
 
     # Community data
     community_prediction: Optional[float] = None
@@ -107,23 +111,40 @@ class MetaculusQuestion:
         question_id = question_data.get("id", post_id)  # Nested question has the actual question ID
 
         # Extract numeric question bounds from scaling object (scaling already defined above)
-        upper_bound = scaling.get("range_max")
-        lower_bound = scaling.get("range_min")
+        upper_bound_raw = scaling.get("range_max")
+        lower_bound_raw = scaling.get("range_min")
         nominal_upper_bound = scaling.get("nominal_max")
         nominal_lower_bound = scaling.get("nominal_min")
         zero_point = scaling.get("zero_point")
 
-        # Convert bounds to float if present
-        if upper_bound is not None:
-            try:
-                upper_bound = float(upper_bound)
-            except (TypeError, ValueError):
-                upper_bound = None
-        if lower_bound is not None:
-            try:
-                lower_bound = float(lower_bound)
-            except (TypeError, ValueError):
-                lower_bound = None
+        # For date questions, bounds are Unix timestamps - also store human-readable strings
+        upper_bound_date_str = None
+        lower_bound_date_str = None
+
+        if question_type == "date":
+            # Date bounds: convert to float (timestamp) and store date strings
+            upper_bound = cls._parse_date_bound(upper_bound_raw)
+            lower_bound = cls._parse_date_bound(lower_bound_raw)
+            if upper_bound is not None:
+                upper_bound_date_str = datetime.fromtimestamp(upper_bound, tz=timezone.utc).strftime("%Y-%m-%d")
+            if lower_bound is not None:
+                lower_bound_date_str = datetime.fromtimestamp(lower_bound, tz=timezone.utc).strftime("%Y-%m-%d")
+        else:
+            # Numeric bounds: just convert to float
+            upper_bound = None
+            lower_bound = None
+            if upper_bound_raw is not None:
+                try:
+                    upper_bound = float(upper_bound_raw)
+                except (TypeError, ValueError):
+                    pass
+            if lower_bound_raw is not None:
+                try:
+                    lower_bound = float(lower_bound_raw)
+                except (TypeError, ValueError):
+                    pass
+
+        # Convert nominal bounds to float if present
         if nominal_upper_bound is not None:
             try:
                 nominal_upper_bound = float(nominal_upper_bound)
@@ -161,11 +182,35 @@ class MetaculusQuestion:
             nominal_upper_bound=nominal_upper_bound,
             nominal_lower_bound=nominal_lower_bound,
             cdf_size=cdf_size,
+            # Date question fields
+            upper_bound_date_str=upper_bound_date_str,
+            lower_bound_date_str=lower_bound_date_str,
             # Community data
             community_prediction=community_pred,
             num_forecasters=data.get("nr_forecasters"),
             raw=data,
         )
+
+    @classmethod
+    def _parse_date_bound(cls, value: Any) -> Optional[float]:
+        """Parse a date bound value to Unix timestamp (float).
+
+        Date bounds can be:
+        - float/int: Already a Unix timestamp
+        - str: ISO format date string (e.g., "2026-12-31T00:00:00Z")
+        """
+        if value is None:
+            return None
+        if isinstance(value, (int, float)):
+            return float(value)
+        if isinstance(value, str):
+            try:
+                # Try parsing ISO format
+                dt = datetime.fromisoformat(value.replace("Z", "+00:00"))
+                return dt.timestamp()
+            except ValueError:
+                pass
+        return None
 
 
 @dataclass
@@ -488,7 +533,8 @@ class MetaculusClient:
         # Use question_id (not post id) for the forecast API
         if question.question_type == "binary":
             return await self.submit_binary_prediction(question.question_id, prediction)
-        elif question.question_type in ("numeric", "discrete"):
+        elif question.question_type in ("numeric", "discrete", "date"):
+            # Date questions use the same CDF submission as numeric
             return await self.submit_numeric_prediction(
                 question.question_id,
                 prediction,

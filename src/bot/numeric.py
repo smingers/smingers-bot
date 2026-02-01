@@ -17,6 +17,7 @@ from ..storage.artifact_store import ArtifactStore
 from .base_forecaster import BaseForecaster
 from .extractors import (
     extract_percentiles_from_response,
+    extract_date_percentiles_from_response,
     enforce_strict_increasing,
     AgentResult,
 )
@@ -56,6 +57,7 @@ class NumericForecaster(BaseForecaster):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._cdf_size = 201  # Default, updated per-question in _get_question_details
+        self._is_date_question = False  # Default, updated per-question
 
     def _get_prompt_templates(self) -> Tuple[str, str, str, str]:
         """Return numeric-specific prompt templates."""
@@ -68,8 +70,9 @@ class NumericForecaster(BaseForecaster):
 
     def _get_question_details(self, **question_params) -> QuestionDetails:
         """Build QuestionDetails for search pipeline."""
-        # Capture cdf_size for this question (used by _aggregate_results)
+        # Capture cdf_size and date mode for this question
         self._cdf_size = question_params.get("cdf_size", 201)
+        self._is_date_question = question_params.get("is_date_question", False)
         return QuestionDetails(
             title=question_params.get("question_title", ""),
             resolution_criteria=question_params.get("resolution_criteria", ""),
@@ -216,9 +219,17 @@ class NumericForecaster(BaseForecaster):
         """
         Extract percentiles and generate CDF from agent output.
 
+        For date questions, extracts date strings and converts to timestamps.
+        For numeric questions, extracts numeric values directly.
+
         Returns dict with 'percentiles' and 'cdf' keys.
         """
-        percentiles = extract_percentiles_from_response(output, verbose=True)
+        # Use date extractor for date questions, numeric extractor otherwise
+        if self._is_date_question:
+            percentiles = extract_date_percentiles_from_response(output, verbose=True)
+        else:
+            percentiles = extract_percentiles_from_response(output, verbose=True)
+
         percentiles = enforce_strict_increasing(percentiles)
 
         cdf = generate_continuous_cdf(

@@ -149,7 +149,7 @@ class Forecaster:
                 forecast_result = await self._forecast_binary(question, scoped_store)
             elif question.question_type == "multiple_choice":
                 forecast_result = await self._forecast_multiple_choice(question, scoped_store)
-            elif question.question_type in ("numeric", "discrete"):
+            elif question.question_type in ("numeric", "discrete", "date"):
                 forecast_result = await self._forecast_numeric(question, scoped_store)
             else:
                 raise ValueError(f"Unknown question type: {question.question_type}")
@@ -204,7 +204,7 @@ class Forecaster:
             # Add type-specific prediction summary
             if question.question_type == "binary":
                 result["prediction"] = forecast_result["final_prediction"]
-            elif question.question_type in ("numeric", "discrete"):
+            elif question.question_type in ("numeric", "discrete", "date"):
                 result["prediction"] = forecast_result["final_percentiles"]
                 result["cdf"] = forecast_result["final_cdf"]
             elif question.question_type == "multiple_choice":
@@ -271,7 +271,10 @@ class Forecaster:
         question: MetaculusQuestion,
         scoped_store: "ScopedArtifactStore",
     ) -> dict:
-        """Run numeric forecasting pipeline with 5-agent ensemble."""
+        """Run numeric forecasting pipeline with 5-agent ensemble.
+
+        Also handles date questions (which use the same CDF submission format).
+        """
         # Extract bounds - can be at top level or in question.scaling
         scaling = question.raw.get("scaling") or question.raw.get("question", {}).get("scaling", {})
         lower_bound = scaling.get("range_min", 0)
@@ -279,6 +282,17 @@ class Forecaster:
         open_lower_bound = scaling.get("open_lower_bound", False)
         open_upper_bound = scaling.get("open_upper_bound", False)
         zero_point = scaling.get("zero_point")
+
+        # For date questions, set units to indicate YYYY-MM-DD format
+        # and include date bounds in the unit string for LLM context
+        if question.question_type == "date":
+            lower_str = question.lower_bound_date_str or "unknown"
+            upper_str = question.upper_bound_date_str or "unknown"
+            unit_of_measure = f"date (YYYY-MM-DD format, range: {lower_str} to {upper_str})"
+            is_date_question = True
+        else:
+            unit_of_measure = question.unit_of_measure or ""
+            is_date_question = False
 
         forecaster = NumericForecaster(
             config=self.config,
@@ -292,7 +306,7 @@ class Forecaster:
             background_info=question.background_info or "",
             resolution_criteria=question.resolution_criteria or "",
             fine_print=question.raw.get("fine_print", ""),
-            unit_of_measure=question.unit_of_measure or "",
+            unit_of_measure=unit_of_measure,
             lower_bound=lower_bound,
             upper_bound=upper_bound,
             open_lower_bound=open_lower_bound,
@@ -303,6 +317,7 @@ class Forecaster:
             open_time=question.open_time or "",
             scheduled_resolve_time=question.scheduled_resolve_time or "",
             cdf_size=question.cdf_size,
+            is_date_question=is_date_question,
             write=lambda msg: logger.info(msg),
         )
 
@@ -388,7 +403,7 @@ class Forecaster:
                 "dry_run": True,
             })
 
-        elif question.question_type in ("numeric", "discrete"):
+        elif question.question_type in ("numeric", "discrete", "date"):
             percentiles = forecast_result.get("final_percentiles", {})
             median = percentiles.get("50", percentiles.get(50, 0))
             logger.info(f"DRY RUN: Would submit CDF (median: {median})")
@@ -418,7 +433,7 @@ class Forecaster:
         if question.question_type == "binary":
             logger.info(f"Forecast complete: {forecast_result['final_prediction']:.1%}")
 
-        elif question.question_type in ("numeric", "discrete"):
+        elif question.question_type in ("numeric", "discrete", "date"):
             percentiles = forecast_result.get("final_percentiles", {})
             median = percentiles.get("50", percentiles.get(50, 0))
             logger.info(f"Forecast complete: median = {median}")
@@ -448,7 +463,7 @@ class Forecaster:
                 })
                 logger.info(f"Prediction submitted successfully: {prediction:.1%}")
 
-            elif question.question_type in ("numeric", "discrete"):
+            elif question.question_type in ("numeric", "discrete", "date"):
                 cdf = forecast_result["final_cdf"]
                 response = await self.metaculus.submit_numeric_prediction(
                     question.question_id,
@@ -505,7 +520,7 @@ class Forecaster:
         if question.question_type == "binary":
             final_prediction = forecast_result.get("final_prediction")
             prediction_data = json.dumps({"probability": final_prediction})
-        elif question.question_type in ("numeric", "discrete"):
+        elif question.question_type in ("numeric", "discrete", "date"):
             percentiles = forecast_result.get("final_percentiles", {})
             final_prediction = percentiles.get("50", percentiles.get(50))
             prediction_data = json.dumps({"percentiles": percentiles})
@@ -644,7 +659,7 @@ async def main():
         print(f"Question: {result['question'].title}")
         if result['question'].question_type == "binary":
             print(f"Prediction: {result['prediction']:.1%}")
-        elif result['question'].question_type in ("numeric", "discrete"):
+        elif result['question'].question_type in ("numeric", "discrete", "date"):
             print(f"Prediction (median): {result['prediction'].get(50, 'N/A')}")
         elif result['question'].question_type == "multiple_choice":
             print(f"Prediction: {result['prediction']}")
