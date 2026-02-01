@@ -19,7 +19,7 @@ from abc import ABC, abstractmethod
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Tuple
 
-from ..utils.llm import LLMClient
+from ..utils.llm import LLMClient, get_cost_tracker
 from ..storage.artifact_store import ArtifactStore
 from .handler_mixin import ForecasterMixin
 from .extractors import AgentResult
@@ -91,6 +91,18 @@ class BaseForecaster(ForecasterMixin, ABC):
         today = datetime.now().strftime("%Y-%m-%d")
         question_params["today"] = today
 
+        # Cost tracking by step
+        cost_tracker = get_cost_tracker()
+        step_costs = {}
+
+        def snapshot_cost(step_name: str, start_cost: float) -> float:
+            """Record cost for a step and return current total for next step."""
+            current_cost = cost_tracker.total_cost
+            step_costs[step_name] = round(current_cost - start_cost, 4)
+            return current_cost
+
+        pipeline_start_cost = cost_tracker.total_cost
+
         # Build question details for search
         question_details = self._get_question_details(**question_params)
 
@@ -114,6 +126,8 @@ class BaseForecaster(ForecasterMixin, ABC):
 
         write(f"\nHistorical query output:\n{historical_output[:500]}...")
         write(f"\nCurrent query output:\n{current_output[:500]}...")
+
+        step1_end_cost = snapshot_cost("step1_query_generation", pipeline_start_cost)
 
         if self.artifact_store:
             self.artifact_store.save_query_generation("historical", historical_prompt, historical_output)
@@ -152,6 +166,8 @@ class BaseForecaster(ForecasterMixin, ABC):
 
         write(f"\nHistorical context ({len(historical_context)} chars)")
         write(f"Current context ({len(current_context)} chars)")
+
+        step2_end_cost = snapshot_cost("step2_search", step1_end_cost)
 
         # Store metadata
         tool_usage["centralized_research"]["historical"] = historical_metadata
@@ -227,6 +243,8 @@ class BaseForecaster(ForecasterMixin, ABC):
                 if not isinstance(output, Exception) and not output.startswith("Error:"):
                     self.artifact_store.save_agent_step1(i + 1, output)
 
+        step3_end_cost = snapshot_cost("step3_outside_view", step2_end_cost)
+
         # =========================================================================
         # STEP 4: Cross-pollinate context
         # =========================================================================
@@ -291,6 +309,8 @@ class BaseForecaster(ForecasterMixin, ABC):
                     "duration_seconds": duration,
                 })
 
+        step5_end_cost = snapshot_cost("step5_inside_view", step3_end_cost)
+
         # =========================================================================
         # STEP 6: Extract predictions and aggregate
         # =========================================================================
@@ -340,8 +360,38 @@ class BaseForecaster(ForecasterMixin, ABC):
             self.artifact_store.save_aggregation(
                 self._get_aggregation_data(agent_results, agents, final_prediction)
             )
-            # Save tool usage tracking
+            # Save tool usage tracking with step costs
+            tool_usage["step_costs"] = step_costs
+            tool_usage["total_pipeline_cost"] = round(cost_tracker.total_cost - pipeline_start_cost, 4)
             self.artifact_store.save_tool_usage(tool_usage)
+
+        # Log cost breakdown
+        write("\n=== Cost Breakdown ===")
+        for step_name, cost in step_costs.items():
+            write(f"  {step_name}: ${cost:.4f}")
+
+        # Show search cost breakdown
+        search_hist = tool_usage["centralized_research"]["historical"]
+        search_curr = tool_usage["centralized_research"]["current"]
+        if search_hist.get("llm_cost") or search_curr.get("llm_cost"):
+            write("    Search LLM breakdown:")
+            if search_hist.get("llm_cost_summarization"):
+                write(f"      historical summarization: ${search_hist['llm_cost_summarization']:.4f}")
+            if search_hist.get("llm_cost_agentic"):
+                write(f"      historical agentic: ${search_hist['llm_cost_agentic']:.4f}")
+            if search_curr.get("llm_cost_summarization"):
+                write(f"      current summarization: ${search_curr['llm_cost_summarization']:.4f}")
+            if search_curr.get("llm_cost_agentic"):
+                write(f"      current agentic: ${search_curr['llm_cost_agentic']:.4f}")
+
+        # Show agent costs
+        write("  Agent costs:")
+        for agent_name, agent_data in tool_usage["agents"].items():
+            s1_cost = agent_data.get("step1", {}).get("cost", 0)
+            s2_cost = agent_data.get("step2", {}).get("cost", 0)
+            write(f"    {agent_name}: S1=${s1_cost:.4f} S2=${s2_cost:.4f}")
+
+        write(f"  TOTAL: ${tool_usage['total_pipeline_cost']:.4f}")
 
         return self._build_result(
             final_prediction=final_prediction,

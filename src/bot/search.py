@@ -21,7 +21,7 @@ from datetime import datetime, timezone
 import httpx
 import dateparser
 
-from ..utils.llm import LLMClient
+from ..utils.llm import LLMClient, get_cost_tracker
 from .content_extractor import FastContentExtractor
 from .prompts import INITIAL_SEARCH_PROMPT, CONTINUATION_SEARCH_PROMPT
 
@@ -147,6 +147,9 @@ class SearchPipeline:
         Returns:
             Tuple of (formatted_results_string, metadata_dict)
         """
+        cost_tracker = get_cost_tracker()
+        start_cost = cost_tracker.total_cost
+
         metadata = {
             "forecaster_id": forecaster_id,
             "searched": False,
@@ -154,6 +157,10 @@ class SearchPipeline:
             "queries": [],
             "tools_used": set(),
         }
+
+        # Track costs by operation type
+        self._current_summarization_cost = 0.0
+        self._current_agentic_cost = 0.0
         try:
             # Extract the "Search queries:" block
             search_queries_block = re.search(
@@ -293,6 +300,11 @@ class SearchPipeline:
 
             # Convert set to list for JSON serialization
             metadata["tools_used"] = list(metadata["tools_used"])
+
+            # Track LLM costs by operation type
+            metadata["llm_cost"] = round(cost_tracker.total_cost - start_cost, 4)
+            metadata["llm_cost_summarization"] = round(self._current_summarization_cost, 4)
+            metadata["llm_cost_agentic"] = round(self._current_agentic_cost, 4)
 
             return formatted_results, metadata
 
@@ -476,6 +488,8 @@ class SearchPipeline:
                 messages=[{"role": "user", "content": prompt}],
                 max_tokens=1500,
             )
+            # Track summarization cost
+            self._current_summarization_cost += response.cost
             return response.content
         except Exception as e:
             logger.error(f"Article summarization failed: {e}")
@@ -781,6 +795,9 @@ class SearchPipeline:
                     messages=[{"role": "user", "content": prompt}],
                     max_tokens=4000,
                 )
+
+                # Track agentic search cost
+                self._current_agentic_cost += response.cost
 
                 response_text = response.content
 
