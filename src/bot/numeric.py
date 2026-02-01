@@ -147,10 +147,8 @@ class NumericForecaster(BaseForecaster):
             fine_print=question_params.get("fine_print", ""),
             open_time=question_params.get("open_time", ""),
             scheduled_resolve_time=question_params.get("scheduled_resolve_time", ""),
-            lower_bound_message=bound_msgs["lower_bound_message"],
-            upper_bound_message=bound_msgs["upper_bound_message"],
+            bounds_info=bound_msgs["bounds_info"],
             units=unit,
-            hint=bound_msgs["hint"],
         )
         current = prompt_current.format(
             title=question_params.get("question_title", ""),
@@ -160,10 +158,8 @@ class NumericForecaster(BaseForecaster):
             fine_print=question_params.get("fine_print", ""),
             open_time=question_params.get("open_time", ""),
             scheduled_resolve_time=question_params.get("scheduled_resolve_time", ""),
-            lower_bound_message=bound_msgs["lower_bound_message"],
-            upper_bound_message=bound_msgs["upper_bound_message"],
+            bounds_info=bound_msgs["bounds_info"],
             units=unit,
-            hint=bound_msgs["hint"],
         )
         return historical, current
 
@@ -186,9 +182,7 @@ class NumericForecaster(BaseForecaster):
             scheduled_resolve_time=question_params.get("scheduled_resolve_time", ""),
             context=historical_context,
             units=unit,
-            lower_bound_message=bound_msgs["lower_bound_message"],
-            upper_bound_message=bound_msgs["upper_bound_message"],
-            hint=bound_msgs["hint"],
+            bounds_info=bound_msgs["bounds_info"],
         )
 
     def _format_step2_prompt(
@@ -210,9 +204,7 @@ class NumericForecaster(BaseForecaster):
             scheduled_resolve_time=question_params.get("scheduled_resolve_time", ""),
             context=context,
             units=unit,
-            lower_bound_message=bound_msgs["lower_bound_message"],
-            upper_bound_message=bound_msgs["upper_bound_message"],
-            hint=bound_msgs["hint"],
+            bounds_info=bound_msgs["bounds_info"],
         )
 
     def _extract_prediction(self, output: str, **question_params) -> Dict[str, Any]:
@@ -367,6 +359,8 @@ class NumericForecaster(BaseForecaster):
         nominal_lower_bound: Optional[float] = None,
         open_time: str = "",
         scheduled_resolve_time: str = "",
+        cdf_size: int = 201,
+        is_date_question: bool = False,
         write: callable = print,
     ) -> NumericForecastResult:
         """
@@ -388,10 +382,12 @@ class NumericForecaster(BaseForecaster):
             nominal_lower_bound: Suggested lower bound (may be tighter than hard bound)
             open_time: When the question opened for forecasting
             scheduled_resolve_time: When the question resolves
+            cdf_size: Number of CDF points (201 for numeric, 102 for discrete)
+            is_date_question: Whether this is a date question (uses date extraction)
             write: Logging function
 
         Returns:
-            NumericForecastResult with 201-point CDF and all agent outputs
+            NumericForecastResult with CDF and all agent outputs
         """
         return await super().forecast(
             write=write,
@@ -410,6 +406,8 @@ class NumericForecaster(BaseForecaster):
             nominal_lower_bound=nominal_lower_bound,
             open_time=open_time,
             scheduled_resolve_time=scheduled_resolve_time,
+            cdf_size=cdf_size,
+            is_date_question=is_date_question,
         )
 
 

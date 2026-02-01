@@ -69,6 +69,7 @@ class MetaculusQuestion:
         question_data = data.get("question", data)
 
         # Determine question type from nested question object
+        # Supported types: binary, numeric, discrete, multiple_choice, date
         q_type = question_data.get("type", "binary")
         if q_type == "multiple_choice":
             question_type = "multiple_choice"
@@ -78,8 +79,13 @@ class MetaculusQuestion:
             question_type = "discrete"
         elif q_type == "date":
             question_type = "date"
-        else:
+        elif q_type == "binary":
             question_type = "binary"
+        else:
+            raise ValueError(
+                f"Unsupported question type: '{q_type}'. "
+                f"Supported types: binary, numeric, discrete, multiple_choice, date"
+            )
 
         # Get CDF size from inbound_outcome_count (201 for numeric, 102 for discrete)
         scaling = question_data.get("scaling", {}) or {}
