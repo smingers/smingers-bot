@@ -1,0 +1,10 @@
+
+======================================================================
+RUN: 2026-02-01T21:20:06.454143+00:00
+Tournament: 32916 | Strategy: new-only | Via: run_bot.py
+Success: 0 | Failed: 1
+======================================================================
+
+🔴 SUBMISSION Q41935: [Short fuse] What will be the Rotten Tomatoes Rating for "Me
+  SubmissionError: API returned 400: Client error '400 Bad Request' for url 'https://www.metaculus.com/api/questions/forecast/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400

@@ -1,0 +1,5 @@
+{
+  "percentiles": null,
+  "cdf_length": 0,
+  "error": "Cannot satisfy minimum step requirement: need 0.010000 but only have 0.010000 available in CDF range"
+}
