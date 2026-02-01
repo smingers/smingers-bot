@@ -1,0 +1,184 @@
+{
+  "centralized_research": {
+    "historical": {
+      "forecaster_id": "-1",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Claude Plays Pokemon progress 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Claude Plays Pokemon update 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Latest status Claude Plays Pokemon run, has champion been beaten as of Feb 1 2026? Provide timeline and sources.",
+          "tool": "Agent",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "Agent"
+      ],
+      "llm_cost": 0.2211,
+      "llm_cost_summarization": 0.1651,
+      "llm_cost_agentic": 0.0559
+    },
+    "current": {
+      "forecaster_id": "0",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "Claude Plays Pokemon beats champion",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Claude Plays Pokemon progress 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Latest updates on Claude Plays Pokemon completing Generation 1 league in 2026 timeline",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 19
+        },
+        {
+          "query": "When will Claude Plays Pokemon beat the first Pok\u00e9mon game? (2026)",
+          "tool": "AskNews",
+          "deep_research_query": "Latest updates on Claude Plays Pokemon completing Generation 1 league in 2026 timeline"
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "AskNews"
+      ],
+      "llm_cost": 0.2211,
+      "llm_cost_summarization": 0.1651,
+      "llm_cost_agentic": 0.0559
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6316,
+        "token_output": 2060,
+        "cost": 0.049848,
+        "duration_seconds": 68.80058026313782
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15736,
+        "token_output": 3906,
+        "cost": 0.105798,
+        "duration_seconds": 93.10539770126343
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6316,
+        "token_output": 2170,
+        "cost": 0.051498,
+        "duration_seconds": 68.80086994171143
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14903,
+        "token_output": 2695,
+        "cost": 0.08513399999999999,
+        "duration_seconds": 93.10525274276733
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5438,
+        "token_output": 2871,
+        "cost": 0.049710500000000005,
+        "duration_seconds": 68.80103874206543
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13621,
+        "token_output": 3392,
+        "cost": 0.07132475,
+        "duration_seconds": 93.10519599914551
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5438,
+        "token_output": 1594,
+        "cost": 0.023628,
+        "duration_seconds": 68.80110621452332
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13569,
+        "token_output": 1511,
+        "cost": 0.039226,
+        "duration_seconds": 93.10511112213135
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5438,
+        "token_output": 1915,
+        "cost": 0.026196,
+        "duration_seconds": 68.80121803283691
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12786,
+        "token_output": 2092,
+        "cost": 0.042308,
+        "duration_seconds": 93.10508799552917
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0166,
+    "step2_search": 0.2211,
+    "step3_outside_view": 0.2009,
+    "step5_inside_view": 0.3438
+  },
+  "total_pipeline_cost": 0.7824
+}
