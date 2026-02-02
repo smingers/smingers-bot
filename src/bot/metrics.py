@@ -19,14 +19,17 @@ class StepMetrics:
     Metrics for a single forecasting step (Step 1 or Step 2).
 
     Attributes:
-        searched: Whether search was performed (legacy field, always False for forecasting steps)
-        queries: List of search queries (legacy field, always empty for forecasting steps)
         token_input: Number of input tokens used
         token_output: Number of output tokens generated
         cost: LLM cost in dollars
         duration_seconds: Wall-clock time for the step
         error: Error message if the step failed, None otherwise
+
+    Note: `searched` and `queries` fields are kept for backward compatibility with
+    the artifact JSON schema (tool_usage.json). They are always False/empty for
+    forecasting steps but must be present for consistent serialization.
     """
+    # Legacy fields for artifact schema compatibility (always False/empty for forecaster steps)
     searched: bool = False
     queries: list[str] = field(default_factory=list)
     token_input: int = 0
