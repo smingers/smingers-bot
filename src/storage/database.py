@@ -148,10 +148,6 @@ class ForecastDatabase:
             if "prediction_data" not in agent_columns:
                 await db.execute("ALTER TABLE agent_predictions ADD COLUMN prediction_data TEXT")
 
-            # Rename agent_name to agent_id for consistency with code
-            if "agent_name" in agent_columns and "agent_id" not in agent_columns:
-                await db.execute("ALTER TABLE agent_predictions RENAME COLUMN agent_name TO agent_id")
-
             await db.commit()
 
     # =========================================================================
