@@ -41,21 +41,25 @@ logger = logging.getLogger(__name__)
 # - The mapping below defines: agent_index -> (source_agent_index, context_label)
 # - The source agent's Step 1 output becomes part of this agent's Step 2 context
 #
-# MAPPING STRATEGY (with default production models):
+# MAPPING STRATEGY:
+# The specific model assignments are configured in config.yaml. The key principle is:
 # - Forecasters 1 & 5 receive their OWN Step 1 output (self-consistency anchors)
-# - Forecasters 2, 3, 4 receive output from a DIFFERENT model family:
-#   - Forecaster 2 (Sonnet 4.5) <- Forecaster 4 (o3): Claude sees OpenAI reasoning
-#   - Forecaster 3 (o3-mini) <- Forecaster 2 (Sonnet 4.5): OpenAI sees Claude reasoning
-#   - Forecaster 4 (o3) <- Forecaster 3 (o3-mini): Cross-pollination within OpenAI family
+# - Forecasters 2, 3, 4 receive output from a DIFFERENT model family
+#
+# Example with typical production models (Claude + OpenAI mix):
+#   - Forecaster 2 (Claude) <- Forecaster 4 (OpenAI): Claude sees OpenAI reasoning
+#   - Forecaster 3 (OpenAI) <- Forecaster 2 (Claude): OpenAI sees Claude reasoning
+#   - Forecaster 4 (OpenAI) <- Forecaster 3 (OpenAI): Cross-pollination within same family
 #
 # This creates a "reasoning exchange" where different model architectures
 # critique and build upon each other's initial forecasts.
+# See config.yaml ensemble.production.agents for actual model assignments.
 CROSS_POLLINATION_MAP: dict[int, tuple[int, str]] = {
-    0: (0, "Outside view prediction"),  # Forecaster 1 <- self (Sonnet 4.5)
-    1: (3, "Outside view prediction"),  # Forecaster 2 <- Forecaster 4 (Sonnet 4.5 <- o3)
-    2: (1, "Outside view prediction"),  # Forecaster 3 <- Forecaster 2 (o3-mini <- Sonnet 4.5)
-    3: (2, "Outside view prediction"),  # Forecaster 4 <- Forecaster 3 (o3 <- o3-mini)
-    4: (4, "Outside view prediction"),  # Forecaster 5 <- self (o3)
+    0: (0, "Outside view prediction"),  # Forecaster 1 <- self
+    1: (3, "Outside view prediction"),  # Forecaster 2 <- Forecaster 4
+    2: (1, "Outside view prediction"),  # Forecaster 3 <- Forecaster 2
+    3: (2, "Outside view prediction"),  # Forecaster 4 <- Forecaster 3
+    4: (4, "Outside view prediction"),  # Forecaster 5 <- self
 }
 
 
