@@ -77,11 +77,10 @@ async def forecast_question(
     question_id: int = None,
     question_url: str = None,
     config_path: str = "config.yaml",
-    dry_run: bool = False,
     mode: str = None,
 ):
     """Forecast a single question."""
-    resolved = ResolvedConfig.from_yaml(config_path, mode=mode, dry_run=dry_run)
+    resolved = ResolvedConfig.from_yaml(config_path, mode=mode)
     config = resolved.to_dict()
 
     try:
@@ -174,12 +173,11 @@ async def forecast_question(
 async def forecast_unforecasted_questions(
     tournament_id: int | str,
     config_path: str = "config.yaml",
-    dry_run: bool = False,
     mode: str = None,
     limit: int = 10,
 ):
     """Forecast questions in a tournament that I haven't forecasted yet."""
-    resolved = ResolvedConfig.from_yaml(config_path, mode=mode, dry_run=dry_run)
+    resolved = ResolvedConfig.from_yaml(config_path, mode=mode)
     # Modify raw config for tournament_id before converting to dict
     resolved.source["submission"]["tournament_id"] = tournament_id
 
@@ -251,11 +249,6 @@ def main():
         help="Forecast all unforecasted questions in tournament",
     )
     parser.add_argument(
-        "--dry-run",
-        action="store_true",
-        help="Don't actually submit predictions (shortcut for --mode test)",
-    )
-    parser.add_argument(
         "--mode",
         "-m",
         type=str,
@@ -296,7 +289,6 @@ def main():
             forecast_unforecasted_questions(
                 tournament_id=args.tournament,
                 config_path=args.config,
-                dry_run=args.dry_run,
                 mode=args.mode,
                 limit=args.limit,
             )
@@ -308,7 +300,6 @@ def main():
                 question_id=args.question,
                 question_url=args.url,
                 config_path=args.config,
-                dry_run=args.dry_run,
                 mode=args.mode,
             )
         )

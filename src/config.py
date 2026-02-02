@@ -67,7 +67,6 @@ class ResolvedConfig:
         cls,
         path: str | Path = "config.yaml",
         mode: RunMode | None = None,
-        dry_run: bool = False,
     ) -> "ResolvedConfig":
         """
         Load configuration from YAML file and resolve mode settings.
@@ -75,28 +74,25 @@ class ResolvedConfig:
         Args:
             path: Path to the YAML configuration file
             mode: Explicit mode override ("test", "preview", "live")
-            dry_run: Shortcut for mode="test" (mode= takes precedence)
 
         Returns:
             ResolvedConfig with resolved mode settings
 
         Mode resolution priority:
             1. Explicit `mode` argument
-            2. `dry_run=True` argument (equivalent to mode="test")
-            3. `mode` key in config file
-            4. Default to "test"
+            2. `mode` key in config file
+            3. Default to "test"
         """
         with open(path) as f:
             raw = yaml.safe_load(f)
 
-        return cls.from_dict(raw, mode=mode, dry_run=dry_run)
+        return cls.from_dict(raw, mode=mode)
 
     @classmethod
     def from_dict(
         cls,
         raw: dict,
         mode: RunMode | None = None,
-        dry_run: bool = False,
     ) -> "ResolvedConfig":
         """
         Create ResolvedConfig from a configuration dictionary.
@@ -104,16 +100,13 @@ class ResolvedConfig:
         Args:
             raw: Configuration dictionary (typically loaded from YAML)
             mode: Explicit mode override
-            dry_run: Shortcut for mode="test"
 
         Returns:
             ResolvedConfig with resolved mode settings
         """
-        # Determine mode (priority: mode arg > dry_run flag > config > default)
+        # Determine mode (priority: mode arg > config > default)
         if mode:
             resolved_mode = mode
-        elif dry_run:
-            resolved_mode = "test"
         else:
             resolved_mode = raw.get("mode", "test")
 

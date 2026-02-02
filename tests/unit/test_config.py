@@ -51,22 +51,6 @@ class TestResolvedConfigFromDict:
         assert resolved.active_agents == sample_config["ensemble"]["quality"]
         assert resolved.should_submit is True
 
-    def test_dry_run_flag_overrides_config(self, sample_config):
-        """Test that dry_run=True flag overrides config.mode."""
-        sample_config["mode"] = "live"  # Set live in config
-        resolved = ResolvedConfig.from_dict(sample_config, dry_run=True)
-
-        assert resolved.mode == "test"
-        assert resolved.should_submit is False
-
-    def test_explicit_mode_overrides_dry_run_flag(self, sample_config):
-        """Test that explicit mode= parameter takes precedence over dry_run flag."""
-        resolved = ResolvedConfig.from_dict(sample_config, mode="live", dry_run=True)
-
-        # mode= should win over dry_run=
-        assert resolved.mode == "live"
-        assert resolved.should_submit is True
-
     def test_defaults_to_config_mode(self, sample_config):
         """Test that config's mode is used when no arguments provided."""
         sample_config["mode"] = "preview"

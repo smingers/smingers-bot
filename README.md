@@ -10,7 +10,7 @@ The forecasting pipeline and prompts in this bot are based on [Panshul42's Metac
 
 1. Copy `.env.template` to `.env` and fill in your API keys
 2. Install dependencies: `poetry install`
-3. Run a test forecast: `poetry run python main.py --question <id> --dry-run`
+3. Run a test forecast: `poetry run python main.py --question <id> --mode test`
 
 ## Usage
 
@@ -35,8 +35,8 @@ python main.py --question 41594 --mode live
 # List tournament questions
 python main.py --tournament 32721 --list
 
-# Forecast all new questions
-python main.py --tournament 32721 --forecast-new --limit 5
+# Forecast all unforecasted questions
+python main.py --tournament 32721 --forecast-unforecasted --limit 5
 
 # Verbose logging
 python main.py --question 41594 --mode test --verbose
