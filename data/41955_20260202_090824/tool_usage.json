@@ -1,0 +1,196 @@
+{
+  "centralized_research": {
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "EU regulation mandatory age verification",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "EU social media age check law 2025-2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide the historical community prediction time-series for Metaculus question 41173 from launch through 2026-02-02, highlight major jumps and corresponding news events; also summarize any discussions in the comment thread pointing to future EU legislative timelines.",
+          "tool": "Agent",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google",
+        "Google News"
+      ],
+      "llm_cost": 0.3455,
+      "llm_cost_summarization": 0.1947,
+      "llm_cost_agentic": 0.1509,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "EU age verification legislation 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "EU social media age checks",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Latest 2026 developments on EU plans for mandatory age verification on social media or AI platforms, including any proposed regulations.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 31
+        },
+        {
+          "query": "Will the community prediction be higher than 26.00% on 2026-02-15 for the Metaculus question \"Will the EU require mandatory age verification on social media or AI before 2027?\"?",
+          "tool": "AskNews",
+          "deep_research_query": "Latest 2026 developments on EU plans for mandatory age verification on social media or AI platforms, including any proposed regulations."
+        }
+      ],
+      "tools_used": [
+        "AskNews",
+        "Google",
+        "Google News"
+      ],
+      "llm_cost": 0.2376,
+      "llm_cost_summarization": 0.1947,
+      "llm_cost_agentic": 0.0429,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6001,
+        "token_output": 2562,
+        "cost": 0.056433,
+        "duration_seconds": 67.25325798988342,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 19074,
+        "token_output": 3138,
+        "cost": 0.104292,
+        "duration_seconds": 75.9443109035492,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6001,
+        "token_output": 2127,
+        "cost": 0.04990800000000001,
+        "duration_seconds": 67.25330829620361,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17891,
+        "token_output": 2181,
+        "cost": 0.08638799999999999,
+        "duration_seconds": 75.9442846775055,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5342,
+        "token_output": 2535,
+        "cost": 0.0448385,
+        "duration_seconds": 67.253347158432,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16625,
+        "token_output": 2223,
+        "cost": 0.060215750000000005,
+        "duration_seconds": 75.94425702095032,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5342,
+        "token_output": 1858,
+        "cost": 0.025548,
+        "duration_seconds": 67.25337958335876,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16224,
+        "token_output": 1403,
+        "cost": 0.043671999999999996,
+        "duration_seconds": 75.94423007965088,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5342,
+        "token_output": 1546,
+        "cost": 0.023052000000000003,
+        "duration_seconds": 67.25340509414673,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15714,
+        "token_output": 3821,
+        "cost": 0.061995999999999996,
+        "duration_seconds": 75.9442036151886,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.015,
+    "step2_search": 0.3455,
+    "step3_outside_view": 0.1998,
+    "step5_inside_view": 0.3566
+  },
+  "total_pipeline_cost": 0.9169
+}
