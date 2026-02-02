@@ -31,9 +31,11 @@ class MetaculusQuestion:
     - id: The POST ID (appears in URLs like /questions/12345/)
     - question_id: The QUESTION ID (used in forecasting API calls)
 
-    These are usually the same but can differ when questions are
-    part of conditional/group structures. Always use question_id
-    for API calls to submit predictions.
+    When they differ: These IDs are usually identical for standalone questions.
+    They differ for grouped questions (e.g., conditional pairs, question groups)
+    where multiple questions share a single post page. In these cases, the post
+    ID identifies the page while each sub-question has its own question_id.
+    Always use question_id for API calls to submit predictions.
 
     Attributes:
         id: Post ID (used in URLs, for display/navigation)

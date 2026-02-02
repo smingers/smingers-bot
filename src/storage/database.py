@@ -428,16 +428,16 @@ class ForecastDatabase:
                     f.prediction_data,
                     f.total_cost,
                     f.created_at,
-                    MAX(CASE WHEN ap.agent_id IN ('forecaster_1', 'agent_1') THEN ap.prediction END) as agent_1,
-                    MAX(CASE WHEN ap.agent_id IN ('forecaster_2', 'agent_2') THEN ap.prediction END) as agent_2,
-                    MAX(CASE WHEN ap.agent_id IN ('forecaster_3', 'agent_3') THEN ap.prediction END) as agent_3,
-                    MAX(CASE WHEN ap.agent_id IN ('forecaster_4', 'agent_4') THEN ap.prediction END) as agent_4,
-                    MAX(CASE WHEN ap.agent_id IN ('forecaster_5', 'agent_5') THEN ap.prediction END) as agent_5,
-                    MAX(CASE WHEN ap.agent_id IN ('forecaster_1', 'agent_1') THEN ap.prediction_data END) as agent_1_data,
-                    MAX(CASE WHEN ap.agent_id IN ('forecaster_2', 'agent_2') THEN ap.prediction_data END) as agent_2_data,
-                    MAX(CASE WHEN ap.agent_id IN ('forecaster_3', 'agent_3') THEN ap.prediction_data END) as agent_3_data,
-                    MAX(CASE WHEN ap.agent_id IN ('forecaster_4', 'agent_4') THEN ap.prediction_data END) as agent_4_data,
-                    MAX(CASE WHEN ap.agent_id IN ('forecaster_5', 'agent_5') THEN ap.prediction_data END) as agent_5_data
+                    MAX(CASE WHEN ap.agent_id = 'forecaster_1' THEN ap.prediction END) as agent_1,
+                    MAX(CASE WHEN ap.agent_id = 'forecaster_2' THEN ap.prediction END) as agent_2,
+                    MAX(CASE WHEN ap.agent_id = 'forecaster_3' THEN ap.prediction END) as agent_3,
+                    MAX(CASE WHEN ap.agent_id = 'forecaster_4' THEN ap.prediction END) as agent_4,
+                    MAX(CASE WHEN ap.agent_id = 'forecaster_5' THEN ap.prediction END) as agent_5,
+                    MAX(CASE WHEN ap.agent_id = 'forecaster_1' THEN ap.prediction_data END) as agent_1_data,
+                    MAX(CASE WHEN ap.agent_id = 'forecaster_2' THEN ap.prediction_data END) as agent_2_data,
+                    MAX(CASE WHEN ap.agent_id = 'forecaster_3' THEN ap.prediction_data END) as agent_3_data,
+                    MAX(CASE WHEN ap.agent_id = 'forecaster_4' THEN ap.prediction_data END) as agent_4_data,
+                    MAX(CASE WHEN ap.agent_id = 'forecaster_5' THEN ap.prediction_data END) as agent_5_data
                 FROM forecasts f
                 LEFT JOIN agent_predictions ap ON f.id = ap.forecast_id
                 {where_clause}

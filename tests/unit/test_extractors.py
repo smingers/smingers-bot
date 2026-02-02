@@ -75,6 +75,19 @@ class TestBinaryProbabilityExtraction:
         with pytest.raises(ExtractionError, match="Could not extract probability"):
             self._extract(binary_response_no_probability)
 
+    def test_extraction_error_has_attributes(self, binary_response_no_probability):
+        """Test that ExtractionError includes agent_name and response_preview attributes."""
+        try:
+            self._extract(binary_response_no_probability)
+            pytest.fail("Expected ExtractionError to be raised")
+        except ExtractionError as e:
+            # Verify the attributes exist (even if None by default)
+            assert hasattr(e, "agent_name")
+            assert hasattr(e, "response_preview")
+            # Default values should be None when not explicitly set
+            assert e.agent_name is None
+            assert e.response_preview is None
+
     def test_whitespace_handling(self):
         """Test extraction handles various whitespace around value."""
         cases = [
