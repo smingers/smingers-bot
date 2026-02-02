@@ -2,13 +2,24 @@
 """
 Migrate artifact data to populate missing database fields.
 
-Scans artifact directories and:
-1. Backfills 'mode' from metadata.json
+PURPOSE:
+This is a one-time migration utility for backfilling database fields that were
+added after some forecasts were already recorded. It reads JSON files from the
+artifact directories (data/{question_id}_{timestamp}/) and updates the SQLite
+database with any missing data.
+
+Specifically, it:
+1. Backfills the 'mode' field (test/preview/live) from metadata.json
 2. Backfills 'prediction_data' JSON from prediction.json and aggregation.json
+
+WHEN TO USE:
+- Only needed if you have old forecast artifacts with incomplete database records
+- New forecasts populate these fields automatically during the pipeline
+- Safe to run multiple times (only updates rows with missing data)
 
 Usage:
     python scripts/migrate_artifacts.py
-    python scripts/migrate_artifacts.py --dry-run  # Preview changes
+    python scripts/migrate_artifacts.py --dry-run  # Preview changes without modifying DB
 """
 
 import asyncio
