@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 """
-Metaculus AI Forecasting Bot - Main Entry Point
+AI Forecasting Bot - Main Entry Point
+
+Supports multiple forecast sources:
+- metaculus (default): Forecast on Metaculus prediction questions
+- ecclesia: Forecast on Ecclesia business questions (coming soon)
 
 Usage:
     # Forecast a specific question by ID
@@ -8,6 +12,9 @@ Usage:
 
     # Forecast a question by URL
     python main.py --url "https://www.metaculus.com/questions/12345/..."
+
+    # Specify source explicitly (default: metaculus)
+    python main.py --source metaculus --question 12345
 
     # Run modes:
     #   test    - fast models (Haiku), no submission
@@ -22,6 +29,9 @@ Usage:
 
     # Forecast all unforecasted questions in a tournament
     python main.py --tournament 32721 --forecast-unforecasted
+
+    # List available sources
+    python main.py --list-sources
 """
 
 import argparse
@@ -39,6 +49,7 @@ from src.bot import ExtractionError, SubmissionError
 from src.bot.forecaster import Forecaster
 from src.config import ResolvedConfig
 from src.runner import format_prediction, run_forecasts
+from src.sources import list_sources
 from src.utils.metaculus_api import MetaculusClient
 
 
@@ -238,6 +249,16 @@ def main():
         epilog=__doc__,
     )
 
+    parser.add_argument(
+        "--source",
+        "-s",
+        type=str,
+        default="metaculus",
+        help="Forecast source: metaculus (default), ecclesia (coming soon)",
+    )
+    parser.add_argument(
+        "--list-sources", action="store_true", help="List available forecast sources"
+    )
     parser.add_argument("--question", "-q", type=int, help="Question ID to forecast")
     parser.add_argument("--url", "-u", type=str, help="Question URL to forecast")
     parser.add_argument(
@@ -275,10 +296,24 @@ def main():
     # Setup logging
     setup_logging(args.verbose)
 
+    # Handle --list-sources
+    if args.list_sources:
+        print("\nAvailable forecast sources:")
+        for source_name in list_sources():
+            default_marker = " (default)" if source_name == "metaculus" else ""
+            print(f"  - {source_name}{default_marker}")
+        sys.exit(0)
+
     # Validate arguments
     if not any([args.question, args.url, args.tournament]):
         parser.print_help()
         print("\nError: Must specify --question, --url, or --tournament")
+        sys.exit(1)
+
+    # Validate source
+    available_sources = list_sources()
+    if args.source not in available_sources:
+        print(f"\nError: Unknown source '{args.source}'. Available: {', '.join(available_sources)}")
         sys.exit(1)
 
     # Run appropriate command
