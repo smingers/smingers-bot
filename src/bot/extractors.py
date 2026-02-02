@@ -5,12 +5,11 @@ This module consolidates extraction logic from the question handlers,
 making it testable and reusable across all question types.
 """
 
-import re
 import logging
+import re
 import unicodedata
 from dataclasses import dataclass
-from datetime import datetime, timezone
-from typing import Dict, List, Optional, Union
+from datetime import UTC, datetime
 
 from src.bot.exceptions import ExtractionError
 
@@ -20,6 +19,7 @@ logger = logging.getLogger(__name__)
 # ============================================================================
 # Unified Agent Result Type
 # ============================================================================
+
 
 @dataclass
 class AgentResult:
@@ -43,42 +43,65 @@ class AgentResult:
         percentiles: Numeric question percentiles (dict mapping percentile -> value)
         cdf: Numeric question CDF (201-point list)
     """
+
     # Common fields
     agent_id: str
     model: str
     weight: float
     step1_output: str
     step2_output: str
-    error: Optional[str] = None
+    error: str | None = None
 
     # Binary-specific
-    probability: Optional[float] = None
+    probability: float | None = None
 
     # Multiple choice-specific
-    probabilities: Optional[List[float]] = None
+    probabilities: list[float] | None = None
 
     # Numeric-specific
-    percentiles: Optional[Dict[int, float]] = None
-    cdf: Optional[List[float]] = None
+    percentiles: dict[int, float] | None = None
+    cdf: list[float] | None = None
+
 
 # ============================================================================
 # Constants
 # ============================================================================
 
 # Valid percentile keys for numeric questions
-VALID_PERCENTILE_KEYS: set[int] = {1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 99}
+VALID_PERCENTILE_KEYS: set[int] = {
+    1,
+    5,
+    10,
+    15,
+    20,
+    25,
+    30,
+    35,
+    40,
+    45,
+    50,
+    55,
+    60,
+    65,
+    70,
+    75,
+    80,
+    85,
+    90,
+    95,
+    99,
+}
 
 # Regex for parsing percentile lines (numeric values)
 NUM_PATTERN = re.compile(
-    r"^(?:percentile\s*)?(\d{1,3})\s*[:\-]\s*([+-]?\d+(?:\.\d+)?(?:e[+-]?\d+)?)\s*$",
-    re.IGNORECASE
+    r"^(?:percentile\s*)?(\d{1,3})\s*[:\-]\s*([+-]?\d+(?:\.\d+)?(?:e[+-]?\d+)?)\s*$", re.IGNORECASE
 )
 
 # Regex for parsing percentile lines with date values (YYYY-MM-DD or YYYY-MM-DDTHH:MM:SSZ)
 # Note: clean_line() lowercases input, so T/Z become t/z
 DATE_PATTERN = re.compile(
     r"^(?:percentile\s*)?(\d{1,3})\s*[:\-]\s*(\d{4}-\d{2}-\d{2}(?:[tT]\d{2}:\d{2}:\d{2}[zZ]?)?)\s*$",
-    re.IGNORECASE
+    re.IGNORECASE,
 )
 
 # Characters that can start bullet points
@@ -91,6 +114,7 @@ DASH_RE = re.compile(r"[\u2010\u2011\u2012\u2013\u2014\u2015\u2212]")
 # ============================================================================
 # Binary Probability Extraction
 # ============================================================================
+
 
 def extract_binary_probability_percent(text: str) -> float:
     """
@@ -122,17 +146,20 @@ def extract_binary_probability_percent(text: str) -> float:
         return min(99, max(1, number))
 
     snippet = text[-200:] if len(text) > 200 else text
-    raise ExtractionError(f"Could not extract probability from response. Last 200 chars: {snippet!r}")
+    raise ExtractionError(
+        f"Could not extract probability from response. Last 200 chars: {snippet!r}"
+    )
 
 
 # ============================================================================
 # Multiple Choice Probability Extraction
 # ============================================================================
 
+
 def extract_multiple_choice_probabilities(
     text: str,
     num_options: int,
-) -> List[float]:
+) -> list[float]:
     """
     Extract option probabilities from multiple choice forecast response.
 
@@ -151,18 +178,22 @@ def extract_multiple_choice_probabilities(
     matches = re.findall(r"Probabilities:\s*\[([0-9.,\s]+)\]", text)
     if not matches:
         snippet = text[-200:] if len(text) > 200 else text
-        raise ExtractionError(f"Could not extract 'Probabilities' list from response. Last 200 chars: {snippet!r}")
+        raise ExtractionError(
+            f"Could not extract 'Probabilities' list from response. Last 200 chars: {snippet!r}"
+        )
 
     last_match = matches[-1]
     numbers = [float(n.strip()) for n in last_match.split(",") if n.strip()]
 
     if len(numbers) != num_options:
-        raise ExtractionError(f"Expected {num_options} probabilities, got {len(numbers)}: {numbers}")
+        raise ExtractionError(
+            f"Expected {num_options} probabilities, got {len(numbers)}: {numbers}"
+        )
 
     return numbers
 
 
-def normalize_probabilities(probs: List[float]) -> List[float]:
+def normalize_probabilities(probs: list[float]) -> list[float]:
     """
     Normalize probabilities to sum to 1.0.
 
@@ -192,6 +223,7 @@ def normalize_probabilities(probs: List[float]) -> List[float]:
 # Numeric Percentile Extraction
 # ============================================================================
 
+
 def clean_line(s: str) -> str:
     """
     Clean and normalize a line of text for percentile parsing.
@@ -209,14 +241,11 @@ def clean_line(s: str) -> str:
     # Strip bullets from the start, then strip any remaining whitespace
     s = s.strip().lstrip(BULLET_CHARS).strip()
     # Remove thousands-sep commas & NBSPs
-    s = s.replace(",", "").replace("\u00A0", "")
+    s = s.replace(",", "").replace("\u00a0", "")
     return s.lower()
 
 
-def extract_percentiles_from_response(
-    text: Union[str, List],
-    verbose: bool = True
-) -> Dict[int, float]:
+def extract_percentiles_from_response(text: str | list, verbose: bool = True) -> dict[int, float]:
     """
     Extract percentiles from numeric forecast response.
 
@@ -276,9 +305,8 @@ def extract_percentiles_from_response(
 
 
 def extract_date_percentiles_from_response(
-    text: Union[str, List],
-    verbose: bool = True
-) -> Dict[int, float]:
+    text: str | list, verbose: bool = True
+) -> dict[int, float]:
     """
     Extract date percentiles from forecast response and convert to timestamps.
 
@@ -337,7 +365,7 @@ def extract_date_percentiles_from_response(
     return percentiles
 
 
-def parse_date_to_timestamp(date_str: str) -> Optional[float]:
+def parse_date_to_timestamp(date_str: str) -> float | None:
     """
     Parse a date string to Unix timestamp.
 
@@ -363,7 +391,7 @@ def parse_date_to_timestamp(date_str: str) -> Optional[float]:
                 normalized = normalized[:-1] + "+00:00"
             dt = datetime.fromisoformat(normalized)
             if dt.tzinfo is None:
-                dt = dt.replace(tzinfo=timezone.utc)
+                dt = dt.replace(tzinfo=UTC)
             return dt.timestamp()
         except ValueError:
             pass
@@ -371,7 +399,7 @@ def parse_date_to_timestamp(date_str: str) -> Optional[float]:
     # Try simple YYYY-MM-DD format
     try:
         dt = datetime.strptime(date_str, "%Y-%m-%d")
-        dt = dt.replace(tzinfo=timezone.utc)
+        dt = dt.replace(tzinfo=UTC)
         return dt.timestamp()
     except ValueError:
         pass
@@ -379,7 +407,7 @@ def parse_date_to_timestamp(date_str: str) -> Optional[float]:
     return None
 
 
-def enforce_strict_increasing(pct_dict: Dict[int, float]) -> Dict[int, float]:
+def enforce_strict_increasing(pct_dict: dict[int, float]) -> dict[int, float]:
     """
     Ensure strictly increasing values by adding tiny jitter if necessary.
 
@@ -411,7 +439,7 @@ def enforce_strict_increasing(pct_dict: Dict[int, float]) -> Dict[int, float]:
             )
 
     # Apply jitter for minor flat spots (e.g., P40=10.0, P60=10.0)
-    last_val = -float('inf')
+    last_val = -float("inf")
     new_pct_dict = {}
 
     for p, v in sorted_items:

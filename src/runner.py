@@ -16,10 +16,11 @@ Usage:
 """
 
 import logging
+from collections.abc import Callable
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
-from typing import Any, Callable, Optional
+from typing import Any
 
 from .bot import ExtractionError, SubmissionError
 from .bot.forecaster import Forecaster
@@ -105,8 +106,8 @@ class RunResult:
     def write_failure_log(
         self,
         source: str = "runner",
-        tournament_id: Optional[str] = None,
-        strategy: Optional[str] = None,
+        tournament_id: str | None = None,
+        strategy: str | None = None,
     ) -> None:
         """
         Append failures to persistent log file.
@@ -122,8 +123,8 @@ class RunResult:
         FAILURE_LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
 
         with open(FAILURE_LOG_PATH, "a") as f:
-            f.write(f"\n{'='*70}\n")
-            f.write(f"RUN: {datetime.now(timezone.utc).isoformat()}\n")
+            f.write(f"\n{'=' * 70}\n")
+            f.write(f"RUN: {datetime.now(UTC).isoformat()}\n")
             header_parts = []
             if tournament_id:
                 header_parts.append(f"Tournament: {tournament_id}")
@@ -132,7 +133,7 @@ class RunResult:
             header_parts.append(f"Via: {source}")
             f.write(" | ".join(header_parts) + "\n")
             f.write(f"Success: {self.success_count} | Failed: {self.error_count}\n")
-            f.write(f"{'='*70}\n")
+            f.write(f"{'=' * 70}\n")
 
             for failure in self.failures:
                 if failure.is_extraction_error:
@@ -146,7 +147,7 @@ class RunResult:
 
         logger.info(f"Failures logged to: {FAILURE_LOG_PATH}")
 
-    def print_summary(self, tournament_id: Optional[str] = None, strategy: Optional[str] = None) -> None:
+    def print_summary(self, tournament_id: str | None = None, strategy: str | None = None) -> None:
         """
         Print a summary of the run to stdout.
 
@@ -188,7 +189,9 @@ class RunResult:
             # Show critical errors first (extraction, submission), then other
             extraction_failures = [f for f in self.failures if f.is_extraction_error]
             submission_failures = [f for f in self.failures if f.is_submission_error]
-            other_failures = [f for f in self.failures if not f.is_extraction_error and not f.is_submission_error]
+            other_failures = [
+                f for f in self.failures if not f.is_extraction_error and not f.is_submission_error
+            ]
 
             if extraction_failures:
                 print("\n🔴 EXTRACTION FAILURES (LLM output parsing failed):")
@@ -220,9 +223,9 @@ ErrorCallback = Callable[[MetaculusQuestion, Exception], None]
 async def run_forecasts(
     questions: list[MetaculusQuestion],
     forecaster: Forecaster,
-    on_progress: Optional[ProgressCallback] = None,
-    on_success: Optional[SuccessCallback] = None,
-    on_error: Optional[ErrorCallback] = None,
+    on_progress: ProgressCallback | None = None,
+    on_success: SuccessCallback | None = None,
+    on_error: ErrorCallback | None = None,
 ) -> RunResult:
     """
     Run forecasts for a list of questions with unified error handling.

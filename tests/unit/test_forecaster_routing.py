@@ -7,18 +7,18 @@ Tests cover:
 - Question fetching by ID and URL
 """
 
-import pytest
 from unittest.mock import AsyncMock, MagicMock, patch
-from dataclasses import dataclass
 
-from src.bot.forecaster import Forecaster, ScopedArtifactStore
+import pytest
+
 from src.bot.exceptions import QuestionTypeError
+from src.bot.forecaster import Forecaster, ScopedArtifactStore
 from src.utils.metaculus_api import MetaculusQuestion
-
 
 # ============================================================================
 # Helper Fixtures
 # ============================================================================
+
 
 @pytest.fixture
 def mock_question_binary():
@@ -108,7 +108,10 @@ def mock_question_date():
     q.description = "Background"
     q.background_info = "More background"
     q.resolution_criteria = "Criteria"
-    q.raw = {"fine_print": "Fine print", "scaling": {"range_min": 1767225600, "range_max": 1798761600}}
+    q.raw = {
+        "fine_print": "Fine print",
+        "scaling": {"range_min": 1767225600, "range_max": 1798761600},
+    }
     q.open_time = "2025-01-01"
     q.scheduled_close_time = "2026-12-31"
     q.scheduled_resolve_time = "2027-01-15"
@@ -188,6 +191,7 @@ def mock_config():
 # Question Routing Tests
 # ============================================================================
 
+
 class TestForecasterRouting:
     """Tests for question type routing."""
 
@@ -195,7 +199,7 @@ class TestForecasterRouting:
     async def test_routes_binary_question(self, mock_question_binary, mock_config):
         """Binary questions use _forecast_binary."""
         with patch.multiple(
-            'src.bot.forecaster',
+            "src.bot.forecaster",
             MetaculusClient=MagicMock,
             LLMClient=MagicMock,
             ArtifactStore=MagicMock,
@@ -218,12 +222,18 @@ class TestForecasterRouting:
             mock_result.historical_context = ""
             mock_result.current_context = ""
 
-            with patch.object(forecaster, '_forecast_binary', AsyncMock(return_value={
-                "final_prediction": 0.65,
-                "agent_results": [],
-                "historical_context": "",
-                "current_context": "",
-            })) as mock_handler:
+            with patch.object(
+                forecaster,
+                "_forecast_binary",
+                AsyncMock(
+                    return_value={
+                        "final_prediction": 0.65,
+                        "agent_results": [],
+                        "historical_context": "",
+                        "current_context": "",
+                    }
+                ),
+            ) as mock_handler:
                 result = await forecaster.forecast_question(question=mock_question_binary)
 
                 mock_handler.assert_called_once()
@@ -233,7 +243,7 @@ class TestForecasterRouting:
     async def test_routes_numeric_question(self, mock_question_numeric, mock_config):
         """Numeric questions use _forecast_numeric."""
         with patch.multiple(
-            'src.bot.forecaster',
+            "src.bot.forecaster",
             MetaculusClient=MagicMock,
             LLMClient=MagicMock,
             ArtifactStore=MagicMock,
@@ -249,13 +259,19 @@ class TestForecasterRouting:
             forecaster.database.insert_forecast = AsyncMock()
             forecaster.database.insert_agent_prediction = AsyncMock()
 
-            with patch.object(forecaster, '_forecast_numeric', AsyncMock(return_value={
-                "final_percentiles": {"50": 50},
-                "final_cdf": [0.5] * 201,
-                "agent_results": [],
-                "historical_context": "",
-                "current_context": "",
-            })) as mock_handler:
+            with patch.object(
+                forecaster,
+                "_forecast_numeric",
+                AsyncMock(
+                    return_value={
+                        "final_percentiles": {"50": 50},
+                        "final_cdf": [0.5] * 201,
+                        "agent_results": [],
+                        "historical_context": "",
+                        "current_context": "",
+                    }
+                ),
+            ) as mock_handler:
                 result = await forecaster.forecast_question(question=mock_question_numeric)
 
                 mock_handler.assert_called_once()
@@ -265,7 +281,7 @@ class TestForecasterRouting:
     async def test_routes_discrete_question(self, mock_question_discrete, mock_config):
         """Discrete questions use _forecast_numeric (same as numeric)."""
         with patch.multiple(
-            'src.bot.forecaster',
+            "src.bot.forecaster",
             MetaculusClient=MagicMock,
             LLMClient=MagicMock,
             ArtifactStore=MagicMock,
@@ -281,14 +297,20 @@ class TestForecasterRouting:
             forecaster.database.insert_forecast = AsyncMock()
             forecaster.database.insert_agent_prediction = AsyncMock()
 
-            with patch.object(forecaster, '_forecast_numeric', AsyncMock(return_value={
-                "final_percentiles": {"50": 5},
-                "final_cdf": [0.5] * 102,
-                "agent_results": [],
-                "historical_context": "",
-                "current_context": "",
-            })) as mock_handler:
-                result = await forecaster.forecast_question(question=mock_question_discrete)
+            with patch.object(
+                forecaster,
+                "_forecast_numeric",
+                AsyncMock(
+                    return_value={
+                        "final_percentiles": {"50": 5},
+                        "final_cdf": [0.5] * 102,
+                        "agent_results": [],
+                        "historical_context": "",
+                        "current_context": "",
+                    }
+                ),
+            ) as mock_handler:
+                await forecaster.forecast_question(question=mock_question_discrete)
 
                 mock_handler.assert_called_once()
 
@@ -296,7 +318,7 @@ class TestForecasterRouting:
     async def test_routes_date_question(self, mock_question_date, mock_config):
         """Date questions use _forecast_numeric with date flag."""
         with patch.multiple(
-            'src.bot.forecaster',
+            "src.bot.forecaster",
             MetaculusClient=MagicMock,
             LLMClient=MagicMock,
             ArtifactStore=MagicMock,
@@ -312,29 +334,39 @@ class TestForecasterRouting:
             forecaster.database.insert_forecast = AsyncMock()
             forecaster.database.insert_agent_prediction = AsyncMock()
 
-            with patch.object(forecaster, '_forecast_numeric', AsyncMock(return_value={
-                "final_percentiles": {"50": 1777000000},
-                "final_cdf": [0.5] * 201,
-                "agent_results": [],
-                "historical_context": "",
-                "current_context": "",
-            })) as mock_handler:
-                result = await forecaster.forecast_question(question=mock_question_date)
+            with patch.object(
+                forecaster,
+                "_forecast_numeric",
+                AsyncMock(
+                    return_value={
+                        "final_percentiles": {"50": 1777000000},
+                        "final_cdf": [0.5] * 201,
+                        "agent_results": [],
+                        "historical_context": "",
+                        "current_context": "",
+                    }
+                ),
+            ) as mock_handler:
+                await forecaster.forecast_question(question=mock_question_date)
 
                 mock_handler.assert_called_once()
 
     @pytest.mark.asyncio
-    async def test_routes_multiple_choice_question(self, mock_question_multiple_choice, mock_config):
+    async def test_routes_multiple_choice_question(
+        self, mock_question_multiple_choice, mock_config
+    ):
         """Multiple choice questions use _forecast_multiple_choice."""
         with patch.multiple(
-            'src.bot.forecaster',
+            "src.bot.forecaster",
             MetaculusClient=MagicMock,
             LLMClient=MagicMock,
             ArtifactStore=MagicMock,
             ForecastDatabase=MagicMock,
         ):
             forecaster = Forecaster(mock_config)
-            forecaster.metaculus.get_question = AsyncMock(return_value=mock_question_multiple_choice)
+            forecaster.metaculus.get_question = AsyncMock(
+                return_value=mock_question_multiple_choice
+            )
             forecaster.artifact_store.create_forecast_artifacts = MagicMock()
             forecaster.artifact_store.save_question = MagicMock()
             forecaster.artifact_store.save_metadata = MagicMock()
@@ -343,13 +375,19 @@ class TestForecasterRouting:
             forecaster.database.insert_forecast = AsyncMock()
             forecaster.database.insert_agent_prediction = AsyncMock()
 
-            with patch.object(forecaster, '_forecast_multiple_choice', AsyncMock(return_value={
-                "final_probabilities": {"A": 0.5, "B": 0.3, "C": 0.2},
-                "agent_results": [],
-                "historical_context": "",
-                "current_context": "",
-                "options": ["A", "B", "C"],
-            })) as mock_handler:
+            with patch.object(
+                forecaster,
+                "_forecast_multiple_choice",
+                AsyncMock(
+                    return_value={
+                        "final_probabilities": {"A": 0.5, "B": 0.3, "C": 0.2},
+                        "agent_results": [],
+                        "historical_context": "",
+                        "current_context": "",
+                        "options": ["A", "B", "C"],
+                    }
+                ),
+            ) as mock_handler:
                 result = await forecaster.forecast_question(question=mock_question_multiple_choice)
 
                 mock_handler.assert_called_once()
@@ -359,7 +397,7 @@ class TestForecasterRouting:
     async def test_raises_for_unknown_type(self, mock_question_unknown, mock_config):
         """Unknown question types raise QuestionTypeError."""
         with patch.multiple(
-            'src.bot.forecaster',
+            "src.bot.forecaster",
             MetaculusClient=MagicMock,
             LLMClient=MagicMock,
             ArtifactStore=MagicMock,
@@ -382,6 +420,7 @@ class TestForecasterRouting:
 # Question Fetching Tests
 # ============================================================================
 
+
 class TestForecasterQuestionFetching:
     """Tests for question fetching by ID and URL."""
 
@@ -389,7 +428,7 @@ class TestForecasterQuestionFetching:
     async def test_fetches_by_question_id(self, mock_question_binary, mock_config):
         """Fetches question by ID when question_id provided."""
         with patch.multiple(
-            'src.bot.forecaster',
+            "src.bot.forecaster",
             MetaculusClient=MagicMock,
             LLMClient=MagicMock,
             ArtifactStore=MagicMock,
@@ -405,12 +444,18 @@ class TestForecasterQuestionFetching:
             forecaster.database.insert_forecast = AsyncMock()
             forecaster.database.insert_agent_prediction = AsyncMock()
 
-            with patch.object(forecaster, '_forecast_binary', AsyncMock(return_value={
-                "final_prediction": 0.5,
-                "agent_results": [],
-                "historical_context": "",
-                "current_context": "",
-            })):
+            with patch.object(
+                forecaster,
+                "_forecast_binary",
+                AsyncMock(
+                    return_value={
+                        "final_prediction": 0.5,
+                        "agent_results": [],
+                        "historical_context": "",
+                        "current_context": "",
+                    }
+                ),
+            ):
                 await forecaster.forecast_question(question_id=12345)
 
                 forecaster.metaculus.get_question.assert_called_once_with(12345)
@@ -419,7 +464,7 @@ class TestForecasterQuestionFetching:
     async def test_fetches_by_url(self, mock_question_binary, mock_config):
         """Fetches question by URL when question_url provided."""
         with patch.multiple(
-            'src.bot.forecaster',
+            "src.bot.forecaster",
             MetaculusClient=MagicMock,
             LLMClient=MagicMock,
             ArtifactStore=MagicMock,
@@ -435,13 +480,21 @@ class TestForecasterQuestionFetching:
             forecaster.database.insert_forecast = AsyncMock()
             forecaster.database.insert_agent_prediction = AsyncMock()
 
-            with patch.object(forecaster, '_forecast_binary', AsyncMock(return_value={
-                "final_prediction": 0.5,
-                "agent_results": [],
-                "historical_context": "",
-                "current_context": "",
-            })):
-                await forecaster.forecast_question(question_url="https://metaculus.com/questions/12345/")
+            with patch.object(
+                forecaster,
+                "_forecast_binary",
+                AsyncMock(
+                    return_value={
+                        "final_prediction": 0.5,
+                        "agent_results": [],
+                        "historical_context": "",
+                        "current_context": "",
+                    }
+                ),
+            ):
+                await forecaster.forecast_question(
+                    question_url="https://metaculus.com/questions/12345/"
+                )
 
                 forecaster.metaculus.get_question_by_url.assert_called_once()
 
@@ -449,7 +502,7 @@ class TestForecasterQuestionFetching:
     async def test_raises_without_question_source(self, mock_config):
         """Raises ValueError when no question source provided."""
         with patch.multiple(
-            'src.bot.forecaster',
+            "src.bot.forecaster",
             MetaculusClient=MagicMock,
             LLMClient=MagicMock,
             ArtifactStore=MagicMock,
@@ -464,6 +517,7 @@ class TestForecasterQuestionFetching:
 # ============================================================================
 # ScopedArtifactStore Tests
 # ============================================================================
+
 
 class TestScopedArtifactStore:
     """Tests for ScopedArtifactStore wrapper."""
@@ -500,9 +554,7 @@ class TestScopedArtifactStore:
         scoped = ScopedArtifactStore(mock_store, mock_artifacts)
         scoped.save_agent_step1(1, "response")
 
-        mock_store.save_agent_step1.assert_called_once_with(
-            mock_artifacts, 1, "response"
-        )
+        mock_store.save_agent_step1.assert_called_once_with(mock_artifacts, 1, "response")
 
     def test_delegates_save_aggregation(self):
         """Delegates save_aggregation to underlying store."""
@@ -512,6 +564,4 @@ class TestScopedArtifactStore:
         scoped = ScopedArtifactStore(mock_store, mock_artifacts)
         scoped.save_aggregation({"final": 0.5})
 
-        mock_store.save_aggregation.assert_called_once_with(
-            mock_artifacts, {"final": 0.5}
-        )
+        mock_store.save_aggregation.assert_called_once_with(mock_artifacts, {"final": 0.5})

@@ -7,16 +7,17 @@ Tests cover:
 - Metadata tracking
 """
 
-import pytest
-from unittest.mock import AsyncMock, MagicMock, patch
 import re
+from unittest.mock import AsyncMock, MagicMock, patch
 
-from src.bot.search import SearchPipeline, QuestionDetails
+import pytest
 
+from src.bot.search import QuestionDetails, SearchPipeline
 
 # ============================================================================
 # Query Parsing Tests
 # ============================================================================
+
 
 class TestSearchQueryParsing:
     """Tests for parsing search queries from LLM responses."""
@@ -42,7 +43,9 @@ class TestSearchQueryParsing:
     def test_parses_google_query(self, llm_search_queries_response):
         """'query' (Google) parsed correctly."""
         # Use regex to verify format matches what the code expects
-        pattern = r'(?:\d+\.\s*)?(["\']?(.*?)["\']?)\s*[\(\[](Google|Google News|Agent|AskNews)[\)\]]'
+        pattern = (
+            r'(?:\d+\.\s*)?(["\']?(.*?)["\']?)\s*[\(\[](Google|Google News|Agent|AskNews)[\)\]]'
+        )
 
         matches = re.findall(pattern, llm_search_queries_response)
 
@@ -53,7 +56,9 @@ class TestSearchQueryParsing:
 
     def test_parses_google_news_query(self, llm_search_queries_response):
         """'query' (Google News) parsed correctly."""
-        pattern = r'(?:\d+\.\s*)?(["\']?(.*?)["\']?)\s*[\(\[](Google|Google News|Agent|AskNews)[\)\]]'
+        pattern = (
+            r'(?:\d+\.\s*)?(["\']?(.*?)["\']?)\s*[\(\[](Google|Google News|Agent|AskNews)[\)\]]'
+        )
 
         matches = re.findall(pattern, llm_search_queries_response)
 
@@ -63,7 +68,9 @@ class TestSearchQueryParsing:
 
     def test_parses_agent_query(self, llm_search_queries_response):
         """'query' (Agent) parsed correctly."""
-        pattern = r'(?:\d+\.\s*)?(["\']?(.*?)["\']?)\s*[\(\[](Google|Google News|Agent|AskNews)[\)\]]'
+        pattern = (
+            r'(?:\d+\.\s*)?(["\']?(.*?)["\']?)\s*[\(\[](Google|Google News|Agent|AskNews)[\)\]]'
+        )
 
         matches = re.findall(pattern, llm_search_queries_response)
 
@@ -73,7 +80,9 @@ class TestSearchQueryParsing:
 
     def test_parses_asknews_query(self, llm_search_queries_with_asknews):
         """'query' (AskNews) parsed correctly."""
-        pattern = r'(?:\d+\.\s*)?(["\']?(.*?)["\']?)\s*[\(\[](Google|Google News|Agent|AskNews)[\)\]]'
+        pattern = (
+            r'(?:\d+\.\s*)?(["\']?(.*?)["\']?)\s*[\(\[](Google|Google News|Agent|AskNews)[\)\]]'
+        )
 
         matches = re.findall(pattern, llm_search_queries_with_asknews)
 
@@ -85,16 +94,16 @@ class TestSearchQueryParsing:
         """Returns empty when no 'Search queries:' block."""
         # The code looks for 'Search queries:' block
         search_block = re.search(
-            r'(?:Search queries:)(.*)',
-            llm_search_queries_empty,
-            re.DOTALL | re.IGNORECASE
+            r"(?:Search queries:)(.*)", llm_search_queries_empty, re.DOTALL | re.IGNORECASE
         )
 
         assert search_block is None
 
     def test_handles_malformed_queries(self, llm_search_queries_malformed):
         """Gracefully handles malformed query format."""
-        pattern = r'(?:\d+\.\s*)?(["\']?(.*?)["\']?)\s*[\(\[](Google|Google News|Agent|AskNews)[\)\]]'
+        pattern = (
+            r'(?:\d+\.\s*)?(["\']?(.*?)["\']?)\s*[\(\[](Google|Google News|Agent|AskNews)[\)\]]'
+        )
 
         matches = re.findall(pattern, llm_search_queries_malformed)
 
@@ -106,6 +115,7 @@ class TestSearchQueryParsing:
 # ============================================================================
 # SearchPipeline execute_searches_from_response Tests
 # ============================================================================
+
 
 class TestSearchPipelineProcessQueries:
     """Tests for SearchPipeline.execute_searches_from_response()."""
@@ -129,11 +139,13 @@ class TestSearchPipelineProcessQueries:
         }
 
     @pytest.mark.asyncio
-    async def test_returns_metadata_with_tools_used(self, config, question_details, llm_search_queries_response):
+    async def test_returns_metadata_with_tools_used(
+        self, config, question_details, llm_search_queries_response
+    ):
         """Metadata includes tools_used set."""
         # We need to mock the actual search methods
-        with patch.object(SearchPipeline, '_google_search_and_scrape', AsyncMock(return_value="")):
-            with patch.object(SearchPipeline, '_agentic_search', AsyncMock(return_value="")):
+        with patch.object(SearchPipeline, "_google_search_and_scrape", AsyncMock(return_value="")):
+            with patch.object(SearchPipeline, "_agentic_search", AsyncMock(return_value="")):
                 pipeline = SearchPipeline(config)
                 # Mock the http_client with async-compatible aclose
                 mock_client = MagicMock()
@@ -152,7 +164,9 @@ class TestSearchPipelineProcessQueries:
                 assert "Google" in metadata["tools_used"]
 
     @pytest.mark.asyncio
-    async def test_returns_empty_for_no_queries(self, config, question_details, llm_search_queries_empty):
+    async def test_returns_empty_for_no_queries(
+        self, config, question_details, llm_search_queries_empty
+    ):
         """Returns empty string and metadata when no queries found."""
         pipeline = SearchPipeline(config)
         # Mock the http_client with async-compatible aclose
@@ -173,8 +187,8 @@ class TestSearchPipelineProcessQueries:
     @pytest.mark.asyncio
     async def test_tracks_query_count(self, config, question_details, llm_search_queries_response):
         """Metadata tracks number of queries."""
-        with patch.object(SearchPipeline, '_google_search_and_scrape', AsyncMock(return_value="")):
-            with patch.object(SearchPipeline, '_agentic_search', AsyncMock(return_value="")):
+        with patch.object(SearchPipeline, "_google_search_and_scrape", AsyncMock(return_value="")):
+            with patch.object(SearchPipeline, "_agentic_search", AsyncMock(return_value="")):
                 pipeline = SearchPipeline(config)
                 # Mock the http_client with async-compatible aclose
                 mock_client = MagicMock()
@@ -197,8 +211,10 @@ class TestSearchPipelineProcessQueries:
 Search queries:
 1. "test query" (Google)
 """
-        with patch.object(SearchPipeline, '_google_search_and_scrape', AsyncMock(return_value="")):
-            with patch.object(SearchPipeline, '_call_asknews', AsyncMock(return_value="AskNews results")) as mock_asknews:
+        with patch.object(SearchPipeline, "_google_search_and_scrape", AsyncMock(return_value="")):
+            with patch.object(
+                SearchPipeline, "_call_asknews", AsyncMock(return_value="AskNews results")
+            ) as mock_asknews:
                 pipeline = SearchPipeline(config)
                 # Mock the http_client with async-compatible aclose
                 mock_client = MagicMock()
@@ -219,6 +235,7 @@ Search queries:
 # ============================================================================
 # QuestionDetails Tests
 # ============================================================================
+
 
 class TestQuestionDetails:
     """Tests for QuestionDetails dataclass."""
@@ -254,6 +271,7 @@ class TestQuestionDetails:
 # ============================================================================
 # Date Parsing Tests
 # ============================================================================
+
 
 class TestSearchDateParsing:
     """Tests for date parsing utilities in search."""
@@ -318,6 +336,7 @@ class TestSearchDateParsing:
 # Error Handling Tests
 # ============================================================================
 
+
 class TestSearchErrorHandling:
     """Tests for error handling in search pipeline."""
 
@@ -341,8 +360,11 @@ class TestSearchErrorHandling:
 Search queries:
 1. "test" (Google)
 """
-        with patch.object(SearchPipeline, '_google_search_and_scrape',
-                         AsyncMock(side_effect=RuntimeError("Search failed"))):
+        with patch.object(
+            SearchPipeline,
+            "_google_search_and_scrape",
+            AsyncMock(side_effect=RuntimeError("Search failed")),
+        ):
             pipeline = SearchPipeline(config)
             # Mock the http_client with async-compatible aclose
             mock_client = MagicMock()

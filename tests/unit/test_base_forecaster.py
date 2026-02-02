@@ -12,20 +12,21 @@ Tests cover:
 Note: _format_query_prompts is tested in test_prompts.py via concrete subclasses.
 """
 
+from unittest.mock import AsyncMock, MagicMock, patch
+
 import pytest
-from unittest.mock import MagicMock, AsyncMock, patch
 
-from src.bot.base_forecaster import BaseForecaster, CROSS_POLLINATION_MAP
+from src.bot.base_forecaster import CROSS_POLLINATION_MAP, BaseForecaster
 from src.bot.extractors import AgentResult
-from src.bot.search import QuestionDetails
 from src.bot.prompts import CLAUDE_CONTEXT, GPT_CONTEXT
-from src.utils.llm import LLMClient, LLMResponse
+from src.bot.search import QuestionDetails
 from src.storage.artifact_store import ArtifactStore
-
+from src.utils.llm import LLMClient, LLMResponse
 
 # ============================================================================
 # Concrete Test Implementation
 # ============================================================================
+
 
 class ConcreteForecaster(BaseForecaster):
     """Minimal concrete implementation for testing base class logic."""
@@ -62,7 +63,9 @@ class ConcreteForecaster(BaseForecaster):
             raise RuntimeError("No valid predictions")
         return sum(r.probability for r in valid) / len(valid)
 
-    def _build_agent_result(self, agent_id, model, weight, step1_output, step2_output, prediction, error):
+    def _build_agent_result(
+        self, agent_id, model, weight, step1_output, step2_output, prediction, error
+    ):
         return AgentResult(
             agent_id=agent_id,
             model=model,
@@ -80,6 +83,7 @@ class ConcreteForecaster(BaseForecaster):
 # ============================================================================
 # CROSS_POLLINATION_MAP Tests
 # ============================================================================
+
 
 class TestCrossPolllinationMap:
     """Tests for the CROSS_POLLINATION_MAP constant."""
@@ -114,6 +118,7 @@ class TestCrossPolllinationMap:
 # ============================================================================
 # Initialization Tests
 # ============================================================================
+
 
 class TestBaseForecasterInit:
     """Tests for BaseForecaster initialization."""
@@ -150,6 +155,7 @@ class TestBaseForecasterInit:
 # ============================================================================
 # Data Extraction Methods Tests
 # ============================================================================
+
 
 class TestGetExtractedData:
     """Tests for _get_extracted_data default implementation."""
@@ -204,7 +210,7 @@ class TestGetAggregationData:
         """Returns dict with correct keys."""
         results = [
             AgentResult(
-                agent_id=f"forecaster_{i+1}",
+                agent_id=f"forecaster_{i + 1}",
                 model="test",
                 weight=1.0,
                 step1_output="",
@@ -213,7 +219,7 @@ class TestGetAggregationData:
             )
             for i in range(5)
         ]
-        agents = [{"name": f"f{i+1}", "model": "test", "weight": 1.0} for i in range(5)]
+        agents = [{"name": f"f{i + 1}", "model": "test", "weight": 1.0} for i in range(5)]
 
         data = forecaster._get_aggregation_data(results, agents, 0.60)
 
@@ -232,6 +238,7 @@ class TestGetAggregationData:
 # Cross-Pollination Logic Tests
 # ============================================================================
 
+
 class TestCrossPolllinationLogic:
     """Tests for cross-pollination context assembly."""
 
@@ -239,7 +246,7 @@ class TestCrossPolllinationLogic:
     def forecaster(self):
         config = {
             "_active_agents": [
-                {"name": f"forecaster_{i+1}", "model": "test-model", "weight": 1.0}
+                {"name": f"forecaster_{i + 1}", "model": "test-model", "weight": 1.0}
                 for i in range(5)
             ]
         }
@@ -247,7 +254,7 @@ class TestCrossPolllinationLogic:
 
     def test_assembles_context_format(self):
         """Cross-pollinated context has correct format."""
-        step1_outputs = [f"Output from agent {i+1}" for i in range(5)]
+        step1_outputs = [f"Output from agent {i + 1}" for i in range(5)]
         current_context = "Current news context"
 
         # Simulate cross-pollination logic from forecast()
@@ -306,6 +313,7 @@ class TestCrossPolllinationLogic:
 # Cost Tracking Snapshot Tests
 # ============================================================================
 
+
 class TestCostTrackingSnapshot:
     """Tests for the cost tracking snapshot function."""
 
@@ -363,6 +371,7 @@ class TestCostTrackingSnapshot:
 # System Prompt Selection Tests
 # ============================================================================
 
+
 class TestSystemPromptSelection:
     """Tests for system prompt selection based on model name."""
 
@@ -400,6 +409,7 @@ class TestSystemPromptSelection:
 # Full Pipeline Tests with Mocked LLM
 # ============================================================================
 
+
 class TestForecastPipeline:
     """Tests for full forecast() pipeline with mocked externals."""
 
@@ -407,7 +417,7 @@ class TestForecastPipeline:
     def config(self):
         return {
             "_active_agents": [
-                {"name": f"forecaster_{i+1}", "model": "test-model", "weight": 1.0}
+                {"name": f"forecaster_{i + 1}", "model": "test-model", "weight": 1.0}
                 for i in range(5)
             ],
             "_active_models": {
@@ -442,7 +452,9 @@ class TestForecastPipeline:
         return MagicMock(spec=ArtifactStore)
 
     @pytest.mark.asyncio
-    async def test_pipeline_completes_successfully(self, config, mock_llm_response, mock_search_pipeline, mock_artifact_store):
+    async def test_pipeline_completes_successfully(
+        self, config, mock_llm_response, mock_search_pipeline, mock_artifact_store
+    ):
         """Full pipeline completes with all mocked externals."""
         # Mock LLM client
         mock_llm = MagicMock(spec=LLMClient)
@@ -452,14 +464,19 @@ class TestForecastPipeline:
         mock_tracker = MagicMock()
         mock_tracker.total_cost = 0.5
 
-        with patch('src.bot.base_forecaster.SearchPipeline') as MockSearchPipeline, \
-             patch('src.bot.base_forecaster.get_cost_tracker', return_value=mock_tracker):
-
+        with (
+            patch("src.bot.base_forecaster.SearchPipeline") as MockSearchPipeline,
+            patch("src.bot.base_forecaster.get_cost_tracker", return_value=mock_tracker),
+        ):
             # Setup async context manager
-            MockSearchPipeline.return_value.__aenter__ = AsyncMock(return_value=mock_search_pipeline)
+            MockSearchPipeline.return_value.__aenter__ = AsyncMock(
+                return_value=mock_search_pipeline
+            )
             MockSearchPipeline.return_value.__aexit__ = AsyncMock(return_value=None)
 
-            forecaster = ConcreteForecaster(config, llm_client=mock_llm, artifact_store=mock_artifact_store)
+            forecaster = ConcreteForecaster(
+                config, llm_client=mock_llm, artifact_store=mock_artifact_store
+            )
             result = await forecaster.forecast(
                 log=MagicMock(),
                 question_title="Test Question?",
@@ -475,7 +492,9 @@ class TestForecastPipeline:
             assert result["prediction"] == 50.0  # ConcreteForecaster always returns 50
 
     @pytest.mark.asyncio
-    async def test_pipeline_calls_llm_for_query_generation(self, config, mock_llm_response, mock_search_pipeline, mock_artifact_store):
+    async def test_pipeline_calls_llm_for_query_generation(
+        self, config, mock_llm_response, mock_search_pipeline, mock_artifact_store
+    ):
         """Pipeline calls LLM for historical and current query generation."""
         mock_llm = MagicMock(spec=LLMClient)
         mock_llm.complete = AsyncMock(return_value=mock_llm_response)
@@ -483,13 +502,18 @@ class TestForecastPipeline:
         mock_tracker = MagicMock()
         mock_tracker.total_cost = 0.5
 
-        with patch('src.bot.base_forecaster.SearchPipeline') as MockSearchPipeline, \
-             patch('src.bot.base_forecaster.get_cost_tracker', return_value=mock_tracker):
-
-            MockSearchPipeline.return_value.__aenter__ = AsyncMock(return_value=mock_search_pipeline)
+        with (
+            patch("src.bot.base_forecaster.SearchPipeline") as MockSearchPipeline,
+            patch("src.bot.base_forecaster.get_cost_tracker", return_value=mock_tracker),
+        ):
+            MockSearchPipeline.return_value.__aenter__ = AsyncMock(
+                return_value=mock_search_pipeline
+            )
             MockSearchPipeline.return_value.__aexit__ = AsyncMock(return_value=None)
 
-            forecaster = ConcreteForecaster(config, llm_client=mock_llm, artifact_store=mock_artifact_store)
+            forecaster = ConcreteForecaster(
+                config, llm_client=mock_llm, artifact_store=mock_artifact_store
+            )
             await forecaster.forecast(
                 log=MagicMock(),
                 question_title="Test?",
@@ -505,7 +529,9 @@ class TestForecastPipeline:
             assert mock_llm.complete.call_count == 12
 
     @pytest.mark.asyncio
-    async def test_pipeline_calls_search_for_both_contexts(self, config, mock_llm_response, mock_search_pipeline, mock_artifact_store):
+    async def test_pipeline_calls_search_for_both_contexts(
+        self, config, mock_llm_response, mock_search_pipeline, mock_artifact_store
+    ):
         """Pipeline calls search for historical and current contexts."""
         mock_llm = MagicMock(spec=LLMClient)
         mock_llm.complete = AsyncMock(return_value=mock_llm_response)
@@ -513,13 +539,18 @@ class TestForecastPipeline:
         mock_tracker = MagicMock()
         mock_tracker.total_cost = 0.5
 
-        with patch('src.bot.base_forecaster.SearchPipeline') as MockSearchPipeline, \
-             patch('src.bot.base_forecaster.get_cost_tracker', return_value=mock_tracker):
-
-            MockSearchPipeline.return_value.__aenter__ = AsyncMock(return_value=mock_search_pipeline)
+        with (
+            patch("src.bot.base_forecaster.SearchPipeline") as MockSearchPipeline,
+            patch("src.bot.base_forecaster.get_cost_tracker", return_value=mock_tracker),
+        ):
+            MockSearchPipeline.return_value.__aenter__ = AsyncMock(
+                return_value=mock_search_pipeline
+            )
             MockSearchPipeline.return_value.__aexit__ = AsyncMock(return_value=None)
 
-            forecaster = ConcreteForecaster(config, llm_client=mock_llm, artifact_store=mock_artifact_store)
+            forecaster = ConcreteForecaster(
+                config, llm_client=mock_llm, artifact_store=mock_artifact_store
+            )
             await forecaster.forecast(
                 log=MagicMock(),
                 question_title="Test?",
@@ -534,7 +565,9 @@ class TestForecastPipeline:
             assert mock_search_pipeline.execute_searches_from_response.call_count == 2
 
     @pytest.mark.asyncio
-    async def test_pipeline_handles_step1_agent_errors(self, config, mock_search_pipeline, mock_artifact_store):
+    async def test_pipeline_handles_step1_agent_errors(
+        self, config, mock_search_pipeline, mock_artifact_store
+    ):
         """Pipeline handles errors from step 1 agents gracefully."""
         call_count = 0
 
@@ -546,16 +579,24 @@ class TestForecastPipeline:
             if call_count <= 2:
                 return LLMResponse(
                     content="Query output",
-                    model="test", input_tokens=10, output_tokens=10,
-                    cost=0.001, latency_ms=50, timestamp="2026-01-01T00:00:00Z"
+                    model="test",
+                    input_tokens=10,
+                    output_tokens=10,
+                    cost=0.001,
+                    latency_ms=50,
+                    timestamp="2026-01-01T00:00:00Z",
                 )
             elif call_count in [3, 5]:  # Agents 1 and 3 fail in step1
                 raise RuntimeError("LLM API error")
             else:
                 return LLMResponse(
                     content="Agent output",
-                    model="test", input_tokens=10, output_tokens=10,
-                    cost=0.001, latency_ms=50, timestamp="2026-01-01T00:00:00Z"
+                    model="test",
+                    input_tokens=10,
+                    output_tokens=10,
+                    cost=0.001,
+                    latency_ms=50,
+                    timestamp="2026-01-01T00:00:00Z",
                 )
 
         mock_llm = MagicMock(spec=LLMClient)
@@ -564,13 +605,18 @@ class TestForecastPipeline:
         mock_tracker = MagicMock()
         mock_tracker.total_cost = 0.5
 
-        with patch('src.bot.base_forecaster.SearchPipeline') as MockSearchPipeline, \
-             patch('src.bot.base_forecaster.get_cost_tracker', return_value=mock_tracker):
-
-            MockSearchPipeline.return_value.__aenter__ = AsyncMock(return_value=mock_search_pipeline)
+        with (
+            patch("src.bot.base_forecaster.SearchPipeline") as MockSearchPipeline,
+            patch("src.bot.base_forecaster.get_cost_tracker", return_value=mock_tracker),
+        ):
+            MockSearchPipeline.return_value.__aenter__ = AsyncMock(
+                return_value=mock_search_pipeline
+            )
             MockSearchPipeline.return_value.__aexit__ = AsyncMock(return_value=None)
 
-            forecaster = ConcreteForecaster(config, llm_client=mock_llm, artifact_store=mock_artifact_store)
+            forecaster = ConcreteForecaster(
+                config, llm_client=mock_llm, artifact_store=mock_artifact_store
+            )
             result = await forecaster.forecast(
                 log=MagicMock(),
                 question_title="Test?",
@@ -586,7 +632,9 @@ class TestForecastPipeline:
             assert "prediction" in result
 
     @pytest.mark.asyncio
-    async def test_pipeline_saves_artifacts_when_store_provided(self, config, mock_llm_response, mock_search_pipeline):
+    async def test_pipeline_saves_artifacts_when_store_provided(
+        self, config, mock_llm_response, mock_search_pipeline
+    ):
         """Pipeline saves artifacts when artifact_store is provided."""
         mock_llm = MagicMock(spec=LLMClient)
         mock_llm.complete = AsyncMock(return_value=mock_llm_response)
@@ -596,10 +644,13 @@ class TestForecastPipeline:
 
         mock_store = MagicMock(spec=ArtifactStore)
 
-        with patch('src.bot.base_forecaster.SearchPipeline') as MockSearchPipeline, \
-             patch('src.bot.base_forecaster.get_cost_tracker', return_value=mock_tracker):
-
-            MockSearchPipeline.return_value.__aenter__ = AsyncMock(return_value=mock_search_pipeline)
+        with (
+            patch("src.bot.base_forecaster.SearchPipeline") as MockSearchPipeline,
+            patch("src.bot.base_forecaster.get_cost_tracker", return_value=mock_tracker),
+        ):
+            MockSearchPipeline.return_value.__aenter__ = AsyncMock(
+                return_value=mock_search_pipeline
+            )
             MockSearchPipeline.return_value.__aexit__ = AsyncMock(return_value=None)
 
             forecaster = ConcreteForecaster(config, llm_client=mock_llm, artifact_store=mock_store)
@@ -624,7 +675,9 @@ class TestForecastPipeline:
             assert mock_store.save_tool_usage.called
 
     @pytest.mark.asyncio
-    async def test_pipeline_tracks_costs_per_step(self, config, mock_llm_response, mock_search_pipeline, mock_artifact_store):
+    async def test_pipeline_tracks_costs_per_step(
+        self, config, mock_llm_response, mock_search_pipeline, mock_artifact_store
+    ):
         """Pipeline tracks costs for each step."""
         mock_llm = MagicMock(spec=LLMClient)
         mock_llm.complete = AsyncMock(return_value=mock_llm_response)
@@ -648,13 +701,18 @@ class TestForecastPipeline:
             if "Step" in msg and "===" in msg:
                 cost_index[0] += 1
 
-        with patch('src.bot.base_forecaster.SearchPipeline') as MockSearchPipeline, \
-             patch('src.bot.base_forecaster.get_cost_tracker', return_value=mock_tracker):
-
-            MockSearchPipeline.return_value.__aenter__ = AsyncMock(return_value=mock_search_pipeline)
+        with (
+            patch("src.bot.base_forecaster.SearchPipeline") as MockSearchPipeline,
+            patch("src.bot.base_forecaster.get_cost_tracker", return_value=mock_tracker),
+        ):
+            MockSearchPipeline.return_value.__aenter__ = AsyncMock(
+                return_value=mock_search_pipeline
+            )
             MockSearchPipeline.return_value.__aexit__ = AsyncMock(return_value=None)
 
-            forecaster = ConcreteForecaster(config, llm_client=mock_llm, artifact_store=mock_artifact_store)
+            forecaster = ConcreteForecaster(
+                config, llm_client=mock_llm, artifact_store=mock_artifact_store
+            )
             await forecaster.forecast(
                 log=mock_write,
                 question_title="Test?",
@@ -670,7 +728,9 @@ class TestForecastPipeline:
             assert cost_breakdown_logged
 
     @pytest.mark.asyncio
-    async def test_pipeline_uses_correct_system_prompts(self, mock_llm_response, mock_search_pipeline, mock_artifact_store):
+    async def test_pipeline_uses_correct_system_prompts(
+        self, mock_llm_response, mock_search_pipeline, mock_artifact_store
+    ):
         """Pipeline uses CLAUDE_CONTEXT for claude models, GPT_CONTEXT for others."""
         config = {
             "_active_agents": [
@@ -695,13 +755,18 @@ class TestForecastPipeline:
         mock_tracker = MagicMock()
         mock_tracker.total_cost = 0.5
 
-        with patch('src.bot.base_forecaster.SearchPipeline') as MockSearchPipeline, \
-             patch('src.bot.base_forecaster.get_cost_tracker', return_value=mock_tracker):
-
-            MockSearchPipeline.return_value.__aenter__ = AsyncMock(return_value=mock_search_pipeline)
+        with (
+            patch("src.bot.base_forecaster.SearchPipeline") as MockSearchPipeline,
+            patch("src.bot.base_forecaster.get_cost_tracker", return_value=mock_tracker),
+        ):
+            MockSearchPipeline.return_value.__aenter__ = AsyncMock(
+                return_value=mock_search_pipeline
+            )
             MockSearchPipeline.return_value.__aexit__ = AsyncMock(return_value=None)
 
-            forecaster = ConcreteForecaster(config, llm_client=mock_llm, artifact_store=mock_artifact_store)
+            forecaster = ConcreteForecaster(
+                config, llm_client=mock_llm, artifact_store=mock_artifact_store
+            )
             await forecaster.forecast(
                 log=MagicMock(),
                 question_title="Test?",
@@ -714,6 +779,7 @@ class TestForecastPipeline:
 
             # Check that both CLAUDE_CONTEXT and GPT_CONTEXT were used
             system_prompts = [call.get("system", "") for call in captured_calls if "system" in call]
-            assert any(CLAUDE_CONTEXT in str(sp) for sp in system_prompts), "CLAUDE_CONTEXT not used"
+            assert any(CLAUDE_CONTEXT in str(sp) for sp in system_prompts), (
+                "CLAUDE_CONTEXT not used"
+            )
             assert any(GPT_CONTEXT in str(sp) for sp in system_prompts), "GPT_CONTEXT not used"
-

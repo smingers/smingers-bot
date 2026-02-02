@@ -7,7 +7,6 @@ multiple choice handlers.
 """
 
 import logging
-from typing import List, Optional
 
 from ..utils.llm import LLMClient
 
@@ -35,7 +34,7 @@ class ForecasterMixin:
     config: dict
     llm: LLMClient
 
-    def _get_agents(self) -> List[dict]:
+    def _get_agents(self) -> list[dict]:
         """
         Get agent configurations from config.
 
@@ -84,7 +83,7 @@ class ForecasterMixin:
         self,
         model: str,
         prompt: str,
-        system_prompt: Optional[str] = None,
+        system_prompt: str | None = None,
     ) -> str:
         """
         Call a model via LLMClient.
@@ -118,7 +117,7 @@ class ForecasterMixin:
         self,
         model: str,
         prompt: str,
-        system_prompt: Optional[str] = None,
+        system_prompt: str | None = None,
     ) -> tuple[str, dict]:
         """
         Call a model via LLMClient and return content + metadata.

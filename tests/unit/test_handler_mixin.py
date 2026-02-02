@@ -7,16 +7,17 @@ Tests cover:
 - _call_model() basic behavior
 """
 
+from unittest.mock import AsyncMock, MagicMock
+
 import pytest
-from unittest.mock import AsyncMock, MagicMock, patch
 
-from src.bot.handler_mixin import ForecasterMixin, DEFAULT_AGENTS
+from src.bot.handler_mixin import DEFAULT_AGENTS, ForecasterMixin
 from src.utils.llm import LLMClient, LLMResponse
-
 
 # ============================================================================
 # Test Helper Class
 # ============================================================================
+
 
 class TestableForecasterMixin(ForecasterMixin):
     """Concrete class for testing the mixin."""
@@ -29,6 +30,7 @@ class TestableForecasterMixin(ForecasterMixin):
 # ============================================================================
 # _get_agents Tests
 # ============================================================================
+
 
 class TestGetAgents:
     """Tests for _get_agents() configuration hierarchy."""
@@ -44,7 +46,7 @@ class TestGetAgents:
                 "agents": [
                     {"name": "ensemble_1", "model": "ensemble-model", "weight": 1.0},
                 ]
-            }
+            },
         }
         mixin = TestableForecasterMixin(config)
 
@@ -64,7 +66,7 @@ class TestGetAgents:
                     {"name": "ensemble_1", "model": "ensemble-model", "weight": 1.5},
                     {"name": "ensemble_2", "model": "ensemble-model", "weight": 0.5},
                 ]
-            }
+            },
         }
         mixin = TestableForecasterMixin(config)
 
@@ -119,7 +121,7 @@ class TestGetAgents:
                 "agents": [
                     {"name": "ensemble_1", "model": "test", "weight": 1.0},
                 ]
-            }
+            },
         }
         mixin = TestableForecasterMixin(config)
 
@@ -133,6 +135,7 @@ class TestGetAgents:
 # _resolve_model Tests
 # ============================================================================
 
+
 class TestGetModel:
     """Tests for _resolve_model() configuration hierarchy."""
 
@@ -145,7 +148,7 @@ class TestGetModel:
             },
             "models": {
                 "query_generator": "config-query-model",
-            }
+            },
         }
         mixin = TestableForecasterMixin(config)
 
@@ -159,7 +162,7 @@ class TestGetModel:
             "active_models": {},
             "models": {
                 "query_generator": "config-query-model",
-            }
+            },
         }
         mixin = TestableForecasterMixin(config)
 
@@ -184,7 +187,7 @@ class TestGetModel:
             },
             "models": {
                 "another_model": "another-model",
-            }
+            },
         }
         mixin = TestableForecasterMixin(config)
 
@@ -196,6 +199,7 @@ class TestGetModel:
 # ============================================================================
 # _call_model Tests
 # ============================================================================
+
 
 class TestCallModel:
     """Tests for _call_model() LLM calls."""
@@ -260,6 +264,7 @@ class TestCallModel:
 # _call_model_with_metadata Tests
 # ============================================================================
 
+
 class TestCallModelWithMetadata:
     """Tests for _call_model_with_metadata()."""
 
@@ -302,6 +307,7 @@ class TestCallModelWithMetadata:
 # ============================================================================
 # DEFAULT_AGENTS Tests
 # ============================================================================
+
 
 class TestDefaultAgents:
     """Tests for DEFAULT_AGENTS constant."""

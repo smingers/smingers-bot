@@ -6,17 +6,18 @@ Tests cover:
 - Probability normalization to API bounds
 """
 
-import pytest
 from unittest.mock import MagicMock
 
-from src.bot.binary import BinaryForecaster
-from src.bot.extractors import AgentResult
-from src.bot.exceptions import InsufficientPredictionsError
+import pytest
 
+from src.bot.binary import BinaryForecaster
+from src.bot.exceptions import InsufficientPredictionsError
+from src.bot.extractors import AgentResult
 
 # ============================================================================
 # Binary Aggregation Tests
 # ============================================================================
+
 
 class TestBinaryAggregation:
     """Tests for _aggregate_results() weighted averaging."""
@@ -84,8 +85,14 @@ class TestBinaryAggregation:
 
         # Agent results with extreme probabilities
         extreme_high_results = [
-            AgentResult(agent_id=f"forecaster_{i+1}", model="test", weight=1.0,
-                       step1_output="", step2_output="", probability=99.5)
+            AgentResult(
+                agent_id=f"forecaster_{i + 1}",
+                model="test",
+                weight=1.0,
+                step1_output="",
+                step2_output="",
+                probability=99.5,
+            )
             for i in range(5)
         ]
 
@@ -96,8 +103,14 @@ class TestBinaryAggregation:
 
         # Agent results with very low probabilities
         extreme_low_results = [
-            AgentResult(agent_id=f"forecaster_{i+1}", model="test", weight=1.0,
-                       step1_output="", step2_output="", probability=0.05)
+            AgentResult(
+                agent_id=f"forecaster_{i + 1}",
+                model="test",
+                weight=1.0,
+                step1_output="",
+                step2_output="",
+                probability=0.05,
+            )
             for i in range(5)
         ]
 
@@ -117,10 +130,22 @@ class TestBinaryAggregation:
         ]
 
         results = [
-            AgentResult(agent_id="forecaster_1", model="test", weight=2.0,
-                       step1_output="", step2_output="", probability=60.0),  # 60%
-            AgentResult(agent_id="forecaster_2", model="test", weight=1.0,
-                       step1_output="", step2_output="", probability=30.0),  # 30%
+            AgentResult(
+                agent_id="forecaster_1",
+                model="test",
+                weight=2.0,
+                step1_output="",
+                step2_output="",
+                probability=60.0,
+            ),  # 60%
+            AgentResult(
+                agent_id="forecaster_2",
+                model="test",
+                weight=1.0,
+                step1_output="",
+                step2_output="",
+                probability=30.0,
+            ),  # 30%
         ]
 
         result = forecaster._aggregate_results(results, agents, write)
@@ -134,11 +159,24 @@ class TestBinaryAggregation:
         write = MagicMock()
 
         results = [
-            AgentResult(agent_id="forecaster_1", model="test", weight=1.0,
-                       step1_output="", step2_output="", probability=75.0),
+            AgentResult(
+                agent_id="forecaster_1",
+                model="test",
+                weight=1.0,
+                step1_output="",
+                step2_output="",
+                probability=75.0,
+            ),
         ] + [
-            AgentResult(agent_id=f"forecaster_{i+2}", model="test", weight=1.0,
-                       step1_output="", step2_output="", probability=None, error="Failed")
+            AgentResult(
+                agent_id=f"forecaster_{i + 2}",
+                model="test",
+                weight=1.0,
+                step1_output="",
+                step2_output="",
+                probability=None,
+                error="Failed",
+            )
             for i in range(4)
         ]
 
@@ -151,6 +189,7 @@ class TestBinaryAggregation:
 # ============================================================================
 # BinaryForecaster Method Tests
 # ============================================================================
+
 
 class TestBinaryForecasterMethods:
     """Tests for other BinaryForecaster methods."""
@@ -223,7 +262,7 @@ class TestBinaryForecasterMethods:
 
     def test_get_aggregation_data(self, forecaster, valid_agent_results):
         """Returns dict with aggregation info."""
-        agents = [{"name": f"f{i+1}", "model": "test", "weight": 1.0} for i in range(5)]
+        agents = [{"name": f"f{i + 1}", "model": "test", "weight": 1.0} for i in range(5)]
 
         data = forecaster._get_aggregation_data(valid_agent_results, agents, 0.60)
 

@@ -10,19 +10,18 @@ Tests cover:
 """
 
 import pytest
-from pathlib import Path
 
 from src.storage.database import (
+    AgentPredictionRecord,
     ForecastDatabase,
     ForecastRecord,
-    AgentPredictionRecord,
     ResearchSourceRecord,
 )
-
 
 # ============================================================================
 # ForecastRecord Dataclass Tests
 # ============================================================================
+
 
 class TestForecastRecord:
     """Tests for ForecastRecord dataclass."""
@@ -109,6 +108,7 @@ class TestResearchSourceRecord:
 # Database Initialization Tests
 # ============================================================================
 
+
 class TestDatabaseInitialization:
     """Tests for database initialization."""
 
@@ -145,9 +145,7 @@ class TestDatabaseInitialization:
         await db.migrate_schema()
 
         async with aiosqlite.connect(db_path) as conn:
-            cursor = await conn.execute(
-                "SELECT name FROM sqlite_master WHERE type='table'"
-            )
+            cursor = await conn.execute("SELECT name FROM sqlite_master WHERE type='table'")
             tables = {row[0] for row in await cursor.fetchall()}
 
         assert "forecasts" in tables
@@ -170,6 +168,7 @@ class TestDatabaseInitialization:
 # ============================================================================
 # Insert Operations Tests
 # ============================================================================
+
 
 class TestInsertOperations:
     """Tests for database insert operations."""
@@ -306,8 +305,7 @@ class TestInsertOperations:
         # Verify via direct query
         async with aiosqlite.connect(db.db_path) as conn:
             cursor = await conn.execute(
-                "SELECT * FROM research_sources WHERE forecast_id = ?",
-                ("12345_20260101_120000",)
+                "SELECT * FROM research_sources WHERE forecast_id = ?", ("12345_20260101_120000",)
             )
             rows = await cursor.fetchall()
 
@@ -317,6 +315,7 @@ class TestInsertOperations:
 # ============================================================================
 # Query Operations Tests
 # ============================================================================
+
 
 class TestQueryOperations:
     """Tests for database query operations."""
@@ -441,6 +440,7 @@ class TestQueryOperations:
 # Update Operations Tests
 # ============================================================================
 
+
 class TestUpdateOperations:
     """Tests for database update operations."""
 
@@ -520,6 +520,7 @@ class TestUpdateOperations:
 # ============================================================================
 # Analytics Queries Tests
 # ============================================================================
+
 
 class TestAnalyticsQueries:
     """Tests for analytics query operations."""
@@ -678,7 +679,7 @@ class TestAnalyticsQueries:
         for i in range(3):
             agent = AgentPredictionRecord(
                 forecast_id="12345_20260101_120000",
-                agent_id=f"forecaster_{i+1}",
+                agent_id=f"forecaster_{i + 1}",
                 model="test-model",
                 weight=1.0,
                 prediction=0.5 + i * 0.1,
@@ -696,6 +697,7 @@ class TestAnalyticsQueries:
 # ============================================================================
 # Schema Migration Tests
 # ============================================================================
+
 
 class TestSchemaMigration:
     """Tests for schema migration."""

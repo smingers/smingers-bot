@@ -9,9 +9,8 @@ Note: The dataclasses here (AgentResult, ForecastData) are display-oriented
 and differ from the pipeline's internal AgentResult in src/bot/extractors.py.
 """
 
-from datetime import datetime
-from typing import Optional, Any
 from dataclasses import dataclass
+from datetime import datetime
 
 
 @dataclass
@@ -21,12 +20,15 @@ class AgentResult:
     Note: This is distinct from src.bot.extractors.AgentResult which is
     used internally by the forecasting pipeline.
     """
+
     name: str  # Agent identifier (e.g., "forecaster_1")
     model: str  # Model name (e.g., "openrouter/anthropic/claude-sonnet-4.5")
     weight: float  # Ensemble weight (default: 1.0 for all agents)
     prediction: float  # Extracted prediction (probability for binary)
     reasoning: str  # Full reasoning text from agent output
-    evidence_weights: Optional[dict] = None  # Categorized evidence (e.g., {"bullish": [...], "bearish": [...]})
+    evidence_weights: dict | None = (
+        None  # Categorized evidence (e.g., {"bullish": [...], "bearish": [...]})
+    )
 
 
 @dataclass
@@ -35,6 +37,7 @@ class ForecastData:
 
     Aggregates data from multiple pipeline stages for report generation.
     """
+
     # Question metadata
     question_id: int  # Metaculus question ID
     question_title: str  # Question title
@@ -80,14 +83,22 @@ def generate_reasoning_report(data: ForecastData) -> str:
     lines.append(f"**Question ID:** {data.question_id}")
     lines.append(f"**Submitted:** {data.timestamp}")
     lines.append(f"**Type:** {data.question_type}")
-    lines.append(f"**Final Prediction:** {_format_prediction(data.final_prediction, data.question_type)}")
+    lines.append(
+        f"**Final Prediction:** {_format_prediction(data.final_prediction, data.question_type)}"
+    )
     lines.append("")
 
     # Question Summary
     lines.append("## Question Summary")
-    lines.append(data.question_text[:500] + "..." if len(data.question_text) > 500 else data.question_text)
+    lines.append(
+        data.question_text[:500] + "..." if len(data.question_text) > 500 else data.question_text
+    )
     lines.append("")
-    lines.append(f"**Resolution:** {data.resolution_criteria[:300]}..." if len(data.resolution_criteria) > 300 else f"**Resolution:** {data.resolution_criteria}")
+    lines.append(
+        f"**Resolution:** {data.resolution_criteria[:300]}..."
+        if len(data.resolution_criteria) > 300
+        else f"**Resolution:** {data.resolution_criteria}"
+    )
     lines.append("")
 
     # Research Summary
@@ -151,7 +162,9 @@ def generate_reasoning_report(data: ForecastData) -> str:
     weighted_avg = weighted_sum / total_weight if total_weight > 0 else data.final_prediction
 
     lines.append(f"**Aggregation method:** {data.aggregation_method}")
-    lines.append(f"**Weighted average:** {weighted_avg:.2%} → **Submitted: {data.final_prediction:.1%}**")
+    lines.append(
+        f"**Weighted average:** {weighted_avg:.2%} → **Submitted: {data.final_prediction:.1%}**"
+    )
     lines.append("")
 
     # Calibration Checklist

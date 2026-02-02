@@ -6,20 +6,21 @@ Implements binary-specific extraction and aggregation logic.
 """
 
 import logging
-from datetime import datetime
-from typing import Any, Callable, Dict, List, Optional, Tuple
+from collections.abc import Callable
 from dataclasses import dataclass, field
+from datetime import datetime
+from typing import Any
 
-from ..utils.llm import LLMClient
 from ..storage.artifact_store import ArtifactStore
+from ..utils.llm import LLMClient
 from .base_forecaster import BaseForecaster
-from .extractors import extract_binary_probability_percent, AgentResult
 from .exceptions import InsufficientPredictionsError
+from .extractors import AgentResult, extract_binary_probability_percent
 from .prompts import (
-    BINARY_PROMPT_HISTORICAL,
-    BINARY_PROMPT_CURRENT,
     BINARY_PROMPT_1,
     BINARY_PROMPT_2,
+    BINARY_PROMPT_CURRENT,
+    BINARY_PROMPT_HISTORICAL,
 )
 from .search import QuestionDetails
 
@@ -29,12 +30,13 @@ logger = logging.getLogger(__name__)
 @dataclass
 class BinaryForecastResult:
     """Complete result from binary forecasting pipeline."""
+
     final_probability: float
-    agent_results: List[AgentResult]
+    agent_results: list[AgentResult]
     historical_context: str
     current_context: str
-    probabilities: List[Optional[float]]
-    weights: List[float]
+    probabilities: list[float | None]
+    weights: list[float]
     timestamp: str = field(default_factory=lambda: datetime.now().isoformat())
 
 
@@ -48,7 +50,7 @@ class BinaryForecaster(BaseForecaster):
     - Weighted average aggregation
     """
 
-    def _get_prompt_templates(self) -> Tuple[str, str, str, str]:
+    def _get_prompt_templates(self) -> tuple[str, str, str, str]:
         """Return binary-specific prompt templates."""
         return (
             BINARY_PROMPT_HISTORICAL,
@@ -94,14 +96,14 @@ class BinaryForecaster(BaseForecaster):
 
     def _aggregate_results(
         self,
-        agent_results: List[AgentResult],
-        agents: List[Dict],
+        agent_results: list[AgentResult],
+        agents: list[dict],
         log: Callable[[str], Any],
     ) -> float:
         """Compute weighted average of probabilities."""
         probabilities = [r.probability for r in agent_results]
         weights = [a["weight"] for a in agents]
-        valid_probs = [(p, w) for p, w in zip(probabilities, weights) if p is not None]
+        valid_probs = [(p, w) for p, w in zip(probabilities, weights, strict=True) if p is not None]
 
         if not valid_probs:
             error_msg = (
@@ -110,9 +112,7 @@ class BinaryForecaster(BaseForecaster):
             )
             logger.error(error_msg)
             log(f"FATAL ERROR: {error_msg}")
-            raise InsufficientPredictionsError(
-                error_msg, valid_count=0, total_count=len(agents)
-            )
+            raise InsufficientPredictionsError(error_msg, valid_count=0, total_count=len(agents))
 
         weighted_sum = sum(p * w for p, w in valid_probs)
         weight_sum = sum(w for _, w in valid_probs)
@@ -122,7 +122,7 @@ class BinaryForecaster(BaseForecaster):
 
         log(f"\nProbabilities: {probabilities}")
         log(f"Weights: {weights}")
-        log(f"Final probability: {final_prob:.3f} ({final_prob*100:.1f}%)")
+        log(f"Final probability: {final_prob:.3f} ({final_prob * 100:.1f}%)")
 
         return final_prob
 
@@ -134,7 +134,7 @@ class BinaryForecaster(BaseForecaster):
         step1_output: str,
         step2_output: str,
         prediction: Any,
-        error: Optional[str],
+        error: str | None,
     ) -> AgentResult:
         """Build AgentResult with probability field."""
         return AgentResult(
@@ -150,10 +150,10 @@ class BinaryForecaster(BaseForecaster):
     def _build_result(
         self,
         final_prediction: float,
-        agent_results: List[AgentResult],
+        agent_results: list[AgentResult],
         historical_context: str,
         current_context: str,
-        agents: List[Dict],
+        agents: list[dict],
         **question_params,
     ) -> BinaryForecastResult:
         """Build BinaryForecastResult."""
@@ -166,7 +166,7 @@ class BinaryForecaster(BaseForecaster):
             weights=[a["weight"] for a in agents],
         )
 
-    def _get_extracted_data(self, result: AgentResult) -> Dict:
+    def _get_extracted_data(self, result: AgentResult) -> dict:
         """Get data for extracted prediction artifact."""
         return {
             "probability": result.probability,
@@ -175,10 +175,10 @@ class BinaryForecaster(BaseForecaster):
 
     def _get_aggregation_data(
         self,
-        agent_results: List[AgentResult],
-        agents: List[Dict],
+        agent_results: list[AgentResult],
+        agents: list[dict],
         final_prediction: float,
-    ) -> Dict:
+    ) -> dict:
         """Get data for aggregation artifact."""
         return {
             "individual_probabilities": [r.probability for r in agent_results],
@@ -231,10 +231,10 @@ class BinaryForecaster(BaseForecaster):
 async def get_binary_forecast(
     question_details: dict,
     config: dict,
-    llm_client: Optional[LLMClient] = None,
-    artifact_store: Optional[ArtifactStore] = None,
+    llm_client: LLMClient | None = None,
+    artifact_store: ArtifactStore | None = None,
     log: Callable[[str], Any] = print,
-) -> Tuple[float, str]:
+) -> tuple[float, str]:
     """
     Convenience function to get a binary forecast.
 
@@ -260,7 +260,7 @@ async def get_binary_forecast(
 
     # Format outputs for display
     formatted_outputs = "\n\n".join(
-        f"=== Forecaster {i+1} ===\n"
+        f"=== Forecaster {i + 1} ===\n"
         f"Model: {r.model}\n"
         f"Output:\n{r.step2_output[:1000]}...\n"
         f"Predicted Probability: {r.probability if r.probability is not None else 'N/A'}%"

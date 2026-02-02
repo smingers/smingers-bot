@@ -11,11 +11,10 @@ Then open http://localhost:8000 in your browser.
 import argparse
 import json
 import re
-from datetime import datetime
-from http.server import HTTPServer, BaseHTTPRequestHandler
+from http.server import BaseHTTPRequestHandler, HTTPServer
 from pathlib import Path
 from typing import Any
-from urllib.parse import urlparse, unquote
+from urllib.parse import unquote, urlparse
 
 
 def read_file_safe(path: Path) -> str | None:
@@ -75,11 +74,17 @@ def compute_percentiles_from_cdf(cdf: list[float], scaling: dict) -> dict[str, f
         for i, cdf_val in enumerate(cdf):
             if cdf_val >= target:
                 # Linear interpolation for better accuracy
-                if i > 0 and cdf[i-1] < target:
+                if i > 0 and cdf[i - 1] < target:
                     # Interpolate between i-1 and i
-                    frac = (target - cdf[i-1]) / (cdf_val - cdf[i-1]) if cdf_val != cdf[i-1] else 0
-                    if i < len(continuous_range) and i-1 < len(continuous_range):
-                        val = continuous_range[i-1] + frac * (continuous_range[i] - continuous_range[i-1])
+                    frac = (
+                        (target - cdf[i - 1]) / (cdf_val - cdf[i - 1])
+                        if cdf_val != cdf[i - 1]
+                        else 0
+                    )
+                    if i < len(continuous_range) and i - 1 < len(continuous_range):
+                        val = continuous_range[i - 1] + frac * (
+                            continuous_range[i] - continuous_range[i - 1]
+                        )
                         result[str(p)] = val
                 elif i < len(continuous_range):
                     result[str(p)] = continuous_range[i]
@@ -155,19 +160,21 @@ def list_forecast_runs(data_dir: Path) -> list[dict]:
         else:
             dry_run = True
 
-        runs.append({
-            "folder": entry.name,
-            "question_id": question_id,
-            "timestamp": timestamp,
-            "title": analysis.get("title", "Unknown"),
-            "type": question_type,
-            "prediction": prediction,
-            "community_prediction": analysis.get("community_prediction"),
-            "dry_run": dry_run,
-            "total_cost": costs.get("total_cost", 0),
-            "mode": metadata.get("config_snapshot", {}).get("mode", "unknown"),
-            "structure": structure,
-        })
+        runs.append(
+            {
+                "folder": entry.name,
+                "question_id": question_id,
+                "timestamp": timestamp,
+                "title": analysis.get("title", "Unknown"),
+                "type": question_type,
+                "prediction": prediction,
+                "community_prediction": analysis.get("community_prediction"),
+                "dry_run": dry_run,
+                "total_cost": costs.get("total_cost", 0),
+                "mode": metadata.get("config_snapshot", {}).get("mode", "unknown"),
+                "structure": structure,
+            }
+        )
 
     # Sort by timestamp descending (most recent first)
     runs.sort(key=lambda x: x["timestamp"], reverse=True)
@@ -215,15 +222,25 @@ def load_new_structure(run_dir: Path, folder: str, metadata: dict) -> dict[str, 
         "computed_percentiles": computed_percentiles,  # Actual values at percentiles
         "question": question,
         "research": {
-            "query_historical_prompt": read_file_safe(run_dir / "04_inside_view" / "query_historical" / "prompt.md"),
-            "query_historical": read_file_safe(run_dir / "04_inside_view" / "query_historical" / "response.md"),
-            "query_current_prompt": read_file_safe(run_dir / "04_inside_view" / "query_current" / "prompt.md"),
-            "query_current": read_file_safe(run_dir / "04_inside_view" / "query_current" / "response.md"),
+            "query_historical_prompt": read_file_safe(
+                run_dir / "04_inside_view" / "query_historical" / "prompt.md"
+            ),
+            "query_historical": read_file_safe(
+                run_dir / "04_inside_view" / "query_historical" / "response.md"
+            ),
+            "query_current_prompt": read_file_safe(
+                run_dir / "04_inside_view" / "query_current" / "prompt.md"
+            ),
+            "query_current": read_file_safe(
+                run_dir / "04_inside_view" / "query_current" / "response.md"
+            ),
             "search_historical": read_json_safe(run_dir / "02_research" / "historical_search.json"),
             "search_current": read_json_safe(run_dir / "02_research" / "current_search.json"),
         },
         "ensemble": {
-            "step1_prompt": read_file_safe(run_dir / "04_inside_view" / "step1_shared" / "prompt.md"),
+            "step1_prompt": read_file_safe(
+                run_dir / "04_inside_view" / "step1_shared" / "prompt.md"
+            ),
             "aggregation": read_json_safe(run_dir / "04_inside_view" / "aggregation.json"),
             "agents": [],
         },
@@ -233,9 +250,15 @@ def load_new_structure(run_dir: Path, folder: str, metadata: dict) -> dict[str, 
     for i in range(1, 6):
         agent_data = {
             "name": f"Agent {i}",
-            "step1": read_file_safe(run_dir / "04_inside_view" / f"forecaster_{i}_step1" / "response.md"),
-            "step2": read_file_safe(run_dir / "04_inside_view" / f"forecaster_{i}_step2" / "response.md"),
-            "result": read_json_safe(run_dir / "04_inside_view" / f"forecaster_{i}" / "extracted.json"),
+            "step1": read_file_safe(
+                run_dir / "04_inside_view" / f"forecaster_{i}_step1" / "response.md"
+            ),
+            "step2": read_file_safe(
+                run_dir / "04_inside_view" / f"forecaster_{i}_step2" / "response.md"
+            ),
+            "result": read_json_safe(
+                run_dir / "04_inside_view" / f"forecaster_{i}" / "extracted.json"
+            ),
         }
 
         # Get model from metadata
@@ -274,9 +297,13 @@ def load_old_structure(run_dir: Path, folder: str, metadata: dict) -> dict[str, 
         "computed_percentiles": computed_percentiles,  # Actual values at percentiles
         "question": question,
         "research": {
-            "query_historical_prompt": read_file_safe(run_dir / "research" / "query_historical_prompt.md"),
+            "query_historical_prompt": read_file_safe(
+                run_dir / "research" / "query_historical_prompt.md"
+            ),
             "query_historical": read_file_safe(run_dir / "research" / "query_historical.md"),
-            "query_current_prompt": read_file_safe(run_dir / "research" / "query_current_prompt.md"),
+            "query_current_prompt": read_file_safe(
+                run_dir / "research" / "query_current_prompt.md"
+            ),
             "query_current": read_file_safe(run_dir / "research" / "query_current.md"),
             "search_historical": read_json_safe(run_dir / "research" / "search_historical.json"),
             "search_current": read_json_safe(run_dir / "research" / "search_current.json"),

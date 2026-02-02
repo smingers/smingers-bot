@@ -56,6 +56,19 @@ pytest tests/unit/test_cdf_generation.py
 pytest tests/ -v
 ```
 
+## Code Quality
+
+```bash
+# Manual checks
+poetry run ruff check .          # Lint
+poetry run ruff check --fix .    # Lint with auto-fix
+poetry run ruff format .         # Format
+
+# Pre-commit runs automatically on git commit
+# To run manually on all files:
+poetry run pre-commit run --all-files
+```
+
 ## Viewing Forecasts
 
 ```bash

@@ -9,19 +9,20 @@ Tests cover:
 """
 
 import pytest
-import numpy as np
-from unittest.mock import MagicMock, AsyncMock, patch
-from dataclasses import dataclass
 
-from src.bot.numeric import NumericForecaster, NumericForecastResult
-from src.bot.extractors import AgentResult, extract_percentiles_from_response, enforce_strict_increasing
 from src.bot.cdf import generate_continuous_cdf
-from src.bot.exceptions import InsufficientPredictionsError, CDFGenerationError, ExtractionError
-
+from src.bot.exceptions import ExtractionError, InsufficientPredictionsError
+from src.bot.extractors import (
+    AgentResult,
+    enforce_strict_increasing,
+    extract_percentiles_from_response,
+)
+from src.bot.numeric import NumericForecaster, NumericForecastResult
 
 # ============================================================================
 # Percentile Extraction Tests
 # ============================================================================
+
 
 class TestPercentileExtraction:
     """Tests for percentile extraction from LLM responses."""
@@ -103,6 +104,7 @@ P95: 800
 # Enforce Strict Increasing Tests
 # ============================================================================
 
+
 class TestEnforceStrictIncreasing:
     """Tests for enforce_strict_increasing function."""
 
@@ -123,7 +125,7 @@ class TestEnforceStrictIncreasing:
         # Should be strictly increasing
         values = [result[k] for k in sorted(result.keys())]
         for i in range(1, len(values)):
-            assert values[i] > values[i-1]
+            assert values[i] > values[i - 1]
 
     def test_raises_for_inverted_values(self):
         """Raises ExtractionError for severely inverted values."""
@@ -143,6 +145,7 @@ class TestEnforceStrictIncreasing:
 # ============================================================================
 # CDF Generation Tests
 # ============================================================================
+
 
 class TestCDFGeneration:
     """Tests for CDF generation from percentiles."""
@@ -192,7 +195,7 @@ class TestCDFGeneration:
         )
 
         for i in range(1, len(cdf)):
-            assert cdf[i] >= cdf[i-1], f"CDF not monotonic at index {i}"
+            assert cdf[i] >= cdf[i - 1], f"CDF not monotonic at index {i}"
 
     def test_cdf_bounded_0_to_1(self):
         """CDF values are between 0 and 1."""
@@ -230,6 +233,7 @@ class TestCDFGeneration:
 # ============================================================================
 # NumericForecaster Tests
 # ============================================================================
+
 
 class TestNumericForecasterBounds:
     """Tests for NumericForecaster bound handling."""
@@ -300,6 +304,7 @@ class TestNumericForecasterBounds:
 # CDF Aggregation Tests
 # ============================================================================
 
+
 class TestCDFAggregation:
     """Tests for NumericForecaster CDF aggregation."""
 
@@ -322,12 +327,30 @@ class TestCDFAggregation:
         cdf3 = [1 - (1 - i / 200) ** 2 for i in range(201)]  # Inverse quadratic
 
         agent_results = [
-            AgentResult(agent_id="agent_1", model="test", weight=1.0,
-                       step1_output="", step2_output="", cdf=cdf1),
-            AgentResult(agent_id="agent_2", model="test", weight=1.0,
-                       step1_output="", step2_output="", cdf=cdf2),
-            AgentResult(agent_id="agent_3", model="test", weight=1.0,
-                       step1_output="", step2_output="", cdf=cdf3),
+            AgentResult(
+                agent_id="agent_1",
+                model="test",
+                weight=1.0,
+                step1_output="",
+                step2_output="",
+                cdf=cdf1,
+            ),
+            AgentResult(
+                agent_id="agent_2",
+                model="test",
+                weight=1.0,
+                step1_output="",
+                step2_output="",
+                cdf=cdf2,
+            ),
+            AgentResult(
+                agent_id="agent_3",
+                model="test",
+                weight=1.0,
+                step1_output="",
+                step2_output="",
+                cdf=cdf3,
+            ),
         ]
 
         agents = [
@@ -352,12 +375,30 @@ class TestCDFAggregation:
         cdf2 = [0.9] * 201  # All 0.9
 
         agent_results = [
-            AgentResult(agent_id="agent_1", model="test", weight=1.0,
-                       step1_output="", step2_output="", cdf=cdf1),
-            AgentResult(agent_id="agent_2", model="test", weight=1.0,
-                       step1_output="", step2_output="", cdf=cdf2),
-            AgentResult(agent_id="agent_3", model="test", weight=1.0,
-                       step1_output="", step2_output="", cdf=cdf2),  # 3rd with cdf2
+            AgentResult(
+                agent_id="agent_1",
+                model="test",
+                weight=1.0,
+                step1_output="",
+                step2_output="",
+                cdf=cdf1,
+            ),
+            AgentResult(
+                agent_id="agent_2",
+                model="test",
+                weight=1.0,
+                step1_output="",
+                step2_output="",
+                cdf=cdf2,
+            ),
+            AgentResult(
+                agent_id="agent_3",
+                model="test",
+                weight=1.0,
+                step1_output="",
+                step2_output="",
+                cdf=cdf2,
+            ),  # 3rd with cdf2
         ]
 
         agents = [
@@ -379,12 +420,32 @@ class TestCDFAggregation:
         cdf1 = [i / 200 for i in range(201)]
 
         agent_results = [
-            AgentResult(agent_id="agent_1", model="test", weight=1.0,
-                       step1_output="", step2_output="", cdf=cdf1),
-            AgentResult(agent_id="agent_2", model="test", weight=1.0,
-                       step1_output="", step2_output="", cdf=None, error="Failed"),
-            AgentResult(agent_id="agent_3", model="test", weight=1.0,
-                       step1_output="", step2_output="", cdf=None, error="Failed"),
+            AgentResult(
+                agent_id="agent_1",
+                model="test",
+                weight=1.0,
+                step1_output="",
+                step2_output="",
+                cdf=cdf1,
+            ),
+            AgentResult(
+                agent_id="agent_2",
+                model="test",
+                weight=1.0,
+                step1_output="",
+                step2_output="",
+                cdf=None,
+                error="Failed",
+            ),
+            AgentResult(
+                agent_id="agent_3",
+                model="test",
+                weight=1.0,
+                step1_output="",
+                step2_output="",
+                cdf=None,
+                error="Failed",
+            ),
         ]
 
         agents = [
@@ -407,14 +468,38 @@ class TestCDFAggregation:
         cdf_wrong = [i / 100 for i in range(102)]  # Wrong size
 
         agent_results = [
-            AgentResult(agent_id="agent_1", model="test", weight=1.0,
-                       step1_output="", step2_output="", cdf=cdf_correct),
-            AgentResult(agent_id="agent_2", model="test", weight=1.0,
-                       step1_output="", step2_output="", cdf=cdf_correct),
-            AgentResult(agent_id="agent_3", model="test", weight=1.0,
-                       step1_output="", step2_output="", cdf=cdf_correct),
-            AgentResult(agent_id="agent_4", model="test", weight=1.0,
-                       step1_output="", step2_output="", cdf=cdf_wrong),  # Wrong size
+            AgentResult(
+                agent_id="agent_1",
+                model="test",
+                weight=1.0,
+                step1_output="",
+                step2_output="",
+                cdf=cdf_correct,
+            ),
+            AgentResult(
+                agent_id="agent_2",
+                model="test",
+                weight=1.0,
+                step1_output="",
+                step2_output="",
+                cdf=cdf_correct,
+            ),
+            AgentResult(
+                agent_id="agent_3",
+                model="test",
+                weight=1.0,
+                step1_output="",
+                step2_output="",
+                cdf=cdf_correct,
+            ),
+            AgentResult(
+                agent_id="agent_4",
+                model="test",
+                weight=1.0,
+                step1_output="",
+                step2_output="",
+                cdf=cdf_wrong,
+            ),  # Wrong size
         ]
 
         agents = [
@@ -432,6 +517,7 @@ class TestCDFAggregation:
 # ============================================================================
 # NumericForecastResult Tests
 # ============================================================================
+
 
 class TestNumericForecastResult:
     """Tests for NumericForecastResult dataclass."""
@@ -467,6 +553,7 @@ class TestNumericForecastResult:
 # Extraction to CDF Integration Tests
 # ============================================================================
 
+
 class TestExtractionToCDFIntegration:
     """Integration tests for full extraction → CDF pipeline."""
 
@@ -500,4 +587,4 @@ Percentile 95: 800
         assert len(cdf) == 201
         assert all(0 <= v <= 1 for v in cdf)
         for i in range(1, len(cdf)):
-            assert cdf[i] >= cdf[i-1]
+            assert cdf[i] >= cdf[i - 1]

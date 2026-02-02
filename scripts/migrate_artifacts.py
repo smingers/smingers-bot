@@ -145,10 +145,12 @@ def extract_agent_predictions_data(forecast_dir: Path, fmt: str) -> list[dict]:
                     elif "probabilities" in data and data["probabilities"]:
                         pred_data = {"probabilities": data["probabilities"]}
 
-                    predictions.append({
-                        "agent_id": f"forecaster_{i}",
-                        "prediction_data": json.dumps(pred_data) if pred_data else None,
-                    })
+                    predictions.append(
+                        {
+                            "agent_id": f"forecaster_{i}",
+                            "prediction_data": json.dumps(pred_data) if pred_data else None,
+                        }
+                    )
                 except json.JSONDecodeError:
                     continue
 
@@ -169,10 +171,12 @@ def extract_agent_predictions_data(forecast_dir: Path, fmt: str) -> list[dict]:
                     elif "probabilities" in data and data["probabilities"]:
                         pred_data = {"probabilities": data["probabilities"]}
 
-                    predictions.append({
-                        "agent_id": f"forecaster_{i}",
-                        "prediction_data": json.dumps(pred_data) if pred_data else None,
-                    })
+                    predictions.append(
+                        {
+                            "agent_id": f"forecaster_{i}",
+                            "prediction_data": json.dumps(pred_data) if pred_data else None,
+                        }
+                    )
                 except json.JSONDecodeError:
                     continue
 
@@ -257,9 +261,7 @@ async def migrate(dry_run: bool = False):
                 if agent_pred["prediction_data"]:
                     if not dry_run:
                         await db.update_agent_prediction_data(
-                            forecast_id,
-                            agent_pred["agent_id"],
-                            agent_pred["prediction_data"]
+                            forecast_id, agent_pred["agent_id"], agent_pred["prediction_data"]
                         )
                     stats["agent_data_updated"] += 1
 

@@ -8,17 +8,17 @@ Tests cover:
 - Prediction submission methods
 """
 
-import pytest
-import numpy as np
 from unittest.mock import AsyncMock, MagicMock, patch
 
-from src.utils.metaculus_api import MetaculusQuestion, MetaculusClient
-from src.bot.exceptions import QuestionTypeError
+import pytest
 
+from src.bot.exceptions import QuestionTypeError
+from src.utils.metaculus_api import MetaculusClient, MetaculusQuestion
 
 # ============================================================================
 # MetaculusQuestion.from_api_response Tests
 # ============================================================================
+
 
 class TestMetaculusQuestionFromApiResponse:
     """Tests for parsing question data from API responses."""
@@ -152,6 +152,7 @@ class TestMetaculusQuestionFromApiResponse:
 # _parse_date_bound Tests
 # ============================================================================
 
+
 class TestParseDateBound:
     """Tests for date bound parsing."""
 
@@ -198,6 +199,7 @@ class TestParseDateBound:
 # _validate_cdf Tests
 # ============================================================================
 
+
 class TestValidateCdf:
     """Tests for CDF validation and fixing."""
 
@@ -206,6 +208,7 @@ class TestValidateCdf:
         """Create a MetaculusClient with a test token for accessing _validate_cdf."""
         # We need to patch the env var check
         import os
+
         original = os.environ.get("METACULUS_TOKEN")
         os.environ["METACULUS_TOKEN"] = "test-token"
         client = MetaculusClient()
@@ -227,7 +230,7 @@ class TestValidateCdf:
         assert result[-1] == 0.999
         # Should be monotonically increasing
         for i in range(1, len(result)):
-            assert result[i] > result[i-1]
+            assert result[i] > result[i - 1]
 
     def test_clamps_to_open_bounds(self, client):
         """Open bounds: first=0.001, last=0.999."""
@@ -256,7 +259,9 @@ class TestValidateCdf:
 
         # Result should be strictly monotonic
         for i in range(1, len(result)):
-            assert result[i] > result[i-1], f"Not monotonic at index {i}: {result[i-1]} >= {result[i]}"
+            assert result[i] > result[i - 1], (
+                f"Not monotonic at index {i}: {result[i - 1]} >= {result[i]}"
+            )
 
         # Bounds should be respected
         assert result[0] == 0.001
@@ -272,7 +277,7 @@ class TestValidateCdf:
 
         # Should be strictly increasing
         for i in range(1, len(result)):
-            assert result[i] > result[i-1]
+            assert result[i] > result[i - 1]
 
     def test_caps_maximum_step(self, client):
         """No single step exceeds 0.59."""
@@ -283,7 +288,7 @@ class TestValidateCdf:
 
         max_step = 0.59
         for i in range(1, len(result)):
-            assert result[i] - result[i-1] <= max_step + 1e-10  # Small tolerance
+            assert result[i] - result[i - 1] <= max_step + 1e-10  # Small tolerance
 
     def test_handles_all_equal_values(self, client):
         """Gracefully handles CDF where all values are equal."""
@@ -296,7 +301,7 @@ class TestValidateCdf:
         assert result[-1] == 0.999
         # Should be strictly increasing
         for i in range(1, len(result)):
-            assert result[i] > result[i-1]
+            assert result[i] > result[i - 1]
 
     def test_mixed_open_closed_bounds(self, client):
         """Mixed open/closed bounds handled correctly."""
@@ -328,13 +333,14 @@ class TestValidateCdf:
 # Binary Prediction Submission Tests
 # ============================================================================
 
+
 class TestSubmitBinaryPrediction:
     """Tests for submit_binary_prediction method."""
 
     @pytest.fixture
     def mock_client(self):
         """Create client with mocked httpx client."""
-        with patch('httpx.AsyncClient'):
+        with patch("httpx.AsyncClient"):
             client = MetaculusClient(token="test-token")
             client.client = MagicMock()
             return client
@@ -380,13 +386,14 @@ class TestSubmitBinaryPrediction:
 # Numeric Prediction Submission Tests
 # ============================================================================
 
+
 class TestSubmitNumericPrediction:
     """Tests for submit_numeric_prediction method."""
 
     @pytest.fixture
     def mock_client(self):
         """Create client with mocked httpx client."""
-        with patch('httpx.AsyncClient'):
+        with patch("httpx.AsyncClient"):
             client = MetaculusClient(token="test-token")
             client.client = MagicMock()
             return client
@@ -428,9 +435,7 @@ class TestSubmitNumericPrediction:
         mock_client.client.post = AsyncMock(return_value=mock_response)
 
         cdf = [i / 101 for i in range(102)]
-        result = await mock_client.submit_numeric_prediction(
-            12345, cdf, expected_cdf_size=102
-        )
+        result = await mock_client.submit_numeric_prediction(12345, cdf, expected_cdf_size=102)
 
         assert result == {"success": True}
 
@@ -439,13 +444,14 @@ class TestSubmitNumericPrediction:
 # Multiple Choice Prediction Submission Tests
 # ============================================================================
 
+
 class TestSubmitMultipleChoicePrediction:
     """Tests for submit_multiple_choice_prediction method."""
 
     @pytest.fixture
     def mock_client(self):
         """Create client with mocked httpx client."""
-        with patch('httpx.AsyncClient'):
+        with patch("httpx.AsyncClient"):
             client = MetaculusClient(token="test-token")
             client.client = MagicMock()
             return client
@@ -492,13 +498,14 @@ class TestSubmitMultipleChoicePrediction:
 # Generic Submit Prediction Tests
 # ============================================================================
 
+
 class TestSubmitPrediction:
     """Tests for the generic submit_prediction method."""
 
     @pytest.fixture
     def mock_client(self):
         """Create client with mocked httpx client."""
-        with patch('httpx.AsyncClient'):
+        with patch("httpx.AsyncClient"):
             client = MetaculusClient(token="test-token")
             client.client = MagicMock()
             return client

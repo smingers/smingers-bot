@@ -9,7 +9,7 @@ for tracking metrics throughout the forecasting pipeline. Benefits:
 - Easier to understand and maintain
 """
 
-from dataclasses import dataclass, field, asdict
+from dataclasses import asdict, dataclass, field
 from typing import Any
 
 
@@ -29,6 +29,7 @@ class StepMetrics:
     the artifact JSON schema (tool_usage.json). They are always False/empty for
     forecasting steps but must be present for consistent serialization.
     """
+
     # Legacy fields for artifact schema compatibility (always False/empty for forecaster steps)
     searched: bool = False
     queries: list[str] = field(default_factory=list)
@@ -54,6 +55,7 @@ class AgentMetrics:
         step1: Metrics for Step 1 (outside view)
         step2: Metrics for Step 2 (inside view)
     """
+
     model: str
     weight: float
     step1: StepMetrics = field(default_factory=StepMetrics)
@@ -87,6 +89,7 @@ class ResearchMetrics:
         llm_cost_agentic: LLM cost for agentic search
         error: Error message if research failed
     """
+
     search_id: str = ""
     searched: bool = False
     num_queries: int = 0
@@ -128,6 +131,7 @@ class PipelineMetrics:
         step_costs: Cost breakdown by pipeline step
         total_pipeline_cost: Total cost for the entire pipeline run
     """
+
     centralized_research: dict[str, ResearchMetrics] = field(default_factory=dict)
     agents: dict[str, AgentMetrics] = field(default_factory=dict)
     step_costs: dict[str, float] = field(default_factory=dict)
@@ -141,12 +145,8 @@ class PipelineMetrics:
         ensuring backward compatibility with artifact storage.
         """
         return {
-            "centralized_research": {
-                k: v.to_dict() for k, v in self.centralized_research.items()
-            },
-            "agents": {
-                k: v.to_dict() for k, v in self.agents.items()
-            },
+            "centralized_research": {k: v.to_dict() for k, v in self.centralized_research.items()},
+            "agents": {k: v.to_dict() for k, v in self.agents.items()},
             "step_costs": self.step_costs,
             "total_pipeline_cost": self.total_pipeline_cost,
         }

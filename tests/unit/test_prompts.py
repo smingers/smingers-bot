@@ -10,28 +10,28 @@ Also tests that unsupported question types raise QuestionTypeError.
 import pytest
 
 from src.bot.binary import BinaryForecaster
-from src.bot.numeric import NumericForecaster
-from src.bot.multiple_choice import MultipleChoiceForecaster
 from src.bot.exceptions import QuestionTypeError
+from src.bot.multiple_choice import MultipleChoiceForecaster
+from src.bot.numeric import NumericForecaster
 from src.bot.prompts import (
-    BINARY_PROMPT_HISTORICAL,
-    BINARY_PROMPT_CURRENT,
     BINARY_PROMPT_1,
     BINARY_PROMPT_2,
-    NUMERIC_PROMPT_HISTORICAL,
-    NUMERIC_PROMPT_CURRENT,
-    NUMERIC_PROMPT_1,
-    NUMERIC_PROMPT_2,
-    MULTIPLE_CHOICE_PROMPT_HISTORICAL,
-    MULTIPLE_CHOICE_PROMPT_CURRENT,
+    BINARY_PROMPT_CURRENT,
+    BINARY_PROMPT_HISTORICAL,
     MULTIPLE_CHOICE_PROMPT_1,
     MULTIPLE_CHOICE_PROMPT_2,
+    MULTIPLE_CHOICE_PROMPT_CURRENT,
+    MULTIPLE_CHOICE_PROMPT_HISTORICAL,
+    NUMERIC_PROMPT_1,
+    NUMERIC_PROMPT_2,
+    NUMERIC_PROMPT_CURRENT,
+    NUMERIC_PROMPT_HISTORICAL,
 )
-
 
 # ============================================================================
 # Test Fixtures - Minimal valid inputs for format methods
 # ============================================================================
+
 
 @pytest.fixture
 def minimal_config():
@@ -43,7 +43,11 @@ def minimal_config():
             "summarization": "openrouter/anthropic/claude-3-5-haiku-latest",
         },
         "_active_agents": [
-            {"name": "forecaster_1", "model": "openrouter/anthropic/claude-3-5-haiku-latest", "weight": 1.0},
+            {
+                "name": "forecaster_1",
+                "model": "openrouter/anthropic/claude-3-5-haiku-latest",
+                "weight": 1.0,
+            },
         ],
         "_should_submit": False,
     }
@@ -115,6 +119,7 @@ def mc_question_params(base_question_params):
 # Binary Forecaster Tests
 # ============================================================================
 
+
 class TestBinaryFormatMethods:
     """Tests for BinaryForecaster format methods."""
 
@@ -164,10 +169,13 @@ class TestBinaryFormatMethods:
 # Numeric Forecaster Tests
 # ============================================================================
 
+
 class TestNumericFormatMethods:
     """Tests for NumericForecaster format methods (numeric, discrete, date)."""
 
-    def test_numeric_format_query_prompts_no_keyerror(self, minimal_config, numeric_question_params):
+    def test_numeric_format_query_prompts_no_keyerror(
+        self, minimal_config, numeric_question_params
+    ):
         """Verify _format_query_prompts() doesn't raise KeyError for numeric questions."""
         forecaster = NumericForecaster(minimal_config)
 
@@ -311,6 +319,7 @@ class TestNumericFormatMethods:
 # Multiple Choice Forecaster Tests
 # ============================================================================
 
+
 class TestMultipleChoiceFormatMethods:
     """Tests for MultipleChoiceForecaster format methods."""
 
@@ -359,6 +368,7 @@ class TestMultipleChoiceFormatMethods:
 # ============================================================================
 # Unsupported Question Type Tests
 # ============================================================================
+
 
 class TestUnsupportedQuestionTypes:
     """Tests for unsupported question type handling."""

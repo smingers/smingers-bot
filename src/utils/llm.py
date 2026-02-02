@@ -8,9 +8,8 @@ while logging all prompts, responses, and costs.
 import asyncio
 import logging
 import time
-from typing import Optional, Any, Literal
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 import litellm
 from litellm import acompletion
@@ -77,6 +76,7 @@ class LLMResponse:
         timestamp: ISO 8601 timestamp when the response was received
         raw_response: Original API response dict (for debugging/auditing)
     """
+
     content: str
     model: str
     input_tokens: int
@@ -84,7 +84,7 @@ class LLMResponse:
     cost: float
     latency_ms: int
     timestamp: str
-    raw_response: Optional[dict] = None
+    raw_response: dict | None = None
 
 
 @dataclass
@@ -102,11 +102,12 @@ class LLMCall:
         error: Error message string if call failed, None if successful
         timestamp: ISO 8601 timestamp when the call was initiated
     """
+
     model: str
     messages: list[dict]
-    response: Optional[LLMResponse]
-    error: Optional[str] = None
-    timestamp: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+    response: LLMResponse | None
+    error: str | None = None
+    timestamp: str = field(default_factory=lambda: datetime.now(UTC).isoformat())
 
 
 class CostTracker:
@@ -190,7 +191,7 @@ class LLMClient:
         track_costs: bool = True,
         max_retries: int = 3,
         retry_delay: float = 1.0,
-        timeout_seconds: Optional[float] = None,
+        timeout_seconds: float | None = None,
     ):
         self.log_calls = log_calls
         self.track_costs = track_costs
@@ -204,9 +205,9 @@ class LLMClient:
         model: str,
         messages: list[dict],
         temperature: float = 0.7,
-        max_tokens: Optional[int] = None,
-        system: Optional[str] = None,
-        **kwargs
+        max_tokens: int | None = None,
+        system: str | None = None,
+        **kwargs,
     ) -> LLMResponse:
         """
         Make a completion request to an LLM.
@@ -239,7 +240,7 @@ class LLMClient:
                         messages=messages,
                         temperature=temperature,
                         max_tokens=max_tokens,
-                        **kwargs
+                        **kwargs,
                     ),
                     timeout=self.timeout_seconds,
                 )
@@ -261,7 +262,7 @@ class LLMClient:
                     output_tokens=output_tokens,
                     cost=cost,
                     latency_ms=latency_ms,
-                    timestamp=datetime.now(timezone.utc).isoformat(),
+                    timestamp=datetime.now(UTC).isoformat(),
                     raw_response=response.model_dump() if hasattr(response, "model_dump") else None,
                 )
 
@@ -275,7 +276,7 @@ class LLMClient:
 
                 return llm_response
 
-            except asyncio.TimeoutError:
+            except TimeoutError:
                 last_error = f"Timeout after {self.timeout_seconds}s"
                 logger.warning(
                     f"LLM call timed out (attempt {attempt + 1}/{self.max_retries}): "
@@ -369,12 +370,7 @@ class LLMClient:
 
 
 # Convenience function for simple calls
-async def complete(
-    model: str,
-    prompt: str,
-    system: Optional[str] = None,
-    **kwargs
-) -> str:
+async def complete(model: str, prompt: str, system: str | None = None, **kwargs) -> str:
     """
     Simple completion helper.
 
@@ -389,9 +385,6 @@ async def complete(
     """
     client = LLMClient()
     response = await client.complete(
-        model=model,
-        messages=[{"role": "user", "content": prompt}],
-        system=system,
-        **kwargs
+        model=model, messages=[{"role": "user", "content": prompt}], system=system, **kwargs
     )
     return response.content

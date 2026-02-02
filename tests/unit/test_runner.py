@@ -4,16 +4,17 @@ Tests for the shared runner module.
 Tests RunResult, run_forecasts(), and format_prediction().
 """
 
-import pytest
 import sys
 from pathlib import Path
 from unittest.mock import AsyncMock, MagicMock, patch
 
+import pytest
+
 # Add project root to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-from src.runner import RunResult, ForecastFailure, run_forecasts, format_prediction
 from src.bot import ExtractionError
+from src.runner import ForecastFailure, RunResult, format_prediction, run_forecasts
 
 
 class TestRunResult:

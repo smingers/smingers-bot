@@ -10,14 +10,13 @@ import json
 import sys
 from pathlib import Path
 
-import streamlit as st
 import pandas as pd
+import streamlit as st
 
 # Add project root to path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from src.storage.database import ForecastDatabase
-
 
 # Page config
 st.set_page_config(
@@ -40,6 +39,7 @@ def run_async(coro):
 @st.cache_data(ttl=60)
 def load_forecasts(_db_path: str, mode_filter: str | None, type_filter: str | None):
     """Load forecasts from database with caching."""
+
     async def _load():
         db = ForecastDatabase(_db_path)
         await db.migrate_schema()  # Ensure schema is up to date
@@ -55,6 +55,7 @@ def load_forecasts(_db_path: str, mode_filter: str | None, type_filter: str | No
 @st.cache_data(ttl=60)
 def load_cost_summary(_db_path: str):
     """Load cost summary."""
+
     async def _load():
         db = ForecastDatabase(_db_path)
         return await db.get_cost_summary()
@@ -106,7 +107,7 @@ def format_final_prediction(row: dict) -> str:
             for k, v in probs.items():
                 if v > 1:
                     v = v / 100
-                items.append(f"{k}:{v*100:.0f}%")
+                items.append(f"{k}:{v * 100:.0f}%")
             return " ".join(items)
 
     return "—"
@@ -142,10 +143,10 @@ def format_agent_prediction(row: dict, agent_num: int) -> str:
         if probs:
             # If it's a list, show as compact percentages
             if isinstance(probs, list):
-                return "|".join(f"{p*100:.0f}" if p <= 1 else f"{p:.0f}" for p in probs)
+                return "|".join(f"{p * 100:.0f}" if p <= 1 else f"{p:.0f}" for p in probs)
             # If it's a dict
             elif isinstance(probs, dict):
-                return "|".join(f"{v*100:.0f}" if v <= 1 else f"{v:.0f}" for v in probs.values())
+                return "|".join(f"{v * 100:.0f}" if v <= 1 else f"{v:.0f}" for v in probs.values())
 
     return "—"
 
@@ -170,7 +171,9 @@ def main():
         forecasts = load_forecasts(db_path, mode_filter, type_filter)
     except Exception as e:
         st.error(f"Error loading forecasts: {e}")
-        st.info("Make sure to run the migration script first: `python scripts/migrate_artifacts.py`")
+        st.info(
+            "Make sure to run the migration script first: `python scripts/migrate_artifacts.py`"
+        )
         return
 
     if not forecasts:

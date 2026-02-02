@@ -7,26 +7,27 @@ Implements multiple choice-specific extraction and aggregation logic.
 
 import json
 import logging
-from datetime import datetime
-from typing import Any, Callable, Dict, List, Optional, Tuple
+from collections.abc import Callable
 from dataclasses import dataclass, field
+from datetime import datetime
+from typing import Any
 
 import numpy as np
 
-from ..utils.llm import LLMClient
 from ..storage.artifact_store import ArtifactStore
+from ..utils.llm import LLMClient
 from .base_forecaster import BaseForecaster
+from .exceptions import InsufficientPredictionsError
 from .extractors import (
+    AgentResult,
     extract_multiple_choice_probabilities,
     normalize_probabilities,
-    AgentResult,
 )
-from .exceptions import InsufficientPredictionsError
 from .prompts import (
-    MULTIPLE_CHOICE_PROMPT_HISTORICAL,
-    MULTIPLE_CHOICE_PROMPT_CURRENT,
     MULTIPLE_CHOICE_PROMPT_1,
     MULTIPLE_CHOICE_PROMPT_2,
+    MULTIPLE_CHOICE_PROMPT_CURRENT,
+    MULTIPLE_CHOICE_PROMPT_HISTORICAL,
 )
 from .search import QuestionDetails
 
@@ -36,11 +37,12 @@ logger = logging.getLogger(__name__)
 @dataclass
 class MultipleChoiceForecastResult:
     """Complete result from multiple choice forecasting pipeline."""
-    final_probabilities: Dict[str, float]  # Option -> probability
-    agent_results: List[AgentResult]
+
+    final_probabilities: dict[str, float]  # Option -> probability
+    agent_results: list[AgentResult]
     historical_context: str
     current_context: str
-    options: List[str]
+    options: list[str]
     timestamp: str = field(default_factory=lambda: datetime.now().isoformat())
 
 
@@ -54,7 +56,7 @@ class MultipleChoiceForecaster(BaseForecaster):
     - Weighted average aggregation across options
     """
 
-    def _get_prompt_templates(self) -> Tuple[str, str, str, str]:
+    def _get_prompt_templates(self) -> tuple[str, str, str, str]:
         """Return multiple choice-specific prompt templates."""
         return (
             MULTIPLE_CHOICE_PROMPT_HISTORICAL,
@@ -77,7 +79,7 @@ class MultipleChoiceForecaster(BaseForecaster):
         prompt_historical: str,
         prompt_current: str,
         **question_params,
-    ) -> Tuple[str, str]:
+    ) -> tuple[str, str]:
         """Format query prompts with options parameter."""
         options = question_params.get("options", [])
         options_str = str(options)
@@ -128,7 +130,7 @@ class MultipleChoiceForecaster(BaseForecaster):
         params["options"] = str(question_params.get("options", []))
         return prompt_template.format(**params)
 
-    def _extract_prediction(self, output: str, **question_params) -> List[float]:
+    def _extract_prediction(self, output: str, **question_params) -> list[float]:
         """Extract and normalize probabilities from agent output."""
         options = question_params.get("options", [])
         num_options = len(options)
@@ -137,18 +139,16 @@ class MultipleChoiceForecaster(BaseForecaster):
 
     def _aggregate_results(
         self,
-        agent_results: List[AgentResult],
-        agents: List[Dict],
+        agent_results: list[AgentResult],
+        agents: list[dict],
         log: Callable[[str], Any],
-    ) -> Dict[str, float]:
+    ) -> dict[str, float]:
         """Compute weighted average of option probabilities."""
-        options = []  # Will be populated from question_params in _build_result
-
         # Collect valid predictions
         all_probs = []
         all_weights = []
 
-        for result, agent in zip(agent_results, agents):
+        for result, agent in zip(agent_results, agents, strict=True):
             if result.probabilities is not None and len(result.probabilities) > 0:
                 all_probs.append(result.probabilities)
                 all_weights.append(agent["weight"])
@@ -160,9 +160,7 @@ class MultipleChoiceForecaster(BaseForecaster):
             )
             logger.error(error_msg)
             log(f"FATAL ERROR: {error_msg}")
-            raise InsufficientPredictionsError(
-                error_msg, valid_count=0, total_count=len(agents)
-            )
+            raise InsufficientPredictionsError(error_msg, valid_count=0, total_count=len(agents))
 
         # Weighted average across valid agents
         probs_matrix = np.array(all_probs)
@@ -187,7 +185,7 @@ class MultipleChoiceForecaster(BaseForecaster):
         step1_output: str,
         step2_output: str,
         prediction: Any,
-        error: Optional[str],
+        error: str | None,
     ) -> AgentResult:
         """Build AgentResult with probabilities field."""
         return AgentResult(
@@ -203,10 +201,10 @@ class MultipleChoiceForecaster(BaseForecaster):
     def _build_result(
         self,
         final_prediction: Any,
-        agent_results: List[AgentResult],
+        agent_results: list[AgentResult],
         historical_context: str,
         current_context: str,
-        agents: List[Dict],
+        agents: list[dict],
         **question_params,
     ) -> MultipleChoiceForecastResult:
         """Build MultipleChoiceForecastResult with option -> probability mapping."""
@@ -214,7 +212,9 @@ class MultipleChoiceForecaster(BaseForecaster):
 
         # Convert probability list to option -> probability dict
         if isinstance(final_prediction, list):
-            final_probabilities = {opt: float(p) for opt, p in zip(options, final_prediction)}
+            final_probabilities = {
+                opt: float(p) for opt, p in zip(options, final_prediction, strict=True)
+            }
         else:
             final_probabilities = final_prediction
 
@@ -226,7 +226,7 @@ class MultipleChoiceForecaster(BaseForecaster):
             options=options,
         )
 
-    def _get_extracted_data(self, result: AgentResult) -> Dict:
+    def _get_extracted_data(self, result: AgentResult) -> dict:
         """Get data for extracted prediction artifact."""
         return {
             "probabilities": result.probabilities,
@@ -235,10 +235,10 @@ class MultipleChoiceForecaster(BaseForecaster):
 
     def _get_aggregation_data(
         self,
-        agent_results: List[AgentResult],
-        agents: List[Dict],
+        agent_results: list[AgentResult],
+        agents: list[dict],
         final_prediction: Any,
-    ) -> Dict:
+    ) -> dict:
         """Get data for aggregation artifact."""
         return {
             "individual_probabilities": [r.probabilities for r in agent_results],
@@ -255,7 +255,7 @@ class MultipleChoiceForecaster(BaseForecaster):
         background_info: str = "",
         resolution_criteria: str = "",
         fine_print: str = "",
-        options: List[str] = None,
+        options: list[str] = None,
         open_time: str = "",
         scheduled_resolve_time: str = "",
         log: Callable[[str], Any] = print,
@@ -294,10 +294,10 @@ class MultipleChoiceForecaster(BaseForecaster):
 async def get_multiple_choice_forecast(
     question_details: dict,
     config: dict,
-    llm_client: Optional[LLMClient] = None,
-    artifact_store: Optional[ArtifactStore] = None,
+    llm_client: LLMClient | None = None,
+    artifact_store: ArtifactStore | None = None,
     log: Callable[[str], Any] = print,
-) -> Tuple[Dict[str, float], str]:
+) -> tuple[dict[str, float], str]:
     """
     Convenience function to get a multiple choice forecast.
 

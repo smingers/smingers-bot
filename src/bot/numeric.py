@@ -6,28 +6,29 @@ Implements numeric-specific extraction (percentiles → CDF) and aggregation log
 """
 
 import logging
-from datetime import datetime
-from typing import Any, Callable, Dict, List, Optional, Tuple
+from collections.abc import Callable
 from dataclasses import dataclass, field
+from datetime import datetime
+from typing import Any
 
 import numpy as np
 
-from ..utils.llm import LLMClient
 from ..storage.artifact_store import ArtifactStore
+from ..utils.llm import LLMClient
 from .base_forecaster import BaseForecaster
-from .extractors import (
-    extract_percentiles_from_response,
-    extract_date_percentiles_from_response,
-    enforce_strict_increasing,
-    AgentResult,
-)
 from .cdf import generate_continuous_cdf
-from .exceptions import InsufficientPredictionsError, CDFGenerationError
+from .exceptions import CDFGenerationError, InsufficientPredictionsError
+from .extractors import (
+    AgentResult,
+    enforce_strict_increasing,
+    extract_date_percentiles_from_response,
+    extract_percentiles_from_response,
+)
 from .prompts import (
-    NUMERIC_PROMPT_HISTORICAL,
-    NUMERIC_PROMPT_CURRENT,
     NUMERIC_PROMPT_1,
     NUMERIC_PROMPT_2,
+    NUMERIC_PROMPT_CURRENT,
+    NUMERIC_PROMPT_HISTORICAL,
 )
 from .search import QuestionDetails
 
@@ -37,8 +38,9 @@ logger = logging.getLogger(__name__)
 @dataclass
 class NumericForecastResult:
     """Complete result from numeric forecasting pipeline."""
-    final_cdf: List[float]  # 201-point CDF
-    agent_results: List[AgentResult]
+
+    final_cdf: list[float]  # 201-point CDF
+    agent_results: list[AgentResult]
     historical_context: str
     current_context: str
     timestamp: str = field(default_factory=lambda: datetime.now().isoformat())
@@ -59,7 +61,7 @@ class NumericForecaster(BaseForecaster):
         self._cdf_size = 201  # Default, updated per-question in _get_question_details
         self._is_date_question = False  # Default, updated per-question
 
-    def _get_prompt_templates(self) -> Tuple[str, str, str, str]:
+    def _get_prompt_templates(self) -> tuple[str, str, str, str]:
         """Return numeric-specific prompt templates."""
         return (
             NUMERIC_PROMPT_HISTORICAL,
@@ -81,7 +83,7 @@ class NumericForecaster(BaseForecaster):
         )
 
     @staticmethod
-    def _build_bound_messages(**question_params) -> Dict[str, str]:
+    def _build_bound_messages(**question_params) -> dict[str, str]:
         """Build bound-related strings for prompt formatting."""
         open_lower = question_params.get("open_lower_bound", True)
         open_upper = question_params.get("open_upper_bound", True)
@@ -140,12 +142,14 @@ class NumericForecaster(BaseForecaster):
         prompt_historical: str,
         prompt_current: str,
         **question_params,
-    ) -> Tuple[str, str]:
+    ) -> tuple[str, str]:
         """Format query prompts with numeric-specific parameters."""
         bound_msgs = self._build_bound_messages(**question_params)
         unit = self._get_unit(**question_params)
         # Use background_info if available, fall back to question_text
-        background = question_params.get("background_info", "") or question_params.get("question_text", "")
+        background = question_params.get("background_info", "") or question_params.get(
+            "question_text", ""
+        )
 
         historical = prompt_historical.format(
             title=question_params.get("question_title", ""),
@@ -201,7 +205,7 @@ class NumericForecaster(BaseForecaster):
         params["bounds_info"] = bound_msgs["bounds_info"]
         return prompt_template.format(**params)
 
-    def _extract_prediction(self, output: str, **question_params) -> Dict[str, Any]:
+    def _extract_prediction(self, output: str, **question_params) -> dict[str, Any]:
         """
         Extract percentiles and generate CDF from agent output.
 
@@ -235,15 +239,15 @@ class NumericForecaster(BaseForecaster):
 
     def _aggregate_results(
         self,
-        agent_results: List[AgentResult],
-        agents: List[Dict],
+        agent_results: list[AgentResult],
+        agents: list[dict],
         log: Callable[[str], Any],
-    ) -> List[float]:
+    ) -> list[float]:
         """Compute weighted average of CDFs."""
         expected_cdf_size = self._cdf_size
         all_cdfs = []
 
-        for result, agent in zip(agent_results, agents):
+        for result, agent in zip(agent_results, agents, strict=True):
             if result.cdf is not None and len(result.cdf) == expected_cdf_size:
                 all_cdfs.append((np.array(result.cdf), agent["weight"]))
 
@@ -259,7 +263,9 @@ class NumericForecaster(BaseForecaster):
         combined = (numer / denom).tolist()
 
         if len(combined) != expected_cdf_size:
-            raise CDFGenerationError(f"Combined CDF malformed: {len(combined)} points (expected {expected_cdf_size})")
+            raise CDFGenerationError(
+                f"Combined CDF malformed: {len(combined)} points (expected {expected_cdf_size})"
+            )
 
         log(f"\nAggregating {len(all_cdfs)}/{len(agents)} valid CDFs")
         log(f"Combined CDF: {combined[:5]}...{combined[-5:]}")
@@ -274,7 +280,7 @@ class NumericForecaster(BaseForecaster):
         step1_output: str,
         step2_output: str,
         prediction: Any,
-        error: Optional[str],
+        error: str | None,
     ) -> AgentResult:
         """Build AgentResult with percentiles and cdf fields."""
         percentiles = None
@@ -298,10 +304,10 @@ class NumericForecaster(BaseForecaster):
     def _build_result(
         self,
         final_prediction: Any,
-        agent_results: List[AgentResult],
+        agent_results: list[AgentResult],
         historical_context: str,
         current_context: str,
-        agents: List[Dict],
+        agents: list[dict],
         **question_params,
     ) -> NumericForecastResult:
         """Build NumericForecastResult."""
@@ -312,7 +318,7 @@ class NumericForecaster(BaseForecaster):
             current_context=current_context,
         )
 
-    def _get_extracted_data(self, result: AgentResult) -> Dict:
+    def _get_extracted_data(self, result: AgentResult) -> dict:
         """Get data for extracted prediction artifact."""
         return {
             "percentiles": result.percentiles,
@@ -322,17 +328,19 @@ class NumericForecaster(BaseForecaster):
 
     def _get_aggregation_data(
         self,
-        agent_results: List[AgentResult],
-        agents: List[Dict],
+        agent_results: list[AgentResult],
+        agents: list[dict],
         final_prediction: Any,
-    ) -> Dict:
+    ) -> dict:
         """Get data for aggregation artifact."""
         valid_count = sum(1 for r in agent_results if r.cdf is not None)
         return {
             "num_valid_cdfs": valid_count,
             "method": "weighted_average",
             "final_cdf_length": len(final_prediction) if final_prediction else 0,
-            "final_cdf_sample": (final_prediction[:5] + final_prediction[-5:]) if final_prediction else [],
+            "final_cdf_sample": (final_prediction[:5] + final_prediction[-5:])
+            if final_prediction
+            else [],
         }
 
     # Convenience method matching old interface
@@ -348,9 +356,9 @@ class NumericForecaster(BaseForecaster):
         open_lower_bound: bool = False,
         upper_bound: float = 100,
         lower_bound: float = 0,
-        zero_point: Optional[float] = None,
-        nominal_upper_bound: Optional[float] = None,
-        nominal_lower_bound: Optional[float] = None,
+        zero_point: float | None = None,
+        nominal_upper_bound: float | None = None,
+        nominal_lower_bound: float | None = None,
         open_time: str = "",
         scheduled_resolve_time: str = "",
         cdf_size: int = 201,
@@ -409,10 +417,10 @@ class NumericForecaster(BaseForecaster):
 async def get_numeric_forecast(
     question_details: dict,
     config: dict,
-    llm_client: Optional[LLMClient] = None,
-    artifact_store: Optional[ArtifactStore] = None,
+    llm_client: LLMClient | None = None,
+    artifact_store: ArtifactStore | None = None,
     log: Callable[[str], Any] = print,
-) -> Tuple[List[float], str]:
+) -> tuple[list[float], str]:
     """
     Convenience function to get a numeric forecast.
 
@@ -431,7 +439,8 @@ async def get_numeric_forecast(
         upper_bound=question_details.get("scaling", {}).get("range_max", 100),
         lower_bound=question_details.get("scaling", {}).get("range_min", 0),
         zero_point=question_details.get("scaling", {}).get("zero_point"),
-        unit_of_measure=question_details.get("unit_of_measure") or question_details.get("unit", "(unknown)"),
+        unit_of_measure=question_details.get("unit_of_measure")
+        or question_details.get("unit", "(unknown)"),
         log=log,
     )
 

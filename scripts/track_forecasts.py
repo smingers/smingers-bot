@@ -14,10 +14,10 @@ import argparse
 import asyncio
 import json
 import os
-from dataclasses import dataclass, field, asdict
-from datetime import datetime, timezone
+from dataclasses import dataclass, field
+from datetime import UTC, datetime
 from pathlib import Path
-from typing import Optional, Any
+from typing import Any
 
 import httpx
 from dotenv import load_dotenv
@@ -28,6 +28,7 @@ load_dotenv()
 @dataclass
 class BinaryComparison:
     """Comparison for binary questions."""
+
     my_probability: float  # P(Yes)
     community_probability: float  # Community P(Yes)
     difference: float  # my - community (positive = more confident in Yes)
@@ -36,6 +37,7 @@ class BinaryComparison:
 @dataclass
 class NumericComparison:
     """Comparison for numeric/date questions."""
+
     my_median: float
     community_median: float
     my_lower_quartile: float
@@ -51,6 +53,7 @@ class NumericComparison:
 @dataclass
 class MultipleChoiceComparison:
     """Comparison for multiple choice questions."""
+
     my_probabilities: dict[str, float]
     community_probabilities: dict[str, float]
     differences: dict[str, float]  # my - community per option
@@ -61,6 +64,7 @@ class MultipleChoiceComparison:
 @dataclass
 class ForecastComparison:
     """A single forecast comparison record."""
+
     question_id: int
     question_title: str
     question_type: str
@@ -130,6 +134,7 @@ class ForecastComparison:
 @dataclass
 class TrackingData:
     """Aggregated tracking data for a tournament."""
+
     tournament_id: int
     tournament_name: str
     last_updated: str
@@ -167,7 +172,7 @@ class TrackingData:
 class ForecastTracker:
     """Tracks and compares forecasts against community consensus."""
 
-    def __init__(self, token: Optional[str] = None):
+    def __init__(self, token: str | None = None):
         self.token = token or os.getenv("METACULUS_TOKEN")
         if not self.token:
             raise ValueError("METACULUS_TOKEN required")
@@ -180,7 +185,7 @@ class ForecastTracker:
             },
             timeout=60.0,
         )
-        self.user_id: Optional[int] = None
+        self.user_id: int | None = None
 
     async def close(self):
         await self.client.aclose()
@@ -213,12 +218,15 @@ class ForecastTracker:
         limit = 100
 
         while True:
-            resp = await self.client.get("/posts/", params={
-                "forecaster_id": user_id,
-                "tournaments": tournament_id,
-                "limit": limit,
-                "offset": offset,
-            })
+            resp = await self.client.get(
+                "/posts/",
+                params={
+                    "forecaster_id": user_id,
+                    "tournaments": tournament_id,
+                    "limit": limit,
+                    "offset": offset,
+                },
+            )
             resp.raise_for_status()
             data = resp.json()
 
@@ -248,10 +256,8 @@ class ForecastTracker:
                     raise
 
     def extract_binary_comparison(
-        self,
-        my_forecast: dict,
-        community: dict
-    ) -> Optional[BinaryComparison]:
+        self, my_forecast: dict, community: dict
+    ) -> BinaryComparison | None:
         """Extract binary comparison from forecast data."""
         if not my_forecast or not community:
             return None
@@ -282,10 +288,8 @@ class ForecastTracker:
         )
 
     def extract_numeric_comparison(
-        self,
-        my_forecast: dict,
-        community: dict
-    ) -> Optional[NumericComparison]:
+        self, my_forecast: dict, community: dict
+    ) -> NumericComparison | None:
         """Extract numeric comparison from forecast data."""
         if not my_forecast or not community:
             return None
@@ -331,11 +335,8 @@ class ForecastTracker:
         )
 
     def extract_mc_comparison(
-        self,
-        my_forecast: dict,
-        community: dict,
-        options: list
-    ) -> Optional[MultipleChoiceComparison]:
+        self, my_forecast: dict, community: dict, options: list
+    ) -> MultipleChoiceComparison | None:
         """Extract multiple choice comparison from forecast data."""
         if not my_forecast or not community or not options:
             return None
@@ -360,8 +361,8 @@ class ForecastTracker:
         if not comm_values or len(comm_values) != len(options):
             return None
 
-        my_probs = {label: val for label, val in zip(option_labels, my_values)}
-        comm_probs = {label: val for label, val in zip(option_labels, comm_values)}
+        my_probs = dict(zip(option_labels, my_values, strict=True))
+        comm_probs = dict(zip(option_labels, comm_values, strict=True))
 
         differences = {label: my_probs[label] - comm_probs[label] for label in option_labels}
 
@@ -375,7 +376,7 @@ class ForecastTracker:
             max_difference_value=differences[max_option],
         )
 
-    async def compare_forecast(self, post_data: dict) -> Optional[ForecastComparison]:
+    async def compare_forecast(self, post_data: dict) -> ForecastComparison | None:
         """Create a comparison for a single forecast."""
         post_id = post_data.get("id")
         title = post_data.get("title", "Unknown")
@@ -404,11 +405,11 @@ class ForecastTracker:
         # Extract timestamps
         forecast_time = my_latest.get("start_time")
         if forecast_time:
-            forecast_timestamp = datetime.fromtimestamp(forecast_time, tz=timezone.utc).isoformat()
+            forecast_timestamp = datetime.fromtimestamp(forecast_time, tz=UTC).isoformat()
         else:
             forecast_timestamp = None
 
-        snapshot_timestamp = datetime.now(tz=timezone.utc).isoformat()
+        snapshot_timestamp = datetime.now(tz=UTC).isoformat()
 
         # Get forecaster count
         num_forecasters = comm_latest.get("forecaster_count", 0) if comm_latest else 0
@@ -471,7 +472,8 @@ class ForecastTracker:
             stats["numeric"] = {
                 "count": len(numeric_median_diffs),
                 "mean_median_difference": sum(numeric_median_diffs) / len(numeric_median_diffs),
-                "mean_uncertainty_ratio": sum(numeric_uncertainty_ratios) / len(numeric_uncertainty_ratios),
+                "mean_uncertainty_ratio": sum(numeric_uncertainty_ratios)
+                / len(numeric_uncertainty_ratios),
                 "more_uncertain_count": sum(1 for r in numeric_uncertainty_ratios if r > 1.1),
                 "less_uncertain_count": sum(1 for r in numeric_uncertainty_ratios if r < 0.9),
             }
@@ -485,9 +487,7 @@ class ForecastTracker:
         return stats
 
     async def track_tournament(
-        self,
-        tournament_id: int,
-        existing_data: Optional[TrackingData] = None
+        self, tournament_id: int, existing_data: TrackingData | None = None
     ) -> TrackingData:
         """Track all forecasts in a tournament and compare to community."""
         # Get tournament info
@@ -501,11 +501,6 @@ class ForecastTracker:
         questions = await self.get_my_forecasted_questions(tournament_id)
         print(f"Found {len(questions)} forecasted questions in {tournament_name}")
 
-        # Track which questions we already have
-        existing_ids = set()
-        if existing_data:
-            existing_ids = {f["question_id"] for f in existing_data.forecasts}
-
         # Get full details and compare for each question
         forecasts = []
         for i, q in enumerate(questions):
@@ -514,7 +509,9 @@ class ForecastTracker:
             # Skip if we already have this question (unless we want to update)
             # For now, always update to get latest community consensus
 
-            print(f"  [{i+1}/{len(questions)}] Processing {post_id}: {q.get('title', 'Unknown')[:50]}...")
+            print(
+                f"  [{i + 1}/{len(questions)}] Processing {post_id}: {q.get('title', 'Unknown')[:50]}..."
+            )
 
             try:
                 # Get full details
@@ -538,7 +535,7 @@ class ForecastTracker:
         data = TrackingData(
             tournament_id=tournament_id,
             tournament_name=tournament_name,
-            last_updated=datetime.now(tz=timezone.utc).isoformat(),
+            last_updated=datetime.now(tz=UTC).isoformat(),
             total_forecasts=len(forecasts),
             binary_count=sum(1 for f in forecasts if f.question_type == "binary"),
             numeric_count=sum(1 for f in forecasts if f.question_type in ("numeric", "date")),
@@ -552,7 +549,7 @@ class ForecastTracker:
         return data
 
 
-def load_existing_data(filepath: Path) -> Optional[TrackingData]:
+def load_existing_data(filepath: Path) -> TrackingData | None:
     """Load existing tracking data from file."""
     if not filepath.exists():
         return None
@@ -589,9 +586,9 @@ def save_tracking_data(data: TrackingData, filepath: Path):
 
 def print_summary(data: TrackingData):
     """Print a summary of the tracking data."""
-    print("\n" + "="*70)
+    print("\n" + "=" * 70)
     print(f"FORECAST TRACKING SUMMARY: {data.tournament_name}")
-    print("="*70)
+    print("=" * 70)
     print(f"Last updated: {data.last_updated}")
     print(f"Total forecasts: {data.total_forecasts}")
     print(f"  - Binary: {data.binary_count}")
@@ -608,9 +605,9 @@ def print_summary(data: TrackingData):
         print(f"Aligned with community (±5%): {stats['aligned_count']}")
 
         # Interpretation
-        if stats['mean_difference'] > 0.03:
+        if stats["mean_difference"] > 0.03:
             print("\n  → You tend to predict YES more often than the community")
-        elif stats['mean_difference'] < -0.03:
+        elif stats["mean_difference"] < -0.03:
             print("\n  → You tend to predict NO more often than the community")
         else:
             print("\n  → You're generally aligned with community on binary questions")
@@ -622,9 +619,9 @@ def print_summary(data: TrackingData):
         print(f"More uncertain than community: {stats['more_uncertain_count']}")
         print(f"Less uncertain than community: {stats['less_uncertain_count']}")
 
-        if stats['mean_uncertainty_ratio'] > 1.1:
+        if stats["mean_uncertainty_ratio"] > 1.1:
             print("\n  → You tend to have wider uncertainty ranges than community")
-        elif stats['mean_uncertainty_ratio'] < 0.9:
+        elif stats["mean_uncertainty_ratio"] < 0.9:
             print("\n  → You tend to have narrower uncertainty ranges than community")
         else:
             print("\n  → Your uncertainty is similar to community")
@@ -634,11 +631,11 @@ def print_summary(data: TrackingData):
         stats = data.multiple_choice_stats
         print(f"Mean max difference per question: {stats['mean_max_difference']:.1%}")
 
-    print("\n" + "="*70)
+    print("\n" + "=" * 70)
 
     # Show individual forecast details
     print("\nINDIVIDUAL FORECASTS:")
-    print("-"*70)
+    print("-" * 70)
 
     for fc in data.forecasts:
         comp = fc.get("comparison")
@@ -658,13 +655,20 @@ def print_summary(data: TrackingData):
             print(f"  Community: {comp['community_median']:.4f}")
             print(f"  Uncertainty ratio: {comp['uncertainty_ratio']:.2f}")
         elif comp["type"] == "multiple_choice":
-            print(f"  Max difference: {comp['max_difference_option']} ({comp['max_difference_value']:+.1%})")
+            print(
+                f"  Max difference: {comp['max_difference_option']} ({comp['max_difference_value']:+.1%})"
+            )
 
 
 async def main():
     parser = argparse.ArgumentParser(description="Track forecasts vs community consensus")
     parser.add_argument("--tournament", "-t", type=int, required=True, help="Tournament ID")
-    parser.add_argument("--output", "-o", type=str, help="Output file path (default: data/tracking/<tournament_id>.json)")
+    parser.add_argument(
+        "--output",
+        "-o",
+        type=str,
+        help="Output file path (default: data/tracking/<tournament_id>.json)",
+    )
     parser.add_argument("--quiet", "-q", action="store_true", help="Suppress detailed output")
 
     args = parser.parse_args()

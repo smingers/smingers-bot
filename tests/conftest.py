@@ -2,8 +2,9 @@
 Shared pytest fixtures for Metaculus bot tests.
 """
 
-import pytest
 from pathlib import Path
+
+import pytest
 
 # Path to fixtures directory
 FIXTURES_DIR = Path(__file__).parent / "fixtures"
@@ -12,6 +13,7 @@ FIXTURES_DIR = Path(__file__).parent / "fixtures"
 # ============================================================================
 # Binary Probability Extraction Fixtures
 # ============================================================================
+
 
 @pytest.fixture
 def binary_response_standard():
@@ -96,6 +98,7 @@ The situation is too uncertain for a point estimate.
 # Multiple Choice Extraction Fixtures
 # ============================================================================
 
+
 @pytest.fixture
 def mc_response_3_options():
     """Multiple choice response with 3 options."""
@@ -141,6 +144,7 @@ def mc_response_no_bracket():
 # ============================================================================
 # Numeric Percentile Extraction Fixtures
 # ============================================================================
+
 
 @pytest.fixture
 def numeric_response_standard():
@@ -233,6 +237,7 @@ Percentile 99: 30
 # Date Percentile Extraction Fixtures
 # ============================================================================
 
+
 @pytest.fixture
 def date_response_standard():
     """Standard date response with YYYY-MM-DD format."""
@@ -285,6 +290,7 @@ I think the event will occur around mid-2026, possibly 2026-06-15.
 # Config Fixtures
 # ============================================================================
 
+
 @pytest.fixture
 def sample_config():
     """Sample configuration dictionary."""
@@ -298,18 +304,30 @@ def sample_config():
             "production": {
                 "utility": "openrouter/anthropic/claude-sonnet-4-20250514",
                 "summarization": "openrouter/anthropic/claude-sonnet-4-20250514",
-            }
+            },
         },
         "ensemble": {
             "cheap": [
-                {"name": "forecaster_1", "model": "openrouter/anthropic/claude-3-5-haiku-latest", "weight": 1.0},
-                {"name": "forecaster_2", "model": "openrouter/anthropic/claude-3-5-haiku-latest", "weight": 1.0},
+                {
+                    "name": "forecaster_1",
+                    "model": "openrouter/anthropic/claude-3-5-haiku-latest",
+                    "weight": 1.0,
+                },
+                {
+                    "name": "forecaster_2",
+                    "model": "openrouter/anthropic/claude-3-5-haiku-latest",
+                    "weight": 1.0,
+                },
             ],
             "production": [
-                {"name": "forecaster_1", "model": "openrouter/anthropic/claude-sonnet-4.5", "weight": 1.0},
+                {
+                    "name": "forecaster_1",
+                    "model": "openrouter/anthropic/claude-sonnet-4.5",
+                    "weight": 1.0,
+                },
                 {"name": "forecaster_2", "model": "openrouter/openai/o3", "weight": 1.0},
-            ]
-        }
+            ],
+        },
     }
 
 
@@ -323,7 +341,11 @@ def sample_config_with_active():
             "summarization": "openrouter/anthropic/claude-3-5-haiku-latest",
         },
         "active_agents": [
-            {"name": "forecaster_1", "model": "openrouter/anthropic/claude-3-5-haiku-latest", "weight": 1.0},
+            {
+                "name": "forecaster_1",
+                "model": "openrouter/anthropic/claude-3-5-haiku-latest",
+                "weight": 1.0,
+            },
         ],
         "should_submit": False,
     }
@@ -332,6 +354,7 @@ def sample_config_with_active():
 # ============================================================================
 # Metaculus API Response Fixtures
 # ============================================================================
+
 
 @pytest.fixture
 def binary_api_response():
@@ -352,13 +375,7 @@ def binary_api_response():
             "id": 67890,
             "type": "binary",
             "description": "Background info about the question.",
-            "aggregations": {
-                "recency_weighted": {
-                    "history": [
-                        {"centers": [0.65]}
-                    ]
-                }
-            }
+            "aggregations": {"recency_weighted": {"history": [{"centers": [0.65]}]}},
         },
     }
 
@@ -475,13 +492,15 @@ def unsupported_type_api_response():
 # Agent Result Fixtures
 # ============================================================================
 
+
 @pytest.fixture
 def valid_agent_results():
     """List of 5 AgentResult objects with valid probabilities."""
     from src.bot.extractors import AgentResult
+
     return [
         AgentResult(
-            agent_id=f"forecaster_{i+1}",
+            agent_id=f"forecaster_{i + 1}",
             model="test-model",
             weight=1.0,
             step1_output="Step 1 analysis...",
@@ -496,19 +515,22 @@ def valid_agent_results():
 def partial_agent_results():
     """List with 2 valid, 3 None probabilities."""
     from src.bot.extractors import AgentResult
+
     results = []
     for i in range(5):
         prob = 55.0 if i < 2 else None
         error = None if i < 2 else "Extraction failed"
-        results.append(AgentResult(
-            agent_id=f"forecaster_{i+1}",
-            model="test-model",
-            weight=1.0,
-            step1_output="Step 1 analysis...",
-            step2_output="Step 2 analysis..." if i < 2 else "",
-            probability=prob,
-            error=error,
-        ))
+        results.append(
+            AgentResult(
+                agent_id=f"forecaster_{i + 1}",
+                model="test-model",
+                weight=1.0,
+                step1_output="Step 1 analysis...",
+                step2_output="Step 2 analysis..." if i < 2 else "",
+                probability=prob,
+                error=error,
+            )
+        )
     return results
 
 
@@ -516,9 +538,10 @@ def partial_agent_results():
 def all_failed_agent_results():
     """List where all 5 agents failed to extract probabilities."""
     from src.bot.extractors import AgentResult
+
     return [
         AgentResult(
-            agent_id=f"forecaster_{i+1}",
+            agent_id=f"forecaster_{i + 1}",
             model="test-model",
             weight=1.0,
             step1_output="Step 1 analysis...",
@@ -534,46 +557,47 @@ def all_failed_agent_results():
 # Search Query Fixtures
 # ============================================================================
 
+
 @pytest.fixture
 def llm_search_queries_response():
     """LLM response with Search queries: block."""
-    return '''
+    return """
 Based on my analysis of the question, I need to gather more information.
 
 Search queries:
 1. "climate change policy 2026" (Google)
 2. "renewable energy news January 2026" (Google News)
 3. "energy transition deep analysis trends" (Agent)
-'''
+"""
 
 
 @pytest.fixture
 def llm_search_queries_with_asknews():
     """LLM response including AskNews query for deep research."""
-    return '''
+    return """
 I'll search for relevant information.
 
 Search queries:
 1. "policy update 2026" (Google)
 2. "What are the latest developments in renewable energy policy?" (AskNews)
-'''
+"""
 
 
 @pytest.fixture
 def llm_search_queries_empty():
     """LLM response with no search queries block."""
-    return '''
+    return """
 I have enough information from the provided context to make my forecast.
 No additional research is needed.
-'''
+"""
 
 
 @pytest.fixture
 def llm_search_queries_malformed():
     """LLM response with malformed search queries."""
-    return '''
+    return """
 Search queries:
 1. Some query without parentheses
 2. Another query (unknown source)
 3. "valid query" (Google)
-'''
+"""

@@ -12,20 +12,17 @@ Simplified pipeline that delegates to type-specific handlers:
 import asyncio
 import json
 import logging
-from pathlib import Path
-from typing import Optional, Union
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from ..config import ResolvedConfig
+from ..storage.artifact_store import ArtifactStore, ForecastArtifacts
+from ..storage.database import AgentPredictionRecord, ForecastDatabase, ForecastRecord
 from ..utils.llm import LLMClient, get_cost_tracker, reset_cost_tracker
 from ..utils.metaculus_api import MetaculusClient, MetaculusQuestion
-from ..storage.artifact_store import ArtifactStore, ForecastArtifacts
-from ..storage.database import ForecastDatabase, ForecastRecord, AgentPredictionRecord
-
 from .binary import BinaryForecaster
-from .numeric import NumericForecaster
-from .multiple_choice import MultipleChoiceForecaster
 from .exceptions import QuestionTypeError, SubmissionError
+from .multiple_choice import MultipleChoiceForecaster
+from .numeric import NumericForecaster
 
 logger = logging.getLogger(__name__)
 
@@ -46,7 +43,7 @@ class Forecaster:
         result = await forecaster.forecast_question(question_id=12345)
     """
 
-    def __init__(self, config: Union[ResolvedConfig, dict]):
+    def __init__(self, config: ResolvedConfig | dict):
         """
         Initialize the Forecaster.
 
@@ -79,7 +76,9 @@ class Forecaster:
             base_dir=self.resolved_config.get("storage", {}).get("base_dir", "./data")
         )
         self.database = ForecastDatabase(
-            db_path=self.resolved_config.get("storage", {}).get("database_path", "./data/forecasts.db")
+            db_path=self.resolved_config.get("storage", {}).get(
+                "database_path", "./data/forecasts.db"
+            )
         )
 
         # Configuration from resolved config
@@ -106,9 +105,9 @@ class Forecaster:
 
     async def forecast_question(
         self,
-        question_id: Optional[int] = None,
-        question_url: Optional[str] = None,
-        question: Optional[MetaculusQuestion] = None,
+        question_id: int | None = None,
+        question_url: str | None = None,
+        question: MetaculusQuestion | None = None,
     ) -> dict:
         """
         Run the full forecasting pipeline for a question.
@@ -119,7 +118,7 @@ class Forecaster:
         """
         # Reset cost tracker for this forecast
         reset_cost_tracker()
-        start_time = datetime.now(timezone.utc)
+        start_time = datetime.now(UTC)
 
         # Get question
         if question is None:
@@ -130,7 +129,9 @@ class Forecaster:
             else:
                 raise ValueError("Must provide question_id, question_url, or question object")
 
-        logger.info(f"Forecasting: {question.title} (ID: {question.id}, Type: {question.question_type})")
+        logger.info(
+            f"Forecasting: {question.title} (ID: {question.id}, Type: {question.question_type})"
+        )
 
         # Create artifact container
         artifacts = self.artifact_store.create_forecast_artifacts(question.id)
@@ -170,7 +171,7 @@ class Forecaster:
                 self._save_dry_run_prediction(question, forecast_result, artifacts)
 
             # Step 5: Save metadata and database records
-            end_time = datetime.now(timezone.utc)
+            end_time = datetime.now(UTC)
             costs = get_cost_tracker().get_summary()
 
             self.artifact_store.save_metadata(
@@ -359,12 +360,12 @@ class Forecaster:
             if isinstance(opt, str):
                 options.append(opt)
             elif isinstance(opt, dict):
-                options.append(opt.get("label", f"Option {i+1}"))
+                options.append(opt.get("label", f"Option {i + 1}"))
             else:
-                options.append(f"Option {i+1}")
+                options.append(f"Option {i + 1}")
 
         if not options:
-            options = [f"Option {i+1}" for i in range(4)]
+            options = [f"Option {i + 1}" for i in range(4)]
 
         forecaster = MultipleChoiceForecaster(
             config=self.config,
@@ -402,30 +403,41 @@ class Forecaster:
         if question.question_type == "binary":
             pred = forecast_result["final_prediction"]
             logger.info(f"DRY RUN: Would submit {pred:.1%}")
-            self.artifact_store.save_prediction(artifacts, {
-                "prediction": pred,
-                "dry_run": True,
-            })
+            self.artifact_store.save_prediction(
+                artifacts,
+                {
+                    "prediction": pred,
+                    "dry_run": True,
+                },
+            )
 
         elif question.question_type in ("numeric", "discrete", "date"):
             percentiles = forecast_result.get("final_percentiles", {})
             median = percentiles.get("50", percentiles.get(50, 0))
             logger.info(f"DRY RUN: Would submit CDF (median: {median})")
-            self.artifact_store.save_prediction(artifacts, {
-                "percentiles": percentiles,
-                "cdf": forecast_result.get("final_cdf", []),
-                "dry_run": True,
-            })
+            self.artifact_store.save_prediction(
+                artifacts,
+                {
+                    "percentiles": percentiles,
+                    "cdf": forecast_result.get("final_cdf", []),
+                    "dry_run": True,
+                },
+            )
 
         elif question.question_type == "multiple_choice":
             probs = forecast_result.get("final_probabilities", {})
             if probs:
                 best = max(probs.items(), key=lambda x: x[1])
-                logger.info(f"DRY RUN: Would submit distribution (most likely: {best[0]} at {best[1]:.1%})")
-            self.artifact_store.save_prediction(artifacts, {
-                "distribution": probs,
-                "dry_run": True,
-            })
+                logger.info(
+                    f"DRY RUN: Would submit distribution (most likely: {best[0]} at {best[1]:.1%})"
+                )
+            self.artifact_store.save_prediction(
+                artifacts,
+                {
+                    "distribution": probs,
+                    "dry_run": True,
+                },
+            )
 
     def _log_completion(
         self,
@@ -468,10 +480,13 @@ class Forecaster:
             if question.question_type == "binary":
                 prediction = forecast_result["final_prediction"]
                 response = await self.metaculus.submit_prediction(question, prediction)
-                self.artifact_store.save_prediction(artifacts, {
-                    "prediction": prediction,
-                    "submitted": True,
-                })
+                self.artifact_store.save_prediction(
+                    artifacts,
+                    {
+                        "prediction": prediction,
+                        "submitted": True,
+                    },
+                )
                 logger.info(f"Prediction submitted successfully: {prediction:.1%}")
 
             elif question.question_type in ("numeric", "discrete", "date"):
@@ -485,22 +500,32 @@ class Forecaster:
                 )
                 percentiles = forecast_result.get("final_percentiles", {})
                 median = percentiles.get("50", percentiles.get(50, 0))
-                self.artifact_store.save_prediction(artifacts, {
-                    "percentiles": percentiles,
-                    "cdf": cdf,
-                    "submitted": True,
-                })
+                self.artifact_store.save_prediction(
+                    artifacts,
+                    {
+                        "percentiles": percentiles,
+                        "cdf": cdf,
+                        "submitted": True,
+                    },
+                )
                 logger.info(f"CDF submitted successfully (median: {median})")
 
             elif question.question_type == "multiple_choice":
                 probs = forecast_result["final_probabilities"]
-                response = await self.metaculus.submit_multiple_choice_prediction(question.question_id, probs)
+                response = await self.metaculus.submit_multiple_choice_prediction(
+                    question.question_id, probs
+                )
                 best = max(probs.items(), key=lambda x: x[1])
-                self.artifact_store.save_prediction(artifacts, {
-                    "distribution": probs,
-                    "submitted": True,
-                })
-                logger.info(f"Distribution submitted successfully (most likely: {best[0]} at {best[1]:.1%})")
+                self.artifact_store.save_prediction(
+                    artifacts,
+                    {
+                        "distribution": probs,
+                        "submitted": True,
+                    },
+                )
+                logger.info(
+                    f"Distribution submitted successfully (most likely: {best[0]} at {best[1]:.1%})"
+                )
 
             else:
                 raise QuestionTypeError(
@@ -509,11 +534,14 @@ class Forecaster:
                 )
 
         except httpx.HTTPStatusError as e:
-            self.artifact_store.save_prediction(artifacts, {
-                "forecast_result": forecast_result,
-                "submitted": False,
-                "error": str(e),
-            })
+            self.artifact_store.save_prediction(
+                artifacts,
+                {
+                    "forecast_result": forecast_result,
+                    "submitted": False,
+                    "error": str(e),
+                },
+            )
             raise SubmissionError(
                 f"API returned {e.response.status_code}: {e}",
                 status_code=e.response.status_code,
@@ -572,14 +600,14 @@ class Forecaster:
             pred_value = None
             agent_pred_data = "{}"
 
-            if hasattr(agent_result, 'probability') and agent_result.probability is not None:
+            if hasattr(agent_result, "probability") and agent_result.probability is not None:
                 pred_value = agent_result.probability
                 agent_pred_data = json.dumps({"probability": agent_result.probability})
-            elif hasattr(agent_result, 'percentiles') and agent_result.percentiles:
+            elif hasattr(agent_result, "percentiles") and agent_result.percentiles:
                 # Use median for numeric, store all percentiles
                 pred_value = agent_result.percentiles.get(50, agent_result.percentiles.get("50"))
                 agent_pred_data = json.dumps({"percentiles": agent_result.percentiles})
-            elif hasattr(agent_result, 'probabilities') and agent_result.probabilities:
+            elif hasattr(agent_result, "probabilities") and agent_result.probabilities:
                 # Use max for multiple choice, store full distribution
                 pred_value = max(agent_result.probabilities) if agent_result.probabilities else None
                 agent_pred_data = json.dumps({"probabilities": agent_result.probabilities})
@@ -644,6 +672,7 @@ class ScopedArtifactStore:
 async def main():
     """CLI entry point for testing."""
     import sys
+
     from ..config import load_config
 
     logging.basicConfig(
@@ -664,15 +693,15 @@ async def main():
         else:
             result = await forecaster.forecast_question(question_id=int(input_arg))
 
-        print(f"\n{'='*60}")
-        print(f"FORECAST COMPLETE")
-        print(f"{'='*60}")
+        print(f"\n{'=' * 60}")
+        print("FORECAST COMPLETE")
+        print(f"{'=' * 60}")
         print(f"Question: {result['question'].title}")
-        if result['question'].question_type == "binary":
+        if result["question"].question_type == "binary":
             print(f"Prediction: {result['prediction']:.1%}")
-        elif result['question'].question_type in ("numeric", "discrete", "date"):
+        elif result["question"].question_type in ("numeric", "discrete", "date"):
             print(f"Prediction (median): {result['prediction'].get(50, 'N/A')}")
-        elif result['question'].question_type == "multiple_choice":
+        elif result["question"].question_type == "multiple_choice":
             print(f"Prediction: {result['prediction']}")
         print(f"Cost: ${result['costs']['total_cost']:.4f}")
         print(f"Artifacts: {result['artifacts_dir']}")

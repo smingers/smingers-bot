@@ -9,27 +9,31 @@ These tests cover the extraction logic in:
 Testing CURRENT code behavior to establish a safety net before refactoring.
 """
 
-import pytest
 import re
+
+import pytest
+
+from src.bot.exceptions import ExtractionError
 
 # Import the actual extraction functions/methods
 from src.bot.extractors import (
-    extract_binary_probability_percent,
-    extract_multiple_choice_probabilities as extract_option_probabilities_from_response,
-    normalize_probabilities,
-    extract_percentiles_from_response,
-    extract_date_percentiles_from_response,
-    parse_date_to_timestamp,
-    enforce_strict_increasing,
-    clean_line,
     VALID_PERCENTILE_KEYS,
+    clean_line,
+    enforce_strict_increasing,
+    extract_binary_probability_percent,
+    extract_date_percentiles_from_response,
+    extract_percentiles_from_response,
+    normalize_probabilities,
+    parse_date_to_timestamp,
 )
-from src.bot.exceptions import ExtractionError
-
+from src.bot.extractors import (
+    extract_multiple_choice_probabilities as extract_option_probabilities_from_response,
+)
 
 # ============================================================================
 # Binary Probability Extraction Tests
 # ============================================================================
+
 
 class TestBinaryProbabilityExtraction:
     """Tests for extract_binary_probability_percent()"""
@@ -136,6 +140,7 @@ class TestBinaryProbabilityExtraction:
 # Multiple Choice Extraction Tests
 # ============================================================================
 
+
 class TestMultipleChoiceExtraction:
     """Tests for extract_option_probabilities_from_response()"""
 
@@ -151,7 +156,9 @@ class TestMultipleChoiceExtraction:
 
     def test_decimal_probabilities(self, mc_response_with_decimals):
         """Test extraction of decimal probabilities."""
-        result = extract_option_probabilities_from_response(mc_response_with_decimals, num_options=3)
+        result = extract_option_probabilities_from_response(
+            mc_response_with_decimals, num_options=3
+        )
         assert result == [33.3, 33.3, 33.4]
 
     def test_wrong_count_raises(self, mc_response_wrong_count):
@@ -199,22 +206,22 @@ class TestNormalizeProbabilities:
         """Test normalization when probabilities don't sum to 100."""
         result = normalize_probabilities([10.0, 10.0, 10.0])
         assert sum(result) == pytest.approx(1.0)
-        assert all(p == pytest.approx(1/3) for p in result)
+        assert all(p == pytest.approx(1 / 3) for p in result)
 
     def test_clamping_high_values(self):
         """Test that values > 99 are clamped before normalizing."""
         result = normalize_probabilities([150.0, 50.0])  # 150 should become 99
         assert sum(result) == pytest.approx(1.0)
         # 99/(99+50) and 50/(99+50)
-        assert result[0] == pytest.approx(99/149)
-        assert result[1] == pytest.approx(50/149)
+        assert result[0] == pytest.approx(99 / 149)
+        assert result[1] == pytest.approx(50 / 149)
 
     def test_clamping_low_values(self):
         """Test that values < 1 are clamped to 1 before normalizing."""
         result = normalize_probabilities([0.0, 100.0])  # 0 should become 1
         # 1/(1+99) and 99/(1+99)
-        assert result[0] == pytest.approx(1/100)
-        assert result[1] == pytest.approx(99/100)
+        assert result[0] == pytest.approx(1 / 100)
+        assert result[1] == pytest.approx(99 / 100)
 
     def test_rounding_correction(self):
         """Test that sum is exactly 1.0 after rounding correction."""
@@ -226,6 +233,7 @@ class TestNormalizeProbabilities:
 # ============================================================================
 # Numeric Percentile Extraction Tests
 # ============================================================================
+
 
 class TestNumericPercentileExtraction:
     """Tests for extract_percentiles_from_response()"""
@@ -278,7 +286,29 @@ class TestNumericPercentileExtraction:
 
     def test_valid_percentile_keys(self):
         """Verify the set of valid percentile keys."""
-        expected = {1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 99}
+        expected = {
+            1,
+            5,
+            10,
+            15,
+            20,
+            25,
+            30,
+            35,
+            40,
+            45,
+            50,
+            55,
+            60,
+            65,
+            70,
+            75,
+            80,
+            85,
+            90,
+            95,
+            99,
+        }
         assert VALID_PERCENTILE_KEYS == expected
 
     def test_invalid_percentile_key_ignored(self):
@@ -319,6 +349,7 @@ class TestEnforceStrictIncreasing:
     def test_inverted_values_raises(self):
         """Test that fully inverted percentiles raise an error."""
         import pytest
+
         from src.bot.exceptions import ExtractionError
 
         pct = {1: 100, 50: 50, 99: 10}  # Inverted - P1 > P99
@@ -365,6 +396,7 @@ class TestCleanLine:
 # Date Percentile Extraction Tests
 # ============================================================================
 
+
 class TestDatePercentileExtraction:
     """Tests for extract_date_percentiles_from_response()"""
 
@@ -375,7 +407,7 @@ class TestDatePercentileExtraction:
         assert 50 in result
         assert 99 in result
         # Verify timestamps are reasonable (all should be positive and in the 2020s)
-        for key, timestamp in result.items():
+        for _key, timestamp in result.items():
             assert timestamp > 1700000000  # After 2023
             assert timestamp < 2000000000  # Before 2033
 

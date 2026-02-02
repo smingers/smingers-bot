@@ -13,7 +13,6 @@ Key constraints enforced:
 """
 
 import logging
-from typing import Dict, List, Optional
 
 import numpy as np
 from scipy.interpolate import PchipInterpolator
@@ -23,7 +22,9 @@ from .exceptions import CDFGenerationError
 logger = logging.getLogger(__name__)
 
 
-def _safe_cdf_bounds(cdf: np.ndarray, open_lower: bool, open_upper: bool, step: float) -> np.ndarray:
+def _safe_cdf_bounds(
+    cdf: np.ndarray, open_lower: bool, open_upper: bool, step: float
+) -> np.ndarray:
     """
     Enforce Metaculus CDF requirements:
     - For open bounds: cdf[0] >= 0.001, cdf[-1] <= 0.999
@@ -41,24 +42,24 @@ def _safe_cdf_bounds(cdf: np.ndarray, open_lower: bool, open_upper: bool, step: 
         excess = cdf[idx + 1] - cdf[idx] - 0.59
         # Spread the excess evenly over the remaining points
         span = len(cdf) - idx - 1
-        cdf[idx + 1:] -= excess * np.linspace(1, 0, span)
+        cdf[idx + 1 :] -= excess * np.linspace(1, 0, span)
         # Re-monotonise
-        cdf[idx + 1:] = np.maximum.accumulate(cdf[idx + 1:])
+        cdf[idx + 1 :] = np.maximum.accumulate(cdf[idx + 1 :])
 
     return cdf
 
 
 def generate_continuous_cdf(
-    percentile_values: Dict,
+    percentile_values: dict,
     open_upper_bound: bool,
     open_lower_bound: bool,
     upper_bound: float,
     lower_bound: float,
-    zero_point: Optional[float] = None,
+    zero_point: float | None = None,
     *,
     min_step: float = 5.0e-5,
     num_points: int = 201,
-) -> List[float]:
+) -> list[float]:
     """
     Generate a continuous CDF with strict enforcement of Metaculus requirements.
 
@@ -83,11 +84,15 @@ def generate_continuous_cdf(
         raise CDFGenerationError("Empty percentile values dictionary")
 
     if upper_bound <= lower_bound:
-        raise CDFGenerationError(f"Upper bound ({upper_bound}) must be greater than lower bound ({lower_bound})")
+        raise CDFGenerationError(
+            f"Upper bound ({upper_bound}) must be greater than lower bound ({lower_bound})"
+        )
 
     if zero_point is not None:
         if abs(zero_point - lower_bound) < 1e-6 or abs(zero_point - upper_bound) < 1e-6:
-            raise CDFGenerationError(f"zero_point ({zero_point}) too close to bounds [{lower_bound}, {upper_bound}]")
+            raise CDFGenerationError(
+                f"zero_point ({zero_point}) too close to bounds [{lower_bound}, {upper_bound}]"
+            )
 
     # Clean and validate percentile values
     pv = {}
@@ -120,13 +125,15 @@ def generate_continuous_cdf(
         pv[k] = v
 
     # Create arrays of percentiles and values
-    percentiles, values = zip(*sorted(pv.items()))
+    percentiles, values = zip(*sorted(pv.items()), strict=True)
     percentiles = np.array(percentiles) / 100.0  # Convert to [0,1] range
     values = np.array(values)
 
     # Check if values are strictly increasing after de-duplication
     if np.any(np.diff(values) <= 0):
-        raise CDFGenerationError("Percentile values must be strictly increasing after de-duplication")
+        raise CDFGenerationError(
+            "Percentile values must be strictly increasing after de-duplication"
+        )
 
     # Add boundary points if needed
     if not open_lower_bound and lower_bound < values[0] - 1e-9:
@@ -147,6 +154,7 @@ def generate_continuous_cdf(
     except Exception as e:
         # Fallback to linear interpolation
         logger.warning(f"PchipInterpolator failed ({e}), falling back to linear interpolation")
+
         def spline(x):
             return np.interp(x, x_vals, percentiles)
 
@@ -164,11 +172,12 @@ def generate_continuous_cdf(
             if abs(ratio - 1.0) < 1e-10:
                 return lower_bound + (upper_bound - lower_bound) * t
             else:
-                return np.array([
-                    lower_bound + (upper_bound - lower_bound) *
-                    ((ratio ** tt - 1) / (ratio - 1))
-                    for tt in t
-                ])
+                return np.array(
+                    [
+                        lower_bound + (upper_bound - lower_bound) * ((ratio**tt - 1) / (ratio - 1))
+                        for tt in t
+                    ]
+                )
 
     # Generate the grid and evaluate
     cdf_x = create_grid(num_points)
@@ -208,7 +217,9 @@ def generate_continuous_cdf(
 
             for i in range(overflow_idx, len(result)):
                 t = (i - overflow_idx) / max(1, steps_remaining - 1)
-                result[i] = min(1.0, result[overflow_idx - 1] + (1.0 - result[overflow_idx - 1]) * t)
+                result[i] = min(
+                    1.0, result[overflow_idx - 1] + (1.0 - result[overflow_idx - 1]) * t
+                )
 
             # Final check for minimum steps
             for i in range(overflow_idx, len(result)):
@@ -274,6 +285,8 @@ def generate_continuous_cdf(
     # Final validation
     if np.any(np.diff(cdf_y) < min_step - 1e-10):
         problematic_indices = np.where(np.diff(cdf_y) < min_step - 1e-10)[0]
-        raise CDFGenerationError(f"Failed to enforce minimum step size at indices: {problematic_indices}")
+        raise CDFGenerationError(
+            f"Failed to enforce minimum step size at indices: {problematic_indices}"
+        )
 
     return cdf_y.tolist()

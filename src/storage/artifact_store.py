@@ -22,13 +22,14 @@ Directory structure per question:
         metadata.json          # Config, costs, timing, analysis
 """
 
-import json
 import hashlib
+import json
 import logging
-from datetime import datetime, timezone
+from dataclasses import dataclass, field
+from datetime import UTC, datetime
 from pathlib import Path
-from typing import Any, Optional
-from dataclasses import dataclass, field, asdict
+from typing import Any
+
 import yaml
 
 logger = logging.getLogger(__name__)
@@ -37,6 +38,7 @@ logger = logging.getLogger(__name__)
 @dataclass
 class ForecastArtifacts:
     """Container for all artifacts from a single forecast."""
+
     question_id: int
     timestamp: str
     base_dir: Path
@@ -78,11 +80,9 @@ class ArtifactStore:
 
     def create_forecast_artifacts(self, question_id: int) -> ForecastArtifacts:
         """Create a new artifact container for a forecast."""
-        timestamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
+        timestamp = datetime.now(UTC).strftime("%Y%m%d_%H%M%S")
         return ForecastArtifacts(
-            question_id=question_id,
-            timestamp=timestamp,
-            base_dir=self.base_dir
+            question_id=question_id, timestamp=timestamp, base_dir=self.base_dir
         )
 
     # =========================================================================
@@ -232,7 +232,7 @@ class ArtifactStore:
         metadata = {
             "question_id": artifacts.question_id,
             "timestamp": artifacts.timestamp,
-            "created_at": datetime.now(timezone.utc).isoformat(),
+            "created_at": datetime.now(UTC).isoformat(),
             "config_hash": self._hash_config(config),
             "config_snapshot": config,
             "costs": costs,
@@ -287,7 +287,7 @@ class ArtifactStore:
         config_str = json.dumps(config, sort_keys=True, default=str)
         return hashlib.sha256(config_str.encode()).hexdigest()[:12]
 
-    def load_artifacts(self, question_id: int, timestamp: str) -> Optional[dict]:
+    def load_artifacts(self, question_id: int, timestamp: str) -> dict | None:
         """Load all artifacts for a previous forecast."""
         forecast_dir = self.base_dir / f"{question_id}_{timestamp}"
         if not forecast_dir.exists():
@@ -309,7 +309,7 @@ class ArtifactStore:
 
         return artifacts
 
-    def list_forecasts(self, question_id: Optional[int] = None) -> list[dict]:
+    def list_forecasts(self, question_id: int | None = None) -> list[dict]:
         """List all forecasts, optionally filtered by question ID."""
         forecasts = []
 
@@ -334,12 +334,14 @@ class ArtifactStore:
                     with open(metadata_path) as f:
                         metadata = json.load(f)
 
-                forecasts.append({
-                    "question_id": qid,
-                    "timestamp": timestamp,
-                    "directory": str(forecast_dir),
-                    "metadata": metadata,
-                })
+                forecasts.append(
+                    {
+                        "question_id": qid,
+                        "timestamp": timestamp,
+                        "directory": str(forecast_dir),
+                        "metadata": metadata,
+                    }
+                )
             except (ValueError, IndexError):
                 continue
 

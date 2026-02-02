@@ -2,18 +2,17 @@
 Tests for src/bot/metrics.py - Pipeline metrics dataclasses.
 """
 
-import pytest
 from src.bot.metrics import (
-    StepMetrics,
     AgentMetrics,
-    ResearchMetrics,
     PipelineMetrics,
+    ResearchMetrics,
+    StepMetrics,
 )
-
 
 # ============================================================================
 # StepMetrics Tests
 # ============================================================================
+
 
 class TestStepMetrics:
     """Tests for StepMetrics dataclass."""
@@ -66,6 +65,7 @@ class TestStepMetrics:
 # AgentMetrics Tests
 # ============================================================================
 
+
 class TestAgentMetrics:
     """Tests for AgentMetrics dataclass."""
 
@@ -100,6 +100,7 @@ class TestAgentMetrics:
 # ============================================================================
 # ResearchMetrics Tests
 # ============================================================================
+
 
 class TestResearchMetrics:
     """Tests for ResearchMetrics dataclass."""
@@ -181,6 +182,7 @@ class TestResearchMetrics:
 # ============================================================================
 # PipelineMetrics Tests
 # ============================================================================
+
 
 class TestPipelineMetrics:
     """Tests for PipelineMetrics dataclass."""

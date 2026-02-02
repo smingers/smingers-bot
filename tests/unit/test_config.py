@@ -10,9 +10,10 @@ Modes:
     - "live": production models, submits
 """
 
-import pytest
 import sys
 from pathlib import Path
+
+import pytest
 
 # Add project root to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
@@ -186,8 +187,7 @@ class TestConfigContract:
         """Test that active_agents is limited to 5 agents."""
         # Add more than 5 agents
         sample_config["ensemble"]["cheap"] = [
-            {"name": f"agent_{i}", "model": "test", "weight": 1.0}
-            for i in range(10)
+            {"name": f"agent_{i}", "model": "test", "weight": 1.0} for i in range(10)
         ]
         resolved = ResolvedConfig.from_dict(sample_config, mode="test")
 
@@ -222,7 +222,9 @@ class TestModeValidation:
 
         for mode, expected_submit in modes_and_submit:
             resolved = ResolvedConfig.from_dict(sample_config.copy(), mode=mode)
-            assert resolved.should_submit == expected_submit, f"Mode {mode} should_submit={expected_submit}"
+            assert resolved.should_submit == expected_submit, (
+                f"Mode {mode} should_submit={expected_submit}"
+            )
 
     def test_only_test_uses_cheap(self, sample_config):
         """Test that only test mode uses cheap models."""

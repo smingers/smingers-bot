@@ -7,11 +7,11 @@ Handles all interactions with the Metaculus API:
 - Getting question details
 """
 
-import os
 import logging
-from typing import Optional, Any, Literal
+import os
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import UTC, datetime
+from typing import Any, Literal
 
 import httpx
 
@@ -61,6 +61,7 @@ class MetaculusQuestion:
         zero_point: Reference point for log-scale questions
         cdf_size: Number of CDF points (201 for numeric, 102 for discrete)
     """
+
     id: int
     question_id: int
     title: str
@@ -70,33 +71,33 @@ class MetaculusQuestion:
     background_info: str  # Additional background information
     question_type: Literal["binary", "numeric", "discrete", "multiple_choice", "date"]
     created_at: str
-    open_time: Optional[str]  # When question opened for forecasting
-    scheduled_close_time: Optional[str]
-    scheduled_resolve_time: Optional[str]
+    open_time: str | None  # When question opened for forecasting
+    scheduled_close_time: str | None
+    scheduled_resolve_time: str | None
     status: str  # open, closed, resolved, etc.
 
     # Type-specific fields
-    possibilities: Optional[dict] = None  # For numeric: min, max, etc.
-    options: Optional[list[dict]] = None  # For multiple choice
+    possibilities: dict | None = None  # For numeric: min, max, etc.
+    options: list[dict] | None = None  # For multiple choice
 
     # Numeric question bounds
-    unit_of_measure: Optional[str] = None  # Units for numeric questions
-    upper_bound: Optional[float] = None  # Hard upper bound
-    lower_bound: Optional[float] = None  # Hard lower bound
-    open_upper_bound: Optional[bool] = None  # True if upper bound is soft (can exceed)
-    open_lower_bound: Optional[bool] = None  # True if lower bound is soft (can go below)
-    zero_point: Optional[float] = None  # For log-scale questions
-    nominal_upper_bound: Optional[float] = None  # Suggested upper bound (may be tighter)
-    nominal_lower_bound: Optional[float] = None  # Suggested lower bound (may be tighter)
+    unit_of_measure: str | None = None  # Units for numeric questions
+    upper_bound: float | None = None  # Hard upper bound
+    lower_bound: float | None = None  # Hard lower bound
+    open_upper_bound: bool | None = None  # True if upper bound is soft (can exceed)
+    open_lower_bound: bool | None = None  # True if lower bound is soft (can go below)
+    zero_point: float | None = None  # For log-scale questions
+    nominal_upper_bound: float | None = None  # Suggested upper bound (may be tighter)
+    nominal_lower_bound: float | None = None  # Suggested lower bound (may be tighter)
     cdf_size: int = 201  # CDF size: 201 for numeric, 102 for discrete
 
     # Date question fields (human-readable strings for prompts)
-    upper_bound_date_str: Optional[str] = None  # e.g., "2026-12-31"
-    lower_bound_date_str: Optional[str] = None  # e.g., "2025-01-01"
+    upper_bound_date_str: str | None = None  # e.g., "2026-12-31"
+    lower_bound_date_str: str | None = None  # e.g., "2025-01-01"
 
     # Community data
-    community_prediction: Optional[float] = None
-    num_forecasters: Optional[int] = None
+    community_prediction: float | None = None
+    num_forecasters: int | None = None
 
     # Raw data for reference
     raw: dict = None
@@ -171,9 +172,13 @@ class MetaculusQuestion:
             upper_bound = cls._parse_date_bound(upper_bound_raw)
             lower_bound = cls._parse_date_bound(lower_bound_raw)
             if upper_bound is not None:
-                upper_bound_date_str = datetime.fromtimestamp(upper_bound, tz=timezone.utc).strftime("%Y-%m-%d")
+                upper_bound_date_str = datetime.fromtimestamp(upper_bound, tz=UTC).strftime(
+                    "%Y-%m-%d"
+                )
             if lower_bound is not None:
-                lower_bound_date_str = datetime.fromtimestamp(lower_bound, tz=timezone.utc).strftime("%Y-%m-%d")
+                lower_bound_date_str = datetime.fromtimestamp(lower_bound, tz=UTC).strftime(
+                    "%Y-%m-%d"
+                )
         else:
             # Numeric bounds: just convert to float
             upper_bound = None
@@ -205,15 +210,22 @@ class MetaculusQuestion:
             id=post_id,
             question_id=question_id,
             title=data.get("title", ""),
-            description=data.get("description") or question_data.get("description") or "",  # Handle None, check nested
-            resolution_criteria=data.get("resolution_criteria") or question_data.get("resolution_criteria") or "",
+            description=data.get("description")
+            or question_data.get("description")
+            or "",  # Handle None, check nested
+            resolution_criteria=data.get("resolution_criteria")
+            or question_data.get("resolution_criteria")
+            or "",
             fine_print=data.get("fine_print") or question_data.get("fine_print") or "",
-            background_info=question_data.get("description") or "",  # Background is in nested question.description
+            background_info=question_data.get("description")
+            or "",  # Background is in nested question.description
             question_type=question_type,
             created_at=data.get("created_at", ""),
             open_time=data.get("open_time") or question_data.get("open_time"),
-            scheduled_close_time=data.get("scheduled_close_time") or question_data.get("scheduled_close_time"),
-            scheduled_resolve_time=data.get("scheduled_resolve_time") or question_data.get("scheduled_resolve_time"),
+            scheduled_close_time=data.get("scheduled_close_time")
+            or question_data.get("scheduled_close_time"),
+            scheduled_resolve_time=data.get("scheduled_resolve_time")
+            or question_data.get("scheduled_resolve_time"),
             status=status,
             possibilities=question_data.get("possibilities"),
             options=question_data.get("options"),
@@ -237,7 +249,7 @@ class MetaculusQuestion:
         )
 
     @classmethod
-    def _parse_date_bound(cls, value: Any) -> Optional[float]:
+    def _parse_date_bound(cls, value: Any) -> float | None:
         """Parse a date bound value to Unix timestamp (float).
 
         Date bounds can be:
@@ -261,19 +273,21 @@ class MetaculusQuestion:
 @dataclass
 class MyForecast:
     """Represents a forecast I've already made."""
+
     question_id: int
-    timestamp: Optional[datetime] = None  # When the forecast was made
+    timestamp: datetime | None = None  # When the forecast was made
 
 
 @dataclass
 class PredictionSubmission:
     """A prediction to submit to Metaculus."""
+
     question_id: int
     prediction: float | dict | list  # float for binary, dict for MC, list for numeric CDF
 
     # For tracking
-    submitted_at: Optional[str] = None
-    api_response: Optional[dict] = None
+    submitted_at: str | None = None
+    api_response: dict | None = None
 
 
 class MetaculusClient:
@@ -286,7 +300,7 @@ class MetaculusClient:
         await client.submit_prediction(question_id=12345, prediction=0.65)
     """
 
-    def __init__(self, token: Optional[str] = None):
+    def __init__(self, token: str | None = None):
         self.token = token or os.getenv("METACULUS_TOKEN")
         if not self.token:
             raise ValueError(
@@ -329,6 +343,7 @@ class MetaculusClient:
         # Extract question ID from URL
         # URLs look like: https://www.metaculus.com/questions/12345/...
         import re
+
         match = re.search(r"/questions/(\d+)", url)
         if not match:
             raise ValueError(f"Could not extract question ID from URL: {url}")
@@ -338,7 +353,7 @@ class MetaculusClient:
     async def get_tournament_questions(
         self,
         tournament_id: int | str,
-        status: Optional[str] = "open",
+        status: str | None = "open",
         limit: int = 100,
     ) -> list[MetaculusQuestion]:
         """
@@ -405,7 +420,7 @@ class MetaculusClient:
 
     async def get_my_forecasts(
         self,
-        tournament_id: Optional[int | str] = None,
+        tournament_id: int | str | None = None,
     ) -> dict[int, "MyForecast"]:
         """
         Get questions I've already forecasted on.
@@ -555,7 +570,9 @@ class MetaculusClient:
             "/questions/forecast/",
             json=payload,
         )
-        return self._handle_response(response, f"submitting multiple choice prediction for Q{question_id}")
+        return self._handle_response(
+            response, f"submitting multiple choice prediction for Q{question_id}"
+        )
 
     async def submit_prediction(
         self,
@@ -695,6 +712,6 @@ class MetaculusClient:
 
 
 # Convenience function for getting a configured client
-def get_client(token: Optional[str] = None) -> MetaculusClient:
+def get_client(token: str | None = None) -> MetaculusClient:
     """Get a Metaculus client, using env var if no token provided."""
     return MetaculusClient(token=token)

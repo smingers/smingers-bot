@@ -7,30 +7,34 @@ Enables queries like:
 - "What's my Brier score by question category?"
 """
 
-import aiosqlite
-from pathlib import Path
-from datetime import datetime, timezone
-from typing import Optional, Any
 from dataclasses import dataclass
+from datetime import UTC, datetime
+from pathlib import Path
+from typing import Any
+
+import aiosqlite
 
 
 @dataclass
 class ForecastRecord:
     """A single forecast record for the database."""
+
     id: str  # {question_id}_{timestamp}
     question_id: int
     timestamp: str
     question_type: str  # binary, numeric, multiple_choice
     question_title: str
-    base_rate: Optional[float]
+    base_rate: float | None
     final_prediction: float
-    actual_outcome: Optional[float] = None  # Filled after resolution
-    brier_score: Optional[float] = None  # Calculated after resolution
+    actual_outcome: float | None = None  # Filled after resolution
+    brier_score: float | None = None  # Calculated after resolution
     total_cost: float = 0.0
     config_hash: str = ""
-    tournament_id: Optional[int] = None
+    tournament_id: int | None = None
     mode: str = "unknown"  # test, preview, live
-    prediction_data: str = ""  # JSON: full prediction (percentiles for numeric, probabilities for MC)
+    prediction_data: str = (
+        ""  # JSON: full prediction (percentiles for numeric, probabilities for MC)
+    )
 
 
 @dataclass
@@ -47,6 +51,7 @@ class AgentPredictionRecord:
         reasoning_length: Character count of the agent's reasoning output
         prediction_data: JSON string with full prediction details (percentiles for numeric, etc.)
     """
+
     forecast_id: str
     agent_id: str
     model: str
@@ -59,6 +64,7 @@ class AgentPredictionRecord:
 @dataclass
 class ResearchSourceRecord:
     """Research source used in a forecast."""
+
     forecast_id: str
     source_type: str  # google, google_news, agent, asknews, etc.
     query: str
@@ -157,62 +163,71 @@ class ForecastDatabase:
     async def insert_forecast(self, record: ForecastRecord) -> None:
         """Insert a new forecast record."""
         async with aiosqlite.connect(self.db_path) as db:
-            await db.execute("""
+            await db.execute(
+                """
                 INSERT OR REPLACE INTO forecasts
                 (id, question_id, timestamp, question_type, question_title,
                  base_rate, final_prediction, actual_outcome, brier_score,
                  total_cost, config_hash, tournament_id, created_at, mode, prediction_data)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            """, (
-                record.id,
-                record.question_id,
-                record.timestamp,
-                record.question_type,
-                record.question_title,
-                record.base_rate,
-                record.final_prediction,
-                record.actual_outcome,
-                record.brier_score,
-                record.total_cost,
-                record.config_hash,
-                record.tournament_id,
-                datetime.now(timezone.utc).isoformat(),
-                record.mode,
-                record.prediction_data,
-            ))
+            """,
+                (
+                    record.id,
+                    record.question_id,
+                    record.timestamp,
+                    record.question_type,
+                    record.question_title,
+                    record.base_rate,
+                    record.final_prediction,
+                    record.actual_outcome,
+                    record.brier_score,
+                    record.total_cost,
+                    record.config_hash,
+                    record.tournament_id,
+                    datetime.now(UTC).isoformat(),
+                    record.mode,
+                    record.prediction_data,
+                ),
+            )
             await db.commit()
 
     async def insert_agent_prediction(self, record: AgentPredictionRecord) -> None:
         """Insert an agent's prediction."""
         async with aiosqlite.connect(self.db_path) as db:
-            await db.execute("""
+            await db.execute(
+                """
                 INSERT INTO agent_predictions
                 (forecast_id, agent_id, model, weight, prediction, reasoning_length, prediction_data)
                 VALUES (?, ?, ?, ?, ?, ?, ?)
-            """, (
-                record.forecast_id,
-                record.agent_id,
-                record.model,
-                record.weight,
-                record.prediction,
-                record.reasoning_length,
-                record.prediction_data,
-            ))
+            """,
+                (
+                    record.forecast_id,
+                    record.agent_id,
+                    record.model,
+                    record.weight,
+                    record.prediction,
+                    record.reasoning_length,
+                    record.prediction_data,
+                ),
+            )
             await db.commit()
 
     async def insert_research_source(self, record: ResearchSourceRecord) -> None:
         """Insert a research source record."""
         async with aiosqlite.connect(self.db_path) as db:
-            await db.execute("""
+            await db.execute(
+                """
                 INSERT INTO research_sources
                 (forecast_id, source_type, query, num_results)
                 VALUES (?, ?, ?, ?)
-            """, (
-                record.forecast_id,
-                record.source_type,
-                record.query,
-                record.num_results,
-            ))
+            """,
+                (
+                    record.forecast_id,
+                    record.source_type,
+                    record.query,
+                    record.num_results,
+                ),
+            )
             await db.commit()
 
     # =========================================================================
@@ -220,21 +235,21 @@ class ForecastDatabase:
     # =========================================================================
 
     async def update_outcome(
-        self,
-        question_id: int,
-        actual_outcome: float,
-        brier_score: Optional[float] = None
+        self, question_id: int, actual_outcome: float, brier_score: float | None = None
     ) -> int:
         """
         Update the actual outcome for all forecasts on a question.
         Returns number of rows updated.
         """
         async with aiosqlite.connect(self.db_path) as db:
-            cursor = await db.execute("""
+            cursor = await db.execute(
+                """
                 UPDATE forecasts
                 SET actual_outcome = ?, brier_score = ?
                 WHERE question_id = ?
-            """, (actual_outcome, brier_score, question_id))
+            """,
+                (actual_outcome, brier_score, question_id),
+            )
             await db.commit()
             return cursor.rowcount
 
@@ -242,14 +257,11 @@ class ForecastDatabase:
     # Query Operations
     # =========================================================================
 
-    async def get_forecast(self, forecast_id: str) -> Optional[dict]:
+    async def get_forecast(self, forecast_id: str) -> dict | None:
         """Get a single forecast by ID."""
         async with aiosqlite.connect(self.db_path) as db:
             db.row_factory = aiosqlite.Row
-            cursor = await db.execute(
-                "SELECT * FROM forecasts WHERE id = ?",
-                (forecast_id,)
-            )
+            cursor = await db.execute("SELECT * FROM forecasts WHERE id = ?", (forecast_id,))
             row = await cursor.fetchone()
             return dict(row) if row else None
 
@@ -259,7 +271,7 @@ class ForecastDatabase:
             db.row_factory = aiosqlite.Row
             cursor = await db.execute(
                 "SELECT * FROM forecasts WHERE question_id = ? ORDER BY timestamp DESC",
-                (question_id,)
+                (question_id,),
             )
             rows = await cursor.fetchall()
             return [dict(row) for row in rows]
@@ -269,8 +281,7 @@ class ForecastDatabase:
         async with aiosqlite.connect(self.db_path) as db:
             db.row_factory = aiosqlite.Row
             cursor = await db.execute(
-                "SELECT * FROM agent_predictions WHERE forecast_id = ?",
-                (forecast_id,)
+                "SELECT * FROM agent_predictions WHERE forecast_id = ?", (forecast_id,)
             )
             rows = await cursor.fetchall()
             return [dict(row) for row in rows]
@@ -279,7 +290,7 @@ class ForecastDatabase:
     # Analytics Queries
     # =========================================================================
 
-    async def get_agent_accuracy(self, question_type: Optional[str] = None) -> list[dict]:
+    async def get_agent_accuracy(self, question_type: str | None = None) -> list[dict]:
         """
         Get accuracy stats by agent/model.
         Only includes forecasts with resolved outcomes.
@@ -289,7 +300,8 @@ class ForecastDatabase:
 
         async with aiosqlite.connect(self.db_path) as db:
             db.row_factory = aiosqlite.Row
-            cursor = await db.execute(f"""
+            cursor = await db.execute(
+                f"""
                 SELECT
                     ap.agent_id,
                     ap.model,
@@ -302,7 +314,9 @@ class ForecastDatabase:
                 WHERE f.actual_outcome IS NOT NULL {type_filter}
                 GROUP BY ap.agent_id, ap.model
                 ORDER BY agent_brier ASC
-            """, params)
+            """,
+                params,
+            )
             rows = await cursor.fetchall()
             return [dict(row) for row in rows]
 
@@ -332,14 +346,15 @@ class ForecastDatabase:
             rows = await cursor.fetchall()
             return [dict(row) for row in rows]
 
-    async def get_brier_by_category(self, tournament_id: Optional[int] = None) -> list[dict]:
+    async def get_brier_by_category(self, tournament_id: int | None = None) -> list[dict]:
         """Get Brier scores grouped by question type."""
         tournament_filter = "AND tournament_id = ?" if tournament_id else ""
         params = (tournament_id,) if tournament_id else ()
 
         async with aiosqlite.connect(self.db_path) as db:
             db.row_factory = aiosqlite.Row
-            cursor = await db.execute(f"""
+            cursor = await db.execute(
+                f"""
                 SELECT
                     question_type,
                     COUNT(*) as num_forecasts,
@@ -350,18 +365,21 @@ class ForecastDatabase:
                 WHERE brier_score IS NOT NULL {tournament_filter}
                 GROUP BY question_type
                 ORDER BY avg_brier_score ASC
-            """, params)
+            """,
+                params,
+            )
             rows = await cursor.fetchall()
             return [dict(row) for row in rows]
 
-    async def get_cost_summary(self, tournament_id: Optional[int] = None) -> dict:
+    async def get_cost_summary(self, tournament_id: int | None = None) -> dict:
         """Get cost statistics."""
         tournament_filter = "WHERE tournament_id = ?" if tournament_id else ""
         params = (tournament_id,) if tournament_id else ()
 
         async with aiosqlite.connect(self.db_path) as db:
             db.row_factory = aiosqlite.Row
-            cursor = await db.execute(f"""
+            cursor = await db.execute(
+                f"""
                 SELECT
                     COUNT(*) as num_forecasts,
                     SUM(total_cost) as total_cost,
@@ -370,7 +388,9 @@ class ForecastDatabase:
                     MAX(total_cost) as max_cost
                 FROM forecasts
                 {tournament_filter}
-            """, params)
+            """,
+                params,
+            )
             row = await cursor.fetchone()
             return dict(row) if row else {}
 
@@ -378,19 +398,19 @@ class ForecastDatabase:
         """Get the most recent forecasts."""
         async with aiosqlite.connect(self.db_path) as db:
             db.row_factory = aiosqlite.Row
-            cursor = await db.execute("""
+            cursor = await db.execute(
+                """
                 SELECT * FROM forecasts
                 ORDER BY created_at DESC
                 LIMIT ?
-            """, (limit,))
+            """,
+                (limit,),
+            )
             rows = await cursor.fetchall()
             return [dict(row) for row in rows]
 
     async def get_forecasts_with_agents(
-        self,
-        mode: Optional[str] = None,
-        question_type: Optional[str] = None,
-        limit: int = 100
+        self, mode: str | None = None, question_type: str | None = None, limit: int = 100
     ) -> list[dict]:
         """
         Get forecasts with agent predictions for dashboard display.
@@ -412,7 +432,8 @@ class ForecastDatabase:
             where_clause = "WHERE " + " AND ".join(conditions) if conditions else ""
             params.append(limit)
 
-            cursor = await db.execute(f"""
+            cursor = await db.execute(
+                f"""
                 SELECT
                     f.id,
                     f.question_id,
@@ -440,17 +461,16 @@ class ForecastDatabase:
                 GROUP BY f.id
                 ORDER BY f.timestamp DESC
                 LIMIT ?
-            """, params)
+            """,
+                params,
+            )
             rows = await cursor.fetchall()
             return [dict(row) for row in rows]
 
     async def update_forecast_mode(self, forecast_id: str, mode: str) -> None:
         """Update the mode for a specific forecast."""
         async with aiosqlite.connect(self.db_path) as db:
-            await db.execute(
-                "UPDATE forecasts SET mode = ? WHERE id = ?",
-                (mode, forecast_id)
-            )
+            await db.execute("UPDATE forecasts SET mode = ? WHERE id = ?", (mode, forecast_id))
             await db.commit()
 
     async def update_forecast_prediction_data(self, forecast_id: str, prediction_data: str) -> None:
@@ -458,7 +478,7 @@ class ForecastDatabase:
         async with aiosqlite.connect(self.db_path) as db:
             await db.execute(
                 "UPDATE forecasts SET prediction_data = ? WHERE id = ?",
-                (prediction_data, forecast_id)
+                (prediction_data, forecast_id),
             )
             await db.commit()
 
@@ -469,6 +489,6 @@ class ForecastDatabase:
         async with aiosqlite.connect(self.db_path) as db:
             await db.execute(
                 "UPDATE agent_predictions SET prediction_data = ? WHERE forecast_id = ? AND agent_id = ?",
-                (prediction_data, forecast_id, agent_id)
+                (prediction_data, forecast_id, agent_id),
             )
             await db.commit()

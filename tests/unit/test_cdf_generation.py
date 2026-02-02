@@ -11,23 +11,22 @@ And src/bot/extractors.py:
 These are critical for Metaculus submission validity.
 """
 
-import pytest
 import numpy as np
-from typing import Dict
+import pytest
 
 from src.bot.cdf import (
-    generate_continuous_cdf,
     _safe_cdf_bounds,
+    generate_continuous_cdf,
 )
-from src.bot.extractors import enforce_strict_increasing
 from src.bot.exceptions import CDFGenerationError
+from src.bot.extractors import enforce_strict_increasing
 
 
 class TestGenerateContinuousCDF:
     """Tests for generate_continuous_cdf()"""
 
     @pytest.fixture
-    def simple_percentiles(self) -> Dict[int, float]:
+    def simple_percentiles(self) -> dict[int, float]:
         """Simple increasing percentiles for testing."""
         return {
             1: 10,
@@ -58,7 +57,7 @@ class TestGenerateContinuousCDF:
             lower_bound=0,
         )
         for i in range(len(cdf) - 1):
-            assert cdf[i] <= cdf[i + 1], f"CDF not monotonic at index {i}: {cdf[i]} > {cdf[i+1]}"
+            assert cdf[i] <= cdf[i + 1], f"CDF not monotonic at index {i}: {cdf[i]} > {cdf[i + 1]}"
 
     def test_values_in_valid_range(self, simple_percentiles):
         """Test that all CDF values are in [0, 1]."""
@@ -97,7 +96,9 @@ class TestGenerateContinuousCDF:
         # Closed lower bound: first value == 0
         assert cdf[0] == 0.0, f"Closed lower bound violated: {cdf[0]} != 0"
         # Closed upper bound: last value ≈ 1 (floating point tolerance)
-        assert cdf[-1] == pytest.approx(1.0, abs=1e-9), f"Closed upper bound violated: {cdf[-1]} != 1"
+        assert cdf[-1] == pytest.approx(1.0, abs=1e-9), (
+            f"Closed upper bound violated: {cdf[-1]} != 1"
+        )
 
     def test_max_step_constraint(self, simple_percentiles):
         """Test that no single step exceeds 0.59 (Metaculus requirement)."""
@@ -273,6 +274,7 @@ class TestEnforceStrictIncreasing:
     def test_inverted_values_raises_error(self):
         """Test that fully inverted percentiles raise an error."""
         import pytest
+
         from src.bot.exceptions import ExtractionError
 
         pct = {1: 100, 50: 50, 99: 10}  # Inverted - P1 > P99
@@ -290,7 +292,7 @@ class TestDiscreteCDF:
     """Tests for discrete question CDF generation (102 points instead of 201)."""
 
     @pytest.fixture
-    def simple_percentiles(self) -> Dict[int, float]:
+    def simple_percentiles(self) -> dict[int, float]:
         """Simple increasing percentiles for testing."""
         return {
             1: 10,
@@ -472,7 +474,29 @@ class TestCDFEdgeCases:
     def test_many_percentiles(self):
         """Test with many percentile points."""
         # Use all valid percentile keys
-        valid_keys = [1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 99]
+        valid_keys = [
+            1,
+            5,
+            10,
+            15,
+            20,
+            25,
+            30,
+            35,
+            40,
+            45,
+            50,
+            55,
+            60,
+            65,
+            70,
+            75,
+            80,
+            85,
+            90,
+            95,
+            99,
+        ]
         percentiles = {k: k for k in valid_keys}  # Linear distribution
         cdf = generate_continuous_cdf(
             percentile_values=percentiles,

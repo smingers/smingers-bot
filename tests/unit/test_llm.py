@@ -7,26 +7,26 @@ Tests cover:
 - Response handling
 """
 
-import pytest
 from unittest.mock import AsyncMock, MagicMock, patch
-from dataclasses import dataclass
 
+import pytest
+
+from src.bot.exceptions import LLMError
 from src.utils.llm import (
+    MODEL_COSTS,
+    CostTracker,
+    LLMCall,
     LLMClient,
     LLMResponse,
-    LLMCall,
-    CostTracker,
     estimate_cost,
     get_cost_tracker,
     reset_cost_tracker,
-    MODEL_COSTS,
 )
-from src.bot.exceptions import LLMError
-
 
 # ============================================================================
 # Cost Estimation Tests
 # ============================================================================
+
 
 class TestEstimateCost:
     """Tests for estimate_cost() function."""
@@ -43,7 +43,9 @@ class TestEstimateCost:
 
     def test_estimate_cost_openrouter_model(self):
         """OpenRouter models use correct pricing."""
-        cost = estimate_cost("openrouter/anthropic/claude-3.5-haiku", input_tokens=10000, output_tokens=5000)
+        cost = estimate_cost(
+            "openrouter/anthropic/claude-3.5-haiku", input_tokens=10000, output_tokens=5000
+        )
 
         # Pricing: input=0.80, output=4.0 per 1M tokens
         expected_input = 0.01 * 0.80
@@ -69,6 +71,7 @@ class TestEstimateCost:
 # ============================================================================
 # CostTracker Tests
 # ============================================================================
+
 
 class TestCostTracker:
     """Tests for CostTracker class."""
@@ -118,7 +121,7 @@ class TestCostTracker:
         """Multiple calls accumulate costs."""
         tracker = CostTracker()
 
-        for i in range(3):
+        for _ in range(3):
             response = LLMResponse(
                 content="test",
                 model="test",
@@ -184,6 +187,7 @@ class TestCostTracker:
 # LLMClient Retry Tests
 # ============================================================================
 
+
 class TestLLMClientRetry:
     """Tests for LLMClient retry logic."""
 
@@ -195,9 +199,13 @@ class TestLLMClientRetry:
         mock_response.usage = MagicMock(prompt_tokens=10, completion_tokens=20)
         mock_response.model_dump = MagicMock(return_value={})
 
-        with patch('src.utils.llm.acompletion', AsyncMock(return_value=mock_response)) as mock_complete:
+        with patch(
+            "src.utils.llm.acompletion", AsyncMock(return_value=mock_response)
+        ) as mock_complete:
             client = LLMClient(max_retries=3)
-            response = await client.complete(model="test-model", messages=[{"role": "user", "content": "Hi"}])
+            response = await client.complete(
+                model="test-model", messages=[{"role": "user", "content": "Hi"}]
+            )
 
             assert response.content == "Success"
             assert mock_complete.call_count == 1
@@ -211,13 +219,20 @@ class TestLLMClientRetry:
         mock_response.model_dump = MagicMock(return_value={})
 
         # Fail twice, then succeed
-        with patch('src.utils.llm.acompletion', AsyncMock(side_effect=[
-            RuntimeError("Error 1"),
-            RuntimeError("Error 2"),
-            mock_response,
-        ])) as mock_complete:
+        with patch(
+            "src.utils.llm.acompletion",
+            AsyncMock(
+                side_effect=[
+                    RuntimeError("Error 1"),
+                    RuntimeError("Error 2"),
+                    mock_response,
+                ]
+            ),
+        ) as mock_complete:
             client = LLMClient(max_retries=3, retry_delay=0.01)
-            response = await client.complete(model="test-model", messages=[{"role": "user", "content": "Hi"}])
+            response = await client.complete(
+                model="test-model", messages=[{"role": "user", "content": "Hi"}]
+            )
 
             assert response.content == "Success"
             assert mock_complete.call_count == 3
@@ -225,11 +240,15 @@ class TestLLMClientRetry:
     @pytest.mark.asyncio
     async def test_raises_after_max_retries(self):
         """Raises LLMError after exhausting retries."""
-        with patch('src.utils.llm.acompletion', AsyncMock(side_effect=RuntimeError("Persistent error"))):
+        with patch(
+            "src.utils.llm.acompletion", AsyncMock(side_effect=RuntimeError("Persistent error"))
+        ):
             client = LLMClient(max_retries=3, retry_delay=0.01)
 
             with pytest.raises(LLMError) as exc_info:
-                await client.complete(model="test-model", messages=[{"role": "user", "content": "Hi"}])
+                await client.complete(
+                    model="test-model", messages=[{"role": "user", "content": "Hi"}]
+                )
 
             assert exc_info.value.attempts == 3
             assert "Persistent error" in str(exc_info.value.last_error)
@@ -244,9 +263,11 @@ class TestLLMClientRetry:
         mock_response.usage = MagicMock(prompt_tokens=1000, completion_tokens=500)
         mock_response.model_dump = MagicMock(return_value={})
 
-        with patch('src.utils.llm.acompletion', AsyncMock(return_value=mock_response)):
+        with patch("src.utils.llm.acompletion", AsyncMock(return_value=mock_response)):
             client = LLMClient()
-            await client.complete(model="claude-3-haiku-20240307", messages=[{"role": "user", "content": "Hi"}])
+            await client.complete(
+                model="claude-3-haiku-20240307", messages=[{"role": "user", "content": "Hi"}]
+            )
 
             tracker = get_cost_tracker()
             assert tracker.total_input_tokens == 1000
@@ -256,11 +277,13 @@ class TestLLMClientRetry:
     @pytest.mark.asyncio
     async def test_logs_failed_call(self):
         """Failed calls recorded in call_history."""
-        with patch('src.utils.llm.acompletion', AsyncMock(side_effect=RuntimeError("API Error"))):
+        with patch("src.utils.llm.acompletion", AsyncMock(side_effect=RuntimeError("API Error"))):
             client = LLMClient(max_retries=1, retry_delay=0.01)
 
             with pytest.raises(LLMError):
-                await client.complete(model="test-model", messages=[{"role": "user", "content": "Hi"}])
+                await client.complete(
+                    model="test-model", messages=[{"role": "user", "content": "Hi"}]
+                )
 
             assert len(client.call_history) == 1
             assert client.call_history[0].error is not None
@@ -270,6 +293,7 @@ class TestLLMClientRetry:
 # ============================================================================
 # LLMClient Session Tests
 # ============================================================================
+
 
 class TestLLMClientSession:
     """Tests for LLMClient session management."""
@@ -282,10 +306,12 @@ class TestLLMClientSession:
         mock_response.usage = MagicMock(prompt_tokens=100, completion_tokens=50)
         mock_response.model_dump = MagicMock(return_value={})
 
-        with patch('src.utils.llm.acompletion', AsyncMock(return_value=mock_response)):
+        with patch("src.utils.llm.acompletion", AsyncMock(return_value=mock_response)):
             client = LLMClient()
             await client.complete(model="test-model", messages=[{"role": "user", "content": "Hi"}])
-            await client.complete(model="test-model", messages=[{"role": "user", "content": "Hello"}])
+            await client.complete(
+                model="test-model", messages=[{"role": "user", "content": "Hello"}]
+            )
 
             costs = client.get_session_costs()
 
@@ -312,11 +338,10 @@ class TestLLMClientSession:
         mock_response.usage = MagicMock(prompt_tokens=10, completion_tokens=10)
         mock_response.model_dump = MagicMock(return_value={})
 
-        with patch('src.utils.llm.acompletion', AsyncMock(return_value=mock_response)):
+        with patch("src.utils.llm.acompletion", AsyncMock(return_value=mock_response)):
             client = LLMClient()
             await client.complete(
-                model="test-model",
-                messages=[{"role": "user", "content": "Test prompt"}]
+                model="test-model", messages=[{"role": "user", "content": "Test prompt"}]
             )
 
             prompt, response = client.get_prompt_and_response()
@@ -329,6 +354,7 @@ class TestLLMClientSession:
 # ============================================================================
 # Global Tracker Tests
 # ============================================================================
+
 
 class TestGlobalTracker:
     """Tests for global cost tracker functions."""
@@ -363,6 +389,7 @@ class TestGlobalTracker:
 # MODEL_COSTS Tests
 # ============================================================================
 
+
 class TestModelCosts:
     """Tests for MODEL_COSTS constant."""
 
@@ -385,6 +412,7 @@ class TestModelCosts:
 # ============================================================================
 # LLMResponse Tests
 # ============================================================================
+
 
 class TestLLMResponse:
     """Tests for LLMResponse dataclass."""
@@ -421,7 +449,7 @@ class TestLLMResponse:
         )
 
         # If total_tokens property exists
-        if hasattr(response, 'total_tokens'):
+        if hasattr(response, "total_tokens"):
             assert response.total_tokens == 150
 
 
@@ -466,6 +494,7 @@ class TestLLMCall:
 # ============================================================================
 # Cost Calculation Tests
 # ============================================================================
+
 
 class TestCostCalculations:
     """Additional tests for cost calculation edge cases."""
@@ -528,6 +557,7 @@ class TestCostCalculations:
 # LLMClient Additional Tests
 # ============================================================================
 
+
 class TestLLMClientAdditional:
     """Additional tests for LLMClient functionality."""
 
@@ -539,11 +569,10 @@ class TestLLMClientAdditional:
         mock_response.usage = MagicMock(prompt_tokens=10, completion_tokens=0)
         mock_response.model_dump = MagicMock(return_value={})
 
-        with patch('src.utils.llm.acompletion', AsyncMock(return_value=mock_response)):
+        with patch("src.utils.llm.acompletion", AsyncMock(return_value=mock_response)):
             client = LLMClient()
             response = await client.complete(
-                model="test-model",
-                messages=[{"role": "user", "content": "Hi"}]
+                model="test-model", messages=[{"role": "user", "content": "Hi"}]
             )
 
             assert response.content == ""
@@ -564,7 +593,9 @@ class TestLLMClientAdditional:
             {"role": "user", "content": "How are you?"},
         ]
 
-        with patch('src.utils.llm.acompletion', AsyncMock(return_value=mock_response)) as mock_complete:
+        with patch(
+            "src.utils.llm.acompletion", AsyncMock(return_value=mock_response)
+        ) as mock_complete:
             client = LLMClient()
             await client.complete(model="test-model", messages=messages)
 
@@ -579,13 +610,12 @@ class TestLLMClientAdditional:
         mock_response.usage = MagicMock(prompt_tokens=10, completion_tokens=20)
         mock_response.model_dump = MagicMock(return_value={})
 
-        with patch('src.utils.llm.acompletion', AsyncMock(return_value=mock_response)):
+        with patch("src.utils.llm.acompletion", AsyncMock(return_value=mock_response)):
             client = LLMClient()
 
             for _ in range(5):
                 await client.complete(
-                    model="test-model",
-                    messages=[{"role": "user", "content": "Hi"}]
+                    model="test-model", messages=[{"role": "user", "content": "Hi"}]
                 )
 
             assert len(client.call_history) == 5
@@ -631,9 +661,11 @@ class TestLLMClientTimeout:
                 await asyncio.sleep(10)  # Will timeout
             return mock_response
 
-        with patch('src.utils.llm.acompletion', mock_acompletion):
+        with patch("src.utils.llm.acompletion", mock_acompletion):
             client = LLMClient(timeout_seconds=0.1, max_retries=2, retry_delay=0.01)
-            response = await client.complete(model="test-model", messages=[{"role": "user", "content": "Hi"}])
+            response = await client.complete(
+                model="test-model", messages=[{"role": "user", "content": "Hi"}]
+            )
 
             assert response.content == "Success"
             assert call_count == 2  # First timed out, second succeeded
@@ -646,11 +678,13 @@ class TestLLMClientTimeout:
         async def always_slow(*args, **kwargs):
             await asyncio.sleep(10)
 
-        with patch('src.utils.llm.acompletion', always_slow):
+        with patch("src.utils.llm.acompletion", always_slow):
             client = LLMClient(timeout_seconds=0.05, max_retries=2, retry_delay=0.01)
 
             with pytest.raises(LLMError) as exc_info:
-                await client.complete(model="test-model", messages=[{"role": "user", "content": "Hi"}])
+                await client.complete(
+                    model="test-model", messages=[{"role": "user", "content": "Hi"}]
+                )
 
             assert "Timeout after" in str(exc_info.value.last_error)
             assert exc_info.value.attempts == 2

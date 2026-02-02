@@ -11,20 +11,19 @@ Usage:
   python run_bot.py --tournament 32917 --strategy reforecast --reforecast-days 7
 """
 
-import asyncio
 import argparse
+import asyncio
 import logging
-import os
 import sys
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 
-from src.bot.forecaster import Forecaster
 from src.bot import ExtractionError, SubmissionError
+from src.bot.forecaster import Forecaster
 from src.config import ResolvedConfig
-from src.runner import run_forecasts, format_prediction
+from src.runner import format_prediction, run_forecasts
 from src.utils.metaculus_api import MetaculusClient
 
 logger = logging.getLogger(__name__)
@@ -80,11 +79,13 @@ async def run_forecast(
             for q in questions:
                 if q.id not in forecasted_ids:
                     questions_to_forecast.append(q)
-            logger.info(f"new-only strategy: {len(questions_to_forecast)} new questions to forecast")
+            logger.info(
+                f"new-only strategy: {len(questions_to_forecast)} new questions to forecast"
+            )
 
         elif strategy == "reforecast":
             # Reforecast strategy: new questions + old forecasts needing update
-            cutoff = datetime.now(timezone.utc) - timedelta(days=reforecast_days)
+            cutoff = datetime.now(UTC) - timedelta(days=reforecast_days)
 
             for q in questions:
                 if q.id not in forecasted_ids:
@@ -100,15 +101,16 @@ async def run_forecast(
                         # No timestamp available, include to be safe
                         questions_to_forecast.append(q)
 
-            logger.info(f"reforecast strategy: {len(questions_to_forecast)} questions "
-                       f"(new + older than {reforecast_days} days)")
+            logger.info(
+                f"reforecast strategy: {len(questions_to_forecast)} questions "
+                f"(new + older than {reforecast_days} days)"
+            )
 
         if not questions_to_forecast:
             logger.info("No questions need forecasting. Exiting.")
             return 0
 
     # Forecast questions using shared runner
-    new_questions_count = len(questions_to_forecast)
     questions_to_process = questions_to_forecast[:limit]
     logger.info(f"Processing {len(questions_to_process)} questions (limit: {limit})")
 
@@ -149,55 +151,57 @@ async def run_forecast(
         sys.exit(1)
     elif result.has_critical_errors:
         if result.has_extraction_errors:
-            logger.error(f"{result.extraction_error_count} extraction error(s) - these questions need attention!")
+            logger.error(
+                f"{result.extraction_error_count} extraction error(s) - these questions need attention!"
+            )
         if result.has_submission_errors:
-            logger.error(f"{result.submission_error_count} submission error(s) - forecasts generated but NOT submitted!")
+            logger.error(
+                f"{result.submission_error_count} submission error(s) - forecasts generated but NOT submitted!"
+            )
         sys.exit(1)
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="GitHub Actions forecasting entry point"
-    )
+    parser = argparse.ArgumentParser(description="GitHub Actions forecasting entry point")
     parser.add_argument(
-        "--tournament", "-t",
+        "--tournament",
+        "-t",
         required=True,
-        help="Tournament ID or slug (e.g., 32916, spring-aib-2026)"
+        help="Tournament ID or slug (e.g., 32916, spring-aib-2026)",
     )
     parser.add_argument(
-        "--strategy", "-s",
+        "--strategy",
+        "-s",
         choices=["new-only", "reforecast"],
         default="new-only",
-        help="new-only=forecast new questions only, reforecast=new+refresh old"
+        help="new-only=forecast new questions only, reforecast=new+refresh old",
     )
     parser.add_argument(
         "--reforecast-days",
         type=int,
         default=7,
-        help="Re-forecast if older than this many days (reforecast strategy only)"
+        help="Re-forecast if older than this many days (reforecast strategy only)",
     )
     parser.add_argument(
-        "--limit",
-        type=int,
-        default=50,
-        help="Maximum questions to forecast per run"
+        "--limit", type=int, default=50, help="Maximum questions to forecast per run"
     )
 
     args = parser.parse_args()
 
     logging.basicConfig(
-        level=logging.INFO,
-        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+        level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
     )
     # Suppress noisy trafilatura warnings (failed scrapes are handled gracefully)
     logging.getLogger("trafilatura").setLevel(logging.CRITICAL)
 
-    asyncio.run(run_forecast(
-        tournament_id=args.tournament,
-        strategy=args.strategy,
-        reforecast_days=args.reforecast_days,
-        limit=args.limit,
-    ))
+    asyncio.run(
+        run_forecast(
+            tournament_id=args.tournament,
+            strategy=args.strategy,
+            reforecast_days=args.reforecast_days,
+            limit=args.limit,
+        )
+    )
 
 
 if __name__ == "__main__":

@@ -16,16 +16,17 @@ import asyncio
 import logging
 import time
 from abc import ABC, abstractmethod
+from collections.abc import Callable
 from datetime import datetime
-from typing import Any, Callable, Dict, List, Optional, Tuple
+from typing import Any
 
-from ..utils.llm import LLMClient, get_cost_tracker
 from ..storage.artifact_store import ArtifactStore
-from .handler_mixin import ForecasterMixin
+from ..utils.llm import LLMClient, get_cost_tracker
 from .extractors import AgentResult
-from .search import SearchPipeline, QuestionDetails
+from .handler_mixin import ForecasterMixin
+from .metrics import AgentMetrics, PipelineMetrics, ResearchMetrics
 from .prompts import CLAUDE_CONTEXT, GPT_CONTEXT
-from .metrics import PipelineMetrics, AgentMetrics, StepMetrics, ResearchMetrics
+from .search import QuestionDetails, SearchPipeline
 
 logger = logging.getLogger(__name__)
 
@@ -80,8 +81,8 @@ class BaseForecaster(ForecasterMixin, ABC):
     def __init__(
         self,
         config: dict,
-        llm_client: Optional[LLMClient] = None,
-        artifact_store: Optional[ArtifactStore] = None,
+        llm_client: LLMClient | None = None,
+        artifact_store: ArtifactStore | None = None,
     ):
         """
         Initialize the forecaster.
@@ -99,7 +100,7 @@ class BaseForecaster(ForecasterMixin, ABC):
             self.llm = LLMClient(timeout_seconds=llm_timeout)
         self.artifact_store = artifact_store
 
-    def _get_common_prompt_params(self, **question_params) -> Dict[str, str]:
+    def _get_common_prompt_params(self, **question_params) -> dict[str, str]:
         """
         Extract common prompt parameters used across all question types.
 
@@ -176,7 +177,9 @@ class BaseForecaster(ForecasterMixin, ABC):
         step1_end_cost = snapshot_cost("step1_query_generation", pipeline_start_cost)
 
         if self.artifact_store:
-            self.artifact_store.save_query_generation("historical", historical_prompt, historical_output)
+            self.artifact_store.save_query_generation(
+                "historical", historical_prompt, historical_output
+            )
             self.artifact_store.save_query_generation("current", current_prompt, current_output)
 
         # =========================================================================
@@ -210,8 +213,12 @@ class BaseForecaster(ForecasterMixin, ABC):
         step2_end_cost = snapshot_cost("step2_search", step1_end_cost)
 
         # Store research metadata
-        metrics.centralized_research["historical"] = ResearchMetrics.from_search_metadata(historical_metadata)
-        metrics.centralized_research["current"] = ResearchMetrics.from_search_metadata(current_metadata)
+        metrics.centralized_research["historical"] = ResearchMetrics.from_search_metadata(
+            historical_metadata
+        )
+        metrics.centralized_research["current"] = ResearchMetrics.from_search_metadata(
+            current_metadata
+        )
 
         if self.artifact_store:
             self.artifact_store.save_search_results("historical", {"context": historical_context})
@@ -226,7 +233,7 @@ class BaseForecaster(ForecasterMixin, ABC):
 
         # Initialize agent metrics
         for i, agent in enumerate(agents):
-            agent_id = f"forecaster_{i+1}"
+            agent_id = f"forecaster_{i + 1}"
             metrics.agents[agent_id] = AgentMetrics(
                 model=agent["model"],
                 weight=agent["weight"],
@@ -238,7 +245,7 @@ class BaseForecaster(ForecasterMixin, ABC):
 
         step1_tasks = []
         step1_timings = []
-        for i, agent in enumerate(agents):
+        for agent in agents:
             model = agent["model"]
             system_prompt = CLAUDE_CONTEXT if "claude" in model.lower() else GPT_CONTEXT
 
@@ -254,18 +261,18 @@ class BaseForecaster(ForecasterMixin, ABC):
         step1_outputs = []
 
         for i, result in enumerate(step1_results):
-            agent_id = f"forecaster_{i+1}"
+            agent_id = f"forecaster_{i + 1}"
             duration = time.time() - step1_timings[i]
             step1_metrics = metrics.agents[agent_id].step1
 
             if isinstance(result, Exception):
-                log(f"\nForecaster_{i+1} step 1 ERROR: {result}")
+                log(f"\nForecaster_{i + 1} step 1 ERROR: {result}")
                 step1_outputs.append(f"Error: {result}")
                 step1_metrics.error = str(result)
                 step1_metrics.duration_seconds = duration
             else:
                 output, response_metadata = result
-                log(f"\nForecaster_{i+1} step 1 output:\n{output[:300]}...")
+                log(f"\nForecaster_{i + 1} step 1 output:\n{output[:300]}...")
                 step1_outputs.append(output)
 
                 # Track LLM metrics
@@ -327,7 +334,7 @@ class BaseForecaster(ForecasterMixin, ABC):
         step2_outputs = []
 
         for i, result in enumerate(step2_results):
-            agent_id = f"forecaster_{i+1}"
+            agent_id = f"forecaster_{i + 1}"
             duration = time.time() - step2_timings[i]
             step2_metrics = metrics.agents[agent_id].step2
 
@@ -345,7 +352,7 @@ class BaseForecaster(ForecasterMixin, ABC):
                 step2_metrics.cost = response_metadata.get("cost", 0.0)
                 step2_metrics.duration_seconds = duration
 
-        step5_end_cost = snapshot_cost("step5_inside_view", step3_end_cost)
+        snapshot_cost("step5_inside_view", step3_end_cost)
 
         # =========================================================================
         # STEP 6: Extract predictions and aggregate
@@ -354,27 +361,29 @@ class BaseForecaster(ForecasterMixin, ABC):
 
         agent_results = []
 
-        for i, (agent, output) in enumerate(zip(agents, step2_outputs)):
+        for i, (agent, output) in enumerate(zip(agents, step2_outputs, strict=True)):
             if isinstance(output, Exception):
-                log(f"\nForecaster_{i+1} step 2 ERROR: {output}")
+                log(f"\nForecaster_{i + 1} step 2 ERROR: {output}")
                 prediction = None
                 error = str(output)
             else:
-                log(f"\nForecaster_{i+1} step 2 output:\n{output[:300]}...")
+                log(f"\nForecaster_{i + 1} step 2 output:\n{output[:300]}...")
                 try:
                     prediction = self._extract_prediction(output, **question_params)
-                    log(f"Forecaster_{i+1} prediction: {prediction}")
+                    log(f"Forecaster_{i + 1} prediction: {prediction}")
                     error = None
                 except Exception as e:
-                    log(f"Forecaster_{i+1} extraction error: {e}")
+                    log(f"Forecaster_{i + 1} extraction error: {e}")
                     prediction = None
                     error = str(e)
 
             agent_result = self._build_agent_result(
-                agent_id=f"forecaster_{i+1}",
+                agent_id=f"forecaster_{i + 1}",
                 model=agent["model"],
                 weight=agent["weight"],
-                step1_output=step1_outputs[i] if not isinstance(step1_outputs[i], Exception) else "",
+                step1_output=step1_outputs[i]
+                if not isinstance(step1_outputs[i], Exception)
+                else "",
                 step2_output=output if not isinstance(output, Exception) else "",
                 prediction=prediction,
                 error=error,
@@ -443,14 +452,16 @@ class BaseForecaster(ForecasterMixin, ABC):
         prompt_historical: str,
         prompt_current: str,
         **question_params,
-    ) -> Tuple[str, str]:
+    ) -> tuple[str, str]:
         """
         Format query generation prompts with question parameters.
 
         Default implementation uses common fields. Override for custom formatting.
         """
         # Use background_info if available, fall back to question_text
-        background = question_params.get("background_info", "") or question_params.get("question_text", "")
+        background = question_params.get("background_info", "") or question_params.get(
+            "question_text", ""
+        )
 
         historical = prompt_historical.format(
             title=question_params.get("question_title", ""),
@@ -473,7 +484,7 @@ class BaseForecaster(ForecasterMixin, ABC):
         return historical, current
 
     @abstractmethod
-    def _get_prompt_templates(self) -> Tuple[str, str, str, str]:
+    def _get_prompt_templates(self) -> tuple[str, str, str, str]:
         """
         Return the 4 prompt templates for this question type.
 
@@ -555,8 +566,8 @@ class BaseForecaster(ForecasterMixin, ABC):
     @abstractmethod
     def _aggregate_results(
         self,
-        agent_results: List[AgentResult],
-        agents: List[Dict],
+        agent_results: list[AgentResult],
+        agents: list[dict],
         log: Callable[[str], Any],
     ) -> Any:
         """
@@ -584,7 +595,7 @@ class BaseForecaster(ForecasterMixin, ABC):
         step1_output: str,
         step2_output: str,
         prediction: Any,
-        error: Optional[str],
+        error: str | None,
     ) -> AgentResult:
         """
         Build an AgentResult with type-specific prediction field.
@@ -607,10 +618,10 @@ class BaseForecaster(ForecasterMixin, ABC):
     def _build_result(
         self,
         final_prediction: Any,
-        agent_results: List[AgentResult],
+        agent_results: list[AgentResult],
         historical_context: str,
         current_context: str,
-        agents: List[Dict],
+        agents: list[dict],
         **question_params,
     ) -> Any:
         """
@@ -629,7 +640,7 @@ class BaseForecaster(ForecasterMixin, ABC):
         """
         pass
 
-    def _get_extracted_data(self, result: AgentResult) -> Dict:
+    def _get_extracted_data(self, result: AgentResult) -> dict:
         """
         Get data to save for extracted prediction artifact.
 
@@ -642,10 +653,10 @@ class BaseForecaster(ForecasterMixin, ABC):
 
     def _get_aggregation_data(
         self,
-        agent_results: List[AgentResult],
-        agents: List[Dict],
+        agent_results: list[AgentResult],
+        agents: list[dict],
         final_prediction: Any,
-    ) -> Dict:
+    ) -> dict:
         """
         Get data to save for aggregation artifact.
 

@@ -7,18 +7,18 @@ Usage:
 
 import json
 import sys
-from pathlib import Path
 from collections import Counter
+from pathlib import Path
 
 
 def analyze_tool_usage(tool_usage_path: Path):
     """Analyze and print summary of tool usage."""
-    with open(tool_usage_path, 'r') as f:
+    with open(tool_usage_path) as f:
         data = json.load(f)
 
-    print(f"\n{'='*70}")
+    print(f"\n{'=' * 70}")
     print(f"TOOL USAGE ANALYSIS: {tool_usage_path.parent.name}")
-    print(f"{'='*70}\n")
+    print(f"{'=' * 70}\n")
 
     # Centralized Research Summary
     print("CENTRALIZED RESEARCH")
@@ -39,7 +39,9 @@ def analyze_tool_usage(tool_usage_path: Path):
                 total_results += num_results
 
                 status = "✓" if query["success"] else "✗"
-                print(f"  {status} [{tool:15s}] {num_results:3d} results | {query['query'][:50]}...")
+                print(
+                    f"  {status} [{tool:15s}] {num_results:3d} results | {query['query'][:50]}..."
+                )
 
             print(f"\n  Tools used: {', '.join(phase_data['tools_used'])}")
             print(f"  Total results: {total_results}")
@@ -47,7 +49,7 @@ def analyze_tool_usage(tool_usage_path: Path):
             print("  No search performed")
 
     # Agent Summary
-    print(f"\n\nAGENT EXECUTION")
+    print("\n\nAGENT EXECUTION")
     print("-" * 70)
 
     agents_searched_step1 = 0
@@ -61,7 +63,7 @@ def analyze_tool_usage(tool_usage_path: Path):
     total_step1_time = 0.0
     total_step2_time = 0.0
 
-    for agent_name, agent_data in data["agents"].items():
+    for _agent_name, agent_data in data["agents"].items():
         step1 = agent_data["step1"]
         step2 = agent_data["step2"]
 
@@ -83,35 +85,37 @@ def analyze_tool_usage(tool_usage_path: Path):
             total_step2_tokens_out += step2.get("token_output", 0)
             total_step2_time += step2.get("duration_seconds", 0.0)
 
-    print(f"\nAgent Lineup:")
+    print("\nAgent Lineup:")
     for agent_name, agent_data in data["agents"].items():
         print(f"  {agent_name}: {agent_data['model']} (weight: {agent_data['weight']})")
 
-    print(f"\nSearch Activity:")
+    print("\nSearch Activity:")
     print(f"  Agents that searched in Step 1: {agents_searched_step1}/5")
     print(f"  Agents that searched in Step 2: {agents_searched_step2}/5")
 
     # Show metrics if available
     if total_step1_cost > 0 or total_step2_cost > 0:
-        print(f"\nResource Usage:")
-        print(f"  Step 1 (Outside View):")
+        print("\nResource Usage:")
+        print("  Step 1 (Outside View):")
         print(f"    Total cost: ${total_step1_cost:.4f}")
         print(f"    Total tokens: {total_step1_tokens_in:,} in / {total_step1_tokens_out:,} out")
         print(f"    Total time: {total_step1_time:.1f}s")
 
-        print(f"  Step 2 (Inside View):")
+        print("  Step 2 (Inside View):")
         print(f"    Total cost: ${total_step2_cost:.4f}")
         print(f"    Total tokens: {total_step2_tokens_in:,} in / {total_step2_tokens_out:,} out")
         print(f"    Total time: {total_step2_time:.1f}s")
 
-        print(f"\n  TOTAL:")
+        print("\n  TOTAL:")
         print(f"    Cost: ${total_step1_cost + total_step2_cost:.4f}")
-        print(f"    Tokens: {total_step1_tokens_in + total_step2_tokens_in:,} in / {total_step1_tokens_out + total_step2_tokens_out:,} out")
+        print(
+            f"    Tokens: {total_step1_tokens_in + total_step2_tokens_in:,} in / {total_step1_tokens_out + total_step2_tokens_out:,} out"
+        )
         print(f"    Time: {total_step1_time + total_step2_time:.1f}s")
     else:
-        print(f"\n  (Token/cost/timing metrics not available - likely backfilled data)")
+        print("\n  (Token/cost/timing metrics not available - likely backfilled data)")
 
-    print(f"\n{'='*70}\n")
+    print(f"\n{'=' * 70}\n")
 
 
 def main():
