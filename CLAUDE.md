@@ -373,7 +373,7 @@ When refactoring or renaming, do NOT change the following terms:
 - `CDF` - Cumulative distribution function for numeric questions
 
 **Codebase Conventions** (project preferences):
-- `agent` / `agents` - Generic term for ensemble members (used interchangeably with "forecaster")
+- `forecaster` - Preferred term for ensemble members (avoid `agent` for this purpose)
 - Explicit question type prefixes in prompts: `BINARY_*`, `NUMERIC_*`, `MULTIPLE_CHOICE_*`
 - Mode names: `test`, `preview`, `live`
 
