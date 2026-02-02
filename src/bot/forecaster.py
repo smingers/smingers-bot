@@ -12,7 +12,6 @@ Simplified pipeline that delegates to type-specific handlers:
 import asyncio
 import json
 import logging
-import yaml
 from pathlib import Path
 from typing import Optional, Union
 from datetime import datetime, timezone
@@ -585,6 +584,9 @@ class Forecaster:
                 pred_value = max(agent_result.probabilities) if agent_result.probabilities else None
                 agent_pred_data = json.dumps({"probabilities": agent_result.probabilities})
 
+            # Note: Database schema uses `agent_name` column (for backward compatibility
+            # with existing data), but runtime code uses `agent_id` as the variable name.
+            # The value is the same: "forecaster_1", "forecaster_2", etc.
             agent_record = AgentPredictionRecord(
                 forecast_id=forecast_id,
                 agent_name=agent_result.agent_id,
@@ -642,15 +644,10 @@ class ScopedArtifactStore:
         self.store.save_tool_usage(self.artifacts, tool_usage)
 
 
-def load_config(config_path: str = "config.yaml") -> dict:
-    """Load configuration from YAML file."""
-    with open(config_path) as f:
-        return yaml.safe_load(f)
-
-
 async def main():
     """CLI entry point for testing."""
     import sys
+    from ..config import load_config
 
     logging.basicConfig(
         level=logging.INFO,

@@ -25,19 +25,37 @@ from .handler_mixin import ForecasterMixin
 from .extractors import AgentResult
 from .search import SearchPipeline, QuestionDetails
 from .prompts import CLAUDE_CONTEXT, GPT_CONTEXT
+from .metrics import PipelineMetrics, AgentMetrics, StepMetrics, ResearchMetrics
 
 logger = logging.getLogger(__name__)
 
 
-# Cross-pollination map
-# Maps agent index -> source agent index for step 1 output
-# Creates cross-model diversity: Sonnet 4.5 -> o3-mini-high -> o3 -> Sonnet 4.5
-CROSS_POLLINATION_MAP = {
-    0: (0, "Outside view prediction"),  # Agent 1 <- Agent 1 (Sonnet 4.5 <- Sonnet 4.5)
-    1: (3, "Outside view prediction"),  # Agent 2 <- Agent 4 (Sonnet 4.5 <- o3)
-    2: (1, "Outside view prediction"),  # Agent 3 <- Agent 2 (o3-mini-high <- Sonnet 4.5)
-    3: (2, "Outside view prediction"),  # Agent 4 <- Agent 3 (o3 <- o3-mini-high)
-    4: (4, "Outside view prediction"),  # Agent 5 <- Agent 5 (o3 <- o3)
+# Cross-pollination map: Controls how agents share context between Step 1 and Step 2.
+#
+# PURPOSE: Create ensemble diversity by having agents receive Step 1 (outside view)
+# reasoning from agents using DIFFERENT model families. This prevents groupthink
+# and ensures the ensemble benefits from multiple reasoning styles.
+#
+# HOW IT WORKS:
+# - After Step 1, each agent's output is shared with another agent for Step 2
+# - The mapping below defines: agent_index -> (source_agent_index, context_label)
+# - The source agent's Step 1 output becomes part of this agent's Step 2 context
+#
+# MAPPING STRATEGY (with default production models):
+# - Forecasters 1 & 5 receive their OWN Step 1 output (self-consistency anchors)
+# - Forecasters 2, 3, 4 receive output from a DIFFERENT model family:
+#   - Forecaster 2 (Sonnet 4.5) <- Forecaster 4 (o3): Claude sees OpenAI reasoning
+#   - Forecaster 3 (o3-mini) <- Forecaster 2 (Sonnet 4.5): OpenAI sees Claude reasoning
+#   - Forecaster 4 (o3) <- Forecaster 3 (o3-mini): Cross-pollination within OpenAI family
+#
+# This creates a "reasoning exchange" where different model architectures
+# critique and build upon each other's initial forecasts.
+CROSS_POLLINATION_MAP: dict[int, tuple[int, str]] = {
+    0: (0, "Outside view prediction"),  # Forecaster 1 <- self (Sonnet 4.5)
+    1: (3, "Outside view prediction"),  # Forecaster 2 <- Forecaster 4 (Sonnet 4.5 <- o3)
+    2: (1, "Outside view prediction"),  # Forecaster 3 <- Forecaster 2 (o3-mini <- Sonnet 4.5)
+    3: (2, "Outside view prediction"),  # Forecaster 4 <- Forecaster 3 (o3 <- o3-mini)
+    4: (4, "Outside view prediction"),  # Forecaster 5 <- self (o3)
 }
 
 
@@ -142,26 +160,20 @@ class BaseForecaster(ForecasterMixin, ABC):
         # =========================================================================
         write("\n=== Step 2: Executing searches ===")
 
-        # Initialize tool usage tracking
-        tool_usage = {
-            "centralized_research": {
-                "historical": {},
-                "current": {},
-            },
-            "agents": {},
-        }
+        # Initialize pipeline metrics tracking
+        metrics = PipelineMetrics.create_empty()
 
         async with SearchPipeline(self.config, self.llm) as search:
             results = await asyncio.gather(
                 search.process_search_queries(
                     historical_output,
-                    forecaster_id="-1",
+                    search_id="historical",
                     question_details=question_details,
                     include_asknews=False,
                 ),
                 search.process_search_queries(
                     current_output,
-                    forecaster_id="0",
+                    search_id="current",
                     question_details=question_details,
                     include_asknews=True,
                 ),
@@ -173,9 +185,9 @@ class BaseForecaster(ForecasterMixin, ABC):
 
         step2_end_cost = snapshot_cost("step2_search", step1_end_cost)
 
-        # Store metadata
-        tool_usage["centralized_research"]["historical"] = historical_metadata
-        tool_usage["centralized_research"]["current"] = current_metadata
+        # Store research metadata
+        metrics.centralized_research["historical"] = ResearchMetrics.from_search_metadata(historical_metadata)
+        metrics.centralized_research["current"] = ResearchMetrics.from_search_metadata(current_metadata)
 
         if self.artifact_store:
             self.artifact_store.save_search_results("historical", {"context": historical_context})
@@ -188,15 +200,13 @@ class BaseForecaster(ForecasterMixin, ABC):
 
         agents = self._get_agents()
 
-        # Initialize agent tracking
+        # Initialize agent metrics
         for i, agent in enumerate(agents):
-            agent_name = f"forecaster_{i+1}"
-            tool_usage["agents"][agent_name] = {
-                "model": agent["model"],
-                "weight": agent["weight"],
-                "step1": {"searched": False, "queries": []},
-                "step2": {"searched": False, "queries": []},
-            }
+            agent_id = f"forecaster_{i+1}"
+            metrics.agents[agent_id] = AgentMetrics(
+                model=agent["model"],
+                weight=agent["weight"],
+            )
 
         step1_prompt = self._format_step1_prompt(
             prompt_step1, historical_context, **question_params
@@ -220,26 +230,25 @@ class BaseForecaster(ForecasterMixin, ABC):
         step1_outputs = []
 
         for i, result in enumerate(step1_results):
-            agent_name = f"forecaster_{i+1}"
+            agent_id = f"forecaster_{i+1}"
             duration = time.time() - step1_timings[i]
+            step1_metrics = metrics.agents[agent_id].step1
 
             if isinstance(result, Exception):
                 write(f"\nForecaster_{i+1} step 1 ERROR: {result}")
                 step1_outputs.append(f"Error: {result}")
-                tool_usage["agents"][agent_name]["step1"]["error"] = str(result)
-                tool_usage["agents"][agent_name]["step1"]["duration_seconds"] = duration
+                step1_metrics.error = str(result)
+                step1_metrics.duration_seconds = duration
             else:
                 output, response_metadata = result
                 write(f"\nForecaster_{i+1} step 1 output:\n{output[:300]}...")
                 step1_outputs.append(output)
 
                 # Track LLM metrics
-                tool_usage["agents"][agent_name]["step1"].update({
-                    "token_input": response_metadata.get("input_tokens", 0),
-                    "token_output": response_metadata.get("output_tokens", 0),
-                    "cost": response_metadata.get("cost", 0.0),
-                    "duration_seconds": duration,
-                })
+                step1_metrics.token_input = response_metadata.get("input_tokens", 0)
+                step1_metrics.token_output = response_metadata.get("output_tokens", 0)
+                step1_metrics.cost = response_metadata.get("cost", 0.0)
+                step1_metrics.duration_seconds = duration
 
         if self.artifact_store:
             self.artifact_store.save_step1_prompt(step1_prompt)
@@ -294,24 +303,23 @@ class BaseForecaster(ForecasterMixin, ABC):
         step2_outputs = []
 
         for i, result in enumerate(step2_results):
-            agent_name = f"forecaster_{i+1}"
+            agent_id = f"forecaster_{i+1}"
             duration = time.time() - step2_timings[i]
+            step2_metrics = metrics.agents[agent_id].step2
 
             if isinstance(result, Exception):
                 step2_outputs.append(result)
-                tool_usage["agents"][agent_name]["step2"]["error"] = str(result)
-                tool_usage["agents"][agent_name]["step2"]["duration_seconds"] = duration
+                step2_metrics.error = str(result)
+                step2_metrics.duration_seconds = duration
             else:
                 output, response_metadata = result
                 step2_outputs.append(output)
 
                 # Track LLM metrics
-                tool_usage["agents"][agent_name]["step2"].update({
-                    "token_input": response_metadata.get("input_tokens", 0),
-                    "token_output": response_metadata.get("output_tokens", 0),
-                    "cost": response_metadata.get("cost", 0.0),
-                    "duration_seconds": duration,
-                })
+                step2_metrics.token_input = response_metadata.get("input_tokens", 0)
+                step2_metrics.token_output = response_metadata.get("output_tokens", 0)
+                step2_metrics.cost = response_metadata.get("cost", 0.0)
+                step2_metrics.duration_seconds = duration
 
         step5_end_cost = snapshot_cost("step5_inside_view", step3_end_cost)
 
@@ -359,15 +367,15 @@ class BaseForecaster(ForecasterMixin, ABC):
         # Aggregate results
         final_prediction = self._aggregate_results(agent_results, agents, write)
 
-        # Save aggregation
+        # Save aggregation and metrics
         if self.artifact_store:
             self.artifact_store.save_aggregation(
                 self._get_aggregation_data(agent_results, agents, final_prediction)
             )
-            # Save tool usage tracking with step costs
-            tool_usage["step_costs"] = step_costs
-            tool_usage["total_pipeline_cost"] = round(cost_tracker.total_cost - pipeline_start_cost, 4)
-            self.artifact_store.save_tool_usage(tool_usage)
+            # Save pipeline metrics with step costs
+            metrics.step_costs = step_costs
+            metrics.total_pipeline_cost = round(cost_tracker.total_cost - pipeline_start_cost, 4)
+            self.artifact_store.save_tool_usage(metrics.to_dict())
 
         # Log cost breakdown
         write("\n=== Cost Breakdown ===")
@@ -375,27 +383,27 @@ class BaseForecaster(ForecasterMixin, ABC):
             write(f"  {step_name}: ${cost:.4f}")
 
         # Show search cost breakdown
-        search_hist = tool_usage["centralized_research"]["historical"]
-        search_curr = tool_usage["centralized_research"]["current"]
-        if search_hist.get("llm_cost") or search_curr.get("llm_cost"):
+        search_hist = metrics.centralized_research["historical"]
+        search_curr = metrics.centralized_research["current"]
+        if search_hist.llm_cost or search_curr.llm_cost:
             write("    Search LLM breakdown:")
-            if search_hist.get("llm_cost_summarization"):
-                write(f"      historical summarization: ${search_hist['llm_cost_summarization']:.4f}")
-            if search_hist.get("llm_cost_agentic"):
-                write(f"      historical agentic: ${search_hist['llm_cost_agentic']:.4f}")
-            if search_curr.get("llm_cost_summarization"):
-                write(f"      current summarization: ${search_curr['llm_cost_summarization']:.4f}")
-            if search_curr.get("llm_cost_agentic"):
-                write(f"      current agentic: ${search_curr['llm_cost_agentic']:.4f}")
+            if search_hist.llm_cost_summarization:
+                write(f"      historical summarization: ${search_hist.llm_cost_summarization:.4f}")
+            if search_hist.llm_cost_agentic:
+                write(f"      historical agentic: ${search_hist.llm_cost_agentic:.4f}")
+            if search_curr.llm_cost_summarization:
+                write(f"      current summarization: ${search_curr.llm_cost_summarization:.4f}")
+            if search_curr.llm_cost_agentic:
+                write(f"      current agentic: ${search_curr.llm_cost_agentic:.4f}")
 
         # Show agent costs
         write("  Agent costs:")
-        for agent_name, agent_data in tool_usage["agents"].items():
-            s1_cost = agent_data.get("step1", {}).get("cost", 0)
-            s2_cost = agent_data.get("step2", {}).get("cost", 0)
-            write(f"    {agent_name}: S1=${s1_cost:.4f} S2=${s2_cost:.4f}")
+        for agent_id, agent_metrics in metrics.agents.items():
+            s1_cost = agent_metrics.step1.cost
+            s2_cost = agent_metrics.step2.cost
+            write(f"    {agent_id}: S1=${s1_cost:.4f} S2=${s2_cost:.4f}")
 
-        write(f"  TOTAL: ${tool_usage['total_pipeline_cost']:.4f}")
+        write(f"  TOTAL: ${metrics.total_pipeline_cost:.4f}")
 
         return self._build_result(
             final_prediction=final_prediction,

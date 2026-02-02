@@ -129,12 +129,12 @@ class SearchPipeline:
     async def process_search_queries(
         self,
         response: str,
-        forecaster_id: str,
+        search_id: str,
         question_details: QuestionDetails,
         include_asknews: bool = False,
     ) -> Tuple[str, Dict[str, Any]]:
         """
-        Parse search queries from forecaster's response and execute them.
+        Parse search queries from a response and execute them.
 
         Queries are expected in format:
         Search queries:
@@ -143,8 +143,8 @@ class SearchPipeline:
         3. "query text" (Agent)
 
         Args:
-            response: The forecaster's response containing search queries
-            forecaster_id: ID for logging
+            response: The response containing search queries (from query generation)
+            search_id: Identifier for logging (e.g., "historical", "current")
             question_details: Question context for summarization
             include_asknews: If True, also call AskNews with question title (for current search)
 
@@ -155,7 +155,7 @@ class SearchPipeline:
         start_cost = cost_tracker.total_cost
 
         metadata = {
-            "forecaster_id": forecaster_id,
+            "search_id": search_id,
             "searched": False,
             "num_queries": 0,
             "queries": [],
@@ -173,7 +173,7 @@ class SearchPipeline:
                 re.DOTALL | re.IGNORECASE
             )
             if not search_queries_block:
-                logger.info(f"Forecaster {forecaster_id}: No search queries block found")
+                logger.info(f"Search[{search_id}]: No search queries block found")
                 return "", metadata
 
             queries_text = search_queries_block.group(1).strip()
@@ -193,10 +193,10 @@ class SearchPipeline:
                 )
 
             if not search_queries:
-                logger.info(f"Forecaster {forecaster_id}: No valid search queries found:\n{queries_text}")
+                logger.info(f"Search[{search_id}]: No valid search queries found:\n{queries_text}")
                 return "", metadata
 
-            logger.info(f"Forecaster {forecaster_id}: Processing {len(search_queries)} search queries")
+            logger.info(f"Search[{search_id}]: Processing {len(search_queries)} search queries")
 
             metadata["searched"] = True
             metadata["num_queries"] = len(search_queries)
@@ -218,7 +218,7 @@ class SearchPipeline:
                 if not query:
                     continue
 
-                logger.info(f"Forecaster {forecaster_id}: Query='{query}' Source={source}")
+                logger.info(f"Search[{search_id}]: Query='{query}' Source={source}")
 
                 # Track query and tool usage in metadata
                 metadata["queries"].append({"query": query, "tool": source})
@@ -241,14 +241,14 @@ class SearchPipeline:
                     # Store the LLM-generated query for Deep Research
                     # The actual AskNews call will be added below with include_asknews
                     asknews_deep_research_query = query
-                    logger.info(f"Forecaster {forecaster_id}: Found AskNews Deep Research query: {query[:50]}...")
+                    logger.info(f"Search[{search_id}]: Found AskNews Deep Research query: {query[:50]}...")
 
             # Programmatically add AskNews for current search
             # Uses question title for news search, LLM-generated query for Deep Research
             if include_asknews:
-                logger.info(f"Forecaster {forecaster_id}: Adding AskNews search with question title")
+                logger.info(f"Search[{search_id}]: Adding AskNews search with question title")
                 if asknews_deep_research_query:
-                    logger.info(f"Forecaster {forecaster_id}: Deep Research will use LLM-generated query")
+                    logger.info(f"Search[{search_id}]: Deep Research will use LLM-generated query")
                 tasks.append(self._call_asknews(
                     news_query=question_details.title,
                     deep_research_query=asknews_deep_research_query,
@@ -262,7 +262,7 @@ class SearchPipeline:
                 metadata["tools_used"].add("AskNews")
 
             if not tasks:
-                logger.info(f"Forecaster {forecaster_id}: No tasks generated")
+                logger.info(f"Search[{search_id}]: No tasks generated")
                 return "", metadata
 
             # Execute all tasks
@@ -272,7 +272,7 @@ class SearchPipeline:
             formatted_results = ""
             for i, ((query, source), result) in enumerate(zip(query_sources, results)):
                 if isinstance(result, Exception):
-                    logger.error(f"Forecaster {forecaster_id}: Error for '{query}' → {result}")
+                    logger.error(f"Search[{search_id}]: Error for '{query}' → {result}")
                     metadata["queries"][i]["success"] = False
                     metadata["queries"][i]["error"] = str(result)
                     metadata["queries"][i]["num_results"] = 0
@@ -284,7 +284,7 @@ class SearchPipeline:
                     else:
                         formatted_results += f"\n<Summary query=\"{query}\">\nError: {result}\n</Summary>\n"
                 else:
-                    logger.info(f"Forecaster {forecaster_id}: Query '{query}' processed successfully")
+                    logger.info(f"Search[{search_id}]: Query '{query}' processed successfully")
 
                     # Count results by looking for tags in the result string
                     if source == "AskNews":
@@ -313,7 +313,7 @@ class SearchPipeline:
             return formatted_results, metadata
 
         except Exception as e:
-            logger.error(f"Forecaster {forecaster_id}: Error processing search queries: {e}")
+            logger.error(f"Search[{search_id}]: Error processing search queries: {e}")
             traceback.print_exc()
             metadata["error"] = str(e)
             return "Error processing some search queries. Partial results may be available.", metadata
@@ -963,19 +963,19 @@ class SearchPipeline:
 # Convenience functions
 # -------------------------------------------------------------------------
 
-async def process_forecaster_queries(
+async def process_search_queries(
     response: str,
-    forecaster_id: str,
+    search_id: str,
     question_details: dict,
     config: dict,
     llm_client: Optional[LLMClient] = None,
 ) -> Tuple[str, Dict[str, Any]]:
     """
-    Convenience function to process search queries from a forecaster response.
+    Convenience function to process search queries from a response.
 
     Args:
-        response: Forecaster's response containing search queries
-        forecaster_id: ID for logging
+        response: Response containing search queries (from query generation)
+        search_id: Identifier for logging (e.g., "historical", "current")
         question_details: Dict with title, resolution_criteria, fine_print, description
         config: Configuration dict
         llm_client: Optional LLMClient instance
@@ -992,4 +992,4 @@ async def process_forecaster_queries(
     )
 
     async with SearchPipeline(config, llm_client) as pipeline:
-        return await pipeline.process_search_queries(response, forecaster_id, qd)
+        return await pipeline.process_search_queries(response, search_id, qd)
