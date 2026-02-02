@@ -1,0 +1,196 @@
+{
+  "centralized_research": {
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "BAMLHYH0A0HYM2TRIV daily values 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "high yield bond index February 2026 market outlook",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Download FRED series BAMLHYH0A0HYM2TRIV Jan 2025-Feb 2026 with daily frequency",
+          "tool": "Agent",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google News",
+        "Google"
+      ],
+      "llm_cost": 0.2961,
+      "llm_cost_summarization": 0.2382,
+      "llm_cost_agentic": 0.0579,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "ICE BofA US High Yield Index value February 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "US high yield bond market February 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide recent articles discussing performance and forecasts for the ICE BofA US High Yield Index and US high yield bond returns in February 2026",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "What will be the value of \"ICE BofA US High Yield Index Total Return Index Value\" on 2026-02-13?",
+          "tool": "AskNews",
+          "deep_research_query": "Provide recent articles discussing performance and forecasts for the ICE BofA US High Yield Index and US high yield bond returns in February 2026"
+        }
+      ],
+      "tools_used": [
+        "AskNews",
+        "Google News",
+        "Google"
+      ],
+      "llm_cost": 0.2961,
+      "llm_cost_summarization": 0.2382,
+      "llm_cost_agentic": 0.0579,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6147,
+        "token_output": 1662,
+        "cost": 0.043371,
+        "duration_seconds": 50.102580308914185,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15572,
+        "token_output": 1937,
+        "cost": 0.075771,
+        "duration_seconds": 72.45863389968872,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6147,
+        "token_output": 2251,
+        "cost": 0.052205999999999995,
+        "duration_seconds": 50.10263752937317,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15115,
+        "token_output": 3091,
+        "cost": 0.09171,
+        "duration_seconds": 72.45859861373901,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5442,
+        "token_output": 1961,
+        "cost": 0.036977499999999996,
+        "duration_seconds": 50.10267782211304,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14206,
+        "token_output": 2619,
+        "cost": 0.0615265,
+        "duration_seconds": 72.45856022834778,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5442,
+        "token_output": 2038,
+        "cost": 0.027187999999999997,
+        "duration_seconds": 50.102707624435425,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13822,
+        "token_output": 1511,
+        "cost": 0.039731999999999996,
+        "duration_seconds": 72.45850396156311,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5442,
+        "token_output": 1681,
+        "cost": 0.024332,
+        "duration_seconds": 50.10273265838623,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13183,
+        "token_output": 1202,
+        "cost": 0.035982,
+        "duration_seconds": 72.45846772193909,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0199,
+    "step2_search": 0.2961,
+    "step3_outside_view": 0.1841,
+    "step5_inside_view": 0.3047
+  },
+  "total_pipeline_cost": 0.8047
+}
