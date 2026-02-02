@@ -64,7 +64,19 @@ MODEL_COSTS = {
 
 @dataclass
 class LLMResponse:
-    """Response from an LLM call with metadata."""
+    """
+    Response from an LLM API call with usage and cost metadata.
+
+    Attributes:
+        content: The text content returned by the model
+        model: Model identifier used (e.g., "openrouter/anthropic/claude-sonnet-4")
+        input_tokens: Number of tokens in the input prompt
+        output_tokens: Number of tokens in the model's response
+        cost: Estimated cost in USD (based on MODEL_COSTS)
+        latency_ms: Round-trip time for the API call in milliseconds
+        timestamp: ISO 8601 timestamp when the response was received
+        raw_response: Original API response dict (for debugging/auditing)
+    """
     content: str
     model: str
     input_tokens: int
@@ -77,7 +89,19 @@ class LLMResponse:
 
 @dataclass
 class LLMCall:
-    """Record of an LLM call for logging."""
+    """
+    Record of an LLM call for logging and cost tracking.
+
+    Used by CostTracker to maintain a history of all API calls made during
+    a forecasting session, including both successful responses and errors.
+
+    Attributes:
+        model: Model identifier used for this call
+        messages: List of message dicts sent to the API (role + content)
+        response: LLMResponse if successful, None if call failed
+        error: Error message string if call failed, None if successful
+        timestamp: ISO 8601 timestamp when the call was initiated
+    """
     model: str
     messages: list[dict]
     response: Optional[LLMResponse]

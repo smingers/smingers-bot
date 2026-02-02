@@ -72,7 +72,7 @@ class TestAgentPredictionRecord:
         """Creates record with all fields."""
         record = AgentPredictionRecord(
             forecast_id="12345_20260101_120000",
-            agent_name="forecaster_1",
+            agent_id="forecaster_1",
             model="test-model",
             weight=1.0,
             prediction=0.65,
@@ -80,7 +80,7 @@ class TestAgentPredictionRecord:
         )
 
         assert record.forecast_id == "12345_20260101_120000"
-        assert record.agent_name == "forecaster_1"
+        assert record.agent_id == "forecaster_1"
         assert record.model == "test-model"
         assert record.weight == 1.0
         assert record.prediction == 0.65
@@ -259,7 +259,7 @@ class TestInsertOperations:
         # Insert agent prediction
         agent_record = AgentPredictionRecord(
             forecast_id="12345_20260101_120000",
-            agent_name="forecaster_1",
+            agent_id="forecaster_1",
             model="claude-3-haiku",
             weight=1.0,
             prediction=0.60,
@@ -270,7 +270,7 @@ class TestInsertOperations:
         # Verify
         predictions = await db.get_agent_predictions("12345_20260101_120000")
         assert len(predictions) == 1
-        assert predictions[0]["agent_name"] == "forecaster_1"
+        assert predictions[0]["agent_id"] == "forecaster_1"
         assert predictions[0]["prediction"] == 0.60
 
     @pytest.mark.asyncio
@@ -641,7 +641,7 @@ class TestAnalyticsQueries:
         # Add agent prediction
         agent = AgentPredictionRecord(
             forecast_id="12345_20260101_120000",
-            agent_name="forecaster_1",
+            agent_id="forecaster_1",
             model="test-model",
             weight=1.0,
             prediction=0.6,
@@ -652,7 +652,7 @@ class TestAnalyticsQueries:
         results = await db.get_agent_accuracy()
 
         assert len(results) > 0
-        assert results[0]["agent_name"] == "forecaster_1"
+        assert results[0]["agent_id"] == "forecaster_1"
 
     @pytest.mark.asyncio
     async def test_get_forecasts_with_agents(self, tmp_path):
@@ -678,7 +678,7 @@ class TestAnalyticsQueries:
         for i in range(3):
             agent = AgentPredictionRecord(
                 forecast_id="12345_20260101_120000",
-                agent_name=f"forecaster_{i+1}",
+                agent_id=f"forecaster_{i+1}",
                 model="test-model",
                 weight=1.0,
                 prediction=0.5 + i * 0.1,

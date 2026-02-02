@@ -126,7 +126,7 @@ class SearchPipeline:
     # Main entry point: process search queries from forecaster response
     # -------------------------------------------------------------------------
 
-    async def process_search_queries(
+    async def execute_searches_from_response(
         self,
         response: str,
         search_id: str,
@@ -963,7 +963,7 @@ class SearchPipeline:
 # Convenience functions
 # -------------------------------------------------------------------------
 
-async def process_search_queries(
+async def execute_searches_from_response(
     response: str,
     search_id: str,
     question_details: dict,
@@ -992,4 +992,4 @@ async def process_search_queries(
     )
 
     async with SearchPipeline(config, llm_client) as pipeline:
-        return await pipeline.process_search_queries(response, search_id, qd)
+        return await pipeline.execute_searches_from_response(response, search_id, qd)

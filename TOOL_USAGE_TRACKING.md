@@ -96,7 +96,7 @@ The backfilled data shows:
 ### Modified Files
 
 1. **`src/bot/search.py`**
-   - Modified `process_search_queries()` to return `Tuple[str, Dict]` instead of just `str`
+   - Modified `execute_searches_from_response()` to return `Tuple[str, Dict]` instead of just `str`
    - Tracks queries, tools used, results count, success/failure for each search
 
 2. **`src/storage/artifact_store.py`**

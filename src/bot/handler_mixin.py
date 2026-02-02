@@ -57,9 +57,9 @@ class ForecasterMixin:
 
         return agents[:5]  # Ensure max 5 agents
 
-    def _get_model(self, key: str, default: str) -> str:
+    def _resolve_model(self, key: str, default: str) -> str:
         """
-        Get model from config with fallback.
+        Resolve which model to use from config with fallback.
 
         Looks for model in order:
         1. _active_models[key] (set by mode application)

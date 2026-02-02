@@ -74,7 +74,7 @@ class ResearchMetrics:
     """
     Metrics from centralized research (search pipeline).
 
-    These fields come from SearchPipeline.process_search_queries() metadata.
+    These fields come from SearchPipeline.execute_searches_from_response() metadata.
 
     Attributes:
         search_id: Identifier for this search batch (e.g., "historical", "current")

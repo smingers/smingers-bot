@@ -243,7 +243,7 @@ class NumericForecaster(BaseForecaster):
         self,
         agent_results: List[AgentResult],
         agents: List[Dict],
-        write: callable,
+        log: callable,
     ) -> List[float]:
         """Compute weighted average of CDFs."""
         expected_cdf_size = self._cdf_size
@@ -267,8 +267,8 @@ class NumericForecaster(BaseForecaster):
         if len(combined) != expected_cdf_size:
             raise CDFGenerationError(f"Combined CDF malformed: {len(combined)} points (expected {expected_cdf_size})")
 
-        write(f"\nAggregating {len(all_cdfs)}/{len(agents)} valid CDFs")
-        write(f"Combined CDF: {combined[:5]}...{combined[-5:]}")
+        log(f"\nAggregating {len(all_cdfs)}/{len(agents)} valid CDFs")
+        log(f"Combined CDF: {combined[:5]}...{combined[-5:]}")
 
         return combined
 
@@ -361,7 +361,7 @@ class NumericForecaster(BaseForecaster):
         scheduled_resolve_time: str = "",
         cdf_size: int = 201,
         is_date_question: bool = False,
-        write: callable = print,
+        log: callable = print,
     ) -> NumericForecastResult:
         """
         Generate a forecast for a numeric question.
@@ -384,13 +384,13 @@ class NumericForecaster(BaseForecaster):
             scheduled_resolve_time: When the question resolves
             cdf_size: Number of CDF points (201 for numeric, 102 for discrete)
             is_date_question: Whether this is a date question (uses date extraction)
-            write: Logging function
+            log: Logging function
 
         Returns:
             NumericForecastResult with CDF and all agent outputs
         """
         return await super().forecast(
-            write=write,
+            log=log,
             question_title=question_title,
             question_text=question_text,
             background_info=background_info,
@@ -417,7 +417,7 @@ async def get_numeric_forecast(
     config: dict,
     llm_client: Optional[LLMClient] = None,
     artifact_store: Optional[ArtifactStore] = None,
-    write: callable = print,
+    log: callable = print,
 ) -> Tuple[List[float], str]:
     """
     Convenience function to get a numeric forecast.
@@ -438,7 +438,7 @@ async def get_numeric_forecast(
         lower_bound=question_details.get("scaling", {}).get("range_min", 0),
         zero_point=question_details.get("scaling", {}).get("zero_point"),
         unit=question_details.get("unit", "(unknown)"),
-        write=write,
+        log=log,
     )
 
     # Format comment

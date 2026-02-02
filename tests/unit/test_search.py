@@ -104,11 +104,11 @@ class TestSearchQueryParsing:
 
 
 # ============================================================================
-# SearchPipeline process_search_queries Tests
+# SearchPipeline execute_searches_from_response Tests
 # ============================================================================
 
 class TestSearchPipelineProcessQueries:
-    """Tests for SearchPipeline.process_search_queries()."""
+    """Tests for SearchPipeline.execute_searches_from_response()."""
 
     @pytest.fixture
     def question_details(self):
@@ -140,7 +140,7 @@ class TestSearchPipelineProcessQueries:
                 mock_client.aclose = AsyncMock()
                 pipeline.http_client = mock_client
 
-                _, metadata = await pipeline.process_search_queries(
+                _, metadata = await pipeline.execute_searches_from_response(
                     llm_search_queries_response,
                     search_id="test",
                     question_details=question_details,
@@ -160,7 +160,7 @@ class TestSearchPipelineProcessQueries:
         mock_client.aclose = AsyncMock()
         pipeline.http_client = mock_client
 
-        results, metadata = await pipeline.process_search_queries(
+        results, metadata = await pipeline.execute_searches_from_response(
             llm_search_queries_empty,
             search_id="test",
             question_details=question_details,
@@ -181,7 +181,7 @@ class TestSearchPipelineProcessQueries:
                 mock_client.aclose = AsyncMock()
                 pipeline.http_client = mock_client
 
-                _, metadata = await pipeline.process_search_queries(
+                _, metadata = await pipeline.execute_searches_from_response(
                     llm_search_queries_response,
                     search_id="test",
                     question_details=question_details,
@@ -205,7 +205,7 @@ Search queries:
                 mock_client.aclose = AsyncMock()
                 pipeline.http_client = mock_client
 
-                results, metadata = await pipeline.process_search_queries(
+                results, metadata = await pipeline.execute_searches_from_response(
                     response,
                     search_id="test",
                     question_details=question_details,
@@ -349,7 +349,7 @@ Search queries:
             mock_client.aclose = AsyncMock()
             pipeline.http_client = mock_client
 
-            results, metadata = await pipeline.process_search_queries(
+            results, metadata = await pipeline.execute_searches_from_response(
                 response,
                 search_id="test",
                 question_details=question_details,

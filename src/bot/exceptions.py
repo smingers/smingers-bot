@@ -16,9 +16,21 @@ class ExtractionError(ForecastingError):
 
     Raised when the probability/percentile/option extraction logic
     cannot parse the agent's response.
+
+    Attributes:
+        agent_name: Identifier of the agent that failed (e.g., "forecaster_1")
+        response_preview: First portion of the unparseable response for debugging
     """
 
-    pass
+    def __init__(
+        self,
+        message: str,
+        agent_name: str | None = None,
+        response_preview: str | None = None,
+    ):
+        super().__init__(message)
+        self.agent_name = agent_name
+        self.response_preview = response_preview
 
 
 class InsufficientPredictionsError(ForecastingError):

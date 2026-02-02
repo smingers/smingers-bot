@@ -335,7 +335,7 @@ SQLite at `data/forecasts.db` for analytics with three tables:
 - `total_cost`, `config_hash`, `tournament_id`
 
 **agent_predictions** - Individual agent outputs:
-- `forecast_id`, `agent_name`, `model`, `weight`, `prediction`, `reasoning_length`
+- `forecast_id`, `agent_id`, `model`, `weight`, `prediction`, `reasoning_length`
 
 **research_sources** - Research tracking:
 - `forecast_id`, `source_type`, `query`, `num_results`

@@ -153,7 +153,7 @@ class MultipleChoiceForecaster(BaseForecaster):
         self,
         agent_results: List[AgentResult],
         agents: List[Dict],
-        write: callable,
+        log: callable,
     ) -> Dict[str, float]:
         """Compute weighted average of option probabilities."""
         options = []  # Will be populated from question_params in _build_result
@@ -173,7 +173,7 @@ class MultipleChoiceForecaster(BaseForecaster):
                 f"Errors: {[r.error for r in agent_results]}"
             )
             logger.error(error_msg)
-            write(f"FATAL ERROR: {error_msg}")
+            log(f"FATAL ERROR: {error_msg}")
             raise InsufficientPredictionsError(
                 error_msg, valid_count=0, total_count=len(agents)
             )
@@ -182,13 +182,13 @@ class MultipleChoiceForecaster(BaseForecaster):
         probs_matrix = np.array(all_probs)
         weights = np.array(all_weights)
 
-        write(f"\nAggregating {len(all_probs)}/{len(agents)} valid agent predictions")
+        log(f"\nAggregating {len(all_probs)}/{len(agents)} valid agent predictions")
 
         weighted_probs = np.average(probs_matrix, axis=0, weights=weights)
         weighted_probs = weighted_probs / weighted_probs.sum()  # Ensure sums to 1.0
 
-        write(f"Weights: {weights.tolist()}")
-        write(f"Final weighted probabilities: {weighted_probs.tolist()}")
+        log(f"Weights: {weights.tolist()}")
+        log(f"Final weighted probabilities: {weighted_probs.tolist()}")
 
         # Return as list - will be converted to dict in _build_result
         return weighted_probs.tolist()
@@ -272,7 +272,7 @@ class MultipleChoiceForecaster(BaseForecaster):
         options: List[str] = None,
         open_time: str = "",
         scheduled_resolve_time: str = "",
-        write: callable = print,
+        log: callable = print,
     ) -> MultipleChoiceForecastResult:
         """
         Generate a forecast for a multiple choice question.
@@ -286,13 +286,13 @@ class MultipleChoiceForecaster(BaseForecaster):
             options: List of option labels
             open_time: When the question opened for forecasting
             scheduled_resolve_time: When the question resolves
-            write: Logging function
+            log: Logging function
 
         Returns:
             MultipleChoiceForecastResult with probabilities per option
         """
         return await super().forecast(
-            write=write,
+            log=log,
             question_title=question_title,
             question_text=question_text,
             background_info=background_info,
@@ -310,7 +310,7 @@ async def get_multiple_choice_forecast(
     config: dict,
     llm_client: Optional[LLMClient] = None,
     artifact_store: Optional[ArtifactStore] = None,
-    write: callable = print,
+    log: callable = print,
 ) -> Tuple[Dict[str, float], str]:
     """
     Convenience function to get a multiple choice forecast.
@@ -326,7 +326,7 @@ async def get_multiple_choice_forecast(
         resolution_criteria=question_details.get("resolution_criteria", ""),
         fine_print=question_details.get("fine_print", ""),
         options=question_details.get("options", []),
-        write=write,
+        log=log,
     )
 
     # Format comment

@@ -260,7 +260,7 @@ class Forecaster:
             fine_print=question.raw.get("fine_print", ""),
             open_time=question.open_time or "",
             scheduled_resolve_time=question.scheduled_resolve_time or "",
-            write=lambda msg: logger.info(msg),
+            log=lambda msg: logger.info(msg),
         )
 
         return {
@@ -322,7 +322,7 @@ class Forecaster:
             scheduled_resolve_time=question.scheduled_resolve_time or "",
             cdf_size=question.cdf_size,
             is_date_question=is_date_question,
-            write=lambda msg: logger.info(msg),
+            log=lambda msg: logger.info(msg),
         )
 
         # Derive percentiles from CDF if needed (for logging/display)
@@ -381,7 +381,7 @@ class Forecaster:
             options=options,
             open_time=question.open_time or "",
             scheduled_resolve_time=question.scheduled_resolve_time or "",
-            write=lambda msg: logger.info(msg),
+            log=lambda msg: logger.info(msg),
         )
 
         return {
@@ -584,12 +584,9 @@ class Forecaster:
                 pred_value = max(agent_result.probabilities) if agent_result.probabilities else None
                 agent_pred_data = json.dumps({"probabilities": agent_result.probabilities})
 
-            # Note: Database schema uses `agent_name` column (for backward compatibility
-            # with existing data), but runtime code uses `agent_id` as the variable name.
-            # The value is the same: "forecaster_1", "forecaster_2", etc.
             agent_record = AgentPredictionRecord(
                 forecast_id=forecast_id,
-                agent_name=agent_result.agent_id,
+                agent_id=agent_result.agent_id,
                 model=agent_result.model,
                 weight=agent_result.weight,
                 prediction=pred_value or 0.0,  # Default to 0 if no prediction

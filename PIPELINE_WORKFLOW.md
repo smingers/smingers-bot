@@ -505,7 +505,7 @@ results = await asyncio.gather(*tasks)
 4. **Create AgentPrediction object:**
    ```python
    AgentPrediction(
-       agent_name="analyst",
+       agent_id="analyst",
        model="claude-sonnet-4-20250514",
        weight=1.0,
        prediction=0.42,
@@ -530,9 +530,9 @@ Example results:
 ### Outputs (per agent)
 
 **Saved artifacts (for each agent):**
-- `data/.../04_inside_view/{agent_name}/prompt.md` - Filled template
-- `data/.../04_inside_view/{agent_name}/response.md` - Full LLM reasoning
-- `data/.../04_inside_view/{agent_name}/extracted.json`
+- `data/.../04_inside_view/{agent_id}/prompt.md` - Filled template
+- `data/.../04_inside_view/{agent_id}/response.md` - Full LLM reasoning
+- `data/.../04_inside_view/{agent_id}/extracted.json`
   ```json
   {
     "prediction": 0.42,
@@ -1039,7 +1039,7 @@ INSERT INTO forecasts (
 **2. Agent predictions (5 records):**
 ```sql
 INSERT INTO agent_predictions (
-    forecast_id, agent_name, model, weight, prediction, reasoning_length
+    forecast_id, agent_id, model, weight, prediction, reasoning_length
 ) VALUES
     ('41594_20260124_143022', 'analyst', 'claude-sonnet-4-20250514', 1.0, 0.42, 2847),
     ('41594_20260124_143022', 'historian', 'claude-sonnet-4-20250514', 1.0, 0.38, 3012),

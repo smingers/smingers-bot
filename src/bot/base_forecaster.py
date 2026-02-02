@@ -97,14 +97,14 @@ class BaseForecaster(ForecasterMixin, ABC):
 
     async def forecast(
         self,
-        write: callable = print,
+        log: callable = print,
         **question_params,
     ) -> Any:
         """
         Run the full forecasting pipeline.
 
         Args:
-            write: Logging function (default: print)
+            log: Progress logging callback (default: print). Called with status messages.
             **question_params: Question-specific parameters (title, text, criteria, etc.)
 
         Returns:
@@ -134,20 +134,20 @@ class BaseForecaster(ForecasterMixin, ABC):
         # =========================================================================
         # STEP 1: Generate historical and current search queries
         # =========================================================================
-        write("\n=== Step 1: Generating search queries ===")
+        log("\n=== Step 1: Generating search queries ===")
 
         historical_prompt, current_prompt = self._format_query_prompts(
             prompt_historical, prompt_current, **question_params
         )
 
-        query_model = self._get_model("query_generator", "openrouter/openai/o3")
+        query_model = self._resolve_model("query_generator", "openrouter/openai/o3")
 
         historical_task = self._call_model(query_model, historical_prompt)
         current_task = self._call_model(query_model, current_prompt)
         historical_output, current_output = await asyncio.gather(historical_task, current_task)
 
-        write(f"\nHistorical query output:\n{historical_output[:500]}...")
-        write(f"\nCurrent query output:\n{current_output[:500]}...")
+        log(f"\nHistorical query output:\n{historical_output[:500]}...")
+        log(f"\nCurrent query output:\n{current_output[:500]}...")
 
         step1_end_cost = snapshot_cost("step1_query_generation", pipeline_start_cost)
 
@@ -158,20 +158,20 @@ class BaseForecaster(ForecasterMixin, ABC):
         # =========================================================================
         # STEP 2: Execute searches
         # =========================================================================
-        write("\n=== Step 2: Executing searches ===")
+        log("\n=== Step 2: Executing searches ===")
 
         # Initialize pipeline metrics tracking
         metrics = PipelineMetrics.create_empty()
 
         async with SearchPipeline(self.config, self.llm) as search:
             results = await asyncio.gather(
-                search.process_search_queries(
+                search.execute_searches_from_response(
                     historical_output,
                     search_id="historical",
                     question_details=question_details,
                     include_asknews=False,
                 ),
-                search.process_search_queries(
+                search.execute_searches_from_response(
                     current_output,
                     search_id="current",
                     question_details=question_details,
@@ -180,8 +180,8 @@ class BaseForecaster(ForecasterMixin, ABC):
             )
             (historical_context, historical_metadata), (current_context, current_metadata) = results
 
-        write(f"\nHistorical context ({len(historical_context)} chars)")
-        write(f"Current context ({len(current_context)} chars)")
+        log(f"\nHistorical context ({len(historical_context)} chars)")
+        log(f"Current context ({len(current_context)} chars)")
 
         step2_end_cost = snapshot_cost("step2_search", step1_end_cost)
 
@@ -196,7 +196,7 @@ class BaseForecaster(ForecasterMixin, ABC):
         # =========================================================================
         # STEP 3: Run 5 agents on Step 1 (outside view)
         # =========================================================================
-        write("\n=== Step 3: Running Step 1 (outside view) ===")
+        log("\n=== Step 3: Running Step 1 (outside view) ===")
 
         agents = self._get_agents()
 
@@ -235,13 +235,13 @@ class BaseForecaster(ForecasterMixin, ABC):
             step1_metrics = metrics.agents[agent_id].step1
 
             if isinstance(result, Exception):
-                write(f"\nForecaster_{i+1} step 1 ERROR: {result}")
+                log(f"\nForecaster_{i+1} step 1 ERROR: {result}")
                 step1_outputs.append(f"Error: {result}")
                 step1_metrics.error = str(result)
                 step1_metrics.duration_seconds = duration
             else:
                 output, response_metadata = result
-                write(f"\nForecaster_{i+1} step 1 output:\n{output[:300]}...")
+                log(f"\nForecaster_{i+1} step 1 output:\n{output[:300]}...")
                 step1_outputs.append(output)
 
                 # Track LLM metrics
@@ -261,7 +261,7 @@ class BaseForecaster(ForecasterMixin, ABC):
         # =========================================================================
         # STEP 4: Cross-pollinate context
         # =========================================================================
-        write("\n=== Step 4: Cross-pollinating context ===")
+        log("\n=== Step 4: Cross-pollinating context ===")
 
         context_map = {}
         for i in range(5):
@@ -279,7 +279,7 @@ class BaseForecaster(ForecasterMixin, ABC):
         # =========================================================================
         # STEP 5: Run 5 agents on Step 2 (inside view)
         # =========================================================================
-        write("\n=== Step 5: Running Step 2 (inside view) ===")
+        log("\n=== Step 5: Running Step 2 (inside view) ===")
 
         step2_tasks = []
         step2_timings = []
@@ -326,23 +326,23 @@ class BaseForecaster(ForecasterMixin, ABC):
         # =========================================================================
         # STEP 6: Extract predictions and aggregate
         # =========================================================================
-        write("\n=== Step 6: Extracting and aggregating predictions ===")
+        log("\n=== Step 6: Extracting and aggregating predictions ===")
 
         agent_results = []
 
         for i, (agent, output) in enumerate(zip(agents, step2_outputs)):
             if isinstance(output, Exception):
-                write(f"\nForecaster_{i+1} step 2 ERROR: {output}")
+                log(f"\nForecaster_{i+1} step 2 ERROR: {output}")
                 prediction = None
                 error = str(output)
             else:
-                write(f"\nForecaster_{i+1} step 2 output:\n{output[:300]}...")
+                log(f"\nForecaster_{i+1} step 2 output:\n{output[:300]}...")
                 try:
                     prediction = self._extract_prediction(output, **question_params)
-                    write(f"Forecaster_{i+1} prediction: {prediction}")
+                    log(f"Forecaster_{i+1} prediction: {prediction}")
                     error = None
                 except Exception as e:
-                    write(f"Forecaster_{i+1} extraction error: {e}")
+                    log(f"Forecaster_{i+1} extraction error: {e}")
                     prediction = None
                     error = str(e)
 
@@ -365,7 +365,7 @@ class BaseForecaster(ForecasterMixin, ABC):
                 self.artifact_store.save_agent_extracted(i + 1, self._get_extracted_data(result))
 
         # Aggregate results
-        final_prediction = self._aggregate_results(agent_results, agents, write)
+        final_prediction = self._aggregate_results(agent_results, agents, log)
 
         # Save aggregation and metrics
         if self.artifact_store:
@@ -378,32 +378,32 @@ class BaseForecaster(ForecasterMixin, ABC):
             self.artifact_store.save_tool_usage(metrics.to_dict())
 
         # Log cost breakdown
-        write("\n=== Cost Breakdown ===")
+        log("\n=== Cost Breakdown ===")
         for step_name, cost in step_costs.items():
-            write(f"  {step_name}: ${cost:.4f}")
+            log(f"  {step_name}: ${cost:.4f}")
 
         # Show search cost breakdown
         search_hist = metrics.centralized_research["historical"]
         search_curr = metrics.centralized_research["current"]
         if search_hist.llm_cost or search_curr.llm_cost:
-            write("    Search LLM breakdown:")
+            log("    Search LLM breakdown:")
             if search_hist.llm_cost_summarization:
-                write(f"      historical summarization: ${search_hist.llm_cost_summarization:.4f}")
+                log(f"      historical summarization: ${search_hist.llm_cost_summarization:.4f}")
             if search_hist.llm_cost_agentic:
-                write(f"      historical agentic: ${search_hist.llm_cost_agentic:.4f}")
+                log(f"      historical agentic: ${search_hist.llm_cost_agentic:.4f}")
             if search_curr.llm_cost_summarization:
-                write(f"      current summarization: ${search_curr.llm_cost_summarization:.4f}")
+                log(f"      current summarization: ${search_curr.llm_cost_summarization:.4f}")
             if search_curr.llm_cost_agentic:
-                write(f"      current agentic: ${search_curr.llm_cost_agentic:.4f}")
+                log(f"      current agentic: ${search_curr.llm_cost_agentic:.4f}")
 
         # Show agent costs
-        write("  Agent costs:")
+        log("  Agent costs:")
         for agent_id, agent_metrics in metrics.agents.items():
             s1_cost = agent_metrics.step1.cost
             s2_cost = agent_metrics.step2.cost
-            write(f"    {agent_id}: S1=${s1_cost:.4f} S2=${s2_cost:.4f}")
+            log(f"    {agent_id}: S1=${s1_cost:.4f} S2=${s2_cost:.4f}")
 
-        write(f"  TOTAL: ${metrics.total_pipeline_cost:.4f}")
+        log(f"  TOTAL: ${metrics.total_pipeline_cost:.4f}")
 
         return self._build_result(
             final_prediction=final_prediction,
@@ -533,7 +533,7 @@ class BaseForecaster(ForecasterMixin, ABC):
         self,
         agent_results: List[AgentResult],
         agents: List[Dict],
-        write: callable,
+        log: callable,
     ) -> Any:
         """
         Aggregate individual predictions into final result.
@@ -541,7 +541,7 @@ class BaseForecaster(ForecasterMixin, ABC):
         Args:
             agent_results: List of AgentResult with predictions
             agents: Agent configurations with weights
-            write: Logging function
+            log: Progress logging callback
 
         Returns:
             Final aggregated prediction

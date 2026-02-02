@@ -35,14 +35,25 @@ class ForecastRecord:
 
 @dataclass
 class AgentPredictionRecord:
-    """A single agent's prediction within a forecast."""
+    """
+    A single agent's prediction within a forecast.
+
+    Attributes:
+        forecast_id: Links to the parent forecast record (format: {question_id}_{timestamp})
+        agent_id: Identifies which ensemble agent made this prediction (e.g., "forecaster_1")
+        model: The LLM model used (e.g., "openrouter/anthropic/claude-sonnet-4")
+        weight: Agent's weight in the ensemble average (typically 1.0 for equal weighting)
+        prediction: The agent's probability prediction (0-1 for binary)
+        reasoning_length: Character count of the agent's reasoning output
+        prediction_data: JSON string with full prediction details (percentiles for numeric, etc.)
+    """
     forecast_id: str
-    agent_name: str
+    agent_id: str
     model: str
     weight: float
     prediction: float
-    reasoning_length: int  # Character count of reasoning
-    prediction_data: str = ""  # JSON: full prediction data for this agent
+    reasoning_length: int
+    prediction_data: str = ""
 
 
 @dataclass
@@ -89,7 +100,7 @@ class ForecastDatabase:
                 CREATE TABLE IF NOT EXISTS agent_predictions (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     forecast_id TEXT NOT NULL,
-                    agent_name TEXT NOT NULL,
+                    agent_id TEXT NOT NULL,
                     model TEXT NOT NULL,
                     weight REAL NOT NULL,
                     prediction REAL NOT NULL,
@@ -118,7 +129,7 @@ class ForecastDatabase:
             await db.commit()
 
     async def migrate_schema(self) -> None:
-        """Run schema migrations to add new columns."""
+        """Run schema migrations to add/rename columns."""
         async with aiosqlite.connect(self.db_path) as db:
             # Check forecasts table columns
             cursor = await db.execute("PRAGMA table_info(forecasts)")
@@ -136,6 +147,10 @@ class ForecastDatabase:
 
             if "prediction_data" not in agent_columns:
                 await db.execute("ALTER TABLE agent_predictions ADD COLUMN prediction_data TEXT")
+
+            # Rename agent_name to agent_id for consistency with code
+            if "agent_name" in agent_columns and "agent_id" not in agent_columns:
+                await db.execute("ALTER TABLE agent_predictions RENAME COLUMN agent_name TO agent_id")
 
             await db.commit()
 
@@ -176,11 +191,11 @@ class ForecastDatabase:
         async with aiosqlite.connect(self.db_path) as db:
             await db.execute("""
                 INSERT INTO agent_predictions
-                (forecast_id, agent_name, model, weight, prediction, reasoning_length, prediction_data)
+                (forecast_id, agent_id, model, weight, prediction, reasoning_length, prediction_data)
                 VALUES (?, ?, ?, ?, ?, ?, ?)
             """, (
                 record.forecast_id,
-                record.agent_name,
+                record.agent_id,
                 record.model,
                 record.weight,
                 record.prediction,
@@ -280,7 +295,7 @@ class ForecastDatabase:
             db.row_factory = aiosqlite.Row
             cursor = await db.execute(f"""
                 SELECT
-                    ap.agent_name,
+                    ap.agent_id,
                     ap.model,
                     COUNT(*) as num_forecasts,
                     AVG(ap.weight) as avg_weight,
@@ -289,7 +304,7 @@ class ForecastDatabase:
                 FROM agent_predictions ap
                 JOIN forecasts f ON ap.forecast_id = f.id
                 WHERE f.actual_outcome IS NOT NULL {type_filter}
-                GROUP BY ap.agent_name, ap.model
+                GROUP BY ap.agent_id, ap.model
                 ORDER BY agent_brier ASC
             """, params)
             rows = await cursor.fetchall()
@@ -413,16 +428,16 @@ class ForecastDatabase:
                     f.prediction_data,
                     f.total_cost,
                     f.created_at,
-                    MAX(CASE WHEN ap.agent_name IN ('forecaster_1', 'agent_1') THEN ap.prediction END) as agent_1,
-                    MAX(CASE WHEN ap.agent_name IN ('forecaster_2', 'agent_2') THEN ap.prediction END) as agent_2,
-                    MAX(CASE WHEN ap.agent_name IN ('forecaster_3', 'agent_3') THEN ap.prediction END) as agent_3,
-                    MAX(CASE WHEN ap.agent_name IN ('forecaster_4', 'agent_4') THEN ap.prediction END) as agent_4,
-                    MAX(CASE WHEN ap.agent_name IN ('forecaster_5', 'agent_5') THEN ap.prediction END) as agent_5,
-                    MAX(CASE WHEN ap.agent_name IN ('forecaster_1', 'agent_1') THEN ap.prediction_data END) as agent_1_data,
-                    MAX(CASE WHEN ap.agent_name IN ('forecaster_2', 'agent_2') THEN ap.prediction_data END) as agent_2_data,
-                    MAX(CASE WHEN ap.agent_name IN ('forecaster_3', 'agent_3') THEN ap.prediction_data END) as agent_3_data,
-                    MAX(CASE WHEN ap.agent_name IN ('forecaster_4', 'agent_4') THEN ap.prediction_data END) as agent_4_data,
-                    MAX(CASE WHEN ap.agent_name IN ('forecaster_5', 'agent_5') THEN ap.prediction_data END) as agent_5_data
+                    MAX(CASE WHEN ap.agent_id IN ('forecaster_1', 'agent_1') THEN ap.prediction END) as agent_1,
+                    MAX(CASE WHEN ap.agent_id IN ('forecaster_2', 'agent_2') THEN ap.prediction END) as agent_2,
+                    MAX(CASE WHEN ap.agent_id IN ('forecaster_3', 'agent_3') THEN ap.prediction END) as agent_3,
+                    MAX(CASE WHEN ap.agent_id IN ('forecaster_4', 'agent_4') THEN ap.prediction END) as agent_4,
+                    MAX(CASE WHEN ap.agent_id IN ('forecaster_5', 'agent_5') THEN ap.prediction END) as agent_5,
+                    MAX(CASE WHEN ap.agent_id IN ('forecaster_1', 'agent_1') THEN ap.prediction_data END) as agent_1_data,
+                    MAX(CASE WHEN ap.agent_id IN ('forecaster_2', 'agent_2') THEN ap.prediction_data END) as agent_2_data,
+                    MAX(CASE WHEN ap.agent_id IN ('forecaster_3', 'agent_3') THEN ap.prediction_data END) as agent_3_data,
+                    MAX(CASE WHEN ap.agent_id IN ('forecaster_4', 'agent_4') THEN ap.prediction_data END) as agent_4_data,
+                    MAX(CASE WHEN ap.agent_id IN ('forecaster_5', 'agent_5') THEN ap.prediction_data END) as agent_5_data
                 FROM forecasts f
                 LEFT JOIN agent_predictions ap ON f.id = ap.forecast_id
                 {where_clause}
@@ -452,12 +467,12 @@ class ForecastDatabase:
             await db.commit()
 
     async def update_agent_prediction_data(
-        self, forecast_id: str, agent_name: str, prediction_data: str
+        self, forecast_id: str, agent_id: str, prediction_data: str
     ) -> None:
         """Update the prediction_data JSON for a specific agent prediction."""
         async with aiosqlite.connect(self.db_path) as db:
             await db.execute(
-                "UPDATE agent_predictions SET prediction_data = ? WHERE forecast_id = ? AND agent_name = ?",
-                (prediction_data, forecast_id, agent_name)
+                "UPDATE agent_predictions SET prediction_data = ? WHERE forecast_id = ? AND agent_id = ?",
+                (prediction_data, forecast_id, agent_id)
             )
             await db.commit()
