@@ -14,16 +14,16 @@ from src.bot.exceptions import QuestionTypeError
 from src.bot.multiple_choice import MultipleChoiceForecaster
 from src.bot.numeric import NumericForecaster
 from src.bot.prompts import (
-    BINARY_PROMPT_1,
-    BINARY_PROMPT_2,
+    BINARY_INSIDE_VIEW_PROMPT,
+    BINARY_OUTSIDE_VIEW_PROMPT,
     BINARY_PROMPT_CURRENT,
     BINARY_PROMPT_HISTORICAL,
-    MULTIPLE_CHOICE_PROMPT_1,
-    MULTIPLE_CHOICE_PROMPT_2,
+    MULTIPLE_CHOICE_INSIDE_VIEW_PROMPT,
+    MULTIPLE_CHOICE_OUTSIDE_VIEW_PROMPT,
     MULTIPLE_CHOICE_PROMPT_CURRENT,
     MULTIPLE_CHOICE_PROMPT_HISTORICAL,
-    NUMERIC_PROMPT_1,
-    NUMERIC_PROMPT_2,
+    NUMERIC_INSIDE_VIEW_PROMPT,
+    NUMERIC_OUTSIDE_VIEW_PROMPT,
     NUMERIC_PROMPT_CURRENT,
     NUMERIC_PROMPT_HISTORICAL,
 )
@@ -138,12 +138,14 @@ class TestBinaryFormatMethods:
         assert len(historical) > 0
         assert len(current) > 0
 
-    def test_binary_format_step1_prompt_no_keyerror(self, minimal_config, base_question_params):
-        """Verify _format_step1_prompt() doesn't raise KeyError."""
+    def test_binary_format_outside_view_prompt_no_keyerror(
+        self, minimal_config, base_question_params
+    ):
+        """Verify _format_outside_view_prompt() doesn't raise KeyError."""
         forecaster = BinaryForecaster(minimal_config)
 
-        result = forecaster._format_step1_prompt(
-            BINARY_PROMPT_1,
+        result = forecaster._format_outside_view_prompt(
+            BINARY_OUTSIDE_VIEW_PROMPT,
             historical_context="Some historical context from search",
             **base_question_params,
         )
@@ -151,12 +153,14 @@ class TestBinaryFormatMethods:
         assert isinstance(result, str)
         assert len(result) > 0
 
-    def test_binary_format_step2_prompt_no_keyerror(self, minimal_config, base_question_params):
-        """Verify _format_step2_prompt() doesn't raise KeyError."""
+    def test_binary_format_inside_view_prompt_no_keyerror(
+        self, minimal_config, base_question_params
+    ):
+        """Verify _format_inside_view_prompt() doesn't raise KeyError."""
         forecaster = BinaryForecaster(minimal_config)
 
-        result = forecaster._format_step2_prompt(
-            BINARY_PROMPT_2,
+        result = forecaster._format_inside_view_prompt(
+            BINARY_INSIDE_VIEW_PROMPT,
             context="Cross-pollinated context with current news",
             **base_question_params,
         )
@@ -189,12 +193,14 @@ class TestNumericFormatMethods:
         assert isinstance(current, str)
         assert "bounds" in historical.lower() or "bound" in historical.lower()
 
-    def test_numeric_format_step1_prompt_no_keyerror(self, minimal_config, numeric_question_params):
-        """Verify _format_step1_prompt() doesn't raise KeyError for numeric questions."""
+    def test_numeric_format_outside_view_prompt_no_keyerror(
+        self, minimal_config, numeric_question_params
+    ):
+        """Verify _format_outside_view_prompt() doesn't raise KeyError for numeric questions."""
         forecaster = NumericForecaster(minimal_config)
 
-        result = forecaster._format_step1_prompt(
-            NUMERIC_PROMPT_1,
+        result = forecaster._format_outside_view_prompt(
+            NUMERIC_OUTSIDE_VIEW_PROMPT,
             historical_context="Historical research context",
             **numeric_question_params,
         )
@@ -202,12 +208,14 @@ class TestNumericFormatMethods:
         assert isinstance(result, str)
         assert len(result) > 0
 
-    def test_numeric_format_step2_prompt_no_keyerror(self, minimal_config, numeric_question_params):
-        """Verify _format_step2_prompt() doesn't raise KeyError for numeric questions."""
+    def test_numeric_format_inside_view_prompt_no_keyerror(
+        self, minimal_config, numeric_question_params
+    ):
+        """Verify _format_inside_view_prompt() doesn't raise KeyError for numeric questions."""
         forecaster = NumericForecaster(minimal_config)
 
-        result = forecaster._format_step2_prompt(
-            NUMERIC_PROMPT_2,
+        result = forecaster._format_inside_view_prompt(
+            NUMERIC_INSIDE_VIEW_PROMPT,
             context="Cross-pollinated context",
             **numeric_question_params,
         )
@@ -228,21 +236,21 @@ class TestNumericFormatMethods:
         assert isinstance(historical, str)
         assert isinstance(current, str)
 
-        # Step 1
-        step1 = forecaster._format_step1_prompt(
-            NUMERIC_PROMPT_1,
+        # Outside view
+        outside_view = forecaster._format_outside_view_prompt(
+            NUMERIC_OUTSIDE_VIEW_PROMPT,
             historical_context="Historical context",
             **discrete_question_params,
         )
-        assert isinstance(step1, str)
+        assert isinstance(outside_view, str)
 
-        # Step 2
-        step2 = forecaster._format_step2_prompt(
-            NUMERIC_PROMPT_2,
+        # Inside view
+        inside_view = forecaster._format_inside_view_prompt(
+            NUMERIC_INSIDE_VIEW_PROMPT,
             context="Cross-pollinated context",
             **discrete_question_params,
         )
-        assert isinstance(step2, str)
+        assert isinstance(inside_view, str)
 
     def test_date_format_prompts_no_keyerror(self, minimal_config, date_question_params):
         """Verify format methods work for date questions (is_date_question=True)."""
@@ -257,21 +265,21 @@ class TestNumericFormatMethods:
         assert isinstance(historical, str)
         assert isinstance(current, str)
 
-        # Step 1
-        step1 = forecaster._format_step1_prompt(
-            NUMERIC_PROMPT_1,
+        # Outside view
+        outside_view = forecaster._format_outside_view_prompt(
+            NUMERIC_OUTSIDE_VIEW_PROMPT,
             historical_context="Historical context",
             **date_question_params,
         )
-        assert isinstance(step1, str)
+        assert isinstance(outside_view, str)
 
-        # Step 2
-        step2 = forecaster._format_step2_prompt(
-            NUMERIC_PROMPT_2,
+        # Inside view
+        inside_view = forecaster._format_inside_view_prompt(
+            NUMERIC_INSIDE_VIEW_PROMPT,
             context="Cross-pollinated context",
             **date_question_params,
         )
-        assert isinstance(step2, str)
+        assert isinstance(inside_view, str)
 
     def test_get_bounds_explanation_returns_bounds_info(self, numeric_question_params):
         """Verify _get_bounds_explanation() returns dict with 'bounds_info' key."""
@@ -338,12 +346,12 @@ class TestMultipleChoiceFormatMethods:
         # Options should appear in the prompt
         assert "Option A" in historical or "['Option A'" in historical
 
-    def test_mc_format_step1_prompt_no_keyerror(self, minimal_config, mc_question_params):
-        """Verify _format_step1_prompt() doesn't raise KeyError."""
+    def test_mc_format_outside_view_prompt_no_keyerror(self, minimal_config, mc_question_params):
+        """Verify _format_outside_view_prompt() doesn't raise KeyError."""
         forecaster = MultipleChoiceForecaster(minimal_config)
 
-        result = forecaster._format_step1_prompt(
-            MULTIPLE_CHOICE_PROMPT_1,
+        result = forecaster._format_outside_view_prompt(
+            MULTIPLE_CHOICE_OUTSIDE_VIEW_PROMPT,
             historical_context="Historical research context",
             **mc_question_params,
         )
@@ -351,12 +359,12 @@ class TestMultipleChoiceFormatMethods:
         assert isinstance(result, str)
         assert len(result) > 0
 
-    def test_mc_format_step2_prompt_no_keyerror(self, minimal_config, mc_question_params):
-        """Verify _format_step2_prompt() doesn't raise KeyError."""
+    def test_mc_format_inside_view_prompt_no_keyerror(self, minimal_config, mc_question_params):
+        """Verify _format_inside_view_prompt() doesn't raise KeyError."""
         forecaster = MultipleChoiceForecaster(minimal_config)
 
-        result = forecaster._format_step2_prompt(
-            MULTIPLE_CHOICE_PROMPT_2,
+        result = forecaster._format_inside_view_prompt(
+            MULTIPLE_CHOICE_INSIDE_VIEW_PROMPT,
             context="Cross-pollinated context",
             **mc_question_params,
         )

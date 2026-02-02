@@ -32,7 +32,7 @@ class ResolvedConfig:
 
     This dataclass provides a clean interface for accessing configuration
     values after mode resolution. It resolves:
-    - Which model tier to use (cheap vs production)
+    - Which model tier to use (fast vs quality)
     - Which ensemble agents to use
     - Whether to submit predictions
 
@@ -56,7 +56,7 @@ class ResolvedConfig:
         should_submit: Whether to submit predictions to Metaculus
     """
 
-    raw: dict[str, Any]
+    source: dict[str, Any]
     mode: RunMode
     active_models: dict[str, Any]
     active_agents: list[dict[str, Any]]
@@ -67,7 +67,6 @@ class ResolvedConfig:
         cls,
         path: str | Path = "config.yaml",
         mode: RunMode | None = None,
-        dry_run: bool = False,
     ) -> "ResolvedConfig":
         """
         Load configuration from YAML file and resolve mode settings.
@@ -75,28 +74,25 @@ class ResolvedConfig:
         Args:
             path: Path to the YAML configuration file
             mode: Explicit mode override ("test", "preview", "live")
-            dry_run: Shortcut for mode="test" (mode= takes precedence)
 
         Returns:
             ResolvedConfig with resolved mode settings
 
         Mode resolution priority:
             1. Explicit `mode` argument
-            2. `dry_run=True` argument (equivalent to mode="test")
-            3. `mode` key in config file
-            4. Default to "test"
+            2. `mode` key in config file
+            3. Default to "test"
         """
         with open(path) as f:
             raw = yaml.safe_load(f)
 
-        return cls.from_dict(raw, mode=mode, dry_run=dry_run)
+        return cls.from_dict(raw, mode=mode)
 
     @classmethod
     def from_dict(
         cls,
         raw: dict,
         mode: RunMode | None = None,
-        dry_run: bool = False,
     ) -> "ResolvedConfig":
         """
         Create ResolvedConfig from a configuration dictionary.
@@ -104,16 +100,13 @@ class ResolvedConfig:
         Args:
             raw: Configuration dictionary (typically loaded from YAML)
             mode: Explicit mode override
-            dry_run: Shortcut for mode="test"
 
         Returns:
             ResolvedConfig with resolved mode settings
         """
-        # Determine mode (priority: mode arg > dry_run flag > config > default)
+        # Determine mode (priority: mode arg > config > default)
         if mode:
             resolved_mode = mode
-        elif dry_run:
-            resolved_mode = "test"
         else:
             resolved_mode = raw.get("mode", "test")
 
@@ -123,7 +116,7 @@ class ResolvedConfig:
             raise ValueError(f"Invalid mode '{resolved_mode}'. Must be one of: {valid_modes}")
 
         # Select model tier based on mode
-        model_tier = "cheap" if resolved_mode == "test" else "production"
+        model_tier = "fast" if resolved_mode == "test" else "quality"
 
         # Resolve active models
         if "models" in raw and model_tier in raw["models"]:
@@ -148,7 +141,7 @@ class ResolvedConfig:
         should_submit = resolved_mode == "live"
 
         return cls(
-            raw=raw,
+            source=raw,
             mode=resolved_mode,
             active_models=active_models,
             active_agents=active_agents,
@@ -167,7 +160,7 @@ class ResolvedConfig:
         Returns:
             Dictionary ready for serialization with unambiguous mode
         """
-        result = self.raw.copy()
+        result = self.source.copy()
         # Set mode to resolved value
         result["mode"] = self.mode
         # Resolved values for handlers
@@ -183,15 +176,15 @@ class ResolvedConfig:
         This allows ResolvedConfig to be used somewhat like a dict
         for accessing non-resolved config values (e.g., research settings).
         """
-        return self.raw.get(key, default)
+        return self.source.get(key, default)
 
     def __getitem__(self, key: str):
         """Allow dict-like access to raw config values."""
-        return self.raw[key]
+        return self.source[key]
 
     def __contains__(self, key: str) -> bool:
         """Support 'in' operator for raw config keys."""
-        return key in self.raw
+        return key in self.source
 
 
 def load_config(config_path: str = "config.yaml") -> dict:

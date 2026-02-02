@@ -10,9 +10,9 @@ Usage:
     python main.py --url "https://www.metaculus.com/questions/12345/..."
 
     # Run modes:
-    #   test    - cheap models (Haiku), no submission
-    #   preview - production models, no submission
-    #   live    - production models, submits to Metaculus
+    #   test    - fast models (Haiku), no submission
+    #   preview - quality models, no submission
+    #   live    - quality models, submits to Metaculus
     python main.py --question 12345 --mode test
     python main.py --question 12345 --mode preview
     python main.py --question 12345 --mode live
@@ -20,8 +20,8 @@ Usage:
     # List tournament questions
     python main.py --tournament 32721 --list
 
-    # Forecast all new questions in a tournament
-    python main.py --tournament 32721 --forecast-new
+    # Forecast all unforecasted questions in a tournament
+    python main.py --tournament 32721 --forecast-unforecasted
 """
 
 import argparse
@@ -77,11 +77,10 @@ async def forecast_question(
     question_id: int = None,
     question_url: str = None,
     config_path: str = "config.yaml",
-    dry_run: bool = False,
     mode: str = None,
 ):
     """Forecast a single question."""
-    resolved = ResolvedConfig.from_yaml(config_path, mode=mode, dry_run=dry_run)
+    resolved = ResolvedConfig.from_yaml(config_path, mode=mode)
     config = resolved.to_dict()
 
     try:
@@ -171,17 +170,16 @@ async def forecast_question(
         sys.exit(1)
 
 
-async def forecast_new_questions(
+async def forecast_unforecasted_questions(
     tournament_id: int | str,
     config_path: str = "config.yaml",
-    dry_run: bool = False,
     mode: str = None,
     limit: int = 10,
 ):
-    """Forecast all new questions in a tournament."""
-    resolved = ResolvedConfig.from_yaml(config_path, mode=mode, dry_run=dry_run)
+    """Forecast questions in a tournament that I haven't forecasted yet."""
+    resolved = ResolvedConfig.from_yaml(config_path, mode=mode)
     # Modify raw config for tournament_id before converting to dict
-    resolved.raw["submission"]["tournament_id"] = tournament_id
+    resolved.source["submission"]["tournament_id"] = tournament_id
 
     async with MetaculusClient() as client:
         # Get all open questions
@@ -246,26 +244,26 @@ def main():
     )
     parser.add_argument("--list", "-l", action="store_true", help="List questions in tournament")
     parser.add_argument(
-        "--forecast-new", action="store_true", help="Forecast all new questions in tournament"
-    )
-    parser.add_argument(
-        "--dry-run",
+        "--forecast-unforecasted",
         action="store_true",
-        help="Don't actually submit predictions (shortcut for --mode test)",
+        help="Forecast all unforecasted questions in tournament",
     )
     parser.add_argument(
         "--mode",
         "-m",
         type=str,
         choices=["test", "preview", "live"],
-        help="Run mode: test (cheap models, no submit), preview (production models, no submit), live (production models, submits)",
+        help="Run mode: test (fast models, no submit), preview (quality models, no submit), live (quality models, submits)",
     )
     parser.add_argument(
         "--config", "-c", type=str, default="config.yaml", help="Path to config file"
     )
     parser.add_argument("--verbose", "-v", action="store_true", help="Enable verbose logging")
     parser.add_argument(
-        "--limit", type=int, default=10, help="Maximum questions to forecast with --forecast-new"
+        "--limit",
+        type=int,
+        default=10,
+        help="Maximum questions to forecast with --forecast-unforecasted",
     )
 
     args = parser.parse_args()
@@ -286,12 +284,11 @@ def main():
     if args.list and args.tournament:
         asyncio.run(list_questions(args.tournament))
 
-    elif args.forecast_new and args.tournament:
+    elif args.forecast_unforecasted and args.tournament:
         asyncio.run(
-            forecast_new_questions(
+            forecast_unforecasted_questions(
                 tournament_id=args.tournament,
                 config_path=args.config,
-                dry_run=args.dry_run,
                 mode=args.mode,
                 limit=args.limit,
             )
@@ -303,7 +300,6 @@ def main():
                 question_id=args.question,
                 question_url=args.url,
                 config_path=args.config,
-                dry_run=args.dry_run,
                 mode=args.mode,
             )
         )

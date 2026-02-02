@@ -10,19 +10,19 @@ Tests cover:
 
 import json
 
-from src.storage.artifact_store import ArtifactStore, ForecastArtifacts
+from src.storage.artifact_store import ArtifactStore, ForecastArtifactPaths
 
 # ============================================================================
-# ForecastArtifacts Tests
+# ForecastArtifactPaths Tests
 # ============================================================================
 
 
-class TestForecastArtifacts:
-    """Tests for ForecastArtifacts dataclass."""
+class TestForecastArtifactPaths:
+    """Tests for ForecastArtifactPaths dataclass."""
 
     def test_creates_directory_structure(self, tmp_path):
         """Creates all required directories on init."""
-        artifacts = ForecastArtifacts(
+        artifacts = ForecastArtifactPaths(
             question_id=12345,
             timestamp="20260101_120000",
             base_dir=tmp_path,
@@ -35,7 +35,7 @@ class TestForecastArtifacts:
 
     def test_sets_correct_paths(self, tmp_path):
         """Sets all artifact paths correctly."""
-        artifacts = ForecastArtifacts(
+        artifacts = ForecastArtifactPaths(
             question_id=12345,
             timestamp="20260101_120000",
             base_dir=tmp_path,
@@ -108,48 +108,48 @@ class TestArtifactStore:
             saved = json.load(f)
         assert saved == results
 
-    def test_save_step1_prompt(self, tmp_path):
-        """Saves step 1 prompt to ensemble directory."""
+    def test_save_outside_view_prompt(self, tmp_path):
+        """Saves outside view prompt to ensemble directory."""
         store = ArtifactStore(base_dir=tmp_path)
         artifacts = store.create_forecast_artifacts(12345)
 
-        store.save_step1_prompt(artifacts, "Step 1 prompt content")
+        store.save_outside_view_prompt(artifacts, "Outside view prompt content")
 
-        path = artifacts.ensemble_dir / "step1_prompt.md"
+        path = artifacts.ensemble_dir / "outside_view_prompt.md"
         assert path.exists()
-        assert path.read_text() == "Step 1 prompt content"
+        assert path.read_text() == "Outside view prompt content"
 
-    def test_save_agent_step1(self, tmp_path):
-        """Saves agent step 1 response."""
+    def test_save_forecaster_outside_view(self, tmp_path):
+        """Saves forecaster outside view response."""
         store = ArtifactStore(base_dir=tmp_path)
         artifacts = store.create_forecast_artifacts(12345)
 
-        store.save_agent_step1(artifacts, 1, "Agent 1 step 1 response")
+        store.save_forecaster_outside_view(artifacts, 1, "Forecaster 1 outside view response")
 
-        path = artifacts.ensemble_dir / "agent_1_step1.md"
+        path = artifacts.ensemble_dir / "forecaster_1_outside_view.md"
         assert path.exists()
-        assert path.read_text() == "Agent 1 step 1 response"
+        assert path.read_text() == "Forecaster 1 outside view response"
 
-    def test_save_agent_step2(self, tmp_path):
-        """Saves agent step 2 response."""
+    def test_save_forecaster_inside_view(self, tmp_path):
+        """Saves forecaster inside view response."""
         store = ArtifactStore(base_dir=tmp_path)
         artifacts = store.create_forecast_artifacts(12345)
 
-        store.save_agent_step2(artifacts, 3, "Agent 3 step 2 response")
+        store.save_forecaster_inside_view(artifacts, 3, "Forecaster 3 inside view response")
 
-        path = artifacts.ensemble_dir / "agent_3_step2.md"
+        path = artifacts.ensemble_dir / "forecaster_3_inside_view.md"
         assert path.exists()
-        assert path.read_text() == "Agent 3 step 2 response"
+        assert path.read_text() == "Forecaster 3 inside view response"
 
-    def test_save_agent_extracted(self, tmp_path):
+    def test_save_forecaster_prediction(self, tmp_path):
         """Saves extracted prediction JSON."""
         store = ArtifactStore(base_dir=tmp_path)
         artifacts = store.create_forecast_artifacts(12345)
         extracted = {"probability": 0.65, "error": None}
 
-        store.save_agent_extracted(artifacts, 2, extracted)
+        store.save_forecaster_prediction(artifacts, 2, extracted)
 
-        path = artifacts.ensemble_dir / "agent_2.json"
+        path = artifacts.ensemble_dir / "forecaster_2.json"
         assert path.exists()
         with open(path) as f:
             saved = json.load(f)
@@ -319,15 +319,15 @@ class TestLoadArtifacts:
 
         # Save some files
         store.save_question(artifacts, {"id": 12345})
-        store.save_step1_prompt(artifacts, "Prompt content")
+        store.save_outside_view_prompt(artifacts, "Prompt content")
 
         result = store.load_artifacts(artifacts.question_id, artifacts.timestamp)
 
         assert result is not None
         assert "question.json" in result
         assert result["question.json"] == {"id": 12345}
-        assert "ensemble/step1_prompt.md" in result
-        assert result["ensemble/step1_prompt.md"] == "Prompt content"
+        assert "ensemble/outside_view_prompt.md" in result
+        assert result["ensemble/outside_view_prompt.md"] == "Prompt content"
 
 
 # ============================================================================
@@ -394,8 +394,8 @@ class TestListForecasts:
         store = ArtifactStore(base_dir=tmp_path)
 
         # Create with explicit timestamps
-        artifacts1 = ForecastArtifacts(12345, "20260101_100000", tmp_path)
-        artifacts2 = ForecastArtifacts(12345, "20260101_120000", tmp_path)
+        artifacts1 = ForecastArtifactPaths(12345, "20260101_100000", tmp_path)
+        artifacts2 = ForecastArtifactPaths(12345, "20260101_120000", tmp_path)
         store.save_metadata(artifacts1, {}, {}, {})
         store.save_metadata(artifacts2, {}, {}, {})
 

@@ -8,7 +8,7 @@ Question selection modes:
 
 Usage:
   python run_bot.py --tournament 32916 --question-selection new-only
-  python run_bot.py --tournament 32917 --question-selection reforecast --reforecast-days 7
+  python run_bot.py --tournament 32917 --question-selection reforecast --reforecast-threshold-days 7
 """
 
 import argparse
@@ -32,7 +32,7 @@ logger = logging.getLogger(__name__)
 async def forecast_metaculus_questions(
     tournament_id: str,
     question_selection: str = "new-only",
-    reforecast_older_than_days: int = 7,
+    reforecast_threshold_days: int = 7,
     limit: int = 50,
 ):
     """
@@ -41,7 +41,7 @@ async def forecast_metaculus_questions(
     Args:
         tournament_id: Tournament ID or slug (e.g., "32916", "minibench")
         question_selection: "new-only" (new questions only) or "reforecast" (new + old)
-        reforecast_older_than_days: For reforecast mode, re-forecast questions older than this
+        reforecast_threshold_days: For reforecast mode, re-forecast questions older than this
         limit: Maximum questions to forecast per run
 
     Returns:
@@ -83,7 +83,7 @@ async def forecast_metaculus_questions(
 
         elif question_selection == "reforecast":
             # Reforecast mode: new questions + old forecasts needing update
-            cutoff = datetime.now(UTC) - timedelta(days=reforecast_older_than_days)
+            cutoff = datetime.now(UTC) - timedelta(days=reforecast_threshold_days)
 
             for q in questions:
                 if q.id not in forecasted_ids:
@@ -101,7 +101,7 @@ async def forecast_metaculus_questions(
 
             logger.info(
                 f"reforecast: {len(questions_to_forecast)} questions "
-                f"(new + older than {reforecast_older_than_days} days)"
+                f"(new + older than {reforecast_threshold_days} days)"
             )
 
         if not questions_to_forecast:
@@ -177,10 +177,10 @@ def main():
         help="new-only=forecast new questions only, reforecast=new+refresh old",
     )
     parser.add_argument(
-        "--reforecast-days",
+        "--reforecast-threshold-days",
         type=int,
         default=7,
-        help="Re-forecast if older than this many days (reforecast mode only)",
+        help="Re-forecast questions older than this many days (reforecast mode only)",
     )
     parser.add_argument(
         "--limit", type=int, default=50, help="Maximum questions to forecast per run"
@@ -198,7 +198,7 @@ def main():
         forecast_metaculus_questions(
             tournament_id=args.tournament,
             question_selection=args.question_selection,
-            reforecast_older_than_days=args.reforecast_older_than_days,
+            reforecast_threshold_days=args.reforecast_threshold_days,
             limit=args.limit,
         )
     )

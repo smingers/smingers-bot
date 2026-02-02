@@ -98,7 +98,7 @@ python main.py --question 41594 --mode live
 
 **Passed to next stage:**
 - `MetaculusQuestion` object
-- `ForecastArtifacts` container
+- `ForecastArtifactPaths` container
 
 ---
 
@@ -696,7 +696,7 @@ final_pred = max(0.001, min(0.999, 0.386))
 ### Inputs
 - `question`: MetaculusQuestion (id=41594)
 - `forecast_result`: Contains `final_prediction` (0.386)
-- `dry_run`: False (in live mode)
+- `should_submit`: True (in live mode)
 
 ### Process (Live Mode)
 
@@ -757,9 +757,9 @@ response = await metaculus.submit_multiple_choice_prediction(
 
 ### Process (Test/Preview Mode)
 
-**If `dry_run=True` (test or preview mode):**
+**If `should_submit=False` (test or preview mode):**
 ```python
-logger.info(f"DRY RUN: Would submit 38.6%")
+logger.info(f"Mode: test/preview - skipping submission")
 # No API call made
 # Still save prediction artifact
 ```
@@ -945,7 +945,7 @@ Full audit trail saved to: `data/41594_20260124_143022/`
 - `data/.../06_submission/reasoning_report.md` - Complete human-readable report
 
 **Report is available for:**
-- Manual review before submission (dry run mode)
+- Manual review before submission (test/preview mode)
 - Post-submission documentation
 - Metaculus reasoning field (if enabled in config)
 
@@ -1485,9 +1485,9 @@ Print summary to console
 
 ## Appendix: CLI Examples
 
-**Basic forecast (dry run):**
+**Basic forecast (test mode):**
 ```bash
-python main.py --question 41594
+python main.py --question 41594 --mode test
 ```
 
 **Live forecast (submits):**

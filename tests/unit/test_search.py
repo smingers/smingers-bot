@@ -304,30 +304,30 @@ class TestSearchDateParsing:
 
         assert result == "Unknown"
 
-    def test_validate_time_before(self):
-        """_validate_time returns True when source is before cutoff."""
+    def test_is_before_resolution_date_true(self):
+        """_is_before_resolution_date returns True when source is before cutoff."""
         from src.bot.search import SearchPipeline
 
         pipeline = SearchPipeline({})
-        result = pipeline._validate_time("Dec 31, 2026", "Jan 15, 2026")
+        result = pipeline._is_before_resolution_date("Dec 31, 2026", "Jan 15, 2026")
 
         assert result is True
 
-    def test_validate_time_after(self):
-        """_validate_time returns False when source is after cutoff."""
+    def test_is_before_resolution_date_false(self):
+        """_is_before_resolution_date returns False when source is after cutoff."""
         from src.bot.search import SearchPipeline
 
         pipeline = SearchPipeline({})
-        result = pipeline._validate_time("Jan 1, 2026", "Jan 15, 2026")
+        result = pipeline._is_before_resolution_date("Jan 1, 2026", "Jan 15, 2026")
 
         assert result is False
 
-    def test_validate_time_unknown(self):
-        """_validate_time returns False for Unknown dates."""
+    def test_is_before_resolution_date_unknown(self):
+        """_is_before_resolution_date returns False for Unknown dates."""
         from src.bot.search import SearchPipeline
 
         pipeline = SearchPipeline({})
-        result = pipeline._validate_time("Dec 31, 2026", "Unknown")
+        result = pipeline._is_before_resolution_date("Dec 31, 2026", "Unknown")
 
         assert result is False
 

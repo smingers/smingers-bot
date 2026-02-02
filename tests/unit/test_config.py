@@ -5,9 +5,9 @@ Tests the ResolvedConfig class in src/config.py and verifies
 the contract between entry points and handlers.
 
 Modes:
-    - "test": cheap models, no submission
-    - "preview": production models, no submission
-    - "live": production models, submits
+    - "test": fast models, no submission
+    - "preview": quality models, no submission
+    - "live": quality models, submits
 """
 
 import sys
@@ -24,47 +24,31 @@ from src.config import ResolvedConfig
 class TestResolvedConfigFromDict:
     """Tests for ResolvedConfig.from_dict() method."""
 
-    def test_test_mode_uses_cheap_models(self, sample_config):
-        """Test that test mode selects cheap models."""
+    def test_test_mode_uses_fast_models(self, sample_config):
+        """Test that test mode selects fast models."""
         resolved = ResolvedConfig.from_dict(sample_config, mode="test")
 
         assert resolved.mode == "test"
-        assert resolved.active_models == sample_config["models"]["cheap"]
-        assert resolved.active_agents == sample_config["ensemble"]["cheap"]
+        assert resolved.active_models == sample_config["models"]["fast"]
+        assert resolved.active_agents == sample_config["ensemble"]["fast"]
         assert resolved.should_submit is False
 
-    def test_preview_mode_uses_production_models(self, sample_config):
-        """Test that preview mode selects production models but doesn't submit."""
+    def test_preview_mode_uses_quality_models(self, sample_config):
+        """Test that preview mode selects quality models but doesn't submit."""
         resolved = ResolvedConfig.from_dict(sample_config, mode="preview")
 
         assert resolved.mode == "preview"
-        assert resolved.active_models == sample_config["models"]["production"]
-        assert resolved.active_agents == sample_config["ensemble"]["production"]
+        assert resolved.active_models == sample_config["models"]["quality"]
+        assert resolved.active_agents == sample_config["ensemble"]["quality"]
         assert resolved.should_submit is False
 
     def test_live_mode_submits(self, sample_config):
-        """Test that live mode uses production models and enables submission."""
+        """Test that live mode uses quality models and enables submission."""
         resolved = ResolvedConfig.from_dict(sample_config, mode="live")
 
         assert resolved.mode == "live"
-        assert resolved.active_models == sample_config["models"]["production"]
-        assert resolved.active_agents == sample_config["ensemble"]["production"]
-        assert resolved.should_submit is True
-
-    def test_dry_run_flag_overrides_config(self, sample_config):
-        """Test that dry_run=True flag overrides config.mode."""
-        sample_config["mode"] = "live"  # Set live in config
-        resolved = ResolvedConfig.from_dict(sample_config, dry_run=True)
-
-        assert resolved.mode == "test"
-        assert resolved.should_submit is False
-
-    def test_explicit_mode_overrides_dry_run_flag(self, sample_config):
-        """Test that explicit mode= parameter takes precedence over dry_run flag."""
-        resolved = ResolvedConfig.from_dict(sample_config, mode="live", dry_run=True)
-
-        # mode= should win over dry_run=
-        assert resolved.mode == "live"
+        assert resolved.active_models == sample_config["models"]["quality"]
+        assert resolved.active_agents == sample_config["ensemble"]["quality"]
         assert resolved.should_submit is True
 
     def test_defaults_to_config_mode(self, sample_config):
@@ -77,8 +61,8 @@ class TestResolvedConfigFromDict:
     def test_defaults_to_test_if_no_mode(self):
         """Test that test is the default when no mode specified anywhere."""
         config = {
-            "models": {"cheap": {"utility": "model-a"}, "production": {"utility": "model-b"}},
-            "ensemble": {"cheap": [], "production": []},
+            "models": {"fast": {"utility": "model-a"}, "quality": {"utility": "model-b"}},
+            "ensemble": {"fast": [], "quality": []},
         }
         resolved = ResolvedConfig.from_dict(config)
 
@@ -97,14 +81,14 @@ class TestResolvedConfigFromDict:
         assert resolved.active_models == {"utility": "fallback-model"}
         assert resolved.active_agents == [{"name": "test"}]
 
-    def test_raw_config_preserved(self, sample_config):
-        """Test that original config is preserved in raw attribute."""
+    def test_source_config_preserved(self, sample_config):
+        """Test that original config is preserved in source attribute."""
         resolved = ResolvedConfig.from_dict(sample_config, mode="test")
 
-        # Raw config should contain original keys
-        assert "models" in resolved.raw
-        assert "ensemble" in resolved.raw
-        assert "mode" in resolved.raw
+        # Source config should contain original keys
+        assert "models" in resolved.source
+        assert "ensemble" in resolved.source
+        assert "mode" in resolved.source
 
 
 class TestResolvedConfigToDict:
@@ -186,7 +170,7 @@ class TestConfigContract:
     def test_agents_limited_to_five(self, sample_config):
         """Test that active_agents is limited to 5 agents."""
         # Add more than 5 agents
-        sample_config["ensemble"]["cheap"] = [
+        sample_config["ensemble"]["fast"] = [
             {"name": f"agent_{i}", "model": "test", "weight": 1.0} for i in range(10)
         ]
         resolved = ResolvedConfig.from_dict(sample_config, mode="test")
@@ -226,15 +210,15 @@ class TestModeValidation:
                 f"Mode {mode} should_submit={expected_submit}"
             )
 
-    def test_only_test_uses_cheap(self, sample_config):
-        """Test that only test mode uses cheap models."""
+    def test_only_test_uses_fast_models(self, sample_config):
+        """Test that only test mode uses fast models."""
         resolved_test = ResolvedConfig.from_dict(sample_config.copy(), mode="test")
         resolved_preview = ResolvedConfig.from_dict(sample_config.copy(), mode="preview")
         resolved_live = ResolvedConfig.from_dict(sample_config.copy(), mode="live")
 
-        assert resolved_test.active_models == sample_config["models"]["cheap"]
-        assert resolved_preview.active_models == sample_config["models"]["production"]
-        assert resolved_live.active_models == sample_config["models"]["production"]
+        assert resolved_test.active_models == sample_config["models"]["fast"]
+        assert resolved_preview.active_models == sample_config["models"]["quality"]
+        assert resolved_live.active_models == sample_config["models"]["quality"]
 
 
 class TestResolvedConfigAccessors:
@@ -292,6 +276,6 @@ class TestResolvedConfigImmutability:
         resolved = ResolvedConfig.from_dict(sample_config, mode="test")
         result = resolved.to_dict()
 
-        # Modifying result should not affect raw
+        # Modifying result should not affect source
         result["new_key"] = "new_value"
-        assert "new_key" not in resolved.raw
+        assert "new_key" not in resolved.source

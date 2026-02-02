@@ -546,15 +546,17 @@ class TestScopedArtifactStore:
             mock_artifacts, "current", {"results": []}
         )
 
-    def test_delegates_save_agent_step1(self):
-        """Delegates save_agent_step1 to underlying store."""
+    def test_delegates_save_forecaster_outside_view(self):
+        """Delegates save_forecaster_outside_view to underlying store."""
         mock_store = MagicMock()
         mock_artifacts = MagicMock()
 
         scoped = ScopedArtifactStore(mock_store, mock_artifacts)
-        scoped.save_agent_step1(1, "response")
+        scoped.save_forecaster_outside_view(1, "response")
 
-        mock_store.save_agent_step1.assert_called_once_with(mock_artifacts, 1, "response")
+        mock_store.save_forecaster_outside_view.assert_called_once_with(
+            mock_artifacts, 1, "response"
+        )
 
     def test_delegates_save_aggregation(self):
         """Delegates save_aggregation to underlying store."""

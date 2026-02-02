@@ -7,7 +7,7 @@ Multi-backend HTML content extraction with site-specific configs:
 3. Readability (fallback)
 4. BoilerPy3 (last resort)
 
-Also includes FastContentExtractor for concurrent URL fetching.
+Also includes ConcurrentContentExtractor for concurrent URL fetching.
 """
 
 import asyncio
@@ -292,7 +292,7 @@ class HTMLContentExtractor:
             return self._format_with_metadata(self._clean_content(best_result), metadata)
 
         # Fallback: auto-detect main content div
-        guessed_div = self._guess_main_content_div(soup)
+        guessed_div = self._find_content_by_density(soup)
         if guessed_div:
             text = guessed_div.get_text(separator=" ", strip=True)
             if text:
@@ -477,8 +477,8 @@ class HTMLContentExtractor:
         except Exception:
             return None
 
-    def _guess_main_content_div(self, soup: BeautifulSoup) -> Tag | None:
-        """Guess the main content div based on text density."""
+    def _find_content_by_density(self, soup: BeautifulSoup) -> Tag | None:
+        """Find the main content div based on text density."""
         candidates = []
         for div in soup.find_all("div"):
             class_attr = " ".join(div.get("class", []))
@@ -680,7 +680,7 @@ class HTMLContentExtractor:
         return content
 
 
-class FastContentExtractor:
+class ConcurrentContentExtractor:
     """
     Concurrent URL fetcher and content extractor.
 
@@ -707,7 +707,7 @@ class FastContentExtractor:
 
     def __init__(self, bright_data_api_key: str | None = None):
         """
-        Initialize the fast content extractor.
+        Initialize the concurrent content extractor.
 
         Args:
             bright_data_api_key: Optional Bright Data API key for more reliable scraping.
@@ -962,7 +962,7 @@ async def extract_article(url: str) -> ExtractedContent:
         content = await extract_article("https://example.com/article")
         print(content.text)
     """
-    async with FastContentExtractor() as extractor:
+    async with ConcurrentContentExtractor() as extractor:
         results = await extractor.extract_content([url])
 
         if url in results and results[url]["success"]:
@@ -1003,7 +1003,7 @@ async def extract_articles_batch(
         for result in results:
             print(f"{result.url}: {result.word_count} words")
     """
-    async with FastContentExtractor() as extractor:
+    async with ConcurrentContentExtractor() as extractor:
         results_dict = await extractor.extract_content(urls)
 
         results = []

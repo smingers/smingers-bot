@@ -15,7 +15,7 @@ import logging
 from datetime import UTC, datetime
 
 from ..config import ResolvedConfig
-from ..storage.artifact_store import ArtifactStore, ForecastArtifacts
+from ..storage.artifact_store import ArtifactStore, ForecastArtifactPaths
 from ..storage.database import AgentPredictionRecord, ForecastDatabase, ForecastRecord
 from ..utils.llm import LLMClient, get_cost_tracker, reset_cost_tracker
 from ..utils.metaculus_api import MetaculusClient, MetaculusQuestion
@@ -140,8 +140,8 @@ class Forecaster:
             # Step 1: Save question
             self.artifact_store.save_question(artifacts, question.raw)
 
-            # Step 2: Analyze question (saved later in metadata)
-            analysis = self._analyze_question(question)
+            # Step 2: Extract question metadata (saved later in metadata.json)
+            analysis = self._extract_question_metadata(question)
 
             # Step 3: Run type-specific forecaster (does research + forecasting)
             if question.question_type == "binary":
@@ -225,8 +225,8 @@ class Forecaster:
             )
             raise
 
-    def _analyze_question(self, question: MetaculusQuestion) -> dict:
-        """Analyze and classify the question."""
+    def _extract_question_metadata(self, question: MetaculusQuestion) -> dict:
+        """Extract metadata fields from the question for artifact storage."""
         return {
             "id": question.id,
             "title": question.title,
@@ -394,7 +394,7 @@ class Forecaster:
         self,
         question: MetaculusQuestion,
         forecast_result: dict,
-        artifacts: ForecastArtifacts,
+        artifacts: ForecastArtifactPaths,
     ):
         """Save prediction artifact without submitting (test/preview mode)."""
         mode_label = self.resolved_config.mode.upper()
@@ -465,7 +465,7 @@ class Forecaster:
         self,
         question: MetaculusQuestion,
         forecast_result: dict,
-        artifacts: ForecastArtifacts,
+        artifacts: ForecastArtifactPaths,
     ) -> dict:
         """Submit prediction to Metaculus.
 
@@ -553,7 +553,7 @@ class Forecaster:
         self,
         question: MetaculusQuestion,
         forecast_result: dict,
-        artifacts: ForecastArtifacts,
+        artifacts: ForecastArtifactPaths,
         costs: dict,
     ):
         """Save forecast data to database for analytics."""
@@ -617,7 +617,9 @@ class Forecaster:
                 model=agent_result.model,
                 weight=agent_result.weight,
                 prediction=pred_value or 0.0,  # Default to 0 if no prediction
-                reasoning_length=len(agent_result.step2_output) if agent_result.step2_output else 0,
+                reasoning_length=len(agent_result.inside_view_output)
+                if agent_result.inside_view_output
+                else 0,
                 prediction_data=agent_pred_data,
             )
             await self.database.insert_agent_prediction(agent_record)
@@ -628,36 +630,36 @@ class ScopedArtifactStore:
     Wraps ArtifactStore to automatically scope saves to a specific forecast.
 
     The handlers call methods like save_query_generation(type, prompt, response)
-    without needing to know about ForecastArtifacts.
+    without needing to know about ForecastArtifactPaths.
     """
 
-    def __init__(self, store: ArtifactStore, artifacts: ForecastArtifacts):
+    def __init__(self, store: ArtifactStore, artifacts: ForecastArtifactPaths):
         self.store = store
         self.artifacts = artifacts
 
-    def save_query_generation(self, query_type: str, prompt: str, response: str) -> None:
+    def save_query_generation(self, search_phase: str, prompt: str, response: str) -> None:
         """Save query generation prompt and response."""
-        self.store.save_query_generation(self.artifacts, query_type, prompt, response)
+        self.store.save_query_generation(self.artifacts, search_phase, prompt, response)
 
-    def save_search_results(self, search_type: str, results: dict) -> None:
+    def save_search_results(self, search_phase: str, results: dict) -> None:
         """Save search results."""
-        self.store.save_search_results(self.artifacts, search_type, results)
+        self.store.save_search_results(self.artifacts, search_phase, results)
 
-    def save_step1_prompt(self, prompt: str) -> None:
-        """Save the shared step 1 (outside view) prompt."""
-        self.store.save_step1_prompt(self.artifacts, prompt)
+    def save_outside_view_prompt(self, prompt: str) -> None:
+        """Save the shared outside view prompt."""
+        self.store.save_outside_view_prompt(self.artifacts, prompt)
 
-    def save_agent_step1(self, agent_num: int, response: str) -> None:
-        """Save an agent's step 1 (outside view) response."""
-        self.store.save_agent_step1(self.artifacts, agent_num, response)
+    def save_forecaster_outside_view(self, forecaster_num: int, response: str) -> None:
+        """Save a forecaster's outside view response."""
+        self.store.save_forecaster_outside_view(self.artifacts, forecaster_num, response)
 
-    def save_agent_step2(self, agent_num: int, response: str) -> None:
-        """Save an agent's step 2 (inside view) response."""
-        self.store.save_agent_step2(self.artifacts, agent_num, response)
+    def save_forecaster_inside_view(self, forecaster_num: int, response: str) -> None:
+        """Save a forecaster's inside view response."""
+        self.store.save_forecaster_inside_view(self.artifacts, forecaster_num, response)
 
-    def save_agent_extracted(self, agent_num: int, extracted: dict) -> None:
-        """Save extracted prediction from agent."""
-        self.store.save_agent_extracted(self.artifacts, agent_num, extracted)
+    def save_forecaster_prediction(self, forecaster_num: int, extracted: dict) -> None:
+        """Save extracted prediction from forecaster."""
+        self.store.save_forecaster_prediction(self.artifacts, forecaster_num, extracted)
 
     def save_aggregation(self, aggregation: dict) -> None:
         """Save aggregation result."""

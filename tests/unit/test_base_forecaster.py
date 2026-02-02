@@ -35,8 +35,8 @@ class ConcreteForecaster(BaseForecaster):
         return (
             "historical: {title}",
             "current: {title}",
-            "step1: {context}",
-            "step2: {context}",
+            "outside_view: {context}",
+            "inside_view: {context}",
         )
 
     def _get_question_details(self, **params):
@@ -48,10 +48,10 @@ class ConcreteForecaster(BaseForecaster):
             resolution_date=params.get("scheduled_resolve_time"),
         )
 
-    def _format_step1_prompt(self, template, context, **params):
+    def _format_outside_view_prompt(self, template, context, **params):
         return template.format(context=context)
 
-    def _format_step2_prompt(self, template, context, **params):
+    def _format_inside_view_prompt(self, template, context, **params):
         return template.format(context=context)
 
     def _extract_prediction(self, output, **params):
@@ -64,14 +64,14 @@ class ConcreteForecaster(BaseForecaster):
         return sum(r.probability for r in valid) / len(valid)
 
     def _build_agent_result(
-        self, agent_id, model, weight, step1_output, step2_output, prediction, error
+        self, agent_id, model, weight, outside_view_output, inside_view_output, prediction, error
     ):
         return AgentResult(
             agent_id=agent_id,
             model=model,
             weight=weight,
-            step1_output=step1_output,
-            step2_output=step2_output,
+            outside_view_output=outside_view_output,
+            inside_view_output=inside_view_output,
             probability=prediction,
             error=error,
         )
@@ -170,8 +170,8 @@ class TestGetExtractedData:
             agent_id="forecaster_1",
             model="test",
             weight=1.0,
-            step1_output="",
-            step2_output="",
+            outside_view_output="",
+            inside_view_output="",
             probability=65.0,
             error=None,
         )
@@ -187,8 +187,8 @@ class TestGetExtractedData:
             agent_id="forecaster_1",
             model="test",
             weight=1.0,
-            step1_output="",
-            step2_output="",
+            outside_view_output="",
+            inside_view_output="",
             probability=None,
             error="Extraction failed",
         )
@@ -213,8 +213,8 @@ class TestGetAggregationData:
                 agent_id=f"forecaster_{i + 1}",
                 model="test",
                 weight=1.0,
-                step1_output="",
-                step2_output="",
+                outside_view_output="",
+                inside_view_output="",
                 probability=50.0 + i * 5,
             )
             for i in range(5)
@@ -254,14 +254,14 @@ class TestCrossPolllinationLogic:
 
     def test_assembles_context_format(self):
         """Cross-pollinated context has correct format."""
-        step1_outputs = [f"Output from agent {i + 1}" for i in range(5)]
+        outside_view_outputs = [f"Output from agent {i + 1}" for i in range(5)]
         current_context = "Current news context"
 
         # Simulate cross-pollination logic from forecast()
         context_map = {}
         for i in range(5):
             source_idx, label = CROSS_POLLINATION_MAP[i]
-            source_output = step1_outputs[source_idx]
+            source_output = outside_view_outputs[source_idx]
             context_map[i] = f"Current context: {current_context}\n{label}: {source_output}"
 
         # Check format
@@ -270,7 +270,7 @@ class TestCrossPolllinationLogic:
 
     def test_handles_failed_source_agent(self):
         """Uses empty string when source agent failed."""
-        step1_outputs = [
+        outside_view_outputs = [
             "Output 1",
             "Output 2",
             "Output 3",
@@ -283,10 +283,10 @@ class TestCrossPolllinationLogic:
         context_map = {}
         for i in range(5):
             source_idx, label = CROSS_POLLINATION_MAP[i]
-            if isinstance(step1_outputs[source_idx], Exception):
+            if isinstance(outside_view_outputs[source_idx], Exception):
                 source_output = ""
             else:
-                source_output = step1_outputs[source_idx]
+                source_output = outside_view_outputs[source_idx]
             context_map[i] = f"Current context: {current_context}\n{label}: {source_output}"
 
         # Agent 2 (idx 1) gets from Agent 4 (idx 3) which failed
@@ -294,12 +294,12 @@ class TestCrossPolllinationLogic:
 
     def test_uses_correct_source_agent(self):
         """Each agent receives context from correct source per map."""
-        step1_outputs = [f"UNIQUE_OUTPUT_{i}" for i in range(5)]
+        outside_view_outputs = [f"UNIQUE_OUTPUT_{i}" for i in range(5)]
 
         context_map = {}
         for i in range(5):
             source_idx, label = CROSS_POLLINATION_MAP[i]
-            context_map[i] = step1_outputs[source_idx]
+            context_map[i] = outside_view_outputs[source_idx]
 
         # Verify based on CROSS_POLLINATION_MAP
         assert "UNIQUE_OUTPUT_0" in context_map[0]  # Agent 1 <- Agent 1
@@ -667,10 +667,10 @@ class TestForecastPipeline:
             # Verify artifact store methods were called
             assert mock_store.save_query_generation.called
             assert mock_store.save_search_results.called
-            assert mock_store.save_step1_prompt.called
-            assert mock_store.save_agent_step1.called
-            assert mock_store.save_agent_step2.called
-            assert mock_store.save_agent_extracted.called
+            assert mock_store.save_outside_view_prompt.called
+            assert mock_store.save_forecaster_outside_view.called
+            assert mock_store.save_forecaster_inside_view.called
+            assert mock_store.save_forecaster_prediction.called
             assert mock_store.save_aggregation.called
             assert mock_store.save_tool_usage.called
 

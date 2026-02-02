@@ -20,13 +20,13 @@ from .cdf import generate_continuous_cdf
 from .exceptions import CDFGenerationError, InsufficientPredictionsError
 from .extractors import (
     AgentResult,
-    enforce_strict_increasing,
+    enforce_monotonic_percentiles,
     extract_date_percentiles_from_response,
     extract_percentiles_from_response,
 )
 from .prompts import (
-    NUMERIC_PROMPT_1,
-    NUMERIC_PROMPT_2,
+    NUMERIC_INSIDE_VIEW_PROMPT,
+    NUMERIC_OUTSIDE_VIEW_PROMPT,
     NUMERIC_PROMPT_CURRENT,
     NUMERIC_PROMPT_HISTORICAL,
 )
@@ -66,8 +66,8 @@ class NumericForecaster(BaseForecaster):
         return (
             NUMERIC_PROMPT_HISTORICAL,
             NUMERIC_PROMPT_CURRENT,
-            NUMERIC_PROMPT_1,
-            NUMERIC_PROMPT_2,
+            NUMERIC_OUTSIDE_VIEW_PROMPT,
+            NUMERIC_INSIDE_VIEW_PROMPT,
         )
 
     def _get_question_details(self, **question_params) -> QuestionDetails:
@@ -175,13 +175,13 @@ class NumericForecaster(BaseForecaster):
         )
         return historical, current
 
-    def _format_step1_prompt(
+    def _format_outside_view_prompt(
         self,
         prompt_template: str,
         historical_context: str,
         **question_params,
     ) -> str:
-        """Format Step 1 prompt with numeric-specific parameters."""
+        """Format outside view prompt with numeric-specific parameters."""
         params = self._get_common_prompt_params(**question_params)
         bound_msgs = self._get_bounds_explanation(**question_params)
         unit = self._get_unit(**question_params)
@@ -190,13 +190,13 @@ class NumericForecaster(BaseForecaster):
         params["bounds_info"] = bound_msgs["bounds_info"]
         return prompt_template.format(**params)
 
-    def _format_step2_prompt(
+    def _format_inside_view_prompt(
         self,
         prompt_template: str,
         context: str,
         **question_params,
     ) -> str:
-        """Format Step 2 prompt with cross-pollinated context."""
+        """Format inside view prompt with cross-pollinated context."""
         params = self._get_common_prompt_params(**question_params)
         bound_msgs = self._get_bounds_explanation(**question_params)
         unit = self._get_unit(**question_params)
@@ -220,7 +220,7 @@ class NumericForecaster(BaseForecaster):
         else:
             percentiles = extract_percentiles_from_response(output, verbose=True)
 
-        percentiles = enforce_strict_increasing(percentiles)
+        percentiles = enforce_monotonic_percentiles(percentiles)
 
         cdf = generate_continuous_cdf(
             percentiles,
@@ -277,8 +277,8 @@ class NumericForecaster(BaseForecaster):
         agent_id: str,
         model: str,
         weight: float,
-        step1_output: str,
-        step2_output: str,
+        outside_view_output: str,
+        inside_view_output: str,
         prediction: Any,
         error: str | None,
     ) -> AgentResult:
@@ -294,8 +294,8 @@ class NumericForecaster(BaseForecaster):
             agent_id=agent_id,
             model=model,
             weight=weight,
-            step1_output=step1_output,
-            step2_output=step2_output,
+            outside_view_output=outside_view_output,
+            inside_view_output=inside_view_output,
             percentiles=percentiles,
             cdf=cdf,
             error=error,
@@ -452,7 +452,7 @@ async def get_numeric_forecast(
     for agent_result in result.agent_results:
         comment_parts.append(
             f"=== {agent_result.agent_id} ({agent_result.model}) ===\n"
-            f"Output:\n{agent_result.step2_output[:500]}...\n"
+            f"Output:\n{agent_result.inside_view_output[:500]}...\n"
         )
 
     comment = "\n\n".join(comment_parts)

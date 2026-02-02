@@ -150,15 +150,12 @@ def list_forecast_runs(data_dir: Path) -> list[dict]:
                 # For MC, just indicate it exists
                 prediction = "distribution"
 
-        # Check both dry_run flag and submitted flag
-        # submitted=true means it was actually submitted (not a dry run)
+        # Check if prediction was actually submitted
+        # submitted=true in prediction file, or mode=live in config
         if final_pred:
-            if final_pred.get("submitted", False):
-                dry_run = False
-            else:
-                dry_run = final_pred.get("dry_run", True)
+            submitted = final_pred.get("submitted", False)
         else:
-            dry_run = True
+            submitted = False
 
         runs.append(
             {
@@ -169,7 +166,7 @@ def list_forecast_runs(data_dir: Path) -> list[dict]:
                 "type": question_type,
                 "prediction": prediction,
                 "community_prediction": analysis.get("community_prediction"),
-                "dry_run": dry_run,
+                "submitted": submitted,
                 "total_cost": costs.get("total_cost", 0),
                 "mode": metadata.get("config_snapshot", {}).get("mode", "unknown"),
                 "structure": structure,
