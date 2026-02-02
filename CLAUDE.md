@@ -48,6 +48,23 @@ python run_bot.py --tournament 32916 --strategy new-only
 python run_bot.py --tournament 32916 --strategy reforecast --reforecast-days 7
 ```
 
+### Forecast Tracking
+
+Compare your forecasts against community consensus to identify systematic biases:
+
+```bash
+# Track forecasts for tournament 32916 (spring-aib-2026)
+poetry run python scripts/track_forecasts.py --tournament 32916
+
+# Custom output file
+poetry run python scripts/track_forecasts.py --tournament 32916 --output data/tracking/spring_aib_2026.json
+
+# Quiet mode (just save, minimal output)
+poetry run python scripts/track_forecasts.py --tournament 32916 --quiet
+```
+
+Output is saved to `data/tracking/<tournament_id>.json` and progressively updated on each run.
+
 ## Architecture
 
 ### Forecasting Pipeline
@@ -109,8 +126,6 @@ metaculus-bot/
 │   │   ├── artifact_store.py  # Forecast artifact persistence
 │   │   ├── database.py        # SQLite analytics DB
 │   │   └── report_generator.py # Report generation
-│   ├── research/
-│   │   └── asknews_searcher.py # AskNews integration
 │   └── config.py              # Configuration handling
 ├── tests/
 │   ├── conftest.py            # Pytest fixtures
