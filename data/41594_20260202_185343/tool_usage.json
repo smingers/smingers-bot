@@ -1,0 +1,196 @@
+{
+  "centralized_research": {
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "US military intervention Middle East precedents",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Trump Iran military action likelihood",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Analyze potential US military scenarios against Iran, considering geopolitical tensions, domestic Iranian protests, and strategic US interests in the region, including potential regime change objectives and international diplomatic constraints.",
+          "tool": "Agent",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "Agent"
+      ],
+      "llm_cost": 0.0648,
+      "llm_cost_summarization": 0.0422,
+      "llm_cost_agentic": 0.0226,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "US Iran military strike preparations",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Trump Iran conflict potential attack",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Likelihood of US intervention in Iran's current political crisis",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "Will the United States attack Iran before April 2026?",
+          "tool": "AskNews",
+          "deep_research_query": "Likelihood of US intervention in Iran's current political crisis"
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "AskNews",
+        "Google"
+      ],
+      "llm_cost": 0.0431,
+      "llm_cost_summarization": 0.0422,
+      "llm_cost_agentic": 0.0009,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-3.5-haiku",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4015,
+        "token_output": 766,
+        "cost": 0.006276,
+        "duration_seconds": 18.41912603378296,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12241,
+        "token_output": 728,
+        "cost": 0.0127048,
+        "duration_seconds": 18.112807035446167,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-3.5-haiku",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4015,
+        "token_output": 829,
+        "cost": 0.006528000000000001,
+        "duration_seconds": 18.419267892837524,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12284,
+        "token_output": 651,
+        "cost": 0.012431200000000002,
+        "duration_seconds": 18.112753868103027,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/anthropic/claude-3.5-haiku",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4015,
+        "token_output": 793,
+        "cost": 0.006384000000000001,
+        "duration_seconds": 18.41929864883423,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12303,
+        "token_output": 713,
+        "cost": 0.012694400000000002,
+        "duration_seconds": 18.11268401145935,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/anthropic/claude-3.5-haiku",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4015,
+        "token_output": 810,
+        "cost": 0.006452,
+        "duration_seconds": 18.41931986808777,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12268,
+        "token_output": 615,
+        "cost": 0.012274400000000001,
+        "duration_seconds": 18.112613201141357,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/anthropic/claude-3.5-haiku",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4015,
+        "token_output": 744,
+        "cost": 0.006188000000000001,
+        "duration_seconds": 18.41935920715332,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12219,
+        "token_output": 714,
+        "cost": 0.012631200000000002,
+        "duration_seconds": 18.11257004737854,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0042,
+    "step2_search": 0.0648,
+    "step3_outside_view": 0.0318,
+    "step5_inside_view": 0.0627
+  },
+  "total_pipeline_cost": 0.1635
+}
