@@ -142,7 +142,7 @@ class TestSearchPipelineProcessQueries:
 
                 _, metadata = await pipeline.process_search_queries(
                     llm_search_queries_response,
-                    forecaster_id="test",
+                    search_id="test",
                     question_details=question_details,
                 )
 
@@ -162,7 +162,7 @@ class TestSearchPipelineProcessQueries:
 
         results, metadata = await pipeline.process_search_queries(
             llm_search_queries_empty,
-            forecaster_id="test",
+            search_id="test",
             question_details=question_details,
         )
 
@@ -183,7 +183,7 @@ class TestSearchPipelineProcessQueries:
 
                 _, metadata = await pipeline.process_search_queries(
                     llm_search_queries_response,
-                    forecaster_id="test",
+                    search_id="test",
                     question_details=question_details,
                 )
 
@@ -207,7 +207,7 @@ Search queries:
 
                 results, metadata = await pipeline.process_search_queries(
                     response,
-                    forecaster_id="test",
+                    search_id="test",
                     question_details=question_details,
                     include_asknews=True,
                 )
@@ -351,7 +351,7 @@ Search queries:
 
             results, metadata = await pipeline.process_search_queries(
                 response,
-                forecaster_id="test",
+                search_id="test",
                 question_details=question_details,
             )
 

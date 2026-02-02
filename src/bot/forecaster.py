@@ -12,7 +12,6 @@ Simplified pipeline that delegates to type-specific handlers:
 import asyncio
 import json
 import logging
-import yaml
 from pathlib import Path
 from typing import Optional, Union
 from datetime import datetime, timezone
@@ -642,15 +641,10 @@ class ScopedArtifactStore:
         self.store.save_tool_usage(self.artifacts, tool_usage)
 
 
-def load_config(config_path: str = "config.yaml") -> dict:
-    """Load configuration from YAML file."""
-    with open(config_path) as f:
-        return yaml.safe_load(f)
-
-
 async def main():
     """CLI entry point for testing."""
     import sys
+    from ..config import load_config
 
     logging.basicConfig(
         level=logging.INFO,
