@@ -347,9 +347,11 @@ class EcclesiaClient:
         """
         Submit an AI forecast for a bet.
 
-        Note: This submits to a dedicated AI forecast endpoint (to be created
-        in Ecclesia backend), not the regular reviews endpoint. This keeps
-        AI forecasts separate from human team consensus.
+        This method tries the dedicated AI forecast endpoint first. If that
+        endpoint doesn't exist (404), it falls back to submitting as a review.
+
+        The dedicated endpoint keeps AI forecasts separate from human consensus.
+        The fallback integrates with team consensus (interim solution).
 
         Args:
             bet_id: The bet's MongoDB ObjectId
@@ -358,11 +360,65 @@ class EcclesiaClient:
         Returns:
             API response dict
         """
-        # Build payload based on bet type
-        payload: dict[str, Any] = {
+        # Build payload for dedicated AI endpoint
+        ai_payload: dict[str, Any] = {
             "reasoning": forecast.reasoning,
             "modelInfo": forecast.model_info,
             "cost": forecast.cost,
+        }
+
+        if forecast.probability is not None:
+            ai_payload["probability"] = forecast.probability
+        if forecast.estimate is not None:
+            ai_payload["estimate"] = forecast.estimate
+        if forecast.category_probabilities is not None:
+            ai_payload["categoryProbabilities"] = forecast.category_probabilities
+
+        # Try dedicated AI forecast endpoint first
+        try:
+            response = await self.client.post(
+                f"/bets/{bet_id}/ai-forecast",
+                json=ai_payload,
+            )
+            if response.status_code != 404:
+                return self._handle_response(response, f"submitting AI forecast for bet {bet_id}")
+        except httpx.HTTPStatusError as e:
+            if e.response.status_code != 404:
+                raise
+
+        # Fallback: Submit as a review (affects team consensus)
+        logger.warning(
+            f"AI forecast endpoint not available, falling back to reviews endpoint for bet {bet_id}"
+        )
+        return await self.submit_as_review(bet_id, forecast)
+
+    async def submit_as_review(
+        self,
+        bet_id: str,
+        forecast: AIForecast,
+    ) -> dict:
+        """
+        Submit an AI forecast as a regular review.
+
+        This integrates the AI forecast into the team consensus (not ideal,
+        but works until the dedicated AI endpoint is available).
+
+        The reviews endpoint expects:
+        - comments: required string
+        - probability: 0-100 for binary bets
+        - estimate: number for numeric bets
+        - categoryProbabilities: [0-100, ...] summing to 100 for categorical
+
+        Args:
+            bet_id: The bet's MongoDB ObjectId
+            forecast: AIForecast object
+
+        Returns:
+            API response dict (updated bet object)
+        """
+        # Build payload matching the reviews endpoint format
+        payload: dict[str, Any] = {
+            "comments": forecast.reasoning or f"AI forecast (model: {forecast.model_info})",
         }
 
         if forecast.probability is not None:
@@ -372,13 +428,11 @@ class EcclesiaClient:
         if forecast.category_probabilities is not None:
             payload["categoryProbabilities"] = forecast.category_probabilities
 
-        # Submit to AI forecast endpoint
-        # NOTE: This endpoint needs to be created in Ecclesia backend
         response = await self.client.post(
-            f"/bets/{bet_id}/ai-forecast",
+            f"/bets/{bet_id}/reviews",
             json=payload,
         )
-        return self._handle_response(response, f"submitting AI forecast for bet {bet_id}")
+        return self._handle_response(response, f"submitting review for bet {bet_id}")
 
     async def get_ai_forecast(self, bet_id: str) -> dict | None:
         """
