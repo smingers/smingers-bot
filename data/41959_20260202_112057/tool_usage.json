@@ -1,0 +1,196 @@
+{
+  "centralized_research": {
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Laken Riley background incident 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Laken Riley scheduled court date",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Recent news, upcoming events Feb 2-15 2026 affecting search interest for \u201cLaken Riley\u201d; include trials, releases, media appearances",
+          "tool": "Agent",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "Agent"
+      ],
+      "llm_cost": 0.2372,
+      "llm_cost_summarization": 0.1869,
+      "llm_cost_agentic": 0.0503,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Laken Riley case details",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Laken Riley Feb 2026 news",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Upcoming events, court dates or public appearances involving Laken Riley in the United States between February 2 and February 15 2026",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 26
+        },
+        {
+          "query": "Will the interest in \u201claken riley\u201d change between 2026-02-02 and 2026-02-15 according to Google Trends?",
+          "tool": "AskNews",
+          "deep_research_query": "Upcoming events, court dates or public appearances involving Laken Riley in the United States between February 2 and February 15 2026"
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "AskNews"
+      ],
+      "llm_cost": 0.1934,
+      "llm_cost_summarization": 0.1869,
+      "llm_cost_agentic": 0.0066,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6105,
+        "token_output": 1627,
+        "cost": 0.04272,
+        "duration_seconds": 56.03252649307251,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17717,
+        "token_output": 2829,
+        "cost": 0.095586,
+        "duration_seconds": 69.78151798248291,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6105,
+        "token_output": 1,
+        "cost": 0.018330000000000003,
+        "duration_seconds": 56.03259801864624,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17288,
+        "token_output": 2423,
+        "cost": 0.08820900000000001,
+        "duration_seconds": 69.78146576881409,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5486,
+        "token_output": 2551,
+        "cost": 0.045314499999999994,
+        "duration_seconds": 56.03263068199158,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14282,
+        "token_output": 1810,
+        "cost": 0.0503335,
+        "duration_seconds": 69.78142738342285,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5486,
+        "token_output": 1512,
+        "cost": 0.023068,
+        "duration_seconds": 56.03265357017517,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15985,
+        "token_output": 1611,
+        "cost": 0.044857999999999995,
+        "duration_seconds": 69.7813823223114,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5486,
+        "token_output": 2132,
+        "cost": 0.028028000000000004,
+        "duration_seconds": 56.032686710357666,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15497,
+        "token_output": 1712,
+        "cost": 0.04469,
+        "duration_seconds": 69.78133225440979,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.018,
+    "step2_search": 0.2372,
+    "step3_outside_view": 0.1575,
+    "step5_inside_view": 0.3237
+  },
+  "total_pipeline_cost": 0.7363
+}

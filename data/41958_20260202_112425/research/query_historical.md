@@ -1,0 +1,7 @@
+Analysis:
+The key to judging whether SMCI’s share price will be higher on 2026-02-14 than on 2026-02-02 is understanding 1) how the stock has typically behaved in the two-week window around quarterly earnings and product announcements, 2) any scheduled catalysts between 2 Feb – 14 Feb 2026 (e.g., an earnings release, conference appearance, AI server launch, index rebalancing), and 3) the company’s recent price momentum and volatility relative to the S&P 500 and semiconductor/server peers. Historical context on past February price moves, reactions to earnings, and analyst revisions will provide an outside-view baseline that can later be updated with new information released before resolution.
+
+Search queries:
+1. SMCI February stock performance history (Google)  
+2. SMCI upcoming earnings February 2026 (Google News)  
+3. Provide a concise historical review of SMCI’s share-price behavior in the two weeks before and after past ten quarterly earnings announcements; list any scheduled corporate or macro events between 2 Feb 2026 and 14 Feb 2026 that could move the stock, such as earnings dates, product launches, Fed meetings, or index changes. Include average percentage move and volatility. (Agent)
