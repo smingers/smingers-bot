@@ -174,7 +174,7 @@ def list_forecast_runs(data_dir: Path) -> list[dict]:
         )
 
     # Sort by timestamp descending (most recent first)
-    runs.sort(key=lambda x: x["timestamp"], reverse=True)
+    runs.sort(key=lambda run: run["timestamp"], reverse=True)
     return runs
 
 

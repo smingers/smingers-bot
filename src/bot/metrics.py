@@ -145,8 +145,14 @@ class PipelineMetrics:
         ensuring backward compatibility with artifact storage.
         """
         return {
-            "centralized_research": {k: v.to_dict() for k, v in self.centralized_research.items()},
-            "agents": {k: v.to_dict() for k, v in self.agents.items()},
+            "centralized_research": {
+                search_id: research.to_dict()
+                for search_id, research in self.centralized_research.items()
+            },
+            "agents": {
+                forecaster_id: forecaster.to_dict()
+                for forecaster_id, forecaster in self.agents.items()
+            },
             "step_costs": self.step_costs,
             "total_pipeline_cost": self.total_pipeline_cost,
         }

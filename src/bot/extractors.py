@@ -442,10 +442,10 @@ def enforce_monotonic_percentiles(pct_dict: dict[int, float]) -> dict[int, float
     last_val = -float("inf")
     new_pct_dict = {}
 
-    for p, v in sorted_items:
-        if v <= last_val:
-            v = last_val + 1e-8  # Add a tiny epsilon
-        new_pct_dict[p] = v
-        last_val = v
+    for p, val in sorted_items:
+        if val <= last_val:
+            val = last_val + 1e-8  # Add a tiny epsilon
+        new_pct_dict[p] = val
+        last_val = val
 
     return new_pct_dict

@@ -118,7 +118,7 @@ async def forecast_question(
                 print(f"80% CI: [{p10:.2f}, {p90:.2f}]")
             elif question_type == "multiple_choice":
                 dist = result["prediction"]
-                best = max(dist.items(), key=lambda x: x[1])
+                best = max(dist.items(), key=lambda option_prob: option_prob[1])
                 print(f"Prediction: {best[0]} ({best[1]:.1%})")
                 print(f"Distribution: {dist}")
             else:
