@@ -18,3 +18,13 @@ Success: 0 | Failed: 1
 🔴 SUBMISSION Q41935: [Short fuse] What will be the Rotten Tomatoes Rating for "Me
   SubmissionError: API returned 400: Client error '400 Bad Request' for url 'https://www.metaculus.com/api/questions/forecast/'
 For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+
+======================================================================
+RUN: 2026-02-02T14:44:11.081992+00:00
+Tournament: minibench | Strategy: new-only | Via: run_bot.py
+Success: 0 | Failed: 1
+======================================================================
+
+🔴 SUBMISSION Q41968: What will be the value of "Overnight Repurchase Agreements: 
+  SubmissionError: API returned 400: Client error '400 Bad Request' for url 'https://www.metaculus.com/api/questions/forecast/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
