@@ -4,11 +4,11 @@ CDF generation utilities for numeric question forecasting.
 This module contains functions for generating CDFs that satisfy
 Metaculus requirements for numeric/discrete question submissions.
 
-Key constraints enforced:
+Key constraints enforced (matching Metaculus official implementation):
 - Configurable number of points (201 for numeric, 102 for discrete)
 - Monotonically increasing
-- No single step exceeds 0.59
-- Minimum step size enforced
+- No single step exceeds max_pmf_value (0.2 * 200 / inbound_outcome_count)
+- Minimum step size enforced (5e-5)
 - Open/closed bound handling
 """
 
@@ -21,32 +21,125 @@ from .exceptions import CDFGenerationError
 
 logger = logging.getLogger(__name__)
 
+# Constants matching Metaculus official implementation
+DEFAULT_CDF_SIZE = 201
+DEFAULT_INBOUND_OUTCOME_COUNT = DEFAULT_CDF_SIZE - 1  # 200
+MAX_NUMERIC_PMF_VALUE = 0.2
 
-def _safe_cdf_bounds(
-    cdf: np.ndarray, open_lower: bool, open_upper: bool, step: float
-) -> np.ndarray:
+
+def get_max_pmf_value(cdf_size: int, include_wiggle_room: bool = True) -> float:
     """
-    Enforce Metaculus CDF requirements:
-    - For open bounds: cdf[0] >= 0.001, cdf[-1] <= 0.999
-    - No single step may exceed 0.59
+    Calculate the maximum allowed PMF value (step size) for a given CDF size.
+
+    Matches Metaculus official implementation:
+    - Base cap is 0.2 for the default 200 inbound outcomes
+    - Scales proportionally for different CDF sizes
+    - Includes 5% wiggle room by default for safety margin
+
+    Args:
+        cdf_size: Number of points in the CDF (201 for numeric, varies for discrete)
+        include_wiggle_room: If True, multiply by 0.95 for safety margin
+
+    Returns:
+        Maximum allowed step size between adjacent CDF points
     """
-    # Pin tails to legal open-bound limits
-    if open_lower:
-        cdf[0] = max(cdf[0], 0.001)
-    if open_upper:
-        cdf[-1] = min(cdf[-1], 0.999)
+    inbound_outcome_count = cdf_size - 1
+    normal_cap = MAX_NUMERIC_PMF_VALUE * (DEFAULT_INBOUND_OUTCOME_COUNT / inbound_outcome_count)
 
-    # Enforce the 0.59 maximum step rule
-    big_jumps = np.where(np.diff(cdf) > 0.59)[0]
-    for idx in big_jumps:
-        excess = cdf[idx + 1] - cdf[idx] - 0.59
-        # Spread the excess evenly over the remaining points
-        span = len(cdf) - idx - 1
-        cdf[idx + 1 :] -= excess * np.linspace(1, 0, span)
-        # Re-monotonise
-        cdf[idx + 1 :] = np.maximum.accumulate(cdf[idx + 1 :])
+    if include_wiggle_room:
+        return normal_cap * 0.95
+    else:
+        return normal_cap
 
-    return cdf
+
+def _standardize_cdf(
+    cdf: list[float] | np.ndarray,
+    open_lower_bound: bool,
+    open_upper_bound: bool,
+) -> list[float]:
+    """
+    Standardize a CDF to meet Metaculus requirements.
+
+    Matches Metaculus official implementation from numeric_report.py:
+    - Assigns no mass outside of closed bounds (scales accordingly)
+    - Assigns at least a minimum amount of mass outside of open bounds
+    - Ensures CDF is increasing by at least the minimum amount
+    - Caps the maximum growth to max_pmf_value
+
+    Args:
+        cdf: Input CDF values
+        open_lower_bound: Whether the lower bound is open
+        open_upper_bound: Whether the upper bound is open
+
+    Returns:
+        Standardized CDF as a list of floats
+    """
+    cdf = np.array(cdf, dtype=float)
+    cdf_size = len(cdf)
+
+    # Apply lower bound & enforce boundary values
+    scale_lower_to = 0 if open_lower_bound else cdf[0]
+    scale_upper_to = 1.0 if open_upper_bound else cdf[-1]
+    rescaled_inbound_mass = scale_upper_to - scale_lower_to
+
+    # Avoid division by zero
+    if rescaled_inbound_mass < 1e-10:
+        rescaled_inbound_mass = 1e-10
+
+    def apply_minimum(F: float, location: float) -> float:
+        """Apply minimum probability mass outside bounds."""
+        # F is the height of the cdf at location (in range [0, 1])
+        # rescale
+        rescaled_F = (F - scale_lower_to) / rescaled_inbound_mass
+        # offset
+        if open_lower_bound and open_upper_bound:
+            return 0.988 * rescaled_F + 0.01 * location + 0.001
+        elif open_lower_bound:
+            return 0.989 * rescaled_F + 0.01 * location + 0.001
+        elif open_upper_bound:
+            return 0.989 * rescaled_F + 0.01 * location
+        return 0.99 * rescaled_F + 0.01 * location
+
+    for i, value in enumerate(cdf):
+        cdf[i] = apply_minimum(value, i / (cdf_size - 1))
+
+    # Apply upper bound - operate in PMF space
+    pmf = np.diff(cdf, prepend=0, append=1)
+    cap = get_max_pmf_value(cdf_size)
+
+    def cap_pmf(scale: float) -> np.ndarray:
+        return np.concatenate([pmf[:1], np.minimum(cap, scale * pmf[1:-1]), pmf[-1:]])
+
+    def capped_sum(scale: float) -> float:
+        return float(cap_pmf(scale).sum())
+
+    # Find the appropriate scale search space
+    lo = hi = scale = 1.0
+    while capped_sum(hi) < 1.0:
+        hi *= 1.2
+
+    # Hone in on scale value that makes capped sum 1
+    for _ in range(100):
+        scale = 0.5 * (lo + hi)
+        s = capped_sum(scale)
+        if s < 1.0:
+            lo = scale
+        else:
+            hi = scale
+        if s == 1.0 or (hi - lo) < 2e-5:
+            break
+
+    # Apply scale and renormalize
+    pmf = cap_pmf(scale)
+    if pmf[1:-1].sum() > 1e-10:
+        pmf[1:-1] *= (cdf[-1] - cdf[0]) / pmf[1:-1].sum()
+
+    # Back to CDF space
+    cdf = np.cumsum(pmf)[:-1]
+
+    # Round to minimize floating point errors
+    cdf = np.round(cdf, 10)
+    return cdf.tolist()
 
 
 def generate_continuous_cdf(
@@ -200,93 +293,25 @@ def generate_continuous_cdf(
     if not open_upper_bound:
         cdf_y[-1] = 1.0
 
-    # Strict enforcement of minimum step size
-    def enforce_min_steps(y_values, min_step_size):
-        """Enforce minimum step size between adjacent points."""
-        result = y_values.copy()
-
-        # First pass: enforce minimum steps
-        for i in range(1, len(result)):
-            if result[i] < result[i - 1] + min_step_size:
-                result[i] = min(result[i - 1] + min_step_size, 1.0)
-
-        # Second pass: ensure we don't exceed 1.0
-        if result[-1] > 1.0:
-            overflow_idx = np.where(result > 1.0)[0][0]
-            steps_remaining = len(result) - overflow_idx
-
-            for i in range(overflow_idx, len(result)):
-                t = (i - overflow_idx) / max(1, steps_remaining - 1)
-                result[i] = min(
-                    1.0, result[overflow_idx - 1] + (1.0 - result[overflow_idx - 1]) * t
-                )
-
-            # Final check for minimum steps
-            for i in range(overflow_idx, len(result)):
-                if i > overflow_idx and result[i] < result[i - 1] + min_step_size:
-                    result[i] = result[i - 1] + min_step_size
-                    if result[i] > 1.0:
-                        result[i] = 1.0
-                        for j in range(i - 1, overflow_idx - 1, -1):
-                            max_allowed = result[j + 1] - min_step_size
-                            if result[j] > max_allowed:
-                                result[j] = max_allowed
-
-        return result
-
-    # Apply strict step enforcement
-    cdf_y = enforce_min_steps(cdf_y, min_step)
-    cdf_y = _safe_cdf_bounds(cdf_y, open_lower_bound, open_upper_bound, min_step)
-
-    # Double-check minimum step size requirement
-    steps = np.diff(cdf_y)
-    if np.any(steps < min_step):
-        logger.warning("Minimum step size still violated. Using aggressive step enforcement.")
-
-        if not open_lower_bound:
-            start_val = 0.0
-        else:
-            start_val = cdf_y[0]
-
-        if not open_upper_bound:
-            end_val = 1.0
-        else:
-            end_val = min(cdf_y[-1], 1.0)
-
-        available_range = end_val - start_val
-        required_range = (len(cdf_y) - 1) * min_step
-
-        if required_range > available_range:
-            raise CDFGenerationError(
-                f"Cannot satisfy minimum step requirement: need {required_range:.6f} "
-                f"but only have {available_range:.6f} available in CDF range"
-            )
-
-        # Create a new CDF with exactly min_step between points where needed
-        new_cdf = np.zeros_like(cdf_y)
-        new_cdf[0] = start_val
-
-        if len(cdf_y) > 2:
-            orig_shape = np.diff(cdf_y)
-            orig_shape = np.maximum(orig_shape, min_step)
-            orig_shape = orig_shape / np.sum(orig_shape)
-
-            remaining = available_range - (len(cdf_y) - 1) * min_step
-            extra_steps = remaining * orig_shape
-
-            for i in range(1, len(new_cdf)):
-                new_cdf[i] = new_cdf[i - 1] + min_step + extra_steps[i - 1]
-        else:
-            for i in range(1, len(new_cdf)):
-                new_cdf[i] = new_cdf[i - 1] + (available_range / (len(new_cdf) - 1))
-
-        cdf_y = new_cdf
+    # Apply Metaculus standardization (handles both min and max step enforcement)
+    cdf_y = _standardize_cdf(cdf_y, open_lower_bound, open_upper_bound)
 
     # Final validation
-    if np.any(np.diff(cdf_y) < min_step - 1e-10):
+    steps = np.diff(cdf_y)
+    max_allowed_step = get_max_pmf_value(num_points, include_wiggle_room=False)
+
+    if np.any(steps < min_step - 1e-10):
         problematic_indices = np.where(np.diff(cdf_y) < min_step - 1e-10)[0]
         raise CDFGenerationError(
             f"Failed to enforce minimum step size at indices: {problematic_indices}"
         )
 
-    return cdf_y.tolist()
+    if np.any(steps > max_allowed_step + 1e-10):
+        problematic_indices = np.where(steps > max_allowed_step + 1e-10)[0]
+        max_step_found = steps[problematic_indices[0]]
+        raise CDFGenerationError(
+            f"Failed to enforce maximum step size: found {max_step_found:.4f} at index {problematic_indices[0]}, "
+            f"max allowed is {max_allowed_step:.4f}"
+        )
+
+    return cdf_y

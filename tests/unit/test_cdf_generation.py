@@ -3,7 +3,7 @@ Tests for CDF generation in numeric forecasting.
 
 Tests the functions in src/bot/cdf.py:
 - generate_continuous_cdf()
-- _safe_cdf_bounds()
+- get_max_pmf_value()
 
 And src/bot/extractors.py:
 - enforce_monotonic_percentiles()
@@ -15,8 +15,8 @@ import numpy as np
 import pytest
 
 from src.bot.cdf import (
-    _safe_cdf_bounds,
     generate_continuous_cdf,
+    get_max_pmf_value,
 )
 from src.bot.exceptions import CDFGenerationError
 from src.bot.extractors import enforce_monotonic_percentiles
@@ -101,7 +101,7 @@ class TestGenerateContinuousCDF:
         )
 
     def test_max_step_constraint(self, simple_percentiles):
-        """Test that no single step exceeds 0.59 (Metaculus requirement)."""
+        """Test that no single step exceeds max_pmf_value (Metaculus requirement)."""
         cdf = generate_continuous_cdf(
             percentile_values=simple_percentiles,
             open_upper_bound=True,
@@ -110,7 +110,10 @@ class TestGenerateContinuousCDF:
             lower_bound=0,
         )
         steps = np.diff(cdf)
-        assert np.all(steps <= 0.59), f"Max step exceeded: {np.max(steps)} > 0.59"
+        max_allowed = get_max_pmf_value(201, include_wiggle_room=False)
+        assert np.all(steps <= max_allowed + 1e-10), (
+            f"Max step exceeded: {np.max(steps)} > {max_allowed}"
+        )
 
     def test_min_step_constraint(self, simple_percentiles):
         """Test that minimum step size is enforced."""
@@ -224,33 +227,31 @@ class TestGenerateContinuousCDF:
         assert len(cdf) == 201
 
 
-class TestSafeCdfBounds:
-    """Tests for _safe_cdf_bounds()"""
+class TestGetMaxPmfValue:
+    """Tests for get_max_pmf_value()"""
 
-    def test_enforces_open_lower_bound(self):
-        """Test that open lower bound pins first value to >= 0.001."""
-        cdf = np.array([0.0, 0.1, 0.5, 0.9, 1.0])
-        result = _safe_cdf_bounds(cdf, open_lower=True, open_upper=False, step=5e-5)
-        assert result[0] >= 0.001
+    def test_default_201_points(self):
+        """Test that 201 points gives max of 0.2 (without wiggle room)."""
+        max_val = get_max_pmf_value(201, include_wiggle_room=False)
+        assert max_val == pytest.approx(0.2, abs=1e-10)
 
-    def test_enforces_open_upper_bound(self):
-        """Test that open upper bound pins last value to <= 0.999."""
-        cdf = np.array([0.0, 0.1, 0.5, 0.9, 1.0])
-        result = _safe_cdf_bounds(cdf, open_lower=False, open_upper=True, step=5e-5)
-        assert result[-1] <= 0.999
+    def test_default_201_with_wiggle_room(self):
+        """Test that 201 points gives 0.19 with wiggle room."""
+        max_val = get_max_pmf_value(201, include_wiggle_room=True)
+        assert max_val == pytest.approx(0.19, abs=1e-10)
 
-    def test_fixes_large_jumps(self):
-        """Test that jumps > 0.59 are corrected."""
-        cdf = np.array([0.0, 0.1, 0.8, 0.85, 0.9])  # 0.1 -> 0.8 = 0.7 jump > 0.59
-        result = _safe_cdf_bounds(cdf, open_lower=False, open_upper=False, step=5e-5)
-        steps = np.diff(result)
-        assert np.all(steps <= 0.59 + 1e-6), f"Large jump still present: {np.max(steps)}"
+    def test_102_points_scales(self):
+        """Test that 102 points scales the max appropriately."""
+        max_val = get_max_pmf_value(102, include_wiggle_room=False)
+        # 0.2 * (200 / 101) ≈ 0.396
+        expected = 0.2 * (200 / 101)
+        assert max_val == pytest.approx(expected, abs=1e-10)
 
-    def test_preserves_monotonicity(self):
-        """Test that result is still monotonically increasing."""
-        cdf = np.array([0.0, 0.1, 0.8, 0.85, 0.9, 0.95, 1.0])
-        result = _safe_cdf_bounds(cdf, open_lower=False, open_upper=False, step=5e-5)
-        assert np.all(np.diff(result) >= 0), "Monotonicity violated"
+    def test_smaller_cdf_allows_larger_steps(self):
+        """Test that smaller CDFs allow larger steps."""
+        max_201 = get_max_pmf_value(201, include_wiggle_room=False)
+        max_102 = get_max_pmf_value(102, include_wiggle_room=False)
+        assert max_102 > max_201
 
 
 class TestEnforceStrictIncreasing:
@@ -355,7 +356,7 @@ class TestDiscreteCDF:
         assert np.all(steps >= min_step - 1e-10), f"Min step violated: {np.min(steps)} < {min_step}"
 
     def test_max_step_constraint_102(self, simple_percentiles):
-        """Test that no single step exceeds 0.59 with 102 points."""
+        """Test that no single step exceeds max_pmf_value with 102 points."""
         cdf = generate_continuous_cdf(
             percentile_values=simple_percentiles,
             open_upper_bound=True,
@@ -365,7 +366,10 @@ class TestDiscreteCDF:
             num_points=102,
         )
         steps = np.diff(cdf)
-        assert np.all(steps <= 0.59), f"Max step exceeded: {np.max(steps)} > 0.59"
+        max_allowed = get_max_pmf_value(102, include_wiggle_room=False)
+        assert np.all(steps <= max_allowed + 1e-10), (
+            f"Max step exceeded: {np.max(steps)} > {max_allowed}"
+        )
 
     def test_open_bounds_constraints_102(self, simple_percentiles):
         """Test that open bounds satisfy Metaculus requirements for 102 points."""
