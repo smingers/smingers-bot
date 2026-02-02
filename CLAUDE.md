@@ -356,6 +356,34 @@ SQLite at `data/forecasts.db` for analytics with three tables:
 
 ## Code Conventions
 
+### Protected Vocabulary
+
+When refactoring or renaming, do NOT change the following terms:
+
+**Metaculus-Specific Terms** (defined by the platform):
+- `binary`, `numeric`, `multiple_choice` - Question type identifiers from Metaculus API
+- `tournament`, `question` - Core Metaculus entities
+- `resolution_criteria`, `fine_print`, `background_info` - Metaculus question fields
+
+**Domain Terms** (forecasting methodology):
+- `forecaster` / `ensemble` - The 5-agent prediction system
+- `outside_view` / `inside_view` - Two-stage prediction approach (historical vs current context)
+- `cross_pollination` - Sharing outputs between forecasters for diversity
+- `aggregation` - Combining forecaster predictions into final probability
+- `CDF` - Cumulative distribution function for numeric questions
+
+**Codebase Conventions** (project preferences):
+- `agent` / `agents` - Generic term for ensemble members (used interchangeably with "forecaster")
+- Explicit question type prefixes in prompts: `BINARY_*`, `NUMERIC_*`, `MULTIPLE_CHOICE_*`
+- Mode names: `test`, `preview`, `live`
+
+When doing naming reviews, focus on:
+- Ambiguous variable names (`data`, `result`, `info`, `item`)
+- Inconsistent naming across similar concepts
+- Abbreviations that could be spelled out
+- Boolean variables that don't read as predicates
+- Function names that don't describe what they return
+
 ### Adding New Question Types
 
 1. Create handler in `src/bot/` inheriting from `ForecasterMixin`
