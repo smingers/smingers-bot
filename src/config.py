@@ -22,7 +22,7 @@ from typing import Any, Literal
 
 import yaml
 
-Mode = Literal["test", "preview", "live"]
+RunMode = Literal["test", "preview", "live"]
 
 
 @dataclass
@@ -57,7 +57,7 @@ class ResolvedConfig:
     """
 
     raw: dict[str, Any]
-    mode: Mode
+    mode: RunMode
     active_models: dict[str, Any]
     active_agents: list[dict[str, Any]]
     should_submit: bool
@@ -66,7 +66,7 @@ class ResolvedConfig:
     def from_yaml(
         cls,
         path: str | Path = "config.yaml",
-        mode: Mode | None = None,
+        mode: RunMode | None = None,
         dry_run: bool = False,
     ) -> "ResolvedConfig":
         """
@@ -95,7 +95,7 @@ class ResolvedConfig:
     def from_dict(
         cls,
         raw: dict,
-        mode: Mode | None = None,
+        mode: RunMode | None = None,
         dry_run: bool = False,
     ) -> "ResolvedConfig":
         """

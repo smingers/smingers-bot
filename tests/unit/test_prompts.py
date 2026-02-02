@@ -2,7 +2,7 @@
 Tests for prompt template formatting methods.
 
 These tests verify that format methods don't raise KeyError due to mismatches
-between what _build_bound_messages() returns and what prompt templates expect.
+between what _get_bounds_explanation() returns and what prompt templates expect.
 
 Also tests that unsupported question types raise QuestionTypeError.
 """
@@ -273,18 +273,18 @@ class TestNumericFormatMethods:
         )
         assert isinstance(step2, str)
 
-    def test_build_bound_messages_returns_bounds_info(self, numeric_question_params):
-        """Verify _build_bound_messages() returns dict with 'bounds_info' key."""
-        result = NumericForecaster._build_bound_messages(**numeric_question_params)
+    def test_get_bounds_explanation_returns_bounds_info(self, numeric_question_params):
+        """Verify _get_bounds_explanation() returns dict with 'bounds_info' key."""
+        result = NumericForecaster._get_bounds_explanation(**numeric_question_params)
 
         assert isinstance(result, dict)
         assert "bounds_info" in result
         assert isinstance(result["bounds_info"], str)
         assert len(result["bounds_info"]) > 0
 
-    def test_build_bound_messages_open_bounds(self):
+    def test_get_bounds_explanation_open_bounds(self):
         """Test bounds message for open bounds."""
-        result = NumericForecaster._build_bound_messages(
+        result = NumericForecaster._get_bounds_explanation(
             open_lower_bound=True,
             open_upper_bound=True,
             lower_bound=0,
@@ -292,9 +292,9 @@ class TestNumericFormatMethods:
         )
         assert "OPEN" in result["bounds_info"]
 
-    def test_build_bound_messages_closed_bounds(self):
+    def test_get_bounds_explanation_closed_bounds(self):
         """Test bounds message for closed bounds."""
-        result = NumericForecaster._build_bound_messages(
+        result = NumericForecaster._get_bounds_explanation(
             open_lower_bound=False,
             open_upper_bound=False,
             lower_bound=0,
@@ -302,9 +302,9 @@ class TestNumericFormatMethods:
         )
         assert "CLOSED" in result["bounds_info"]
 
-    def test_build_bound_messages_with_zero_point(self):
+    def test_get_bounds_explanation_with_zero_point(self):
         """Test bounds message includes zero_point when provided."""
-        result = NumericForecaster._build_bound_messages(
+        result = NumericForecaster._get_bounds_explanation(
             open_lower_bound=True,
             open_upper_bound=True,
             lower_bound=1,

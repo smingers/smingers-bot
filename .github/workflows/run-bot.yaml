@@ -101,7 +101,7 @@ jobs:
         run: |
           poetry run python run_bot.py \
             --tournament 32916 \
-            --strategy new-only \
+            --question-selection new-only \
             --limit 50
         env:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
@@ -117,7 +117,7 @@ jobs:
         run: |
           poetry run python run_bot.py \
             --tournament minibench \
-            --strategy new-only \
+            --question-selection new-only \
             --limit 50
         env:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
@@ -135,7 +135,7 @@ jobs:
       #   run: |
       #     poetry run python run_bot.py \
       #       --tournament 32917 \
-      #       --strategy reforecast \
+      #       --question-selection reforecast \
       #       --reforecast-days 7 \
       #       --limit 20
       #   env:
@@ -148,7 +148,7 @@ jobs:
       #   run: |
       #     poetry run python run_bot.py \
       #       --tournament main-site \
-      #       --strategy reforecast \
+      #       --question-selection reforecast \
       #       --reforecast-days 7 \
       #       --limit 10
       #   env:

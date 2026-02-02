@@ -18,32 +18,32 @@ from src.utils.llm import (
     LLMCall,
     LLMClient,
     LLMResponse,
-    estimate_cost,
+    calculate_cost,
     get_cost_tracker,
     reset_cost_tracker,
 )
 
 # ============================================================================
-# Cost Estimation Tests
+# Cost Calculation Tests
 # ============================================================================
 
 
-class TestEstimateCost:
-    """Tests for estimate_cost() function."""
+class TestCalculateCost:
+    """Tests for calculate_cost() function."""
 
-    def test_estimate_cost_known_model(self):
+    def test_calculate_cost_known_model(self):
         """Known models use correct pricing."""
         # Claude Haiku pricing: input=0.25, output=1.25 per 1M tokens
-        cost = estimate_cost("claude-3-haiku-20240307", input_tokens=1000, output_tokens=1000)
+        cost = calculate_cost("claude-3-haiku-20240307", input_tokens=1000, output_tokens=1000)
 
         # 1000 tokens = 0.001 * costs
         expected_input = 0.001 * 0.25
         expected_output = 0.001 * 1.25
         assert cost == pytest.approx(expected_input + expected_output)
 
-    def test_estimate_cost_openrouter_model(self):
+    def test_calculate_cost_openrouter_model(self):
         """OpenRouter models use correct pricing."""
-        cost = estimate_cost(
+        cost = calculate_cost(
             "openrouter/anthropic/claude-3.5-haiku", input_tokens=10000, output_tokens=5000
         )
 
@@ -52,18 +52,18 @@ class TestEstimateCost:
         expected_output = 0.005 * 4.0
         assert cost == pytest.approx(expected_input + expected_output)
 
-    def test_estimate_cost_unknown_model(self):
+    def test_calculate_cost_unknown_model(self):
         """Unknown models use default (expensive) pricing."""
-        cost = estimate_cost("unknown-model-xyz", input_tokens=1000, output_tokens=1000)
+        cost = calculate_cost("unknown-model-xyz", input_tokens=1000, output_tokens=1000)
 
         # Default: input=5.0, output=15.0 per 1M tokens
         expected_input = 0.001 * 5.0
         expected_output = 0.001 * 15.0
         assert cost == pytest.approx(expected_input + expected_output)
 
-    def test_estimate_cost_zero_tokens(self):
+    def test_calculate_cost_zero_tokens(self):
         """Zero tokens returns zero cost."""
-        cost = estimate_cost("claude-3-haiku-20240307", input_tokens=0, output_tokens=0)
+        cost = calculate_cost("claude-3-haiku-20240307", input_tokens=0, output_tokens=0)
 
         assert cost == 0.0
 
@@ -499,10 +499,10 @@ class TestLLMCall:
 class TestCostCalculations:
     """Additional tests for cost calculation edge cases."""
 
-    def test_estimate_cost_large_token_counts(self):
+    def test_calculate_cost_large_token_counts(self):
         """Handles large token counts correctly."""
         # 1 million input tokens, 500k output tokens
-        cost = estimate_cost(
+        cost = calculate_cost(
             "claude-3-haiku-20240307",
             input_tokens=1_000_000,
             output_tokens=500_000,
@@ -512,9 +512,9 @@ class TestCostCalculations:
         expected = 0.25 + 0.625
         assert cost == pytest.approx(expected)
 
-    def test_estimate_cost_fractional_tokens(self):
+    def test_calculate_cost_fractional_tokens(self):
         """Handles non-integer conceptual costs (integer tokens)."""
-        cost = estimate_cost(
+        cost = calculate_cost(
             "claude-3-haiku-20240307",
             input_tokens=1,  # Single token
             output_tokens=1,
@@ -533,7 +533,7 @@ class TestCostCalculations:
             ("gpt-4o", (200, 100)),
             ("claude-3-haiku-20240307", (150, 75)),
         ]:
-            cost = estimate_cost(model, tokens[0], tokens[1])
+            cost = calculate_cost(model, tokens[0], tokens[1])
             response = LLMResponse(
                 content="Response",
                 model=model,

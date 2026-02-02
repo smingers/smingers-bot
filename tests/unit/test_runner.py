@@ -338,13 +338,15 @@ class TestRunResultWriteFailureLog:
 
         log_path = tmp_path / "test.log"
         with patch("src.runner.FAILURE_LOG_PATH", log_path):
-            result.write_failure_log(source="test", tournament_id="12345", strategy="new-only")
+            result.write_failure_log(
+                source="test", tournament_id="12345", question_selection="new-only"
+            )
 
         assert log_path.exists()
         content = log_path.read_text()
         assert "Q123" in content
         assert "Test Question" in content
-        assert "new-only" in content
+        assert "Selection: new-only" in content
         assert "12345" in content
 
 
@@ -367,11 +369,11 @@ class TestRunResultPrintSummary:
         result = RunResult()
         result.add_failure(123, "Test Q", ValueError("error"))
 
-        result.print_summary(tournament_id="12345", strategy="new-only")
+        result.print_summary(tournament_id="12345", question_selection="new-only")
 
         captured = capsys.readouterr()
         assert "Tournament: 12345" in captured.out
-        assert "Strategy: new-only" in captured.out
+        assert "Selection: new-only" in captured.out
         assert "Failed: 1" in captured.out
 
     def test_print_summary_with_extraction_errors(self, capsys):

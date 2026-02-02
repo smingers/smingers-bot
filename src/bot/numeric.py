@@ -83,7 +83,7 @@ class NumericForecaster(BaseForecaster):
         )
 
     @staticmethod
-    def _build_bound_messages(**question_params) -> dict[str, str]:
+    def _get_bounds_explanation(**question_params) -> dict[str, str]:
         """Build bound-related strings for prompt formatting."""
         open_lower = question_params.get("open_lower_bound", True)
         open_upper = question_params.get("open_upper_bound", True)
@@ -144,7 +144,7 @@ class NumericForecaster(BaseForecaster):
         **question_params,
     ) -> tuple[str, str]:
         """Format query prompts with numeric-specific parameters."""
-        bound_msgs = self._build_bound_messages(**question_params)
+        bound_msgs = self._get_bounds_explanation(**question_params)
         unit = self._get_unit(**question_params)
         # Use background_info if available, fall back to question_text
         background = question_params.get("background_info", "") or question_params.get(
@@ -183,7 +183,7 @@ class NumericForecaster(BaseForecaster):
     ) -> str:
         """Format Step 1 prompt with numeric-specific parameters."""
         params = self._get_common_prompt_params(**question_params)
-        bound_msgs = self._build_bound_messages(**question_params)
+        bound_msgs = self._get_bounds_explanation(**question_params)
         unit = self._get_unit(**question_params)
         params["context"] = historical_context
         params["units"] = unit
@@ -198,7 +198,7 @@ class NumericForecaster(BaseForecaster):
     ) -> str:
         """Format Step 2 prompt with cross-pollinated context."""
         params = self._get_common_prompt_params(**question_params)
-        bound_msgs = self._build_bound_messages(**question_params)
+        bound_msgs = self._get_bounds_explanation(**question_params)
         unit = self._get_unit(**question_params)
         params["context"] = context
         params["units"] = unit

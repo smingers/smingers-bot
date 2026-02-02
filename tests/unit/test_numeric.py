@@ -238,9 +238,9 @@ class TestCDFGeneration:
 class TestNumericForecasterBounds:
     """Tests for NumericForecaster bound handling."""
 
-    def test_build_bound_messages_both_open(self):
+    def test_get_bounds_explanation_both_open(self):
         """Builds correct messages for both bounds open."""
-        result = NumericForecaster._build_bound_messages(
+        result = NumericForecaster._get_bounds_explanation(
             open_lower_bound=True,
             open_upper_bound=True,
             lower_bound=0,
@@ -251,9 +251,9 @@ class TestNumericForecasterBounds:
         assert "lower bound is 0" in result["bounds_info"]
         assert "upper bound is 100" in result["bounds_info"]
 
-    def test_build_bound_messages_both_closed(self):
+    def test_get_bounds_explanation_both_closed(self):
         """Builds correct messages for both bounds closed."""
-        result = NumericForecaster._build_bound_messages(
+        result = NumericForecaster._get_bounds_explanation(
             open_lower_bound=False,
             open_upper_bound=False,
             lower_bound=0,
@@ -262,9 +262,9 @@ class TestNumericForecasterBounds:
 
         assert "Both bounds are CLOSED" in result["bounds_info"]
 
-    def test_build_bound_messages_lower_closed(self):
+    def test_get_bounds_explanation_lower_closed(self):
         """Builds correct messages for lower closed, upper open."""
-        result = NumericForecaster._build_bound_messages(
+        result = NumericForecaster._get_bounds_explanation(
             open_lower_bound=False,
             open_upper_bound=True,
             lower_bound=0,
@@ -274,9 +274,9 @@ class TestNumericForecasterBounds:
         assert "lower bound is CLOSED" in result["bounds_info"]
         assert "upper bound is OPEN" in result["bounds_info"]
 
-    def test_build_bound_messages_upper_closed(self):
+    def test_get_bounds_explanation_upper_closed(self):
         """Builds correct messages for lower open, upper closed."""
-        result = NumericForecaster._build_bound_messages(
+        result = NumericForecaster._get_bounds_explanation(
             open_lower_bound=True,
             open_upper_bound=False,
             lower_bound=0,
@@ -286,9 +286,9 @@ class TestNumericForecasterBounds:
         assert "lower bound is OPEN" in result["bounds_info"]
         assert "upper bound is CLOSED" in result["bounds_info"]
 
-    def test_build_bound_messages_with_zero_point(self):
+    def test_get_bounds_explanation_with_zero_point(self):
         """Includes zero point when provided."""
-        result = NumericForecaster._build_bound_messages(
+        result = NumericForecaster._get_bounds_explanation(
             open_lower_bound=True,
             open_upper_bound=True,
             lower_bound=0,
