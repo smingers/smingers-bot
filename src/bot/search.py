@@ -439,11 +439,11 @@ class SearchPipeline:
             valid_urls = []
             max_results = 3
 
-            for url, data in results.items():
+            for url, extraction in results.items():
                 if len(summarize_tasks) >= max_results:
                     break
 
-                content = (data.get("content") or "").strip()
+                content = (extraction.get("content") or "").strip()
                 if len(content.split()) < 100:
                     logger.debug(f"[google_search_and_scrape] Skipping low-content: {url}")
                     continue
@@ -604,7 +604,9 @@ class SearchPipeline:
                         unique_articles.append(article_dict)
 
                 # Sort by date (newest first)
-                unique_articles = sorted(unique_articles, key=lambda x: x["pub_date"], reverse=True)
+                unique_articles = sorted(
+                    unique_articles, key=lambda article: article["pub_date"], reverse=True
+                )
 
                 duplicates_removed = (len(hot_articles) + len(historical_articles)) - len(
                     unique_articles
@@ -948,11 +950,11 @@ class SearchPipeline:
             max_results = 3
             results_count = 0
 
-            for url, data in results.items():
+            for url, extraction in results.items():
                 if results_count >= max_results:
                     break
 
-                content = (data.get("content") or "").strip()
+                content = (extraction.get("content") or "").strip()
                 if len(content.split()) < 100:
                     continue
 

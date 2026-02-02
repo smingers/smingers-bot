@@ -287,7 +287,7 @@ class HTMLContentExtractor:
                 total_score = base_weight * score * length_score
                 scored_results.append((content, total_score, label))
 
-            best_result, _, label = max(scored_results, key=lambda x: x[1])
+            best_result, _, label = max(scored_results, key=lambda scored: scored[1])
             logger.debug(f"Selected content from {label} with length {len(best_result)}")
             return self._format_with_metadata(self._clean_content(best_result), metadata)
 
