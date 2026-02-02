@@ -6,7 +6,7 @@ Tests the functions in src/bot/cdf.py:
 - _safe_cdf_bounds()
 
 And src/bot/extractors.py:
-- enforce_strict_increasing()
+- enforce_monotonic_percentiles()
 
 These are critical for Metaculus submission validity.
 """
@@ -19,7 +19,7 @@ from src.bot.cdf import (
     generate_continuous_cdf,
 )
 from src.bot.exceptions import CDFGenerationError
-from src.bot.extractors import enforce_strict_increasing
+from src.bot.extractors import enforce_monotonic_percentiles
 
 
 class TestGenerateContinuousCDF:
@@ -254,18 +254,18 @@ class TestSafeCdfBounds:
 
 
 class TestEnforceStrictIncreasing:
-    """Tests for enforce_strict_increasing()"""
+    """Tests for enforce_monotonic_percentiles()"""
 
     def test_already_increasing_unchanged(self):
         """Test that already increasing values are unchanged."""
         pct = {1: 10, 50: 50, 99: 100}
-        result = enforce_strict_increasing(pct)
+        result = enforce_monotonic_percentiles(pct)
         assert result == {1: 10, 50: 50, 99: 100}
 
     def test_fixes_duplicate_values(self):
         """Test that duplicate values get small offset."""
         pct = {1: 10, 10: 10, 50: 50}
-        result = enforce_strict_increasing(pct)
+        result = enforce_monotonic_percentiles(pct)
         sorted_values = [result[k] for k in sorted(result.keys())]
         # Should be strictly increasing
         for i in range(len(sorted_values) - 1):
@@ -279,12 +279,12 @@ class TestEnforceStrictIncreasing:
 
         pct = {1: 100, 50: 50, 99: 10}  # Inverted - P1 > P99
         with pytest.raises(ExtractionError, match="Percentiles are inverted"):
-            enforce_strict_increasing(pct)
+            enforce_monotonic_percentiles(pct)
 
     def test_preserves_key_order(self):
         """Test that percentile keys are preserved."""
         pct = {1: 10, 50: 20, 99: 30}
-        result = enforce_strict_increasing(pct)
+        result = enforce_monotonic_percentiles(pct)
         assert set(result.keys()) == {1, 50, 99}
 
 

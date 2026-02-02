@@ -17,8 +17,8 @@ from .base_forecaster import BaseForecaster
 from .exceptions import InsufficientPredictionsError
 from .extractors import AgentResult, extract_binary_probability_percent
 from .prompts import (
-    BINARY_PROMPT_1,
-    BINARY_PROMPT_2,
+    BINARY_INSIDE_VIEW_PROMPT,
+    BINARY_OUTSIDE_VIEW_PROMPT,
     BINARY_PROMPT_CURRENT,
     BINARY_PROMPT_HISTORICAL,
 )
@@ -55,8 +55,8 @@ class BinaryForecaster(BaseForecaster):
         return (
             BINARY_PROMPT_HISTORICAL,
             BINARY_PROMPT_CURRENT,
-            BINARY_PROMPT_1,
-            BINARY_PROMPT_2,
+            BINARY_OUTSIDE_VIEW_PROMPT,
+            BINARY_INSIDE_VIEW_PROMPT,
         )
 
     def _get_question_details(self, **question_params) -> QuestionDetails:
@@ -68,24 +68,24 @@ class BinaryForecaster(BaseForecaster):
             description=question_params.get("question_text", ""),
         )
 
-    def _format_step1_prompt(
+    def _format_outside_view_prompt(
         self,
         prompt_template: str,
         historical_context: str,
         **question_params,
     ) -> str:
-        """Format Step 1 prompt with historical context."""
+        """Format outside view prompt with historical context."""
         params = self._get_common_prompt_params(**question_params)
         params["context"] = historical_context
         return prompt_template.format(**params)
 
-    def _format_step2_prompt(
+    def _format_inside_view_prompt(
         self,
         prompt_template: str,
         context: str,
         **question_params,
     ) -> str:
-        """Format Step 2 prompt with cross-pollinated context."""
+        """Format inside view prompt with cross-pollinated context."""
         params = self._get_common_prompt_params(**question_params)
         params["context"] = context
         return prompt_template.format(**params)
@@ -131,8 +131,8 @@ class BinaryForecaster(BaseForecaster):
         agent_id: str,
         model: str,
         weight: float,
-        step1_output: str,
-        step2_output: str,
+        outside_view_output: str,
+        inside_view_output: str,
         prediction: Any,
         error: str | None,
     ) -> AgentResult:
@@ -141,8 +141,8 @@ class BinaryForecaster(BaseForecaster):
             agent_id=agent_id,
             model=model,
             weight=weight,
-            step1_output=step1_output,
-            step2_output=step2_output,
+            outside_view_output=outside_view_output,
+            inside_view_output=inside_view_output,
             probability=prediction,
             error=error,
         )
@@ -262,7 +262,7 @@ async def get_binary_forecast(
     formatted_outputs = "\n\n".join(
         f"=== Forecaster {i + 1} ===\n"
         f"Model: {r.model}\n"
-        f"Output:\n{r.step2_output[:1000]}...\n"
+        f"Output:\n{r.inside_view_output[:1000]}...\n"
         f"Predicted Probability: {r.probability if r.probability is not None else 'N/A'}%"
         for i, r in enumerate(result.agent_results)
     )

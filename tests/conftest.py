@@ -100,7 +100,7 @@ The situation is too uncertain for a point estimate.
 
 
 @pytest.fixture
-def mc_response_3_options():
+def multiple_choice_response_3_options():
     """Multiple choice response with 3 options."""
     return """
 ## Option Analysis
@@ -114,7 +114,7 @@ Probabilities: [55, 30, 15]
 
 
 @pytest.fixture
-def mc_response_5_options():
+def multiple_choice_response_5_options():
     """Multiple choice response with 5 options."""
     return """
 Analysis of all options:
@@ -124,19 +124,19 @@ Probabilities: [10, 25, 35, 20, 10]
 
 
 @pytest.fixture
-def mc_response_with_decimals():
+def multiple_choice_response_with_decimals():
     """Multiple choice with decimal probabilities."""
     return "After analysis: Probabilities: [33.3, 33.3, 33.4]"
 
 
 @pytest.fixture
-def mc_response_wrong_count():
+def multiple_choice_response_count_mismatch():
     """Multiple choice with wrong number of probabilities."""
     return "Probabilities: [50, 50]"  # Only 2 when 3 expected
 
 
 @pytest.fixture
-def mc_response_no_bracket():
+def multiple_choice_response_no_brackets():
     """Multiple choice without proper bracket format."""
     return "The probabilities are 40%, 35%, and 25%."
 
@@ -147,7 +147,7 @@ def mc_response_no_bracket():
 
 
 @pytest.fixture
-def numeric_response_standard():
+def numeric_percentile_response_standard():
     """Standard numeric response with percentile distribution."""
     return """
 ## Analysis
@@ -169,7 +169,7 @@ Percentile 99: 120
 
 
 @pytest.fixture
-def numeric_response_with_bullets():
+def numeric_percentile_response_with_bullets():
     """Numeric response with bullet points in distribution."""
     return """
 Distribution:
@@ -182,7 +182,7 @@ Distribution:
 
 
 @pytest.fixture
-def numeric_response_colon_format():
+def numeric_percentile_response_colon_separator():
     """Numeric response with simple colon format."""
     return """
 Distribution:
@@ -196,7 +196,7 @@ Distribution:
 
 
 @pytest.fixture
-def numeric_response_dash_format():
+def numeric_percentile_response_dash_separator():
     """Numeric response with dash separators."""
     return """
 Distribution:
@@ -209,7 +209,7 @@ Percentile 99 - 60.1
 
 
 @pytest.fixture
-def numeric_response_no_distribution():
+def numeric_percentile_response_missing_anchor():
     """Numeric response without Distribution: anchor."""
     return """
 I think the value will be around 50, with a range of 30-70.
@@ -217,7 +217,7 @@ I think the value will be around 50, with a range of 30-70.
 
 
 @pytest.fixture
-def numeric_response_non_monotonic():
+def numeric_percentile_response_non_monotonic():
     """Numeric response with non-monotonic values (needs fixing)."""
     return """
 Distribution:
@@ -297,17 +297,17 @@ def sample_config():
     return {
         "mode": "test",
         "models": {
-            "cheap": {
+            "fast": {
                 "utility": "openrouter/anthropic/claude-3-5-haiku-latest",
                 "summarization": "openrouter/anthropic/claude-3-5-haiku-latest",
             },
-            "production": {
+            "quality": {
                 "utility": "openrouter/anthropic/claude-sonnet-4-20250514",
                 "summarization": "openrouter/anthropic/claude-sonnet-4-20250514",
             },
         },
         "ensemble": {
-            "cheap": [
+            "fast": [
                 {
                     "name": "forecaster_1",
                     "model": "openrouter/anthropic/claude-3-5-haiku-latest",
@@ -319,7 +319,7 @@ def sample_config():
                     "weight": 1.0,
                 },
             ],
-            "production": [
+            "quality": [
                 {
                     "name": "forecaster_1",
                     "model": "openrouter/anthropic/claude-sonnet-4.5",
@@ -494,7 +494,7 @@ def unsupported_type_api_response():
 
 
 @pytest.fixture
-def valid_agent_results():
+def forecaster_results_all_successful():
     """List of 5 AgentResult objects with valid probabilities."""
     from src.bot.extractors import AgentResult
 
@@ -503,8 +503,8 @@ def valid_agent_results():
             agent_id=f"forecaster_{i + 1}",
             model="test-model",
             weight=1.0,
-            step1_output="Step 1 analysis...",
-            step2_output="Step 2 analysis...",
+            outside_view_output="Outside view analysis...",
+            inside_view_output="Inside view analysis...",
             probability=50.0 + i * 5,  # 50, 55, 60, 65, 70
         )
         for i in range(5)
@@ -512,7 +512,7 @@ def valid_agent_results():
 
 
 @pytest.fixture
-def partial_agent_results():
+def forecaster_results_partial_failures():
     """List with 2 valid, 3 None probabilities."""
     from src.bot.extractors import AgentResult
 
@@ -525,8 +525,8 @@ def partial_agent_results():
                 agent_id=f"forecaster_{i + 1}",
                 model="test-model",
                 weight=1.0,
-                step1_output="Step 1 analysis...",
-                step2_output="Step 2 analysis..." if i < 2 else "",
+                outside_view_output="Outside view analysis...",
+                inside_view_output="Inside view analysis..." if i < 2 else "",
                 probability=prob,
                 error=error,
             )
@@ -535,7 +535,7 @@ def partial_agent_results():
 
 
 @pytest.fixture
-def all_failed_agent_results():
+def forecaster_results_all_failed():
     """List where all 5 agents failed to extract probabilities."""
     from src.bot.extractors import AgentResult
 
@@ -544,8 +544,8 @@ def all_failed_agent_results():
             agent_id=f"forecaster_{i + 1}",
             model="test-model",
             weight=1.0,
-            step1_output="Step 1 analysis...",
-            step2_output="",
+            outside_view_output="Outside view analysis...",
+            inside_view_output="",
             probability=None,
             error="Extraction failed",
         )

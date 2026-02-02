@@ -18,11 +18,11 @@ from src.bot.exceptions import ExtractionError
 # Import the actual extraction functions/methods
 from src.bot.extractors import (
     VALID_PERCENTILE_KEYS,
-    clean_line,
-    enforce_strict_increasing,
+    enforce_monotonic_percentiles,
     extract_binary_probability_percent,
     extract_date_percentiles_from_response,
     extract_percentiles_from_response,
+    normalize_percentile_line,
     normalize_probabilities,
     parse_date_to_timestamp,
 )
@@ -144,32 +144,40 @@ class TestBinaryProbabilityExtraction:
 class TestMultipleChoiceExtraction:
     """Tests for extract_option_probabilities_from_response()"""
 
-    def test_standard_3_options(self, mc_response_3_options):
+    def test_standard_3_options(self, multiple_choice_response_3_options):
         """Test extraction of 3 probabilities."""
-        result = extract_option_probabilities_from_response(mc_response_3_options, num_options=3)
+        result = extract_option_probabilities_from_response(
+            multiple_choice_response_3_options, num_options=3
+        )
         assert result == [55.0, 30.0, 15.0]
 
-    def test_5_options(self, mc_response_5_options):
+    def test_5_options(self, multiple_choice_response_5_options):
         """Test extraction of 5 probabilities."""
-        result = extract_option_probabilities_from_response(mc_response_5_options, num_options=5)
+        result = extract_option_probabilities_from_response(
+            multiple_choice_response_5_options, num_options=5
+        )
         assert result == [10.0, 25.0, 35.0, 20.0, 10.0]
 
-    def test_decimal_probabilities(self, mc_response_with_decimals):
+    def test_decimal_probabilities(self, multiple_choice_response_with_decimals):
         """Test extraction of decimal probabilities."""
         result = extract_option_probabilities_from_response(
-            mc_response_with_decimals, num_options=3
+            multiple_choice_response_with_decimals, num_options=3
         )
         assert result == [33.3, 33.3, 33.4]
 
-    def test_wrong_count_raises(self, mc_response_wrong_count):
+    def test_wrong_count_raises(self, multiple_choice_response_count_mismatch):
         """Test that wrong number of probabilities raises ExtractionError."""
         with pytest.raises(ExtractionError, match="Expected 3 probabilities, got 2"):
-            extract_option_probabilities_from_response(mc_response_wrong_count, num_options=3)
+            extract_option_probabilities_from_response(
+                multiple_choice_response_count_mismatch, num_options=3
+            )
 
-    def test_no_bracket_format_raises(self, mc_response_no_bracket):
+    def test_no_bracket_format_raises(self, multiple_choice_response_no_brackets):
         """Test that missing bracket format raises ExtractionError."""
         with pytest.raises(ExtractionError, match="Could not extract"):
-            extract_option_probabilities_from_response(mc_response_no_bracket, num_options=3)
+            extract_option_probabilities_from_response(
+                multiple_choice_response_no_brackets, num_options=3
+            )
 
     def test_uses_last_match(self):
         """When multiple Probabilities: lists exist, use the last one."""
@@ -238,9 +246,11 @@ class TestNormalizeProbabilities:
 class TestNumericPercentileExtraction:
     """Tests for extract_percentiles_from_response()"""
 
-    def test_standard_format(self, numeric_response_standard):
+    def test_standard_format(self, numeric_percentile_response_standard):
         """Test extraction from standard percentile format."""
-        result = extract_percentiles_from_response(numeric_response_standard, verbose=False)
+        result = extract_percentiles_from_response(
+            numeric_percentile_response_standard, verbose=False
+        )
         assert 1 in result
         assert 99 in result
         assert result[1] == 10
@@ -250,7 +260,7 @@ class TestNumericPercentileExtraction:
 
     def test_bullet_format(self):
         """Test extraction with bullet points - note: bullets leave leading space after strip."""
-        # The clean_line function strips bullets but leaves a leading space
+        # The normalize_percentile_line function strips bullets but leaves a leading space
         # which causes the regex not to match. This is current behavior.
         # Test with colon format that works:
         text = """
@@ -266,23 +276,29 @@ class TestNumericPercentileExtraction:
         assert result[50] == 25
         assert result[99] == 50
 
-    def test_colon_format(self, numeric_response_colon_format):
+    def test_colon_format(self, numeric_percentile_response_colon_separator):
         """Test extraction with simple colon format (no 'Percentile' word)."""
-        result = extract_percentiles_from_response(numeric_response_colon_format, verbose=False)
+        result = extract_percentiles_from_response(
+            numeric_percentile_response_colon_separator, verbose=False
+        )
         assert result[1] == 100
         assert result[50] == 500
         assert result[99] == 1000
 
-    def test_dash_format(self, numeric_response_dash_format):
+    def test_dash_format(self, numeric_percentile_response_dash_separator):
         """Test extraction with dash separators."""
-        result = extract_percentiles_from_response(numeric_response_dash_format, verbose=False)
+        result = extract_percentiles_from_response(
+            numeric_percentile_response_dash_separator, verbose=False
+        )
         assert result[1] == pytest.approx(5.5)
         assert result[50] == pytest.approx(25.7)
 
-    def test_no_distribution_anchor_raises(self, numeric_response_no_distribution):
+    def test_no_distribution_anchor_raises(self, numeric_percentile_response_missing_anchor):
         """Test that missing Distribution: anchor raises ExtractionError."""
         with pytest.raises(ExtractionError, match="No valid percentiles"):
-            extract_percentiles_from_response(numeric_response_no_distribution, verbose=False)
+            extract_percentiles_from_response(
+                numeric_percentile_response_missing_anchor, verbose=False
+            )
 
     def test_valid_percentile_keys(self):
         """Verify the set of valid percentile keys."""
@@ -325,21 +341,21 @@ class TestNumericPercentileExtraction:
         assert 50 in result
 
 
-class TestEnforceStrictIncreasing:
-    """Tests for enforce_strict_increasing()"""
+class TestEnforceMonotonicPercentiles:
+    """Tests for enforce_monotonic_percentiles()"""
 
     def test_already_increasing(self):
         """Test with already strictly increasing values."""
         pct = {1: 10, 50: 50, 99: 100}
-        result = enforce_strict_increasing(pct)
+        result = enforce_monotonic_percentiles(pct)
         assert result[1] == 10
         assert result[50] == 50
         assert result[99] == 100
 
-    def test_duplicate_values(self, numeric_response_non_monotonic):
+    def test_duplicate_values(self, numeric_percentile_response_non_monotonic):
         """Test fixing duplicate values."""
         pct = {1: 10, 10: 10, 50: 10, 90: 20, 99: 30}
-        result = enforce_strict_increasing(pct)
+        result = enforce_monotonic_percentiles(pct)
 
         # Should be strictly increasing
         sorted_values = [result[k] for k in sorted(result.keys())]
@@ -354,42 +370,42 @@ class TestEnforceStrictIncreasing:
 
         pct = {1: 100, 50: 50, 99: 10}  # Inverted - P1 > P99
         with pytest.raises(ExtractionError, match="Percentiles are inverted"):
-            enforce_strict_increasing(pct)
+            enforce_monotonic_percentiles(pct)
 
     def test_minor_decrease_fixed_with_jitter(self):
         """Test that minor flat/decreasing spots are fixed with jitter."""
         # P40 and P60 are equal (flat), but overall trend is increasing
         pct = {1: 10, 40: 50, 60: 50, 99: 100}
-        result = enforce_strict_increasing(pct)
+        result = enforce_monotonic_percentiles(pct)
 
         # Should be strictly increasing after jitter
         assert result[1] < result[40] < result[60] < result[99]
 
 
-class TestCleanLine:
-    """Tests for the clean_line() helper function."""
+class TestNormalizePercentileLine:
+    """Tests for the normalize_percentile_line() helper function."""
 
     def test_removes_bullets(self):
         """Test removal of bullet characters and trailing whitespace."""
-        # clean_line strips whitespace, removes bullets, then strips again
-        assert clean_line("• Percentile 50: 100") == "percentile 50: 100"
-        assert clean_line("* Percentile 50: 100") == "percentile 50: 100"
-        assert clean_line("-Percentile 50: 100") == "percentile 50: 100"
+        # normalize_percentile_line strips whitespace, removes bullets, then strips again
+        assert normalize_percentile_line("• Percentile 50: 100") == "percentile 50: 100"
+        assert normalize_percentile_line("* Percentile 50: 100") == "percentile 50: 100"
+        assert normalize_percentile_line("-Percentile 50: 100") == "percentile 50: 100"
 
     def test_normalizes_dashes(self):
         """Test normalization of various dash characters to ASCII hyphen."""
         # Unicode dashes: en-dash, em-dash, etc.
-        assert clean_line("Percentile 50\u2013100") == "percentile 50-100"  # en-dash
-        assert clean_line("Percentile 50\u2014100") == "percentile 50-100"  # em-dash
+        assert normalize_percentile_line("Percentile 50\u2013100") == "percentile 50-100"  # en-dash
+        assert normalize_percentile_line("Percentile 50\u2014100") == "percentile 50-100"  # em-dash
 
     def test_removes_commas(self):
         """Test removal of thousands separators."""
-        assert clean_line("1,000") == "1000"
-        assert clean_line("1,000,000") == "1000000"
+        assert normalize_percentile_line("1,000") == "1000"
+        assert normalize_percentile_line("1,000,000") == "1000000"
 
     def test_lowercase(self):
         """Test conversion to lowercase."""
-        assert clean_line("PERCENTILE 50: 100") == "percentile 50: 100"
+        assert normalize_percentile_line("PERCENTILE 50: 100") == "percentile 50: 100"
 
 
 # ============================================================================

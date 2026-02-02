@@ -14,7 +14,7 @@ from src.bot.cdf import generate_continuous_cdf
 from src.bot.exceptions import ExtractionError, InsufficientPredictionsError
 from src.bot.extractors import (
     AgentResult,
-    enforce_strict_increasing,
+    enforce_monotonic_percentiles,
     extract_percentiles_from_response,
 )
 from src.bot.numeric import NumericForecaster, NumericForecastResult
@@ -106,13 +106,13 @@ P95: 800
 
 
 class TestEnforceStrictIncreasing:
-    """Tests for enforce_strict_increasing function."""
+    """Tests for enforce_monotonic_percentiles function."""
 
     def test_already_increasing(self):
         """Returns unchanged when already strictly increasing."""
         percentiles = {5: 100, 25: 200, 50: 300, 75: 400, 95: 500}
 
-        result = enforce_strict_increasing(percentiles)
+        result = enforce_monotonic_percentiles(percentiles)
 
         assert result == percentiles
 
@@ -120,7 +120,7 @@ class TestEnforceStrictIncreasing:
         """Fixes equal consecutive values."""
         percentiles = {5: 100, 25: 100, 50: 100, 75: 100, 95: 100}
 
-        result = enforce_strict_increasing(percentiles)
+        result = enforce_monotonic_percentiles(percentiles)
 
         # Should be strictly increasing
         values = [result[k] for k in sorted(result.keys())]
@@ -132,13 +132,13 @@ class TestEnforceStrictIncreasing:
         percentiles = {5: 500, 25: 400, 50: 300, 75: 200, 95: 100}
 
         with pytest.raises(ExtractionError) as exc_info:
-            enforce_strict_increasing(percentiles)
+            enforce_monotonic_percentiles(percentiles)
 
         assert "inverted" in str(exc_info.value).lower()
 
     def test_handles_empty(self):
         """Handles empty percentiles dict."""
-        result = enforce_strict_increasing({})
+        result = enforce_monotonic_percentiles({})
         assert result == {}
 
 
@@ -331,24 +331,24 @@ class TestCDFAggregation:
                 agent_id="agent_1",
                 model="test",
                 weight=1.0,
-                step1_output="",
-                step2_output="",
+                outside_view_output="",
+                inside_view_output="",
                 cdf=cdf1,
             ),
             AgentResult(
                 agent_id="agent_2",
                 model="test",
                 weight=1.0,
-                step1_output="",
-                step2_output="",
+                outside_view_output="",
+                inside_view_output="",
                 cdf=cdf2,
             ),
             AgentResult(
                 agent_id="agent_3",
                 model="test",
                 weight=1.0,
-                step1_output="",
-                step2_output="",
+                outside_view_output="",
+                inside_view_output="",
                 cdf=cdf3,
             ),
         ]
@@ -379,24 +379,24 @@ class TestCDFAggregation:
                 agent_id="agent_1",
                 model="test",
                 weight=1.0,
-                step1_output="",
-                step2_output="",
+                outside_view_output="",
+                inside_view_output="",
                 cdf=cdf1,
             ),
             AgentResult(
                 agent_id="agent_2",
                 model="test",
                 weight=1.0,
-                step1_output="",
-                step2_output="",
+                outside_view_output="",
+                inside_view_output="",
                 cdf=cdf2,
             ),
             AgentResult(
                 agent_id="agent_3",
                 model="test",
                 weight=1.0,
-                step1_output="",
-                step2_output="",
+                outside_view_output="",
+                inside_view_output="",
                 cdf=cdf2,
             ),  # 3rd with cdf2
         ]
@@ -424,16 +424,16 @@ class TestCDFAggregation:
                 agent_id="agent_1",
                 model="test",
                 weight=1.0,
-                step1_output="",
-                step2_output="",
+                outside_view_output="",
+                inside_view_output="",
                 cdf=cdf1,
             ),
             AgentResult(
                 agent_id="agent_2",
                 model="test",
                 weight=1.0,
-                step1_output="",
-                step2_output="",
+                outside_view_output="",
+                inside_view_output="",
                 cdf=None,
                 error="Failed",
             ),
@@ -441,8 +441,8 @@ class TestCDFAggregation:
                 agent_id="agent_3",
                 model="test",
                 weight=1.0,
-                step1_output="",
-                step2_output="",
+                outside_view_output="",
+                inside_view_output="",
                 cdf=None,
                 error="Failed",
             ),
@@ -472,32 +472,32 @@ class TestCDFAggregation:
                 agent_id="agent_1",
                 model="test",
                 weight=1.0,
-                step1_output="",
-                step2_output="",
+                outside_view_output="",
+                inside_view_output="",
                 cdf=cdf_correct,
             ),
             AgentResult(
                 agent_id="agent_2",
                 model="test",
                 weight=1.0,
-                step1_output="",
-                step2_output="",
+                outside_view_output="",
+                inside_view_output="",
                 cdf=cdf_correct,
             ),
             AgentResult(
                 agent_id="agent_3",
                 model="test",
                 weight=1.0,
-                step1_output="",
-                step2_output="",
+                outside_view_output="",
+                inside_view_output="",
                 cdf=cdf_correct,
             ),
             AgentResult(
                 agent_id="agent_4",
                 model="test",
                 weight=1.0,
-                step1_output="",
-                step2_output="",
+                outside_view_output="",
+                inside_view_output="",
                 cdf=cdf_wrong,
             ),  # Wrong size
         ]
@@ -571,7 +571,7 @@ Percentile 95: 800
 """
         # Extract
         percentiles = extract_percentiles_from_response(response)
-        percentiles = enforce_strict_increasing(percentiles)
+        percentiles = enforce_monotonic_percentiles(percentiles)
 
         # Generate CDF
         cdf = generate_continuous_cdf(

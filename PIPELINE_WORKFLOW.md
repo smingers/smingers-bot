@@ -98,7 +98,7 @@ python main.py --question 41594 --mode live
 
 **Passed to next stage:**
 - `MetaculusQuestion` object
-- `ForecastArtifacts` container
+- `ForecastArtifactPaths` container
 
 ---
 

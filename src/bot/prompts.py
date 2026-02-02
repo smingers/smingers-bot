@@ -4,8 +4,8 @@ Prompts
 These prompts implement a two-stage research + two-stage forecasting pipeline:
 1. Historical research queries -> Outside view context
 2. Current research queries -> Inside view context
-3. Outside view prediction (PROMPT_1) using historical context
-4. Inside view prediction (PROMPT_2) using current context + outside view
+3. Outside view prediction (OUTSIDE_VIEW_PROMPT) using historical context
+4. Inside view prediction (INSIDE_VIEW_PROMPT) using current context + outside view
 """
 
 # =============================================================================
@@ -122,7 +122,7 @@ Search queries:
 """
 
 
-BINARY_PROMPT_1 = """
+BINARY_OUTSIDE_VIEW_PROMPT = """
 You are currently analyzing a forecasting question to generate an outside view prediction.
 
 The forecasting question is:
@@ -172,7 +172,7 @@ Outside View Prediction:
 """
 
 
-BINARY_PROMPT_2 = """
+BINARY_INSIDE_VIEW_PROMPT = """
 You are currently analyzing a forecasting question to generate a final, inside view prediction.
 
 The forecasting question is:
@@ -363,7 +363,7 @@ Search queries:
 3. [Query details] (AskNews)
 """
 
-MULTIPLE_CHOICE_PROMPT_1 = """
+MULTIPLE_CHOICE_OUTSIDE_VIEW_PROMPT = """
 
 You are currently analyzing a forecasting question to generate an outside view prediction.
 
@@ -417,7 +417,7 @@ Option_B: Probability_B
 Option_N: Probability_N
 """
 
-MULTIPLE_CHOICE_PROMPT_2 = """
+MULTIPLE_CHOICE_INSIDE_VIEW_PROMPT = """
 You are currently analyzing a forecasting question to generate a final, inside view prediction.
 
 The forecasting question is:
@@ -614,7 +614,7 @@ Search queries:
 """
 
 
-NUMERIC_PROMPT_1 = """
+NUMERIC_OUTSIDE_VIEW_PROMPT = """
 You are currently analyzing a numeric forecasting question to generate a final, inside view prediction.
 
 The forecasting question is:
@@ -686,7 +686,7 @@ Percentile 90: XX
 """
 
 
-NUMERIC_PROMPT_2 = """
+NUMERIC_INSIDE_VIEW_PROMPT = """
 You are a professional forecaster interviewing for a job.
 
 Your interview question is:

@@ -21,7 +21,7 @@ import dateparser
 import httpx
 
 from ..utils.llm import LLMClient, get_cost_tracker
-from .content_extractor import FastContentExtractor
+from .content_extractor import ConcurrentContentExtractor
 from .prompts import CONTINUATION_SEARCH_PROMPT, INITIAL_SEARCH_PROMPT
 
 logger = logging.getLogger(__name__)
@@ -111,8 +111,8 @@ class SearchPipeline:
         self.asknews_client_id = os.getenv("ASKNEWS_CLIENT_ID")
         self.asknews_secret = os.getenv("ASKNEWS_CLIENT_SECRET") or os.getenv("ASKNEWS_SECRET")
 
-        # Semaphore to limit concurrent AskNews calls (free tier has concurrency limit)
-        self._asknews_semaphore = asyncio.Semaphore(1)
+        # Rate limiter for AskNews calls (free tier has concurrency limit)
+        self._asknews_rate_limiter = asyncio.Semaphore(1)
 
     async def __aenter__(self):
         self.http_client = httpx.AsyncClient(timeout=70.0)
@@ -382,7 +382,9 @@ class SearchPipeline:
                 if date_before:
                     item_date_str = item.get("date", "")
                     item_date = self._parse_date(item_date_str)
-                    if item_date != "Unknown" and self._validate_time(date_before, item_date):
+                    if item_date != "Unknown" and self._is_before_resolution_date(
+                        date_before, item_date
+                    ):
                         filtered_items.append(item)
                     # Skip items we can't validate
                 else:
@@ -428,7 +430,7 @@ class SearchPipeline:
                 return f'<Summary query="{query}">No URLs returned from Google.</Summary>\n'
 
             # Extract content from URLs
-            async with FastContentExtractor() as extractor:
+            async with ConcurrentContentExtractor() as extractor:
                 logger.info(f"[google_search_and_scrape] Extracting content from {len(urls)} URLs")
                 results = await extractor.extract_content(urls)
 
@@ -538,9 +540,9 @@ class SearchPipeline:
             logger.warning("AskNews credentials not set")
             return "AskNews credentials not configured."
 
-        # Use semaphore to limit concurrent AskNews calls (free tier limit)
-        async with self._asknews_semaphore:
-            formatted_articles = ""
+        # Rate limit AskNews calls (free tier limit)
+        async with self._asknews_rate_limiter:
+            articles_markdown = ""
 
             # Part 1: News search (latest + historical)
             try:
@@ -611,11 +613,11 @@ class SearchPipeline:
                     logger.info(f"[call_asknews] Removed {duplicates_removed} duplicate articles")
 
                 # Format news results
-                formatted_articles = "Here are the relevant news articles:\n\n"
+                articles_markdown = "Here are the relevant news articles:\n\n"
 
                 for article in unique_articles:
                     pub_date = article["pub_date"].strftime("%B %d, %Y %I:%M %p")
-                    formatted_articles += (
+                    articles_markdown += (
                         f"**{article['eng_title']}**\n"
                         f"{article['summary']}\n"
                         f"Original language: {article['language']}\n"
@@ -624,11 +626,11 @@ class SearchPipeline:
                     )
 
                 if not unique_articles:
-                    formatted_articles += "No articles were found.\n\n"
+                    articles_markdown += "No articles were found.\n\n"
 
             except Exception as e:
                 logger.error(f"[call_asknews] News search error: {e}")
-                formatted_articles = f"Error retrieving news articles: {e}\n\n"
+                articles_markdown = f"Error retrieving news articles: {e}\n\n"
 
             # Part 2: Deep Research (only if deep_research_query provided)
             if deep_research_query:
@@ -645,7 +647,7 @@ class SearchPipeline:
                         deep_research_query, preset="low-depth", _skip_semaphore=True
                     )
 
-                    formatted_articles += (
+                    articles_markdown += (
                         f"\n--- Deep Research Analysis ---\n{deep_research_result}\n"
                     )
                     logger.info(
@@ -654,13 +656,13 @@ class SearchPipeline:
 
                 except Exception as e:
                     logger.error(f"[call_asknews] Deep research error: {e}")
-                    formatted_articles += f"\n--- Deep Research Analysis ---\nError: {e}\n"
+                    articles_markdown += f"\n--- Deep Research Analysis ---\nError: {e}\n"
             else:
                 logger.info(
                     "[call_asknews] Skipping deep research (no deep_research_query provided)"
                 )
 
-            return formatted_articles
+            return articles_markdown
 
     async def _call_asknews_deep_research(
         self,
@@ -767,11 +769,11 @@ class SearchPipeline:
                 logger.error(f"[asknews_deep_research] Error: {e}")
                 return f"Error running deep research: {e}"
 
-        # If called from _call_asknews, semaphore is already held
+        # If called from _call_asknews, rate limiter is already held
         if _skip_semaphore:
             return await _do_deep_research()
         else:
-            async with self._asknews_semaphore:
+            async with self._asknews_rate_limiter:
                 return await _do_deep_research()
 
     # -------------------------------------------------------------------------
@@ -939,7 +941,7 @@ class SearchPipeline:
             if not urls:
                 return f'<RawContent query="{query}">No URLs returned from Google.</RawContent>\n'
 
-            async with FastContentExtractor() as extractor:
+            async with ConcurrentContentExtractor() as extractor:
                 results = await extractor.extract_content(urls)
 
             output = ""
@@ -981,8 +983,8 @@ class SearchPipeline:
             return parsed_date.strftime("%b %d, %Y")
         return "Unknown"
 
-    def _validate_time(self, before_date_str: str, source_date_str: str) -> bool:
-        """Check if source date is before the cutoff date."""
+    def _is_before_resolution_date(self, before_date_str: str, source_date_str: str) -> bool:
+        """Check if source date is before the resolution cutoff date."""
         if source_date_str == "Unknown":
             return False
         before_date = dateparser.parse(before_date_str)

@@ -22,14 +22,14 @@ mode: "test"
 # The 5-agent ensemble is configured separately below.
 
 models:
-  # Models for test mode (cheap, fast)
-  cheap:
+  # Models for test mode (fast, inexpensive)
+  fast:
     query_generator: "openrouter/anthropic/claude-3.5-haiku"
     article_summarizer: "openrouter/anthropic/claude-3.5-haiku"
     agentic_search: "openrouter/anthropic/claude-3.5-haiku"
 
-  # Models for preview and live modes
-  production:
+  # Models for preview and live modes (higher quality)
+  quality:
     query_generator: "openrouter/openai/o3"
     article_summarizer: "openrouter/anthropic/claude-sonnet-4.5"
     agentic_search: "openrouter/openai/o3"
@@ -48,8 +48,8 @@ models:
 #   - Agent 5 (o3) receives Agent 5's step 1 output (o3)
 
 ensemble:
-  # Agents for test mode (all Haiku - cheap, fast)
-  cheap:
+  # Agents for test mode (all Haiku - fast, inexpensive)
+  fast:
     - name: "forecaster_1"
       model: "openrouter/anthropic/claude-3.5-haiku"
       weight: 1.0
@@ -70,8 +70,8 @@ ensemble:
       model: "openrouter/anthropic/claude-3.5-haiku"
       weight: 1.0
 
-  # Agents for preview and live modes
-  production:
+  # Agents for preview and live modes (higher quality)
+  quality:
     - name: "forecaster_1"
       model: "openrouter/anthropic/claude-sonnet-4.5"
       weight: 1.0

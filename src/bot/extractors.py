@@ -33,8 +33,8 @@ class AgentResult:
         agent_id: Identifier like "forecaster_1"
         model: LLM model used (e.g., "openrouter/anthropic/claude-sonnet-4")
         weight: Agent weight for ensemble aggregation
-        step1_output: Raw LLM response from outside view (step 1)
-        step2_output: Raw LLM response from inside view (step 2)
+        outside_view_output: Raw LLM response from outside view prediction
+        inside_view_output: Raw LLM response from inside view prediction
         error: Error message if extraction failed, None otherwise
 
     Type-specific fields (only one set populated per question type):
@@ -48,8 +48,8 @@ class AgentResult:
     agent_id: str
     model: str
     weight: float
-    step1_output: str
-    step2_output: str
+    outside_view_output: str
+    inside_view_output: str
     error: str | None = None
 
     # Binary-specific
@@ -98,7 +98,7 @@ NUM_PATTERN = re.compile(
 )
 
 # Regex for parsing percentile lines with date values (YYYY-MM-DD or YYYY-MM-DDTHH:MM:SSZ)
-# Note: clean_line() lowercases input, so T/Z become t/z
+# Note: normalize_percentile_line() lowercases input, so T/Z become t/z
 DATE_PATTERN = re.compile(
     r"^(?:percentile\s*)?(\d{1,3})\s*[:\-]\s*(\d{4}-\d{2}-\d{2}(?:[tT]\d{2}:\d{2}:\d{2}[zZ]?)?)\s*$",
     re.IGNORECASE,
@@ -224,7 +224,7 @@ def normalize_probabilities(probs: list[float]) -> list[float]:
 # ============================================================================
 
 
-def clean_line(s: str) -> str:
+def normalize_percentile_line(s: str) -> str:
     """
     Clean and normalize a line of text for percentile parsing.
 
@@ -269,7 +269,7 @@ def extract_percentiles_from_response(text: str | list, verbose: bool = True) ->
     collecting = False
 
     for idx, raw in enumerate(lines, 1):
-        line = clean_line(str(raw))
+        line = normalize_percentile_line(str(raw))
 
         if not collecting and "distribution:" in line:
             collecting = True
@@ -329,7 +329,7 @@ def extract_date_percentiles_from_response(
     collecting = False
 
     for idx, raw in enumerate(lines, 1):
-        line = clean_line(str(raw))
+        line = normalize_percentile_line(str(raw))
 
         if not collecting and "distribution:" in line:
             collecting = True
@@ -381,7 +381,7 @@ def parse_date_to_timestamp(date_str: str) -> float | None:
     """
     date_str = date_str.strip()
 
-    # Try full ISO format first (handle both uppercase and lowercase T/Z from clean_line)
+    # Try full ISO format first (handle both uppercase and lowercase T/Z from normalize_percentile_line)
     if "T" in date_str or "t" in date_str:
         try:
             # Normalize to uppercase for parsing
@@ -407,7 +407,7 @@ def parse_date_to_timestamp(date_str: str) -> float | None:
     return None
 
 
-def enforce_strict_increasing(pct_dict: dict[int, float]) -> dict[int, float]:
+def enforce_monotonic_percentiles(pct_dict: dict[int, float]) -> dict[int, float]:
     """
     Ensure strictly increasing values by adding tiny jitter if necessary.
 

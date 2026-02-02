@@ -47,11 +47,11 @@ class TestBinaryAggregation:
             {"name": "forecaster_5", "model": "test", "weight": 1.0},
         ]
 
-    def test_aggregation_all_valid(self, forecaster, agents, valid_agent_results):
+    def test_aggregation_all_valid(self, forecaster, agents, forecaster_results_all_successful):
         """All 5 agents valid → weighted average."""
         write = MagicMock()
 
-        result = forecaster._aggregate_results(valid_agent_results, agents, write)
+        result = forecaster._aggregate_results(forecaster_results_all_successful, agents, write)
 
         # Probabilities are 50, 55, 60, 65, 70 (percent)
         # Average = 60%, normalized to 0.60
@@ -59,22 +59,22 @@ class TestBinaryAggregation:
         # Should have called write for logging
         assert write.called
 
-    def test_aggregation_some_none(self, forecaster, agents, partial_agent_results):
+    def test_aggregation_some_none(self, forecaster, agents, forecaster_results_partial_failures):
         """Agents with None probabilities are excluded from averaging."""
         write = MagicMock()
 
-        result = forecaster._aggregate_results(partial_agent_results, agents, write)
+        result = forecaster._aggregate_results(forecaster_results_partial_failures, agents, write)
 
         # Only first 2 agents valid (both 55%), so average = 55%
         # Normalized to 0.55
         assert result == pytest.approx(0.55, rel=0.01)
 
-    def test_aggregation_all_failed(self, forecaster, agents, all_failed_agent_results):
+    def test_aggregation_all_failed(self, forecaster, agents, forecaster_results_all_failed):
         """All agents failed → raises InsufficientPredictionsError."""
         write = MagicMock()
 
         with pytest.raises(InsufficientPredictionsError) as exc_info:
-            forecaster._aggregate_results(all_failed_agent_results, agents, write)
+            forecaster._aggregate_results(forecaster_results_all_failed, agents, write)
 
         assert exc_info.value.valid_count == 0
         assert exc_info.value.total_count == 5
@@ -89,8 +89,8 @@ class TestBinaryAggregation:
                 agent_id=f"forecaster_{i + 1}",
                 model="test",
                 weight=1.0,
-                step1_output="",
-                step2_output="",
+                outside_view_output="",
+                inside_view_output="",
                 probability=99.5,
             )
             for i in range(5)
@@ -107,8 +107,8 @@ class TestBinaryAggregation:
                 agent_id=f"forecaster_{i + 1}",
                 model="test",
                 weight=1.0,
-                step1_output="",
-                step2_output="",
+                outside_view_output="",
+                inside_view_output="",
                 probability=0.05,
             )
             for i in range(5)
@@ -134,16 +134,16 @@ class TestBinaryAggregation:
                 agent_id="forecaster_1",
                 model="test",
                 weight=2.0,
-                step1_output="",
-                step2_output="",
+                outside_view_output="",
+                inside_view_output="",
                 probability=60.0,
             ),  # 60%
             AgentResult(
                 agent_id="forecaster_2",
                 model="test",
                 weight=1.0,
-                step1_output="",
-                step2_output="",
+                outside_view_output="",
+                inside_view_output="",
                 probability=30.0,
             ),  # 30%
         ]
@@ -163,8 +163,8 @@ class TestBinaryAggregation:
                 agent_id="forecaster_1",
                 model="test",
                 weight=1.0,
-                step1_output="",
-                step2_output="",
+                outside_view_output="",
+                inside_view_output="",
                 probability=75.0,
             ),
         ] + [
@@ -172,8 +172,8 @@ class TestBinaryAggregation:
                 agent_id=f"forecaster_{i + 2}",
                 model="test",
                 weight=1.0,
-                step1_output="",
-                step2_output="",
+                outside_view_output="",
+                inside_view_output="",
                 probability=None,
                 error="Failed",
             )
@@ -215,8 +215,8 @@ class TestBinaryForecasterMethods:
             agent_id="forecaster_1",
             model="test-model",
             weight=1.5,
-            step1_output="Step 1",
-            step2_output="Step 2",
+            outside_view_output="Step 1",
+            inside_view_output="Step 2",
             prediction=55.0,
             error=None,
         )
@@ -224,8 +224,8 @@ class TestBinaryForecasterMethods:
         assert result.agent_id == "forecaster_1"
         assert result.model == "test-model"
         assert result.weight == 1.5
-        assert result.step1_output == "Step 1"
-        assert result.step2_output == "Step 2"
+        assert result.outside_view_output == "Step 1"
+        assert result.inside_view_output == "Step 2"
         assert result.probability == 55.0
         assert result.error is None
 
@@ -235,8 +235,8 @@ class TestBinaryForecasterMethods:
             agent_id="forecaster_1",
             model="test-model",
             weight=1.0,
-            step1_output="Step 1",
-            step2_output="",
+            outside_view_output="Step 1",
+            inside_view_output="",
             prediction=None,
             error="Extraction failed",
         )
@@ -250,8 +250,8 @@ class TestBinaryForecasterMethods:
             agent_id="forecaster_1",
             model="test",
             weight=1.0,
-            step1_output="",
-            step2_output="",
+            outside_view_output="",
+            inside_view_output="",
             probability=65.0,
             error=None,
         )
@@ -260,11 +260,11 @@ class TestBinaryForecasterMethods:
 
         assert data == {"probability": 65.0, "error": None}
 
-    def test_get_aggregation_data(self, forecaster, valid_agent_results):
+    def test_get_aggregation_data(self, forecaster, forecaster_results_all_successful):
         """Returns dict with aggregation info."""
         agents = [{"name": f"f{i + 1}", "model": "test", "weight": 1.0} for i in range(5)]
 
-        data = forecaster._get_aggregation_data(valid_agent_results, agents, 0.60)
+        data = forecaster._get_aggregation_data(forecaster_results_all_successful, agents, 0.60)
 
         assert data["method"] == "weighted_average"
         assert data["final_probability"] == 0.60

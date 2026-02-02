@@ -4,9 +4,9 @@ Base forecaster class implementing the shared 5-agent ensemble pipeline.
 This module provides the common pipeline structure used by all question type handlers:
 1. Generate search queries (historical + current)
 2. Execute searches
-3. Run Step 1 (outside view) with 5 agents
+3. Run outside view prediction with 5 forecaster agents
 4. Cross-pollinate context between agents
-5. Run Step 2 (inside view) with 5 agents
+5. Run inside view prediction with 5 forecaster agents
 6. Extract predictions and aggregate
 
 Subclasses implement type-specific logic by overriding abstract methods.
@@ -31,20 +31,20 @@ from .search import QuestionDetails, SearchPipeline
 logger = logging.getLogger(__name__)
 
 
-# Cross-pollination map: Controls how agents share context between Step 1 and Step 2.
+# Cross-pollination map: Controls how forecasters share context between outside view and inside view.
 #
-# PURPOSE: Create ensemble diversity by having agents receive Step 1 (outside view)
-# reasoning from agents using DIFFERENT model families. This prevents groupthink
+# PURPOSE: Create ensemble diversity by having forecasters receive outside view
+# reasoning from forecasters using DIFFERENT model families. This prevents groupthink
 # and ensures the ensemble benefits from multiple reasoning styles.
 #
 # HOW IT WORKS:
-# - After Step 1, each agent's output is shared with another agent for Step 2
-# - The mapping below defines: agent_index -> (source_agent_index, context_label)
-# - The source agent's Step 1 output becomes part of this agent's Step 2 context
+# - After outside view, each forecaster's output is shared with another forecaster for inside view
+# - The mapping below defines: forecaster_index -> (source_forecaster_index, context_label)
+# - The source forecaster's outside view output becomes part of this forecaster's inside view context
 #
 # MAPPING STRATEGY:
 # The specific model assignments are configured in config.yaml. The key principle is:
-# - Forecasters 1 & 5 receive their OWN Step 1 output (self-consistency anchors)
+# - Forecasters 1 & 5 receive their OWN outside view output (self-consistency anchors)
 # - Forecasters 2, 3, 4 receive output from a DIFFERENT model family
 #
 # Example with typical production models (Claude + OpenAI mix):
@@ -71,9 +71,9 @@ class BaseForecaster(ForecasterMixin, ABC):
     Implements the shared 6-step ensemble pipeline. Subclasses must implement:
     - _get_prompt_templates(): Return the 4 prompt templates for this question type
     - _get_question_details(): Build QuestionDetails from question parameters
-    - _format_step1_prompt(): Format the Step 1 (outside view) prompt
-    - _format_step2_prompt(): Format the Step 2 (inside view) prompt for each agent
-    - _extract_prediction(): Extract type-specific prediction from agent output
+    - _format_outside_view_prompt(): Format the outside view prompt
+    - _format_inside_view_prompt(): Format the inside view prompt for each forecaster
+    - _extract_prediction(): Extract type-specific prediction from forecaster output
     - _aggregate_results(): Aggregate predictions into final result
     - _build_result(): Build the final result object
     """
@@ -154,7 +154,9 @@ class BaseForecaster(ForecasterMixin, ABC):
         question_details = self._get_question_details(**question_params)
 
         # Get prompt templates
-        prompt_historical, prompt_current, prompt_step1, prompt_step2 = self._get_prompt_templates()
+        prompt_historical, prompt_current, prompt_outside_view, prompt_inside_view = (
+            self._get_prompt_templates()
+        )
 
         # =========================================================================
         # STEP 1: Generate historical and current search queries
@@ -225,9 +227,9 @@ class BaseForecaster(ForecasterMixin, ABC):
             self.artifact_store.save_search_results("current", {"context": current_context})
 
         # =========================================================================
-        # STEP 3: Run 5 agents on Step 1 (outside view)
+        # STEP 3: Run 5 forecasters on outside view prediction
         # =========================================================================
-        log("\n=== Step 3: Running Step 1 (outside view) ===")
+        log("\n=== Step 3: Running outside view prediction ===")
 
         agents = self._get_agents()
 
@@ -239,53 +241,55 @@ class BaseForecaster(ForecasterMixin, ABC):
                 weight=agent["weight"],
             )
 
-        step1_prompt = self._format_step1_prompt(
-            prompt_step1, historical_context, **question_params
+        outside_view_prompt = self._format_outside_view_prompt(
+            prompt_outside_view, historical_context, **question_params
         )
 
-        step1_tasks = []
-        step1_timings = []
+        outside_view_tasks = []
+        outside_view_timings = []
         for agent in agents:
             model = agent["model"]
             system_prompt = CLAUDE_CONTEXT if "claude" in model.lower() else GPT_CONTEXT
 
-            # Record start time for this agent
+            # Record start time for this forecaster
             start_time = time.time()
-            step1_timings.append(start_time)
+            outside_view_timings.append(start_time)
 
-            step1_tasks.append(
-                self._call_model_with_metadata(model, step1_prompt, system_prompt=system_prompt)
+            outside_view_tasks.append(
+                self._call_model_with_metadata(
+                    model, outside_view_prompt, system_prompt=system_prompt
+                )
             )
 
-        step1_results = await asyncio.gather(*step1_tasks, return_exceptions=True)
-        step1_outputs = []
+        outside_view_results = await asyncio.gather(*outside_view_tasks, return_exceptions=True)
+        outside_view_outputs = []
 
-        for i, result in enumerate(step1_results):
+        for i, result in enumerate(outside_view_results):
             agent_id = f"forecaster_{i + 1}"
-            duration = time.time() - step1_timings[i]
-            step1_metrics = metrics.agents[agent_id].step1
+            duration = time.time() - outside_view_timings[i]
+            outside_view_metrics = metrics.agents[agent_id].step1
 
             if isinstance(result, Exception):
-                log(f"\nForecaster_{i + 1} step 1 ERROR: {result}")
-                step1_outputs.append(f"Error: {result}")
-                step1_metrics.error = str(result)
-                step1_metrics.duration_seconds = duration
+                log(f"\nForecaster_{i + 1} outside view ERROR: {result}")
+                outside_view_outputs.append(f"Error: {result}")
+                outside_view_metrics.error = str(result)
+                outside_view_metrics.duration_seconds = duration
             else:
                 output, response_metadata = result
-                log(f"\nForecaster_{i + 1} step 1 output:\n{output[:300]}...")
-                step1_outputs.append(output)
+                log(f"\nForecaster_{i + 1} outside view output:\n{output[:300]}...")
+                outside_view_outputs.append(output)
 
                 # Track LLM metrics
-                step1_metrics.token_input = response_metadata.get("input_tokens", 0)
-                step1_metrics.token_output = response_metadata.get("output_tokens", 0)
-                step1_metrics.cost = response_metadata.get("cost", 0.0)
-                step1_metrics.duration_seconds = duration
+                outside_view_metrics.token_input = response_metadata.get("input_tokens", 0)
+                outside_view_metrics.token_output = response_metadata.get("output_tokens", 0)
+                outside_view_metrics.cost = response_metadata.get("cost", 0.0)
+                outside_view_metrics.duration_seconds = duration
 
         if self.artifact_store:
-            self.artifact_store.save_step1_prompt(step1_prompt)
-            for i, output in enumerate(step1_outputs):
+            self.artifact_store.save_outside_view_prompt(outside_view_prompt)
+            for i, output in enumerate(outside_view_outputs):
                 if not isinstance(output, Exception) and not output.startswith("Error:"):
-                    self.artifact_store.save_agent_step1(i + 1, output)
+                    self.artifact_store.save_forecaster_outside_view(i + 1, output)
 
         step3_end_cost = snapshot_cost("step3_outside_view", step2_end_cost)
 
@@ -297,60 +301,62 @@ class BaseForecaster(ForecasterMixin, ABC):
         context_map = {}
         for i in range(5):
             source_idx, label = CROSS_POLLINATION_MAP[i]
-            if isinstance(step1_outputs[source_idx], Exception):
+            if isinstance(outside_view_outputs[source_idx], Exception):
                 logger.warning(
-                    f"Cross-pollination source agent {source_idx + 1} failed; "
-                    f"agent {i + 1} will receive empty context"
+                    f"Cross-pollination source forecaster {source_idx + 1} failed; "
+                    f"forecaster {i + 1} will receive empty context"
                 )
                 source_output = ""
             else:
-                source_output = step1_outputs[source_idx]
+                source_output = outside_view_outputs[source_idx]
             context_map[i] = f"Current context: {current_context}\n{label}: {source_output}"
 
         # =========================================================================
-        # STEP 5: Run 5 agents on Step 2 (inside view)
+        # STEP 5: Run 5 forecasters on inside view prediction
         # =========================================================================
-        log("\n=== Step 5: Running Step 2 (inside view) ===")
+        log("\n=== Step 5: Running inside view prediction ===")
 
-        step2_tasks = []
-        step2_timings = []
+        inside_view_tasks = []
+        inside_view_timings = []
         for i, agent in enumerate(agents):
             model = agent["model"]
             system_prompt = CLAUDE_CONTEXT if "claude" in model.lower() else GPT_CONTEXT
 
-            step2_prompt = self._format_step2_prompt(
-                prompt_step2, context_map[i], **question_params
+            inside_view_prompt = self._format_inside_view_prompt(
+                prompt_inside_view, context_map[i], **question_params
             )
 
-            # Record start time for this agent
+            # Record start time for this forecaster
             start_time = time.time()
-            step2_timings.append(start_time)
+            inside_view_timings.append(start_time)
 
-            step2_tasks.append(
-                self._call_model_with_metadata(model, step2_prompt, system_prompt=system_prompt)
+            inside_view_tasks.append(
+                self._call_model_with_metadata(
+                    model, inside_view_prompt, system_prompt=system_prompt
+                )
             )
 
-        step2_results = await asyncio.gather(*step2_tasks, return_exceptions=True)
-        step2_outputs = []
+        inside_view_results = await asyncio.gather(*inside_view_tasks, return_exceptions=True)
+        inside_view_outputs = []
 
-        for i, result in enumerate(step2_results):
+        for i, result in enumerate(inside_view_results):
             agent_id = f"forecaster_{i + 1}"
-            duration = time.time() - step2_timings[i]
-            step2_metrics = metrics.agents[agent_id].step2
+            duration = time.time() - inside_view_timings[i]
+            inside_view_metrics = metrics.agents[agent_id].step2
 
             if isinstance(result, Exception):
-                step2_outputs.append(result)
-                step2_metrics.error = str(result)
-                step2_metrics.duration_seconds = duration
+                inside_view_outputs.append(result)
+                inside_view_metrics.error = str(result)
+                inside_view_metrics.duration_seconds = duration
             else:
                 output, response_metadata = result
-                step2_outputs.append(output)
+                inside_view_outputs.append(output)
 
                 # Track LLM metrics
-                step2_metrics.token_input = response_metadata.get("input_tokens", 0)
-                step2_metrics.token_output = response_metadata.get("output_tokens", 0)
-                step2_metrics.cost = response_metadata.get("cost", 0.0)
-                step2_metrics.duration_seconds = duration
+                inside_view_metrics.token_input = response_metadata.get("input_tokens", 0)
+                inside_view_metrics.token_output = response_metadata.get("output_tokens", 0)
+                inside_view_metrics.cost = response_metadata.get("cost", 0.0)
+                inside_view_metrics.duration_seconds = duration
 
         snapshot_cost("step5_inside_view", step3_end_cost)
 
@@ -361,13 +367,13 @@ class BaseForecaster(ForecasterMixin, ABC):
 
         agent_results = []
 
-        for i, (agent, output) in enumerate(zip(agents, step2_outputs, strict=True)):
+        for i, (agent, output) in enumerate(zip(agents, inside_view_outputs, strict=True)):
             if isinstance(output, Exception):
-                log(f"\nForecaster_{i + 1} step 2 ERROR: {output}")
+                log(f"\nForecaster_{i + 1} inside view ERROR: {output}")
                 prediction = None
                 error = str(output)
             else:
-                log(f"\nForecaster_{i + 1} step 2 output:\n{output[:300]}...")
+                log(f"\nForecaster_{i + 1} inside view output:\n{output[:300]}...")
                 try:
                     prediction = self._extract_prediction(output, **question_params)
                     log(f"Forecaster_{i + 1} prediction: {prediction}")
@@ -381,21 +387,25 @@ class BaseForecaster(ForecasterMixin, ABC):
                 agent_id=f"forecaster_{i + 1}",
                 model=agent["model"],
                 weight=agent["weight"],
-                step1_output=step1_outputs[i]
-                if not isinstance(step1_outputs[i], Exception)
+                outside_view_output=outside_view_outputs[i]
+                if not isinstance(outside_view_outputs[i], Exception)
                 else "",
-                step2_output=output if not isinstance(output, Exception) else "",
+                inside_view_output=output if not isinstance(output, Exception) else "",
                 prediction=prediction,
                 error=error,
             )
             agent_results.append(agent_result)
 
-        # Save step 2 artifacts
+        # Save inside view artifacts
         if self.artifact_store:
             for i, result in enumerate(agent_results):
-                if result.step2_output:
-                    self.artifact_store.save_agent_step2(i + 1, result.step2_output)
-                self.artifact_store.save_agent_extracted(i + 1, self._get_extracted_data(result))
+                if result.inside_view_output:
+                    self.artifact_store.save_forecaster_inside_view(
+                        i + 1, result.inside_view_output
+                    )
+                self.artifact_store.save_forecaster_prediction(
+                    i + 1, self._get_extracted_data(result)
+                )
 
         # Aggregate results
         final_prediction = self._aggregate_results(agent_results, agents, log)
@@ -489,7 +499,7 @@ class BaseForecaster(ForecasterMixin, ABC):
         Return the 4 prompt templates for this question type.
 
         Returns:
-            Tuple of (prompt_historical, prompt_current, prompt_step1, prompt_step2)
+            Tuple of (prompt_historical, prompt_current, prompt_outside_view, prompt_inside_view)
         """
         pass
 
@@ -507,17 +517,17 @@ class BaseForecaster(ForecasterMixin, ABC):
         pass
 
     @abstractmethod
-    def _format_step1_prompt(
+    def _format_outside_view_prompt(
         self,
         prompt_template: str,
         historical_context: str,
         **question_params,
     ) -> str:
         """
-        Format the Step 1 (outside view) prompt.
+        Format the outside view prompt.
 
         Args:
-            prompt_template: The step 1 prompt template
+            prompt_template: The outside view prompt template
             historical_context: Search results for historical context
             **question_params: Question-specific parameters
 
@@ -527,18 +537,18 @@ class BaseForecaster(ForecasterMixin, ABC):
         pass
 
     @abstractmethod
-    def _format_step2_prompt(
+    def _format_inside_view_prompt(
         self,
         prompt_template: str,
         context: str,
         **question_params,
     ) -> str:
         """
-        Format the Step 2 (inside view) prompt for a single agent.
+        Format the inside view prompt for a single forecaster.
 
         Args:
-            prompt_template: The step 2 prompt template
-            context: Cross-pollinated context (current context + step 1 output)
+            prompt_template: The inside view prompt template
+            context: Cross-pollinated context (current context + outside view output)
             **question_params: Question-specific parameters
 
         Returns:
@@ -592,8 +602,8 @@ class BaseForecaster(ForecasterMixin, ABC):
         agent_id: str,
         model: str,
         weight: float,
-        step1_output: str,
-        step2_output: str,
+        outside_view_output: str,
+        inside_view_output: str,
         prediction: Any,
         error: str | None,
     ) -> AgentResult:
@@ -601,11 +611,11 @@ class BaseForecaster(ForecasterMixin, ABC):
         Build an AgentResult with type-specific prediction field.
 
         Args:
-            agent_id: Agent identifier
+            agent_id: Forecaster identifier
             model: Model name
-            weight: Agent weight
-            step1_output: Step 1 output
-            step2_output: Step 2 output
+            weight: Forecaster weight
+            outside_view_output: Outside view output
+            inside_view_output: Inside view output
             prediction: Extracted prediction (type-specific)
             error: Error message if extraction failed
 

@@ -24,8 +24,8 @@ from .extractors import (
     normalize_probabilities,
 )
 from .prompts import (
-    MULTIPLE_CHOICE_PROMPT_1,
-    MULTIPLE_CHOICE_PROMPT_2,
+    MULTIPLE_CHOICE_INSIDE_VIEW_PROMPT,
+    MULTIPLE_CHOICE_OUTSIDE_VIEW_PROMPT,
     MULTIPLE_CHOICE_PROMPT_CURRENT,
     MULTIPLE_CHOICE_PROMPT_HISTORICAL,
 )
@@ -61,8 +61,8 @@ class MultipleChoiceForecaster(BaseForecaster):
         return (
             MULTIPLE_CHOICE_PROMPT_HISTORICAL,
             MULTIPLE_CHOICE_PROMPT_CURRENT,
-            MULTIPLE_CHOICE_PROMPT_1,
-            MULTIPLE_CHOICE_PROMPT_2,
+            MULTIPLE_CHOICE_OUTSIDE_VIEW_PROMPT,
+            MULTIPLE_CHOICE_INSIDE_VIEW_PROMPT,
         )
 
     def _get_question_details(self, **question_params) -> QuestionDetails:
@@ -106,25 +106,25 @@ class MultipleChoiceForecaster(BaseForecaster):
         )
         return historical, current
 
-    def _format_step1_prompt(
+    def _format_outside_view_prompt(
         self,
         prompt_template: str,
         historical_context: str,
         **question_params,
     ) -> str:
-        """Format Step 1 prompt with options."""
+        """Format outside view prompt with options."""
         params = self._get_common_prompt_params(**question_params)
         params["context"] = historical_context
         params["options"] = str(question_params.get("options", []))
         return prompt_template.format(**params)
 
-    def _format_step2_prompt(
+    def _format_inside_view_prompt(
         self,
         prompt_template: str,
         context: str,
         **question_params,
     ) -> str:
-        """Format Step 2 prompt with cross-pollinated context and options."""
+        """Format inside view prompt with cross-pollinated context and options."""
         params = self._get_common_prompt_params(**question_params)
         params["context"] = context
         params["options"] = str(question_params.get("options", []))
@@ -182,8 +182,8 @@ class MultipleChoiceForecaster(BaseForecaster):
         agent_id: str,
         model: str,
         weight: float,
-        step1_output: str,
-        step2_output: str,
+        outside_view_output: str,
+        inside_view_output: str,
         prediction: Any,
         error: str | None,
     ) -> AgentResult:
@@ -192,8 +192,8 @@ class MultipleChoiceForecaster(BaseForecaster):
             agent_id=agent_id,
             model=model,
             weight=weight,
-            step1_output=step1_output,
-            step2_output=step2_output,
+            outside_view_output=outside_view_output,
+            inside_view_output=inside_view_output,
             probabilities=prediction if prediction is not None else [],
             error=error,
         )
@@ -323,7 +323,7 @@ async def get_multiple_choice_forecast(
     for agent_result in result.agent_results:
         comment_parts.append(
             f"=== {agent_result.agent_id} ({agent_result.model}) ===\n"
-            f"Output:\n{agent_result.step2_output[:500]}...\n"
+            f"Output:\n{agent_result.inside_view_output[:500]}...\n"
             f"Probabilities: {agent_result.probabilities}\n"
         )
 
