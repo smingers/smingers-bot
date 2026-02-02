@@ -165,7 +165,7 @@ class Forecaster:
                     artifacts=artifacts,
                 )
             else:
-                self._save_preview_prediction(question, forecast_result, artifacts)
+                self._save_without_submitting(question, forecast_result, artifacts)
 
             # Step 5: Save metadata and database records
             end_time = datetime.now(UTC)
@@ -390,16 +390,18 @@ class Forecaster:
             "options": result.options,
         }
 
-    def _save_preview_prediction(
+    def _save_without_submitting(
         self,
         question: MetaculusQuestion,
         forecast_result: dict,
         artifacts: ForecastArtifacts,
     ):
         """Save prediction artifact without submitting (test/preview mode)."""
+        mode_label = self.resolved_config.mode.upper()
+
         if question.question_type == "binary":
             pred = forecast_result["final_prediction"]
-            logger.info(f"PREVIEW: Would submit {pred:.1%}")
+            logger.info(f"{mode_label}: Would submit {pred:.1%}")
             self.artifact_store.save_prediction(
                 artifacts,
                 {
@@ -411,7 +413,7 @@ class Forecaster:
         elif question.question_type in ("numeric", "discrete", "date"):
             percentiles = forecast_result.get("final_percentiles", {})
             median = percentiles.get("50", percentiles.get(50, 0))
-            logger.info(f"PREVIEW: Would submit CDF (median: {median})")
+            logger.info(f"{mode_label}: Would submit CDF (median: {median})")
             self.artifact_store.save_prediction(
                 artifacts,
                 {
@@ -426,7 +428,7 @@ class Forecaster:
             if probs:
                 best = max(probs.items(), key=lambda x: x[1])
                 logger.info(
-                    f"PREVIEW: Would submit distribution (most likely: {best[0]} at {best[1]:.1%})"
+                    f"{mode_label}: Would submit distribution (most likely: {best[0]} at {best[1]:.1%})"
                 )
             self.artifact_store.save_prediction(
                 artifacts,
