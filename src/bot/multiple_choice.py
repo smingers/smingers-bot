@@ -8,7 +8,7 @@ Implements multiple choice-specific extraction and aggregation logic.
 import json
 import logging
 from datetime import datetime
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Callable, Dict, List, Optional, Tuple
 from dataclasses import dataclass, field
 
 import numpy as np
@@ -111,17 +111,10 @@ class MultipleChoiceForecaster(BaseForecaster):
         **question_params,
     ) -> str:
         """Format Step 1 prompt with options."""
-        options = question_params.get("options", [])
-        return prompt_template.format(
-            title=question_params.get("question_title", ""),
-            today=question_params.get("today", ""),
-            resolution_criteria=question_params.get("resolution_criteria", ""),
-            fine_print=question_params.get("fine_print", ""),
-            open_time=question_params.get("open_time", ""),
-            scheduled_resolve_time=question_params.get("scheduled_resolve_time", ""),
-            context=historical_context,
-            options=str(options),
-        )
+        params = self._get_common_prompt_params(**question_params)
+        params["context"] = historical_context
+        params["options"] = str(question_params.get("options", []))
+        return prompt_template.format(**params)
 
     def _format_step2_prompt(
         self,
@@ -130,17 +123,10 @@ class MultipleChoiceForecaster(BaseForecaster):
         **question_params,
     ) -> str:
         """Format Step 2 prompt with cross-pollinated context and options."""
-        options = question_params.get("options", [])
-        return prompt_template.format(
-            title=question_params.get("question_title", ""),
-            today=question_params.get("today", ""),
-            resolution_criteria=question_params.get("resolution_criteria", ""),
-            fine_print=question_params.get("fine_print", ""),
-            open_time=question_params.get("open_time", ""),
-            scheduled_resolve_time=question_params.get("scheduled_resolve_time", ""),
-            context=context,
-            options=str(options),
-        )
+        params = self._get_common_prompt_params(**question_params)
+        params["context"] = context
+        params["options"] = str(question_params.get("options", []))
+        return prompt_template.format(**params)
 
     def _extract_prediction(self, output: str, **question_params) -> List[float]:
         """Extract and normalize probabilities from agent output."""
@@ -153,7 +139,7 @@ class MultipleChoiceForecaster(BaseForecaster):
         self,
         agent_results: List[AgentResult],
         agents: List[Dict],
-        log: callable,
+        log: Callable[[str], Any],
     ) -> Dict[str, float]:
         """Compute weighted average of option probabilities."""
         options = []  # Will be populated from question_params in _build_result
@@ -272,7 +258,7 @@ class MultipleChoiceForecaster(BaseForecaster):
         options: List[str] = None,
         open_time: str = "",
         scheduled_resolve_time: str = "",
-        log: callable = print,
+        log: Callable[[str], Any] = print,
     ) -> MultipleChoiceForecastResult:
         """
         Generate a forecast for a multiple choice question.
@@ -310,7 +296,7 @@ async def get_multiple_choice_forecast(
     config: dict,
     llm_client: Optional[LLMClient] = None,
     artifact_store: Optional[ArtifactStore] = None,
-    log: callable = print,
+    log: Callable[[str], Any] = print,
 ) -> Tuple[Dict[str, float], str]:
     """
     Convenience function to get a multiple choice forecast.

@@ -17,7 +17,7 @@ import logging
 import time
 from abc import ABC, abstractmethod
 from datetime import datetime
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Callable, Dict, List, Optional, Tuple
 
 from ..utils.llm import LLMClient, get_cost_tracker
 from ..storage.artifact_store import ArtifactStore
@@ -95,9 +95,29 @@ class BaseForecaster(ForecasterMixin, ABC):
             self.llm = LLMClient(timeout_seconds=llm_timeout)
         self.artifact_store = artifact_store
 
+    def _get_common_prompt_params(self, **question_params) -> Dict[str, str]:
+        """
+        Extract common prompt parameters used across all question types.
+
+        These 6 parameters are used in every prompt template. Subclasses can
+        extend by adding type-specific params (e.g., options, units, bounds_info).
+
+        Returns:
+            Dict with title, today, resolution_criteria, fine_print,
+            open_time, and scheduled_resolve_time.
+        """
+        return {
+            "title": question_params.get("question_title", ""),
+            "today": question_params.get("today", ""),
+            "resolution_criteria": question_params.get("resolution_criteria", ""),
+            "fine_print": question_params.get("fine_print", ""),
+            "open_time": question_params.get("open_time", ""),
+            "scheduled_resolve_time": question_params.get("scheduled_resolve_time", ""),
+        }
+
     async def forecast(
         self,
-        log: callable = print,
+        log: Callable[[str], Any] = print,
         **question_params,
     ) -> Any:
         """
@@ -533,7 +553,7 @@ class BaseForecaster(ForecasterMixin, ABC):
         self,
         agent_results: List[AgentResult],
         agents: List[Dict],
-        log: callable,
+        log: Callable[[str], Any],
     ) -> Any:
         """
         Aggregate individual predictions into final result.

@@ -34,9 +34,9 @@ class TestGetAgents:
     """Tests for _get_agents() configuration hierarchy."""
 
     def test_get_agents_from_active_agents(self):
-        """_active_agents takes precedence over other sources."""
+        """active_agents takes precedence over other sources."""
         config = {
-            "_active_agents": [
+            "active_agents": [
                 {"name": "active_1", "model": "active-model", "weight": 2.0},
                 {"name": "active_2", "model": "active-model", "weight": 1.0},
             ],
@@ -56,9 +56,9 @@ class TestGetAgents:
         assert agents[0]["weight"] == 2.0
 
     def test_get_agents_from_ensemble(self):
-        """Falls back to ensemble.agents when _active_agents is empty."""
+        """Falls back to ensemble.agents when active_agents is empty."""
         config = {
-            "_active_agents": [],
+            "active_agents": [],
             "ensemble": {
                 "agents": [
                     {"name": "ensemble_1", "model": "ensemble-model", "weight": 1.5},
@@ -88,7 +88,7 @@ class TestGetAgents:
     def test_get_agents_limits_to_five(self):
         """Never returns more than 5 agents."""
         config = {
-            "_active_agents": [
+            "active_agents": [
                 {"name": f"agent_{i}", "model": "test", "weight": 1.0}
                 for i in range(10)  # 10 agents
             ]
@@ -100,7 +100,7 @@ class TestGetAgents:
         assert len(agents) == 5
 
     def test_get_agents_missing_key_uses_default(self):
-        """Missing _active_agents key falls back properly."""
+        """Missing active_agents key falls back properly."""
         config = {
             "ensemble": {}  # No agents key
         }
@@ -112,9 +112,9 @@ class TestGetAgents:
         assert len(agents) == 5
 
     def test_get_agents_none_active_agents_uses_ensemble(self):
-        """None value for _active_agents falls back to ensemble."""
+        """None value for active_agents falls back to ensemble."""
         config = {
-            "_active_agents": None,
+            "active_agents": None,
             "ensemble": {
                 "agents": [
                     {"name": "ensemble_1", "model": "test", "weight": 1.0},
@@ -137,9 +137,9 @@ class TestGetModel:
     """Tests for _resolve_model() configuration hierarchy."""
 
     def test_resolve_model_from_active_models(self):
-        """_active_models takes precedence."""
+        """active_models takes precedence."""
         config = {
-            "_active_models": {
+            "active_models": {
                 "query_generator": "active-query-model",
                 "summarizer": "active-summary-model",
             },
@@ -154,9 +154,9 @@ class TestGetModel:
         assert model == "active-query-model"
 
     def test_resolve_model_from_models(self):
-        """Falls back to models when _active_models doesn't have key."""
+        """Falls back to models when active_models doesn't have key."""
         config = {
-            "_active_models": {},
+            "active_models": {},
             "models": {
                 "query_generator": "config-query-model",
             }
@@ -179,7 +179,7 @@ class TestGetModel:
     def test_resolve_model_missing_key_uses_default(self):
         """Missing key in all configs uses default."""
         config = {
-            "_active_models": {
+            "active_models": {
                 "other_model": "some-model",
             },
             "models": {

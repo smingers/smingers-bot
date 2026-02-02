@@ -315,17 +315,17 @@ def sample_config():
 
 @pytest.fixture
 def sample_config_with_active():
-    """Config with _active_* keys already set (post mode application)."""
+    """Config with active_* keys already set (post mode application)."""
     return {
         "mode": "test",
-        "_active_models": {
+        "active_models": {
             "utility": "openrouter/anthropic/claude-3-5-haiku-latest",
             "summarization": "openrouter/anthropic/claude-3-5-haiku-latest",
         },
-        "_active_agents": [
+        "active_agents": [
             {"name": "forecaster_1", "model": "openrouter/anthropic/claude-3-5-haiku-latest", "weight": 1.0},
         ],
-        "_should_submit": False,
+        "should_submit": False,
     }
 
 

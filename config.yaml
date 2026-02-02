@@ -171,3 +171,7 @@ llm:
   # Most calls complete in <2 min; this catches hung requests from OpenRouter/providers
   # If a call times out, the agent is skipped and remaining agents are aggregated
   timeout_seconds: 240  # 4 minutes
+
+  # Maximum output tokens for LLM responses
+  # Higher values allow longer responses but increase cost
+  max_output_tokens: 4000

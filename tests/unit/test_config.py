@@ -109,14 +109,14 @@ class TestResolvedConfigFromDict:
 class TestResolvedConfigToDict:
     """Tests for ResolvedConfig.to_dict() backward compatibility."""
 
-    def test_to_dict_creates_private_keys(self, sample_config):
-        """Test that to_dict() creates private _active_* keys."""
+    def test_to_dict_creates_resolved_keys(self, sample_config):
+        """Test that to_dict() creates resolved active_* keys."""
         resolved = ResolvedConfig.from_dict(sample_config, mode="test")
         result = resolved.to_dict()
 
-        assert "_active_models" in result
-        assert "_active_agents" in result
-        assert "_should_submit" in result
+        assert "active_models" in result
+        assert "active_agents" in result
+        assert "should_submit" in result
 
     def test_to_dict_preserves_original_keys(self, sample_config):
         """Test that to_dict() preserves original config keys."""
@@ -137,16 +137,16 @@ class TestResolvedConfigToDict:
 
         # mode should be the CLI override, not the config default
         assert result["mode"] == "live"
-        assert result["_should_submit"] is True
+        assert result["should_submit"] is True
 
     def test_to_dict_values_match_attributes(self, sample_config):
         """Test that to_dict() values match the resolved attributes."""
         resolved = ResolvedConfig.from_dict(sample_config, mode="live")
         result = resolved.to_dict()
 
-        assert result["_active_models"] == resolved.active_models
-        assert result["_active_agents"] == resolved.active_agents
-        assert result["_should_submit"] == resolved.should_submit
+        assert result["active_models"] == resolved.active_models
+        assert result["active_agents"] == resolved.active_agents
+        assert result["should_submit"] == resolved.should_submit
         assert result["mode"] == resolved.mode
 
 
@@ -281,9 +281,9 @@ class TestResolvedConfigImmutability:
 
         _ = ResolvedConfig.from_dict(sample_config, mode="test")
 
-        # Original config should not have _active_* keys
+        # Original config should not have active_* keys (those are only in to_dict() output)
         assert set(sample_config.keys()) == original_keys
-        assert "_active_models" not in sample_config
+        assert "active_models" not in sample_config
 
     def test_to_dict_returns_copy(self, sample_config):
         """Test that to_dict() returns a copy, not the original."""

@@ -245,27 +245,23 @@ data/41594_20260126_230107/
 │   ├── query_current.md                # Generated current queries
 │   ├── historical_search.json          # Search results (Google/AskNews)
 │   └── current_search.json             # Search results (Google/AskNews)
-├── 04_inside_view/
-│   ├── step1_shared/
-│   │   └── prompt.md                   # Shared outside view prompt
-│   ├── forecaster_1_step1/
-│   │   └── response.md                 # Agent 1 outside view response
-│   ├── forecaster_1_step2/
-│   │   └── response.md                 # Agent 1 inside view response
-│   ├── forecaster_1/
-│   │   └── extracted.json              # Extracted: {probability: 0.52}
-│   ├── forecaster_2_step1/response.md
-│   ├── forecaster_2_step2/response.md
-│   ├── forecaster_2/extracted.json
-│   ├── forecaster_3_step1/response.md
-│   ├── forecaster_3_step2/response.md
-│   ├── forecaster_3/extracted.json
-│   ├── forecaster_4_step1/response.md
-│   ├── forecaster_4_step2/response.md
-│   ├── forecaster_4/extracted.json
-│   ├── forecaster_5_step1/response.md
-│   ├── forecaster_5_step2/response.md
-│   ├── forecaster_5/extracted.json
+├── ensemble/
+│   ├── step1_prompt.md                 # Shared outside view prompt
+│   ├── agent_1_step1.md                # Agent 1 outside view response
+│   ├── agent_1_step2.md                # Agent 1 inside view response
+│   ├── agent_1.json                    # Extracted: {probability: 0.52}
+│   ├── agent_2_step1.md
+│   ├── agent_2_step2.md
+│   ├── agent_2.json
+│   ├── agent_3_step1.md
+│   ├── agent_3_step2.md
+│   ├── agent_3.json
+│   ├── agent_4_step1.md
+│   ├── agent_4_step2.md
+│   ├── agent_4.json
+│   ├── agent_5_step1.md
+│   ├── agent_5_step2.md
+│   ├── agent_5.json
 │   └── aggregation.json                # Final: {final_probability: 0.545}
 ├── 06_submission/
 │   ├── final_prediction.json           # Submitted prediction
@@ -381,8 +377,9 @@ response = await client.generate(prompt, model="openrouter/anthropic/claude-sonn
 Use `ArtifactStore` to save intermediate outputs:
 ```python
 store = ArtifactStore(base_dir)
-store.save_text("02_research/query_historical.md", queries)
-store.save_json("04_inside_view/aggregation.json", results)
+artifacts = store.create_forecast_artifacts(question_id)
+store.save_query_generation(artifacts, "historical", prompt, output)
+store.save_aggregation(artifacts, aggregation_data)
 ```
 
 ## Legacy Code

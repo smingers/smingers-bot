@@ -7,7 +7,7 @@ Implements numeric-specific extraction (percentiles → CDF) and aggregation log
 
 import logging
 from datetime import datetime
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Callable, Dict, List, Optional, Tuple
 from dataclasses import dataclass, field
 
 import numpy as np
@@ -170,20 +170,14 @@ class NumericForecaster(BaseForecaster):
         **question_params,
     ) -> str:
         """Format Step 1 prompt with numeric-specific parameters."""
+        params = self._get_common_prompt_params(**question_params)
         bound_msgs = self._build_bound_messages(**question_params)
         # Support both old 'unit' key and new 'unit_of_measure' key
         unit = question_params.get("unit_of_measure") or question_params.get("unit", "(unknown)")
-        return prompt_template.format(
-            title=question_params.get("question_title", ""),
-            today=question_params.get("today", ""),
-            resolution_criteria=question_params.get("resolution_criteria", ""),
-            fine_print=question_params.get("fine_print", ""),
-            open_time=question_params.get("open_time", ""),
-            scheduled_resolve_time=question_params.get("scheduled_resolve_time", ""),
-            context=historical_context,
-            units=unit,
-            bounds_info=bound_msgs["bounds_info"],
-        )
+        params["context"] = historical_context
+        params["units"] = unit
+        params["bounds_info"] = bound_msgs["bounds_info"]
+        return prompt_template.format(**params)
 
     def _format_step2_prompt(
         self,
@@ -192,20 +186,14 @@ class NumericForecaster(BaseForecaster):
         **question_params,
     ) -> str:
         """Format Step 2 prompt with cross-pollinated context."""
+        params = self._get_common_prompt_params(**question_params)
         bound_msgs = self._build_bound_messages(**question_params)
         # Support both old 'unit' key and new 'unit_of_measure' key
         unit = question_params.get("unit_of_measure") or question_params.get("unit", "(unknown)")
-        return prompt_template.format(
-            title=question_params.get("question_title", ""),
-            today=question_params.get("today", ""),
-            resolution_criteria=question_params.get("resolution_criteria", ""),
-            fine_print=question_params.get("fine_print", ""),
-            open_time=question_params.get("open_time", ""),
-            scheduled_resolve_time=question_params.get("scheduled_resolve_time", ""),
-            context=context,
-            units=unit,
-            bounds_info=bound_msgs["bounds_info"],
-        )
+        params["context"] = context
+        params["units"] = unit
+        params["bounds_info"] = bound_msgs["bounds_info"]
+        return prompt_template.format(**params)
 
     def _extract_prediction(self, output: str, **question_params) -> Dict[str, Any]:
         """
@@ -243,7 +231,7 @@ class NumericForecaster(BaseForecaster):
         self,
         agent_results: List[AgentResult],
         agents: List[Dict],
-        log: callable,
+        log: Callable[[str], Any],
     ) -> List[float]:
         """Compute weighted average of CDFs."""
         expected_cdf_size = self._cdf_size
@@ -361,7 +349,7 @@ class NumericForecaster(BaseForecaster):
         scheduled_resolve_time: str = "",
         cdf_size: int = 201,
         is_date_question: bool = False,
-        log: callable = print,
+        log: Callable[[str], Any] = print,
     ) -> NumericForecastResult:
         """
         Generate a forecast for a numeric question.
@@ -417,7 +405,7 @@ async def get_numeric_forecast(
     config: dict,
     llm_client: Optional[LLMClient] = None,
     artifact_store: Optional[ArtifactStore] = None,
-    log: callable = print,
+    log: Callable[[str], Any] = print,
 ) -> Tuple[List[float], str]:
     """
     Convenience function to get a numeric forecast.
