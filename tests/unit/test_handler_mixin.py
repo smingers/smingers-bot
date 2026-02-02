@@ -3,7 +3,7 @@ Tests for ForecasterMixin shared functionality.
 
 Tests cover:
 - _get_agents() config hierarchy
-- _get_model() config hierarchy
+- _resolve_model() config hierarchy
 - _call_model() basic behavior
 """
 
@@ -130,13 +130,13 @@ class TestGetAgents:
 
 
 # ============================================================================
-# _get_model Tests
+# _resolve_model Tests
 # ============================================================================
 
 class TestGetModel:
-    """Tests for _get_model() configuration hierarchy."""
+    """Tests for _resolve_model() configuration hierarchy."""
 
-    def test_get_model_from_active_models(self):
+    def test_resolve_model_from_active_models(self):
         """_active_models takes precedence."""
         config = {
             "_active_models": {
@@ -149,11 +149,11 @@ class TestGetModel:
         }
         mixin = TestableForecasterMixin(config)
 
-        model = mixin._get_model("query_generator", "default-model")
+        model = mixin._resolve_model("query_generator", "default-model")
 
         assert model == "active-query-model"
 
-    def test_get_model_from_models(self):
+    def test_resolve_model_from_models(self):
         """Falls back to models when _active_models doesn't have key."""
         config = {
             "_active_models": {},
@@ -163,20 +163,20 @@ class TestGetModel:
         }
         mixin = TestableForecasterMixin(config)
 
-        model = mixin._get_model("query_generator", "default-model")
+        model = mixin._resolve_model("query_generator", "default-model")
 
         assert model == "config-query-model"
 
-    def test_get_model_default_fallback(self):
+    def test_resolve_model_default_fallback(self):
         """Falls back to default when no config available."""
         config = {}
         mixin = TestableForecasterMixin(config)
 
-        model = mixin._get_model("query_generator", "my-default-model")
+        model = mixin._resolve_model("query_generator", "my-default-model")
 
         assert model == "my-default-model"
 
-    def test_get_model_missing_key_uses_default(self):
+    def test_resolve_model_missing_key_uses_default(self):
         """Missing key in all configs uses default."""
         config = {
             "_active_models": {
@@ -188,7 +188,7 @@ class TestGetModel:
         }
         mixin = TestableForecasterMixin(config)
 
-        model = mixin._get_model("query_generator", "fallback-model")
+        model = mixin._resolve_model("query_generator", "fallback-model")
 
         assert model == "fallback-model"
 

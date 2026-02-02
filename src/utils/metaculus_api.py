@@ -24,9 +24,45 @@ METACULUS_API_BASE = "https://www.metaculus.com/api"
 
 @dataclass
 class MetaculusQuestion:
-    """Parsed Metaculus question data."""
-    id: int  # Post ID (used in URLs)
-    question_id: int  # Question ID (used for forecasting API)
+    """
+    Parsed Metaculus question data.
+
+    IMPORTANT: This class has two ID fields with distinct purposes:
+    - id: The POST ID (appears in URLs like /questions/12345/)
+    - question_id: The QUESTION ID (used in forecasting API calls)
+
+    When they differ: These IDs are usually identical for standalone questions.
+    They differ for grouped questions (e.g., conditional pairs, question groups)
+    where multiple questions share a single post page. In these cases, the post
+    ID identifies the page while each sub-question has its own question_id.
+    Always use question_id for API calls to submit predictions.
+
+    Attributes:
+        id: Post ID (used in URLs, for display/navigation)
+        question_id: Question ID (used for forecasting API calls)
+        title: Question title
+        description: Question background/context
+        resolution_criteria: How the question will be resolved
+        fine_print: Additional resolution details and edge cases
+        background_info: Additional background information
+        question_type: One of "binary", "numeric", "discrete", "multiple_choice", "date"
+        created_at: ISO timestamp when question was created
+        open_time: When question opened for forecasting (ISO timestamp)
+        scheduled_close_time: When forecasting closes (ISO timestamp)
+        scheduled_resolve_time: When question resolves (ISO timestamp)
+        status: Question status (open, closed, resolved, etc.)
+
+    Type-specific fields (only populated for relevant question types):
+        possibilities: For numeric questions - min, max, scale info
+        options: For multiple choice - list of option dicts
+        unit_of_measure: Units for numeric questions (e.g., "USD", "people")
+        upper_bound/lower_bound: Hard bounds for numeric questions
+        open_upper_bound/open_lower_bound: Whether bounds can be exceeded
+        zero_point: Reference point for log-scale questions
+        cdf_size: Number of CDF points (201 for numeric, 102 for discrete)
+    """
+    id: int
+    question_id: int
     title: str
     description: str  # Question background/context
     resolution_criteria: str

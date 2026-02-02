@@ -108,7 +108,7 @@ class BinaryForecaster(BaseForecaster):
         self,
         agent_results: List[AgentResult],
         agents: List[Dict],
-        write: callable,
+        log: callable,
     ) -> float:
         """Compute weighted average of probabilities."""
         probabilities = [r.probability for r in agent_results]
@@ -121,7 +121,7 @@ class BinaryForecaster(BaseForecaster):
                 f"Probabilities: {probabilities}, Errors: {[r.error for r in agent_results]}"
             )
             logger.error(error_msg)
-            write(f"FATAL ERROR: {error_msg}")
+            log(f"FATAL ERROR: {error_msg}")
             raise InsufficientPredictionsError(
                 error_msg, valid_count=0, total_count=len(agents)
             )
@@ -132,9 +132,9 @@ class BinaryForecaster(BaseForecaster):
         # Normalize to [0.001, 0.999]
         final_prob = max(0.001, min(0.999, final_prob_pct / 100))
 
-        write(f"\nProbabilities: {probabilities}")
-        write(f"Weights: {weights}")
-        write(f"Final probability: {final_prob:.3f} ({final_prob*100:.1f}%)")
+        log(f"\nProbabilities: {probabilities}")
+        log(f"Weights: {weights}")
+        log(f"Final probability: {final_prob:.3f} ({final_prob*100:.1f}%)")
 
         return final_prob
 
@@ -209,7 +209,7 @@ class BinaryForecaster(BaseForecaster):
         fine_print: str = "",
         open_time: str = "",
         scheduled_resolve_time: str = "",
-        write: callable = print,
+        log: callable = print,
     ) -> BinaryForecastResult:
         """
         Generate a forecast for a binary question.
@@ -222,13 +222,13 @@ class BinaryForecaster(BaseForecaster):
             fine_print: Additional resolution details
             open_time: When the question opened for forecasting
             scheduled_resolve_time: When the question resolves
-            write: Logging function (default: print)
+            log: Logging function (default: print)
 
         Returns:
             BinaryForecastResult with final probability and all agent outputs
         """
         return await super().forecast(
-            write=write,
+            log=log,
             question_title=question_title,
             question_text=question_text,
             background_info=background_info,
@@ -245,7 +245,7 @@ async def get_binary_forecast(
     config: dict,
     llm_client: Optional[LLMClient] = None,
     artifact_store: Optional[ArtifactStore] = None,
-    write: callable = print,
+    log: callable = print,
 ) -> Tuple[float, str]:
     """
     Convenience function to get a binary forecast.
@@ -255,7 +255,7 @@ async def get_binary_forecast(
         config: Configuration dict
         llm_client: Optional LLMClient
         artifact_store: Optional ArtifactStore
-        write: Logging function
+        log: Logging function
 
     Returns:
         Tuple of (final_probability, formatted_outputs)
@@ -267,7 +267,7 @@ async def get_binary_forecast(
         question_text=question_details.get("description", ""),
         resolution_criteria=question_details.get("resolution_criteria", ""),
         fine_print=question_details.get("fine_print", ""),
-        write=write,
+        log=log,
     )
 
     # Format outputs for display

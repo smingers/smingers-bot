@@ -36,9 +36,21 @@ class ResolvedConfig:
     - Which ensemble agents to use
     - Whether to submit predictions
 
+    Access Patterns:
+        Use ATTRIBUTE access for resolved values:
+            config.mode          # "test", "preview", or "live"
+            config.active_models # Models for utility tasks
+            config.active_agents # Ensemble agent configurations
+            config.should_submit # Whether to submit to Metaculus
+
+        Use DICT-LIKE access for raw config values:
+            config.get("research")      # Research settings
+            config["submission"]        # Submission settings
+            "research" in config        # Check if key exists
+
     Attributes:
         raw: The complete raw configuration dictionary
-        mode: The resolved run mode
+        mode: The resolved run mode ("test", "preview", or "live")
         active_models: Dictionary of models for utility tasks (query generation, etc.)
         active_agents: List of agent configurations for the ensemble
         should_submit: Whether to submit predictions to Metaculus

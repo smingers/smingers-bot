@@ -56,7 +56,7 @@ class ConcreteForecaster(BaseForecaster):
     def _extract_prediction(self, output, **params):
         return 50.0  # Always return 50%
 
-    def _aggregate_results(self, results, agents, write):
+    def _aggregate_results(self, results, agents, log):
         valid = [r for r in results if r.probability is not None]
         if not valid:
             raise RuntimeError("No valid predictions")
@@ -431,7 +431,7 @@ class TestForecastPipeline:
     def mock_search_pipeline(self):
         """Create a properly mocked SearchPipeline async context manager."""
         mock_search = MagicMock()
-        mock_search.process_search_queries = AsyncMock(
+        mock_search.execute_searches_from_response = AsyncMock(
             return_value=("Mocked search context", {"tools_used": ["google"]})
         )
         return mock_search
@@ -461,7 +461,7 @@ class TestForecastPipeline:
 
             forecaster = ConcreteForecaster(config, llm_client=mock_llm, artifact_store=mock_artifact_store)
             result = await forecaster.forecast(
-                write=MagicMock(),
+                log=MagicMock(),
                 question_title="Test Question?",
                 question_text="Background info",
                 resolution_criteria="Resolves YES if X",
@@ -491,7 +491,7 @@ class TestForecastPipeline:
 
             forecaster = ConcreteForecaster(config, llm_client=mock_llm, artifact_store=mock_artifact_store)
             await forecaster.forecast(
-                write=MagicMock(),
+                log=MagicMock(),
                 question_title="Test?",
                 question_text="Background",
                 resolution_criteria="Criteria",
@@ -521,7 +521,7 @@ class TestForecastPipeline:
 
             forecaster = ConcreteForecaster(config, llm_client=mock_llm, artifact_store=mock_artifact_store)
             await forecaster.forecast(
-                write=MagicMock(),
+                log=MagicMock(),
                 question_title="Test?",
                 question_text="Background",
                 resolution_criteria="Criteria",
@@ -531,7 +531,7 @@ class TestForecastPipeline:
             )
 
             # Search should be called twice (historical + current)
-            assert mock_search_pipeline.process_search_queries.call_count == 2
+            assert mock_search_pipeline.execute_searches_from_response.call_count == 2
 
     @pytest.mark.asyncio
     async def test_pipeline_handles_step1_agent_errors(self, config, mock_search_pipeline, mock_artifact_store):
@@ -572,7 +572,7 @@ class TestForecastPipeline:
 
             forecaster = ConcreteForecaster(config, llm_client=mock_llm, artifact_store=mock_artifact_store)
             result = await forecaster.forecast(
-                write=MagicMock(),
+                log=MagicMock(),
                 question_title="Test?",
                 question_text="Background",
                 resolution_criteria="Criteria",
@@ -604,7 +604,7 @@ class TestForecastPipeline:
 
             forecaster = ConcreteForecaster(config, llm_client=mock_llm, artifact_store=mock_store)
             await forecaster.forecast(
-                write=MagicMock(),
+                log=MagicMock(),
                 question_title="Test?",
                 question_text="Background",
                 resolution_criteria="Criteria",
@@ -656,7 +656,7 @@ class TestForecastPipeline:
 
             forecaster = ConcreteForecaster(config, llm_client=mock_llm, artifact_store=mock_artifact_store)
             await forecaster.forecast(
-                write=mock_write,
+                log=mock_write,
                 question_title="Test?",
                 question_text="Background",
                 resolution_criteria="Criteria",
@@ -703,7 +703,7 @@ class TestForecastPipeline:
 
             forecaster = ConcreteForecaster(config, llm_client=mock_llm, artifact_store=mock_artifact_store)
             await forecaster.forecast(
-                write=MagicMock(),
+                log=MagicMock(),
                 question_title="Test?",
                 question_text="Background",
                 resolution_criteria="Criteria",
