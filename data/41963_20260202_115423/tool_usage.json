@@ -1,0 +1,196 @@
+{
+  "centralized_research": {
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Keir Starmer leadership challenge 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Starmer resignation rumours February 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Retrieve past Metaculus political leadership \u201ccease to be\u201d questions; chart community-prediction change during final two weeks before resolution or checkpoint; highlight typical magnitude and catalysts of moves. Also summarise any major UK political events from 1 Jan\u20132 Feb 2026 that affected Starmer\u2019s standing.",
+          "tool": "Agent",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google News",
+        "Google"
+      ],
+      "llm_cost": 0.415,
+      "llm_cost_summarization": 0.1913,
+      "llm_cost_agentic": 0.2237,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "Keir Starmer leadership challenge 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Labour Party polling January 2026 UK",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Recent articles about potential leadership challenges to UK Prime Minister Keir Starmer and Labour Party polling trends since December 2025",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 21
+        },
+        {
+          "query": "Will the community prediction be higher than 34.00% on 2026-02-15 for the Metaculus question \"Will Keir Starmer cease to be Prime Minister of the UK during 2026?\"?",
+          "tool": "AskNews",
+          "deep_research_query": "Recent articles about potential leadership challenges to UK Prime Minister Keir Starmer and Labour Party polling trends since December 2025"
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "AskNews",
+        "Google"
+      ],
+      "llm_cost": 0.2389,
+      "llm_cost_summarization": 0.1913,
+      "llm_cost_agentic": 0.0475,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6361,
+        "token_output": 2392,
+        "cost": 0.054963000000000005,
+        "duration_seconds": 79.37282109260559,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15643,
+        "token_output": 2956,
+        "cost": 0.09126899999999999,
+        "duration_seconds": 79.24949812889099,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6361,
+        "token_output": 2170,
+        "cost": 0.051633000000000005,
+        "duration_seconds": 79.37287950515747,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14790,
+        "token_output": 3052,
+        "cost": 0.09015000000000001,
+        "duration_seconds": 79.24946999549866,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5616,
+        "token_output": 3174,
+        "cost": 0.05426400000000001,
+        "duration_seconds": 79.37292432785034,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13753,
+        "token_output": 3021,
+        "cost": 0.06636175,
+        "duration_seconds": 79.24944019317627,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5616,
+        "token_output": 1859,
+        "cost": 0.026104000000000002,
+        "duration_seconds": 79.3729681968689,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13809,
+        "token_output": 1717,
+        "cost": 0.041354,
+        "duration_seconds": 79.24941158294678,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5616,
+        "token_output": 1780,
+        "cost": 0.025472,
+        "duration_seconds": 79.37300658226013,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13034,
+        "token_output": 2682,
+        "cost": 0.047524,
+        "duration_seconds": 79.24938321113586,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0168,
+    "step2_search": 0.415,
+    "step3_outside_view": 0.2124,
+    "step5_inside_view": 0.3367
+  },
+  "total_pipeline_cost": 0.981
+}
