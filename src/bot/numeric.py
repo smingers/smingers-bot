@@ -126,6 +126,15 @@ class NumericForecaster(BaseForecaster):
             "bounds_info": "\n".join(lines),
         }
 
+    @staticmethod
+    def _get_unit(**question_params) -> str:
+        """Extract unit of measure from question parameters.
+
+        Supports both the newer 'unit_of_measure' key (used by forecaster.py)
+        and the legacy 'unit' key for backward compatibility.
+        """
+        return question_params.get("unit_of_measure") or question_params.get("unit", "(unknown)")
+
     def _format_query_prompts(
         self,
         prompt_historical: str,
@@ -134,8 +143,7 @@ class NumericForecaster(BaseForecaster):
     ) -> Tuple[str, str]:
         """Format query prompts with numeric-specific parameters."""
         bound_msgs = self._build_bound_messages(**question_params)
-        # Support both old 'unit' key and new 'unit_of_measure' key
-        unit = question_params.get("unit_of_measure") or question_params.get("unit", "(unknown)")
+        unit = self._get_unit(**question_params)
         # Use background_info if available, fall back to question_text
         background = question_params.get("background_info", "") or question_params.get("question_text", "")
 
@@ -172,8 +180,7 @@ class NumericForecaster(BaseForecaster):
         """Format Step 1 prompt with numeric-specific parameters."""
         params = self._get_common_prompt_params(**question_params)
         bound_msgs = self._build_bound_messages(**question_params)
-        # Support both old 'unit' key and new 'unit_of_measure' key
-        unit = question_params.get("unit_of_measure") or question_params.get("unit", "(unknown)")
+        unit = self._get_unit(**question_params)
         params["context"] = historical_context
         params["units"] = unit
         params["bounds_info"] = bound_msgs["bounds_info"]
@@ -188,8 +195,7 @@ class NumericForecaster(BaseForecaster):
         """Format Step 2 prompt with cross-pollinated context."""
         params = self._get_common_prompt_params(**question_params)
         bound_msgs = self._build_bound_messages(**question_params)
-        # Support both old 'unit' key and new 'unit_of_measure' key
-        unit = question_params.get("unit_of_measure") or question_params.get("unit", "(unknown)")
+        unit = self._get_unit(**question_params)
         params["context"] = context
         params["units"] = unit
         params["bounds_info"] = bound_msgs["bounds_info"]
@@ -425,7 +431,7 @@ async def get_numeric_forecast(
         upper_bound=question_details.get("scaling", {}).get("range_max", 100),
         lower_bound=question_details.get("scaling", {}).get("range_min", 0),
         zero_point=question_details.get("scaling", {}).get("zero_point"),
-        unit=question_details.get("unit", "(unknown)"),
+        unit_of_measure=question_details.get("unit_of_measure") or question_details.get("unit", "(unknown)"),
         log=log,
     )
 

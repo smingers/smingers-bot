@@ -167,7 +167,7 @@ class Forecaster:
                     artifacts=artifacts,
                 )
             else:
-                self._log_dry_run(question, forecast_result, artifacts)
+                self._save_dry_run_prediction(question, forecast_result, artifacts)
 
             # Step 5: Save metadata and database records
             end_time = datetime.now(timezone.utc)
@@ -392,13 +392,13 @@ class Forecaster:
             "options": result.options,
         }
 
-    def _log_dry_run(
+    def _save_dry_run_prediction(
         self,
         question: MetaculusQuestion,
         forecast_result: dict,
         artifacts: ForecastArtifacts,
     ):
-        """Log dry run summary and save prediction artifact."""
+        """Save prediction artifact and log dry run summary."""
         if question.question_type == "binary":
             pred = forecast_result["final_prediction"]
             logger.info(f"DRY RUN: Would submit {pred:.1%}")

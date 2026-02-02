@@ -36,7 +36,7 @@ from dotenv import load_dotenv
 sys.path.insert(0, str(Path(__file__).parent))
 
 from src.bot.forecaster import Forecaster
-from src.bot import ExtractionError
+from src.bot import ExtractionError, SubmissionError
 from src.config import ResolvedConfig
 from src.runner import run_forecasts, format_prediction
 from src.utils.metaculus_api import MetaculusClient
@@ -148,6 +148,19 @@ async def forecast_question(
         print(f"\n{'!'*60}")
         print("To debug: Check the artifacts directory for the full LLM response.")
         print("The prompts may need adjustment for this question type.")
+        print(f"{'!'*60}")
+        sys.exit(1)
+
+    except SubmissionError as e:
+        print(f"\n{'!'*60}")
+        print("SUBMISSION ERROR - FORECAST GENERATED BUT NOT SUBMITTED")
+        print(f"{'!'*60}")
+        print(f"\nThe forecast was generated but could not be submitted to Metaculus.")
+        print(f"Error: {e}")
+        if e.status_code:
+            print(f"HTTP Status: {e.status_code}")
+        print(f"\n{'!'*60}")
+        print("Check your METACULUS_TOKEN and network connectivity.")
         print(f"{'!'*60}")
         sys.exit(1)
 

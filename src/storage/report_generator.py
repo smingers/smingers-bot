@@ -2,6 +2,11 @@
 Report Generator
 
 Generates human-readable markdown reports from forecast artifacts.
+Used for creating detailed reasoning reports for individual forecasts
+and summary reports across multiple forecasts (e.g., tournament reviews).
+
+Note: The dataclasses here (AgentResult, ForecastData) are display-oriented
+and differ from the pipeline's internal AgentResult in src/bot/extractors.py.
 """
 
 from datetime import datetime
@@ -11,46 +16,54 @@ from dataclasses import dataclass
 
 @dataclass
 class AgentResult:
-    """Result from a single ensemble agent."""
-    name: str
-    model: str
-    weight: float
-    prediction: float
-    reasoning: str
-    evidence_weights: Optional[dict] = None
+    """Result from a single ensemble agent for display purposes.
+
+    Note: This is distinct from src.bot.extractors.AgentResult which is
+    used internally by the forecasting pipeline.
+    """
+    name: str  # Agent identifier (e.g., "forecaster_1")
+    model: str  # Model name (e.g., "openrouter/anthropic/claude-sonnet-4.5")
+    weight: float  # Ensemble weight (default: 1.0 for all agents)
+    prediction: float  # Extracted prediction (probability for binary)
+    reasoning: str  # Full reasoning text from agent output
+    evidence_weights: Optional[dict] = None  # Categorized evidence (e.g., {"bullish": [...], "bearish": [...]})
 
 
 @dataclass
 class ForecastData:
-    """All data needed to generate a report."""
-    question_id: int
-    question_title: str
-    question_text: str
-    question_type: str
-    resolution_criteria: str
-    timestamp: str
+    """All data needed to generate a comprehensive forecast report.
 
-    # Research
-    research_sources_count: int
-    research_summary: str
+    Aggregates data from multiple pipeline stages for report generation.
+    """
+    # Question metadata
+    question_id: int  # Metaculus question ID
+    question_title: str  # Question title
+    question_text: str  # Full question description
+    question_type: str  # "binary", "numeric", or "multiple_choice"
+    resolution_criteria: str  # How the question resolves
+    timestamp: str  # When the forecast was made (ISO format)
 
-    # Outside view
-    base_rate: float
-    reference_classes: list[str]
-    outside_view_reasoning: str
+    # Research phase
+    research_sources_count: int  # Number of sources consulted
+    research_summary: str  # Aggregated research findings
 
-    # Inside view (ensemble)
-    agent_results: list[AgentResult]
-    aggregation_method: str
-    final_prediction: float
+    # Outside view (base rate analysis)
+    base_rate: float  # Historical base rate estimate
+    reference_classes: list[str]  # Reference classes considered
+    outside_view_reasoning: str  # Reasoning for base rate
+
+    # Inside view (ensemble predictions)
+    agent_results: list[AgentResult]  # Individual agent predictions
+    aggregation_method: str  # How predictions were combined (e.g., "weighted_average")
+    final_prediction: float  # Final submitted prediction
 
     # Calibration
-    calibration_checklist: dict
+    calibration_checklist: dict  # Calibration checks performed
 
-    # Costs
-    research_cost: float
-    llm_cost: float
-    total_cost: float
+    # Cost tracking
+    research_cost: float  # Research API costs
+    llm_cost: float  # LLM inference costs
+    total_cost: float  # Total forecast cost
 
 
 def generate_reasoning_report(data: ForecastData) -> str:
