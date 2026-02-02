@@ -1,0 +1,196 @@
+{
+  "centralized_research": {
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "fafo google trends past 12 months",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "fafo viral trend January 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide US daily Google Trends values for fafo last 90 days",
+          "tool": "Agent",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Google News",
+        "Agent"
+      ],
+      "llm_cost": 0.3142,
+      "llm_cost_summarization": 0.1576,
+      "llm_cost_agentic": 0.1566,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "fafo tiktok trend February 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "fafo meme February 2026 news",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Are there upcoming song releases, viral social-media campaigns, or scheduled events in the United States that feature the word \u201cfafo\u201d between Feb 2 and Feb 15 2026?",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 19
+        },
+        {
+          "query": "Will the interest in \u201cfafo\u201d change between 2026-02-02 and 2026-02-15 according to Google Trends?",
+          "tool": "AskNews",
+          "deep_research_query": "Are there upcoming song releases, viral social-media campaigns, or scheduled events in the United States that feature the word \u201cfafo\u201d between Feb 2 and Feb 15 2026?"
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Google News",
+        "AskNews"
+      ],
+      "llm_cost": 0.1626,
+      "llm_cost_summarization": 0.1576,
+      "llm_cost_agentic": 0.005,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6165,
+        "token_output": 1999,
+        "cost": 0.048479999999999995,
+        "duration_seconds": 53.536468267440796,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14424,
+        "token_output": 2493,
+        "cost": 0.08066699999999999,
+        "duration_seconds": 59.67828559875488,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6165,
+        "token_output": 2237,
+        "cost": 0.05205,
+        "duration_seconds": 53.53651976585388,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13454,
+        "token_output": 2153,
+        "cost": 0.072657,
+        "duration_seconds": 59.67825245857239,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5363,
+        "token_output": 2452,
+        "cost": 0.04371325,
+        "duration_seconds": 53.536559104919434,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12991,
+        "token_output": 2229,
+        "cost": 0.05394025,
+        "duration_seconds": 59.67822289466858,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5363,
+        "token_output": 1453,
+        "cost": 0.022350000000000002,
+        "duration_seconds": 53.53659534454346,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12796,
+        "token_output": 1651,
+        "cost": 0.0388,
+        "duration_seconds": 59.678194761276245,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5363,
+        "token_output": 1516,
+        "cost": 0.022854,
+        "duration_seconds": 53.53662586212158,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11967,
+        "token_output": 1420,
+        "cost": 0.035294,
+        "duration_seconds": 59.67816734313965,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0161,
+    "step2_search": 0.3142,
+    "step3_outside_view": 0.1894,
+    "step5_inside_view": 0.2814
+  },
+  "total_pipeline_cost": 0.8011
+}

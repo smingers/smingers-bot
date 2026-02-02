@@ -1,0 +1,196 @@
+{
+  "centralized_research": {
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Brent crude price January 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "OPEC output cuts February 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "DCOILBRENTEU daily values Nov 2025-Jan 2026 and factors affecting Brent price trend",
+          "tool": "Agent",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Google News",
+        "Agent"
+      ],
+      "llm_cost": 0.2004,
+      "llm_cost_summarization": 0.1417,
+      "llm_cost_agentic": 0.0586,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Brent crude price February 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "oil market outlook 2026 Brent",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Latest Brent crude price forecasts for February 2026 and supply-demand analysis",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 21
+        },
+        {
+          "query": "What will be the value of \"Crude Oil Prices: Brent - Europe\" on 2026-02-13?",
+          "tool": "AskNews",
+          "deep_research_query": "Latest Brent crude price forecasts for February 2026 and supply-demand analysis"
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Google News",
+        "AskNews"
+      ],
+      "llm_cost": 0.151,
+      "llm_cost_summarization": 0.1417,
+      "llm_cost_agentic": 0.0093,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6361,
+        "token_output": 2375,
+        "cost": 0.054708,
+        "duration_seconds": 58.78636074066162,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17863,
+        "token_output": 3037,
+        "cost": 0.09914400000000001,
+        "duration_seconds": 76.02514934539795,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6361,
+        "token_output": 2023,
+        "cost": 0.049428,
+        "duration_seconds": 58.786410331726074,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16737,
+        "token_output": 2493,
+        "cost": 0.08760599999999999,
+        "duration_seconds": 76.02511096000671,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5616,
+        "token_output": 2170,
+        "cost": 0.040208,
+        "duration_seconds": 58.78644919395447,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15280,
+        "token_output": 2398,
+        "cost": 0.060312,
+        "duration_seconds": 76.02507424354553,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5616,
+        "token_output": 1515,
+        "cost": 0.023352,
+        "duration_seconds": 58.78648567199707,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15308,
+        "token_output": 1403,
+        "cost": 0.04184,
+        "duration_seconds": 76.02503967285156,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5616,
+        "token_output": 2130,
+        "cost": 0.028272,
+        "duration_seconds": 58.78651309013367,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14685,
+        "token_output": 1458,
+        "cost": 0.041034,
+        "duration_seconds": 76.02500700950623,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0148,
+    "step2_search": 0.2004,
+    "step3_outside_view": 0.196,
+    "step5_inside_view": 0.3299
+  },
+  "total_pipeline_cost": 0.7411
+}
