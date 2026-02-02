@@ -234,11 +234,11 @@ class ForecastDatabase:
     # Update Operations
     # =========================================================================
 
-    async def update_outcome(
+    async def update_question_resolution(
         self, question_id: int, actual_outcome: float, brier_score: float | None = None
     ) -> int:
         """
-        Update the actual outcome for all forecasts on a question.
+        Update resolution data (outcome and Brier score) for all forecasts on a question.
         Returns number of rows updated.
         """
         async with aiosqlite.connect(self.db_path) as db:

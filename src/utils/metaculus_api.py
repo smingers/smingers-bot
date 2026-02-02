@@ -370,7 +370,7 @@ class MetaculusClient:
         params = {
             "tournaments": tournament_id,
             "limit": limit,
-            "order_by": "-created_at",
+            "order_by": "scheduled_close_time",  # Prioritize questions closing soonest
         }
         if status:
             params["statuses"] = status

@@ -107,7 +107,7 @@ class RunResult:
         self,
         source: str = "runner",
         tournament_id: str | None = None,
-        strategy: str | None = None,
+        question_selection: str | None = None,
     ) -> None:
         """
         Append failures to persistent log file.
@@ -115,7 +115,7 @@ class RunResult:
         Args:
             source: Identifier for the calling entry point (e.g., "main.py", "run_bot.py")
             tournament_id: Optional tournament ID for context
-            strategy: Optional run strategy (e.g., "new-only", "reforecast") - only for run_bot.py
+            question_selection: Optional selection mode (e.g., "new-only", "reforecast")
         """
         if not self.failures:
             return
@@ -128,8 +128,8 @@ class RunResult:
             header_parts = []
             if tournament_id:
                 header_parts.append(f"Tournament: {tournament_id}")
-            if strategy:
-                header_parts.append(f"Strategy: {strategy}")
+            if question_selection:
+                header_parts.append(f"Selection: {question_selection}")
             header_parts.append(f"Via: {source}")
             f.write(" | ".join(header_parts) + "\n")
             f.write(f"Success: {self.success_count} | Failed: {self.error_count}\n")
@@ -147,21 +147,23 @@ class RunResult:
 
         logger.info(f"Failures logged to: {FAILURE_LOG_PATH}")
 
-    def print_summary(self, tournament_id: str | None = None, strategy: str | None = None) -> None:
+    def print_summary(
+        self, tournament_id: str | None = None, question_selection: str | None = None
+    ) -> None:
         """
         Print a summary of the run to stdout.
 
         Args:
             tournament_id: Optional tournament ID to include in summary
-            strategy: Optional strategy (e.g., "new-only", "reforecast") to include in summary
+            question_selection: Optional selection mode (e.g., "new-only", "reforecast")
         """
         print("\n" + "=" * 70)
         print("FORECAST RUN SUMMARY")
         print("=" * 70)
         if tournament_id:
             print(f"Tournament: {tournament_id}")
-        if strategy:
-            print(f"Strategy: {strategy}")
+        if question_selection:
+            print(f"Selection: {question_selection}")
         print(f"Successful: {self.success_count}")
         print(f"Failed: {self.error_count}")
 

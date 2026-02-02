@@ -6,7 +6,7 @@ Simplified pipeline that delegates to type-specific handlers:
 2. Route to appropriate handler (binary/numeric/multiple_choice)
 3. Handler does all research + forecasting internally
 4. Save final prediction
-5. Submit if not dry_run
+5. Submit if should_submit is True (based on mode: live submits, test/preview don't)
 """
 
 import asyncio
@@ -80,9 +80,6 @@ class Forecaster:
                 "database_path", "./data/forecasts.db"
             )
         )
-
-        # Configuration from resolved config
-        self.dry_run = not self.resolved_config.should_submit
 
         # Log the mode
         logger.info(f"Forecaster initialized in '{self.resolved_config.mode}' mode")
@@ -159,16 +156,16 @@ class Forecaster:
                     question_type=question.question_type,
                 )
 
-            # Step 4: Submit prediction (unless dry run)
+            # Step 4: Submit prediction (if configured to submit)
             submission_result = None
-            if not self.dry_run:
+            if self.resolved_config.should_submit:
                 submission_result = await self._submit_prediction(
                     question=question,
                     forecast_result=forecast_result,
                     artifacts=artifacts,
                 )
             else:
-                self._save_dry_run_prediction(question, forecast_result, artifacts)
+                self._save_preview_prediction(question, forecast_result, artifacts)
 
             # Step 5: Save metadata and database records
             end_time = datetime.now(UTC)
@@ -393,34 +390,34 @@ class Forecaster:
             "options": result.options,
         }
 
-    def _save_dry_run_prediction(
+    def _save_preview_prediction(
         self,
         question: MetaculusQuestion,
         forecast_result: dict,
         artifacts: ForecastArtifacts,
     ):
-        """Save prediction artifact and log dry run summary."""
+        """Save prediction artifact without submitting (test/preview mode)."""
         if question.question_type == "binary":
             pred = forecast_result["final_prediction"]
-            logger.info(f"DRY RUN: Would submit {pred:.1%}")
+            logger.info(f"PREVIEW: Would submit {pred:.1%}")
             self.artifact_store.save_prediction(
                 artifacts,
                 {
                     "prediction": pred,
-                    "dry_run": True,
+                    "submitted": False,
                 },
             )
 
         elif question.question_type in ("numeric", "discrete", "date"):
             percentiles = forecast_result.get("final_percentiles", {})
             median = percentiles.get("50", percentiles.get(50, 0))
-            logger.info(f"DRY RUN: Would submit CDF (median: {median})")
+            logger.info(f"PREVIEW: Would submit CDF (median: {median})")
             self.artifact_store.save_prediction(
                 artifacts,
                 {
                     "percentiles": percentiles,
                     "cdf": forecast_result.get("final_cdf", []),
-                    "dry_run": True,
+                    "submitted": False,
                 },
             )
 
@@ -429,13 +426,13 @@ class Forecaster:
             if probs:
                 best = max(probs.items(), key=lambda x: x[1])
                 logger.info(
-                    f"DRY RUN: Would submit distribution (most likely: {best[0]} at {best[1]:.1%})"
+                    f"PREVIEW: Would submit distribution (most likely: {best[0]} at {best[1]:.1%})"
                 )
             self.artifact_store.save_prediction(
                 artifacts,
                 {
                     "distribution": probs,
-                    "dry_run": True,
+                    "submitted": False,
                 },
             )
 

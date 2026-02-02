@@ -445,7 +445,7 @@ class TestUpdateOperations:
     """Tests for database update operations."""
 
     @pytest.mark.asyncio
-    async def test_update_outcome(self, tmp_path):
+    async def test_update_question_resolution(self, tmp_path):
         """Updates outcome and brier score."""
         db = ForecastDatabase(tmp_path / "test.db")
         await db.initialize()
@@ -463,7 +463,7 @@ class TestUpdateOperations:
         )
         await db.insert_forecast(forecast)
 
-        rows_updated = await db.update_outcome(
+        rows_updated = await db.update_question_resolution(
             question_id=12345,
             actual_outcome=1.0,
             brier_score=0.1225,  # (0.65 - 1.0)^2
@@ -476,13 +476,13 @@ class TestUpdateOperations:
         assert result["brier_score"] == 0.1225
 
     @pytest.mark.asyncio
-    async def test_update_outcome_no_match(self, tmp_path):
+    async def test_update_question_resolution_no_match(self, tmp_path):
         """Returns 0 when no forecasts match."""
         db = ForecastDatabase(tmp_path / "test.db")
         await db.initialize()
         await db.migrate_schema()
 
-        rows_updated = await db.update_outcome(
+        rows_updated = await db.update_question_resolution(
             question_id=99999,
             actual_outcome=1.0,
         )

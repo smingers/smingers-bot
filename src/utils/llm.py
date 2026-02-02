@@ -160,9 +160,9 @@ def reset_cost_tracker() -> None:
     _cost_tracker.reset()
 
 
-def estimate_cost(model: str, input_tokens: int, output_tokens: int) -> float:
-    """Estimate cost for a given model and token counts."""
-    costs = MODEL_COSTS.get(model, {"input": 5.0, "output": 15.0})  # Default to expensive estimate
+def calculate_cost(model: str, input_tokens: int, output_tokens: int) -> float:
+    """Calculate cost for a given model and token counts using the MODEL_COSTS table."""
+    costs = MODEL_COSTS.get(model, {"input": 5.0, "output": 15.0})  # Default to expensive fallback
     input_cost = (input_tokens / 1_000_000) * costs["input"]
     output_cost = (output_tokens / 1_000_000) * costs["output"]
     return input_cost + output_cost
@@ -253,7 +253,7 @@ class LLMClient:
 
                 input_tokens = usage.prompt_tokens if usage else 0
                 output_tokens = usage.completion_tokens if usage else 0
-                cost = estimate_cost(model, input_tokens, output_tokens)
+                cost = calculate_cost(model, input_tokens, output_tokens)
 
                 llm_response = LLMResponse(
                     content=content,

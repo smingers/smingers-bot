@@ -5,7 +5,7 @@ Generates human-readable markdown reports from forecast artifacts.
 Used for creating detailed reasoning reports for individual forecasts
 and summary reports across multiple forecasts (e.g., tournament reviews).
 
-Note: The dataclasses here (AgentResult, ForecastData) are display-oriented
+Note: The dataclasses here (DisplayAgentResult, ForecastData) are display-oriented
 and differ from the pipeline's internal AgentResult in src/bot/extractors.py.
 """
 
@@ -14,8 +14,8 @@ from datetime import datetime
 
 
 @dataclass
-class AgentResult:
-    """Result from a single ensemble agent for display purposes.
+class DisplayAgentResult:
+    """Result from a single ensemble agent for display/report purposes.
 
     Note: This is distinct from src.bot.extractors.AgentResult which is
     used internally by the forecasting pipeline.
@@ -56,7 +56,7 @@ class ForecastData:
     outside_view_reasoning: str  # Reasoning for base rate
 
     # Inside view (ensemble predictions)
-    agent_results: list[AgentResult]  # Individual agent predictions
+    agent_results: list[DisplayAgentResult]  # Individual agent predictions
     aggregation_method: str  # How predictions were combined (e.g., "weighted_average")
     final_prediction: float  # Final submitted prediction
 
