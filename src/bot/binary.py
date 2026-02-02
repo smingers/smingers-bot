@@ -7,7 +7,7 @@ Implements binary-specific extraction and aggregation logic.
 
 import logging
 from datetime import datetime
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Callable, Dict, List, Optional, Tuple
 from dataclasses import dataclass, field
 
 from ..utils.llm import LLMClient
@@ -73,15 +73,9 @@ class BinaryForecaster(BaseForecaster):
         **question_params,
     ) -> str:
         """Format Step 1 prompt with historical context."""
-        return prompt_template.format(
-            title=question_params.get("question_title", ""),
-            today=question_params.get("today", ""),
-            resolution_criteria=question_params.get("resolution_criteria", ""),
-            fine_print=question_params.get("fine_print", ""),
-            open_time=question_params.get("open_time", ""),
-            scheduled_resolve_time=question_params.get("scheduled_resolve_time", ""),
-            context=historical_context,
-        )
+        params = self._get_common_prompt_params(**question_params)
+        params["context"] = historical_context
+        return prompt_template.format(**params)
 
     def _format_step2_prompt(
         self,
@@ -90,15 +84,9 @@ class BinaryForecaster(BaseForecaster):
         **question_params,
     ) -> str:
         """Format Step 2 prompt with cross-pollinated context."""
-        return prompt_template.format(
-            title=question_params.get("question_title", ""),
-            today=question_params.get("today", ""),
-            resolution_criteria=question_params.get("resolution_criteria", ""),
-            fine_print=question_params.get("fine_print", ""),
-            open_time=question_params.get("open_time", ""),
-            scheduled_resolve_time=question_params.get("scheduled_resolve_time", ""),
-            context=context,
-        )
+        params = self._get_common_prompt_params(**question_params)
+        params["context"] = context
+        return prompt_template.format(**params)
 
     def _extract_prediction(self, output: str, **question_params) -> float:
         """Extract probability percentage from agent output."""
@@ -108,7 +96,7 @@ class BinaryForecaster(BaseForecaster):
         self,
         agent_results: List[AgentResult],
         agents: List[Dict],
-        log: callable,
+        log: Callable[[str], Any],
     ) -> float:
         """Compute weighted average of probabilities."""
         probabilities = [r.probability for r in agent_results]
@@ -209,7 +197,7 @@ class BinaryForecaster(BaseForecaster):
         fine_print: str = "",
         open_time: str = "",
         scheduled_resolve_time: str = "",
-        log: callable = print,
+        log: Callable[[str], Any] = print,
     ) -> BinaryForecastResult:
         """
         Generate a forecast for a binary question.
@@ -245,7 +233,7 @@ async def get_binary_forecast(
     config: dict,
     llm_client: Optional[LLMClient] = None,
     artifact_store: Optional[ArtifactStore] = None,
-    log: callable = print,
+    log: Callable[[str], Any] = print,
 ) -> Tuple[float, str]:
     """
     Convenience function to get a binary forecast.

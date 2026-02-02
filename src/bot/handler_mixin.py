@@ -40,14 +40,14 @@ class ForecasterMixin:
         Get agent configurations from config.
 
         Looks for agents in order:
-        1. _active_agents (set by mode application)
+        1. active_agents (set by mode application)
         2. ensemble.agents (from config file)
         3. DEFAULT_AGENTS fallback
 
         Returns:
             List of up to 5 agent configurations with name, model, weight.
         """
-        agents = self.config.get("_active_agents", [])
+        agents = self.config.get("active_agents", [])
 
         if not agents:
             agents = self.config.get("ensemble", {}).get("agents", [])
@@ -62,7 +62,7 @@ class ForecasterMixin:
         Resolve which model to use from config with fallback.
 
         Looks for model in order:
-        1. _active_models[key] (set by mode application)
+        1. active_models[key] (set by mode application)
         2. models[key] (from config file)
         3. default parameter
 
@@ -73,8 +73,12 @@ class ForecasterMixin:
         Returns:
             Model identifier string.
         """
-        active_models = self.config.get("_active_models", {})
+        active_models = self.config.get("active_models", {})
         return active_models.get(key, self.config.get("models", {}).get(key, default))
+
+    def _get_max_tokens(self) -> int:
+        """Get max output tokens from config with fallback to 4000."""
+        return self.config.get("llm", {}).get("max_output_tokens", 4000)
 
     async def _call_model(
         self,
@@ -103,7 +107,7 @@ class ForecasterMixin:
                 model=model,
                 messages=messages,
                 system=system_prompt,
-                max_tokens=4000,
+                max_tokens=self._get_max_tokens(),
             )
             return response.content
         except Exception as e:
@@ -137,7 +141,7 @@ class ForecasterMixin:
                 model=model,
                 messages=messages,
                 system=system_prompt,
-                max_tokens=4000,
+                max_tokens=self._get_max_tokens(),
             )
             metadata = {
                 "input_tokens": response.input_tokens,

@@ -480,7 +480,7 @@ class SearchPipeline:
         )
 
         # Use haiku for summarization (fast, cheap)
-        active_models = self.config.get("_active_models", {})
+        active_models = self.config.get("active_models", {})
         model = active_models.get(
             "article_summarizer",
             self.config.get("models", {}).get("article_summarizer", "claude-3-haiku-20240307")
@@ -766,7 +766,7 @@ class SearchPipeline:
         search_results = ""
 
         # Get model for agentic search from active models (respects mode)
-        active_models = self.config.get("_active_models", {})
+        active_models = self.config.get("active_models", {})
         model = active_models.get(
             "agentic_search",
             # Fallback: check if there's a query_generator, else default to haiku

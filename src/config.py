@@ -162,7 +162,7 @@ class ResolvedConfig:
         The returned dict includes:
         - All raw config values (models, ensemble, research, etc.)
         - "mode" is set to the resolved mode (CLI override > config file)
-        - Resolved values for handlers: _active_models, _active_agents, _should_submit
+        - Resolved values for handlers: active_models, active_agents, should_submit
 
         Returns:
             Dictionary ready for serialization with unambiguous mode
@@ -171,9 +171,9 @@ class ResolvedConfig:
         # Set mode to resolved value
         result["mode"] = self.mode
         # Resolved values for handlers
-        result["_active_models"] = self.active_models
-        result["_active_agents"] = self.active_agents
-        result["_should_submit"] = self.should_submit
+        result["active_models"] = self.active_models
+        result["active_agents"] = self.active_agents
+        result["should_submit"] = self.should_submit
         return result
 
     def get(self, key: str, default=None):
