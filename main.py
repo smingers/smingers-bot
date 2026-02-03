@@ -4,7 +4,7 @@ AI Forecasting Bot - Main Entry Point
 
 Supports multiple forecast sources:
 - metaculus (default): Forecast on Metaculus prediction questions
-- ecclesia: Forecast on Ecclesia business questions (coming soon)
+- ecclesia: Forecast on Ecclesia business questions
 
 Usage:
     # Forecast a specific question by ID
@@ -49,7 +49,9 @@ from src.bot import ExtractionError, SubmissionError
 from src.bot.forecaster import Forecaster
 from src.config import ResolvedConfig
 from src.runner import format_prediction, run_forecasts
-from src.sources import list_sources
+from src.sources import get_source, list_sources
+from src.storage.artifact_store import ArtifactStore
+from src.utils.llm import LLMClient
 from src.utils.metaculus_api import MetaculusClient
 
 
@@ -182,6 +184,75 @@ async def forecast_question(
         sys.exit(1)
 
 
+async def forecast_ecclesia_question(
+    bet_id: str,
+    config_path: str = "config.yaml",
+    mode: str = None,
+):
+    """Forecast a single Ecclesia bet using the new source architecture."""
+    resolved = ResolvedConfig.from_yaml(config_path, mode=mode)
+    source_config = resolved.to_dict()
+
+    # Create shared components
+    llm_client = LLMClient()
+    artifact_store = ArtifactStore("data")
+
+    source = get_source("ecclesia", source_config, llm_client, artifact_store)
+
+    try:
+        async with source:
+            print(f"\n{'=' * 60}")
+            print(f"FORECASTING ECCLESIA BET: {bet_id}")
+            print(f"Mode: {resolved.mode}")
+            print(f"{'=' * 60}\n")
+
+            # Run the forecast
+            forecast = await source.run_forecast(bet_id, log=print)
+
+            print(f"\n{'=' * 60}")
+            print("FORECAST COMPLETE")
+            print(f"{'=' * 60}")
+            print(f"Type: {forecast.question_type}")
+
+            # Format prediction based on type
+            if forecast.question_type == "binary":
+                print(f"Prediction: {forecast.prediction:.0f}%")
+                # Show individual agent results
+                if forecast.agent_results:
+                    probs = [
+                        r.probability for r in forecast.agent_results if r.probability is not None
+                    ]
+                    if probs:
+                        print(f"Agent probabilities: {[f'{p:.0f}%' for p in probs]}")
+            elif forecast.question_type == "numeric":
+                print(f"Prediction (median): {forecast.prediction}")
+            elif forecast.question_type == "multiple_choice":
+                print(f"Prediction: {forecast.prediction}")
+
+            print(f"Cost: ${llm_client.cost_tracker.total_cost:.4f}")
+
+            # Submit if live mode
+            if resolved.should_submit:
+                print("\nSubmitting to Ecclesia...")
+                converted = source.convert_forecast(forecast)
+                result = await source.submit_forecast(bet_id, converted)
+                print("Status: SUBMITTED")
+                print(f"Response: {result}")
+            else:
+                mode_label = "TEST" if resolved.mode == "test" else "PREVIEW"
+                print(f"\nStatus: {mode_label} (not submitted)")
+
+            return forecast
+
+    except Exception as e:
+        print(f"\n{'!' * 60}")
+        print("FORECAST FAILED")
+        print(f"{'!' * 60}")
+        print(f"Error: {e}")
+        print(f"{'!' * 60}")
+        raise
+
+
 async def forecast_unforecasted_questions(
     tournament_id: int | str,
     config_path: str = "config.yaml",
@@ -254,7 +325,7 @@ def main():
         "-s",
         type=str,
         default="metaculus",
-        help="Forecast source: metaculus (default), ecclesia (coming soon)",
+        help="Forecast source: metaculus (default), ecclesia",
     )
     parser.add_argument(
         "--list-sources", action="store_true", help="List available forecast sources"
@@ -331,14 +402,26 @@ def main():
         )
 
     elif args.question or args.url:
-        asyncio.run(
-            forecast_question(
-                question_id=args.question,
-                question_url=args.url,
-                config_path=args.config,
-                mode=args.mode,
+        if args.source == "ecclesia":
+            # Ecclesia uses bet IDs (strings), not integer question IDs
+            bet_id = str(args.question) if args.question else args.url
+            asyncio.run(
+                forecast_ecclesia_question(
+                    bet_id=bet_id,
+                    config_path=args.config,
+                    mode=args.mode,
+                )
             )
-        )
+        else:
+            # Default: Metaculus source
+            asyncio.run(
+                forecast_question(
+                    question_id=args.question,
+                    question_url=args.url,
+                    config_path=args.config,
+                    mode=args.mode,
+                )
+            )
 
     else:
         parser.print_help()
