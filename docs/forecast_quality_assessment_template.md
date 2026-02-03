@@ -8,9 +8,19 @@ When asked to analyze a forecast run using this template:
    - `question.json`, `metadata.json`, `prediction.json`
    - `research/query_historical.md`, `query_current.md`
    - `research/search_historical.json`, `search_current.json`
-   - `ensemble/agent_*_step1.md` (outside view)
-   - `ensemble/agent_*_step2.md` (inside view)
+   - Forecaster reasoning files (see naming conventions below)
    - `ensemble/aggregation.json`
+
+   **Artifact naming conventions** (changed Feb 2, 2026):
+
+   | Era | Forecaster files | Prompt file |
+   |-----|------------------|-------------|
+   | Current (Feb 2+) | `ensemble/forecaster_{i}_outside_view.md`, `forecaster_{i}_inside_view.md`, `forecaster_{i}.json` | `ensemble/outside_view_prompt.md` |
+   | Legacy (pre-Feb 2) | `ensemble/agent_{i}_step1.md`, `agent_{i}_step2.md`, `agent_{i}.json` | `ensemble/step1_prompt.md` |
+
+   The terminology mapping:
+   - `step1` / `outside_view` = Historical context analysis, base rate derivation
+   - `step2` / `inside_view` = Current news integration, final calibration
 
 2. Cross-pollination structure for this pipeline:
    - Step 2 instance 1 (Sonnet 4.5): receives Step 1 output 1
