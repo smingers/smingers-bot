@@ -1,0 +1,7 @@
+Analysis:
+Thom Tillis, a U.S. Senator from North Carolina, has not been at the center of any major, sustained national story in the past month.  Over the last 30 days, his Google Trends daily values have hovered mostly in the 15-30 range, spiking only when (1) he is quoted on high–profile Senate votes, (2) North-Carolina–specific issues reach national outlets, or (3) partisan social-media accounts elevate a remark.  None of those triggers is currently scheduled or predictable for the coming week: no committee hearings featuring Tillis, no announced bill rollouts with his name atop the press release, and no imminent North-Carolina political event tied to him.  Historically, absent a news jolt, his seven-day moves are small—often 0-to-±3 points—so the base-rate favors “Doesn’t change.”  The outside view therefore starts with ~60-70 % probability of staying within the ±3 band, with tails split between a mild random uptick (e.g., quote picked up by cable news) and a mild downtick (noise regression).  To refine that, we need: (a) any fresh reports or rumors, (b) a look at last-year volatility in comparable quiet periods, and (c) confirmation that no big Senate floor drama is calendared for 3-10 Feb.
+
+Search queries:
+1. Thom Tillis February 2026 news (Google)
+2. Thom Tillis 2026 scandal rumors (Google News)
+3. Google Trends thom tillis daily January-February 2026 volatility analysis (Agent)
