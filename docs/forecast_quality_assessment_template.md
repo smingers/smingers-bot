@@ -35,6 +35,11 @@ When asked to analyze a forecast run using this template:
 
 5. Save the completed assessment to: `docs/assessments/{QUESTION_ID}_{TIMESTAMP}_assessment.md`
 
+6. Update `docs/assessments/README.md`:
+   - Add a row to the Assessment Summary table (keep sorted by question ID)
+   - Update the Grade Distribution counts
+   - Update the Question Type Distribution counts
+
 ---
 
 # FORECAST QUALITY ASSESSMENT REPORT
