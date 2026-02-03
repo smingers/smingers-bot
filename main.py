@@ -229,7 +229,7 @@ async def forecast_ecclesia_question(
             elif forecast.question_type == "multiple_choice":
                 print(f"Prediction: {forecast.prediction}")
 
-            print(f"Cost: ${llm_client.cost_tracker.total_cost:.4f}")
+            print(f"Cost: ${llm_client.get_session_costs()['cost']:.4f}")
 
             # Submit if live mode
             if resolved.should_submit:
@@ -330,7 +330,7 @@ def main():
     parser.add_argument(
         "--list-sources", action="store_true", help="List available forecast sources"
     )
-    parser.add_argument("--question", "-q", type=int, help="Question ID to forecast")
+    parser.add_argument("--question", "-q", type=str, help="Question/bet ID to forecast")
     parser.add_argument("--url", "-u", type=str, help="Question URL to forecast")
     parser.add_argument(
         "--tournament", "-t", type=str, help="Tournament ID or slug (e.g., 32916, minibench)"
@@ -413,10 +413,11 @@ def main():
                 )
             )
         else:
-            # Default: Metaculus source
+            # Default: Metaculus source (expects integer question IDs)
+            question_id = int(args.question) if args.question else None
             asyncio.run(
                 forecast_question(
-                    question_id=args.question,
+                    question_id=question_id,
                     question_url=args.url,
                     config_path=args.config,
                     mode=args.mode,

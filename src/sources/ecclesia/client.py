@@ -14,8 +14,13 @@ import httpx
 
 logger = logging.getLogger(__name__)
 
-# Default Ecclesia API base URL (can be overridden via env var)
-ECCLESIA_API_BASE = os.getenv("ECCLESIA_API_BASE", "http://localhost:3000/api")
+# Default Ecclesia API base URL
+DEFAULT_ECCLESIA_API_BASE = "http://localhost:3000/api"
+
+
+def get_ecclesia_api_base() -> str:
+    """Get Ecclesia API base URL from env (read at runtime, not import time)."""
+    return os.getenv("ECCLESIA_API_BASE", DEFAULT_ECCLESIA_API_BASE)
 
 
 @dataclass
@@ -186,7 +191,7 @@ class EcclesiaClient:
             base_url: API base URL (defaults to ECCLESIA_API_BASE env var)
             token: JWT token (defaults to ECCLESIA_TOKEN env var)
         """
-        self.base_url = base_url or ECCLESIA_API_BASE
+        self.base_url = base_url or get_ecclesia_api_base()
         self._token = token or os.getenv("ECCLESIA_TOKEN")
 
         # Create client with cookie support
