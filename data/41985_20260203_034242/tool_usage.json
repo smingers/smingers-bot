@@ -1,0 +1,196 @@
+{
+  "centralized_research": {
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Verisign earnings calendar 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Verisign price news February 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Summarize upcoming events for VRSN before 11 Feb 2026, including earnings release schedule, regulatory decisions, and recent analyst revisions; provide historical price reaction to last three earnings reports.",
+          "tool": "Agent",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google",
+        "Google News"
+      ],
+      "llm_cost": 0.2628,
+      "llm_cost_summarization": 0.1506,
+      "llm_cost_agentic": 0.1122,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "VeriSign Q4 2025 earnings date",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "VRSN stock news February 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Latest coverage on VeriSign earnings expectations and .com price cap decision in early February 2026",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "Will VRSN's market close price on 2026-02-11 be higher than its market close price on 2026-02-03?",
+          "tool": "AskNews",
+          "deep_research_query": "Latest coverage on VeriSign earnings expectations and .com price cap decision in early February 2026"
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Google News",
+        "AskNews"
+      ],
+      "llm_cost": 0.1566,
+      "llm_cost_summarization": 0.1506,
+      "llm_cost_agentic": 0.006,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5660,
+        "token_output": 2202,
+        "cost": 0.05001,
+        "duration_seconds": 58.350363969802856,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16803,
+        "token_output": 3615,
+        "cost": 0.104634,
+        "duration_seconds": 130.0368595123291,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5660,
+        "token_output": 2163,
+        "cost": 0.049425000000000004,
+        "duration_seconds": 58.350417375564575,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15784,
+        "token_output": 2447,
+        "cost": 0.08405699999999999,
+        "duration_seconds": 130.03683614730835,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4991,
+        "token_output": 2020,
+        "cost": 0.03701425,
+        "duration_seconds": 58.35045909881592,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14825,
+        "token_output": 2457,
+        "cost": 0.06034175,
+        "duration_seconds": 130.0368115901947,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4991,
+        "token_output": 1644,
+        "cost": 0.023134000000000002,
+        "duration_seconds": 58.35049772262573,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14517,
+        "token_output": 1682,
+        "cost": 0.04249,
+        "duration_seconds": 130.0367877483368,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4991,
+        "token_output": 1864,
+        "cost": 0.024894,
+        "duration_seconds": 58.35052728652954,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13814,
+        "token_output": 1063,
+        "cost": 0.036132,
+        "duration_seconds": 130.03676390647888,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0131,
+    "step2_search": 0.2628,
+    "step3_outside_view": 0.1845,
+    "step5_inside_view": 0.3277
+  },
+  "total_pipeline_cost": 0.788
+}
