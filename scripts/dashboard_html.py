@@ -36,13 +36,6 @@ def read_json_safe(path: Path) -> dict | None:
         return None
 
 
-def detect_structure(run_dir: Path) -> str:
-    """Detect which artifact structure is used: 'old' or 'new'."""
-    if (run_dir / "01_analysis.json").exists():
-        return "new"
-    return "old"
-
-
 def compute_percentiles_from_cdf(cdf: list[float], scaling: dict) -> dict[str, float]:
     """
     Compute actual percentile values from CDF and question scaling.
@@ -114,17 +107,9 @@ def list_forecast_runs(data_dir: Path) -> list[dict]:
         if metadata is None:
             continue
 
-        structure = detect_structure(entry)
-
-        # Get analysis data (location differs by structure)
-        if structure == "new":
-            analysis = read_json_safe(entry / "01_analysis.json") or {}
-            final_pred = read_json_safe(entry / "06_submission" / "final_prediction.json")
-            question = read_json_safe(entry / "00_question.json")
-        else:
-            analysis = metadata.get("analysis", {})
-            final_pred = read_json_safe(entry / "prediction.json")
-            question = read_json_safe(entry / "question.json")
+        analysis = metadata.get("analysis", {})
+        final_pred = read_json_safe(entry / "prediction.json")
+        question = read_json_safe(entry / "question.json")
 
         costs = metadata.get("costs", {})
         question_type = analysis.get("type", "unknown")
@@ -169,7 +154,6 @@ def list_forecast_runs(data_dir: Path) -> list[dict]:
                 "submitted": submitted,
                 "total_cost": costs.get("total_cost", 0),
                 "mode": metadata.get("config_snapshot", {}).get("mode", "unknown"),
-                "structure": structure,
             }
         )
 
@@ -185,92 +169,7 @@ def load_forecast_detail(data_dir: Path, folder: str) -> dict[str, Any]:
     if not run_dir.exists():
         return {"error": f"Folder not found: {folder}"}
 
-    structure = detect_structure(run_dir)
     metadata = read_json_safe(run_dir / "metadata.json")
-
-    if structure == "new":
-        return load_new_structure(run_dir, folder, metadata)
-    else:
-        return load_old_structure(run_dir, folder, metadata)
-
-
-def load_new_structure(run_dir: Path, folder: str, metadata: dict) -> dict[str, Any]:
-    """Load forecast from new artifact structure (02_research, 04_inside_view, etc.)."""
-    analysis = read_json_safe(run_dir / "01_analysis.json") or {}
-    final_pred = read_json_safe(run_dir / "06_submission" / "final_prediction.json")
-    question = read_json_safe(run_dir / "00_question.json")
-
-    # For numeric questions, compute actual percentile values from CDF
-    computed_percentiles = None
-    if analysis.get("type") == "numeric" and final_pred and question:
-        cdf = final_pred.get("cdf", [])
-        # Get scaling from nested question structure
-        scaling = question.get("question", {}).get("scaling", {})
-        if cdf and scaling:
-            computed_percentiles = compute_percentiles_from_cdf(cdf, scaling)
-
-    data = {
-        "folder": folder,
-        "structure": "new",
-        "metadata": metadata,
-        "analysis": analysis,
-        "question_type": analysis.get("type", "unknown"),
-        "prediction": final_pred,
-        "computed_percentiles": computed_percentiles,  # Actual values at percentiles
-        "question": question,
-        "research": {
-            "query_historical_prompt": read_file_safe(
-                run_dir / "04_inside_view" / "query_historical" / "prompt.md"
-            ),
-            "query_historical": read_file_safe(
-                run_dir / "04_inside_view" / "query_historical" / "response.md"
-            ),
-            "query_current_prompt": read_file_safe(
-                run_dir / "04_inside_view" / "query_current" / "prompt.md"
-            ),
-            "query_current": read_file_safe(
-                run_dir / "04_inside_view" / "query_current" / "response.md"
-            ),
-            "search_historical": read_json_safe(run_dir / "02_research" / "historical_search.json"),
-            "search_current": read_json_safe(run_dir / "02_research" / "current_search.json"),
-        },
-        "ensemble": {
-            "step1_prompt": read_file_safe(
-                run_dir / "04_inside_view" / "step1_shared" / "prompt.md"
-            ),
-            "aggregation": read_json_safe(run_dir / "04_inside_view" / "aggregation.json"),
-            "agents": [],
-        },
-    }
-
-    # Load agent data (1-5)
-    for i in range(1, 6):
-        agent_data = {
-            "name": f"Agent {i}",
-            "step1": read_file_safe(
-                run_dir / "04_inside_view" / f"forecaster_{i}_step1" / "response.md"
-            ),
-            "step2": read_file_safe(
-                run_dir / "04_inside_view" / f"forecaster_{i}_step2" / "response.md"
-            ),
-            "result": read_json_safe(
-                run_dir / "04_inside_view" / f"forecaster_{i}" / "extracted.json"
-            ),
-        }
-
-        # Get model from metadata
-        if metadata:
-            agents = metadata.get("config_snapshot", {}).get("_active_agents", [])
-            if i <= len(agents):
-                agent_data["model"] = agents[i - 1].get("model", "unknown")
-
-        data["ensemble"]["agents"].append(agent_data)
-
-    return data
-
-
-def load_old_structure(run_dir: Path, folder: str, metadata: dict) -> dict[str, Any]:
-    """Load forecast from old artifact structure (research, ensemble directories)."""
     prediction = read_json_safe(run_dir / "prediction.json")
     analysis = metadata.get("analysis", {}) if metadata else {}
     question = read_json_safe(run_dir / "question.json")
@@ -286,7 +185,6 @@ def load_old_structure(run_dir: Path, folder: str, metadata: dict) -> dict[str, 
 
     data = {
         "folder": folder,
-        "structure": "old",
         "metadata": metadata,
         "analysis": analysis,
         "question_type": analysis.get("type", "unknown"),
