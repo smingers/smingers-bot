@@ -293,8 +293,8 @@ class TestNumericPercentileExtraction:
         assert result[1] == pytest.approx(5.5)
         assert result[50] == pytest.approx(25.7)
 
-    def test_no_distribution_anchor_raises(self, numeric_percentile_response_missing_anchor):
-        """Test that missing Distribution: anchor raises ExtractionError."""
+    def test_no_percentile_lines_raises(self, numeric_percentile_response_missing_anchor):
+        """Test that text without any Percentile X: lines raises ExtractionError."""
         with pytest.raises(ExtractionError, match="No valid percentiles"):
             extract_percentiles_from_response(
                 numeric_percentile_response_missing_anchor, verbose=False
@@ -339,6 +339,45 @@ class TestNumericPercentileExtraction:
         assert 2 not in result
         assert 5 in result
         assert 50 in result
+
+    def test_extraction_without_anchor(self):
+        """Test that percentiles are extracted without requiring Distribution: anchor."""
+        text = """
+        Analysis: The value will likely be around 50.
+
+        The last thing you write is your final answer as:
+        Percentile 10: 30 (lowest value)
+        Percentile 20: 40
+        Percentile 40: 48
+        Percentile 60: 52
+        Percentile 80: 60
+        Percentile 90: 70 (highest value)
+        """
+        result = extract_percentiles_from_response(text, verbose=False)
+        assert result[10] == pytest.approx(30)
+        assert result[20] == pytest.approx(40)
+        assert result[40] == pytest.approx(48)
+        assert result[60] == pytest.approx(52)
+        assert result[80] == pytest.approx(60)
+        assert result[90] == pytest.approx(70)
+
+    def test_uses_last_occurrence(self):
+        """Test that later occurrences of percentiles override earlier ones."""
+        text = """
+        Initial estimate:
+        Percentile 10: 25
+        Percentile 50: 50
+
+        After reconsideration:
+        Percentile 10: 30
+        Percentile 50: 55
+        Percentile 90: 80
+        """
+        result = extract_percentiles_from_response(text, verbose=False)
+        # Should use the later values
+        assert result[10] == pytest.approx(30)
+        assert result[50] == pytest.approx(55)
+        assert result[90] == pytest.approx(80)
 
 
 class TestEnforceMonotonicPercentiles:
@@ -443,8 +482,8 @@ class TestDatePercentileExtraction:
         for i in range(len(sorted_values) - 1):
             assert sorted_values[i] < sorted_values[i + 1]
 
-    def test_no_distribution_anchor_raises(self, date_response_no_distribution):
-        """Test that missing Distribution: anchor raises ExtractionError."""
+    def test_no_percentile_lines_raises(self, date_response_no_distribution):
+        """Test that text without any Percentile X: date lines raises ExtractionError."""
         with pytest.raises(ExtractionError, match="No valid date percentiles"):
             extract_date_percentiles_from_response(date_response_no_distribution, verbose=False)
 

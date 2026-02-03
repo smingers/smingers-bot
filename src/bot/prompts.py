@@ -744,14 +744,7 @@ Subsequently, calibrate your outside view prediction, considering:
 (b) You aim to predict a true probability distribution, not a hedged smooth distribution or an overconfident extremely narrow distribution. In your thinking, always consider ranges over singular values.
 (c) Small changes in percentile location values can disproportionately reshape the slope and overall distribution of the extrapolated CDF, esepcially near the tails.
 
-It might be a good idea to set a wide 90/10 confidence intervals to account for unknown unknowns.
-
-Regarding the final prediction, please keep in mind the following:
-- Please notice the units requested (e.g. whether you represent a number as 1,000,000 or 1m).
-- Never use scientific notation.
-- Always start with a smaller number (more negative if negative) and then increase from there
-
-You are suggested to use the below checklist to verify the quality of your forecast **while reasoning**. Adjust your forecast if you have made mistakes. You can very briefly add a shortened version to your answer (see the format below).
+You are suggested to use the below checklist to verify the quality of your forecast **while reasoning**. Adjust your forecast if you have made mistakes. You can very briefly add a shortened version to your answer.
 
 ------------------------ FORECASTING CHECKLIST ------------------------
 1. Paraphrase the target variable/resolution criteria in <20 words, including units and the time window
@@ -771,38 +764,22 @@ You are suggested to use the below checklist to verify the quality of your forec
 
 ------------------------------------------------------------------------
 
-**Essential formatting requirements**
-(a) For large numbers, please DO NOT output commas between numbers like 1,000,000. Instead, just write 1000000. If not, this will cause a parsing error.
-(b) You MUST prefix the final percentiles with Distribution: as a regex will be programmed to read text below 'Distribution:'.
-(c) Do NOT include % symbols after percentile values - just write the number (e.g., "Percentile 1: 8.5" not "Percentile 1: 8.5%").
+Formatting Instructions:
+- Please notice the units requested and give your answer in these units (e.g. whether you represent a number as 1,000,000 or 1 million).
+- Never use scientific notation.
+- Always start with a smaller number (more negative if negative) and then increase from there. The value for percentile 10 should always be less than the value for percentile 20, and so on.
 
-**CRITICAL: Percentile values MUST be strictly increasing.**
-- Percentile 1 = lowest value (only 1% of outcomes fall below this)
-- Percentile 99 = highest value (99% of outcomes fall below this)
-- Each percentile value must be GREATER than the previous one
+You remind yourself that good forecasters are humble and set wide 90/10 confidence intervals to account for unknown unknowns.
 
-Format your answer as below.
-
-Analysis:
-{{Insert your analysis here, following the above components. You can segment your analysis across multiple final answer ranges if you find it useful.}}
-
-Probability calibration
-{{Insert your calibration of your inside view prediction here.}}
-
-Checklist:
-{{Shortened, brief checklist verification here}}
-
-Distribution:
-Percentile 1: XX
-Percentile 5: XX
-Percentile 10: XX
+The last thing you write is your final answer as:
+"
+Percentile 10: XX (lowest number value)
 Percentile 20: XX
 Percentile 40: XX
 Percentile 60: XX
 Percentile 80: XX
-Percentile 90: XX
-Percentile 95: XX
-Percentile 99: XX
+Percentile 90: XX (highest number value)
+"
 """
 
 

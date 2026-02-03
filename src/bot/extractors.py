@@ -93,8 +93,10 @@ VALID_PERCENTILE_KEYS: set[int] = {
 }
 
 # Regex for parsing percentile lines (numeric values)
+# Allows optional trailing text like "(lowest value)" or "(highest value)"
 NUM_PATTERN = re.compile(
-    r"^(?:percentile\s*)?(\d{1,3})\s*[:\-]\s*([+-]?\d+(?:\.\d+)?(?:e[+-]?\d+)?)\s*$", re.IGNORECASE
+    r"^(?:percentile\s*)?(\d{1,3})\s*[:\-]\s*([+-]?\d+(?:\.\d+)?(?:e[+-]?\d+)?)\s*(?:\(.*\))?\s*$",
+    re.IGNORECASE,
 )
 
 # Regex for parsing percentile lines with date values (YYYY-MM-DD or YYYY-MM-DDTHH:MM:SSZ)
@@ -249,9 +251,13 @@ def extract_percentiles_from_response(text: str | list, verbose: bool = True) ->
     """
     Extract percentiles from numeric forecast response.
 
-    Looks for "Distribution:" anchor then parses lines like:
-    - Percentile 1: 15
-    - Percentile 5: 20
+    Scans for "Percentile X:" lines anywhere in the response. No anchor required.
+    Takes the LAST occurrence of each percentile if duplicates exist (since the
+    final answer typically appears at the end of the response).
+
+    Supported formats:
+    - Percentile 10: 15
+    - Percentile 10: 15 (lowest value)
     - 10: 25 (percentile word optional)
 
     Args:
@@ -262,28 +268,16 @@ def extract_percentiles_from_response(text: str | list, verbose: bool = True) ->
         Dictionary mapping percentile keys to values
 
     Raises:
-        ValueError: If no valid percentiles extracted
+        ExtractionError: If no valid percentiles extracted
     """
     lines = text if isinstance(text, list) else text.splitlines()
     percentiles = {}
-    collecting = False
 
     for idx, raw in enumerate(lines, 1):
         line = normalize_percentile_line(str(raw))
 
-        if not collecting and "distribution:" in line:
-            collecting = True
-            if verbose:
-                logger.debug(f"Found 'Distribution:' anchor at line {idx}")
-            continue
-
-        if not collecting:
-            continue
-
         match = NUM_PATTERN.match(line)
         if not match:
-            if verbose:
-                logger.debug(f"No match on line {idx}: {line}")
             continue
 
         key, val_text = match.groups()
@@ -293,7 +287,7 @@ def extract_percentiles_from_response(text: str | list, verbose: bool = True) ->
             if p in VALID_PERCENTILE_KEYS:
                 percentiles[p] = val
                 if verbose:
-                    logger.debug(f"Matched Percentile {p}: {val}")
+                    logger.debug(f"Matched Percentile {p}: {val} at line {idx}")
         except Exception as e:
             logger.warning(f"Failed parsing line {idx}: {line} -> {e}")
 
@@ -310,7 +304,10 @@ def extract_date_percentiles_from_response(
     """
     Extract date percentiles from forecast response and convert to timestamps.
 
-    Looks for "Distribution:" anchor then parses lines like:
+    Scans for "Percentile X:" lines with date values anywhere in the response.
+    No anchor required. Takes the LAST occurrence of each percentile if duplicates exist.
+
+    Supported formats:
     - Percentile 10: 2026-03-15
     - Percentile 50: 2026-06-01T12:00:00Z
 
@@ -326,24 +323,12 @@ def extract_date_percentiles_from_response(
     """
     lines = text if isinstance(text, list) else text.splitlines()
     percentiles = {}
-    collecting = False
 
     for idx, raw in enumerate(lines, 1):
         line = normalize_percentile_line(str(raw))
 
-        if not collecting and "distribution:" in line:
-            collecting = True
-            if verbose:
-                logger.debug(f"Found 'Distribution:' anchor at line {idx}")
-            continue
-
-        if not collecting:
-            continue
-
         match = DATE_PATTERN.match(line)
         if not match:
-            if verbose:
-                logger.debug(f"No date match on line {idx}: {line}")
             continue
 
         key, date_text = match.groups()
@@ -354,7 +339,9 @@ def extract_date_percentiles_from_response(
             if p in VALID_PERCENTILE_KEYS and timestamp is not None:
                 percentiles[p] = timestamp
                 if verbose:
-                    logger.debug(f"Matched Percentile {p}: {date_text} -> {timestamp}")
+                    logger.debug(
+                        f"Matched Percentile {p}: {date_text} -> {timestamp} at line {idx}"
+                    )
         except Exception as e:
             logger.warning(f"Failed parsing date line {idx}: {line} -> {e}")
 
@@ -413,8 +400,9 @@ def enforce_monotonic_percentiles(pct_dict: dict[int, float]) -> dict[int, float
 
     This fixes cases where the LLM outputs flat percentile values (e.g., P40=10.0, P60=10.0).
 
-    However, if the distribution is fully INVERTED (P1 > P99), this indicates the model
-    misunderstood CDF semantics and we raise an error rather than silently corrupting the data.
+    However, if the distribution is fully INVERTED (lowest percentile > highest percentile),
+    this indicates the model misunderstood CDF semantics and we raise an error rather than
+    silently corrupting the data.
 
     Args:
         pct_dict: Dictionary mapping percentile keys to values
@@ -423,7 +411,7 @@ def enforce_monotonic_percentiles(pct_dict: dict[int, float]) -> dict[int, float
         New dictionary with strictly increasing values
 
     Raises:
-        ExtractionError: If percentiles are inverted (P1 > P99)
+        ExtractionError: If percentiles are inverted (lower percentile has higher value)
     """
     sorted_items = sorted(pct_dict.items())
 
@@ -435,7 +423,7 @@ def enforce_monotonic_percentiles(pct_dict: dict[int, float]) -> dict[int, float
         if first_val > last_val:
             raise ExtractionError(
                 f"Percentiles are inverted: P{first_key}={first_val} > P{last_key}={last_val}. "
-                f"Percentile values must increase (P1 should be lowest, P99 highest)."
+                f"Percentile values must increase (lower percentiles should have lower values)."
             )
 
     # Apply jitter for minor flat spots (e.g., P40=10.0, P60=10.0)
