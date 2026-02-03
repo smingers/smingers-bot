@@ -39,7 +39,7 @@ logger = logging.getLogger(__name__)
 class ForecastArtifactPaths:
     """Container for all artifacts from a single forecast."""
 
-    question_id: int
+    question_id: int | str  # int for Metaculus, str for Ecclesia ObjectIds
     timestamp: str
     base_dir: Path
 
@@ -78,7 +78,7 @@ class ArtifactStore:
         self.base_dir = Path(base_dir)
         self.base_dir.mkdir(parents=True, exist_ok=True)
 
-    def create_forecast_artifacts(self, question_id: int) -> ForecastArtifactPaths:
+    def create_forecast_artifacts(self, question_id: int | str) -> ForecastArtifactPaths:
         """Create a new artifact container for a forecast."""
         timestamp = datetime.now(UTC).strftime("%Y%m%d_%H%M%S")
         return ForecastArtifactPaths(

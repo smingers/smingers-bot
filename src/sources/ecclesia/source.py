@@ -19,7 +19,7 @@ from ...core.extractors import (
     extract_percentiles_from_response,
 )
 from ...core.types import CoreForecast, PromptSet, Question, ResearchContext
-from ...storage.artifact_store import ArtifactStore
+from ...storage.artifact_store import ArtifactStore, ForecastArtifactPaths
 from ...utils.llm import LLMClient
 from ..base import BaseSource, register_source
 from .client import AIForecast, EcclesiaBet, EcclesiaClient
@@ -278,9 +278,18 @@ class EcclesiaSource(BaseSource):
         Returns:
             CoreForecast with prediction and metadata
         """
+        # Create artifact paths if we have an artifact store
+        artifacts = None
+        if self.artifact_store:
+            artifacts = self.artifact_store.create_forecast_artifacts(bet_id)
+
         # Fetch bet
         bet = await self.fetch_ecclesia_bet(bet_id)
         log(f"\nForecasting: {bet.name} (Type: {bet.bet_type})")
+
+        # Save bet data as artifact
+        if artifacts:
+            self.artifact_store.save_question(artifacts, bet.raw)
 
         # Build context
         builder = await self._get_context_builder()
@@ -290,16 +299,25 @@ class EcclesiaSource(BaseSource):
         log(f"Current context: {len(context.current_context)} chars")
         log(f"Reference classes: {len(context.reference_classes)} similar bets")
 
+        # Save research context as artifacts
+        if artifacts:
+            self.artifact_store.save_search_results(
+                artifacts, "historical", {"context": context.historical_context}
+            )
+            self.artifact_store.save_search_results(
+                artifacts, "current", {"context": context.current_context}
+            )
+
         # Get prompts
         prompts = self.get_prompts(bet.bet_type)
 
         # Run ensemble
         if bet.bet_type == "binary":
-            return await self._run_binary_ensemble(bet, context, prompts, log)
+            return await self._run_binary_ensemble(bet, context, prompts, log, artifacts)
         elif bet.bet_type == "numeric":
-            return await self._run_numeric_ensemble(bet, context, prompts, log)
+            return await self._run_numeric_ensemble(bet, context, prompts, log, artifacts)
         elif bet.bet_type == "categorical":
-            return await self._run_categorical_ensemble(bet, context, prompts, log)
+            return await self._run_categorical_ensemble(bet, context, prompts, log, artifacts)
         else:
             raise ValueError(f"Unsupported bet type: {bet.bet_type}")
 
@@ -309,6 +327,7 @@ class EcclesiaSource(BaseSource):
         context: Any,
         prompts: PromptSet,
         log: Callable[[str], Any],
+        artifacts: ForecastArtifactPaths | None = None,
     ) -> CoreForecast:
         """Run the 5-agent ensemble for a binary question."""
         agents = self._get_agents()
@@ -322,11 +341,21 @@ class EcclesiaSource(BaseSource):
             context=context.historical_context,
         )
 
+        # Save outside view prompt
+        if artifacts and self.artifact_store:
+            self.artifact_store.save_outside_view_prompt(artifacts, outside_view_prompt)
+
         # Step 1: Run outside view predictions
         log("\n=== Running outside view predictions ===")
         outside_view_outputs = await self._run_agent_step(
             agents, outside_view_prompt, prompts.system_claude, log, "outside view"
         )
+
+        # Save outside view outputs
+        if artifacts and self.artifact_store:
+            for i, output in enumerate(outside_view_outputs):
+                if not isinstance(output, Exception):
+                    self.artifact_store.save_forecaster_outside_view(artifacts, i + 1, output)
 
         # Step 2: Cross-pollinate and run inside view
         log("\n=== Running inside view predictions ===")
@@ -408,6 +437,25 @@ class EcclesiaSource(BaseSource):
                     )
                     probabilities.append(None)
 
+        # Save inside view outputs and predictions
+        if artifacts and self.artifact_store:
+            for i, ar in enumerate(agent_results):
+                if ar.inside_view_output:
+                    self.artifact_store.save_forecaster_inside_view(
+                        artifacts, i + 1, ar.inside_view_output
+                    )
+                self.artifact_store.save_forecaster_prediction(
+                    artifacts,
+                    i + 1,
+                    {
+                        "agent_id": ar.agent_id,
+                        "model": ar.model,
+                        "weight": ar.weight,
+                        "probability": ar.probability,
+                        "error": ar.error,
+                    },
+                )
+
         # Aggregate
         valid_probs = [
             (p, a["weight"]) for p, a in zip(probabilities, agents, strict=True) if p is not None
@@ -425,6 +473,19 @@ class EcclesiaSource(BaseSource):
 
         log(f"\nFinal probability: {final_prob:.0f}%")
 
+        # Save aggregation
+        if artifacts and self.artifact_store:
+            self.artifact_store.save_aggregation(
+                artifacts,
+                {
+                    "final_probability": final_prob,
+                    "valid_forecasters": len(valid_probs),
+                    "total_forecasters": len(agents),
+                    "individual_probabilities": probabilities,
+                    "weights": [a["weight"] for a in agents],
+                },
+            )
+
         return CoreForecast(
             prediction=final_prob,  # 0-100 for Ecclesia
             question_type="binary",
@@ -439,6 +500,7 @@ class EcclesiaSource(BaseSource):
         context: Any,
         prompts: PromptSet,
         log: Callable[[str], Any],
+        artifacts: ForecastArtifactPaths | None = None,
     ) -> CoreForecast:
         """Run the 5-agent ensemble for a numeric question."""
         agents = self._get_agents()
@@ -568,6 +630,7 @@ class EcclesiaSource(BaseSource):
         context: Any,
         prompts: PromptSet,
         log: Callable[[str], Any],
+        artifacts: ForecastArtifactPaths | None = None,
     ) -> CoreForecast:
         """Run the 5-agent ensemble for a categorical question."""
         agents = self._get_agents()
