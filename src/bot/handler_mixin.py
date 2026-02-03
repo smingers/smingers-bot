@@ -9,6 +9,7 @@ multiple choice handlers.
 import logging
 
 from ..utils.llm import LLMClient
+from .exceptions import TruncationError
 
 logger = logging.getLogger(__name__)
 
@@ -75,9 +76,24 @@ class ForecasterMixin:
         active_models = self.config.get("active_models", {})
         return active_models.get(key, self.config.get("models", {}).get(key, default))
 
-    def _get_max_tokens(self) -> int:
-        """Get max output tokens from config with fallback to 4000."""
-        return self.config.get("llm", {}).get("max_output_tokens", 4000)
+    def _get_max_tokens(self, model: str | None = None) -> int:
+        """
+        Get max output tokens from config with fallback to 4000.
+
+        Checks for model-specific overrides in llm.model_max_tokens first,
+        then falls back to llm.max_output_tokens, then 4000.
+        """
+        llm_config = self.config.get("llm", {})
+        default = llm_config.get("max_output_tokens", 4000)
+
+        # Check for model-specific override
+        if model:
+            model_overrides = llm_config.get("model_max_tokens", {})
+            for model_pattern, max_tokens in model_overrides.items():
+                if model_pattern in model:
+                    return max_tokens
+
+        return default
 
     async def _call_model(
         self,
@@ -106,7 +122,7 @@ class ForecasterMixin:
                 model=model,
                 messages=messages,
                 system=system_prompt,
-                max_tokens=self._get_max_tokens(),
+                max_tokens=self._get_max_tokens(model),
             )
             return response.content
         except Exception as e:
@@ -136,18 +152,30 @@ class ForecasterMixin:
         messages = [{"role": "user", "content": prompt}]
 
         try:
+            max_tokens = self._get_max_tokens(model)
             response = await self.llm.complete(
                 model=model,
                 messages=messages,
                 system=system_prompt,
-                max_tokens=self._get_max_tokens(),
+                max_tokens=max_tokens,
             )
+
+            # Check for truncation - response was cut off before completion
+            if response.was_truncated:
+                raise TruncationError(
+                    f"Response truncated after {response.output_tokens} tokens (limit: {max_tokens})",
+                    output_tokens=response.output_tokens,
+                    max_tokens=max_tokens,
+                )
+
             metadata = {
                 "input_tokens": response.input_tokens,
                 "output_tokens": response.output_tokens,
                 "cost": response.cost,
             }
             return response.content, metadata
+        except TruncationError:
+            raise  # Don't wrap TruncationError
         except Exception as e:
             logger.error(f"Model call failed ({model}): {e}")
             raise

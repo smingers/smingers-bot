@@ -452,6 +452,66 @@ class TestLLMResponse:
         if hasattr(response, "total_tokens"):
             assert response.total_tokens == 150
 
+    def test_was_truncated_true_when_finish_reason_length(self):
+        """was_truncated returns True when finish_reason is 'length'."""
+        response = LLMResponse(
+            content="Incomplete...",
+            model="test",
+            input_tokens=100,
+            output_tokens=4000,
+            cost=0.01,
+            latency_ms=100,
+            timestamp="2026-01-01T00:00:00Z",
+            finish_reason="length",
+        )
+
+        assert response.was_truncated is True
+
+    def test_was_truncated_false_when_finish_reason_stop(self):
+        """was_truncated returns False when finish_reason is 'stop'."""
+        response = LLMResponse(
+            content="Complete response",
+            model="test",
+            input_tokens=100,
+            output_tokens=500,
+            cost=0.01,
+            latency_ms=100,
+            timestamp="2026-01-01T00:00:00Z",
+            finish_reason="stop",
+        )
+
+        assert response.was_truncated is False
+
+    def test_was_truncated_false_when_finish_reason_none(self):
+        """was_truncated returns False when finish_reason is None."""
+        response = LLMResponse(
+            content="Response",
+            model="test",
+            input_tokens=100,
+            output_tokens=500,
+            cost=0.01,
+            latency_ms=100,
+            timestamp="2026-01-01T00:00:00Z",
+            finish_reason=None,
+        )
+
+        assert response.was_truncated is False
+
+    def test_was_truncated_false_for_other_finish_reasons(self):
+        """was_truncated returns False for other finish_reasons like 'content_filter'."""
+        response = LLMResponse(
+            content="Filtered response",
+            model="test",
+            input_tokens=100,
+            output_tokens=500,
+            cost=0.01,
+            latency_ms=100,
+            timestamp="2026-01-01T00:00:00Z",
+            finish_reason="content_filter",
+        )
+
+        assert response.was_truncated is False
+
 
 class TestLLMCall:
     """Tests for LLMCall dataclass."""

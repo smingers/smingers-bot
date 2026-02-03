@@ -294,6 +294,21 @@ pytest tests/unit/test_cdf_generation.py
 pytest tests/ -v
 ```
 
+### Code Formatting
+
+Run ruff to lint and format code before committing:
+
+```bash
+# Check for issues
+ruff check .
+
+# Auto-fix issues
+ruff check --fix .
+
+# Format code
+ruff format .
+```
+
 ### Test Infrastructure
 
 Test files in `tests/unit/`:

@@ -67,6 +67,20 @@ class LLMError(ForecastingError):
         self.last_error = last_error
 
 
+class TruncationError(ForecastingError):
+    """LLM response was truncated due to hitting max_tokens limit.
+
+    Raised when finish_reason is "length", indicating the response
+    was cut off before completion. The output is likely missing
+    the final probability/percentile values.
+    """
+
+    def __init__(self, message: str, output_tokens: int = 0, max_tokens: int = 0):
+        super().__init__(message)
+        self.output_tokens = output_tokens
+        self.max_tokens = max_tokens
+
+
 class SearchError(ForecastingError):
     """Search pipeline encountered an error.
 

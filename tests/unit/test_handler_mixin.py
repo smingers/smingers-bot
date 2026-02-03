@@ -4,13 +4,16 @@ Tests for ForecasterMixin shared functionality.
 Tests cover:
 - _get_agents() config hierarchy
 - _resolve_model() config hierarchy
+- _get_max_tokens() model-specific limits
 - _call_model() basic behavior
+- _call_model_with_metadata() truncation detection
 """
 
 from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 
+from src.bot.exceptions import TruncationError
 from src.bot.handler_mixin import DEFAULT_AGENTS, ForecasterMixin
 from src.utils.llm import LLMClient, LLMResponse
 
@@ -302,6 +305,124 @@ class TestCallModelWithMetadata:
 
         with pytest.raises(RuntimeError, match="API error"):
             await mixin._call_model_with_metadata("test-model", "Prompt")
+
+    @pytest.mark.asyncio
+    async def test_raises_truncation_error_when_response_truncated(self):
+        """Raises TruncationError when finish_reason is 'length'."""
+        mock_llm = MagicMock(spec=LLMClient)
+        mock_response = LLMResponse(
+            content="Incomplete response that was cut off...",
+            model="test-model",
+            input_tokens=100,
+            output_tokens=4000,
+            cost=0.05,
+            latency_ms=500,
+            timestamp="2026-01-01T00:00:00Z",
+            finish_reason="length",  # Indicates truncation
+        )
+        mock_llm.complete = AsyncMock(return_value=mock_response)
+
+        mixin = TestableForecasterMixin({}, mock_llm)
+
+        with pytest.raises(TruncationError) as exc_info:
+            await mixin._call_model_with_metadata("test-model", "Prompt")
+
+        assert exc_info.value.output_tokens == 4000
+        assert "truncated" in str(exc_info.value).lower()
+
+    @pytest.mark.asyncio
+    async def test_no_truncation_error_when_finish_reason_stop(self):
+        """No error when finish_reason is 'stop' (normal completion)."""
+        mock_llm = MagicMock(spec=LLMClient)
+        mock_response = LLMResponse(
+            content="Complete response with Probability: 25%",
+            model="test-model",
+            input_tokens=100,
+            output_tokens=500,
+            cost=0.05,
+            latency_ms=500,
+            timestamp="2026-01-01T00:00:00Z",
+            finish_reason="stop",  # Normal completion
+        )
+        mock_llm.complete = AsyncMock(return_value=mock_response)
+
+        mixin = TestableForecasterMixin({}, mock_llm)
+
+        content, metadata = await mixin._call_model_with_metadata("test-model", "Prompt")
+
+        assert content == "Complete response with Probability: 25%"
+        assert metadata["output_tokens"] == 500
+
+
+# ============================================================================
+# _get_max_tokens Tests
+# ============================================================================
+
+
+class TestGetMaxTokens:
+    """Tests for _get_max_tokens() model-specific limits."""
+
+    def test_default_max_tokens(self):
+        """Returns 4000 when no config specified."""
+        mixin = TestableForecasterMixin({})
+
+        assert mixin._get_max_tokens() == 4000
+
+    def test_max_tokens_from_config(self):
+        """Returns value from llm.max_output_tokens config."""
+        config = {"llm": {"max_output_tokens": 6000}}
+        mixin = TestableForecasterMixin(config)
+
+        assert mixin._get_max_tokens() == 6000
+
+    def test_model_specific_override(self):
+        """Model-specific override takes precedence."""
+        config = {
+            "llm": {
+                "max_output_tokens": 4000,
+                "model_max_tokens": {
+                    "claude-sonnet-4.5": 5000,
+                    "gpt-4": 8000,
+                },
+            }
+        }
+        mixin = TestableForecasterMixin(config)
+
+        # Model with override
+        assert mixin._get_max_tokens("openrouter/anthropic/claude-sonnet-4.5") == 5000
+        assert mixin._get_max_tokens("openrouter/openai/gpt-4") == 8000
+
+        # Model without override uses default
+        assert mixin._get_max_tokens("openrouter/openai/o3") == 4000
+
+    def test_model_pattern_matching(self):
+        """Pattern matching works for partial model names."""
+        config = {
+            "llm": {
+                "max_output_tokens": 4000,
+                "model_max_tokens": {
+                    "claude-sonnet": 5000,  # Matches any claude-sonnet variant
+                },
+            }
+        }
+        mixin = TestableForecasterMixin(config)
+
+        assert mixin._get_max_tokens("openrouter/anthropic/claude-sonnet-4.5") == 5000
+        assert mixin._get_max_tokens("anthropic/claude-sonnet-4") == 5000
+        assert mixin._get_max_tokens("claude-sonnet-3.5") == 5000
+
+    def test_no_model_uses_default(self):
+        """When model is None, returns default."""
+        config = {
+            "llm": {
+                "max_output_tokens": 4000,
+                "model_max_tokens": {"claude-sonnet-4.5": 5000},
+            }
+        }
+        mixin = TestableForecasterMixin(config)
+
+        assert mixin._get_max_tokens(None) == 4000
+        assert mixin._get_max_tokens() == 4000
 
 
 # ============================================================================

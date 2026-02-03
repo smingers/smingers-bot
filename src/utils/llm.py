@@ -84,7 +84,13 @@ class LLMResponse:
     cost: float
     latency_ms: int
     timestamp: str
+    finish_reason: str | None = None  # "stop", "length", "content_filter", etc.
     raw_response: dict | None = None
+
+    @property
+    def was_truncated(self) -> bool:
+        """Returns True if the response was truncated due to hitting max_tokens."""
+        return self.finish_reason == "length"
 
 
 @dataclass
@@ -249,6 +255,7 @@ class LLMClient:
 
                 # Extract response data
                 content = response.choices[0].message.content
+                finish_reason = response.choices[0].finish_reason
                 usage = response.usage
 
                 input_tokens = usage.prompt_tokens if usage else 0
@@ -263,6 +270,7 @@ class LLMClient:
                     cost=cost,
                     latency_ms=latency_ms,
                     timestamp=datetime.now(UTC).isoformat(),
+                    finish_reason=finish_reason,
                     raw_response=response.model_dump() if hasattr(response, "model_dump") else None,
                 )
 
