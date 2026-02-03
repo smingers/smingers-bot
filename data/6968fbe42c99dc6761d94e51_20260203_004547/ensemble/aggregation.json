@@ -1,0 +1,19 @@
+{
+  "final_probability": 63.6,
+  "valid_forecasters": 5,
+  "total_forecasters": 5,
+  "individual_probabilities": [
+    67.0,
+    70.0,
+    55.0,
+    68.0,
+    58.0
+  ],
+  "weights": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+  ]
+}

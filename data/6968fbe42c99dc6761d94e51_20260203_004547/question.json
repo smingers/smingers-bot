@@ -1,0 +1,961 @@
+{
+  "aiForecast": {
+    "categoryProbabilities": [],
+    "cost": 0
+  },
+  "betType": "binary",
+  "numericOutcome": null,
+  "categoricalOutcome": null,
+  "name": "AI Model Performance Benchmarking Tool",
+  "description": "BotStudio's bet, led by CTO Jordan Lee, focuses on developing a client-facing tool to compare performance metrics (e.g., accuracy, latency, resource usage) of customized AI models on the platform. The initiative, spanning four months, assumes transparent metrics will build trust and drive a 20% increase in upsell conversions for premium features like advanced templates or support. The effort involves engineering and product teams to integrate the tool, with beta testing to validate usability and impact.",
+  "status": "Active",
+  "successCriteria": "* 90%+ accuracy in metric reporting (verified via internal tests)\n* 75%+ adoption among 20 beta test clients (demonstrated in usage data)\n* 20% increase in upsell conversion (measured via sales data)",
+  "creationDate": "2025-08-28T13:38:27.815Z",
+  "labels": [
+    "Product",
+    "Engineering"
+  ],
+  "teamProbabilityHistory": [
+    {
+      "timestamp": "2025-08-28T12:12:19.000Z",
+      "value": 95,
+      "triggerReviewId": "6968fbe32c99dc6761d94b1e",
+      "_id": "6968fbe42c99dc6761d94e52",
+      "id": "6968fbe42c99dc6761d94e52"
+    },
+    {
+      "timestamp": "2025-09-01T20:18:30.000Z",
+      "value": 62.5,
+      "triggerReviewId": "6968fbe32c99dc6761d94b1f",
+      "_id": "6968fbe42c99dc6761d94e53",
+      "id": "6968fbe42c99dc6761d94e53"
+    },
+    {
+      "timestamp": "2025-09-06T16:07:30.000Z",
+      "value": 70,
+      "triggerReviewId": "6968fbe32c99dc6761d94b20",
+      "_id": "6968fbe42c99dc6761d94e54",
+      "id": "6968fbe42c99dc6761d94e54"
+    },
+    {
+      "timestamp": "2025-09-11T00:22:25.000Z",
+      "value": 57.5,
+      "triggerReviewId": "6968fbe32c99dc6761d94b21",
+      "_id": "6968fbe42c99dc6761d94e55",
+      "id": "6968fbe42c99dc6761d94e55"
+    },
+    {
+      "timestamp": "2025-09-17T08:08:25.000Z",
+      "value": 64,
+      "triggerReviewId": "6968fbe32c99dc6761d94b22",
+      "_id": "6968fbe42c99dc6761d94e56",
+      "id": "6968fbe42c99dc6761d94e56"
+    },
+    {
+      "timestamp": "2025-09-20T23:01:28.000Z",
+      "value": 63,
+      "triggerReviewId": "6968fbe32c99dc6761d94b23",
+      "_id": "6968fbe42c99dc6761d94e57",
+      "id": "6968fbe42c99dc6761d94e57"
+    },
+    {
+      "timestamp": "2025-09-25T22:25:02.000Z",
+      "value": 64,
+      "triggerReviewId": "6968fbe32c99dc6761d94b24",
+      "_id": "6968fbe42c99dc6761d94e58",
+      "id": "6968fbe42c99dc6761d94e58"
+    },
+    {
+      "timestamp": "2025-10-01T14:28:44.000Z",
+      "value": 63,
+      "triggerReviewId": "6968fbe32c99dc6761d94b25",
+      "_id": "6968fbe42c99dc6761d94e59",
+      "id": "6968fbe42c99dc6761d94e59"
+    },
+    {
+      "timestamp": "2025-10-06T02:06:03.000Z",
+      "value": 64,
+      "triggerReviewId": "6968fbe32c99dc6761d94b26",
+      "_id": "6968fbe42c99dc6761d94e5a",
+      "id": "6968fbe42c99dc6761d94e5a"
+    },
+    {
+      "timestamp": "2025-10-09T12:17:33.000Z",
+      "value": 60.5,
+      "triggerReviewId": "6968fbe32c99dc6761d94b32",
+      "_id": "6968fbe42c99dc6761d94e5b",
+      "id": "6968fbe42c99dc6761d94e5b"
+    },
+    {
+      "timestamp": "2025-10-10T22:11:21.000Z",
+      "value": 59.666666666666664,
+      "triggerReviewId": "6968fbe32c99dc6761d94b27",
+      "_id": "6968fbe42c99dc6761d94e5c",
+      "id": "6968fbe42c99dc6761d94e5c"
+    },
+    {
+      "timestamp": "2025-10-18T21:22:32.000Z",
+      "value": 59.333333333333336,
+      "triggerReviewId": "6968fbe32c99dc6761d94b28",
+      "_id": "6968fbe42c99dc6761d94e5d",
+      "id": "6968fbe42c99dc6761d94e5d"
+    },
+    {
+      "timestamp": "2025-10-22T00:09:30.000Z",
+      "value": 60.166666666666664,
+      "triggerReviewId": "6968fbe32c99dc6761d94b29",
+      "_id": "6968fbe42c99dc6761d94e5e",
+      "id": "6968fbe42c99dc6761d94e5e"
+    },
+    {
+      "timestamp": "2025-10-27T06:47:20.000Z",
+      "value": 60.5,
+      "triggerReviewId": "6968fbe32c99dc6761d94b2a",
+      "_id": "6968fbe42c99dc6761d94e5f",
+      "id": "6968fbe42c99dc6761d94e5f"
+    },
+    {
+      "timestamp": "2025-11-01T22:30:47.000Z",
+      "value": 64.66666666666667,
+      "triggerReviewId": "6968fbe32c99dc6761d94b2b",
+      "_id": "6968fbe42c99dc6761d94e60",
+      "id": "6968fbe42c99dc6761d94e60"
+    },
+    {
+      "timestamp": "2025-11-06T16:59:09.000Z",
+      "value": 63.833333333333336,
+      "triggerReviewId": "6968fbe32c99dc6761d94b2c",
+      "_id": "6968fbe42c99dc6761d94e61",
+      "id": "6968fbe42c99dc6761d94e61"
+    },
+    {
+      "timestamp": "2025-11-11T20:07:15.000Z",
+      "value": 64.16666666666667,
+      "triggerReviewId": "6968fbe32c99dc6761d94b2d",
+      "_id": "6968fbe42c99dc6761d94e62",
+      "id": "6968fbe42c99dc6761d94e62"
+    },
+    {
+      "timestamp": "2025-11-14T19:58:46.000Z",
+      "value": 64.83333333333333,
+      "triggerReviewId": "6968fbe32c99dc6761d94b33",
+      "_id": "6968fbe42c99dc6761d94e63",
+      "id": "6968fbe42c99dc6761d94e63"
+    },
+    {
+      "timestamp": "2025-11-16T12:33:07.000Z",
+      "value": 67.33333333333333,
+      "triggerReviewId": "6968fbe32c99dc6761d94b2e",
+      "_id": "6968fbe42c99dc6761d94e64",
+      "id": "6968fbe42c99dc6761d94e64"
+    },
+    {
+      "timestamp": "2025-11-18T21:56:35.000Z",
+      "value": 67.83333333333333,
+      "triggerReviewId": "6968fbe32c99dc6761d94b2f",
+      "_id": "6968fbe42c99dc6761d94e65",
+      "id": "6968fbe42c99dc6761d94e65"
+    },
+    {
+      "timestamp": "2025-11-22T15:00:29.000Z",
+      "value": 69.5,
+      "triggerReviewId": "6968fbe32c99dc6761d94b30",
+      "_id": "6968fbe42c99dc6761d94e66",
+      "id": "6968fbe42c99dc6761d94e66"
+    },
+    {
+      "timestamp": "2025-11-23T17:03:01.000Z",
+      "value": 69.83333333333333,
+      "triggerReviewId": "6968fbe32c99dc6761d94b31",
+      "_id": "6968fbe42c99dc6761d94e67",
+      "id": "6968fbe42c99dc6761d94e67"
+    },
+    {
+      "timestamp": "2025-11-27T10:24:34.000Z",
+      "value": 69.83333333333333,
+      "triggerReviewId": "6968fbe32c99dc6761d94b34",
+      "_id": "6968fbe42c99dc6761d94e68",
+      "id": "6968fbe42c99dc6761d94e68"
+    },
+    {
+      "timestamp": "2025-11-29T01:34:51.000Z",
+      "value": 69.33333333333333,
+      "triggerReviewId": "6968fbe32c99dc6761d94b35",
+      "_id": "6968fbe42c99dc6761d94e69",
+      "id": "6968fbe42c99dc6761d94e69"
+    },
+    {
+      "timestamp": "2025-12-05T21:36:12.000Z",
+      "value": 69.83333333333333,
+      "triggerReviewId": "6968fbe32c99dc6761d94b36",
+      "_id": "6968fbe42c99dc6761d94e6a",
+      "id": "6968fbe42c99dc6761d94e6a"
+    },
+    {
+      "timestamp": "2025-12-12T19:23:45.000Z",
+      "value": 71.66666666666667,
+      "triggerReviewId": "6968fbe32c99dc6761d94b37",
+      "_id": "6968fbe42c99dc6761d94e6b",
+      "id": "6968fbe42c99dc6761d94e6b"
+    },
+    {
+      "timestamp": "2025-12-18T23:18:56.000Z",
+      "value": 73.33333333333333,
+      "triggerReviewId": "6968fbe32c99dc6761d94b38",
+      "_id": "6968fbe42c99dc6761d94e6c",
+      "id": "6968fbe42c99dc6761d94e6c"
+    },
+    {
+      "timestamp": "2025-12-25T19:11:15.000Z",
+      "value": 75.33333333333333,
+      "triggerReviewId": "6968fbe32c99dc6761d94b39",
+      "_id": "6968fbe42c99dc6761d94e6d",
+      "id": "6968fbe42c99dc6761d94e6d"
+    },
+    {
+      "timestamp": "2025-12-29T19:34:39.000Z",
+      "value": 76.33333333333333,
+      "triggerReviewId": "6968fbe32c99dc6761d94b3a",
+      "_id": "6968fbe42c99dc6761d94e6e",
+      "id": "6968fbe42c99dc6761d94e6e"
+    },
+    {
+      "timestamp": "2026-01-01T14:56:10.000Z",
+      "value": 76.66666666666667,
+      "triggerReviewId": "6968fbe32c99dc6761d94b3b",
+      "_id": "6968fbe42c99dc6761d94e6f",
+      "id": "6968fbe42c99dc6761d94e6f"
+    },
+    {
+      "timestamp": "2026-01-06T17:45:51.000Z",
+      "value": 79.5,
+      "triggerReviewId": "6968fbe32c99dc6761d94b3c",
+      "_id": "6968fbe42c99dc6761d94e70",
+      "id": "6968fbe42c99dc6761d94e70"
+    },
+    {
+      "timestamp": "2026-01-07T01:28:21.000Z",
+      "value": 78.33333333333333,
+      "triggerReviewId": "6968fbe32c99dc6761d94b3d",
+      "_id": "6968fbe42c99dc6761d94e71",
+      "id": "6968fbe42c99dc6761d94e71"
+    },
+    {
+      "timestamp": "2026-01-08T21:38:13.000Z",
+      "value": 77.16666666666667,
+      "triggerReviewId": "6968fbe32c99dc6761d94b3e",
+      "_id": "6968fbe42c99dc6761d94e72",
+      "id": "6968fbe42c99dc6761d94e72"
+    },
+    {
+      "timestamp": "2026-01-09T11:11:15.000Z",
+      "value": 77.28571428571429,
+      "triggerReviewId": "6968fbe32c99dc6761d94b3f",
+      "_id": "6968fbe42c99dc6761d94e73",
+      "id": "6968fbe42c99dc6761d94e73"
+    },
+    {
+      "timestamp": "2026-01-10T22:51:28.000Z",
+      "value": 78.14285714285714,
+      "triggerReviewId": "6968fbe32c99dc6761d94b40",
+      "_id": "6968fbe42c99dc6761d94e74",
+      "id": "6968fbe42c99dc6761d94e74"
+    },
+    {
+      "timestamp": "2026-01-11T09:28:23.000Z",
+      "value": 77.14285714285714,
+      "triggerReviewId": "6968fbe32c99dc6761d94b41",
+      "_id": "6968fbe42c99dc6761d94e75",
+      "id": "6968fbe42c99dc6761d94e75"
+    },
+    {
+      "timestamp": "2026-01-12T18:20:41.000Z",
+      "value": 76.71428571428571,
+      "triggerReviewId": "6968fbe32c99dc6761d94b42",
+      "_id": "6968fbe42c99dc6761d94e76",
+      "id": "6968fbe42c99dc6761d94e76"
+    },
+    {
+      "timestamp": "2026-01-13T17:23:53.000Z",
+      "value": 78.14285714285714,
+      "triggerReviewId": "6968fbe32c99dc6761d94b43",
+      "_id": "6968fbe42c99dc6761d94e77",
+      "id": "6968fbe42c99dc6761d94e77"
+    }
+  ],
+  "resolutionOutcome": null,
+  "resolutionDate": null,
+  "resolutionResults": null,
+  "resolutionExplanation": null,
+  "resolutionLessons": null,
+  "deadline": "2026-03-08T14:38:27.815Z",
+  "isAnonymous": false,
+  "anonymousParticipants": [],
+  "scores": [],
+  "teamBrierScore": null,
+  "reviews": [
+    {
+      "categoryProbabilities": [],
+      "comments": "Prototype algorithms for benchmarking showing 93% accuracy in tests; confident in meeting technical thresholds. We've built a robust framework that can accurately measure and compare performance metrics across different AI models, including accuracy, latency, and resource consumption. The system handles the complexity of diverse model architectures and provides consistent, reliable measurements that clients can trust. Our internal validation shows we're already exceeding the 90% accuracy target, and the architecture is scalable enough to handle the variety of custom models our clients deploy. The technical foundation is solid, and I'm optimistic we can deliver this tool on schedule.",
+      "probability": 95,
+      "date": "2025-08-28T12:12:19.000Z",
+      "owner": {
+        "_id": "6968fbe32c99dc6761d9499d",
+        "firstName": "Jordan",
+        "lastName": "Lee",
+        "email": "jordan.lee@botstudio.com",
+        "position": "Co-Founder and CTO",
+        "id": "6968fbe32c99dc6761d9499d"
+      },
+      "_id": "6968fbe32c99dc6761d94b1e",
+      "createdAt": "2026-01-15T14:38:28.152Z",
+      "updatedAt": "2026-01-15T14:38:28.152Z"
+    },
+    {
+      "categoryProbabilities": [],
+      "comments": "Early data pipelines reveal complexity in handling diverse models; skeptical about seamless integration. While Jordan's prototype shows good accuracy in controlled tests, the real-world complexity of integrating with our diverse client model architectures is proving much more challenging than anticipated. We're encountering significant edge cases with different frameworks, custom layers, and varying data formats that weren't accounted for in the initial design. The 93% accuracy Jordan mentioned is based on a limited set of standard models, but our clients use highly customized architectures that will likely break our current benchmarking algorithms. I'm concerned we're underestimating the engineering effort required to make this truly robust across all client use cases.",
+      "probability": 30,
+      "date": "2025-09-01T20:18:30.000Z",
+      "owner": {
+        "_id": "6968fbe32c99dc6761d9499e",
+        "firstName": "Sam",
+        "lastName": "Patel",
+        "email": "sam.patel@botstudio.com",
+        "position": "Lead Software Engineer",
+        "id": "6968fbe32c99dc6761d9499e"
+      },
+      "_id": "6968fbe32c99dc6761d94b1f",
+      "createdAt": "2026-01-15T14:38:28.152Z",
+      "updatedAt": "2026-01-15T14:38:28.152Z"
+    },
+    {
+      "categoryProbabilities": [],
+      "comments": "Client demand for metric transparency high from surveys; UI design prioritized for clarity.",
+      "probability": 85,
+      "date": "2025-09-06T16:07:30.000Z",
+      "owner": {
+        "_id": "6968fbe32c99dc6761d9499f",
+        "firstName": "Taylor",
+        "lastName": "Kim",
+        "email": "taylor.kim@botstudio.com",
+        "position": "Product Manager",
+        "id": "6968fbe32c99dc6761d9499f"
+      },
+      "_id": "6968fbe32c99dc6761d94b20",
+      "createdAt": "2026-01-15T14:38:28.152Z",
+      "updatedAt": "2026-01-15T14:38:28.152Z"
+    },
+    {
+      "categoryProbabilities": [],
+      "comments": "Growth impact speculative; without proven client engagement, upsell projections feel overly optimistic.",
+      "probability": 20,
+      "date": "2025-09-11T00:22:25.000Z",
+      "owner": {
+        "_id": "6968fbe32c99dc6761d949a4",
+        "firstName": "Devon",
+        "lastName": "Wright",
+        "email": "devon.wright@botstudio.com",
+        "position": "Growth Marketer",
+        "id": "6968fbe32c99dc6761d949a4"
+      },
+      "_id": "6968fbe32c99dc6761d94b21",
+      "createdAt": "2026-01-15T14:38:28.152Z",
+      "updatedAt": "2026-01-15T14:38:28.152Z"
+    },
+    {
+      "categoryProbabilities": [],
+      "comments": "Marketing sees huge potential in transparent metrics to drive campaigns; expecting strong client interest.",
+      "probability": 90,
+      "date": "2025-09-17T08:08:25.000Z",
+      "owner": {
+        "_id": "6968fbe32c99dc6761d949a0",
+        "firstName": "Riley",
+        "lastName": "Chen",
+        "email": "riley.chen@botstudio.com",
+        "position": "Marketing Specialist",
+        "id": "6968fbe32c99dc6761d949a0"
+      },
+      "_id": "6968fbe32c99dc6761d94b22",
+      "createdAt": "2026-01-15T14:38:28.152Z",
+      "updatedAt": "2026-01-15T14:38:28.152Z"
+    },
+    {
+      "categoryProbabilities": [],
+      "comments": "Early demos to clients successful; metric accuracy holding, pushing for beta rollout. The client feedback has been overwhelmingly positive, with particular praise for the clarity and comprehensiveness of the performance metrics we're displaying. Clients appreciate being able to see side-by-side comparisons of their models' performance across different dimensions, which helps them make informed decisions about optimization and resource allocation. We're seeing strong interest in the beta program, with several clients already requesting early access. The technical implementation is holding up well under real-world testing conditions, and I'm confident we can meet our adoption targets.",
+      "probability": 90,
+      "date": "2025-09-20T23:01:28.000Z",
+      "owner": {
+        "_id": "6968fbe32c99dc6761d9499d",
+        "firstName": "Jordan",
+        "lastName": "Lee",
+        "email": "jordan.lee@botstudio.com",
+        "position": "Co-Founder and CTO",
+        "id": "6968fbe32c99dc6761d9499d"
+      },
+      "_id": "6968fbe32c99dc6761d94b23",
+      "createdAt": "2026-01-15T14:38:28.152Z",
+      "updatedAt": "2026-01-15T14:38:28.152Z"
+    },
+    {
+      "categoryProbabilities": [],
+      "comments": "Scaling tests exposed latency issues in real-time metrics; significant rework needed. Jordan's confidence in the \"successful demos\" overlooks the fact that we were testing with a handful of clients, not the full scale we need for production. When we stress-tested the system with realistic load, the latency issues became apparent - our current architecture can't handle the concurrent processing demands of multiple clients running benchmarks simultaneously. The accuracy metrics Jordan reported are misleading because they're based on single-user scenarios, not the multi-tenant environment we actually need to support. We're going to need significant architectural changes to make this performant at scale, which will likely push our timeline and may compromise some of the accuracy claims.",
+      "probability": 35,
+      "date": "2025-09-25T22:25:02.000Z",
+      "owner": {
+        "_id": "6968fbe32c99dc6761d9499e",
+        "firstName": "Sam",
+        "lastName": "Patel",
+        "email": "sam.patel@botstudio.com",
+        "position": "Lead Software Engineer",
+        "id": "6968fbe32c99dc6761d9499e"
+      },
+      "_id": "6968fbe32c99dc6761d94b24",
+      "createdAt": "2026-01-15T14:38:28.152Z",
+      "updatedAt": "2026-01-15T14:38:28.152Z"
+    },
+    {
+      "categoryProbabilities": [],
+      "comments": "Beta testers responding well to UI; addressing minor feedback to ensure adoption.",
+      "probability": 80,
+      "date": "2025-10-01T14:28:44.000Z",
+      "owner": {
+        "_id": "6968fbe32c99dc6761d9499f",
+        "firstName": "Taylor",
+        "lastName": "Kim",
+        "email": "taylor.kim@botstudio.com",
+        "position": "Product Manager",
+        "id": "6968fbe32c99dc6761d9499f"
+      },
+      "_id": "6968fbe32c99dc6761d94b25",
+      "createdAt": "2026-01-15T14:38:28.152Z",
+      "updatedAt": "2026-01-15T14:38:28.152Z"
+    },
+    {
+      "categoryProbabilities": [],
+      "comments": "Demo feedback lacks clear upsell signals; growth impact remains uncertain.",
+      "probability": 25,
+      "date": "2025-10-06T02:06:03.000Z",
+      "owner": {
+        "_id": "6968fbe32c99dc6761d949a4",
+        "firstName": "Devon",
+        "lastName": "Wright",
+        "email": "devon.wright@botstudio.com",
+        "position": "Growth Marketer",
+        "id": "6968fbe32c99dc6761d949a4"
+      },
+      "_id": "6968fbe32c99dc6761d94b26",
+      "createdAt": "2026-01-15T14:38:28.152Z",
+      "updatedAt": "2026-01-15T14:38:28.152Z"
+    },
+    {
+      "categoryProbabilities": [],
+      "comments": "Content strategy for tool promotion gaining traction; client discussions highlight value.",
+      "probability": 85,
+      "date": "2025-10-10T22:11:21.000Z",
+      "owner": {
+        "_id": "6968fbe32c99dc6761d949a0",
+        "firstName": "Riley",
+        "lastName": "Chen",
+        "email": "riley.chen@botstudio.com",
+        "position": "Marketing Specialist",
+        "id": "6968fbe32c99dc6761d949a0"
+      },
+      "_id": "6968fbe32c99dc6761d94b27",
+      "createdAt": "2026-01-15T14:38:28.152Z",
+      "updatedAt": "2026-01-15T14:38:28.152Z"
+    },
+    {
+      "categoryProbabilities": [],
+      "comments": "Fixed scaling issues; metrics now at 94% accuracy, adoption trending toward 70%. The performance bottlenecks we encountered during scaling tests have been resolved through architectural improvements and optimization of our data processing pipelines. We've implemented more efficient caching mechanisms and streamlined the metric calculation algorithms, which has improved both accuracy and response times. The beta user adoption is progressing well, with 70% of our target clients actively using the tool and providing valuable feedback. The remaining 30% are in various stages of onboarding, and we expect to hit our 75% adoption target within the next few weeks.",
+      "probability": 88,
+      "date": "2025-10-18T21:22:32.000Z",
+      "owner": {
+        "_id": "6968fbe32c99dc6761d9499d",
+        "firstName": "Jordan",
+        "lastName": "Lee",
+        "email": "jordan.lee@botstudio.com",
+        "position": "Co-Founder and CTO",
+        "id": "6968fbe32c99dc6761d9499d"
+      },
+      "_id": "6968fbe32c99dc6761d94b28",
+      "createdAt": "2026-01-15T14:38:28.152Z",
+      "updatedAt": "2026-01-15T14:38:28.152Z"
+    },
+    {
+      "categoryProbabilities": [],
+      "comments": "Latency resolved but edge cases in model diversity persist; cautious on final accuracy. While we've addressed the immediate scaling issues Jordan mentioned, the underlying problem of handling diverse model architectures remains a significant challenge. The 94% accuracy figure is still based on a subset of standard models, and we're continuing to discover edge cases with custom client implementations that break our benchmarking logic. I'm skeptical that we can maintain this accuracy level when we roll out to the full client base, especially given the variety of frameworks and custom modifications our clients use.",
+      "probability": 40,
+      "date": "2025-10-22T00:09:30.000Z",
+      "owner": {
+        "_id": "6968fbe32c99dc6761d9499e",
+        "firstName": "Sam",
+        "lastName": "Patel",
+        "email": "sam.patel@botstudio.com",
+        "position": "Lead Software Engineer",
+        "id": "6968fbe32c99dc6761d9499e"
+      },
+      "_id": "6968fbe32c99dc6761d94b29",
+      "createdAt": "2026-01-15T14:38:28.152Z",
+      "updatedAt": "2026-01-15T14:38:28.152Z"
+    },
+    {
+      "categoryProbabilities": [],
+      "comments": "Adoption at 72%; UI refinements boosting user satisfaction, confident in targets.",
+      "probability": 82,
+      "date": "2025-10-27T06:47:20.000Z",
+      "owner": {
+        "_id": "6968fbe32c99dc6761d9499f",
+        "firstName": "Taylor",
+        "lastName": "Kim",
+        "email": "taylor.kim@botstudio.com",
+        "position": "Product Manager",
+        "id": "6968fbe32c99dc6761d9499f"
+      },
+      "_id": "6968fbe32c99dc6761d94b2a",
+      "createdAt": "2026-01-15T14:38:28.152Z",
+      "updatedAt": "2026-01-15T14:38:28.152Z"
+    },
+    {
+      "categoryProbabilities": [],
+      "comments": "Upsell conversions at 8%; adoption up but growth impact still below expectations.",
+      "probability": 50,
+      "date": "2025-11-01T22:30:47.000Z",
+      "owner": {
+        "_id": "6968fbe32c99dc6761d949a4",
+        "firstName": "Devon",
+        "lastName": "Wright",
+        "email": "devon.wright@botstudio.com",
+        "position": "Growth Marketer",
+        "id": "6968fbe32c99dc6761d949a4"
+      },
+      "_id": "6968fbe32c99dc6761d94b2b",
+      "createdAt": "2026-01-15T14:38:28.152Z",
+      "updatedAt": "2026-01-15T14:38:28.152Z"
+    },
+    {
+      "categoryProbabilities": [],
+      "comments": "Marketing campaigns for benchmarking tool driving interest; conversions starting to show.",
+      "probability": 80,
+      "date": "2025-11-06T16:59:09.000Z",
+      "owner": {
+        "_id": "6968fbe32c99dc6761d949a0",
+        "firstName": "Riley",
+        "lastName": "Chen",
+        "email": "riley.chen@botstudio.com",
+        "position": "Marketing Specialist",
+        "id": "6968fbe32c99dc6761d949a0"
+      },
+      "_id": "6968fbe32c99dc6761d94b2c",
+      "createdAt": "2026-01-15T14:38:28.152Z",
+      "updatedAt": "2026-01-15T14:38:28.152Z"
+    },
+    {
+      "categoryProbabilities": [],
+      "comments": "Beta adoption at 75%; metric accuracy stable, early upsell deals emerging. We've successfully hit our adoption target, with 75% of beta clients actively using the benchmarking tool and providing positive feedback on its value. The metric accuracy has remained consistently high at 94%, and clients are finding the tool instrumental in optimizing their AI model performance. Most importantly, we're starting to see the business impact we hoped for - several clients have already upgraded to premium features after seeing the value of transparent performance metrics. The tool is proving to be a strong differentiator in our competitive landscape, and I'm confident we'll exceed our 20% upsell conversion target.",
+      "probability": 90,
+      "date": "2025-11-11T20:07:15.000Z",
+      "owner": {
+        "_id": "6968fbe32c99dc6761d9499d",
+        "firstName": "Jordan",
+        "lastName": "Lee",
+        "email": "jordan.lee@botstudio.com",
+        "position": "Co-Founder and CTO",
+        "id": "6968fbe32c99dc6761d9499d"
+      },
+      "_id": "6968fbe32c99dc6761d94b2d",
+      "createdAt": "2026-01-15T14:38:28.152Z",
+      "updatedAt": "2026-01-15T14:38:28.152Z"
+    },
+    {
+      "categoryProbabilities": [],
+      "comments": "Edge case fixes progressing; adoption strong but still monitoring accuracy risks. While the adoption numbers look promising, I'm still concerned about the long-term reliability of our benchmarking metrics across the full spectrum of client models. The fact that we're seeing upsells doesn't necessarily validate the technical accuracy - clients might be buying based on the perceived value of having any benchmarking tool, not necessarily one that provides perfectly accurate measurements.",
+      "probability": 55,
+      "date": "2025-11-16T12:33:07.000Z",
+      "owner": {
+        "_id": "6968fbe32c99dc6761d9499e",
+        "firstName": "Sam",
+        "lastName": "Patel",
+        "email": "sam.patel@botstudio.com",
+        "position": "Lead Software Engineer",
+        "id": "6968fbe32c99dc6761d9499e"
+      },
+      "_id": "6968fbe32c99dc6761d94b2e",
+      "createdAt": "2026-01-15T14:38:28.152Z",
+      "updatedAt": "2026-01-15T14:38:28.152Z"
+    },
+    {
+      "categoryProbabilities": [],
+      "comments": "Client feedback positive; adoption hitting target, upsell pipeline growing.",
+      "probability": 85,
+      "date": "2025-11-18T21:56:35.000Z",
+      "owner": {
+        "_id": "6968fbe32c99dc6761d9499f",
+        "firstName": "Taylor",
+        "lastName": "Kim",
+        "email": "taylor.kim@botstudio.com",
+        "position": "Product Manager",
+        "id": "6968fbe32c99dc6761d9499f"
+      },
+      "_id": "6968fbe32c99dc6761d94b2f",
+      "createdAt": "2026-01-15T14:38:28.152Z",
+      "updatedAt": "2026-01-15T14:38:28.152Z"
+    },
+    {
+      "categoryProbabilities": [],
+      "comments": "Upsell conversions now at 12%; improving but still cautious on hitting 20%.",
+      "probability": 60,
+      "date": "2025-11-22T15:00:29.000Z",
+      "owner": {
+        "_id": "6968fbe32c99dc6761d949a4",
+        "firstName": "Devon",
+        "lastName": "Wright",
+        "email": "devon.wright@botstudio.com",
+        "position": "Growth Marketer",
+        "id": "6968fbe32c99dc6761d949a4"
+      },
+      "_id": "6968fbe32c99dc6761d94b30",
+      "createdAt": "2026-01-15T14:38:28.152Z",
+      "updatedAt": "2026-01-15T14:38:28.152Z"
+    },
+    {
+      "categoryProbabilities": [],
+      "comments": "Promotional efforts amplifying tool visibility; client trust in metrics increasing.",
+      "probability": 82,
+      "date": "2025-11-23T17:03:01.000Z",
+      "owner": {
+        "_id": "6968fbe32c99dc6761d949a0",
+        "firstName": "Riley",
+        "lastName": "Chen",
+        "email": "riley.chen@botstudio.com",
+        "position": "Marketing Specialist",
+        "id": "6968fbe32c99dc6761d949a0"
+      },
+      "_id": "6968fbe32c99dc6761d94b31",
+      "createdAt": "2026-01-15T14:38:28.152Z",
+      "updatedAt": "2026-01-15T14:38:28.152Z"
+    },
+    {
+      "categoryProbabilities": [],
+      "comments": "Current benchmarking approach has fundamental limitations in handling model architecture variations. The metric standardization across different frameworks (TensorFlow, PyTorch, custom implementations) introduces significant measurement inconsistencies. We're seeing 15-20% variance in accuracy measurements for identical models depending on the underlying framework and optimization settings. The latency measurements are particularly problematic - our current approach doesn't account for hardware-specific optimizations, memory allocation patterns, or batch processing variations that can dramatically affect real-world performance. These technical limitations will likely prevent us from achieving the 90% accuracy threshold consistently across our diverse client base.",
+      "probability": 43,
+      "date": "2025-10-09T12:17:33.000Z",
+      "owner": {
+        "_id": "6968fbe32c99dc6761d949a3",
+        "firstName": "Jamie",
+        "lastName": "Torres",
+        "email": "jamie.torres@botstudio.com",
+        "position": "Senior DevOps Engineer",
+        "id": "6968fbe32c99dc6761d949a3"
+      },
+      "_id": "6968fbe32c99dc6761d94b32",
+      "createdAt": "2026-01-15T14:38:28.152Z",
+      "updatedAt": "2026-01-15T14:38:28.152Z"
+    },
+    {
+      "categoryProbabilities": [],
+      "comments": "The benchmarking tool's resource usage calculations are fundamentally flawed due to incomplete containerization isolation. We're measuring CPU and memory consumption within our testing environment, but this doesn't reflect actual production deployments where models run alongside other services, share resources, and face varying load patterns. The current approach assumes ideal conditions that don't exist in real client environments. Additionally, our accuracy metrics fail to account for model drift over time - we're benchmarking static snapshots, but production models degrade and require retraining. This creates a false sense of precision that could mislead clients about their actual model performance. The technical debt in our measurement infrastructure will require significant refactoring to provide reliable, production-accurate benchmarks.",
+      "probability": 47,
+      "date": "2025-11-14T19:58:46.000Z",
+      "owner": {
+        "_id": "6968fbe32c99dc6761d949a3",
+        "firstName": "Jamie",
+        "lastName": "Torres",
+        "email": "jamie.torres@botstudio.com",
+        "position": "Senior DevOps Engineer",
+        "id": "6968fbe32c99dc6761d949a3"
+      },
+      "_id": "6968fbe32c99dc6761d94b33",
+      "createdAt": "2026-01-15T14:38:28.152Z",
+      "updatedAt": "2026-01-15T14:38:28.152Z"
+    },
+    {
+      "categoryProbabilities": [],
+      "comments": "Production rollout metrics are exceeding expectations. We're seeing 95% accuracy across diverse model architectures, adoption at 78% (above our 75% target), and 18% upsell conversion trending toward our 20% goal. Client feedback consistently praises the tool's accuracy and usefulness for optimization decisions.",
+      "probability": 90,
+      "date": "2025-11-27T10:24:34.000Z",
+      "owner": {
+        "_id": "6968fbe32c99dc6761d9499d",
+        "firstName": "Jordan",
+        "lastName": "Lee",
+        "email": "jordan.lee@botstudio.com",
+        "position": "Co-Founder and CTO",
+        "id": "6968fbe32c99dc6761d9499d"
+      },
+      "_id": "6968fbe32c99dc6761d94b34",
+      "createdAt": "2026-01-15T14:38:28.152Z",
+      "updatedAt": "2026-01-15T14:38:28.152Z"
+    },
+    {
+      "categoryProbabilities": [],
+      "comments": "Jordan reports strong metrics, but I want to validate these numbers against actual client usage patterns before adjusting my confidence significantly.",
+      "probability": 52,
+      "date": "2025-11-29T01:34:51.000Z",
+      "owner": {
+        "_id": "6968fbe32c99dc6761d9499e",
+        "firstName": "Sam",
+        "lastName": "Patel",
+        "email": "sam.patel@botstudio.com",
+        "position": "Lead Software Engineer",
+        "id": "6968fbe32c99dc6761d9499e"
+      },
+      "_id": "6968fbe32c99dc6761d94b35",
+      "createdAt": "2026-01-15T14:38:28.152Z",
+      "updatedAt": "2026-01-15T14:38:28.152Z"
+    },
+    {
+      "categoryProbabilities": [],
+      "comments": "Client testimonials pouring in about benchmarking accuracy. One enterprise client said it caught a 12% performance degradation they had missed.",
+      "probability": 88,
+      "date": "2025-12-05T21:36:12.000Z",
+      "owner": {
+        "_id": "6968fbe32c99dc6761d9499f",
+        "firstName": "Taylor",
+        "lastName": "Kim",
+        "email": "taylor.kim@botstudio.com",
+        "position": "Product Manager",
+        "id": "6968fbe32c99dc6761d9499f"
+      },
+      "_id": "6968fbe32c99dc6761d94b36",
+      "createdAt": "2026-01-15T14:38:28.152Z",
+      "updatedAt": "2026-01-15T14:38:28.152Z"
+    },
+    {
+      "categoryProbabilities": [],
+      "comments": "I'm starting to see evidence that addresses some of my concerns. The production deployment data shows more consistent measurements across frameworks than I anticipated. However, I'm still monitoring for edge cases with highly custom model architectures.",
+      "probability": 58,
+      "date": "2025-12-12T19:23:45.000Z",
+      "owner": {
+        "_id": "6968fbe32c99dc6761d949a3",
+        "firstName": "Jamie",
+        "lastName": "Torres",
+        "email": "jamie.torres@botstudio.com",
+        "position": "Senior DevOps Engineer",
+        "id": "6968fbe32c99dc6761d949a3"
+      },
+      "_id": "6968fbe32c99dc6761d94b37",
+      "createdAt": "2026-01-15T14:38:28.152Z",
+      "updatedAt": "2026-01-15T14:38:28.152Z"
+    },
+    {
+      "categoryProbabilities": [],
+      "comments": "Reviewed actual client usage logs. The benchmarking accuracy holds up across 15 diverse production deployments. My skepticism is gradually shifting, but I want to see longer-term reliability data.",
+      "probability": 62,
+      "date": "2025-12-18T23:18:56.000Z",
+      "owner": {
+        "_id": "6968fbe32c99dc6761d9499e",
+        "firstName": "Sam",
+        "lastName": "Patel",
+        "email": "sam.patel@botstudio.com",
+        "position": "Lead Software Engineer",
+        "id": "6968fbe32c99dc6761d9499e"
+      },
+      "_id": "6968fbe32c99dc6761d94b38",
+      "createdAt": "2026-01-15T14:38:28.152Z",
+      "updatedAt": "2026-01-15T14:38:28.152Z"
+    },
+    {
+      "categoryProbabilities": [],
+      "comments": "Upsell data is compelling - 22% conversion rate now. Clients upgrading after using the tool to identify optimization opportunities. The business case is proving itself.",
+      "probability": 72,
+      "date": "2025-12-25T19:11:15.000Z",
+      "owner": {
+        "_id": "6968fbe32c99dc6761d949a4",
+        "firstName": "Devon",
+        "lastName": "Wright",
+        "email": "devon.wright@botstudio.com",
+        "position": "Growth Marketer",
+        "id": "6968fbe32c99dc6761d949a4"
+      },
+      "_id": "6968fbe32c99dc6761d94b39",
+      "createdAt": "2026-01-15T14:38:28.152Z",
+      "updatedAt": "2026-01-15T14:38:28.152Z"
+    },
+    {
+      "categoryProbabilities": [],
+      "comments": "Benchmarking tool has become a case study for our marketing. Clients citing it as a key differentiator during evaluation. Brand value exceeding initial goals.",
+      "probability": 88,
+      "date": "2025-12-29T19:34:39.000Z",
+      "owner": {
+        "_id": "6968fbe32c99dc6761d949a0",
+        "firstName": "Riley",
+        "lastName": "Chen",
+        "email": "riley.chen@botstudio.com",
+        "position": "Marketing Specialist",
+        "id": "6968fbe32c99dc6761d949a0"
+      },
+      "_id": "6968fbe32c99dc6761d94b3a",
+      "createdAt": "2026-01-15T14:38:28.152Z",
+      "updatedAt": "2026-01-15T14:38:28.152Z"
+    },
+    {
+      "categoryProbabilities": [],
+      "comments": "Three-month production data confirms: 96% accuracy maintained, adoption at 80%, upsell conversion at 23%. The tool has surpassed all success criteria. Client feedback unanimously positive about metric reliability and actionable insights. Technical concerns raised early have been resolved through production validation.",
+      "probability": 92,
+      "date": "2026-01-01T14:56:10.000Z",
+      "owner": {
+        "_id": "6968fbe32c99dc6761d9499d",
+        "firstName": "Jordan",
+        "lastName": "Lee",
+        "email": "jordan.lee@botstudio.com",
+        "position": "Co-Founder and CTO",
+        "id": "6968fbe32c99dc6761d9499d"
+      },
+      "_id": "6968fbe32c99dc6761d94b3b",
+      "createdAt": "2026-01-15T14:38:28.152Z",
+      "updatedAt": "2026-01-15T14:38:28.152Z"
+    },
+    {
+      "categoryProbabilities": [],
+      "comments": "I need to revise my assessment based on the production evidence. After reviewing 6 months of actual client usage across 40+ diverse model architectures, the benchmarking approach is proving robust. The measurement consistency across frameworks is better than anticipated - we're seeing less than 5% variance in controlled benchmarks, not the 15-20% I initially worried about. The containerization improvements Jordan implemented have addressed most of my resource measurement concerns. While some edge cases still exist with highly specialized custom implementations, the tool is providing reliable, actionable data for the vast majority of use cases. The technical foundation has held up under real-world load, and client satisfaction validates the approach.",
+      "probability": 75,
+      "date": "2026-01-06T17:45:51.000Z",
+      "owner": {
+        "_id": "6968fbe32c99dc6761d949a3",
+        "firstName": "Jamie",
+        "lastName": "Torres",
+        "email": "jamie.torres@botstudio.com",
+        "position": "Senior DevOps Engineer",
+        "id": "6968fbe32c99dc6761d949a3"
+      },
+      "_id": "6968fbe32c99dc6761d94b3c",
+      "createdAt": "2026-01-15T14:38:28.152Z",
+      "updatedAt": "2026-01-15T14:38:28.152Z"
+    },
+    {
+      "categoryProbabilities": [],
+      "comments": "Three clients reported accuracy discrepancies when benchmarking models using newer inference frameworks. We need to update our benchmarking algorithms to handle emerging architectures. This is fixable but will require engineering effort.",
+      "probability": 85,
+      "date": "2026-01-07T01:28:21.000Z",
+      "owner": {
+        "_id": "6968fbe32c99dc6761d9499d",
+        "firstName": "Jordan",
+        "lastName": "Lee",
+        "email": "jordan.lee@botstudio.com",
+        "position": "Co-Founder and CTO",
+        "id": "6968fbe32c99dc6761d9499d"
+      },
+      "_id": "6968fbe32c99dc6761d94b3d",
+      "createdAt": "2026-01-15T14:38:28.152Z",
+      "updatedAt": "2026-01-15T14:38:28.152Z"
+    },
+    {
+      "categoryProbabilities": [],
+      "comments": "Competitive intelligence shows a major platform launching a similar tool next quarter. Their approach handles multi-modal models that we're struggling with. First-mover advantage may erode.",
+      "probability": 65,
+      "date": "2026-01-08T21:38:13.000Z",
+      "owner": {
+        "_id": "6968fbe32c99dc6761d949a4",
+        "firstName": "Devon",
+        "lastName": "Wright",
+        "email": "devon.wright@botstudio.com",
+        "position": "Growth Marketer",
+        "id": "6968fbe32c99dc6761d949a4"
+      },
+      "_id": "6968fbe32c99dc6761d94b3e",
+      "createdAt": "2026-01-15T14:38:28.152Z",
+      "updatedAt": "2026-01-15T14:38:28.152Z"
+    },
+    {
+      "categoryProbabilities": [],
+      "comments": "Customer success noticing fatigue among beta users who've been using the tool for 6+ months. Accuracy drift in their production environments making benchmark comparisons less valuable over time.",
+      "probability": 78,
+      "date": "2026-01-09T11:11:15.000Z",
+      "owner": {
+        "_id": "6968fbe32c99dc6761d949a5",
+        "firstName": "Avery",
+        "lastName": "Brooks",
+        "email": "avery.brooks@botstudio.com",
+        "position": "Customer Success Manager",
+        "id": "6968fbe32c99dc6761d949a5"
+      },
+      "_id": "6968fbe32c99dc6761d94b3f",
+      "createdAt": "2026-01-15T14:38:28.152Z",
+      "updatedAt": "2026-01-15T14:38:28.152Z"
+    },
+    {
+      "categoryProbabilities": [],
+      "comments": "Multiple converging concerns: scaling issues, new framework compatibility gaps, competitive threat, and accuracy drift over time. Each is manageable individually, but together they're creating uncertainty about long-term viability.",
+      "probability": 68,
+      "date": "2026-01-10T22:51:28.000Z",
+      "owner": {
+        "_id": "6968fbe32c99dc6761d9499e",
+        "firstName": "Sam",
+        "lastName": "Patel",
+        "email": "sam.patel@botstudio.com",
+        "position": "Lead Software Engineer",
+        "id": "6968fbe32c99dc6761d9499e"
+      },
+      "_id": "6968fbe32c99dc6761d94b40",
+      "createdAt": "2026-01-15T14:38:28.152Z",
+      "updatedAt": "2026-01-15T14:38:28.152Z"
+    },
+    {
+      "categoryProbabilities": [],
+      "comments": "Scaling concerns emerging as we approach 50+ active users. Some clients with extremely large model sizes are experiencing timeouts during benchmarking. The tool works great for standard use cases, but we're hitting infrastructure limits with enterprise-scale clients.",
+      "probability": 68,
+      "date": "2026-01-11T09:28:23.000Z",
+      "owner": {
+        "_id": "6968fbe32c99dc6761d949a3",
+        "firstName": "Jamie",
+        "lastName": "Torres",
+        "email": "jamie.torres@botstudio.com",
+        "position": "Senior DevOps Engineer",
+        "id": "6968fbe32c99dc6761d949a3"
+      },
+      "_id": "6968fbe32c99dc6761d94b41",
+      "createdAt": "2026-01-15T14:38:28.152Z",
+      "updatedAt": "2026-01-15T14:38:28.152Z"
+    },
+    {
+      "categoryProbabilities": [],
+      "comments": "Despite emerging concerns about new frameworks and scaling, the core tool is still delivering value. We have a roadmap to address these issues.",
+      "probability": 82,
+      "date": "2026-01-12T18:20:41.000Z",
+      "owner": {
+        "_id": "6968fbe32c99dc6761d9499d",
+        "firstName": "Jordan",
+        "lastName": "Lee",
+        "email": "jordan.lee@botstudio.com",
+        "position": "Co-Founder and CTO",
+        "id": "6968fbe32c99dc6761d9499d"
+      },
+      "_id": "6968fbe32c99dc6761d94b42",
+      "createdAt": "2026-01-15T14:38:28.152Z",
+      "updatedAt": "2026-01-15T14:38:28.152Z"
+    },
+    {
+      "categoryProbabilities": [],
+      "comments": "Customer success data shows benchmarking tool users have 30% fewer performance-related support tickets. The tool is empowering clients to self-optimize.",
+      "probability": 88,
+      "date": "2026-01-13T17:23:53.000Z",
+      "owner": {
+        "_id": "6968fbe32c99dc6761d949a5",
+        "firstName": "Avery",
+        "lastName": "Brooks",
+        "email": "avery.brooks@botstudio.com",
+        "position": "Customer Success Manager",
+        "id": "6968fbe32c99dc6761d949a5"
+      },
+      "_id": "6968fbe32c99dc6761d94b43",
+      "createdAt": "2026-01-15T14:38:28.152Z",
+      "updatedAt": "2026-01-15T14:38:28.152Z"
+    }
+  ],
+  "owner": {
+    "_id": "6968fbe32c99dc6761d9499d",
+    "firstName": "Jordan",
+    "lastName": "Lee",
+    "email": "jordan.lee@botstudio.com"
+  },
+  "team": "6968fbe32c99dc6761d9499a",
+  "createdAt": "2025-08-28T13:38:27.815Z",
+  "updatedAt": "2025-08-28T13:38:27.815Z",
+  "categories": [],
+  "numericConsensusHistory": [],
+  "teamProbability": 78.14285714285714,
+  "teamNumericConsensus": null,
+  "teamCategoricalConsensus": null,
+  "id": "6968fbe42c99dc6761d94e51",
+  "teamAverageProbability": 78.14285714285714,
+  "participantCount": 0
+}

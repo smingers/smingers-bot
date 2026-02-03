@@ -523,3 +523,539 @@ class TestCDFEdgeCases:
             lower_bound=0,
         )
         assert len(cdf) == 201
+
+    def test_negative_bounds_positive_predictions_no_zero_point(self):
+        """
+        Regression test for Q41910 failure (Namibia inflation rate).
+
+        When bounds include negative values (-2 to 15) but all forecaster
+        predictions are positive (e.g., 2.5 to 5.2%), the CDF must still
+        generate without NaN values.
+
+        This failed when log scaling was incorrectly inferred from positive
+        predictions instead of using zero_point=None to determine linear scaling.
+        """
+        # Exact scenario from Q41910: Namibia inflation rate
+        # Bounds: -2.0 to 15.0, zero_point=None
+        # Forecaster predictions were all positive (around 2.5-5.2%)
+        percentiles = {
+            1: 2.5,
+            5: 2.9,
+            10: 3.1,
+            20: 3.3,
+            40: 3.6,
+            60: 3.8,
+            80: 4.1,
+            90: 4.4,
+            95: 4.7,
+            99: 5.2,
+        }
+        cdf = generate_continuous_cdf(
+            percentile_values=percentiles,
+            open_upper_bound=True,
+            open_lower_bound=True,
+            upper_bound=15.0,
+            lower_bound=-2.0,
+            zero_point=None,  # No log scaling - this is the key!
+        )
+
+        # Must not contain NaN values
+        assert len(cdf) == 201
+        assert all(not np.isnan(v) for v in cdf), "CDF contains NaN values"
+        assert all(0 <= v <= 1 for v in cdf), "CDF values outside [0, 1]"
+
+        # Must be monotonically increasing
+        for i in range(len(cdf) - 1):
+            assert cdf[i] <= cdf[i + 1], f"CDF not monotonic at index {i}"
+
+
+class TestValidationMethods:
+    """Tests for validation methods in NumericDistributionGenerator."""
+
+    def test_check_log_scaled_fields_zero_point_above_lower_bound(self):
+        """Test that zero_point >= lower_bound raises error."""
+        percentiles = {10: 20, 50: 50, 90: 80}
+        with pytest.raises(CDFGenerationError, match="less than or equal to the zero point"):
+            generate_continuous_cdf(
+                percentile_values=percentiles,
+                open_upper_bound=True,
+                open_lower_bound=True,
+                upper_bound=100,
+                lower_bound=10,  # lower_bound = 10
+                zero_point=10,  # zero_point = 10, violates lower_bound > zero_point
+            )
+
+    def test_check_log_scaled_fields_value_below_zero_point(self):
+        """Test that percentile value < zero_point raises error."""
+        percentiles = {10: 5, 50: 50, 90: 80}  # value 5 < zero_point 10
+        with pytest.raises(CDFGenerationError, match="less than the zero point"):
+            generate_continuous_cdf(
+                percentile_values=percentiles,
+                open_upper_bound=True,
+                open_lower_bound=True,
+                upper_bound=100,
+                lower_bound=11,  # must be > zero_point
+                zero_point=10,
+            )
+
+    def test_check_percentile_spacing_too_close(self):
+        """Test that percentiles within 5e-5 of each other raise error.
+
+        This validation triggers when adjacent percentiles (not values) are
+        too close together (< 5e-5 apart). Since generate_continuous_cdf only
+        accepts integer percentile keys, this can only be triggered by using
+        NumericDistributionGenerator directly with crafted Percentile objects.
+        """
+        from src.bot.cdf import NumericDistributionGenerator, Percentile
+
+        # Create percentiles that are too close: 0.10 and 0.10001 differ by 0.00001 < 5e-5
+        too_close_percentiles = [
+            Percentile(value=20, percentile=0.10),
+            Percentile(value=30, percentile=0.10001),  # Only 0.00001 apart
+            Percentile(value=80, percentile=0.90),
+        ]
+        with pytest.raises(CDFGenerationError, match="too close"):
+            NumericDistributionGenerator(
+                declared_percentiles=too_close_percentiles,
+                open_upper_bound=True,
+                open_lower_bound=True,
+                upper_bound=100,
+                lower_bound=0,
+                zero_point=None,
+            )
+
+    def test_check_too_far_from_bounds_no_values_in_range(self):
+        """Test that all percentiles outside 25% wiggle room raises error."""
+        # Bounds: 0-100, wiggle room: 25% = 25
+        # So valid range with wiggle: -25 to 125
+        # Put all percentiles WAY outside
+        percentiles = {10: 500, 50: 600, 90: 700}  # All way above 125
+        with pytest.raises(
+            CDFGenerationError, match="No declared percentiles are within the range"
+        ):
+            generate_continuous_cdf(
+                percentile_values=percentiles,
+                open_upper_bound=True,
+                open_lower_bound=True,
+                upper_bound=100,
+                lower_bound=0,
+            )
+
+    def test_check_too_far_from_bounds_values_exceed_2x_range(self):
+        """Test that percentiles exceeding 2x range buffer raise error."""
+        # Bounds: 0-100, range = 100, 2x buffer = 200
+        # So values must be within [-200, 300]
+        # Put one value way outside
+        percentiles = {10: 50, 50: 60, 90: 500}  # 500 > 300 (upper + 2x range)
+        with pytest.raises(CDFGenerationError, match="far exceeding the bounds"):
+            generate_continuous_cdf(
+                percentile_values=percentiles,
+                open_upper_bound=True,
+                open_lower_bound=True,
+                upper_bound=100,
+                lower_bound=0,
+            )
+
+    def test_check_too_far_from_bounds_below_2x_range(self):
+        """Test that percentiles below lower - 2x range raise error."""
+        # Bounds: 0-100, range = 100, 2x buffer = 200
+        # So values must be within [-200, 300]
+        percentiles = {10: -300, 50: 50, 90: 80}  # -300 < -200
+        with pytest.raises(CDFGenerationError, match="far exceeding the bounds"):
+            generate_continuous_cdf(
+                percentile_values=percentiles,
+                open_upper_bound=True,
+                open_lower_bound=True,
+                upper_bound=100,
+                lower_bound=0,
+            )
+
+    def test_check_percentiles_increasing_values_decreasing(self):
+        """Test that decreasing values raise error."""
+        percentiles = {10: 80, 50: 50, 90: 20}  # Values decrease as percentiles increase
+        with pytest.raises(CDFGenerationError, match="strictly increasing order"):
+            generate_continuous_cdf(
+                percentile_values=percentiles,
+                open_upper_bound=True,
+                open_lower_bound=True,
+                upper_bound=100,
+                lower_bound=0,
+            )
+
+    def test_valid_percentiles_within_wiggle_room(self):
+        """Test that percentiles within 25% wiggle room are accepted."""
+        # Bounds: 0-100, wiggle room extends to -25 and 125
+        percentiles = {10: -20, 50: 50, 90: 120}  # Within wiggle room
+        cdf = generate_continuous_cdf(
+            percentile_values=percentiles,
+            open_upper_bound=True,
+            open_lower_bound=True,
+            upper_bound=100,
+            lower_bound=0,
+        )
+        assert len(cdf) == 201
+
+    def test_valid_log_scaled_question(self):
+        """Test that valid log-scaled question works."""
+        # zero_point must be < lower_bound, and all values must be > zero_point
+        percentiles = {10: 20, 50: 50, 90: 80}
+        cdf = generate_continuous_cdf(
+            percentile_values=percentiles,
+            open_upper_bound=True,
+            open_lower_bound=True,
+            upper_bound=100,
+            lower_bound=10,
+            zero_point=5,  # zero_point < lower_bound, all values > zero_point
+        )
+        assert len(cdf) == 201
+        assert all(0 <= v <= 1 for v in cdf)
+
+
+class TestRepeatingValues:
+    """Tests for handling duplicate/repeating percentile values."""
+
+    def test_repeating_values_at_lower_bound(self):
+        """Test that duplicate values at lower bound get proper epsilon offsets."""
+        # Multiple percentiles with value at the lower bound
+        percentiles = {10: 0, 50: 0, 90: 100}
+        cdf = generate_continuous_cdf(
+            percentile_values=percentiles,
+            open_upper_bound=False,
+            open_lower_bound=False,
+            upper_bound=100,
+            lower_bound=0,
+        )
+        assert len(cdf) == 201
+        # CDF should still be strictly increasing
+        for i in range(len(cdf) - 1):
+            assert cdf[i] < cdf[i + 1], f"CDF not strictly increasing at index {i}"
+
+    def test_repeating_values_at_upper_bound(self):
+        """Test that duplicate values at upper bound get proper epsilon offsets."""
+        # Multiple percentiles with value at the upper bound
+        percentiles = {10: 0, 50: 100, 90: 100}
+        cdf = generate_continuous_cdf(
+            percentile_values=percentiles,
+            open_upper_bound=False,
+            open_lower_bound=False,
+            upper_bound=100,
+            lower_bound=0,
+        )
+        assert len(cdf) == 201
+        # CDF should still be strictly increasing
+        for i in range(len(cdf) - 1):
+            assert cdf[i] < cdf[i + 1], f"CDF not strictly increasing at index {i}"
+
+    def test_repeating_values_in_middle(self):
+        """Test that duplicate values in middle of distribution get properly separated."""
+        # Many percentiles clustered at a single value in the middle
+        percentiles = {10: 10, 20: 11, 40: 11, 60: 11, 80: 11, 90: 11}
+        cdf = generate_continuous_cdf(
+            percentile_values=percentiles,
+            open_upper_bound=True,
+            open_lower_bound=False,
+            upper_bound=220,
+            lower_bound=0,
+        )
+        assert len(cdf) == 201
+        # CDF should still be monotonically increasing
+        for i in range(len(cdf) - 1):
+            assert cdf[i] <= cdf[i + 1], f"CDF not monotonic at index {i}"
+        # All values should be valid
+        assert all(0 <= v <= 1 for v in cdf)
+
+    def test_all_same_value_concentrated_prediction(self):
+        """Test when all percentiles have the same value (highly concentrated prediction)."""
+        # All percentiles at value 12 - very concentrated prediction
+        percentiles = {10: 12, 20: 12, 40: 12, 60: 12, 80: 12, 90: 12}
+        cdf = generate_continuous_cdf(
+            percentile_values=percentiles,
+            open_upper_bound=True,
+            open_lower_bound=False,
+            upper_bound=20,
+            lower_bound=0,
+        )
+        assert len(cdf) == 201
+        assert all(0 <= v <= 1 for v in cdf)
+        # Should be monotonically increasing
+        for i in range(len(cdf) - 1):
+            assert cdf[i] <= cdf[i + 1], f"CDF not monotonic at index {i}"
+
+    def test_edge_of_bin_probability_assignment(self):
+        """
+        Test that when all probability is at a single value (e.g., 12),
+        the correct bin gets the probability for scoring.
+
+        If question resolves to "12", probability should be assigned to
+        the bucket containing 12, not the adjacent bucket.
+        """
+        # All percentiles at value 12 - highly concentrated prediction
+        percentiles = {10: 12, 20: 12, 40: 12, 60: 12, 80: 12, 90: 12}
+        cdf = generate_continuous_cdf(
+            percentile_values=percentiles,
+            open_upper_bound=True,
+            open_lower_bound=False,
+            upper_bound=20,
+            lower_bound=0,
+        )
+
+        # Calculate PMF (probability mass function) from CDF
+        pmf = np.diff([0] + list(cdf))
+
+        # For a 201-point CDF over range [0, 20], each bin covers 0.1 units
+        # Value 12 should be in bin 120 (12 / 20 * 200 = 120)
+        # The bin containing 12 should have more probability than neighbors
+        bin_for_12 = 120
+        max_pmf = get_max_pmf_value(201, include_wiggle_room=True) * 0.95
+
+        # The correct bin should have high probability
+        assert pmf[bin_for_12] > max_pmf, (
+            f"Bin {bin_for_12} (containing value 12) should have high probability, "
+            f"got {pmf[bin_for_12]:.5f}, expected > {max_pmf:.5f}"
+        )
+        # Adjacent bins should have less probability
+        assert pmf[bin_for_12] > pmf[bin_for_12 - 1], (
+            f"Bin {bin_for_12} should have more probability than bin {bin_for_12 - 1}"
+        )
+        assert pmf[bin_for_12] > pmf[bin_for_12 + 1], (
+            f"Bin {bin_for_12} should have more probability than bin {bin_for_12 + 1}"
+        )
+
+
+class TestDiscreteDistributions:
+    """Tests for discrete question CDF generation (smaller point counts)."""
+
+    def test_discrete_21_points_with_repeated_values(self):
+        """Test 21-point CDF (discrete question) with repeated values."""
+        percentiles = {10: 12, 20: 12, 40: 12, 60: 12, 80: 12, 90: 12}
+        cdf = generate_continuous_cdf(
+            percentile_values=percentiles,
+            open_upper_bound=False,
+            open_lower_bound=False,
+            upper_bound=20,
+            lower_bound=0,
+            num_points=21,
+        )
+        assert len(cdf) == 21
+        assert all(0 <= v <= 1 for v in cdf)
+        # Most probability should be concentrated around the repeated value
+        # The PMF at index 12 should be larger than neighbors
+        pmf = np.diff([0] + list(cdf))
+        assert pmf[12] > pmf[11], "Probability at value 12 should exceed value 11"
+        assert pmf[12] > pmf[13], "Probability at value 12 should exceed value 13"
+
+
+class TestLogScaleDistributions:
+    """Tests for log-scaled questions (with zero_point)."""
+
+    def test_log_scale_with_repeated_values(self):
+        """Test log-scaled question with concentrated predictions."""
+        percentiles = {10: 11, 20: 11, 40: 11, 60: 11, 80: 11, 90: 11}
+        cdf = generate_continuous_cdf(
+            percentile_values=percentiles,
+            open_upper_bound=False,
+            open_lower_bound=False,
+            upper_bound=100_000_000,
+            lower_bound=1,
+            zero_point=0,
+        )
+        assert len(cdf) == 201
+        assert all(0 <= v <= 1 for v in cdf)
+        # Should not contain NaN
+        assert all(not np.isnan(v) for v in cdf)
+        # Should be monotonically increasing
+        for i in range(len(cdf) - 1):
+            assert cdf[i] <= cdf[i + 1], f"CDF not monotonic at index {i}"
+
+    def test_log_scale_wide_range(self):
+        """Test log-scaled question spanning many orders of magnitude."""
+        percentiles = {10: 10, 50: 1000, 90: 1_000_000}
+        cdf = generate_continuous_cdf(
+            percentile_values=percentiles,
+            open_upper_bound=True,
+            open_lower_bound=False,
+            upper_bound=1_000_000_000,
+            lower_bound=1,
+            zero_point=0,
+        )
+        assert len(cdf) == 201
+        assert all(0 <= v <= 1 for v in cdf)
+
+
+class TestDistributionVariations:
+    """Parametrized tests covering various distribution shapes and configurations."""
+
+    @pytest.mark.parametrize("orientation", ["far_left", "center", "far_right"])
+    @pytest.mark.parametrize("spread", ["very_wide", "normal", "very_narrow"])
+    def test_orientation_and_spread_variations(self, orientation, spread):
+        """Test distributions with different orientations and spreads."""
+        lower_bound, upper_bound = 0, 100
+        range_size = upper_bound - lower_bound
+
+        # Determine center based on orientation
+        orientation_fractions = {
+            "far_left": 0.02,
+            "center": 0.5,
+            "far_right": 0.98,
+        }
+        center = lower_bound + range_size * orientation_fractions[orientation]
+
+        # Determine spread
+        spread_fractions = {
+            "very_wide": 0.99,
+            "normal": 0.15,
+            "very_narrow": 0.01,
+        }
+        half_spread = spread_fractions[spread] * range_size
+
+        # Generate percentiles around center with given spread
+        percentile_points = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
+        percentiles = {}
+        for p in percentile_points:
+            offset = (p - 0.5) * 2 * half_spread
+            value = center + offset
+            percentiles[int(p * 100)] = value
+
+        cdf = generate_continuous_cdf(
+            percentile_values=percentiles,
+            open_upper_bound=True,
+            open_lower_bound=True,
+            upper_bound=upper_bound,
+            lower_bound=lower_bound,
+        )
+
+        assert len(cdf) == 201
+        assert all(0 <= v <= 1 for v in cdf)
+        # Check monotonicity
+        for i in range(len(cdf) - 1):
+            assert cdf[i] <= cdf[i + 1], f"CDF not monotonic at index {i}"
+
+    @pytest.mark.parametrize("cdf_size", [21, 102, 201])
+    @pytest.mark.parametrize("open_upper", [True, False])
+    @pytest.mark.parametrize("open_lower", [True, False])
+    def test_bounds_and_size_variations(self, cdf_size, open_upper, open_lower):
+        """Test different CDF sizes and bound configurations."""
+        percentiles = {10: 20, 30: 40, 50: 50, 70: 60, 90: 80}
+        cdf = generate_continuous_cdf(
+            percentile_values=percentiles,
+            open_upper_bound=open_upper,
+            open_lower_bound=open_lower,
+            upper_bound=100,
+            lower_bound=0,
+            num_points=cdf_size,
+        )
+
+        assert len(cdf) == cdf_size
+        assert all(0 <= v <= 1 for v in cdf)
+
+        # Check boundary constraints
+        if open_lower:
+            assert cdf[0] >= 0.001, "Open lower bound should have cdf[0] >= 0.001"
+        else:
+            assert cdf[0] == 0.0, "Closed lower bound should have cdf[0] == 0"
+
+        if open_upper:
+            assert cdf[-1] <= 0.999, "Open upper bound should have cdf[-1] <= 0.999"
+        else:
+            assert cdf[-1] == pytest.approx(1.0, abs=1e-9), (
+                "Closed upper bound should have cdf[-1] ≈ 1"
+            )
+
+    @pytest.mark.parametrize(
+        "bounds",
+        [
+            (-5, 5),
+            (0, 100),
+            (-30_000, 30_000),
+        ],
+    )
+    def test_different_bound_ranges(self, bounds):
+        """Test distributions with different bound ranges."""
+        lower_bound, upper_bound = bounds
+        center = (lower_bound + upper_bound) / 2
+        spread = (upper_bound - lower_bound) * 0.2
+
+        percentiles = {
+            10: center - spread,
+            50: center,
+            90: center + spread,
+        }
+
+        cdf = generate_continuous_cdf(
+            percentile_values=percentiles,
+            open_upper_bound=True,
+            open_lower_bound=True,
+            upper_bound=upper_bound,
+            lower_bound=lower_bound,
+        )
+
+        assert len(cdf) == 201
+        assert all(0 <= v <= 1 for v in cdf)
+
+
+class TestTooLittleProbabilityInRange:
+    """Tests for error when percentiles assign almost no probability within bounds."""
+
+    def test_all_probability_outside_bounds(self):
+        """Test error when all percentile values are far outside the question bounds."""
+        # All percentiles are between 1.1 and 1.9, but bounds are 14-15
+        percentiles = {
+            10: 1.1,
+            20: 1.2,
+            30: 1.3,
+            40: 1.4,
+            50: 1.5,
+            60: 1.6,
+            70: 1.7,
+            80: 1.8,
+            90: 1.9,
+        }
+        # This should fail the _check_too_far_from_bounds validation
+        with pytest.raises(
+            CDFGenerationError, match="No declared percentiles are within the range"
+        ):
+            generate_continuous_cdf(
+                percentile_values=percentiles,
+                open_upper_bound=True,
+                open_lower_bound=True,
+                upper_bound=15,
+                lower_bound=14,
+            )
+
+
+class TestAggregationEdgeCases:
+    """Tests for CDF aggregation scenarios."""
+
+    def test_aggregating_multiple_cdfs_produces_valid_output(self):
+        """Test that averaging multiple CDFs produces a valid CDF."""
+        # Generate three different CDFs
+        cdf1 = generate_continuous_cdf(
+            percentile_values={10: 10, 50: 20, 90: 30},
+            open_upper_bound=False,
+            open_lower_bound=False,
+            upper_bound=100,
+            lower_bound=0,
+        )
+        cdf2 = generate_continuous_cdf(
+            percentile_values={10: 20, 50: 30, 90: 40},
+            open_upper_bound=False,
+            open_lower_bound=False,
+            upper_bound=100,
+            lower_bound=0,
+        )
+        cdf3 = generate_continuous_cdf(
+            percentile_values={10: 30, 50: 40, 90: 50},
+            open_upper_bound=False,
+            open_lower_bound=False,
+            upper_bound=100,
+            lower_bound=0,
+        )
+
+        # Simple average (this is what numeric.py does)
+        combined = [(c1 + c2 + c3) / 3 for c1, c2, c3 in zip(cdf1, cdf2, cdf3, strict=True)]
+
+        assert len(combined) == 201
+        assert all(0 <= v <= 1 for v in combined)
+        # Should be monotonically increasing
+        for i in range(len(combined) - 1):
+            assert combined[i] <= combined[i + 1], f"Aggregated CDF not monotonic at index {i}"

@@ -1,0 +1,417 @@
+{
+  "aiForecast": {
+    "categoryProbabilities": [],
+    "cost": 0
+  },
+  "betType": "binary",
+  "numericOutcome": null,
+  "categoricalOutcome": null,
+  "name": "Convert Compliance-Blocked Enterprise Prospects into Signed Contracts",
+  "description": "After achieving SOC 2 Type II and GDPR certifications (expected completion by March 2026), test whether compliance was the primary blocker preventing enterprise deals. Alex and Casey lead this sales initiative, re-engaging 15 enterprise prospects who previously cited compliance requirements as the reason for not moving forward\u2014including prospects from the failed finance and healthcare vertical expansions. The bet assumes that certification removes the blocker and these prospects will convert, but acknowledges uncertainty about whether compliance was the real issue versus pricing, product fit, competitive positioning, or other factors. The effort involves personalized outreach, updated security documentation, and demos highlighting compliance capabilities over a six-month period post-certification.",
+  "status": "Active",
+  "successCriteria": "* 3+ signed enterprise contracts from the compliance-blocked prospect list\n* $15,000/month minimum total revenue from these converted deals\n* At least one contract from finance or healthcare vertical (proving we can re-enter those markets)",
+  "creationDate": "2025-11-18T14:38:27.815Z",
+  "labels": [
+    "Sales"
+  ],
+  "teamProbabilityHistory": [
+    {
+      "timestamp": "2025-11-23T17:21:37.000Z",
+      "value": 75,
+      "triggerReviewId": "6968fbe32c99dc6761d94b44",
+      "_id": "6968fbe42c99dc6761d94ea0",
+      "id": "6968fbe42c99dc6761d94ea0"
+    },
+    {
+      "timestamp": "2025-11-28T22:42:05.000Z",
+      "value": 70,
+      "triggerReviewId": "6968fbe32c99dc6761d94b45",
+      "_id": "6968fbe42c99dc6761d94ea1",
+      "id": "6968fbe42c99dc6761d94ea1"
+    },
+    {
+      "timestamp": "2025-12-04T20:12:07.000Z",
+      "value": 60,
+      "triggerReviewId": "6968fbe32c99dc6761d94b46",
+      "_id": "6968fbe42c99dc6761d94ea2",
+      "id": "6968fbe42c99dc6761d94ea2"
+    },
+    {
+      "timestamp": "2025-12-08T18:54:43.000Z",
+      "value": 58.75,
+      "triggerReviewId": "6968fbe32c99dc6761d94b47",
+      "_id": "6968fbe42c99dc6761d94ea3",
+      "id": "6968fbe42c99dc6761d94ea3"
+    },
+    {
+      "timestamp": "2025-12-13T00:16:19.000Z",
+      "value": 57,
+      "triggerReviewId": "6968fbe32c99dc6761d94b48",
+      "_id": "6968fbe42c99dc6761d94ea4",
+      "id": "6968fbe42c99dc6761d94ea4"
+    },
+    {
+      "timestamp": "2025-12-18T03:29:08.000Z",
+      "value": 55,
+      "triggerReviewId": "6968fbe32c99dc6761d94b49",
+      "_id": "6968fbe42c99dc6761d94ea5",
+      "id": "6968fbe42c99dc6761d94ea5"
+    },
+    {
+      "timestamp": "2025-12-23T22:17:26.000Z",
+      "value": 55.714285714285715,
+      "triggerReviewId": "6968fbe32c99dc6761d94b4a",
+      "_id": "6968fbe42c99dc6761d94ea6",
+      "id": "6968fbe42c99dc6761d94ea6"
+    },
+    {
+      "timestamp": "2025-12-31T05:37:20.000Z",
+      "value": 56.42857142857143,
+      "triggerReviewId": "6968fbe32c99dc6761d94b4b",
+      "_id": "6968fbe42c99dc6761d94ea7",
+      "id": "6968fbe42c99dc6761d94ea7"
+    },
+    {
+      "timestamp": "2026-01-05T06:01:36.000Z",
+      "value": 57.142857142857146,
+      "triggerReviewId": "6968fbe32c99dc6761d94b4c",
+      "_id": "6968fbe42c99dc6761d94ea8",
+      "id": "6968fbe42c99dc6761d94ea8"
+    },
+    {
+      "timestamp": "2026-01-08T04:37:15.000Z",
+      "value": 58.57142857142857,
+      "triggerReviewId": "6968fbe32c99dc6761d94b4d",
+      "_id": "6968fbe42c99dc6761d94ea9",
+      "id": "6968fbe42c99dc6761d94ea9"
+    },
+    {
+      "timestamp": "2026-01-11T18:15:40.000Z",
+      "value": 59.375,
+      "triggerReviewId": "6968fbe32c99dc6761d94b4e",
+      "_id": "6968fbe42c99dc6761d94eaa",
+      "id": "6968fbe42c99dc6761d94eaa"
+    },
+    {
+      "timestamp": "2026-01-13T02:21:15.000Z",
+      "value": 60.25,
+      "triggerReviewId": "6968fbe32c99dc6761d94b4f",
+      "_id": "6968fbe42c99dc6761d94eab",
+      "id": "6968fbe42c99dc6761d94eab"
+    },
+    {
+      "timestamp": "2026-01-15T16:18:57.000Z",
+      "value": 59.625,
+      "triggerReviewId": "6968fbe32c99dc6761d94b50",
+      "_id": "6968fbe42c99dc6761d94eac",
+      "id": "6968fbe42c99dc6761d94eac"
+    }
+  ],
+  "resolutionOutcome": null,
+  "resolutionDate": null,
+  "resolutionResults": null,
+  "resolutionExplanation": null,
+  "resolutionLessons": null,
+  "deadline": "2026-10-03T13:38:27.815Z",
+  "isAnonymous": true,
+  "anonymousParticipants": [
+    {
+      "userId": "6968fbe32c99dc6761d9499c",
+      "pseudonym": "Keen Moose",
+      "_id": "6968fbe42c99dc6761d94ead",
+      "id": "6968fbe42c99dc6761d94ead"
+    },
+    {
+      "userId": "6968fbe32c99dc6761d949a2",
+      "pseudonym": "Skilled Falcon",
+      "_id": "6968fbe42c99dc6761d94eae",
+      "id": "6968fbe42c99dc6761d94eae"
+    },
+    {
+      "userId": "6968fbe32c99dc6761d9499d",
+      "pseudonym": "Wise Leopard",
+      "_id": "6968fbe42c99dc6761d94eaf",
+      "id": "6968fbe42c99dc6761d94eaf"
+    },
+    {
+      "userId": "6968fbe32c99dc6761d949a1",
+      "pseudonym": "Daring Dolphin",
+      "_id": "6968fbe42c99dc6761d94eb0",
+      "id": "6968fbe42c99dc6761d94eb0"
+    },
+    {
+      "userId": "6968fbe32c99dc6761d9499f",
+      "pseudonym": "Nimble Weasel",
+      "_id": "6968fbe42c99dc6761d94eb1",
+      "id": "6968fbe42c99dc6761d94eb1"
+    },
+    {
+      "userId": "6968fbe32c99dc6761d949a4",
+      "pseudonym": "Thoughtful Ferret",
+      "_id": "6968fbe42c99dc6761d94eb2",
+      "id": "6968fbe42c99dc6761d94eb2"
+    },
+    {
+      "userId": "6968fbe32c99dc6761d949a5",
+      "pseudonym": "Hardy Hawk",
+      "_id": "6968fbe42c99dc6761d94eb3",
+      "id": "6968fbe42c99dc6761d94eb3"
+    },
+    {
+      "userId": "6968fbe32c99dc6761d949a0",
+      "pseudonym": "Patient Marten",
+      "_id": "6968fbe42c99dc6761d94eb4",
+      "id": "6968fbe42c99dc6761d94eb4"
+    }
+  ],
+  "scores": [],
+  "teamBrierScore": null,
+  "reviews": [
+    {
+      "categoryProbabilities": [],
+      "comments": "We've compiled a list of 15 enterprise prospects who explicitly cited compliance as their blocker. Once we get SOC 2 and GDPR certified in March, I'm confident we can convert at least 3-4 of these. These are warm leads who already showed interest\u2014compliance was literally the only thing stopping them. The finance and healthcare prospects are particularly promising since we know they need our solution, they just couldn't buy without certifications.",
+      "probability": 75,
+      "date": "2025-11-23T17:21:37.000Z",
+      "owner": {
+        "id": "6968fbe32c99dc6761d9499c",
+        "_id": "6968fbe32c99dc6761d9499c",
+        "firstName": "Keen",
+        "lastName": "Moose",
+        "pseudonym": "Keen Moose",
+        "isAnonymous": true
+      },
+      "_id": "6968fbe32c99dc6761d94b44",
+      "createdAt": "2026-01-15T14:38:28.171Z",
+      "updatedAt": "2026-01-15T14:38:28.171Z"
+    },
+    {
+      "categoryProbabilities": [],
+      "comments": "I'm leading the outreach effort with Alex, and I'm optimistic but cautious. We failed hard in finance and healthcare verticals before, and while compliance was mentioned, I'm not 100% convinced it was the only issue. Some of these prospects might have used compliance as a polite way to say no. But the ones who were genuinely engaged before hitting the compliance wall should convert. I'd say we have a decent shot at 3 contracts.",
+      "probability": 65,
+      "date": "2025-11-28T22:42:05.000Z",
+      "owner": {
+        "id": "6968fbe32c99dc6761d949a2",
+        "_id": "6968fbe32c99dc6761d949a2",
+        "firstName": "Skilled",
+        "lastName": "Falcon",
+        "pseudonym": "Skilled Falcon",
+        "isAnonymous": true
+      },
+      "_id": "6968fbe32c99dc6761d94b45",
+      "createdAt": "2026-01-15T14:38:28.171Z",
+      "updatedAt": "2026-01-15T14:38:28.171Z"
+    },
+    {
+      "categoryProbabilities": [],
+      "comments": "I'm skeptical about this bet. We've been burned before assuming we understood why prospects didn't buy. The finance vertical failure taught us that 'compliance requirements' can be code for 'we don't trust a startup platform' or 'your pricing doesn't work for us.' Even with certifications, these prospects might have moved on to competitors, changed priorities, or found other reasons to say no. I'd put this at 40% - possible but far from certain.",
+      "probability": 40,
+      "date": "2025-12-04T20:12:07.000Z",
+      "owner": {
+        "id": "6968fbe32c99dc6761d9499d",
+        "_id": "6968fbe32c99dc6761d9499d",
+        "firstName": "Jordan",
+        "lastName": "Lee",
+        "email": "jordan.lee@botstudio.com",
+        "position": "Co-Founder and CTO",
+        "pseudonym": "Wise Leopard",
+        "originalFirstName": "Jordan",
+        "originalLastName": "Lee",
+        "isCurrentUser": true
+      },
+      "_id": "6968fbe32c99dc6761d94b46",
+      "createdAt": "2026-01-15T14:38:28.171Z",
+      "updatedAt": "2026-01-15T14:38:28.171Z"
+    },
+    {
+      "categoryProbabilities": [],
+      "comments": "From an ops perspective, we're investing significant resources in certifications specifically to unlock these deals. If this bet fails, it means we misread the market signals. But I've seen the prospect list and several of them were genuinely engaged before hitting compliance walls. The timing is good\u2014we have Series A funding to support the certification effort, and these prospects know we're serious. Moderate confidence.",
+      "probability": 55,
+      "date": "2025-12-08T18:54:43.000Z",
+      "owner": {
+        "id": "6968fbe32c99dc6761d949a1",
+        "_id": "6968fbe32c99dc6761d949a1",
+        "firstName": "Daring",
+        "lastName": "Dolphin",
+        "pseudonym": "Daring Dolphin",
+        "isAnonymous": true
+      },
+      "_id": "6968fbe32c99dc6761d94b47",
+      "createdAt": "2026-01-15T14:38:28.171Z",
+      "updatedAt": "2026-01-15T14:38:28.171Z"
+    },
+    {
+      "categoryProbabilities": [],
+      "comments": "Product-wise, we've improved significantly since we first approached these prospects. The benchmarking tool, onboarding automation, and edge deployment features address concerns they might have had. But I'm worried that 'compliance blocker' was sometimes a convenient excuse when the real issue was product fit or competitive positioning. We'll find out once certifications are done, but I'm not assuming success.",
+      "probability": 50,
+      "date": "2025-12-13T00:16:19.000Z",
+      "owner": {
+        "id": "6968fbe32c99dc6761d9499f",
+        "_id": "6968fbe32c99dc6761d9499f",
+        "firstName": "Nimble",
+        "lastName": "Weasel",
+        "pseudonym": "Nimble Weasel",
+        "isAnonymous": true
+      },
+      "_id": "6968fbe32c99dc6761d94b48",
+      "createdAt": "2026-01-15T14:38:28.171Z",
+      "updatedAt": "2026-01-15T14:38:28.171Z"
+    },
+    {
+      "categoryProbabilities": [],
+      "comments": "Growth perspective: Even if compliance was the blocker, market conditions have changed. Some of these prospects might have signed with competitors during the 6+ months we've been working on certifications. Others might have internal budget constraints now that didn't exist before. The finance and healthcare verticals failed for multiple reasons beyond just compliance\u2014I'm not convinced certifications alone will unlock those markets.",
+      "probability": 45,
+      "date": "2025-12-18T03:29:08.000Z",
+      "owner": {
+        "id": "6968fbe32c99dc6761d949a4",
+        "_id": "6968fbe32c99dc6761d949a4",
+        "firstName": "Thoughtful",
+        "lastName": "Ferret",
+        "pseudonym": "Thoughtful Ferret",
+        "isAnonymous": true
+      },
+      "_id": "6968fbe32c99dc6761d94b49",
+      "createdAt": "2026-01-15T14:38:28.171Z",
+      "updatedAt": "2026-01-15T14:38:28.171Z"
+    },
+    {
+      "categoryProbabilities": [],
+      "comments": "Customer success has been tracking these prospects, and several have stayed in touch asking about our certification progress. That's a good sign\u2014they're still interested and waiting. The ones who've maintained engagement are likely genuine compliance-blocked deals. But I'm concerned about the prospects who went silent\u2014they might have moved on. I'd estimate 60% chance we convert the engaged ones, lower for the silent ones.",
+      "probability": 60,
+      "date": "2025-12-23T22:17:26.000Z",
+      "owner": {
+        "id": "6968fbe32c99dc6761d949a5",
+        "_id": "6968fbe32c99dc6761d949a5",
+        "firstName": "Hardy",
+        "lastName": "Hawk",
+        "pseudonym": "Hardy Hawk",
+        "isAnonymous": true
+      },
+      "_id": "6968fbe32c99dc6761d94b4a",
+      "createdAt": "2026-01-15T14:38:28.171Z",
+      "updatedAt": "2026-01-15T14:38:28.171Z"
+    },
+    {
+      "categoryProbabilities": [],
+      "comments": "Certification timeline is on track for March completion. I've started preliminary outreach to the prospect list, and 8 of the 15 have responded positively, saying they're still interested once we're certified. Two finance prospects and one healthcare prospect are actively waiting. This is looking very promising\u2014we might exceed the 3-contract target. The warm response from prospects who've been waiting confirms compliance was the real blocker.",
+      "probability": 80,
+      "date": "2025-12-31T05:37:20.000Z",
+      "owner": {
+        "id": "6968fbe32c99dc6761d9499c",
+        "_id": "6968fbe32c99dc6761d9499c",
+        "firstName": "Keen",
+        "lastName": "Moose",
+        "pseudonym": "Keen Moose",
+        "isAnonymous": true
+      },
+      "_id": "6968fbe32c99dc6761d94b4b",
+      "createdAt": "2026-01-15T14:38:28.171Z",
+      "updatedAt": "2026-01-15T14:38:28.171Z"
+    },
+    {
+      "categoryProbabilities": [],
+      "comments": "Alex's outreach is getting good responses. I'm updating our sales materials with certification details and preparing demos that highlight security and compliance features. The finance prospects are particularly engaged\u2014one even asked to schedule a demo for April, right after our expected certification. I'm feeling more confident, but still cautious about pricing and competitive positioning. We need to make sure we're not just checking the compliance box but also winning on value.",
+      "probability": 70,
+      "date": "2026-01-05T06:01:36.000Z",
+      "owner": {
+        "id": "6968fbe32c99dc6761d949a2",
+        "_id": "6968fbe32c99dc6761d949a2",
+        "firstName": "Skilled",
+        "lastName": "Falcon",
+        "pseudonym": "Skilled Falcon",
+        "isAnonymous": true
+      },
+      "_id": "6968fbe32c99dc6761d94b4c",
+      "createdAt": "2026-01-15T14:38:28.171Z",
+      "updatedAt": "2026-01-15T14:38:28.171Z"
+    },
+    {
+      "categoryProbabilities": [],
+      "comments": "The positive responses are encouraging, but I'm still skeptical. 'Still interested' doesn't mean 'will definitely buy.' We've seen this before where prospects say they're interested but then find other reasons to decline. The real test will be after certifications when we actually try to close deals. Also, I'm concerned that some of these prospects might have been using compliance as a polite rejection. We'll know soon enough, but I'm maintaining cautious probability.",
+      "probability": 50,
+      "date": "2026-01-08T04:37:15.000Z",
+      "owner": {
+        "id": "6968fbe32c99dc6761d9499d",
+        "_id": "6968fbe32c99dc6761d9499d",
+        "firstName": "Jordan",
+        "lastName": "Lee",
+        "email": "jordan.lee@botstudio.com",
+        "position": "Co-Founder and CTO",
+        "pseudonym": "Wise Leopard",
+        "originalFirstName": "Jordan",
+        "originalLastName": "Lee",
+        "isCurrentUser": true
+      },
+      "_id": "6968fbe32c99dc6761d94b4d",
+      "createdAt": "2026-01-15T14:38:28.171Z",
+      "updatedAt": "2026-01-15T14:38:28.171Z"
+    },
+    {
+      "categoryProbabilities": [],
+      "comments": "Marketing is preparing content highlighting our certifications and security posture. The messaging around 'enterprise-ready' and 'compliance-certified' is resonating in our outreach. We're seeing increased engagement from the prospect list, and several have requested updated security documentation. The narrative is strong, but execution will determine if we convert interest into contracts.",
+      "probability": 65,
+      "date": "2026-01-11T18:15:40.000Z",
+      "owner": {
+        "id": "6968fbe32c99dc6761d949a0",
+        "_id": "6968fbe32c99dc6761d949a0",
+        "firstName": "Patient",
+        "lastName": "Marten",
+        "pseudonym": "Patient Marten",
+        "isAnonymous": true
+      },
+      "_id": "6968fbe32c99dc6761d94b4e",
+      "createdAt": "2026-01-15T14:38:28.171Z",
+      "updatedAt": "2026-01-15T14:38:28.171Z"
+    },
+    {
+      "categoryProbabilities": [],
+      "comments": "Certification process is on track, expected to complete by end of March. The ops team is preparing all the documentation and processes these prospects will need for their procurement reviews. We're being thorough because we know enterprise deals require extensive due diligence. The preparation work is solid, but I'm still concerned about whether compliance was truly the only blocker.",
+      "probability": 62,
+      "date": "2026-01-13T02:21:15.000Z",
+      "owner": {
+        "id": "6968fbe32c99dc6761d949a1",
+        "_id": "6968fbe32c99dc6761d949a1",
+        "firstName": "Daring",
+        "lastName": "Dolphin",
+        "pseudonym": "Daring Dolphin",
+        "isAnonymous": true
+      },
+      "_id": "6968fbe32c99dc6761d94b4f",
+      "createdAt": "2026-01-15T14:38:28.171Z",
+      "updatedAt": "2026-01-15T14:38:28.171Z"
+    },
+    {
+      "categoryProbabilities": [],
+      "comments": "We're in good shape for when certifications complete in March. The prospect list is engaged, our sales materials are ready, and we have a clear plan for re-engagement. The early positive responses from 8 prospects give me confidence that compliance was indeed the blocker for many of them. I'm optimistic we can convert at least 3-4 contracts once we're certified, which would exceed our targets.",
+      "probability": 75,
+      "date": "2026-01-15T16:18:57.000Z",
+      "owner": {
+        "id": "6968fbe32c99dc6761d9499c",
+        "_id": "6968fbe32c99dc6761d9499c",
+        "firstName": "Keen",
+        "lastName": "Moose",
+        "pseudonym": "Keen Moose",
+        "isAnonymous": true
+      },
+      "_id": "6968fbe32c99dc6761d94b50",
+      "createdAt": "2026-01-15T14:38:28.171Z",
+      "updatedAt": "2026-01-15T14:38:28.171Z"
+    }
+  ],
+  "owner": {
+    "_id": "6968fbe32c99dc6761d9499c",
+    "firstName": "Alex",
+    "lastName": "Rivera",
+    "email": "alex.rivera@botstudio.com"
+  },
+  "team": "6968fbe32c99dc6761d9499a",
+  "createdAt": "2025-11-18T14:38:27.815Z",
+  "updatedAt": "2025-11-18T14:38:27.815Z",
+  "categories": [],
+  "numericConsensusHistory": [],
+  "teamProbability": 59.625,
+  "teamNumericConsensus": null,
+  "teamCategoricalConsensus": null,
+  "id": "6968fbe42c99dc6761d94e9f",
+  "teamAverageProbability": 59.625,
+  "participantCount": 0
+}
