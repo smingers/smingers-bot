@@ -11,12 +11,12 @@ When asked to analyze a forecast run using this template:
    - Forecaster reasoning files (see naming conventions below)
    - `ensemble/aggregation.json`
 
-   **Artifact naming conventions** (changed Feb 2, 2026):
+   **Artifact naming conventions** (check which files exist - tools handle both):
 
-   | Era | Forecaster files | Prompt file |
-   |-----|------------------|-------------|
-   | Current (Feb 2+) | `ensemble/forecaster_{i}_outside_view.md`, `forecaster_{i}_inside_view.md`, `forecaster_{i}.json` | `ensemble/outside_view_prompt.md` |
-   | Legacy (pre-Feb 2) | `ensemble/agent_{i}_step1.md`, `agent_{i}_step2.md`, `agent_{i}.json` | `ensemble/step1_prompt.md` |
+   | Convention | Forecaster files | Prompt file |
+   |------------|------------------|-------------|
+   | Current | `ensemble/forecaster_{i}_outside_view.md`, `forecaster_{i}_inside_view.md`, `forecaster_{i}.json` | `ensemble/outside_view_prompt.md` |
+   | Legacy | `ensemble/agent_{i}_step1.md`, `agent_{i}_step2.md`, `agent_{i}.json` | `ensemble/step1_prompt.md` |
 
    The terminology mapping:
    - `step1` / `outside_view` = Historical context analysis, base rate derivation
