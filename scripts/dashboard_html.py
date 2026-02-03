@@ -3,7 +3,7 @@
 Forecast Dashboard - Browser-based visualization for forecast runs.
 
 Usage:
-    python -m src.dashboard [--port 8000] [--data-dir ./data]
+    python scripts/dashboard_html.py [--port 8000] [--data-dir ./data]
 
 Then open http://localhost:8000 in your browser.
 """

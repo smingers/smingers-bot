@@ -6,8 +6,8 @@ This document lists all the non-core helper scripts, dashboards, and visualizers
 
 | Tool | Command | Purpose |
 |------|---------|---------|
-| HTML Dashboard | `python -m src.dashboard` | Static HTML dashboard to browse forecasts |
-| Streamlit Dashboard | `streamlit run scripts/dashboard.py` | Interactive dashboard with filtering |
+| HTML Dashboard | `python scripts/dashboard_html.py` | Static HTML dashboard to browse forecasts |
+| Streamlit Dashboard | `streamlit run scripts/dashboard_streamlit.py` | Interactive dashboard with filtering |
 | Forecast Tracker | `python scripts/track_forecasts.py --tournament 32916` | Compare forecasts vs community consensus |
 | Tool Usage Analyzer | `python scripts/analyze_tool_usage.py <path>` | Analyze research tool usage per forecast |
 | Artifact Migration | `python scripts/migrate_artifacts.py` | Backfill missing database fields |
@@ -18,12 +18,12 @@ This document lists all the non-core helper scripts, dashboards, and visualizers
 
 ### Static HTML Dashboard
 
-**Location:** `src/dashboard.py`
+**Location:** `scripts/dashboard_html.py`
 
 A lightweight browser-based dashboard that lists all forecast runs with detailed drill-down views.
 
 ```bash
-python -m src.dashboard [--port 8000] [--data-dir ./data]
+python scripts/dashboard_html.py [--port 8000] [--data-dir ./data]
 ```
 
 Then open http://localhost:8000 in your browser.
@@ -37,14 +37,14 @@ Then open http://localhost:8000 in your browser.
 
 ### Streamlit Dashboard
 
-**Location:** `scripts/dashboard.py`
+**Location:** `scripts/dashboard_streamlit.py`
 
 **Requires:** `streamlit` (install via `pip install streamlit`)
 
 An interactive dashboard with filtering capabilities that reads from the SQLite database.
 
 ```bash
-streamlit run scripts/dashboard.py
+streamlit run scripts/dashboard_streamlit.py
 ```
 
 **Features:**
