@@ -1,0 +1,7 @@
+Analysis:
+The outside view hinges on (a) how BA’s share price typically behaves over a 8-10 calendar-day horizon, (b) forthcoming company‐specific catalysts (deliveries, contract news, regulatory rulings, earnings follow-ups), and (c) sector-wide or macro factors likely to move large-cap industrial/defense names between 3 Feb 2026 and 13 Feb 2026. Helpful historical context therefore includes: past 10-day return distributions for BA, seasonality around early-February trading in prior years, and any currently reported issues or catalysts (e.g., 737 MAX production, 787 delivery pauses, defense program milestones, supply-chain updates, rating changes). News coverage in the last few days will reveal immediate catalysts, while a broader web search can surface scheduled events and analyst commentary. A deeper agent query can compute historical statistics and collate a timeline of known events slated for the next ten days.
+
+Search queries:
+1. Boeing stock February 2026 catalysts (Google)  
+2. Boeing news February 2026 developments (Google News)  
+3. Provide BA 10-day historical return stats for past five years and list any scheduled or probable catalysts between 3 Feb 2026 and 13 Feb 2026 affecting Boeing or aerospace sector. (Agent)
