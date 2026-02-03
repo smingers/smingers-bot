@@ -34,11 +34,12 @@ def analyze_tool_usage(tool_usage_path: Path):
 
             for query in phase_data["queries"]:
                 tool = query["tool"]
-                num_results = query["num_results"]
+                num_results = query.get("num_results", 0)
+                success = query.get("success", False)
                 tools_counter[tool] += 1
                 total_results += num_results
 
-                status = "✓" if query["success"] else "✗"
+                status = "✓" if success else "✗"
                 print(
                     f"  {status} [{tool:15s}] {num_results:3d} results | {query['query'][:50]}..."
                 )
