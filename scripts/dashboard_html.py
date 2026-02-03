@@ -306,19 +306,33 @@ def load_old_structure(run_dir: Path, folder: str, metadata: dict) -> dict[str, 
             "search_current": read_json_safe(run_dir / "research" / "search_current.json"),
         },
         "ensemble": {
-            "step1_prompt": read_file_safe(run_dir / "ensemble" / "step1_prompt.md"),
+            # Try current naming first, fall back to old naming
+            "step1_prompt": (
+                read_file_safe(run_dir / "ensemble" / "outside_view_prompt.md")
+                or read_file_safe(run_dir / "ensemble" / "step1_prompt.md")
+            ),
             "aggregation": read_json_safe(run_dir / "ensemble" / "aggregation.json"),
             "agents": [],
         },
     }
 
     # Load agent data (1-5)
+    # Try current naming (forecaster_{i}_outside_view.md) first, fall back to old (agent_{i}_step1.md)
     for i in range(1, 6):
         agent_data = {
-            "name": f"Agent {i}",
-            "step1": read_file_safe(run_dir / "ensemble" / f"agent_{i}_step1.md"),
-            "step2": read_file_safe(run_dir / "ensemble" / f"agent_{i}_step2.md"),
-            "result": read_json_safe(run_dir / "ensemble" / f"agent_{i}.json"),
+            "name": f"Forecaster {i}",
+            "step1": (
+                read_file_safe(run_dir / "ensemble" / f"forecaster_{i}_outside_view.md")
+                or read_file_safe(run_dir / "ensemble" / f"agent_{i}_step1.md")
+            ),
+            "step2": (
+                read_file_safe(run_dir / "ensemble" / f"forecaster_{i}_inside_view.md")
+                or read_file_safe(run_dir / "ensemble" / f"agent_{i}_step2.md")
+            ),
+            "result": (
+                read_json_safe(run_dir / "ensemble" / f"forecaster_{i}.json")
+                or read_json_safe(run_dir / "ensemble" / f"agent_{i}.json")
+            ),
         }
 
         # Get model from metadata
