@@ -1,0 +1,196 @@
+{
+  "centralized_research": {
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Nvidia stock price forecast 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Nvidia stock China restrictions 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Retrieve daily community prediction history for Metaculus question 40972 and summarize key Nvidia\u2013semiconductor sector news Jan-Feb 2026 likely to influence probability.",
+          "tool": "Agent",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google News",
+        "Google"
+      ],
+      "llm_cost": 0.3947,
+      "llm_cost_summarization": 0.1968,
+      "llm_cost_agentic": 0.198,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "Nvidia AI chip demand slowdown",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Analysts cut Nvidia price target",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide February 2026 analysis assessing likelihood of Nvidia stock falling below $100 in 2026, including revenue risk, demand slowdown, regulatory actions.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 16
+        },
+        {
+          "query": "Will the community prediction be higher than 15.00% on 2026-02-12 for the Metaculus question \"Will Nvidia's stock price close below $100 on any day in 2026?\"?",
+          "tool": "AskNews",
+          "deep_research_query": "Provide February 2026 analysis assessing likelihood of Nvidia stock falling below $100 in 2026, including revenue risk, demand slowdown, regulatory actions."
+        }
+      ],
+      "tools_used": [
+        "AskNews",
+        "Google News",
+        "Google"
+      ],
+      "llm_cost": 0.2013,
+      "llm_cost_summarization": 0.1968,
+      "llm_cost_agentic": 0.0045,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6466,
+        "token_output": 2605,
+        "cost": 0.058473,
+        "duration_seconds": 81.14985418319702,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16330,
+        "token_output": 3341,
+        "cost": 0.099105,
+        "duration_seconds": 85.10274291038513,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6466,
+        "token_output": 2399,
+        "cost": 0.055383,
+        "duration_seconds": 81.14990758895874,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15209,
+        "token_output": 2591,
+        "cost": 0.084492,
+        "duration_seconds": 85.10271692276001,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "cost": 0.0,
+        "duration_seconds": 81.1499719619751,
+        "error": "Response truncated after 4000 tokens (limit: 4000)"
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14129,
+        "token_output": 2739,
+        "cost": 0.06307175000000001,
+        "duration_seconds": 85.10269021987915,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5603,
+        "token_output": 2193,
+        "cost": 0.02875,
+        "duration_seconds": 81.15000748634338,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12026,
+        "token_output": 1605,
+        "cost": 0.036892,
+        "duration_seconds": 85.10266637802124,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5603,
+        "token_output": 1903,
+        "cost": 0.026430000000000002,
+        "duration_seconds": 81.15004229545593,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13068,
+        "token_output": 1604,
+        "cost": 0.038968,
+        "duration_seconds": 85.1016755104065,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0265,
+    "step2_search": 0.3947,
+    "step3_outside_view": 0.2348,
+    "step5_inside_view": 0.3225
+  },
+  "total_pipeline_cost": 0.9786
+}

@@ -1,0 +1,196 @@
+{
+  "centralized_research": {
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Metaculus Sudan ceasefire 2026 probability",
+          "tool": "Google",
+          "success": true,
+          "num_results": 2
+        },
+        {
+          "query": "Sudan ceasefire negotiations 2026 February",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Retrieve full time-series data for Metaculus question 41144; list major probability moves since 2025-12-01 with associated news headlines; summarize trend in last two weeks.",
+          "tool": "Agent",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google News",
+        "Google"
+      ],
+      "llm_cost": 0.2651,
+      "llm_cost_summarization": 0.1591,
+      "llm_cost_agentic": 0.106,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "Sudan ceasefire negotiations 2026 February",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Sudan peace talks early 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Latest reports on Sudan ceasefire talks February 2026",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 17
+        },
+        {
+          "query": "Will the community prediction be higher than 31.00% on 2026-02-15 for the Metaculus question \"Will there be a ceasefire in the Sudanese Civil War during 2026?\"?",
+          "tool": "AskNews",
+          "deep_research_query": "Latest reports on Sudan ceasefire talks February 2026"
+        }
+      ],
+      "tools_used": [
+        "AskNews",
+        "Google News",
+        "Google"
+      ],
+      "llm_cost": 0.1657,
+      "llm_cost_summarization": 0.1591,
+      "llm_cost_agentic": 0.0066,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4358,
+        "token_output": 1678,
+        "cost": 0.038244,
+        "duration_seconds": 49.637006521224976,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15965,
+        "token_output": 2365,
+        "cost": 0.08337,
+        "duration_seconds": 62.43843626976013,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4358,
+        "token_output": 2083,
+        "cost": 0.044319,
+        "duration_seconds": 49.637064933776855,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15552,
+        "token_output": 2422,
+        "cost": 0.082986,
+        "duration_seconds": 62.438411712646484,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 3909,
+        "token_output": 2091,
+        "cost": 0.03611475,
+        "duration_seconds": 49.637104511260986,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14552,
+        "token_output": 2448,
+        "cost": 0.059738000000000006,
+        "duration_seconds": 62.43838548660278,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 3909,
+        "token_output": 2293,
+        "cost": 0.026161999999999998,
+        "duration_seconds": 49.63714027404785,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14245,
+        "token_output": 1549,
+        "cost": 0.040882,
+        "duration_seconds": 62.438358783721924,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 3909,
+        "token_output": 1648,
+        "cost": 0.021002,
+        "duration_seconds": 49.63716959953308,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13630,
+        "token_output": 1740,
+        "cost": 0.04118,
+        "duration_seconds": 62.438334941864014,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0186,
+    "step2_search": 0.2651,
+    "step3_outside_view": 0.1658,
+    "step5_inside_view": 0.3082
+  },
+  "total_pipeline_cost": 0.7577
+}
