@@ -1,0 +1,396 @@
+{
+  "centralized_research": {
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "US recession probability 2026 forecast",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "US GDP forecast 2026 Q1",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Retrieve historical community prediction time series and main arguments for Metaculus question 41089; identify major shifts since January 1 2026 and likely upcoming catalysts before February 14 2026",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 7,
+            "queries_executed": [
+              "Metaculus 41089 community prediction history",
+              "Metaculus 41089 arguments discussion",
+              "Metaculus 41089 forecast January 2026",
+              "Metaculus 41089 related news updates",
+              "Metaculus 41089 upcoming catalysts February 2026",
+              "Metaculus question 41089",
+              "site:metaculus.com 41089",
+              "Metaculus 41089 forecast history",
+              "Metaculus 41089 discussion tab",
+              "Metaculus 41089 January 2026 snapshot",
+              "41089 Metaculus Wayback Machine",
+              "Metaculus question 41089 archive",
+              "webcache google metaculus 41089",
+              "Metaculus 41089 csv download",
+              "Metaculus 41089 community graph",
+              "api2/questions/41089 metaculus",
+              "Metaculus 41089 API timeline",
+              "Metaculus 41089 Wayback snapshot",
+              "41089 metaculus github csv",
+              "41089 metaculus lesswrong",
+              "metaculus api2 questions 41089",
+              "metaculus question 41089 timeline json",
+              "metaculus 41089 screenshot",
+              "metaculus 41089 discord",
+              "metaculus 41089 csv export",
+              "metaculus private question guidelines",
+              "metaculus contact data export",
+              "metaculus api authorization token",
+              "metaculus discord data requests",
+              "metaculus unpublished question id"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "Metaculus 41089 community prediction history",
+                    "Google"
+                  ],
+                  [
+                    "Metaculus 41089 arguments discussion",
+                    "Google"
+                  ],
+                  [
+                    "Metaculus 41089 forecast January 2026",
+                    "Google"
+                  ],
+                  [
+                    "Metaculus 41089 related news updates",
+                    "Google News"
+                  ],
+                  [
+                    "Metaculus 41089 upcoming catalysts February 2026",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 8922,
+                "analysis_chars": 0
+              },
+              {
+                "step_number": 2,
+                "queries_executed": [
+                  [
+                    "Metaculus question 41089",
+                    "Google"
+                  ],
+                  [
+                    "site:metaculus.com 41089",
+                    "Google"
+                  ],
+                  [
+                    "Metaculus 41089 forecast history",
+                    "Google"
+                  ],
+                  [
+                    "Metaculus 41089 discussion tab",
+                    "Google"
+                  ],
+                  [
+                    "Metaculus 41089 January 2026 snapshot",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 779,
+                "analysis_chars": 1697
+              },
+              {
+                "step_number": 3,
+                "queries_executed": [
+                  [
+                    "41089 Metaculus Wayback Machine",
+                    "Google"
+                  ],
+                  [
+                    "Metaculus question 41089 archive",
+                    "Google"
+                  ],
+                  [
+                    "webcache google metaculus 41089",
+                    "Google"
+                  ],
+                  [
+                    "Metaculus 41089 csv download",
+                    "Google"
+                  ],
+                  [
+                    "Metaculus 41089 community graph",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 5223,
+                "analysis_chars": 3455
+              },
+              {
+                "step_number": 4,
+                "queries_executed": [
+                  [
+                    "api2/questions/41089 metaculus",
+                    "Google"
+                  ],
+                  [
+                    "Metaculus 41089 API timeline",
+                    "Google"
+                  ],
+                  [
+                    "Metaculus 41089 Wayback snapshot",
+                    "Google"
+                  ],
+                  [
+                    "41089 metaculus github csv",
+                    "Google"
+                  ],
+                  [
+                    "41089 metaculus lesswrong",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 43920,
+                "analysis_chars": 2836
+              },
+              {
+                "step_number": 5,
+                "queries_executed": [
+                  [
+                    "metaculus api2 questions 41089",
+                    "Google"
+                  ],
+                  [
+                    "metaculus question 41089 timeline json",
+                    "Google"
+                  ],
+                  [
+                    "metaculus 41089 screenshot",
+                    "Google"
+                  ],
+                  [
+                    "metaculus 41089 discord",
+                    "Google"
+                  ],
+                  [
+                    "metaculus 41089 csv export",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 773,
+                "analysis_chars": 3774
+              },
+              {
+                "step_number": 6,
+                "queries_executed": [
+                  [
+                    "metaculus private question guidelines",
+                    "Google"
+                  ],
+                  [
+                    "metaculus contact data export",
+                    "Google"
+                  ],
+                  [
+                    "metaculus api authorization token",
+                    "Google"
+                  ],
+                  [
+                    "metaculus discord data requests",
+                    "Google"
+                  ],
+                  [
+                    "metaculus unpublished question id",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 19979,
+                "analysis_chars": 5401
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Agent",
+        "Google News"
+      ],
+      "llm_cost": 0.3139,
+      "llm_cost_summarization": 0.1959,
+      "llm_cost_agentic": 0.118,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "US GDP growth forecast 2026 recession risk",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "US recession probability 2026 forecast",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "What are economists projecting for US GDP growth in early 2026 and chance of negative quarters?",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 17
+        },
+        {
+          "query": "Will the community prediction be higher than 27.00% on 2026-02-14 for the Metaculus question \"Will the United States experience negative GDP growth during Q1, Q2, or Q3 2026?\"?",
+          "tool": "AskNews",
+          "deep_research_query": "What are economists projecting for US GDP growth in early 2026 and chance of negative quarters?"
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "AskNews",
+        "Google News"
+      ],
+      "llm_cost": 0.2137,
+      "llm_cost_summarization": 0.1959,
+      "llm_cost_agentic": 0.0178,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6873,
+        "token_output": 2178,
+        "cost": 0.053288999999999996,
+        "duration_seconds": 75.44415307044983,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17719,
+        "token_output": 2659,
+        "cost": 0.09304199999999999,
+        "duration_seconds": 63.42844271659851,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6873,
+        "token_output": 1740,
+        "cost": 0.046719,
+        "duration_seconds": 75.44420719146729,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16727,
+        "token_output": 2021,
+        "cost": 0.080496,
+        "duration_seconds": 63.428417444229126,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6187,
+        "token_output": 3038,
+        "cost": 0.05335925,
+        "duration_seconds": 75.44424843788147,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15630,
+        "token_output": 2625,
+        "cost": 0.0641025,
+        "duration_seconds": 63.428388833999634,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6187,
+        "token_output": 2361,
+        "cost": 0.031262,
+        "duration_seconds": 75.4442834854126,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15868,
+        "token_output": 1724,
+        "cost": 0.045528,
+        "duration_seconds": 63.428361654281616,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6187,
+        "token_output": 1761,
+        "cost": 0.026462,
+        "duration_seconds": 75.44431066513062,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14965,
+        "token_output": 1552,
+        "cost": 0.042345999999999995,
+        "duration_seconds": 63.42833614349365,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0191,
+    "step2_search": 0.3139,
+    "step3_outside_view": 0.2111,
+    "step5_inside_view": 0.3255
+  },
+  "total_pipeline_cost": 0.8696
+}
