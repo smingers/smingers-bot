@@ -180,14 +180,14 @@ class SearchPipeline:
             # Parse queries with sources
             # Format: 1. "text" (Source) or 1. text (Source) or 1. text [Source]
             search_queries = re.findall(
-                r'(?:\d+\.\s*)?(["\']?(.*?)["\']?)\s*[\(\[](Google|Google News|Agent|AskNews)[\)\]]',
+                r'(?:\d+\.\s*)?(["\']?(.*?)["\']?)\s*[\(\[](Google|Google News|Google Trends|Agent|AskNews)[\)\]]',
                 queries_text,
             )
 
             # Fallback to unquoted queries
             if not search_queries:
                 search_queries = re.findall(
-                    r"(?:\d+\.\s*)?([^(\[\n]+)\s*[\(\[](Google|Google News|Agent|AskNews)[\)\]]",
+                    r"(?:\d+\.\s*)?([^(\[\n]+)\s*[\(\[](Google|Google News|Google Trends|Agent|AskNews)[\)\]]",
                     queries_text,
                 )
 
@@ -233,6 +233,9 @@ class SearchPipeline:
                             date_before=question_details.resolution_date,
                         )
                     )
+                elif source == "Google Trends":
+                    query_sources.append((query, source))
+                    tasks.append(self._google_trends_search(query))
                 elif source == "Agent":
                     query_sources.append((query, source))
                     tasks.append(self._agentic_search(query))
@@ -286,6 +289,8 @@ class SearchPipeline:
                         formatted_results += (
                             f"\n<Agent_report>\nQuery: {query}\nError: {result}\n</Agent_report>\n"
                         )
+                    elif source == "Google Trends":
+                        formatted_results += f'<GoogleTrendsData term="{query}">\nError: {result}\n</GoogleTrendsData>\n'
                     else:
                         formatted_results += (
                             f'\n<Summary query="{query}">\nError: {result}\n</Summary>\n'
@@ -306,6 +311,10 @@ class SearchPipeline:
                         formatted_results += (
                             f"\n<Agent_report>\nQuery: {query}\n{result}</Agent_report>\n"
                         )
+                    elif source == "Google Trends":
+                        # Google Trends returns 1 data block with statistics
+                        num_results = 1 if "Error" not in result[:100] else 0
+                        formatted_results += f"\n{result}\n"
                     else:
                         num_results = result.count("<Summary")
                         formatted_results += result
@@ -971,6 +980,100 @@ class SearchPipeline:
         except Exception as e:
             logger.error(f"[google_search_agentic] Error: {e}")
             return f'<RawContent query="{query}">Error during search: {e}</RawContent>\n'
+
+    # -------------------------------------------------------------------------
+    # Google Trends
+    # -------------------------------------------------------------------------
+
+    async def _google_trends_search(self, query: str) -> str:
+        """
+        Get Google Trends historical data and compute base rate statistics.
+
+        Query should be the search term (e.g., "hospital", "luigi mangione").
+        Returns formatted statistics for forecaster consumption.
+        """
+        try:
+            from trendspy import Trends
+
+            # Extract the term - query might be "Google Trends data for hospital" or just "hospital"
+            term = self._extract_trends_term(query)
+            logger.info(f"[google_trends_search] Fetching data for term: '{term}'")
+
+            # Run synchronous trendspy call in thread pool
+            def fetch_trends():
+                tr = Trends()
+                return tr.interest_over_time(term, timeframe="today 90-d", geo="US")
+
+            df = await asyncio.to_thread(fetch_trends)
+
+            if df is None or df.empty:
+                logger.warning(f"[google_trends_search] No data available for term: '{term}'")
+                return f'<GoogleTrendsData term="{term}">\nNo data available for this search term.\n</GoogleTrendsData>'
+
+            # Compute statistics
+            current = df[term].iloc[-1]
+            mean = df[term].mean()
+            std = df[term].std()
+
+            # Compute base rate for "Doesn't change" (±3 threshold)
+            # Calculate all possible N-day changes where N matches the question window
+            # Default to 12-day windows (common for these questions)
+            changes = df[term].diff(periods=12).dropna().abs()
+            pct_gt_3 = (changes > 3).mean() * 100
+            pct_lte_3 = 100 - pct_gt_3
+
+            # Recent trend
+            last_7 = df[term].iloc[-7:].mean()
+            prior_7 = df[term].iloc[-14:-7].mean()
+            if last_7 > prior_7 + 1:
+                trend = "increasing"
+            elif last_7 < prior_7 - 1:
+                trend = "decreasing"
+            else:
+                trend = "stable"
+
+            stats = f"""<GoogleTrendsData term="{term}">
+Google Trends US data for "{term}" (last 90 days):
+
+Current value: {current:.0f}
+90-day mean: {mean:.1f}
+90-day std dev: {std:.1f}
+
+BASE RATE ANALYSIS (critical for forecasting):
+- In {pct_lte_3:.0f}% of 12-day windows, the value changed by ≤3 points ("Doesn't change")
+- In {pct_gt_3:.0f}% of 12-day windows, the value changed by >3 points
+
+Recent trend: {trend} (last 7 days avg: {last_7:.1f} vs prior 7 days: {prior_7:.1f})
+
+Note: Google Trends values are relative (0-100 scale), not absolute search volumes.
+</GoogleTrendsData>"""
+
+            logger.info(
+                f"[google_trends_search] Successfully retrieved data for '{term}': "
+                f"current={current:.0f}, mean={mean:.1f}, std={std:.1f}"
+            )
+            return stats
+
+        except Exception as e:
+            logger.error(f"[google_trends_search] Error: {e}")
+            return f'<GoogleTrendsData term="{query}">\nError retrieving data: {e}\n</GoogleTrendsData>'
+
+    def _extract_trends_term(self, query: str) -> str:
+        """Extract the search term from a query like 'Google Trends data for "hospital"'"""
+        # Try to find quoted term first
+        quoted = re.search(r'["\']([^"\']+)["\']', query)
+        if quoted:
+            return quoted.group(1)
+
+        # Otherwise, try to extract term after common phrases
+        query_lower = query.lower()
+        for phrase in ["for ", "of ", "term ", "trends "]:
+            if phrase in query_lower:
+                idx = query_lower.find(phrase) + len(phrase)
+                return query[idx:].strip().strip("\"'")
+
+        # Last resort: return the whole query
+        return query.strip()
 
     # -------------------------------------------------------------------------
     # Utility methods

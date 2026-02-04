@@ -303,7 +303,10 @@ For agent:
 Your query will be processed by a reasoning model equipped with capable web crawlers and designed to generate lengthy, detailed responses. As such, you may use a longer query with detailed instructions. It is possible to ask multiple questions.
 Nonetheless, you are advised to keep your query to at most four sentences.
 
-You should format your answer exactly as below, always formatting the source in brackets () **on the same line as and after** the query. Do not wrap your query in quotes. Be sure to include two queries for Google/Google News and one for Agent.
+For Google Trends:
+If the question is about Google Trends data for a specific search term, use this source to retrieve actual historical data and base rate statistics. Your query should be the search term itself (e.g., "hospital" or "luigi mangione"). This will return 90-day historical data with computed statistics about typical volatility, which is critical for establishing base rates.
+
+You should format your answer exactly as below, always formatting the source in brackets () **on the same line as and after** the query. Do not wrap your query in quotes. Be sure to include two queries for Google/Google News and one for Agent. Add a Google Trends query if the question involves Google Trends data.
 
 Analysis:
 {{Your initial impression/analysis of the forecasting question followed by reasoning about the most relevant historical context needed to generate an outside view.}}
@@ -312,6 +315,7 @@ Search queries:
 1. [Query details] (Google)
 2. [Query details] (Google News)
 3. [Query details] (Agent)
+4. [search term] (Google Trends) -- only if question involves Google Trends data
 """
 
 MULTIPLE_CHOICE_PROMPT_CURRENT = """
