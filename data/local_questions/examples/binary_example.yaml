@@ -1,0 +1,27 @@
+# Example binary (yes/no) question
+# Copy this template and modify for your own questions
+
+id: "binary_example"
+title: "Will the next iPhone have a folding screen?"
+question_type: binary
+
+description: |
+  Apple has been rumored to be working on foldable phone technology for several years.
+  This question asks whether the next iPhone model released after this question was
+  created will feature a folding/foldable screen design.
+
+resolution_criteria: |
+  Resolves YES if Apple releases an iPhone with a screen that physically folds
+  (similar to Samsung Galaxy Fold or Motorola Razr) as part of the main iPhone lineup.
+
+  Resolves NO if the next iPhone release uses a traditional non-folding screen design.
+
+fine_print: |
+  - "Next iPhone" refers to the next major iPhone model announced after question creation
+  - iPad or other Apple devices don't count - must be branded as "iPhone"
+  - A concept/prototype doesn't count - must be a publicly purchasable product
+  - Minor screen flexibility (like slight curves) doesn't qualify as "folding"
+
+# Optional: timing fields
+# open_time: "2026-01-01T00:00:00Z"
+# scheduled_resolve_time: "2026-10-01T00:00:00Z"
