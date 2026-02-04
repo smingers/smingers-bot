@@ -337,6 +337,78 @@ class TestSearchDateParsing:
 # ============================================================================
 
 
+# ============================================================================
+# Google Trends Term Extraction Tests
+# ============================================================================
+
+
+class TestExtractTrendsTerm:
+    """Tests for _extract_trends_term method."""
+
+    @pytest.fixture
+    def pipeline(self):
+        return SearchPipeline({})
+
+    def test_extracts_double_quoted_term(self, pipeline):
+        """Extracts term from double quotes."""
+        result = pipeline._extract_trends_term('"hospital"')
+        assert result == "hospital"
+
+    def test_extracts_single_quoted_term(self, pipeline):
+        """Extracts term from single quotes."""
+        result = pipeline._extract_trends_term("'luigi mangione'")
+        assert result == "luigi mangione"
+
+    def test_extracts_term_after_for(self, pipeline):
+        """Extracts term after 'for' keyword."""
+        result = pipeline._extract_trends_term('Google Trends data for "hospital"')
+        assert result == "hospital"
+
+    def test_extracts_term_after_trends(self, pipeline):
+        """Extracts term after 'trends' keyword when no quotes."""
+        result = pipeline._extract_trends_term("Google Trends hospital")
+        assert result == "hospital"
+
+    def test_returns_whole_query_as_fallback(self, pipeline):
+        """Returns entire query when no pattern matches."""
+        result = pipeline._extract_trends_term("hospital")
+        assert result == "hospital"
+
+    def test_handles_complex_query(self, pipeline):
+        """Handles complex multi-word quoted terms."""
+        result = pipeline._extract_trends_term('historical data for "united healthcare"')
+        assert result == "united healthcare"
+
+    def test_strips_whitespace(self, pipeline):
+        """Strips leading/trailing whitespace."""
+        result = pipeline._extract_trends_term("  hospital  ")
+        assert result == "hospital"
+
+
+class TestGoogleTrendsQueryParsing:
+    """Tests for parsing Google Trends queries from LLM responses."""
+
+    def test_parses_google_trends_query(self):
+        """'query' (Google Trends) parsed correctly."""
+        response = """
+Search queries:
+1. test query (Google)
+2. hospital (Google Trends)
+3. news query (Google News)
+"""
+        pattern = r'(?:\d+\.\s*)?(["\']?(.*?)["\']?)\s*[\(\[](Google|Google News|Google Trends|Agent|AskNews)[\)\]]'
+        matches = re.findall(pattern, response)
+
+        google_trends_queries = [m for m in matches if m[2] == "Google Trends"]
+        assert len(google_trends_queries) == 1
+        assert "hospital" in google_trends_queries[0][1]
+
+
+# ============================================================================
+# Error Handling Tests
+# ============================================================================
+
+
 class TestSearchErrorHandling:
     """Tests for error handling in search pipeline."""
 

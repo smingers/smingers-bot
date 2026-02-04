@@ -24,6 +24,7 @@ dependencies = [
     "lxml>=5.0.0",
     "asknews (>=0.13.10,<0.14.0)",
     "streamlit>=1.40.0",
+    "trendspy>=0.1.6",
 ]
 
 [project.scripts]
