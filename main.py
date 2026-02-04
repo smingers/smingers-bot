@@ -75,7 +75,7 @@ async def list_questions(tournament_id: int | str):
 
 
 async def forecast_question(
-    question_id: int = None,
+    question_id: str | int = None,
     question_url: str = None,
     config_path: str = "config.yaml",
     mode: str = None,
@@ -246,7 +246,7 @@ def main():
         epilog=__doc__,
     )
 
-    parser.add_argument("--question", "-q", type=int, help="Question ID to forecast")
+    parser.add_argument("--question", "-q", type=str, help="Question ID to forecast")
     parser.add_argument("--url", "-u", type=str, help="Question URL to forecast")
     parser.add_argument(
         "--tournament", "-t", type=str, help="Tournament ID or slug (e.g., 32916, minibench)"

@@ -120,7 +120,7 @@ class Forecaster:
 
     async def forecast_question(
         self,
-        question_id: int | None = None,
+        question_id: int | str | None = None,
         question_url: str | None = None,
         question: MetaculusQuestion | Question | None = None,
     ) -> dict:
