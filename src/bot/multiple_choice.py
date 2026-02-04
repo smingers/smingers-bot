@@ -7,26 +7,27 @@ Implements multiple choice-specific extraction and aggregation logic.
 
 import json
 import logging
-from datetime import datetime
-from typing import Any, Dict, List, Optional, Tuple
+from collections.abc import Callable
 from dataclasses import dataclass, field
+from datetime import datetime
+from typing import Any
 
 import numpy as np
 
-from ..utils.llm import LLMClient
 from ..storage.artifact_store import ArtifactStore
+from ..utils.llm import LLMClient
 from .base_forecaster import BaseForecaster
+from .exceptions import InsufficientPredictionsError
 from .extractors import (
+    AgentResult,
     extract_multiple_choice_probabilities,
     normalize_probabilities,
-    AgentResult,
 )
-from .exceptions import InsufficientPredictionsError
 from .prompts import (
-    MULTIPLE_CHOICE_PROMPT_HISTORICAL,
+    MULTIPLE_CHOICE_INSIDE_VIEW_PROMPT,
+    MULTIPLE_CHOICE_OUTSIDE_VIEW_PROMPT,
     MULTIPLE_CHOICE_PROMPT_CURRENT,
-    MULTIPLE_CHOICE_PROMPT_1,
-    MULTIPLE_CHOICE_PROMPT_2,
+    MULTIPLE_CHOICE_PROMPT_HISTORICAL,
 )
 from .search import QuestionDetails
 
@@ -36,11 +37,12 @@ logger = logging.getLogger(__name__)
 @dataclass
 class MultipleChoiceForecastResult:
     """Complete result from multiple choice forecasting pipeline."""
-    final_probabilities: Dict[str, float]  # Option -> probability
-    agent_results: List[AgentResult]
+
+    final_probabilities: dict[str, float]  # Option -> probability
+    agent_results: list[AgentResult]
     historical_context: str
     current_context: str
-    options: List[str]
+    options: list[str]
     timestamp: str = field(default_factory=lambda: datetime.now().isoformat())
 
 
@@ -54,13 +56,13 @@ class MultipleChoiceForecaster(BaseForecaster):
     - Weighted average aggregation across options
     """
 
-    def _get_prompt_templates(self) -> Tuple[str, str, str, str]:
+    def _get_prompt_templates(self) -> tuple[str, str, str, str]:
         """Return multiple choice-specific prompt templates."""
         return (
             MULTIPLE_CHOICE_PROMPT_HISTORICAL,
             MULTIPLE_CHOICE_PROMPT_CURRENT,
-            MULTIPLE_CHOICE_PROMPT_1,
-            MULTIPLE_CHOICE_PROMPT_2,
+            MULTIPLE_CHOICE_OUTSIDE_VIEW_PROMPT,
+            MULTIPLE_CHOICE_INSIDE_VIEW_PROMPT,
         )
 
     def _get_question_details(self, **question_params) -> QuestionDetails:
@@ -77,7 +79,7 @@ class MultipleChoiceForecaster(BaseForecaster):
         prompt_historical: str,
         prompt_current: str,
         **question_params,
-    ) -> Tuple[str, str]:
+    ) -> tuple[str, str]:
         """Format query prompts with options parameter."""
         options = question_params.get("options", [])
         options_str = str(options)
@@ -104,45 +106,31 @@ class MultipleChoiceForecaster(BaseForecaster):
         )
         return historical, current
 
-    def _format_step1_prompt(
+    def _format_outside_view_prompt(
         self,
         prompt_template: str,
         historical_context: str,
         **question_params,
     ) -> str:
-        """Format Step 1 prompt with options."""
-        options = question_params.get("options", [])
-        return prompt_template.format(
-            title=question_params.get("question_title", ""),
-            today=question_params.get("today", ""),
-            resolution_criteria=question_params.get("resolution_criteria", ""),
-            fine_print=question_params.get("fine_print", ""),
-            open_time=question_params.get("open_time", ""),
-            scheduled_resolve_time=question_params.get("scheduled_resolve_time", ""),
-            context=historical_context,
-            options=str(options),
-        )
+        """Format outside view prompt with options."""
+        params = self._get_common_prompt_params(**question_params)
+        params["context"] = historical_context
+        params["options"] = str(question_params.get("options", []))
+        return prompt_template.format(**params)
 
-    def _format_step2_prompt(
+    def _format_inside_view_prompt(
         self,
         prompt_template: str,
         context: str,
         **question_params,
     ) -> str:
-        """Format Step 2 prompt with cross-pollinated context and options."""
-        options = question_params.get("options", [])
-        return prompt_template.format(
-            title=question_params.get("question_title", ""),
-            today=question_params.get("today", ""),
-            resolution_criteria=question_params.get("resolution_criteria", ""),
-            fine_print=question_params.get("fine_print", ""),
-            open_time=question_params.get("open_time", ""),
-            scheduled_resolve_time=question_params.get("scheduled_resolve_time", ""),
-            context=context,
-            options=str(options),
-        )
+        """Format inside view prompt with cross-pollinated context and options."""
+        params = self._get_common_prompt_params(**question_params)
+        params["context"] = context
+        params["options"] = str(question_params.get("options", []))
+        return prompt_template.format(**params)
 
-    def _extract_prediction(self, output: str, **question_params) -> List[float]:
+    def _extract_prediction(self, output: str, **question_params) -> list[float]:
         """Extract and normalize probabilities from agent output."""
         options = question_params.get("options", [])
         num_options = len(options)
@@ -151,18 +139,16 @@ class MultipleChoiceForecaster(BaseForecaster):
 
     def _aggregate_results(
         self,
-        agent_results: List[AgentResult],
-        agents: List[Dict],
-        write: callable,
-    ) -> Dict[str, float]:
+        agent_results: list[AgentResult],
+        agents: list[dict],
+        log: Callable[[str], Any],
+    ) -> dict[str, float]:
         """Compute weighted average of option probabilities."""
-        options = []  # Will be populated from question_params in _build_result
-
         # Collect valid predictions
         all_probs = []
         all_weights = []
 
-        for result, agent in zip(agent_results, agents):
+        for result, agent in zip(agent_results, agents, strict=True):
             if result.probabilities is not None and len(result.probabilities) > 0:
                 all_probs.append(result.probabilities)
                 all_weights.append(agent["weight"])
@@ -173,22 +159,20 @@ class MultipleChoiceForecaster(BaseForecaster):
                 f"Errors: {[r.error for r in agent_results]}"
             )
             logger.error(error_msg)
-            write(f"FATAL ERROR: {error_msg}")
-            raise InsufficientPredictionsError(
-                error_msg, valid_count=0, total_count=len(agents)
-            )
+            log(f"FATAL ERROR: {error_msg}")
+            raise InsufficientPredictionsError(error_msg, valid_count=0, total_count=len(agents))
 
         # Weighted average across valid agents
         probs_matrix = np.array(all_probs)
         weights = np.array(all_weights)
 
-        write(f"\nAggregating {len(all_probs)}/{len(agents)} valid agent predictions")
+        log(f"\nAggregating {len(all_probs)}/{len(agents)} valid agent predictions")
 
         weighted_probs = np.average(probs_matrix, axis=0, weights=weights)
         weighted_probs = weighted_probs / weighted_probs.sum()  # Ensure sums to 1.0
 
-        write(f"Weights: {weights.tolist()}")
-        write(f"Final weighted probabilities: {weighted_probs.tolist()}")
+        log(f"Weights: {weights.tolist()}")
+        log(f"Final weighted probabilities: {weighted_probs.tolist()}")
 
         # Return as list - will be converted to dict in _build_result
         return weighted_probs.tolist()
@@ -198,18 +182,18 @@ class MultipleChoiceForecaster(BaseForecaster):
         agent_id: str,
         model: str,
         weight: float,
-        step1_output: str,
-        step2_output: str,
+        outside_view_output: str,
+        inside_view_output: str,
         prediction: Any,
-        error: Optional[str],
+        error: str | None,
     ) -> AgentResult:
         """Build AgentResult with probabilities field."""
         return AgentResult(
             agent_id=agent_id,
             model=model,
             weight=weight,
-            step1_output=step1_output,
-            step2_output=step2_output,
+            outside_view_output=outside_view_output,
+            inside_view_output=inside_view_output,
             probabilities=prediction if prediction is not None else [],
             error=error,
         )
@@ -217,10 +201,10 @@ class MultipleChoiceForecaster(BaseForecaster):
     def _build_result(
         self,
         final_prediction: Any,
-        agent_results: List[AgentResult],
+        agent_results: list[AgentResult],
         historical_context: str,
         current_context: str,
-        agents: List[Dict],
+        agents: list[dict],
         **question_params,
     ) -> MultipleChoiceForecastResult:
         """Build MultipleChoiceForecastResult with option -> probability mapping."""
@@ -228,7 +212,9 @@ class MultipleChoiceForecaster(BaseForecaster):
 
         # Convert probability list to option -> probability dict
         if isinstance(final_prediction, list):
-            final_probabilities = {opt: float(p) for opt, p in zip(options, final_prediction)}
+            final_probabilities = {
+                opt: float(p) for opt, p in zip(options, final_prediction, strict=True)
+            }
         else:
             final_probabilities = final_prediction
 
@@ -240,7 +226,7 @@ class MultipleChoiceForecaster(BaseForecaster):
             options=options,
         )
 
-    def _get_extracted_data(self, result: AgentResult) -> Dict:
+    def _get_extracted_data(self, result: AgentResult) -> dict:
         """Get data for extracted prediction artifact."""
         return {
             "probabilities": result.probabilities,
@@ -249,10 +235,10 @@ class MultipleChoiceForecaster(BaseForecaster):
 
     def _get_aggregation_data(
         self,
-        agent_results: List[AgentResult],
-        agents: List[Dict],
+        agent_results: list[AgentResult],
+        agents: list[dict],
         final_prediction: Any,
-    ) -> Dict:
+    ) -> dict:
         """Get data for aggregation artifact."""
         return {
             "individual_probabilities": [r.probabilities for r in agent_results],
@@ -269,10 +255,10 @@ class MultipleChoiceForecaster(BaseForecaster):
         background_info: str = "",
         resolution_criteria: str = "",
         fine_print: str = "",
-        options: List[str] = None,
+        options: list[str] = None,
         open_time: str = "",
         scheduled_resolve_time: str = "",
-        write: callable = print,
+        log: Callable[[str], Any] = print,
     ) -> MultipleChoiceForecastResult:
         """
         Generate a forecast for a multiple choice question.
@@ -286,13 +272,13 @@ class MultipleChoiceForecaster(BaseForecaster):
             options: List of option labels
             open_time: When the question opened for forecasting
             scheduled_resolve_time: When the question resolves
-            write: Logging function
+            log: Logging function
 
         Returns:
             MultipleChoiceForecastResult with probabilities per option
         """
         return await super().forecast(
-            write=write,
+            log=log,
             question_title=question_title,
             question_text=question_text,
             background_info=background_info,
@@ -308,10 +294,10 @@ class MultipleChoiceForecaster(BaseForecaster):
 async def get_multiple_choice_forecast(
     question_details: dict,
     config: dict,
-    llm_client: Optional[LLMClient] = None,
-    artifact_store: Optional[ArtifactStore] = None,
-    write: callable = print,
-) -> Tuple[Dict[str, float], str]:
+    llm_client: LLMClient | None = None,
+    artifact_store: ArtifactStore | None = None,
+    log: Callable[[str], Any] = print,
+) -> tuple[dict[str, float], str]:
     """
     Convenience function to get a multiple choice forecast.
 
@@ -326,7 +312,7 @@ async def get_multiple_choice_forecast(
         resolution_criteria=question_details.get("resolution_criteria", ""),
         fine_print=question_details.get("fine_print", ""),
         options=question_details.get("options", []),
-        write=write,
+        log=log,
     )
 
     # Format comment
@@ -337,7 +323,7 @@ async def get_multiple_choice_forecast(
     for agent_result in result.agent_results:
         comment_parts.append(
             f"=== {agent_result.agent_id} ({agent_result.model}) ===\n"
-            f"Output:\n{agent_result.step2_output[:500]}...\n"
+            f"Output:\n{agent_result.inside_view_output[:500]}...\n"
             f"Probabilities: {agent_result.probabilities}\n"
         )
 

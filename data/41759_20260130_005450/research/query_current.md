@@ -1,0 +1,7 @@
+Analysis:
+The current SBP policy rate stands at a historically high 22 % (raised to that level in June 2024 and maintained through the January 2026 Monetary Policy Statement).  Pakistan is still under an IMF-supported program that expires in April 2026; any successor arrangement is likely to keep monetary policy tight until inflation is decisively on a downward path and foreign-exchange reserves are rebuilt.  Headline CPI inflation has fallen from a peak above 38 % (May 2024) to roughly 18 % year-on-year by December 2025, but real rates are still negative, the rupee remains fragile, and further energy-price adjustments are expected in FY 2026.  Market chatter since late 2025 suggests a gradual easing cycle could begin in H2 2026 if inflation drops into single digits, yet analysts from major banks (e.g., Standard Chartered, JPMorgan, local brokerage houses) generally expect only modest cuts—perhaps 200–300 bp—before May 2026, contingent on continued disinflation and IMF sign-off.  Therefore, the most relevant articles are (i) the latest SBP Monetary Policy Statement, (ii) IMF staff-level review notes and press releases, (iii) analyst or newswire pieces discussing the projected policy-rate path through 2026, and (iv) Pakistani press coverage of government/central-bank commentary on inflation and monetary conditions.
+
+Search queries:
+1. Pakistan policy rate forecast 2026 (Google)
+2. SBP interest rate outlook (Google News)
+3. Gather recent reports on SBP projected policy rate path to 2026, IMF conditions, and inflation expectations. (Assistant)

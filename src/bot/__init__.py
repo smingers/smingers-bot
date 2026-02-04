@@ -1,12 +1,8 @@
 """Bot forecasting module."""
 
-
-class ExtractionError(Exception):
-    """Raised when probability/value extraction fails from LLM response."""
-    pass
-
+from .exceptions import ExtractionError, SubmissionError
 
 # The handlers are imported directly by forecaster.py
 # from .binary, .numeric, .multiple_choice
 
-__all__ = ["ExtractionError"]
+__all__ = ["ExtractionError", "SubmissionError"]

@@ -51,10 +51,13 @@ def list_sources() -> list[str]:
     return list(_sources.keys())
 
 
-# Import and register the Metaculus source
-# This is done at module load time so it's always available
+# Import and register sources
+# This is done at module load time so they're always available
 from .metaculus import MetaculusSource
+from .local import LocalSource
+
 register_source("metaculus", MetaculusSource)
+register_source("local", LocalSource)
 
 
 __all__ = [
@@ -62,6 +65,7 @@ __all__ = [
     "Prediction",
     "QuestionSource",
     "MetaculusSource",
+    "LocalSource",
     "register_source",
     "get_source",
     "list_sources",

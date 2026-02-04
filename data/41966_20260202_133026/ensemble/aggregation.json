@@ -1,0 +1,18 @@
+{
+  "individual_probabilities": [
+    40.0,
+    50.0,
+    51.0,
+    56.0,
+    56.0
+  ],
+  "weights": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "method": "weighted_average",
+  "final_probability": 0.506
+}

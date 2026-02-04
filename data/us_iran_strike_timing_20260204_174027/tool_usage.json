@@ -1,0 +1,196 @@
+{
+  "centralized_research": {
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "US Iran military tensions 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "US potential strike Iran nuclear facilities",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Analyze potential US military intervention against Iran, considering diplomatic tensions, nuclear program status, and geopolitical constraints in 2026-2027",
+          "tool": "Agent",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "Agent"
+      ],
+      "llm_cost": 0.0474,
+      "llm_cost_summarization": 0.0244,
+      "llm_cost_agentic": 0.023,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "US Iran military tensions escalation",
+          "tool": "Google",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "US potential strike against Iran nuclear facilities",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "What are the current diplomatic and military tensions between the United States and Iran that could lead to a potential military confrontation in the near future?",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "When will the US' national military forces attempt to execute a military strike within the territory, airspace, or territorial waters of Iran?",
+          "tool": "AskNews",
+          "deep_research_query": "What are the current diplomatic and military tensions between the United States and Iran that could lead to a potential military confrontation in the near future?"
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "AskNews",
+        "Google"
+      ],
+      "llm_cost": 0.0253,
+      "llm_cost_summarization": 0.0244,
+      "llm_cost_agentic": 0.0009,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-3.5-haiku",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4000,
+        "token_output": 724,
+        "cost": 0.006096000000000001,
+        "duration_seconds": 17.674137115478516,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12146,
+        "token_output": 671,
+        "cost": 0.012400800000000002,
+        "duration_seconds": 19.050971269607544,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-3.5-haiku",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4000,
+        "token_output": 708,
+        "cost": 0.006032,
+        "duration_seconds": 17.67437481880188,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12140,
+        "token_output": 680,
+        "cost": 0.012432,
+        "duration_seconds": 19.050883054733276,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/anthropic/claude-3.5-haiku",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4000,
+        "token_output": 789,
+        "cost": 0.0063560000000000005,
+        "duration_seconds": 17.67443299293518,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12130,
+        "token_output": 630,
+        "cost": 0.012224,
+        "duration_seconds": 19.050777196884155,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/anthropic/claude-3.5-haiku",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4000,
+        "token_output": 718,
+        "cost": 0.006072,
+        "duration_seconds": 17.67451286315918,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12211,
+        "token_output": 702,
+        "cost": 0.0125768,
+        "duration_seconds": 19.050583839416504,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/anthropic/claude-3.5-haiku",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4000,
+        "token_output": 823,
+        "cost": 0.0064919999999999995,
+        "duration_seconds": 17.67456889152527,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12245,
+        "token_output": 751,
+        "cost": 0.0128,
+        "duration_seconds": 19.050514936447144,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0039,
+    "step2_search": 0.0474,
+    "step3_outside_view": 0.031,
+    "step5_inside_view": 0.0624
+  },
+  "total_pipeline_cost": 0.1448
+}

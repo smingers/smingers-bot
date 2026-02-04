@@ -1,66 +1,490 @@
 """
 CDF generation utilities for numeric question forecasting.
 
-This module contains functions for generating 201-point CDFs that satisfy
-Metaculus requirements for numeric question submissions.
+This module contains functions for generating CDFs that satisfy
+Metaculus requirements for numeric/discrete question submissions.
 
-Key constraints enforced:
-- 201 exactly spaced points
+IMPORTANT: This implementation exactly matches the official Metaculus
+implementation from metaculus-forecasting-tools/numeric_report.py.
+
+Key constraints enforced (matching Metaculus official implementation):
+- Configurable number of points (201 for numeric, 102 for discrete)
 - Monotonically increasing
-- No single step exceeds 0.59
-- Minimum step size enforced
+- No single step exceeds max_pmf_value (0.2 * 200 / inbound_outcome_count)
+- Minimum step size enforced (5e-5)
 - Open/closed bound handling
 """
 
+from __future__ import annotations
+
 import logging
-from typing import Dict, List, Optional
+from dataclasses import dataclass
 
 import numpy as np
-from scipy.interpolate import PchipInterpolator
 
 from .exceptions import CDFGenerationError
 
 logger = logging.getLogger(__name__)
 
+# Constants matching Metaculus official implementation
+DEFAULT_CDF_SIZE = 201
+DEFAULT_INBOUND_OUTCOME_COUNT = DEFAULT_CDF_SIZE - 1  # 200
+MAX_NUMERIC_PMF_VALUE = 0.2
 
-def _safe_cdf_bounds(cdf: np.ndarray, open_lower: bool, open_upper: bool, step: float) -> np.ndarray:
+
+def get_max_pmf_value(cdf_size: int, include_wiggle_room: bool = True) -> float:
     """
-    Enforce Metaculus CDF requirements:
-    - For open bounds: cdf[0] >= 0.001, cdf[-1] <= 0.999
-    - No single step may exceed 0.59
+    Calculate the maximum allowed PMF value (step size) for a given CDF size.
+
+    Matches Metaculus official implementation:
+    - Base cap is 0.2 for the default 200 inbound outcomes
+    - Scales proportionally for different CDF sizes
+    - Includes 5% wiggle room by default for safety margin
+
+    Args:
+        cdf_size: Number of points in the CDF (201 for numeric, varies for discrete)
+        include_wiggle_room: If True, multiply by 0.95 for safety margin
+
+    Returns:
+        Maximum allowed step size between adjacent CDF points
     """
-    # Pin tails to legal open-bound limits
-    if open_lower:
-        cdf[0] = max(cdf[0], 0.001)
-    if open_upper:
-        cdf[-1] = min(cdf[-1], 0.999)
+    inbound_outcome_count = cdf_size - 1
+    normal_cap = MAX_NUMERIC_PMF_VALUE * (DEFAULT_INBOUND_OUTCOME_COUNT / inbound_outcome_count)
 
-    # Enforce the 0.59 maximum step rule
-    big_jumps = np.where(np.diff(cdf) > 0.59)[0]
-    for idx in big_jumps:
-        excess = cdf[idx + 1] - cdf[idx] - 0.59
-        # Spread the excess evenly over the remaining points
-        span = len(cdf) - idx - 1
-        cdf[idx + 1:] -= excess * np.linspace(1, 0, span)
-        # Re-monotonise
-        cdf[idx + 1:] = np.maximum.accumulate(cdf[idx + 1:])
+    if include_wiggle_room:
+        return normal_cap * 0.95
+    else:
+        return normal_cap
 
-    return cdf
+
+@dataclass
+class Percentile:
+    """A percentile point with a value and percentile (0-1)."""
+
+    value: float
+    percentile: float
+
+
+class NumericDistributionGenerator:
+    """
+    Generates CDFs matching the official Metaculus implementation exactly.
+
+    This class mirrors the NumericDistribution class from metaculus-forecasting-tools.
+    """
+
+    def __init__(
+        self,
+        declared_percentiles: list[Percentile],
+        open_upper_bound: bool,
+        open_lower_bound: bool,
+        upper_bound: float,
+        lower_bound: float,
+        zero_point: float | None,
+        cdf_size: int = DEFAULT_CDF_SIZE,
+    ):
+        self.declared_percentiles = declared_percentiles
+        self.open_upper_bound = open_upper_bound
+        self.open_lower_bound = open_lower_bound
+        self.upper_bound = upper_bound
+        self.lower_bound = lower_bound
+        self.zero_point = zero_point
+        self.cdf_size = cdf_size
+
+        # Run all validations matching official implementation order
+        self._check_percentiles_increasing()
+        self._check_log_scaled_fields()
+        self._check_percentile_spacing()
+        self._check_too_far_from_bounds()
+        self.declared_percentiles = self._check_and_update_repeating_values(
+            self.declared_percentiles
+        )
+
+    def _check_percentiles_increasing(self) -> None:
+        """
+        Ensure percentiles and values are strictly increasing.
+
+        Matches official implementation exactly.
+        """
+        percentiles = self.declared_percentiles
+        for i in range(len(percentiles) - 1):
+            if percentiles[i].percentile >= percentiles[i + 1].percentile:
+                raise CDFGenerationError("Percentiles must be in strictly increasing order")
+            if percentiles[i].value > percentiles[i + 1].value:
+                raise CDFGenerationError("Values must be in strictly increasing order")
+        if len(percentiles) < 2:
+            raise CDFGenerationError("NumericDistribution must have at least 2 percentiles")
+
+    def _check_log_scaled_fields(self) -> None:
+        """
+        Validate log-scaled question constraints.
+
+        Matches official implementation exactly.
+        """
+        if self.zero_point is not None and self.lower_bound <= self.zero_point:
+            raise CDFGenerationError(
+                f"Lower bound {self.lower_bound} is less than or equal to the zero point {self.zero_point}. "
+                "Lower bound must be greater than the zero point."
+            )
+
+        for percentile in self.declared_percentiles:
+            if self.zero_point is not None and percentile.value < self.zero_point:
+                raise CDFGenerationError(
+                    f"Percentile value {percentile.value} is less than the zero point {self.zero_point}. "
+                    "Determining probability less than zero point is currently not supported."
+                )
+
+    def _check_percentile_spacing(self) -> None:
+        """
+        Ensure minimum spacing between percentiles.
+
+        Matches official implementation exactly.
+        """
+        percentiles = self.declared_percentiles
+        for i in range(len(percentiles) - 1):
+            if abs(percentiles[i + 1].percentile - percentiles[i].percentile) < 5e-05:
+                raise CDFGenerationError(
+                    f"Percentiles at indices {i} and {i + 1} are too close. "
+                    f"CDF must be increasing by at least 5e-05 at every step. "
+                    f"{percentiles[i].percentile} and {percentiles[i + 1].percentile} "
+                    f"at values {percentiles[i].value} and {percentiles[i + 1].value}. "
+                    "One possible reason is that your prediction is mostly or completely out of the upper/lower "
+                    "bound range thus assigning very little probability to any one x-axis value."
+                )
+
+    def _check_too_far_from_bounds(self) -> None:
+        """
+        Validate percentile values aren't too far from question bounds.
+
+        Matches official implementation exactly.
+        """
+        percentiles = self.declared_percentiles
+        max_to_min_range = self.upper_bound - self.lower_bound
+
+        # Check that at least some percentiles are within 25% wiggle room
+        wiggle_percent = 0.25
+        wiggle_room = max_to_min_range * wiggle_percent
+        upper_bound_plus_wiggle_room = self.upper_bound + wiggle_room
+        lower_bound_minus_wiggle_room = self.lower_bound - wiggle_room
+        percentiles_within_bounds_plus_wiggle_room = [
+            p
+            for p in percentiles
+            if lower_bound_minus_wiggle_room <= p.value <= upper_bound_plus_wiggle_room
+        ]
+        if len(percentiles_within_bounds_plus_wiggle_room) == 0:
+            raise CDFGenerationError(
+                f"No declared percentiles are within the range of the question +/- {wiggle_percent * 100}%. "
+                f"Lower bound: {self.lower_bound}, upper bound: {self.upper_bound}. "
+                f"Percentiles: {[(p.percentile, p.value) for p in percentiles]}"
+            )
+
+        # Check that no percentiles are WAY outside bounds (2x the range)
+        max_to_min_range_buffer = max_to_min_range * 2
+        percentiles_far_exceeding_bounds = [
+            p
+            for p in percentiles
+            if p.value < self.lower_bound - max_to_min_range_buffer
+            or p.value > self.upper_bound + max_to_min_range_buffer
+        ]
+        if len(percentiles_far_exceeding_bounds) > 0:
+            raise CDFGenerationError(
+                "Some declared percentiles are far exceeding the bounds of the question. "
+                f"Lower bound: {self.lower_bound}, upper bound: {self.upper_bound}. "
+                f"Percentiles: {[(p.percentile, p.value) for p in percentiles_far_exceeding_bounds]}"
+            )
+
+    def _check_and_update_repeating_values(self, percentiles: list[Percentile]) -> list[Percentile]:
+        """
+        Handle duplicate values by adding small offsets.
+
+        Matches official implementation exactly.
+        """
+        from collections import Counter
+
+        unique_value_count = Counter(p.value for p in percentiles)
+        final_percentiles = []
+
+        for percentile in percentiles:
+            value = percentile.value
+            count = unique_value_count[value]
+            repeated_value = count > 1
+            value_in_bounds = self.lower_bound < value < self.upper_bound
+            value_above_bound = value >= self.upper_bound
+            value_below_bound = value <= self.lower_bound
+            epsilon = 1e-10
+
+            if not repeated_value:
+                final_percentiles.append(percentile)
+            elif value_in_bounds:
+                # Official uses 1e-6 for in-bounds values
+                greater_epsilon = 1e-6
+                modification = (1 - percentile.percentile) * greater_epsilon
+                final_percentiles.append(
+                    Percentile(
+                        value=value - modification,
+                        percentile=percentile.percentile,
+                    )
+                )
+            elif value_above_bound:
+                modification = epsilon * percentile.percentile
+                final_percentiles.append(
+                    Percentile(
+                        value=self.upper_bound + modification,
+                        percentile=percentile.percentile,
+                    )
+                )
+            elif value_below_bound:
+                modification = epsilon * (1 - percentile.percentile)
+                final_percentiles.append(
+                    Percentile(
+                        value=self.lower_bound - modification,
+                        percentile=percentile.percentile,
+                    )
+                )
+            else:
+                raise CDFGenerationError(
+                    f"Unexpected state: value {value} is repeated {count} times. "
+                    f"Bounds are [{self.lower_bound}, {self.upper_bound}]"
+                )
+
+        return final_percentiles
+
+    def _nominal_location_to_cdf_location(self, nominal_value: float) -> float:
+        """
+        Convert a real-world value to a CDF location (0-1).
+
+        Matches official implementation exactly.
+        """
+        range_max = self.upper_bound
+        range_min = self.lower_bound
+        zero_point = self.zero_point
+
+        if zero_point is not None:
+            # logarithmically scaled question
+            deriv_ratio = (range_max - zero_point) / (range_min - zero_point)
+            if nominal_value == zero_point:
+                # If nominal = zero point, add epsilon to avoid log(0)
+                nominal_value += 1e-10
+            unscaled_location = (
+                np.log((nominal_value - range_min) * (deriv_ratio - 1) + (range_max - range_min))
+                - np.log(range_max - range_min)
+            ) / np.log(deriv_ratio)
+        else:
+            # linearly scaled question
+            unscaled_location = (nominal_value - range_min) / (range_max - range_min)
+
+        return float(unscaled_location)
+
+    def _cdf_location_to_nominal_location(self, cdf_location: float) -> float:
+        """
+        Convert a CDF location (0-1) to a real-world value.
+
+        Matches official implementation exactly.
+        """
+        range_max = self.upper_bound
+        range_min = self.lower_bound
+        zero_point = self.zero_point
+
+        if zero_point is None:
+            scaled_location = range_min + (range_max - range_min) * cdf_location
+        else:
+            deriv_ratio = (range_max - zero_point) / (range_min - zero_point)
+            scaled_location = range_min + (range_max - range_min) * (
+                deriv_ratio**cdf_location - 1
+            ) / (deriv_ratio - 1)
+
+        if np.isnan(scaled_location):
+            raise CDFGenerationError(f"Scaled location is NaN for cdf location {cdf_location}")
+
+        return float(scaled_location)
+
+    def _add_explicit_upper_lower_bound_percentiles(
+        self,
+        input_percentiles: list[Percentile],
+    ) -> list[Percentile]:
+        """
+        Add explicit boundary percentiles for interpolation.
+
+        Matches official implementation exactly.
+        """
+        open_upper_bound = self.open_upper_bound
+        open_lower_bound = self.open_lower_bound
+        range_max = self.upper_bound
+        range_min = self.lower_bound
+
+        # Convert to dict with percentiles * 100 as keys
+        return_percentiles: dict[float, float] = {
+            p.percentile * 100: p.value for p in input_percentiles
+        }
+
+        percentile_max = max(return_percentiles.keys())
+        percentile_min = min(return_percentiles.keys())
+        range_size = abs(range_max - range_min)
+        buffer = 1 if range_size > 100 else 0.01 * range_size
+
+        # Adjust any values that are exactly at the bounds
+        for percentile, value in list(return_percentiles.items()):
+            if not open_lower_bound and value <= range_min + buffer:
+                return_percentiles[percentile] = range_min + buffer
+            if not open_upper_bound and value >= range_max - buffer:
+                return_percentiles[percentile] = range_max - buffer
+
+        # Set cdf values outside range for upper bound
+        if open_upper_bound:
+            if range_max > return_percentiles[percentile_max]:
+                halfway_between_max_and_100th_percentile = 100 - (0.5 * (100 - percentile_max))
+                return_percentiles[halfway_between_max_and_100th_percentile] = range_max
+        else:
+            return_percentiles[100] = range_max
+
+        # Set cdf values outside range for lower bound
+        if open_lower_bound:
+            if range_min < return_percentiles[percentile_min]:
+                halfway_between_min_and_0th_percentile = 0.5 * percentile_min
+                return_percentiles[halfway_between_min_and_0th_percentile] = range_min
+        else:
+            return_percentiles[0] = range_min
+
+        # Sort and convert back to list
+        sorted_return_percentiles = dict(sorted(return_percentiles.items()))
+
+        return [
+            Percentile(percentile=p / 100, value=v) for p, v in sorted_return_percentiles.items()
+        ]
+
+    def _get_cdf_at(self, cdf_location: float) -> float:
+        """
+        Get the CDF height at a specific CDF location using linear interpolation.
+
+        Matches official implementation exactly.
+        """
+        bounded_percentiles = self._add_explicit_upper_lower_bound_percentiles(
+            self.declared_percentiles
+        )
+
+        # Build mapping of (cdf_location, height)
+        cdf_location_to_percentile_mapping: list[tuple[float, float]] = []
+        for percentile in bounded_percentiles:
+            height = percentile.percentile
+            location = self._nominal_location_to_cdf_location(percentile.value)
+            cdf_location_to_percentile_mapping.append((location, height))
+
+        # Linear interpolation
+        previous = cdf_location_to_percentile_mapping[0]
+        for i in range(1, len(cdf_location_to_percentile_mapping)):
+            current = cdf_location_to_percentile_mapping[i]
+            epsilon = 1e-10
+            if previous[0] - epsilon <= cdf_location <= current[0] + epsilon:
+                result = previous[1] + (current[1] - previous[1]) * (cdf_location - previous[0]) / (
+                    current[0] - previous[0]
+                )
+                if np.isnan(result):
+                    raise CDFGenerationError(f"Result is NaN for cdf location {cdf_location}")
+                return float(result)
+            previous = current
+
+        raise CDFGenerationError(f"CDF location {cdf_location} cannot be found in mapping")
+
+    def _standardize_cdf(self, cdf: list[float] | np.ndarray) -> list[float]:
+        """
+        Standardize a CDF to meet Metaculus requirements.
+
+        Matches official implementation exactly from numeric_report.py.
+        """
+        cdf = list(cdf)  # Make mutable copy
+        lower_open = self.open_lower_bound
+        upper_open = self.open_upper_bound
+
+        # Apply lower bound & enforce boundary values
+        scale_lower_to = 0 if lower_open else cdf[0]
+        scale_upper_to = 1.0 if upper_open else cdf[-1]
+        rescaled_inbound_mass = scale_upper_to - scale_lower_to
+
+        def apply_minimum(F: float, location: float) -> float:
+            # F is the height of the cdf at location (in range [0, 1])
+            # rescale
+            rescaled_F = (F - scale_lower_to) / rescaled_inbound_mass
+            # offset
+            if lower_open and upper_open:
+                return 0.988 * rescaled_F + 0.01 * location + 0.001
+            elif lower_open:
+                return 0.989 * rescaled_F + 0.01 * location + 0.001
+            elif upper_open:
+                return 0.989 * rescaled_F + 0.01 * location
+            return 0.99 * rescaled_F + 0.01 * location
+
+        for i, value in enumerate(cdf):
+            cdf[i] = apply_minimum(value, i / (len(cdf) - 1))
+
+        # Apply upper bound - operate in PMF space
+        cdf_array = np.array(cdf)
+        pmf = np.diff(cdf_array, prepend=0, append=1)
+        cap = get_max_pmf_value(len(cdf))
+
+        def cap_pmf(scale: float) -> np.ndarray:
+            return np.concatenate([pmf[:1], np.minimum(cap, scale * pmf[1:-1]), pmf[-1:]])
+
+        def capped_sum(scale: float) -> float:
+            return float(cap_pmf(scale).sum())
+
+        # Find the appropriate scale search space
+        lo = hi = scale = 1.0
+        while capped_sum(hi) < 1.0:
+            hi *= 1.2
+
+        # Hone in on scale value that makes capped sum 1
+        for _ in range(100):
+            scale = 0.5 * (lo + hi)
+            s = capped_sum(scale)
+            if s < 1.0:
+                lo = scale
+            else:
+                hi = scale
+            if s == 1.0 or (hi - lo) < 2e-5:
+                break
+
+        # Apply scale and renormalize
+        pmf = cap_pmf(scale)
+        pmf[1:-1] *= (cdf_array[-1] - cdf_array[0]) / pmf[1:-1].sum()
+
+        # Back to CDF space
+        cdf_result = np.cumsum(pmf)[:-1]
+
+        # Round to minimize floating point errors
+        cdf_result = np.round(cdf_result, 10)
+        return cdf_result.tolist()
+
+    def get_cdf(self) -> list[float]:
+        """
+        Generate the full CDF matching Metaculus requirements.
+
+        Returns a list of CDF values (probabilities) at evenly spaced locations.
+        """
+        cdf_size = self.cdf_size
+        continuous_cdf: list[float] = []
+        cdf_eval_locations = [i / (cdf_size - 1) for i in range(cdf_size)]
+
+        for loc in cdf_eval_locations:
+            continuous_cdf.append(self._get_cdf_at(loc))
+
+        # Apply standardization
+        continuous_cdf = self._standardize_cdf(continuous_cdf)
+
+        return continuous_cdf
 
 
 def generate_continuous_cdf(
-    percentile_values: Dict,
+    percentile_values: dict,
     open_upper_bound: bool,
     open_lower_bound: bool,
     upper_bound: float,
     lower_bound: float,
-    zero_point: Optional[float] = None,
+    zero_point: float | None = None,
     *,
     min_step: float = 5.0e-5,
     num_points: int = 201,
-) -> List[float]:
+) -> list[float]:
     """
-    Generate a 201-point continuous CDF with strict enforcement of Metaculus requirements.
+    Generate a continuous CDF matching the official Metaculus implementation exactly.
 
     Args:
         percentile_values: Dictionary mapping percentiles (1-99) to values
@@ -68,12 +492,12 @@ def generate_continuous_cdf(
         open_lower_bound: Whether the lower bound is open
         upper_bound: Maximum possible value
         lower_bound: Minimum possible value
-        zero_point: Reference point for non-linear scaling
+        zero_point: Reference point for non-linear (log) scaling
         min_step: Minimum step size between adjacent CDF points
-        num_points: Number of points in the output CDF (default: 201)
+        num_points: Number of points in the output CDF (201 for numeric, 102 for discrete)
 
     Returns:
-        List of CDF values (length 201)
+        List of CDF values (length num_points)
 
     Raises:
         CDFGenerationError: If CDF cannot be generated with given constraints
@@ -83,14 +507,12 @@ def generate_continuous_cdf(
         raise CDFGenerationError("Empty percentile values dictionary")
 
     if upper_bound <= lower_bound:
-        raise CDFGenerationError(f"Upper bound ({upper_bound}) must be greater than lower bound ({lower_bound})")
+        raise CDFGenerationError(
+            f"Upper bound ({upper_bound}) must be greater than lower bound ({lower_bound})"
+        )
 
-    if zero_point is not None:
-        if abs(zero_point - lower_bound) < 1e-6 or abs(zero_point - upper_bound) < 1e-6:
-            raise CDFGenerationError(f"zero_point ({zero_point}) too close to bounds [{lower_bound}, {upper_bound}]")
-
-    # Clean and validate percentile values
-    pv = {}
+    # Clean percentile values (validation happens in NumericDistributionGenerator)
+    cleaned_percentiles: list[Percentile] = []
     for k, v in percentile_values.items():
         try:
             k_float = float(k)
@@ -102,178 +524,47 @@ def generate_continuous_cdf(
             if not np.isfinite(v_float):
                 continue  # Skip non-finite values
 
-            pv[k_float] = v_float
+            cleaned_percentiles.append(Percentile(value=v_float, percentile=k_float / 100.0))
         except (ValueError, TypeError):
             continue  # Skip non-numeric entries
 
-    if len(pv) < 2:
-        raise CDFGenerationError(f"Need at least 2 valid percentile points (got {len(pv)})")
+    if len(cleaned_percentiles) < 2:
+        raise CDFGenerationError(
+            f"Need at least 2 valid percentile points (got {len(cleaned_percentiles)})"
+        )
 
-    # Handle duplicate values by adding small offsets
-    vals_seen = {}
-    for k in sorted(pv):
-        v = pv[k]
-        if v in vals_seen:
-            # Add progressively larger offsets for duplicate values
-            v += (len(vals_seen[v]) + 1) * 1e-9
-        vals_seen.setdefault(v, []).append(k)
-        pv[k] = v
+    # Sort by percentile
+    cleaned_percentiles.sort(key=lambda p: p.percentile)
 
-    # Create arrays of percentiles and values
-    percentiles, values = zip(*sorted(pv.items()))
-    percentiles = np.array(percentiles) / 100.0  # Convert to [0,1] range
-    values = np.array(values)
+    # Create generator and get CDF (all validation happens in NumericDistributionGenerator.__init__)
+    generator = NumericDistributionGenerator(
+        declared_percentiles=cleaned_percentiles,
+        open_upper_bound=open_upper_bound,
+        open_lower_bound=open_lower_bound,
+        upper_bound=upper_bound,
+        lower_bound=lower_bound,
+        zero_point=zero_point,
+        cdf_size=num_points,
+    )
 
-    # Check if values are strictly increasing after de-duplication
-    if np.any(np.diff(values) <= 0):
-        raise CDFGenerationError("Percentile values must be strictly increasing after de-duplication")
-
-    # Add boundary points if needed
-    if not open_lower_bound and lower_bound < values[0] - 1e-9:
-        percentiles = np.insert(percentiles, 0, 0.0)
-        values = np.insert(values, 0, lower_bound)
-
-    if not open_upper_bound and upper_bound > values[-1] + 1e-9:
-        percentiles = np.append(percentiles, 1.0)
-        values = np.append(values, upper_bound)
-
-    # Determine if log scaling is appropriate (all values positive)
-    use_log = np.all(values > 0)
-    x_vals = np.log(values) if use_log else values
-
-    # Create interpolator with fallback
-    try:
-        spline = PchipInterpolator(x_vals, percentiles, extrapolate=True)
-    except Exception as e:
-        # Fallback to linear interpolation
-        logger.warning(f"PchipInterpolator failed ({e}), falling back to linear interpolation")
-        def spline(x):
-            return np.interp(x, x_vals, percentiles)
-
-    # Generate evaluation grid based on zero_point
-    def create_grid(num_pts):
-        t = np.linspace(0, 1, num_pts)
-
-        if zero_point is None:
-            # Linear grid
-            return lower_bound + (upper_bound - lower_bound) * t
-        else:
-            # Non-linear grid based on zero_point
-            ratio = (upper_bound - zero_point) / (lower_bound - zero_point)
-            # Handle potential numerical issues
-            if abs(ratio - 1.0) < 1e-10:
-                return lower_bound + (upper_bound - lower_bound) * t
-            else:
-                return np.array([
-                    lower_bound + (upper_bound - lower_bound) *
-                    ((ratio ** tt - 1) / (ratio - 1))
-                    for tt in t
-                ])
-
-    # Generate the grid and evaluate
-    cdf_x = create_grid(num_points)
-
-    # Handle log transformation for evaluation
-    eval_x = np.log(cdf_x) if use_log else cdf_x
-
-    # Clamp values to avoid extrapolation issues
-    eval_x_clamped = np.clip(eval_x, x_vals[0], x_vals[-1])
-
-    # Generate initial CDF values and clamp to [0,1]
-    cdf_y = spline(eval_x_clamped).clip(0.0, 1.0)
-
-    # Ensure monotonicity (non-decreasing)
-    cdf_y = np.maximum.accumulate(cdf_y)
-
-    # Set boundary values if bounds are closed
-    if not open_lower_bound:
-        cdf_y[0] = 0.0
-    if not open_upper_bound:
-        cdf_y[-1] = 1.0
-
-    # Strict enforcement of minimum step size
-    def enforce_min_steps(y_values, min_step_size):
-        """Enforce minimum step size between adjacent points."""
-        result = y_values.copy()
-
-        # First pass: enforce minimum steps
-        for i in range(1, len(result)):
-            if result[i] < result[i - 1] + min_step_size:
-                result[i] = min(result[i - 1] + min_step_size, 1.0)
-
-        # Second pass: ensure we don't exceed 1.0
-        if result[-1] > 1.0:
-            overflow_idx = np.where(result > 1.0)[0][0]
-            steps_remaining = len(result) - overflow_idx
-
-            for i in range(overflow_idx, len(result)):
-                t = (i - overflow_idx) / max(1, steps_remaining - 1)
-                result[i] = min(1.0, result[overflow_idx - 1] + (1.0 - result[overflow_idx - 1]) * t)
-
-            # Final check for minimum steps
-            for i in range(overflow_idx, len(result)):
-                if i > overflow_idx and result[i] < result[i - 1] + min_step_size:
-                    result[i] = result[i - 1] + min_step_size
-                    if result[i] > 1.0:
-                        result[i] = 1.0
-                        for j in range(i - 1, overflow_idx - 1, -1):
-                            max_allowed = result[j + 1] - min_step_size
-                            if result[j] > max_allowed:
-                                result[j] = max_allowed
-
-        return result
-
-    # Apply strict step enforcement
-    cdf_y = enforce_min_steps(cdf_y, min_step)
-    cdf_y = _safe_cdf_bounds(cdf_y, open_lower_bound, open_upper_bound, min_step)
-
-    # Double-check minimum step size requirement
-    steps = np.diff(cdf_y)
-    if np.any(steps < min_step):
-        logger.warning("Minimum step size still violated. Using aggressive step enforcement.")
-
-        if not open_lower_bound:
-            start_val = 0.0
-        else:
-            start_val = cdf_y[0]
-
-        if not open_upper_bound:
-            end_val = 1.0
-        else:
-            end_val = min(cdf_y[-1], 1.0)
-
-        available_range = end_val - start_val
-        required_range = (len(cdf_y) - 1) * min_step
-
-        if required_range > available_range:
-            raise CDFGenerationError(
-                f"Cannot satisfy minimum step requirement: need {required_range:.6f} "
-                f"but only have {available_range:.6f} available in CDF range"
-            )
-
-        # Create a new CDF with exactly min_step between points where needed
-        new_cdf = np.zeros_like(cdf_y)
-        new_cdf[0] = start_val
-
-        if len(cdf_y) > 2:
-            orig_shape = np.diff(cdf_y)
-            orig_shape = np.maximum(orig_shape, min_step)
-            orig_shape = orig_shape / np.sum(orig_shape)
-
-            remaining = available_range - (len(cdf_y) - 1) * min_step
-            extra_steps = remaining * orig_shape
-
-            for i in range(1, len(new_cdf)):
-                new_cdf[i] = new_cdf[i - 1] + min_step + extra_steps[i - 1]
-        else:
-            for i in range(1, len(new_cdf)):
-                new_cdf[i] = new_cdf[i - 1] + (available_range / (len(new_cdf) - 1))
-
-        cdf_y = new_cdf
+    cdf = generator.get_cdf()
 
     # Final validation
-    if np.any(np.diff(cdf_y) < min_step - 1e-10):
-        problematic_indices = np.where(np.diff(cdf_y) < min_step - 1e-10)[0]
-        raise CDFGenerationError(f"Failed to enforce minimum step size at indices: {problematic_indices}")
+    steps = np.diff(cdf)
+    max_allowed_step = get_max_pmf_value(num_points, include_wiggle_room=False)
 
-    return cdf_y.tolist()
+    if np.any(steps < min_step - 1e-10):
+        problematic_indices = np.where(np.array(steps) < min_step - 1e-10)[0]
+        raise CDFGenerationError(
+            f"Failed to enforce minimum step size at indices: {problematic_indices}"
+        )
+
+    if np.any(steps > max_allowed_step + 1e-10):
+        problematic_indices = np.where(np.array(steps) > max_allowed_step + 1e-10)[0]
+        max_step_found = steps[problematic_indices[0]]
+        raise CDFGenerationError(
+            f"Failed to enforce maximum step size: found {max_step_found:.4f} at index {problematic_indices[0]}, "
+            f"max allowed is {max_allowed_step:.4f}"
+        )
+
+    return cdf

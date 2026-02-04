@@ -16,9 +16,21 @@ class ExtractionError(ForecastingError):
 
     Raised when the probability/percentile/option extraction logic
     cannot parse the agent's response.
+
+    Attributes:
+        agent_name: Identifier of the agent that failed (e.g., "forecaster_1")
+        response_preview: First portion of the unparseable response for debugging
     """
 
-    pass
+    def __init__(
+        self,
+        message: str,
+        agent_name: str | None = None,
+        response_preview: str | None = None,
+    ):
+        super().__init__(message)
+        self.agent_name = agent_name
+        self.response_preview = response_preview
 
 
 class InsufficientPredictionsError(ForecastingError):
@@ -55,6 +67,20 @@ class LLMError(ForecastingError):
         self.last_error = last_error
 
 
+class TruncationError(ForecastingError):
+    """LLM response was truncated due to hitting max_tokens limit.
+
+    Raised when finish_reason is "length", indicating the response
+    was cut off before completion. The output is likely missing
+    the final probability/percentile values.
+    """
+
+    def __init__(self, message: str, output_tokens: int = 0, max_tokens: int = 0):
+        super().__init__(message)
+        self.output_tokens = output_tokens
+        self.max_tokens = max_tokens
+
+
 class SearchError(ForecastingError):
     """Search pipeline encountered an error.
 
@@ -82,3 +108,15 @@ class QuestionTypeError(ForecastingError):
     def __init__(self, message: str, question_type: str | None = None):
         super().__init__(message)
         self.question_type = question_type
+
+
+class SubmissionError(ForecastingError):
+    """Failed to submit prediction to Metaculus API.
+
+    Raised when the API returns an error (4xx, 5xx) during submission.
+    The forecast was generated but not successfully submitted.
+    """
+
+    def __init__(self, message: str, status_code: int | None = None):
+        super().__init__(message)
+        self.status_code = status_code

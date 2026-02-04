@@ -1,0 +1,17 @@
+{
+  "file_path": "data/local_questions/us_iran_strike_timing.yaml",
+  "original_data": {
+    "id": "us_iran_strike_timing",
+    "title": "When will the US' national military forces attempt to execute a military strike within the territory, airspace, or territorial waters of Iran?",
+    "question_type": "multiple_choice",
+    "options": [
+      "Before 11 May 2026",
+      "Between 11 May 2026 and 9 September 2026",
+      "Between 10 September 2026 and 9 January 2027",
+      "Not before 9 January 2027"
+    ],
+    "description": "The US struck at least three Iranian nuclear facilities in late June 2025,\nand Israel is reportedly considering new strikes on the Islamic Republic.\n\nSources:\n- abcnews.go.com/International/iran-full-scale-war-us-israel-europe-president/\n- www.nbcnews.com/politics/white-house/netanyahu-plans-brief-trump-possible-new\n- www.aljazeera.com/news/2026/1/5/trumps-abduction-of-maduro-escalates-concerns\n",
+    "resolution_criteria": "The geographic origin of and weaponry used in a military strike will be\nimmaterial so long as either the weapon detonates or discharges on or over\nIranian territory. A cyberattack alone will not count.\n\nFor the purposes of this question, US national military forces exclude US\nintelligence services (e.g., CIA).\n\nPublic acknowledgment is not required, and the default evidentiary standard\nwould be used, that being credible, open-source media reporting.\n",
+    "fine_print": "- Geographic origin of strike is immaterial\n- Weaponry type is immaterial\n- Cyberattacks do not count\n- CIA and other intelligence services do not count as \"national military forces\"\n- Resolution based on credible open-source media reporting\n"
+  }
+}

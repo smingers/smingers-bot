@@ -1,0 +1,196 @@
+{
+  "centralized_research": {
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Royal Caribbean upcoming earnings February 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "RCL stock analysis February 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Summarize key factors likely to influence RCL share price between 2026-02-04 and 2026-02-14, including scheduled catalysts (earnings, guidance), historical 10-day post-earnings performance, recent cruise industry demand signals, fuel price trends and any significant company or macro news. Provide recent closing-price history and implied volatility where available.",
+          "tool": "Agent",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google News",
+        "Google"
+      ],
+      "llm_cost": 0.2221,
+      "llm_cost_summarization": 0.1673,
+      "llm_cost_agentic": 0.0547,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Royal Caribbean stock outlook 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Royal Caribbean Cruises earnings February 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Latest analyst commentary on Royal Caribbean Cruises share price drivers over next two weeks",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "Will RCL's market close price on 2026-02-14 be higher than its market close price on 2026-02-04?",
+          "tool": "AskNews",
+          "deep_research_query": "Latest analyst commentary on Royal Caribbean Cruises share price drivers over next two weeks"
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "AskNews"
+      ],
+      "llm_cost": 0.1141,
+      "llm_cost_summarization": 0.1082,
+      "llm_cost_agentic": 0.0059,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7603,
+        "token_output": 2032,
+        "cost": 0.053289,
+        "duration_seconds": 54.366692304611206,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15799,
+        "token_output": 3053,
+        "cost": 0.093192,
+        "duration_seconds": 72.0187475681305,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7603,
+        "token_output": 2270,
+        "cost": 0.056859,
+        "duration_seconds": 54.36675429344177,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14940,
+        "token_output": 2325,
+        "cost": 0.07969499999999999,
+        "duration_seconds": 72.01870489120483,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6600,
+        "token_output": 1750,
+        "cost": 0.03605,
+        "duration_seconds": 54.366793632507324,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14110,
+        "token_output": 2917,
+        "cost": 0.06553049999999999,
+        "duration_seconds": 72.01867437362671,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6600,
+        "token_output": 1921,
+        "cost": 0.028568,
+        "duration_seconds": 54.36686062812805,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13440,
+        "token_output": 1372,
+        "cost": 0.037856,
+        "duration_seconds": 72.01864910125732,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6600,
+        "token_output": 1717,
+        "cost": 0.026936,
+        "duration_seconds": 54.36689019203186,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13130,
+        "token_output": 1728,
+        "cost": 0.040083999999999995,
+        "duration_seconds": 72.01862454414368,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0119,
+    "step2_search": 0.2221,
+    "step3_outside_view": 0.2017,
+    "step5_inside_view": 0.3164
+  },
+  "total_pipeline_cost": 0.7521
+}

@@ -26,7 +26,7 @@ The pipeline implements a structured forecasting methodology:
 
 **User executes:**
 ```bash
-python main.py --question 41594 --mode production
+python main.py --question 41594 --mode live
 ```
 
 **Initialization sequence:**
@@ -98,7 +98,7 @@ python main.py --question 41594 --mode production
 
 **Passed to next stage:**
 - `MetaculusQuestion` object
-- `ForecastArtifacts` container
+- `ForecastArtifactPaths` container
 
 ---
 
@@ -505,7 +505,7 @@ results = await asyncio.gather(*tasks)
 4. **Create AgentPrediction object:**
    ```python
    AgentPrediction(
-       agent_name="analyst",
+       agent_id="analyst",
        model="claude-sonnet-4-20250514",
        weight=1.0,
        prediction=0.42,
@@ -530,9 +530,9 @@ Example results:
 ### Outputs (per agent)
 
 **Saved artifacts (for each agent):**
-- `data/.../04_inside_view/{agent_name}/prompt.md` - Filled template
-- `data/.../04_inside_view/{agent_name}/response.md` - Full LLM reasoning
-- `data/.../04_inside_view/{agent_name}/extracted.json`
+- `data/.../04_inside_view/{agent_id}/prompt.md` - Filled template
+- `data/.../04_inside_view/{agent_id}/response.md` - Full LLM reasoning
+- `data/.../04_inside_view/{agent_id}/extracted.json`
   ```json
   {
     "prediction": 0.42,
@@ -696,9 +696,9 @@ final_pred = max(0.001, min(0.999, 0.386))
 ### Inputs
 - `question`: MetaculusQuestion (id=41594)
 - `forecast_result`: Contains `final_prediction` (0.386)
-- `dry_run`: False (in production mode)
+- `should_submit`: True (in live mode)
 
-### Process (Production Mode)
+### Process (Live Mode)
 
 #### 8A. Submit to Metaculus API (`metaculus_api.py`)
 
@@ -755,11 +755,11 @@ response = await metaculus.submit_multiple_choice_prediction(
 )
 ```
 
-### Process (Dry Run Mode)
+### Process (Test/Preview Mode)
 
-**If `dry_run=True`:**
+**If `should_submit=False` (test or preview mode):**
 ```python
-logger.info(f"DRY RUN: Would submit 38.6%")
+logger.info(f"Mode: test/preview - skipping submission")
 # No API call made
 # Still save prediction artifact
 ```
@@ -945,7 +945,7 @@ Full audit trail saved to: `data/41594_20260124_143022/`
 - `data/.../06_submission/reasoning_report.md` - Complete human-readable report
 
 **Report is available for:**
-- Manual review before submission (dry run mode)
+- Manual review before submission (test/preview mode)
 - Post-submission documentation
 - Metaculus reasoning field (if enabled in config)
 
@@ -995,7 +995,7 @@ timing = {
     "created_at": "2026-01-24T14:35:22Z",
     "config_hash": "a3f5e9b2c1d4",
     "config_snapshot": {
-      "mode": "production",
+      "mode": "live",
       "models": {...},
       "ensemble": {...}
     },
@@ -1039,7 +1039,7 @@ INSERT INTO forecasts (
 **2. Agent predictions (5 records):**
 ```sql
 INSERT INTO agent_predictions (
-    forecast_id, agent_name, model, weight, prediction, reasoning_length
+    forecast_id, agent_id, model, weight, prediction, reasoning_length
 ) VALUES
     ('41594_20260124_143022', 'analyst', 'claude-sonnet-4-20250514', 1.0, 0.42, 2847),
     ('41594_20260124_143022', 'historian', 'claude-sonnet-4-20250514', 1.0, 0.38, 3012),
@@ -1226,9 +1226,9 @@ research:
 
 ### Model Selection by Mode
 
-**Dry run mode** (cheap, fast testing):
+**Test mode** (cheap, fast testing):
 ```yaml
-mode: "dry_run"
+mode: "test"
 models:
   cheap:
     base_rate_estimator: "claude-3-haiku-20240307"
@@ -1240,9 +1240,9 @@ ensemble:
 - Speed: ~30 seconds
 - No submission to Metaculus
 
-**Production mode** (high quality, submits):
+**Live mode** (high quality, submits):
 ```yaml
-mode: "production"
+mode: "live"
 models:
   production:
     base_rate_estimator: "claude-sonnet-4-20250514"
@@ -1333,7 +1333,7 @@ ensemble:
 - Report generation: 5 seconds
 - Database persistence: 1 second
 
-### Cost Breakdown (Production Mode)
+### Cost Breakdown (Live Mode)
 
 **Per forecast (~$0.03-0.05):**
 - Query generation (Haiku): $0.0002
@@ -1485,24 +1485,24 @@ Print summary to console
 
 ## Appendix: CLI Examples
 
-**Basic forecast (dry run):**
+**Basic forecast (test mode):**
 ```bash
-python main.py --question 41594
+python main.py --question 41594 --mode test
 ```
 
-**Production forecast (submits):**
+**Live forecast (submits):**
 ```bash
-python main.py --question 41594 --mode production
+python main.py --question 41594 --mode live
 ```
 
-**Test with production models, don't submit:**
+**Preview with production models, don't submit:**
 ```bash
-python main.py --question 41594 --mode dry_run_heavy
+python main.py --question 41594 --mode preview
 ```
 
 **Forecast all new questions in tournament:**
 ```bash
-python main.py --tournament 32721 --forecast-new --limit 5 --mode production
+python main.py --tournament 32721 --forecast-new --limit 5 --mode live
 ```
 
 **List tournament questions:**

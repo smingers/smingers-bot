@@ -58,3 +58,4 @@ htmlcov/
 
 # Poetry
 poetry.lock
+coverage_html/

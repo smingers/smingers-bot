@@ -10,7 +10,7 @@ The forecasting pipeline and prompts in this bot are based on [Panshul42's Metac
 
 1. Copy `.env.template` to `.env` and fill in your API keys
 2. Install dependencies: `poetry install`
-3. Run a test forecast: `poetry run python main.py --question <id> --dry-run`
+3. Run a test forecast: `poetry run python main.py --question <id> --mode test`
 
 ## Usage
 
@@ -23,23 +23,23 @@ cp .env.template .env
 # Required: OPENROUTER_API_KEY, METACULUS_TOKEN
 # Optional: SERPER_API_KEY, ASKNEWS_CLIENT_ID, ASKNEWS_CLIENT_SECRET
 
-# Run a forecast (dry run with cheap models)
-python main.py --question 41594 --mode dry_run
+# Run a forecast (test mode: cheap models, no submission)
+python main.py --question 41594 --mode test
 
-# Run a forecast (dry run with production models)
-python main.py --question 41594 --mode dry_run_heavy
+# Run a forecast (preview mode: production models, no submission)
+python main.py --question 41594 --mode preview
 
-# Run a forecast (submit with production models)
-python main.py --question 41594 --mode production
+# Run a forecast (live mode: production models, submits to Metaculus)
+python main.py --question 41594 --mode live
 
 # List tournament questions
 python main.py --tournament 32721 --list
 
-# Forecast all new questions
-python main.py --tournament 32721 --forecast-new --limit 5
+# Forecast all unforecasted questions
+python main.py --tournament 32721 --forecast-unforecasted --limit 5
 
 # Verbose logging
-python main.py --question 41594 --mode dry_run --verbose
+python main.py --question 41594 --mode test --verbose
 ```
 
 ## Running Tests
@@ -54,6 +54,19 @@ pytest tests/unit/test_cdf_generation.py
 
 # Run with verbose output
 pytest tests/ -v
+```
+
+## Code Quality
+
+```bash
+# Manual checks
+poetry run ruff check .          # Lint
+poetry run ruff check --fix .    # Lint with auto-fix
+poetry run ruff format .         # Format
+
+# Pre-commit runs automatically on git commit
+# To run manually on all files:
+poetry run pre-commit run --all-files
 ```
 
 ## Viewing Forecasts

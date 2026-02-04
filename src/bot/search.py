@@ -3,26 +3,26 @@ Search Pipeline
 
 Key differences from previous approach:
 1. Forecasters generate search queries directly in their responses
-2. Queries are tagged with source (Google, Google News, Assistant, Agent)
-3. Agentic search uses GPT to iteratively research
-4. Articles are summarized with question context
+2. Queries are tagged with source (Google, Google News, Agent)
+3. AskNews is called programmatically for current search (not LLM-controlled)
+4. Agentic search uses GPT to iteratively research
+5. Articles are summarized with question context
 """
 
 import asyncio
-import re
-import os
 import logging
+import os
+import re
 import traceback
-from typing import Dict, List, Optional, Any, Tuple
-from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from dataclasses import dataclass
+from typing import Any
 
-import httpx
 import dateparser
+import httpx
 
-from ..utils.llm import LLMClient
-from .content_extractor import FastContentExtractor
-from .prompts import INITIAL_SEARCH_PROMPT, CONTINUATION_SEARCH_PROMPT
+from ..utils.llm import LLMClient, get_cost_tracker
+from .content_extractor import ConcurrentContentExtractor
+from .prompts import CONTINUATION_SEARCH_PROMPT, INITIAL_SEARCH_PROMPT
 
 logger = logging.getLogger(__name__)
 
@@ -30,21 +30,23 @@ logger = logging.getLogger(__name__)
 @dataclass
 class QuestionDetails:
     """Question details for context-aware article summarization."""
+
     title: str
     resolution_criteria: str
     fine_print: str
     description: str
-    resolution_date: Optional[str] = None
+    resolution_date: str | None = None
 
 
 @dataclass
 class SearchResult:
     """A search result with content."""
+
     url: str
     title: str
     content: str
     source: str  # google, google_news, asknews, agent
-    date: Optional[str] = None
+    date: str | None = None
 
 
 # Article summarization prompt template
@@ -84,11 +86,11 @@ class SearchPipeline:
     Supports multiple search sources:
     - Google (web search via Serper)
     - Google News (news search via Serper)
-    - Assistant (AskNews)
+    - AskNews (news + deep research, called programmatically for current search)
     - Agent (agentic search with iterative GPT analysis)
     """
 
-    def __init__(self, config: dict, llm_client: Optional[LLMClient] = None):
+    def __init__(self, config: dict, llm_client: LLMClient | None = None):
         """
         Initialize search pipeline.
 
@@ -97,16 +99,20 @@ class SearchPipeline:
             llm_client: Optional LLMClient instance (creates one if not provided)
         """
         self.config = config
-        self.llm = llm_client or LLMClient()
-        self.http_client: Optional[httpx.AsyncClient] = None
+        if llm_client:
+            self.llm = llm_client
+        else:
+            llm_timeout = config.get("llm", {}).get("timeout_seconds")
+            self.llm = LLMClient(timeout_seconds=llm_timeout)
+        self.http_client: httpx.AsyncClient | None = None
 
         # API keys
         self.serper_key = os.getenv("SERPER_API_KEY") or os.getenv("SERPER_KEY")
         self.asknews_client_id = os.getenv("ASKNEWS_CLIENT_ID")
         self.asknews_secret = os.getenv("ASKNEWS_CLIENT_SECRET") or os.getenv("ASKNEWS_SECRET")
 
-        # Semaphore to limit concurrent AskNews calls (free tier has concurrency limit)
-        self._asknews_semaphore = asyncio.Semaphore(1)
+        # Rate limiter for AskNews calls (free tier has concurrency limit)
+        self._asknews_rate_limiter = asyncio.Semaphore(1)
 
     async def __aenter__(self):
         self.http_client = httpx.AsyncClient(timeout=70.0)
@@ -121,69 +127,75 @@ class SearchPipeline:
     # Main entry point: process search queries from forecaster response
     # -------------------------------------------------------------------------
 
-    async def process_search_queries(
+    async def execute_searches_from_response(
         self,
         response: str,
-        forecaster_id: str,
+        search_id: str,
         question_details: QuestionDetails,
-    ) -> Tuple[str, Dict[str, Any]]:
+        include_asknews: bool = False,
+    ) -> tuple[str, dict[str, Any]]:
         """
-        Parse search queries from forecaster's response and execute them.
+        Parse search queries from a response and execute them.
 
         Queries are expected in format:
         Search queries:
         1. "query text" (Google)
         2. "query text" (Google News)
-        3. "query text" (Assistant)
-        4. "query text" (Agent)
+        3. "query text" (Agent)
 
         Args:
-            response: The forecaster's response containing search queries
-            forecaster_id: ID for logging
+            response: The response containing search queries (from query generation)
+            search_id: Identifier for logging (e.g., "historical", "current")
             question_details: Question context for summarization
+            include_asknews: If True, also call AskNews with question title (for current search)
 
         Returns:
             Tuple of (formatted_results_string, metadata_dict)
         """
+        cost_tracker = get_cost_tracker()
+        start_cost = cost_tracker.total_cost
+
         metadata = {
-            "forecaster_id": forecaster_id,
+            "search_id": search_id,
             "searched": False,
             "num_queries": 0,
             "queries": [],
             "tools_used": set(),
         }
+
+        # Track costs by operation type
+        self._current_summarization_cost = 0.0
+        self._current_agentic_cost = 0.0
         try:
             # Extract the "Search queries:" block
             search_queries_block = re.search(
-                r'(?:Search queries:)(.*)',
-                response,
-                re.DOTALL | re.IGNORECASE
+                r"(?:Search queries:)(.*)", response, re.DOTALL | re.IGNORECASE
             )
             if not search_queries_block:
-                logger.info(f"Forecaster {forecaster_id}: No search queries block found")
+                logger.info(f"Search[{search_id}]: No search queries block found")
                 return "", metadata
 
             queries_text = search_queries_block.group(1).strip()
 
             # Parse queries with sources
-            # Format: 1. "text" (Source) or 1. text (Source)
+            # Format: 1. "text" (Source) or 1. text (Source) or 1. text [Source]
             search_queries = re.findall(
-                r'(?:\d+\.\s*)?(["\']?(.*?)["\']?)\s*\((Google|Google News|Assistant|Agent)\)',
-                queries_text
+                r'(?:\d+\.\s*)?(["\']?(.*?)["\']?)\s*[\(\[](Google|Google News|Google Trends|Agent|AskNews)[\)\]]',
+                queries_text,
             )
 
             # Fallback to unquoted queries
             if not search_queries:
                 search_queries = re.findall(
-                    r'(?:\d+\.\s*)?([^(\n]+)\s*\((Google|Google News|Assistant|Agent)\)',
-                    queries_text
+                    r"(?:\d+\.\s*)?([^(\[\n]+)\s*[\(\[](Google|Google News|Google Trends|Agent|AskNews)[\)\]]",
+                    queries_text,
                 )
 
             if not search_queries:
-                logger.info(f"Forecaster {forecaster_id}: No valid search queries found:\n{queries_text}")
+                logger.info(f"Search[{search_id}]: No valid search queries found:\n{queries_text}")
                 return "", metadata
 
-            logger.info(f"Forecaster {forecaster_id}: Processing {len(search_queries)} search queries")
+            logger.info(f"Search[{search_id}]: Processing {len(search_queries)} search queries")
 
             metadata["searched"] = True
             metadata["num_queries"] = len(search_queries)
@@ -191,6 +203,9 @@ class SearchPipeline:
             # Build tasks for each query
             tasks = []
             query_sources = []
+
+            # Track LLM-generated AskNews query for Deep Research
+            asknews_deep_research_query: str | None = None
 
             for match in search_queries:
                 if len(match) == 3:
@@ -202,15 +217,14 @@ class SearchPipeline:
                 if not query:
                     continue
 
-
-                logger.info(f"Forecaster {forecaster_id}: Query='{query}' Source={source}")
-                query_sources.append((query, source))
+                logger.info(f"Search[{search_id}]: Query='{query}' Source={source}")
 
                 # Track query and tool usage in metadata
                 metadata["queries"].append({"query": query, "tool": source})
                 metadata["tools_used"].add(source)
 
                 if source in ("Google", "Google News"):
+                    query_sources.append((query, source))
                     tasks.append(
                         self._google_search_and_scrape(
                             query=query,
@@ -219,13 +233,46 @@ class SearchPipeline:
                             date_before=question_details.resolution_date,
                         )
                     )
-                elif source == "Assistant":
-                    tasks.append(self._call_asknews(query))
+                elif source == "Google Trends":
+                    # Check if Google Trends is enabled in config
+                    if not self.config.get("research", {}).get("google_trends_enabled", True):
+                        logger.info(f"Search[{search_id}]: Google Trends disabled, skipping query")
+                        continue
+                    query_sources.append((query, source))
+                    tasks.append(self._google_trends_search(query))
                 elif source == "Agent":
+                    query_sources.append((query, source))
                     tasks.append(self._agentic_search(query))
+                elif source == "AskNews":
+                    # Store the LLM-generated query for Deep Research
+                    # The actual AskNews call will be added below with include_asknews
+                    asknews_deep_research_query = query
+                    logger.info(
+                        f"Search[{search_id}]: Found AskNews Deep Research query: {query[:50]}..."
+                    )
+
+            # Programmatically add AskNews for current search
+            # Uses question title for news search, LLM-generated query for Deep Research
+            if include_asknews:
+                logger.info(f"Search[{search_id}]: Adding AskNews search with question title")
+                if asknews_deep_research_query:
+                    logger.info(f"Search[{search_id}]: Deep Research will use LLM-generated query")
+                tasks.append(
+                    self._call_asknews(
+                        news_query=question_details.title,
+                        deep_research_query=asknews_deep_research_query,
+                    )
+                )
+                query_sources.append((question_details.title, "AskNews"))
+                # Track in metadata (include both queries if Deep Research query exists)
+                asknews_metadata = {"query": question_details.title, "tool": "AskNews"}
+                if asknews_deep_research_query:
+                    asknews_metadata["deep_research_query"] = asknews_deep_research_query
+                metadata["queries"].append(asknews_metadata)
+                metadata["tools_used"].add("AskNews")
 
             if not tasks:
-                logger.info(f"Forecaster {forecaster_id}: No tasks generated")
+                logger.info(f"Search[{search_id}]: No tasks generated")
                 return "", metadata
 
             # Execute all tasks
@@ -233,31 +280,45 @@ class SearchPipeline:
 
             # Format outputs and count results
             formatted_results = ""
-            for i, ((query, source), result) in enumerate(zip(query_sources, results)):
+            for i, ((query, source), result) in enumerate(zip(query_sources, results, strict=True)):
                 if isinstance(result, Exception):
-                    logger.error(f"Forecaster {forecaster_id}: Error for '{query}' → {result}")
+                    logger.error(f"Search[{search_id}]: Error for '{query}' → {result}")
                     metadata["queries"][i]["success"] = False
                     metadata["queries"][i]["error"] = str(result)
                     metadata["queries"][i]["num_results"] = 0
 
-                    if source == "Assistant":
+                    if source == "AskNews":
                         formatted_results += f"\n<Asknews_articles>\nQuery: {query}\nError retrieving results: {result}\n</Asknews_articles>\n"
                     elif source == "Agent":
-                        formatted_results += f"\n<Agent_report>\nQuery: {query}\nError: {result}\n</Agent_report>\n"
+                        formatted_results += (
+                            f"\n<Agent_report>\nQuery: {query}\nError: {result}\n</Agent_report>\n"
+                        )
+                    elif source == "Google Trends":
+                        formatted_results += f'<GoogleTrendsData term="{query}">\nError: {result}\n</GoogleTrendsData>\n'
                     else:
-                        formatted_results += f"\n<Summary query=\"{query}\">\nError: {result}\n</Summary>\n"
+                        formatted_results += (
+                            f'\n<Summary query="{query}">\nError: {result}\n</Summary>\n'
+                        )
                 else:
-                    logger.info(f"Forecaster {forecaster_id}: Query '{query}' processed successfully")
+                    logger.info(f"Search[{search_id}]: Query '{query}' processed successfully")
 
                     # Count results by looking for tags in the result string
-                    if source == "Assistant":
+                    if source == "AskNews":
                         num_results = result.count("**") // 2  # AskNews articles have ** in titles
-                        formatted_results += f"\n<Asknews_articles>\nQuery: {query}\n{result}</Asknews_articles>\n"
+                        formatted_results += (
+                            f"\n<Asknews_articles>\nQuery: {query}\n{result}</Asknews_articles>\n"
+                        )
                     elif source == "Agent":
                         # Agent returns 1 synthesized analysis (not multiple raw contents)
                         # Count as 1 if substantial content exists, 0 if error or empty
                         num_results = 1 if len(result) > 500 and "Error:" not in result[:100] else 0
-                        formatted_results += f"\n<Agent_report>\nQuery: {query}\n{result}</Agent_report>\n"
+                        formatted_results += (
+                            f"\n<Agent_report>\nQuery: {query}\n{result}</Agent_report>\n"
+                        )
+                    elif source == "Google Trends":
+                        # Google Trends returns 1 data block with statistics
+                        num_results = 1 if "Error" not in result[:100] else 0
+                        formatted_results += f"\n{result}\n"
                     else:
                         num_results = result.count("<Summary")
                         formatted_results += result
@@ -268,13 +329,21 @@ class SearchPipeline:
             # Convert set to list for JSON serialization
             metadata["tools_used"] = list(metadata["tools_used"])
 
+            # Track LLM costs by operation type
+            metadata["llm_cost"] = round(cost_tracker.total_cost - start_cost, 4)
+            metadata["llm_cost_summarization"] = round(self._current_summarization_cost, 4)
+            metadata["llm_cost_agentic"] = round(self._current_agentic_cost, 4)
+
             return formatted_results, metadata
 
         except Exception as e:
-            logger.error(f"Forecaster {forecaster_id}: Error processing search queries: {e}")
+            logger.error(f"Search[{search_id}]: Error processing search queries: {e}")
             traceback.print_exc()
             metadata["error"] = str(e)
-            return "Error processing some search queries. Partial results may be available.", metadata
+            return (
+                "Error processing some search queries. Partial results may be available.",
+                metadata,
+            )
 
     # -------------------------------------------------------------------------
     # Google Search + Scrape
@@ -284,8 +353,8 @@ class SearchPipeline:
         self,
         query: str,
         is_news: bool = False,
-        date_before: Optional[str] = None,
-    ) -> List[str]:
+        date_before: str | None = None,
+    ) -> list[str]:
         """
         Search Google via Serper API.
 
@@ -302,7 +371,7 @@ class SearchPipeline:
             return []
 
         # Clean query
-        query = query.replace('"', '').replace("'", '').strip()
+        query = query.replace('"', "").replace("'", "").strip()
         logger.debug(f"[google_search] Query: '{query}' is_news={is_news}")
 
         search_type = "news" if is_news else "search"
@@ -311,25 +380,24 @@ class SearchPipeline:
         try:
             response = await self.http_client.post(
                 url,
-                headers={
-                    'X-API-KEY': self.serper_key,
-                    'Content-Type': 'application/json'
-                },
-                json={"q": query, "num": 20}
+                headers={"X-API-KEY": self.serper_key, "Content-Type": "application/json"},
+                json={"q": query, "num": 20},
             )
             response.raise_for_status()
             data = response.json()
 
-            items = data.get('news' if is_news else 'organic', [])
+            items = data.get("news" if is_news else "organic", [])
             logger.debug(f"[google_search] Found {len(items)} raw results")
 
             # Filter by date if specified
             filtered_items = []
             for item in items:
                 if date_before:
-                    item_date_str = item.get('date', '')
+                    item_date_str = item.get("date", "")
                     item_date = self._parse_date(item_date_str)
-                    if item_date != "Unknown" and self._validate_time(date_before, item_date):
+                    if item_date != "Unknown" and self._is_before_resolution_date(
+                        date_before, item_date
+                    ):
                         filtered_items.append(item)
                     # Skip items we can't validate
                 else:
@@ -338,7 +406,7 @@ class SearchPipeline:
                 if len(filtered_items) >= 12:
                     break
 
-            urls = [item['link'] for item in filtered_items]
+            urls = [item["link"] for item in filtered_items]
             logger.info(f"[google_search] Returning {len(urls)} URLs")
             return urls
 
@@ -351,7 +419,7 @@ class SearchPipeline:
         query: str,
         is_news: bool,
         question_details: QuestionDetails,
-        date_before: Optional[str] = None,
+        date_before: str | None = None,
     ) -> str:
         """
         Search Google and scrape/summarize results.
@@ -372,10 +440,10 @@ class SearchPipeline:
 
             if not urls:
                 logger.warning(f"[google_search_and_scrape] No URLs returned for: '{query}'")
-                return f"<Summary query=\"{query}\">No URLs returned from Google.</Summary>\n"
+                return f'<Summary query="{query}">No URLs returned from Google.</Summary>\n'
 
             # Extract content from URLs
-            async with FastContentExtractor() as extractor:
+            async with ConcurrentContentExtractor() as extractor:
                 logger.info(f"[google_search_and_scrape] Extracting content from {len(urls)} URLs")
                 results = await extractor.extract_content(urls)
 
@@ -384,44 +452,44 @@ class SearchPipeline:
             valid_urls = []
             max_results = 3
 
-            for url, data in results.items():
+            for url, extraction in results.items():
                 if len(summarize_tasks) >= max_results:
                     break
 
-                content = (data.get('content') or '').strip()
+                content = (extraction.get("content") or "").strip()
                 if len(content.split()) < 100:
                     logger.debug(f"[google_search_and_scrape] Skipping low-content: {url}")
                     continue
 
                 if content:
                     truncated = content[:8000]
-                    logger.debug(f"[google_search_and_scrape] Summarizing {len(truncated)} chars from {url}")
-                    summarize_tasks.append(
-                        self._summarize_article(truncated, question_details)
+                    logger.debug(
+                        f"[google_search_and_scrape] Summarizing {len(truncated)} chars from {url}"
                     )
+                    summarize_tasks.append(self._summarize_article(truncated, question_details))
                     valid_urls.append(url)
 
             if not summarize_tasks:
                 logger.warning("[google_search_and_scrape] No content to summarize")
-                return f"<Summary query=\"{query}\">No usable content extracted from any URL.</Summary>\n"
+                return f'<Summary query="{query}">No usable content extracted from any URL.</Summary>\n'
 
             summaries = await asyncio.gather(*summarize_tasks, return_exceptions=True)
 
             # Format output
             output = ""
-            for url, summary in zip(valid_urls, summaries):
+            for url, summary in zip(valid_urls, summaries, strict=True):
                 if isinstance(summary, Exception):
                     logger.error(f"[google_search_and_scrape] Error summarizing {url}: {summary}")
-                    output += f"\n<Summary source=\"{url}\">\nError: {summary}\n</Summary>\n"
+                    output += f'\n<Summary source="{url}">\nError: {summary}\n</Summary>\n'
                 else:
-                    output += f"\n<Summary source=\"{url}\">\n{summary}\n</Summary>\n"
+                    output += f'\n<Summary source="{url}">\n{summary}\n</Summary>\n'
 
             return output
 
         except Exception as e:
             logger.error(f"[google_search_and_scrape] Error: {e}")
             traceback.print_exc()
-            return f"<Summary query=\"{query}\">Error during search and scrape: {e}</Summary>\n"
+            return f'<Summary query="{query}">Error during search and scrape: {e}</Summary>\n'
 
     async def _summarize_article(
         self,
@@ -438,10 +506,10 @@ class SearchPipeline:
         )
 
         # Use haiku for summarization (fast, cheap)
-        active_models = self.config.get("_active_models", {})
+        active_models = self.config.get("active_models", {})
         model = active_models.get(
             "article_summarizer",
-            self.config.get("models", {}).get("article_summarizer", "claude-3-haiku-20240307")
+            self.config.get("models", {}).get("article_summarizer", "claude-3-haiku-20240307"),
         )
 
         try:
@@ -450,6 +518,8 @@ class SearchPipeline:
                 messages=[{"role": "user", "content": prompt}],
                 max_tokens=1500,
             )
+            # Track summarization cost
+            self._current_summarization_cost += response.cost
             return response.content
         except Exception as e:
             logger.error(f"Article summarization failed: {e}")
@@ -459,95 +529,267 @@ class SearchPipeline:
     # AskNews
     # -------------------------------------------------------------------------
 
-    async def _call_asknews(self, query: str) -> str:
+    async def _call_asknews(
+        self,
+        news_query: str,
+        deep_research_query: str | None = None,
+    ) -> str:
         """
-        Search AskNews for relevant articles.
+        Search AskNews for relevant articles and run Deep Research.
 
-        Uses dual strategy: latest news + historical news.
+        Uses three strategies:
+        1. Latest news (recent/hot articles) - uses news_query
+        2. Historical news (news knowledge archive) - uses news_query
+        3. Deep Research (AI-synthesized analysis) - uses deep_research_query if provided
+
+        Args:
+            news_query: Query for news search (typically question title)
+            deep_research_query: Query for Deep Research (LLM-generated, should request
+                information rather than ask a yes/no forecasting question)
+
         Uses semaphore to respect AskNews free tier concurrency limits.
         """
         if not self.asknews_client_id or not self.asknews_secret:
             logger.warning("AskNews credentials not set")
             return "AskNews credentials not configured."
 
-        # Use semaphore to limit concurrent AskNews calls (free tier limit)
-        async with self._asknews_semaphore:
+        # Rate limit AskNews calls (free tier limit)
+        async with self._asknews_rate_limiter:
+            articles_markdown = ""
+
+            # Part 1: News search (latest + historical)
             try:
                 from asknews_sdk import AskNewsSDK
 
                 ask = AskNewsSDK(
                     client_id=self.asknews_client_id,
                     client_secret=self.asknews_secret,
-                    scopes=set(["news"])
+                    scopes=set(["news"]),
                 )
 
                 # Run searches sequentially with rate limit delay
                 # AskNews Pro tier (via Metaculus): 1 request per 10 seconds, add 2s buffer
                 rate_limit_delay = 12
 
-                logger.debug(f"[call_asknews] Searching latest news for: {query[:50]}...")
+                logger.debug(f"[call_asknews] Searching latest news for: {news_query[:50]}...")
                 hot_response = await asyncio.to_thread(
                     ask.news.search_news,
-                    query=query,
+                    query=news_query,
                     n_articles=8,
                     return_type="both",
-                    strategy="latest news"
+                    strategy="latest news",
                 )
 
                 # Rate limit delay between calls
                 logger.debug(f"[call_asknews] Waiting {rate_limit_delay}s for rate limit...")
                 await asyncio.sleep(rate_limit_delay)
 
-                logger.debug(f"[call_asknews] Searching historical news for: {query[:50]}...")
+                logger.debug(f"[call_asknews] Searching historical news for: {news_query[:50]}...")
                 historical_response = await asyncio.to_thread(
                     ask.news.search_news,
-                    query=query,
+                    query=news_query,
                     n_articles=8,
                     return_type="both",
-                    strategy="news knowledge"
+                    strategy="news knowledge",
                 )
 
-                # Format results
-                formatted_articles = "Here are the relevant news articles:\n\n"
+                # Combine and deduplicate articles by URL
+                hot_articles = hot_response.as_dicts or []
+                historical_articles = historical_response.as_dicts or []
 
-                hot_articles = hot_response.as_dicts
-                if hot_articles:
-                    hot_articles = [article.__dict__ for article in hot_articles]
-                    hot_articles = sorted(hot_articles, key=lambda x: x["pub_date"], reverse=True)
+                seen_urls = set()
+                unique_articles = []
 
-                    for article in hot_articles:
-                        pub_date = article["pub_date"].strftime("%B %d, %Y %I:%M %p")
-                        formatted_articles += (
-                            f"**{article['eng_title']}**\n"
-                            f"{article['summary']}\n"
-                            f"Original language: {article['language']}\n"
-                            f"Publish date: {pub_date}\n"
-                            f"Source:[{article['source_id']}]({article['article_url']})\n\n"
-                        )
+                # Process hot articles first (they're more recent)
+                for article in hot_articles:
+                    article_dict = article.__dict__
+                    url = article_dict.get("article_url", "")
+                    if url and url not in seen_urls:
+                        seen_urls.add(url)
+                        unique_articles.append(article_dict)
 
-                historical_articles = historical_response.as_dicts
-                if historical_articles:
-                    historical_articles = [article.__dict__ for article in historical_articles]
-                    historical_articles = sorted(historical_articles, key=lambda x: x["pub_date"], reverse=True)
+                # Then add historical articles that aren't duplicates
+                for article in historical_articles:
+                    article_dict = article.__dict__
+                    url = article_dict.get("article_url", "")
+                    if url and url not in seen_urls:
+                        seen_urls.add(url)
+                        unique_articles.append(article_dict)
 
-                    for article in historical_articles:
-                        pub_date = article["pub_date"].strftime("%B %d, %Y %I:%M %p")
-                        formatted_articles += (
-                            f"**{article['eng_title']}**\n"
-                            f"{article['summary']}\n"
-                            f"Original language: {article['language']}\n"
-                            f"Publish date: {pub_date}\n"
-                            f"Source:[{article['source_id']}]({article['article_url']})\n\n"
-                        )
+                # Sort by date (newest first)
+                unique_articles = sorted(
+                    unique_articles, key=lambda article: article["pub_date"], reverse=True
+                )
 
-                if not hot_articles and not historical_articles:
-                    formatted_articles += "No articles were found.\n\n"
+                duplicates_removed = (len(hot_articles) + len(historical_articles)) - len(
+                    unique_articles
+                )
+                if duplicates_removed > 0:
+                    logger.info(f"[call_asknews] Removed {duplicates_removed} duplicate articles")
 
-                return formatted_articles
+                # Format news results
+                articles_markdown = "Here are the relevant news articles:\n\n"
+
+                for article in unique_articles:
+                    pub_date = article["pub_date"].strftime("%B %d, %Y %I:%M %p")
+                    articles_markdown += (
+                        f"**{article['eng_title']}**\n"
+                        f"{article['summary']}\n"
+                        f"Original language: {article['language']}\n"
+                        f"Publish date: {pub_date}\n"
+                        f"Source:[{article['source_id']}]({article['article_url']})\n\n"
+                    )
+
+                if not unique_articles:
+                    articles_markdown += "No articles were found.\n\n"
 
             except Exception as e:
-                logger.error(f"[call_asknews] Error: {e}")
-                return f"Error retrieving news articles: {e}"
+                logger.error(f"[call_asknews] News search error: {e}")
+                articles_markdown = f"Error retrieving news articles: {e}\n\n"
+
+            # Part 2: Deep Research (only if deep_research_query provided)
+            if deep_research_query:
+                try:
+                    logger.debug(
+                        f"[call_asknews] Waiting {rate_limit_delay}s before deep research..."
+                    )
+                    await asyncio.sleep(rate_limit_delay)
+
+                    logger.info(
+                        f"[call_asknews] Running deep research for: {deep_research_query[:50]}..."
+                    )
+                    deep_research_result = await self._call_asknews_deep_research(
+                        deep_research_query, preset="low-depth", _skip_semaphore=True
+                    )
+
+                    articles_markdown += (
+                        f"\n--- Deep Research Analysis ---\n{deep_research_result}\n"
+                    )
+                    logger.info(
+                        f"[call_asknews] Deep research complete, got {len(deep_research_result)} chars"
+                    )
+
+                except Exception as e:
+                    logger.error(f"[call_asknews] Deep research error: {e}")
+                    articles_markdown += f"\n--- Deep Research Analysis ---\nError: {e}\n"
+            else:
+                logger.info(
+                    "[call_asknews] Skipping deep research (no deep_research_query provided)"
+                )
+
+            return articles_markdown
+
+    async def _call_asknews_deep_research(
+        self,
+        query: str,
+        preset: str = "low-depth",
+        _skip_semaphore: bool = False,
+    ) -> str:
+        """
+        Use AskNews Deep Research for AI-synthesized research.
+
+        Matches the template bot's implementation with three depth presets.
+
+        Args:
+            query: Research query/question
+            preset: One of "low-depth", "medium-depth", "high-depth"
+            _skip_semaphore: Internal flag to skip semaphore when called from _call_asknews
+
+        Returns:
+            Formatted research text
+        """
+        if not self.asknews_client_id or not self.asknews_secret:
+            logger.warning("AskNews credentials not set")
+            return "AskNews credentials not configured."
+
+        async def _do_deep_research():
+            try:
+                from asknews_sdk import AsyncAskNewsSDK
+                from asknews_sdk.dto.deepnews import CreateDeepNewsResponse
+            except ImportError:
+                logger.error(
+                    "asknews_sdk not installed or outdated. Run: poetry add asknews@0.11.6"
+                )
+                return "AskNews SDK not available for deep research."
+
+            # Configure based on preset
+            # Metaculus plan only allows asknews as source
+            if preset == "low-depth":
+                sources = ["asknews"]
+                search_depth = 1
+                max_depth = 1
+                filter_params = None
+            elif preset == "medium-depth":
+                sources = ["asknews"]
+                search_depth = 2
+                max_depth = 4
+                filter_params = None
+            elif preset == "high-depth":
+                sources = ["asknews"]
+                search_depth = 4
+                max_depth = 6
+                filter_params = None
+            else:
+                logger.warning(f"Unknown preset '{preset}', using low-depth")
+                sources = ["asknews"]
+                search_depth = 1
+                max_depth = 1
+                filter_params = None
+
+            model = "deepseek-basic"  # Default model matching template
+
+            logger.info(
+                f"[asknews_deep_research] Starting {preset} research: {query[:50]}... "
+                f"(sources={sources}, depth={search_depth}/{max_depth})"
+            )
+
+            try:
+                async with AsyncAskNewsSDK(
+                    client_id=self.asknews_client_id,
+                    client_secret=self.asknews_secret,
+                    scopes={"chat", "news", "stories", "analytics"},
+                ) as sdk:
+                    response = await sdk.chat.get_deep_news(
+                        messages=[{"role": "user", "content": query}],
+                        search_depth=search_depth,
+                        max_depth=max_depth,
+                        sources=sources,
+                        stream=False,
+                        return_sources=False,
+                        model=model,
+                        inline_citations="numbered",
+                        filter_params=filter_params,
+                    )
+
+                    if not isinstance(response, CreateDeepNewsResponse):
+                        raise ValueError("Response is not a CreateDeepNewsResponse")
+
+                    text = response.choices[0].message.content
+
+                    # Extract content from <final_answer> tags if present
+                    start_tag = "<final_answer>"
+                    end_tag = "</final_answer>"
+                    start_index = text.find(start_tag)
+
+                    if start_index != -1:
+                        start_index += len(start_tag)
+                        end_index = text.find(end_tag, start_index)
+                        if end_index != -1:
+                            text = text[start_index:end_index].strip()
+
+                    logger.info(f"[asknews_deep_research] Complete, got {len(text)} chars")
+                    return text
+
+            except Exception as e:
+                logger.error(f"[asknews_deep_research] Error: {e}")
+                return f"Error running deep research: {e}"
+
+        # If called from _call_asknews, rate limiter is already held
+        if _skip_semaphore:
+            return await _do_deep_research()
+        else:
+            async with self._asknews_rate_limiter:
+                return await _do_deep_research()
 
     # -------------------------------------------------------------------------
     # Agentic Search
@@ -564,15 +806,15 @@ class SearchPipeline:
 
         max_steps = self.config.get("research", {}).get("agentic_search_max_steps", 7)
         current_analysis = ""
-        all_search_queries: List[str] = []
+        all_search_queries: list[str] = []
         search_results = ""
 
         # Get model for agentic search from active models (respects mode)
-        active_models = self.config.get("_active_models", {})
+        active_models = self.config.get("active_models", {})
         model = active_models.get(
             "agentic_search",
             # Fallback: check if there's a query_generator, else default to haiku
-            active_models.get("query_generator", "openrouter/anthropic/claude-3.5-haiku")
+            active_models.get("query_generator", "openrouter/anthropic/claude-3.5-haiku"),
         )
 
         for step in range(max_steps):
@@ -587,7 +829,9 @@ class SearchPipeline:
                             f"Previous search queries used: {', '.join(all_search_queries)}\n"
                         )
                     else:
-                        previous_section = f"Previous search queries used: {', '.join(all_search_queries)}\n"
+                        previous_section = (
+                            f"Previous search queries used: {', '.join(all_search_queries)}\n"
+                        )
 
                     prompt = CONTINUATION_SEARCH_PROMPT.format(
                         query=query,
@@ -602,31 +846,32 @@ class SearchPipeline:
                     max_tokens=4000,
                 )
 
+                # Track agentic search cost
+                self._current_agentic_cost += response.cost
+
                 response_text = response.content
 
                 # Parse analysis
                 analysis_match = re.search(
-                    r'Analysis:\s*(.*?)(?=Search queries:|$)',
-                    response_text,
-                    re.DOTALL
+                    r"Analysis:\s*(.*?)(?=Search queries:|$)", response_text, re.DOTALL
                 )
                 if not analysis_match:
-                    logger.warning(f"[agentic_search] Could not parse analysis from response")
+                    logger.warning("[agentic_search] Could not parse analysis from response")
                     return f"Error: Failed to parse analysis at step {step + 1}"
 
                 if step > 0:
                     current_analysis = analysis_match.group(1).strip()
-                    logger.info(f"[agentic_search] Step {step + 1}: Analysis updated ({len(current_analysis)} chars)")
+                    logger.info(
+                        f"[agentic_search] Step {step + 1}: Analysis updated ({len(current_analysis)} chars)"
+                    )
 
                 # Check for search queries
                 search_queries_match = re.search(
-                    r'Search queries:\s*(.*)',
-                    response_text,
-                    re.DOTALL
+                    r"Search queries:\s*(.*)", response_text, re.DOTALL
                 )
 
                 if step == 0 and not search_queries_match:
-                    logger.warning(f"[agentic_search] No search queries in initial response")
+                    logger.warning("[agentic_search] No search queries in initial response")
                     return "Error: Failed to generate initial search queries"
 
                 if not search_queries_match or step == max_steps - 1:
@@ -637,25 +882,25 @@ class SearchPipeline:
                 # Extract queries with sources
                 queries_text = search_queries_match.group(1).strip()
                 search_queries_with_source = re.findall(
-                    r'\d+\.\s*([^(]+?)\s*\((Google|Google News)\)',
-                    queries_text
+                    r"\d+\.\s*([^(]+?)\s*\((Google|Google News)\)", queries_text
                 )
 
                 if not search_queries_with_source:
                     if step == 0:
-                        logger.warning(f"[agentic_search] No valid queries in initial response")
+                        logger.warning("[agentic_search] No valid queries in initial response")
                         return "Error: Failed to parse initial search queries"
                     else:
-                        logger.info(f"[agentic_search] No new queries, completing research")
+                        logger.info("[agentic_search] No new queries, completing research")
                         break
 
                 # Limit to 5 queries
                 search_queries_with_source = [
-                    (q.strip(), source)
-                    for q, source in search_queries_with_source[:5]
+                    (q.strip(), source) for q, source in search_queries_with_source[:5]
                 ]
 
-                logger.info(f"[agentic_search] Step {step + 1}: Found {len(search_queries_with_source)} queries")
+                logger.info(
+                    f"[agentic_search] Step {step + 1}: Found {len(search_queries_with_source)} queries"
+                )
                 all_search_queries.extend([q for q, _ in search_queries_with_source])
 
                 # Execute searches
@@ -670,13 +915,19 @@ class SearchPipeline:
 
                 # Format search results
                 search_results = ""
-                for (sq, source), result in zip(search_queries_with_source, search_results_list):
+                for (sq, source), result in zip(
+                    search_queries_with_source, search_results_list, strict=True
+                ):
                     if isinstance(result, Exception):
-                        search_results += f"\nSearch query: {sq} (Source: {source})\nError: {result}\n"
+                        search_results += (
+                            f"\nSearch query: {sq} (Source: {source})\nError: {result}\n"
+                        )
                     else:
                         search_results += f"\nSearch query: {sq} (Source: {source})\n{result}\n"
 
-                logger.info(f"[agentic_search] Step {step + 1}: Search complete, {len(search_results)} chars")
+                logger.info(
+                    f"[agentic_search] Step {step + 1}: Search complete, {len(search_results)} chars"
+                )
 
             except Exception as e:
                 logger.error(f"[agentic_search] Error at step {step + 1}: {e}")
@@ -703,36 +954,130 @@ class SearchPipeline:
             urls = await self._google_search(query, is_news)
 
             if not urls:
-                return f"<RawContent query=\"{query}\">No URLs returned from Google.</RawContent>\n"
+                return f'<RawContent query="{query}">No URLs returned from Google.</RawContent>\n'
 
-            async with FastContentExtractor() as extractor:
+            async with ConcurrentContentExtractor() as extractor:
                 results = await extractor.extract_content(urls)
 
             output = ""
             max_results = 3
             results_count = 0
 
-            for url, data in results.items():
+            for url, extraction in results.items():
                 if results_count >= max_results:
                     break
 
-                content = (data.get('content') or '').strip()
+                content = (extraction.get("content") or "").strip()
                 if len(content.split()) < 100:
                     continue
 
                 if content:
                     truncated = content[:8000]
-                    output += f"\n<RawContent source=\"{url}\">\n{truncated}\n</RawContent>\n"
+                    output += f'\n<RawContent source="{url}">\n{truncated}\n</RawContent>\n'
                     results_count += 1
 
             if not output:
-                return f"<RawContent query=\"{query}\">No usable content extracted.</RawContent>\n"
+                return f'<RawContent query="{query}">No usable content extracted.</RawContent>\n'
 
             return output
 
         except Exception as e:
             logger.error(f"[google_search_agentic] Error: {e}")
-            return f"<RawContent query=\"{query}\">Error during search: {e}</RawContent>\n"
+            return f'<RawContent query="{query}">Error during search: {e}</RawContent>\n'
+
+    # -------------------------------------------------------------------------
+    # Google Trends
+    # -------------------------------------------------------------------------
+
+    async def _google_trends_search(self, query: str) -> str:
+        """
+        Get Google Trends historical data and compute base rate statistics.
+
+        Query should be the search term (e.g., "hospital", "luigi mangione").
+        Returns formatted statistics for forecaster consumption.
+        """
+        try:
+            from trendspy import Trends
+
+            # Extract the term - query might be "Google Trends data for hospital" or just "hospital"
+            term = self._extract_trends_term(query)
+            logger.info(f"[google_trends_search] Fetching data for term: '{term}'")
+
+            # Run synchronous trendspy call in thread pool
+            def fetch_trends():
+                tr = Trends()
+                return tr.interest_over_time(term, timeframe="today 90-d", geo="US")
+
+            df = await asyncio.to_thread(fetch_trends)
+
+            if df is None or df.empty:
+                logger.warning(f"[google_trends_search] No data available for term: '{term}'")
+                return f'<GoogleTrendsData term="{term}">\nNo data available for this search term.\n</GoogleTrendsData>'
+
+            # Compute statistics
+            current = df[term].iloc[-1]
+            mean = df[term].mean()
+            std = df[term].std()
+
+            # Compute base rate for "Doesn't change" (±3 threshold)
+            # Calculate all possible N-day changes where N matches the question window
+            # Default to 12-day windows (common for these questions)
+            changes = df[term].diff(periods=12).dropna().abs()
+            pct_gt_3 = (changes > 3).mean() * 100
+            pct_lte_3 = 100 - pct_gt_3
+
+            # Recent trend
+            last_7 = df[term].iloc[-7:].mean()
+            prior_7 = df[term].iloc[-14:-7].mean()
+            if last_7 > prior_7 + 1:
+                trend = "increasing"
+            elif last_7 < prior_7 - 1:
+                trend = "decreasing"
+            else:
+                trend = "stable"
+
+            stats = f"""<GoogleTrendsData term="{term}">
+Google Trends US data for "{term}" (last 90 days):
+
+Current value: {current:.0f}
+90-day mean: {mean:.1f}
+90-day std dev: {std:.1f}
+
+BASE RATE ANALYSIS (critical for forecasting, using ~12-day windows as approximation):
+- In {pct_lte_3:.0f}% of 12-day windows, the value changed by ≤3 points ("Doesn't change")
+- In {pct_gt_3:.0f}% of 12-day windows, the value changed by >3 points
+
+Recent trend: {trend} (last 7 days avg: {last_7:.1f} vs prior 7 days: {prior_7:.1f})
+
+Note: Google Trends values are relative (0-100 scale), not absolute search volumes.
+</GoogleTrendsData>"""
+
+            logger.info(
+                f"[google_trends_search] Successfully retrieved data for '{term}': "
+                f"current={current:.0f}, mean={mean:.1f}, std={std:.1f}"
+            )
+            return stats
+
+        except Exception as e:
+            logger.error(f"[google_trends_search] Error: {e}")
+            return f'<GoogleTrendsData term="{query}">\nError retrieving data: {e}\n</GoogleTrendsData>'
+
+    def _extract_trends_term(self, query: str) -> str:
+        """Extract the search term from a query like 'Google Trends data for "hospital"'"""
+        # Try to find quoted term first
+        quoted = re.search(r'["\']([^"\']+)["\']', query)
+        if quoted:
+            return quoted.group(1)
+
+        # Otherwise, try to extract term after common phrases
+        query_lower = query.lower()
+        for phrase in ["for ", "of ", "term ", "trends "]:
+            if phrase in query_lower:
+                idx = query_lower.find(phrase) + len(phrase)
+                return query[idx:].strip().strip("\"'")
+
+        # Last resort: return the whole query
+        return query.strip()
 
     # -------------------------------------------------------------------------
     # Utility methods
@@ -742,13 +1087,13 @@ class SearchPipeline:
         """Parse date string to standardized format."""
         if not date_str:
             return "Unknown"
-        parsed_date = dateparser.parse(date_str, settings={'STRICT_PARSING': False})
+        parsed_date = dateparser.parse(date_str, settings={"STRICT_PARSING": False})
         if parsed_date:
             return parsed_date.strftime("%b %d, %Y")
         return "Unknown"
 
-    def _validate_time(self, before_date_str: str, source_date_str: str) -> bool:
-        """Check if source date is before the cutoff date."""
+    def _is_before_resolution_date(self, before_date_str: str, source_date_str: str) -> bool:
+        """Check if source date is before the resolution cutoff date."""
         if source_date_str == "Unknown":
             return False
         before_date = dateparser.parse(before_date_str)
@@ -762,19 +1107,20 @@ class SearchPipeline:
 # Convenience functions
 # -------------------------------------------------------------------------
 
-async def process_forecaster_queries(
+
+async def execute_searches_from_response(
     response: str,
-    forecaster_id: str,
+    search_id: str,
     question_details: dict,
     config: dict,
-    llm_client: Optional[LLMClient] = None,
-) -> Tuple[str, Dict[str, Any]]:
+    llm_client: LLMClient | None = None,
+) -> tuple[str, dict[str, Any]]:
     """
-    Convenience function to process search queries from a forecaster response.
+    Convenience function to process search queries from a response.
 
     Args:
-        response: Forecaster's response containing search queries
-        forecaster_id: ID for logging
+        response: Response containing search queries (from query generation)
+        search_id: Identifier for logging (e.g., "historical", "current")
         question_details: Dict with title, resolution_criteria, fine_print, description
         config: Configuration dict
         llm_client: Optional LLMClient instance
@@ -791,4 +1137,4 @@ async def process_forecaster_queries(
     )
 
     async with SearchPipeline(config, llm_client) as pipeline:
-        return await pipeline.process_search_queries(response, forecaster_id, qd)
+        return await pipeline.execute_searches_from_response(response, search_id, qd)

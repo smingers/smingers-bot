@@ -1,0 +1,196 @@
+{
+  "centralized_research": {
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "WHO H5N1 PHEIC history",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "H5N1 PHEIC discussion 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "Provide timeline of all WHO PHEIC declarations, any Emergency Committee meetings or official statements about H5N1 from 2023-Feb 2026, and summarize current human/animal case numbers and geographic spread.",
+          "tool": "Agent",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google",
+        "Google News"
+      ],
+      "llm_cost": 0.2311,
+      "llm_cost_summarization": 0.1105,
+      "llm_cost_agentic": 0.1205,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "H5N1 WHO Emergency Committee 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "H5N1 human cases 2026 WHO",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "What articles report WHO considering declaring a PHEIC for H5N1 since January 2026",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "Will the WHO Director-General declare a PHEIC for H5N1 before May 1, 2026?",
+          "tool": "AskNews",
+          "deep_research_query": "What articles report WHO considering declaring a PHEIC for H5N1 since January 2026"
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "AskNews",
+        "Google News"
+      ],
+      "llm_cost": 0.1158,
+      "llm_cost_summarization": 0.1105,
+      "llm_cost_agentic": 0.0053,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5321,
+        "token_output": 2736,
+        "cost": 0.057003,
+        "duration_seconds": 63.279218435287476,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15106,
+        "token_output": 4000,
+        "cost": 0.105318,
+        "duration_seconds": 91.6304178237915,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5321,
+        "token_output": 2199,
+        "cost": 0.048948000000000005,
+        "duration_seconds": 63.27927374839783,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13727,
+        "token_output": 2231,
+        "cost": 0.07464599999999999,
+        "duration_seconds": 91.6303129196167,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4655,
+        "token_output": 2436,
+        "cost": 0.042250249999999996,
+        "duration_seconds": 63.27931094169617,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12851,
+        "token_output": 2222,
+        "cost": 0.05359725,
+        "duration_seconds": 91.6302843093872,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4655,
+        "token_output": 1578,
+        "cost": 0.021934000000000002,
+        "duration_seconds": 63.279348611831665,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12631,
+        "token_output": 1349,
+        "cost": 0.036054,
+        "duration_seconds": 91.63025760650635,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4655,
+        "token_output": 1989,
+        "cost": 0.025222,
+        "duration_seconds": 63.279383420944214,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11945,
+        "token_output": 1444,
+        "cost": 0.035442,
+        "duration_seconds": 91.63023114204407,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0135,
+    "step2_search": 0.2311,
+    "step3_outside_view": 0.1954,
+    "step5_inside_view": 0.3051
+  },
+  "total_pipeline_cost": 0.745
+}

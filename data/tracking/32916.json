@@ -1,0 +1,417 @@
+{
+  "tournament_id": 32916,
+  "tournament_name": "Tournament 32916",
+  "last_updated": "2026-02-01T18:19:16.868546+00:00",
+  "total_forecasts": 19,
+  "binary_count": 13,
+  "numeric_count": 5,
+  "multiple_choice_count": 1,
+  "binary_stats": {
+    "count": 13,
+    "mean_difference": 0.03688461538461538,
+    "abs_mean_difference": 0.10303846153846151,
+    "more_confident_count": 6,
+    "less_confident_count": 1,
+    "aligned_count": 6
+  },
+  "numeric_stats": {
+    "count": 5,
+    "mean_median_difference": 0.024229418840456318,
+    "mean_uncertainty_ratio": 0.6021320935399139,
+    "more_uncertain_count": 0,
+    "less_uncertain_count": 5
+  },
+  "multiple_choice_stats": {
+    "count": 1,
+    "mean_max_difference": 0.02547570747919982
+  },
+  "forecasts": [
+    {
+      "question_id": 41904,
+      "question_title": "Will the Tisza Party win more parliamentary seats than Fidesz\u2013KDNP in Hungary\u2019s 2026 parliamentary election?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/41904/",
+      "forecast_timestamp": "2026-02-01T15:16:52.424920+00:00",
+      "snapshot_timestamp": "2026-02-01T18:18:49.679209+00:00",
+      "num_forecasters": 106,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.652,
+        "community_probability": 0.54,
+        "difference": 0.11199999999999999
+      }
+    },
+    {
+      "question_id": 41903,
+      "question_title": "Will Russia and Ukraine sign a ceasefire agreement before May 1, 2026?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/41903/",
+      "forecast_timestamp": "2026-02-01T14:29:11.473021+00:00",
+      "snapshot_timestamp": "2026-02-01T18:18:51.254312+00:00",
+      "num_forecasters": 108,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.874,
+        "community_probability": 0.785,
+        "difference": 0.08899999999999997
+      }
+    },
+    {
+      "question_id": 41901,
+      "question_title": "Will the U.S. impose new secondary sanctions related to Russian oil exports before May 1, 2026?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/41901/",
+      "forecast_timestamp": "2026-01-31T21:15:11.008226+00:00",
+      "snapshot_timestamp": "2026-02-01T18:18:52.655867+00:00",
+      "num_forecasters": 111,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.794,
+        "community_probability": 0.6,
+        "difference": 0.19400000000000006
+      }
+    },
+    {
+      "question_id": 41900,
+      "question_title": "Will OpenAI release a model named 'GPT-6' for general public availability before May 1, 2026?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/41900/",
+      "forecast_timestamp": "2026-01-31T12:23:59.386363+00:00",
+      "snapshot_timestamp": "2026-02-01T18:18:54.077172+00:00",
+      "num_forecasters": 113,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.96,
+        "community_probability": 0.88,
+        "difference": 0.07999999999999996
+      }
+    },
+    {
+      "question_id": 41899,
+      "question_title": "How many vehicle deliveries will Rivian report for Q1 2026?",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/41899/",
+      "forecast_timestamp": "2026-01-30T23:02:07.279550+00:00",
+      "snapshot_timestamp": "2026-02-01T18:18:55.701524+00:00",
+      "num_forecasters": 106,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 0.5235451346512499,
+        "community_median": 0.4926485764901327,
+        "my_lower_quartile": 0.4654869644363626,
+        "my_upper_quartile": 0.5956002039354329,
+        "community_lower_quartile": 0.39465879731212594,
+        "community_upper_quartile": 0.6270880823722268,
+        "median_difference": 0.030896558161117138,
+        "my_iqr": 0.13011323949907028,
+        "community_iqr": 0.23242928506010085,
+        "uncertainty_ratio": 0.5597970989990612
+      }
+    },
+    {
+      "question_id": 41898,
+      "question_title": "Will SpaceX conduct 2 or more orbital Starship launch attempts before May 1, 2026?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/41898/",
+      "forecast_timestamp": "2026-01-30T19:54:23.082527+00:00",
+      "snapshot_timestamp": "2026-02-01T18:18:57.090335+00:00",
+      "num_forecasters": 110,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.5660000000000001,
+        "community_probability": 0.6,
+        "difference": -0.03399999999999992
+      }
+    },
+    {
+      "question_id": 41897,
+      "question_title": "Will the Zaporizhzhia Nuclear Power Plant experience another complete loss of external power before May 1, 2026?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/41897/",
+      "forecast_timestamp": "2026-01-30T06:37:34.658949+00:00",
+      "snapshot_timestamp": "2026-02-01T18:18:58.481897+00:00",
+      "num_forecasters": 105,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.474,
+        "community_probability": 0.39,
+        "difference": 0.08399999999999996
+      }
+    },
+    {
+      "question_id": 41896,
+      "question_title": "What is Egypt\u2019s annual inflation rate (year-over-year percent change) for the Urban Consumer Price Index (Urban CPI) for March 2026?",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/41896/",
+      "forecast_timestamp": "2026-01-30T02:07:48.876939+00:00",
+      "snapshot_timestamp": "2026-02-01T18:18:59.886770+00:00",
+      "num_forecasters": 96,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 0.3718071233258948,
+        "community_median": 0.38450945137894194,
+        "my_lower_quartile": 0.3358004843053455,
+        "my_upper_quartile": 0.41462142574635685,
+        "community_lower_quartile": 0.32148022018350547,
+        "community_upper_quartile": 0.447112742900734,
+        "median_difference": -0.012702328053047163,
+        "my_iqr": 0.07882094144101137,
+        "community_iqr": 0.12563252271722852,
+        "uncertainty_ratio": 0.6273928098890457
+      }
+    },
+    {
+      "question_id": 41893,
+      "question_title": "Which party will win the most seats in the 2026 Nepali House of Representatives election?",
+      "question_type": "multiple_choice",
+      "question_url": "https://www.metaculus.com/questions/41893/",
+      "forecast_timestamp": "2026-02-01T15:49:42.525069+00:00",
+      "snapshot_timestamp": "2026-02-01T18:19:01.372084+00:00",
+      "num_forecasters": 102,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "multiple_choice",
+        "my_probabilities": {
+          "Nepali Congress": 0.38346433656198786,
+          "Communist Party of Nepal (Unified Marxist-Leninist)": 0.290941359683846,
+          "Nepali Communist Party": 0.12920919140285203,
+          "Rastriya Swatantra Party": 0.14573407093917684,
+          "Rastriya Prajatantra Party": 0.019891216169988176,
+          "Ujyaalo Nepal Party": 0.009924219470318206,
+          "Pragatisheel Loktantrik Party": 0.009924219470318206,
+          "Other": 0.010911386301512678
+        },
+        "community_probabilities": {
+          "Nepali Congress": 0.3611191288776651,
+          "Communist Party of Nepal (Unified Marxist-Leninist)": 0.3150993300777027,
+          "Nepali Communist Party": 0.13427322810469605,
+          "Rastriya Swatantra Party": 0.12025836345997702,
+          "Rastriya Prajatantra Party": 0.029506933370915565,
+          "Ujyaalo Nepal Party": 0.01041513395736661,
+          "Pragatisheel Loktantrik Party": 0.01041513395736661,
+          "Other": 0.018912748194310314
+        },
+        "differences": {
+          "Nepali Congress": 0.022345207684322743,
+          "Communist Party of Nepal (Unified Marxist-Leninist)": -0.024157970393856698,
+          "Nepali Communist Party": -0.005064036701844021,
+          "Rastriya Swatantra Party": 0.02547570747919982,
+          "Rastriya Prajatantra Party": -0.009615717200927389,
+          "Ujyaalo Nepal Party": -0.0004909144870484036,
+          "Pragatisheel Loktantrik Party": -0.0004909144870484036,
+          "Other": -0.008001361892797636
+        },
+        "max_difference_option": "Rastriya Swatantra Party",
+        "max_difference_value": 0.02547570747919982
+      }
+    },
+    {
+      "question_id": 41892,
+      "question_title": "Will the Liberal Democratic Party win a majority in the 2026 Japanese general election?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/41892/",
+      "forecast_timestamp": "2026-02-01T01:09:16.648369+00:00",
+      "snapshot_timestamp": "2026-02-01T18:19:02.774924+00:00",
+      "num_forecasters": 102,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.30400000000000005,
+        "community_probability": 0.2625,
+        "difference": 0.04150000000000004
+      }
+    },
+    {
+      "question_id": 41839,
+      "question_title": "Will the New START nuclear arms control agreement be renewed until at least February 5, 2027, before February 5, 2026?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/41839/",
+      "forecast_timestamp": "2026-02-01T16:30:49.999150+00:00",
+      "snapshot_timestamp": "2026-02-01T18:19:04.256388+00:00",
+      "num_forecasters": 107,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.988,
+        "community_probability": 0.96,
+        "difference": 0.028000000000000025
+      }
+    },
+    {
+      "question_id": 41838,
+      "question_title": "What will Alphabet's Q4 2025 constant-currency revenues be in these global regions? (EMEA)",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/41838/",
+      "forecast_timestamp": "2026-01-31T16:57:07.463721+00:00",
+      "snapshot_timestamp": "2026-02-01T18:19:05.668654+00:00",
+      "num_forecasters": 107,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 0.5740711270949643,
+        "community_median": 0.4807761513329445,
+        "my_lower_quartile": 0.4003429389182016,
+        "my_upper_quartile": 0.7468610969587562,
+        "community_lower_quartile": 0.28114733220527355,
+        "community_upper_quartile": 0.6869661898243554,
+        "median_difference": 0.09329497576201984,
+        "my_iqr": 0.34651815804055464,
+        "community_iqr": 0.4058188576190819,
+        "uncertainty_ratio": 0.8538739674976137
+      }
+    },
+    {
+      "question_id": 41760,
+      "question_title": "What will be the monthly average CO2 concentration (in ppm) recorded at Mauna Loa Observatory for April 2026?",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/41760/",
+      "forecast_timestamp": "2026-01-30T01:51:30.687100+00:00",
+      "snapshot_timestamp": "2026-02-01T18:19:07.068636+00:00",
+      "num_forecasters": 94,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 0.8049902328793856,
+        "community_median": 0.7838712437385662,
+        "my_lower_quartile": 0.7564242433249438,
+        "my_upper_quartile": 0.8494331854196058,
+        "community_lower_quartile": 0.678805478978459,
+        "community_upper_quartile": 0.8694702106563676,
+        "median_difference": 0.021118989140819444,
+        "my_iqr": 0.09300894209466193,
+        "community_iqr": 0.19066473167790865,
+        "uncertainty_ratio": 0.48781408746208305
+      }
+    },
+    {
+      "question_id": 41759,
+      "question_title": "What will be the State Bank of Pakistan's target policy rate as of May 1, 2026?",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/41759/",
+      "forecast_timestamp": "2026-01-30T01:02:19.804894+00:00",
+      "snapshot_timestamp": "2026-02-01T18:19:08.554839+00:00",
+      "num_forecasters": 89,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 0.2534538820885859,
+        "community_median": 0.26491498289721355,
+        "my_lower_quartile": 0.2374046191640392,
+        "my_upper_quartile": 0.2748870460662542,
+        "community_lower_quartile": 0.2271682568753471,
+        "community_upper_quartile": 0.30496773403059785,
+        "median_difference": -0.011461100808627667,
+        "my_iqr": 0.03748242690221498,
+        "community_iqr": 0.07779947715525073,
+        "uncertainty_ratio": 0.4817825038517662
+      }
+    },
+    {
+      "question_id": 41758,
+      "question_title": "Will North Korea conduct a nuclear test before May 1, 2026?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/41758/",
+      "forecast_timestamp": "2026-01-29T21:19:26.316538+00:00",
+      "snapshot_timestamp": "2026-02-01T18:19:09.992319+00:00",
+      "num_forecasters": 107,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.848,
+        "community_probability": 0.8,
+        "difference": 0.04799999999999993
+      }
+    },
+    {
+      "question_id": 41757,
+      "question_title": "Will the FDA grant approval to Zilebesiran for the treatment of hypertension before May 1, 2026?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/41757/",
+      "forecast_timestamp": "2026-01-29T06:35:25.417363+00:00",
+      "snapshot_timestamp": "2026-02-01T18:19:11.656376+00:00",
+      "num_forecasters": 107,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.99,
+        "community_probability": 0.98,
+        "difference": 0.010000000000000009
+      }
+    },
+    {
+      "question_id": 41756,
+      "question_title": "Before May 1, 2026, will the United States publicly accuse China of supplying lethal military aid to Russia?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/41756/",
+      "forecast_timestamp": "2026-01-29T04:55:16.782807+00:00",
+      "snapshot_timestamp": "2026-02-01T18:19:13.063583+00:00",
+      "num_forecasters": 107,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.45399999999999996,
+        "community_probability": 0.85,
+        "difference": -0.396
+      }
+    },
+    {
+      "question_id": 41755,
+      "question_title": "Will the Bank of Japan raise its policy interest rate again before May 1, 2026?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/41755/",
+      "forecast_timestamp": "2026-01-29T02:33:25.381296+00:00",
+      "snapshot_timestamp": "2026-02-01T18:19:14.481131+00:00",
+      "num_forecasters": 101,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.598,
+        "community_probability": 0.4,
+        "difference": 0.19799999999999995
+      }
+    },
+    {
+      "question_id": 41754,
+      "question_title": "Will Vladimir Putin cease to be the President of the Russian Federation before May 1, 2026?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/41754/",
+      "forecast_timestamp": "2026-01-28T22:23:03.058069+00:00",
+      "snapshot_timestamp": "2026-02-01T18:19:15.867144+00:00",
+      "num_forecasters": 107,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.975,
+        "community_probability": 0.95,
+        "difference": 0.025000000000000022
+      }
+    }
+  ]
+}

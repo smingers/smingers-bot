@@ -5,19 +5,24 @@ Provides a single source of truth for mode resolution, model selection,
 and submission behavior. Replaces the duplicated apply_mode_to_config()
 logic that was previously split across main.py, run_bot.py, and forecaster.py.
 
+Modes:
+    - "test": Cheap models (Haiku), no submission - for testing pipeline
+    - "preview": Production models, no submission - for evaluating quality
+    - "live": Production models, submits to Metaculus
+
 Usage:
-    config = ResolvedConfig.from_yaml("config.yaml", mode="production")
+    config = ResolvedConfig.from_yaml("config.yaml", mode="live")
     print(config.should_submit)  # True
     print(config.active_models)  # Production model dict
 """
 
-from dataclasses import dataclass, field
-from typing import Any, Literal
+from dataclasses import dataclass
 from pathlib import Path
+from typing import Any, Literal
+
 import yaml
 
-
-Mode = Literal["dry_run", "dry_run_heavy", "production"]
+RunMode = Literal["test", "preview", "live"]
 
 
 @dataclass
@@ -27,20 +32,32 @@ class ResolvedConfig:
 
     This dataclass provides a clean interface for accessing configuration
     values after mode resolution. It resolves:
-    - Which model tier to use (cheap vs production)
+    - Which model tier to use (fast vs quality)
     - Which ensemble agents to use
     - Whether to submit predictions
 
+    Access Patterns:
+        Use ATTRIBUTE access for resolved values:
+            config.mode          # "test", "preview", or "live"
+            config.active_models # Models for utility tasks
+            config.active_agents # Ensemble agent configurations
+            config.should_submit # Whether to submit to Metaculus
+
+        Use DICT-LIKE access for raw config values:
+            config.get("research")      # Research settings
+            config["submission"]        # Submission settings
+            "research" in config        # Check if key exists
+
     Attributes:
         raw: The complete raw configuration dictionary
-        mode: The resolved run mode
+        mode: The resolved run mode ("test", "preview", or "live")
         active_models: Dictionary of models for utility tasks (query generation, etc.)
         active_agents: List of agent configurations for the ensemble
         should_submit: Whether to submit predictions to Metaculus
     """
 
-    raw: dict[str, Any]
-    mode: Mode
+    source: dict[str, Any]
+    mode: RunMode
     active_models: dict[str, Any]
     active_agents: list[dict[str, Any]]
     should_submit: bool
@@ -49,37 +66,33 @@ class ResolvedConfig:
     def from_yaml(
         cls,
         path: str | Path = "config.yaml",
-        mode: Mode | None = None,
-        dry_run: bool = False,
+        mode: RunMode | None = None,
     ) -> "ResolvedConfig":
         """
         Load configuration from YAML file and resolve mode settings.
 
         Args:
             path: Path to the YAML configuration file
-            mode: Explicit mode override ("dry_run", "dry_run_heavy", "production")
-            dry_run: Shortcut for mode="dry_run" (mode= takes precedence)
+            mode: Explicit mode override ("test", "preview", "live")
 
         Returns:
             ResolvedConfig with resolved mode settings
 
         Mode resolution priority:
             1. Explicit `mode` argument
-            2. `dry_run=True` argument (equivalent to mode="dry_run")
-            3. `mode` key in config file
-            4. Default to "dry_run"
+            2. `mode` key in config file
+            3. Default to "test"
         """
         with open(path) as f:
             raw = yaml.safe_load(f)
 
-        return cls.from_dict(raw, mode=mode, dry_run=dry_run)
+        return cls.from_dict(raw, mode=mode)
 
     @classmethod
     def from_dict(
         cls,
         raw: dict,
-        mode: Mode | None = None,
-        dry_run: bool = False,
+        mode: RunMode | None = None,
     ) -> "ResolvedConfig":
         """
         Create ResolvedConfig from a configuration dictionary.
@@ -87,26 +100,23 @@ class ResolvedConfig:
         Args:
             raw: Configuration dictionary (typically loaded from YAML)
             mode: Explicit mode override
-            dry_run: Shortcut for mode="dry_run"
 
         Returns:
             ResolvedConfig with resolved mode settings
         """
-        # Determine effective mode (priority: mode arg > dry_run flag > config > default)
+        # Determine mode (priority: mode arg > config > default)
         if mode:
-            effective_mode = mode
-        elif dry_run:
-            effective_mode = "dry_run"
+            resolved_mode = mode
         else:
-            effective_mode = raw.get("mode", "dry_run")
+            resolved_mode = raw.get("mode", "test")
 
         # Validate mode
-        valid_modes = ("dry_run", "dry_run_heavy", "production")
-        if effective_mode not in valid_modes:
-            raise ValueError(f"Invalid mode '{effective_mode}'. Must be one of: {valid_modes}")
+        valid_modes = ("test", "preview", "live")
+        if resolved_mode not in valid_modes:
+            raise ValueError(f"Invalid mode '{resolved_mode}'. Must be one of: {valid_modes}")
 
         # Select model tier based on mode
-        model_tier = "cheap" if effective_mode == "dry_run" else "production"
+        model_tier = "fast" if resolved_mode == "test" else "quality"
 
         # Resolve active models
         if "models" in raw and model_tier in raw["models"]:
@@ -127,12 +137,12 @@ class ResolvedConfig:
             active_agents = []
         active_agents = active_agents[:5]
 
-        # Submission only in production mode
-        should_submit = effective_mode == "production"
+        # Submission only in live mode
+        should_submit = resolved_mode == "live"
 
         return cls(
-            raw=raw,
-            mode=effective_mode,
+            source=raw,
+            mode=resolved_mode,
             active_models=active_models,
             active_agents=active_agents,
             should_submit=should_submit,
@@ -140,22 +150,23 @@ class ResolvedConfig:
 
     def to_dict(self) -> dict:
         """
-        Convert to dictionary with _active_* keys for backward compatibility.
+        Convert to dictionary for serialization and backward compatibility.
 
-        This preserves compatibility with handlers that expect:
-        - config["_active_models"]
-        - config["_active_agents"]
-        - config["_should_submit"]
-        - config["_effective_mode"]
+        The returned dict includes:
+        - All raw config values (models, ensemble, research, etc.)
+        - "mode" is set to the resolved mode (CLI override > config file)
+        - Resolved values for handlers: active_models, active_agents, should_submit
 
         Returns:
-            Dictionary combining raw config with resolved _active_* keys
+            Dictionary ready for serialization with unambiguous mode
         """
-        result = self.raw.copy()
-        result["_active_models"] = self.active_models
-        result["_active_agents"] = self.active_agents
-        result["_should_submit"] = self.should_submit
-        result["_effective_mode"] = self.mode
+        result = self.source.copy()
+        # Set mode to resolved value
+        result["mode"] = self.mode
+        # Resolved values for handlers
+        result["active_models"] = self.active_models
+        result["active_agents"] = self.active_agents
+        result["should_submit"] = self.should_submit
         return result
 
     def get(self, key: str, default=None):
@@ -165,15 +176,15 @@ class ResolvedConfig:
         This allows ResolvedConfig to be used somewhat like a dict
         for accessing non-resolved config values (e.g., research settings).
         """
-        return self.raw.get(key, default)
+        return self.source.get(key, default)
 
     def __getitem__(self, key: str):
         """Allow dict-like access to raw config values."""
-        return self.raw[key]
+        return self.source[key]
 
     def __contains__(self, key: str) -> bool:
         """Support 'in' operator for raw config keys."""
-        return key in self.raw
+        return key in self.source
 
 
 def load_config(config_path: str = "config.yaml") -> dict:

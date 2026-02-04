@@ -1,0 +1,196 @@
+{
+  "centralized_research": {
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "3 year treasury yield history 2025",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "3-year Treasury yield February 2026 CPI impact",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Pull FRED DGS3 daily values Jan 2025-Feb 2026 and compute mean, stdev, last price",
+          "tool": "Agent",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "Agent"
+      ],
+      "llm_cost": 0.2541,
+      "llm_cost_summarization": 0.1505,
+      "llm_cost_agentic": 0.1036,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "3-year Treasury yield February 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "FOMC February 2026 Treasury yields",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Latest analysis of 3-year U.S. Treasury yields and interest rate outlook following the February 2026 FOMC decision",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "What will be the value of \"Market Yield on U.S. Treasury Securities at 3-Year Constant Maturity, Quoted on an Investment Basis\" on 2026-02-10?",
+          "tool": "AskNews",
+          "deep_research_query": "Latest analysis of 3-year U.S. Treasury yields and interest rate outlook following the February 2026 FOMC decision"
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "AskNews",
+        "Google"
+      ],
+      "llm_cost": 0.1556,
+      "llm_cost_summarization": 0.1505,
+      "llm_cost_agentic": 0.0051,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5689,
+        "token_output": 1838,
+        "cost": 0.044636999999999996,
+        "duration_seconds": 48.103660345077515,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13955,
+        "token_output": 2339,
+        "cost": 0.07694999999999999,
+        "duration_seconds": 65.69732475280762,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5689,
+        "token_output": 1898,
+        "cost": 0.045536999999999994,
+        "duration_seconds": 48.10373401641846,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13466,
+        "token_output": 2610,
+        "cost": 0.07954800000000001,
+        "duration_seconds": 65.69728326797485,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5141,
+        "token_output": 2134,
+        "cost": 0.03887275,
+        "duration_seconds": 48.103776931762695,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12492,
+        "token_output": 2102,
+        "cost": 0.051289,
+        "duration_seconds": 65.6972451210022,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5141,
+        "token_output": 1913,
+        "cost": 0.025585999999999998,
+        "duration_seconds": 48.103806018829346,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12411,
+        "token_output": 1584,
+        "cost": 0.037494,
+        "duration_seconds": 65.69720792770386,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5141,
+        "token_output": 2337,
+        "cost": 0.028978,
+        "duration_seconds": 48.10383057594299,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11884,
+        "token_output": 2048,
+        "cost": 0.040152,
+        "duration_seconds": 65.69717192649841,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0141,
+    "step2_search": 0.2541,
+    "step3_outside_view": 0.1836,
+    "step5_inside_view": 0.2854
+  },
+  "total_pipeline_cost": 0.7372
+}

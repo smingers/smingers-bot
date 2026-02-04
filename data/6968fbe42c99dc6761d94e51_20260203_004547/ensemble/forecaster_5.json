@@ -1,0 +1,7 @@
+{
+  "agent_id": "forecaster_5",
+  "model": "openrouter/anthropic/claude-3.5-haiku",
+  "weight": 1.0,
+  "probability": 58.0,
+  "error": null
+}

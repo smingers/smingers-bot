@@ -1,0 +1,196 @@
+{
+  "centralized_research": {
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Nikkei 225 historical data 2025",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Nikkei 225 February 2026 outlook",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide daily Nikkei 225 closes 2020-2026, recent BOJ policy context, and major news likely to impact index before 13 Feb 2026.",
+          "tool": "Agent",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google News",
+        "Google"
+      ],
+      "llm_cost": 0.2597,
+      "llm_cost_summarization": 0.1576,
+      "llm_cost_agentic": 0.102,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Nikkei 225 outlook February 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Nikkei 225 record highs yen",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Latest analysis of Bank of Japan policy impact on Nikkei 225 for early February 2026",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 41
+        },
+        {
+          "query": "What will be the value of \"Nikkei Stock Average, Nikkei 225\" on 2026-02-13?",
+          "tool": "AskNews",
+          "deep_research_query": "Latest analysis of Bank of Japan policy impact on Nikkei 225 for early February 2026"
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "AskNews",
+        "Google"
+      ],
+      "llm_cost": 0.222,
+      "llm_cost_summarization": 0.1576,
+      "llm_cost_agentic": 0.0644,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6920,
+        "token_output": 2254,
+        "cost": 0.05457,
+        "duration_seconds": 72.27989840507507,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13963,
+        "token_output": 3945,
+        "cost": 0.10106399999999999,
+        "duration_seconds": 94.99750685691833,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6920,
+        "token_output": 2934,
+        "cost": 0.06477,
+        "duration_seconds": 72.27995157241821,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12881,
+        "token_output": 2978,
+        "cost": 0.083313,
+        "duration_seconds": 94.99747014045715,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6035,
+        "token_output": 1993,
+        "cost": 0.038463250000000004,
+        "duration_seconds": 72.27999234199524,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12780,
+        "token_output": 2382,
+        "cost": 0.055713,
+        "duration_seconds": 94.99743485450745,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6035,
+        "token_output": 1686,
+        "cost": 0.025558,
+        "duration_seconds": 72.280024766922,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11647,
+        "token_output": 1700,
+        "cost": 0.036893999999999996,
+        "duration_seconds": 94.9974012374878,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6035,
+        "token_output": 1686,
+        "cost": 0.025558,
+        "duration_seconds": 72.28005123138428,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11130,
+        "token_output": 1578,
+        "cost": 0.034884,
+        "duration_seconds": 94.9973692893982,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0144,
+    "step2_search": 0.2597,
+    "step3_outside_view": 0.2089,
+    "step5_inside_view": 0.3119
+  },
+  "total_pipeline_cost": 0.7948
+}

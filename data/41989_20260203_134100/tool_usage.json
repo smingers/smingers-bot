@@ -1,0 +1,196 @@
+{
+  "centralized_research": {
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Thom Tillis February 2026 news",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Thom Tillis 2026 scandal rumors",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Google Trends thom tillis daily January-February 2026 volatility analysis",
+          "tool": "Agent",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google News",
+        "Google"
+      ],
+      "llm_cost": 0.3878,
+      "llm_cost_summarization": 0.1664,
+      "llm_cost_agentic": 0.2214,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Thom Tillis upcoming events 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Thom Tillis latest news 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "List any recent or scheduled news events, investigations, legislation, or high-profile appearances involving U.S. Senator Thom Tillis expected between February 3 and February 10 2026",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 19
+        },
+        {
+          "query": "Will the interest in \u201cthom tillis\u201d change between 2026-02-03 and 2026-02-10 according to Google Trends?",
+          "tool": "AskNews",
+          "deep_research_query": "List any recent or scheduled news events, investigations, legislation, or high-profile appearances involving U.S. Senator Thom Tillis expected between February 3 and February 10 2026"
+        }
+      ],
+      "tools_used": [
+        "AskNews",
+        "Google News",
+        "Google"
+      ],
+      "llm_cost": 0.1232,
+      "llm_cost_summarization": 0.1188,
+      "llm_cost_agentic": 0.0043,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6029,
+        "token_output": 1703,
+        "cost": 0.043632000000000004,
+        "duration_seconds": 54.89399766921997,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14966,
+        "token_output": 2443,
+        "cost": 0.081543,
+        "duration_seconds": 69.60995435714722,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6029,
+        "token_output": 1872,
+        "cost": 0.046167,
+        "duration_seconds": 54.894070863723755,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14234,
+        "token_output": 2787,
+        "cost": 0.084507,
+        "duration_seconds": 69.60992002487183,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5285,
+        "token_output": 2364,
+        "cost": 0.04234475,
+        "duration_seconds": 54.894099950790405,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13357,
+        "token_output": 2289,
+        "cost": 0.05542075,
+        "duration_seconds": 69.6098837852478,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5285,
+        "token_output": 1711,
+        "cost": 0.024258000000000002,
+        "duration_seconds": 54.89413070678711,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13284,
+        "token_output": 1741,
+        "cost": 0.040496000000000004,
+        "duration_seconds": 69.60984873771667,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5285,
+        "token_output": 2203,
+        "cost": 0.028194,
+        "duration_seconds": 54.89415383338928,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12508,
+        "token_output": 1702,
+        "cost": 0.038632,
+        "duration_seconds": 69.60979652404785,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0155,
+    "step2_search": 0.3878,
+    "step3_outside_view": 0.1846,
+    "step5_inside_view": 0.3006
+  },
+  "total_pipeline_cost": 0.8885
+}

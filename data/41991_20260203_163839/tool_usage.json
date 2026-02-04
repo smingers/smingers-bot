@@ -1,0 +1,196 @@
+{
+  "centralized_research": {
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Boeing stock February 2026 catalysts",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Boeing news February 2026 developments",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide BA 10-day historical return stats for past five years and list any scheduled or probable catalysts between 3 Feb 2026 and 13 Feb 2026 affecting Boeing or aerospace sector.",
+          "tool": "Agent",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Agent",
+        "Google"
+      ],
+      "llm_cost": 0.2661,
+      "llm_cost_summarization": 0.1533,
+      "llm_cost_agentic": 0.1128,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Boeing January 2026 aircraft deliveries",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Boeing shares ahead of Senate safety hearing",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Latest Boeing updates and analyst price targets early February 2026",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 17
+        },
+        {
+          "query": "Will BA's market close price on 2026-02-13 be higher than its market close price on 2026-02-03?",
+          "tool": "AskNews",
+          "deep_research_query": "Latest Boeing updates and analyst price targets early February 2026"
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "AskNews",
+        "Google"
+      ],
+      "llm_cost": 0.1598,
+      "llm_cost_summarization": 0.1533,
+      "llm_cost_agentic": 0.0065,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6239,
+        "token_output": 2477,
+        "cost": 0.055872,
+        "duration_seconds": 66.36099529266357,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15303,
+        "token_output": 2297,
+        "cost": 0.080364,
+        "duration_seconds": 75.07020783424377,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6239,
+        "token_output": 2365,
+        "cost": 0.054192,
+        "duration_seconds": 66.3610508441925,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13901,
+        "token_output": 1849,
+        "cost": 0.069438,
+        "duration_seconds": 75.0701813697815,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5506,
+        "token_output": 2185,
+        "cost": 0.0402255,
+        "duration_seconds": 66.36109280586243,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13491,
+        "token_output": 2300,
+        "cost": 0.05580925,
+        "duration_seconds": 75.0701539516449,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5506,
+        "token_output": 1714,
+        "cost": 0.024724,
+        "duration_seconds": 66.36112904548645,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13105,
+        "token_output": 1559,
+        "cost": 0.038682,
+        "duration_seconds": 75.07013010978699,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5506,
+        "token_output": 1705,
+        "cost": 0.024652,
+        "duration_seconds": 66.36115670204163,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12402,
+        "token_output": 1815,
+        "cost": 0.039324,
+        "duration_seconds": 75.07010579109192,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0174,
+    "step2_search": 0.2661,
+    "step3_outside_view": 0.1997,
+    "step5_inside_view": 0.2836
+  },
+  "total_pipeline_cost": 0.7668
+}

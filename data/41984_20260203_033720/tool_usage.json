@@ -1,0 +1,196 @@
+{
+  "centralized_research": {
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Metaculus bilateral ceasefire before 2027",
+          "tool": "Google",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "Russia Ukraine ceasefire talks February 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Retrieve daily community prediction values for Metaculus question 41138 from 2025-10-01 to 2026-02-03 and list key events correlated with moves \u22653 pp; include sources.",
+          "tool": "Agent",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google",
+        "Google News"
+      ],
+      "llm_cost": 0.242,
+      "llm_cost_summarization": 0.077,
+      "llm_cost_agentic": 0.165,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "Russia Ukraine ceasefire negotiations 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Metaculus Russo-Ukrainian ceasefire prediction",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "What new Russia-Ukraine peace or ceasefire talks are scheduled or proposed in early February 2026 and how are officials reacting",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "Will the community prediction be higher than 40.00% on 2026-02-14 for the Metaculus question \"Will there be a bilateral ceasefire in the Russo-Ukrainian conflict before 2027?\"?",
+          "tool": "AskNews",
+          "deep_research_query": "What new Russia-Ukraine peace or ceasefire talks are scheduled or proposed in early February 2026 and how are officials reacting"
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Google News",
+        "AskNews"
+      ],
+      "llm_cost": 0.0831,
+      "llm_cost_summarization": 0.077,
+      "llm_cost_agentic": 0.0061,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4082,
+        "token_output": 1846,
+        "cost": 0.039936,
+        "duration_seconds": 65.34157466888428,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13126,
+        "token_output": 3403,
+        "cost": 0.090423,
+        "duration_seconds": 84.55461192131042,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4082,
+        "token_output": 1902,
+        "cost": 0.040776,
+        "duration_seconds": 65.34162926673889,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12538,
+        "token_output": 2390,
+        "cost": 0.073464,
+        "duration_seconds": 84.5545802116394,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 3636,
+        "token_output": 2397,
+        "cost": 0.039921,
+        "duration_seconds": 65.3416690826416,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11775,
+        "token_output": 2707,
+        "cost": 0.05850425,
+        "duration_seconds": 84.55454802513123,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 3636,
+        "token_output": 1629,
+        "cost": 0.020304,
+        "duration_seconds": 65.34170317649841,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11663,
+        "token_output": 1508,
+        "cost": 0.03539,
+        "duration_seconds": 84.55451655387878,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 3636,
+        "token_output": 1335,
+        "cost": 0.017952,
+        "duration_seconds": 65.34173059463501,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 10752,
+        "token_output": 1460,
+        "cost": 0.033184,
+        "duration_seconds": 84.55447769165039,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0152,
+    "step2_search": 0.242,
+    "step3_outside_view": 0.1589,
+    "step5_inside_view": 0.291
+  },
+  "total_pipeline_cost": 0.7071
+}

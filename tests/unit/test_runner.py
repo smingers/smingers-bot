@@ -4,16 +4,17 @@ Tests for the shared runner module.
 Tests RunResult, run_forecasts(), and format_prediction().
 """
 
-import pytest
 import sys
 from pathlib import Path
 from unittest.mock import AsyncMock, MagicMock, patch
 
+import pytest
+
 # Add project root to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-from src.runner import RunResult, ForecastFailure, run_forecasts, format_prediction
 from src.bot import ExtractionError
+from src.runner import ForecastFailure, RunResult, format_prediction, run_forecasts
 
 
 class TestRunResult:
@@ -326,7 +327,7 @@ class TestRunResultWriteFailureLog:
         result = RunResult()
 
         with patch("src.runner.FAILURE_LOG_PATH", tmp_path / "test.log"):
-            result.write_failure_log(mode="test")
+            result.write_failure_log()
 
         assert not (tmp_path / "test.log").exists()
 
@@ -337,13 +338,15 @@ class TestRunResultWriteFailureLog:
 
         log_path = tmp_path / "test.log"
         with patch("src.runner.FAILURE_LOG_PATH", log_path):
-            result.write_failure_log(mode="dry_run", source="test", tournament_id="12345")
+            result.write_failure_log(
+                source="test", tournament_id="12345", question_selection="new-only"
+            )
 
         assert log_path.exists()
         content = log_path.read_text()
         assert "Q123" in content
         assert "Test Question" in content
-        assert "dry_run" in content
+        assert "Selection: new-only" in content
         assert "12345" in content
 
 
@@ -366,11 +369,11 @@ class TestRunResultPrintSummary:
         result = RunResult()
         result.add_failure(123, "Test Q", ValueError("error"))
 
-        result.print_summary(tournament_id="12345", mode="production")
+        result.print_summary(tournament_id="12345", question_selection="new-only")
 
         captured = capsys.readouterr()
         assert "Tournament: 12345" in captured.out
-        assert "Mode: production" in captured.out
+        assert "Selection: new-only" in captured.out
         assert "Failed: 1" in captured.out
 
     def test_print_summary_with_extraction_errors(self, capsys):

@@ -17,23 +17,23 @@ cp .env.template .env
 # Required: OPENROUTER_API_KEY, METACULUS_TOKEN
 # Optional: SERPER_API_KEY, ASKNEWS_CLIENT_ID, ASKNEWS_CLIENT_SECRET
 
-# Run a forecast (dry run with cheap models)
-python main.py --question 41594 --mode dry_run
+# Run a forecast (test mode: fast models, no submission)
+python main.py --question 41594 --mode test
 
-# Run a forecast (dry run with production models)
-python main.py --question 41594 --mode dry_run_heavy
+# Run a forecast (preview mode: quality models, no submission)
+python main.py --question 41594 --mode preview
 
-# Run a forecast (submit with production models)
-python main.py --question 41594 --mode production
+# Run a forecast (live mode: quality models, submits to Metaculus)
+python main.py --question 41594 --mode live
 
 # List tournament questions
 python main.py --tournament 32721 --list
 
-# Forecast all new questions
-python main.py --tournament 32721 --forecast-new --limit 5
+# Forecast all unforecasted questions
+python main.py --tournament 32721 --forecast-unforecasted --limit 5
 
 # Verbose logging
-python main.py --question 41594 --mode dry_run --verbose
+python main.py --question 41594 --mode test --verbose
 ```
 
 ### Automated Forecasting (GitHub Actions)
@@ -41,12 +41,29 @@ python main.py --question 41594 --mode dry_run --verbose
 The bot runs automatically via `.github/workflows/run-bot.yaml` every 30 minutes using `run_bot.py`:
 
 ```bash
-# Forecast new AIB tournament questions only
-python run_bot.py --tournament 32916 --mode aib
+# Forecast new tournament questions only (always uses live mode)
+python run_bot.py --tournament 32916 --question-selection new-only
 
 # Re-forecast questions older than N days
-python run_bot.py --tournament 32916 --mode reforecast --reforecast-days 7
+python run_bot.py --tournament 32916 --question-selection reforecast --reforecast-threshold-days 7
 ```
+
+### Forecast Tracking
+
+Compare your forecasts against community consensus to identify systematic biases:
+
+```bash
+# Track forecasts for tournament 32916 (spring-aib-2026)
+poetry run python scripts/track_forecasts.py --tournament 32916
+
+# Custom output file
+poetry run python scripts/track_forecasts.py --tournament 32916 --output data/tracking/spring_aib_2026.json
+
+# Quiet mode (just save, minimal output)
+poetry run python scripts/track_forecasts.py --tournament 32916 --quiet
+```
+
+Output is saved to `data/tracking/<tournament_id>.json` and progressively updated on each run.
 
 ## Architecture
 
@@ -59,24 +76,24 @@ Question -> Query Generation -> Search (Historical + Current) -> 5-Agent Ensembl
 Each question type handler does its own integrated pipeline:
 1. **Query Generation** - Generate historical queries (outside view) and current queries (inside view)
 2. **Search Execution** - Google/Serper, AskNews, agentic search
-3. **Step 1 (Outside View)** - 5 agents analyze historical context
-4. **Cross-Pollination** - Agents share outputs for diverse perspectives
-5. **Step 2 (Inside View)** - 5 agents refine with current news
-6. **Aggregation** - Equal-weighted average of agent probabilities
+3. **Outside View Prediction** - 5 forecasters analyze historical context
+4. **Cross-Pollination** - Forecasters share outputs for diverse perspectives
+5. **Inside View Prediction** - 5 forecasters refine with current news
+6. **Aggregation** - Equal-weighted average of forecaster probabilities
 
-### 5-Agent Ensemble
+### 5-Forecaster Ensemble
 
-All agents have equal weight (1.0). Production models:
+All forecasters have equal weight (1.0). Quality tier models:
 - **Forecaster 1-2**: Claude Sonnet 4.5
 - **Forecaster 3**: o3-mini-high
 - **Forecaster 4-5**: o3
 
-Cross-pollination structure:
-- Agent 1 receives Agent 1's step 1 output
-- Agent 2 receives Agent 3's step 1 output
-- Agent 3 receives Agent 2's step 1 output
-- Agent 4 receives Agent 4's step 1 output
-- Agent 5 receives Agent 5's step 1 output
+Cross-pollination structure (creates cross-model diversity):
+- Forecaster 1 receives Forecaster 1's outside view output (Sonnet 4.5 ← self)
+- Forecaster 2 receives Forecaster 4's outside view output (Sonnet 4.5 ← o3)
+- Forecaster 3 receives Forecaster 2's outside view output (o3-mini-high ← Sonnet 4.5)
+- Forecaster 4 receives Forecaster 3's outside view output (o3 ← o3-mini-high)
+- Forecaster 5 receives Forecaster 5's outside view output (o3 ← self)
 
 ### Question Types
 
@@ -109,8 +126,6 @@ metaculus-bot/
 │   │   ├── artifact_store.py  # Forecast artifact persistence
 │   │   ├── database.py        # SQLite analytics DB
 │   │   └── report_generator.py # Report generation
-│   ├── research/
-│   │   └── asknews_searcher.py # AskNews integration
 │   └── config.py              # Configuration handling
 ├── tests/
 │   ├── conftest.py            # Pytest fixtures
@@ -155,12 +170,12 @@ All prompts are in `src/bot/prompts.py`. Key prompts per question type:
 **Binary:**
 - `BINARY_PROMPT_HISTORICAL` - Generate historical search queries
 - `BINARY_PROMPT_CURRENT` - Generate current news queries
-- `BINARY_PROMPT_1` - Outside view prediction
-- `BINARY_PROMPT_2` - Inside view prediction (with calibration checklist)
+- `BINARY_OUTSIDE_VIEW_PROMPT` - Outside view prediction
+- `BINARY_INSIDE_VIEW_PROMPT` - Inside view prediction (with calibration checklist)
 
-**Numeric:** `NUMERIC_PROMPT_HISTORICAL`, `NUMERIC_PROMPT_CURRENT`, `NUMERIC_PROMPT_1`, `NUMERIC_PROMPT_2`
+**Numeric:** `NUMERIC_PROMPT_HISTORICAL`, `NUMERIC_PROMPT_CURRENT`, `NUMERIC_OUTSIDE_VIEW_PROMPT`, `NUMERIC_INSIDE_VIEW_PROMPT`
 
-**Multiple Choice:** `MULTIPLE_CHOICE_PROMPT_HISTORICAL`, `MULTIPLE_CHOICE_PROMPT_CURRENT`, `MULTIPLE_CHOICE_PROMPT_1`, `MULTIPLE_CHOICE_PROMPT_2`
+**Multiple Choice:** `MULTIPLE_CHOICE_PROMPT_HISTORICAL`, `MULTIPLE_CHOICE_PROMPT_CURRENT`, `MULTIPLE_CHOICE_OUTSIDE_VIEW_PROMPT`, `MULTIPLE_CHOICE_INSIDE_VIEW_PROMPT`
 
 Prompts use Python's `.format()` with variables like `{title}`, `{today}`, `{context}`, `{resolution_criteria}`.
 
@@ -168,8 +183,8 @@ Prompts use Python's `.format()` with variables like `{title}`, `{today}`, `{con
 
 All tunable parameters are in `config.yaml`:
 
-- **Models**: `models.cheap` and `models.production` for utility tasks (query generation, article summarization, agentic search)
-- **Ensemble**: `ensemble.cheap` and `ensemble.production` define the 5 forecasting agents
+- **Models**: `models.fast` and `models.quality` for utility tasks (query generation, article summarization, agentic search)
+- **Ensemble**: `ensemble.fast` and `ensemble.quality` define the 5 forecasters
 - **Research**: Google, AskNews, agentic search settings
 
 ### Mode Selection
@@ -178,9 +193,9 @@ The `--mode` flag controls model tier and submission behavior:
 
 | Mode | Models | Submits | Use Case |
 |------|--------|---------|----------|
-| `dry_run` | cheap (Haiku) | No | Quick testing (~$0.09/forecast) |
-| `dry_run_heavy` | production | No | Quality testing |
-| `production` | production | Yes | Live forecasting (~$0.70/forecast) |
+| `test` | fast (Haiku) | No | Quick testing (~$0.09/forecast) |
+| `preview` | quality | No | Quality testing |
+| `live` | quality | Yes | Live forecasting (~$0.70/forecast) |
 
 ### Research Pipeline
 
@@ -215,7 +230,7 @@ AskNews provides news search. Free for Metaculus tournament participants (3k+ ca
 2. Create API credentials with **all scopes**: news, chat, stories, analytics
 3. Add to `.env`: `ASKNEWS_CLIENT_ID` and `ASKNEWS_CLIENT_SECRET`
 
-## Artifacts -- NEEDS UPDATING
+## Artifacts
 
 Every forecast saves artifacts to `data/{question_id}_{timestamp}/`:
 
@@ -230,27 +245,23 @@ data/41594_20260126_230107/
 │   ├── query_current.md                # Generated current queries
 │   ├── historical_search.json          # Search results (Google/AskNews)
 │   └── current_search.json             # Search results (Google/AskNews)
-├── 04_inside_view/
-│   ├── step1_shared/
-│   │   └── prompt.md                   # Shared outside view prompt
-│   ├── forecaster_1_step1/
-│   │   └── response.md                 # Agent 1 outside view response
-│   ├── forecaster_1_step2/
-│   │   └── response.md                 # Agent 1 inside view response
-│   ├── forecaster_1/
-│   │   └── extracted.json              # Extracted: {probability: 0.52}
-│   ├── forecaster_2_step1/response.md
-│   ├── forecaster_2_step2/response.md
-│   ├── forecaster_2/extracted.json
-│   ├── forecaster_3_step1/response.md
-│   ├── forecaster_3_step2/response.md
-│   ├── forecaster_3/extracted.json
-│   ├── forecaster_4_step1/response.md
-│   ├── forecaster_4_step2/response.md
-│   ├── forecaster_4/extracted.json
-│   ├── forecaster_5_step1/response.md
-│   ├── forecaster_5_step2/response.md
-│   ├── forecaster_5/extracted.json
+├── ensemble/
+│   ├── outside_view_prompt.md          # Shared outside view prompt
+│   ├── forecaster_1_outside_view.md    # Forecaster 1 outside view response
+│   ├── forecaster_1_inside_view.md     # Forecaster 1 inside view response
+│   ├── forecaster_1.json               # Extracted: {probability: 0.52}
+│   ├── forecaster_2_outside_view.md
+│   ├── forecaster_2_inside_view.md
+│   ├── forecaster_2.json
+│   ├── forecaster_3_outside_view.md
+│   ├── forecaster_3_inside_view.md
+│   ├── forecaster_3.json
+│   ├── forecaster_4_outside_view.md
+│   ├── forecaster_4_inside_view.md
+│   ├── forecaster_4.json
+│   ├── forecaster_5_outside_view.md
+│   ├── forecaster_5_inside_view.md
+│   ├── forecaster_5.json
 │   └── aggregation.json                # Final: {final_probability: 0.545}
 ├── 06_submission/
 │   ├── final_prediction.json           # Submitted prediction
@@ -283,6 +294,21 @@ pytest tests/unit/test_cdf_generation.py
 pytest tests/ -v
 ```
 
+### Code Formatting
+
+Run ruff to lint and format code before committing:
+
+```bash
+# Check for issues
+ruff check .
+
+# Auto-fix issues
+ruff check --fix .
+
+# Format code
+ruff format .
+```
+
 ### Test Infrastructure
 
 Test files in `tests/unit/`:
@@ -301,8 +327,8 @@ Fixtures in `conftest.py` provide sample LLM responses for:
 The bot runs automatically via `.github/workflows/run-bot.yaml`:
 - **Schedule**: Every 30 minutes
 - **Entry point**: `run_bot.py`
-- **Mode**: `aib` for new questions only
-- **Tournament**: 32916 (Seasonal AIB)
+- **Strategy**: `new-only` (forecasts new questions only)
+- **Tournament**: 32916 (spring-aib-2026)
 
 **Required secrets:**
 - `OPENROUTER_API_KEY` - For all LLM calls
@@ -320,7 +346,7 @@ SQLite at `data/forecasts.db` for analytics with three tables:
 - `total_cost`, `config_hash`, `tournament_id`
 
 **agent_predictions** - Individual agent outputs:
-- `forecast_id`, `agent_name`, `model`, `weight`, `prediction`, `reasoning_length`
+- `forecast_id`, `agent_id`, `model`, `weight`, `prediction`, `reasoning_length`
 
 **research_sources** - Research tracking:
 - `forecast_id`, `source_type`, `query`, `num_results`
@@ -345,10 +371,38 @@ SQLite at `data/forecasts.db` for analytics with three tables:
 
 ## Code Conventions
 
+### Protected Vocabulary
+
+When refactoring or renaming, do NOT change the following terms:
+
+**Metaculus-Specific Terms** (defined by the platform):
+- `binary`, `numeric`, `multiple_choice` - Question type identifiers from Metaculus API
+- `tournament`, `question` - Core Metaculus entities
+- `resolution_criteria`, `fine_print`, `background_info` - Metaculus question fields
+
+**Domain Terms** (forecasting methodology):
+- `forecaster` / `ensemble` - The 5-agent prediction system
+- `outside_view` / `inside_view` - Two-stage prediction approach (historical vs current context)
+- `cross_pollination` - Sharing outputs between forecasters for diversity
+- `aggregation` - Combining forecaster predictions into final probability
+- `CDF` - Cumulative distribution function for numeric questions
+
+**Codebase Conventions** (project preferences):
+- `forecaster` - Preferred term for ensemble members (avoid `agent` for this purpose)
+- Explicit question type prefixes in prompts: `BINARY_*`, `NUMERIC_*`, `MULTIPLE_CHOICE_*`
+- Mode names: `test`, `preview`, `live`
+
+When doing naming reviews, focus on:
+- Ambiguous variable names (`data`, `result`, `info`, `item`)
+- Inconsistent naming across similar concepts
+- Abbreviations that could be spelled out
+- Boolean variables that don't read as predicates
+- Function names that don't describe what they return
+
 ### Adding New Question Types
 
 1. Create handler in `src/bot/` inheriting from `ForecasterMixin`
-2. Add prompts to `src/bot/prompts.py` (HISTORICAL, CURRENT, PROMPT_1, PROMPT_2)
+2. Add prompts to `src/bot/prompts.py` (HISTORICAL, CURRENT, OUTSIDE_VIEW_PROMPT, INSIDE_VIEW_PROMPT)
 3. Add extraction logic to `src/bot/extractors.py`
 4. Register in `src/bot/forecaster.py`
 
@@ -366,8 +420,9 @@ response = await client.generate(prompt, model="openrouter/anthropic/claude-sonn
 Use `ArtifactStore` to save intermediate outputs:
 ```python
 store = ArtifactStore(base_dir)
-store.save_text("02_research/query_historical.md", queries)
-store.save_json("04_inside_view/aggregation.json", results)
+artifacts = store.create_forecast_artifacts(question_id)
+store.save_query_generation(artifacts, "historical", prompt, output)
+store.save_aggregation(artifacts, aggregation_data)
 ```
 
 ## Legacy Code

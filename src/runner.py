@@ -16,12 +16,13 @@ Usage:
 """
 
 import logging
+from collections.abc import Callable
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
-from typing import Any, Callable, Optional, Union
+from typing import Any, Union
 
-from .bot import ExtractionError
+from .bot import ExtractionError, SubmissionError
 from .bot.forecaster import Forecaster
 from .sources.base import Question
 from .utils.metaculus_api import MetaculusQuestion
@@ -43,6 +44,7 @@ class ForecastFailure:
     error_type: str
     error_message: str
     is_extraction_error: bool = False
+    is_submission_error: bool = False
 
 
 @dataclass
@@ -56,6 +58,7 @@ class RunResult:
     success_count: int = 0
     error_count: int = 0
     extraction_error_count: int = 0
+    submission_error_count: int = 0
     failures: list[ForecastFailure] = field(default_factory=list)
     successful_results: list[dict[str, Any]] = field(default_factory=list)
 
@@ -67,6 +70,7 @@ class RunResult:
     def add_failure(self, question_id: Union[int, str], question_title: str, error: Exception) -> None:
         """Record a failed forecast."""
         is_extraction = isinstance(error, ExtractionError)
+        is_submission = isinstance(error, SubmissionError)
         self.failures.append(
             ForecastFailure(
                 question_id=str(question_id),  # Normalize to string
@@ -74,16 +78,29 @@ class RunResult:
                 error_type=type(error).__name__,
                 error_message=str(error)[:200],
                 is_extraction_error=is_extraction,
+                is_submission_error=is_submission,
             )
         )
         self.error_count += 1
         if is_extraction:
             self.extraction_error_count += 1
+        if is_submission:
+            self.submission_error_count += 1
 
     @property
     def has_extraction_errors(self) -> bool:
         """Returns True if there are extraction errors (critical failures)."""
         return self.extraction_error_count > 0
+
+    @property
+    def has_submission_errors(self) -> bool:
+        """Returns True if there are submission errors (API failures)."""
+        return self.submission_error_count > 0
+
+    @property
+    def has_critical_errors(self) -> bool:
+        """Returns True if there are any critical errors (extraction or submission)."""
+        return self.has_extraction_errors or self.has_submission_errors
 
     @property
     def total_count(self) -> int:
@@ -92,17 +109,17 @@ class RunResult:
 
     def write_failure_log(
         self,
-        mode: str,
         source: str = "runner",
-        tournament_id: Optional[str] = None,
+        tournament_id: str | None = None,
+        question_selection: str | None = None,
     ) -> None:
         """
         Append failures to persistent log file.
 
         Args:
-            mode: The run mode (e.g., "dry_run", "production", "aib")
             source: Identifier for the calling entry point (e.g., "main.py", "run_bot.py")
             tournament_id: Optional tournament ID for context
+            question_selection: Optional selection mode (e.g., "new-only", "reforecast")
         """
         if not self.failures:
             return
@@ -110,37 +127,47 @@ class RunResult:
         FAILURE_LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
 
         with open(FAILURE_LOG_PATH, "a") as f:
-            f.write(f"\n{'='*70}\n")
-            f.write(f"RUN: {datetime.now(timezone.utc).isoformat()}\n")
+            f.write(f"\n{'=' * 70}\n")
+            f.write(f"RUN: {datetime.now(UTC).isoformat()}\n")
+            header_parts = []
             if tournament_id:
-                f.write(f"Tournament: {tournament_id} | Mode: {mode} | Via: {source}\n")
-            else:
-                f.write(f"Mode: {mode} | Via: {source}\n")
+                header_parts.append(f"Tournament: {tournament_id}")
+            if question_selection:
+                header_parts.append(f"Selection: {question_selection}")
+            header_parts.append(f"Via: {source}")
+            f.write(" | ".join(header_parts) + "\n")
             f.write(f"Success: {self.success_count} | Failed: {self.error_count}\n")
-            f.write(f"{'='*70}\n")
+            f.write(f"{'=' * 70}\n")
 
             for failure in self.failures:
-                marker = "🔴 EXTRACTION" if failure.is_extraction_error else "🟡 OTHER"
+                if failure.is_extraction_error:
+                    marker = "🔴 EXTRACTION"
+                elif failure.is_submission_error:
+                    marker = "🔴 SUBMISSION"
+                else:
+                    marker = "🟡 OTHER"
                 f.write(f"\n{marker} Q{failure.question_id}: {failure.question_title}\n")
                 f.write(f"  {failure.error_type}: {failure.error_message}\n")
 
         logger.info(f"Failures logged to: {FAILURE_LOG_PATH}")
 
-    def print_summary(self, tournament_id: Optional[str] = None, mode: Optional[str] = None) -> None:
+    def print_summary(
+        self, tournament_id: str | None = None, question_selection: str | None = None
+    ) -> None:
         """
         Print a summary of the run to stdout.
 
         Args:
             tournament_id: Optional tournament ID to include in summary
-            mode: Optional mode to include in summary
+            question_selection: Optional selection mode (e.g., "new-only", "reforecast")
         """
         print("\n" + "=" * 70)
         print("FORECAST RUN SUMMARY")
         print("=" * 70)
         if tournament_id:
             print(f"Tournament: {tournament_id}")
-        if mode:
-            print(f"Mode: {mode}")
+        if question_selection:
+            print(f"Selection: {question_selection}")
         print(f"Successful: {self.success_count}")
         print(f"Failed: {self.error_count}")
 
@@ -152,19 +179,35 @@ class RunResult:
             print("could not be parsed. The question was SKIPPED (not submitted).")
             print("!" * 70)
 
+        if self.submission_error_count > 0:
+            print()
+            print("!" * 70)
+            print(f"⚠️  SUBMISSION ERRORS: {self.submission_error_count}")
+            print("These forecasts were generated but FAILED to submit to Metaculus.")
+            print("!" * 70)
+
         if self.failures:
             print()
             print("-" * 70)
             print("FAILED QUESTIONS (re-run with --question <ID> to retry):")
             print("-" * 70)
 
-            # Show extraction errors first (most important)
+            # Show critical errors first (extraction, submission), then other
             extraction_failures = [f for f in self.failures if f.is_extraction_error]
-            other_failures = [f for f in self.failures if not f.is_extraction_error]
+            submission_failures = [f for f in self.failures if f.is_submission_error]
+            other_failures = [
+                f for f in self.failures if not f.is_extraction_error and not f.is_submission_error
+            ]
 
             if extraction_failures:
                 print("\n🔴 EXTRACTION FAILURES (LLM output parsing failed):")
                 for f in extraction_failures:
+                    print(f"  Q{f.question_id}: {f.question_title}")
+                    print(f"    Error: {f.error_message[:100]}...")
+
+            if submission_failures:
+                print("\n🔴 SUBMISSION FAILURES (API error - forecast NOT submitted):")
+                for f in submission_failures:
                     print(f"  Q{f.question_id}: {f.question_title}")
                     print(f"    Error: {f.error_message[:100]}...")
 
@@ -186,9 +229,9 @@ ErrorCallback = Callable[[QuestionLike, Exception], None]
 async def run_forecasts(
     questions: list[QuestionLike],
     forecaster: Forecaster,
-    on_progress: Optional[ProgressCallback] = None,
-    on_success: Optional[SuccessCallback] = None,
-    on_error: Optional[ErrorCallback] = None,
+    on_progress: ProgressCallback | None = None,
+    on_success: SuccessCallback | None = None,
+    on_error: ErrorCallback | None = None,
 ) -> RunResult:
     """
     Run forecasts for a list of questions with unified error handling.

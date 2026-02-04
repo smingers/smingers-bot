@@ -1,0 +1,7 @@
+Analysis:
+With only four days left until New START’s scheduled expiration on 5 February 2026, any extension or replacement treaty would have to be announced essentially immediately.  To gauge the odds we need very up-to-date coverage on (1) possible breakthrough diplomatic contacts, (2) statements from the White House, Kremlin, State Department, or Russian MFA, and (3) reports from arms-control think tanks (Arms Control Association, Carnegie, etc.) indicating either a signed protocol or at least mutually agreed framework that explicitly runs through 5 February 2027 or later.  Recent context: Russia “suspended” participation in 2023, formal negotiations have been stalled, and most commentary during 2024-25 stressed the unlikelihood of renewal; however, a last-minute political deal, even a short “technical extension,” cannot be ruled out.  Therefore we should look for:  • any joint statements in late January–early February 2026,  • reporting on behind-the-scenes talks in Geneva, Vienna, or via secure video link,  • expert analyses published since mid-January 2026 that might flag imminent movement.  The three searches below target those angles.
+
+Search queries:
+1. New START extension 2026 negotiations (Google)
+2. New START successor treaty February 2026 (Google News)
+3. Latest 2026 reports on US-Russia discussions to renew or replace New START nuclear arms treaty before its expiration on February 5 2026 [AskNews] (AskNews)

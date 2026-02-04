@@ -1,0 +1,196 @@
+{
+  "centralized_research": {
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "US military Iran strike 2026 escalation",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Pentagon planning options against Iran February 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide a chronological list of every confirmed instance since 1979 in which US national military forces executed a kinetic strike on, over, or within the territorial waters of Iran, including June 2025, and summarize immediate Iranian and US responses.  Then assess any credible reporting (Nov 2025\u2013Feb 2026) about new strike planning.",
+          "tool": "Agent",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google News",
+        "Google"
+      ],
+      "llm_cost": 0.2782,
+      "llm_cost_summarization": 0.144,
+      "llm_cost_agentic": 0.1343,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "US Iran military strike preparations 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Pentagon plans Iran strike 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Latest reports about any recent or planned United States military strikes inside Iran or its airspace since January 2026",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "When will the US' national military forces attempt to execute a military strike within the territory, airspace, or territorial waters of Iran?",
+          "tool": "AskNews",
+          "deep_research_query": "Latest reports about any recent or planned United States military strikes inside Iran or its airspace since January 2026"
+        }
+      ],
+      "tools_used": [
+        "AskNews",
+        "Google News",
+        "Google"
+      ],
+      "llm_cost": 0.136,
+      "llm_cost_summarization": 0.1281,
+      "llm_cost_agentic": 0.0079,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7187,
+        "token_output": 2506,
+        "cost": 0.059150999999999995,
+        "duration_seconds": 74.02812695503235,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16412,
+        "token_output": 3239,
+        "cost": 0.097821,
+        "duration_seconds": 85.350172996521,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7187,
+        "token_output": 2307,
+        "cost": 0.056165999999999994,
+        "duration_seconds": 74.02844190597534,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15078,
+        "token_output": 2932,
+        "cost": 0.089214,
+        "duration_seconds": 85.35017085075378,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6311,
+        "token_output": 3503,
+        "cost": 0.06008625,
+        "duration_seconds": 74.02853512763977,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14460,
+        "token_output": 2660,
+        "cost": 0.062545,
+        "duration_seconds": 85.35010099411011,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6311,
+        "token_output": 1972,
+        "cost": 0.028398,
+        "duration_seconds": 74.02860903739929,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14521,
+        "token_output": 1640,
+        "cost": 0.042162,
+        "duration_seconds": 85.35003876686096,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6311,
+        "token_output": 2157,
+        "cost": 0.029878000000000002,
+        "duration_seconds": 74.02871680259705,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13671,
+        "token_output": 1983,
+        "cost": 0.043206,
+        "duration_seconds": 85.3500280380249,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0152,
+    "step2_search": 0.2782,
+    "step3_outside_view": 0.2337,
+    "step5_inside_view": 0.3349
+  },
+  "total_pipeline_cost": 0.8621
+}

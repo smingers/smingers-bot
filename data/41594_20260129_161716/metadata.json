@@ -1,10 +1,15 @@
 {
   "question_id": 41594,
+<<<<<<<< HEAD:data/41594_20260129_160617/metadata.json
+  "timestamp": "20260129_160617",
+  "created_at": "2026-01-29T16:07:29.103432+00:00",
+========
   "timestamp": "20260129_161716",
   "created_at": "2026-01-29T16:18:37.880197+00:00",
+>>>>>>>> origin/claude/rebase-against-main-z1ynq:data/41594_20260129_161716/metadata.json
   "config_hash": "1614097f24eb",
   "config_snapshot": {
-    "mode": "dry_run",
+    "mode": "test",
     "models": {
       "cheap": {
         "query_generator": "openrouter/anthropic/claude-3.5-haiku",
@@ -154,13 +159,22 @@
         "weight": 1.0
       }
     ],
-    "_should_submit": false,
-    "_effective_mode": "dry_run"
+    "_should_submit": false
   },
   "costs": {
     "total_calls": 26,
     "successful_calls": 26,
     "failed_calls": 0,
+<<<<<<<< HEAD:data/41594_20260129_160617/metadata.json
+    "total_input_tokens": 97320,
+    "total_output_tokens": 11954,
+    "total_cost": 0.12567199999999998
+  },
+  "timing": {
+    "start": "2026-01-29T16:06:16.691325+00:00",
+    "end": "2026-01-29T16:07:29.103225+00:00",
+    "duration_seconds": 72.4119
+========
     "total_input_tokens": 97124,
     "total_output_tokens": 12627,
     "total_cost": 0.1282072
@@ -169,6 +183,7 @@
     "start": "2026-01-29T16:17:15.411964+00:00",
     "end": "2026-01-29T16:18:37.879839+00:00",
     "duration_seconds": 82.467875
+>>>>>>>> origin/claude/rebase-against-main-z1ynq:data/41594_20260129_161716/metadata.json
   },
   "errors": [],
   "analysis": {

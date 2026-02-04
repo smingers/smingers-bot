@@ -1,0 +1,2281 @@
+{
+  "id": 41759,
+  "title": "What will be the State Bank of Pakistan's target policy rate as of May 1, 2026?",
+  "short_title": "What will be the State Bank of Pakistan's target policy rate as of May 1, 2026?",
+  "url_title": "What will be the State Bank of Pakistan's target policy rate as of May 1, 2026?",
+  "slug": "what-will-be-the-state-bank-of-pakistans-target-policy-rate-as-of-may-1-2026",
+  "author_id": 276265,
+  "author_username": "AutoQuestionsBot",
+  "coauthors": [],
+  "created_at": "2026-01-22T08:07:58.167571Z",
+  "published_at": "2026-01-30T00:00:00Z",
+  "edited_at": "2026-01-30T01:30:00.126299Z",
+  "curation_status": "approved",
+  "curation_status_updated_at": "2026-01-22T08:08:06.358676Z",
+  "comment_count": 0,
+  "status": "closed",
+  "resolved": false,
+  "actual_close_time": "2026-01-30T01:30:00Z",
+  "scheduled_close_time": "2026-01-30T01:30:00Z",
+  "scheduled_resolve_time": "2026-05-01T00:00:00Z",
+  "actual_resolve_time": null,
+  "open_time": "2026-01-30T00:00:00Z",
+  "nr_forecasters": 89,
+  "html_metadata_json": null,
+  "projects": {
+    "category": [
+      {
+        "id": 3689,
+        "name": "Politics",
+        "slug": "politics",
+        "emoji": "\ud83c\udfdb\ufe0f",
+        "description": "Politics",
+        "type": "category"
+      },
+      {
+        "id": 3698,
+        "name": "Economy & Business",
+        "slug": "economy-business",
+        "emoji": "\ud83d\udcbc",
+        "description": "Economy & Business",
+        "type": "category"
+      }
+    ],
+    "tournament": [
+      {
+        "id": 32916,
+        "type": "tournament",
+        "name": "Spring 2026 AI Forecasting Benchmark Tournament",
+        "slug": "spring-aib-2026",
+        "header_image": "https://cdn.metaculus.com/aib-spring-cover.webp",
+        "prize_pool": "50000.00",
+        "start_date": "2026-01-05T00:00:00Z",
+        "close_date": "2026-07-05T00:00:00Z",
+        "forecasting_end_date": "2026-05-06T00:00:00Z",
+        "html_metadata_json": null,
+        "is_ongoing": true,
+        "user_permission": null,
+        "order": 0,
+        "created_at": "2025-12-12T16:53:45.337955Z",
+        "edited_at": "2026-01-30T20:33:00.225458Z",
+        "score_type": "spot_peer_tournament",
+        "default_permission": "forecaster",
+        "visibility": "not_in_main_feed",
+        "show_on_homepage": true,
+        "is_current_content_translated": false,
+        "bot_leaderboard_status": "bots_only",
+        "description_preview": "<p>Welcome to the Spring 2026 AI Forecasting Benchmark! This is a bot-only competition where bot-makers attempt to push AI to its limits in"
+      }
+    ],
+    "default_project": {
+      "id": 32916,
+      "type": "tournament",
+      "name": "Spring 2026 AI Forecasting Benchmark Tournament",
+      "slug": "spring-aib-2026",
+      "header_image": "https://cdn.metaculus.com/aib-spring-cover.webp",
+      "prize_pool": "50000.00",
+      "start_date": "2026-01-05T00:00:00Z",
+      "close_date": "2026-07-05T00:00:00Z",
+      "forecasting_end_date": "2026-05-06T00:00:00Z",
+      "html_metadata_json": null,
+      "is_ongoing": true,
+      "user_permission": null,
+      "order": 0,
+      "created_at": "2025-12-12T16:53:45.337955Z",
+      "edited_at": "2026-01-30T20:33:00.225458Z",
+      "score_type": "spot_peer_tournament",
+      "default_permission": "forecaster",
+      "visibility": "not_in_main_feed",
+      "show_on_homepage": true,
+      "is_current_content_translated": false,
+      "bot_leaderboard_status": "bots_only",
+      "description_preview": "<p>Welcome to the Spring 2026 AI Forecasting Benchmark! This is a bot-only competition where bot-makers attempt to push AI to its limits in"
+    }
+  },
+  "question": {
+    "id": 41499,
+    "title": "What will be the State Bank of Pakistan's target policy rate as of May 1, 2026?",
+    "created_at": "2026-01-22T08:07:58.167977Z",
+    "open_time": "2026-01-30T00:00:00Z",
+    "cp_reveal_time": "2026-01-30T01:30:00Z",
+    "spot_scoring_time": "2026-01-30T01:30:00Z",
+    "scheduled_resolve_time": "2026-05-01T00:00:00Z",
+    "actual_resolve_time": null,
+    "resolution_set_time": null,
+    "scheduled_close_time": "2026-01-30T01:30:00Z",
+    "actual_close_time": "2026-01-30T01:30:00Z",
+    "type": "numeric",
+    "options": null,
+    "all_options_ever": null,
+    "options_history": null,
+    "group_variable": "",
+    "status": "closed",
+    "possibilities": null,
+    "resolution": null,
+    "include_bots_in_aggregates": true,
+    "question_weight": 1.0,
+    "default_score_type": "spot_peer",
+    "default_aggregation_method": "unweighted",
+    "label": "",
+    "unit": "percent",
+    "open_upper_bound": true,
+    "open_lower_bound": true,
+    "inbound_outcome_count": 200,
+    "scaling": {
+      "range_min": 5.0,
+      "range_max": 25.0,
+      "nominal_min": 5.0,
+      "nominal_max": 25.0,
+      "zero_point": null,
+      "open_upper_bound": true,
+      "open_lower_bound": true,
+      "inbound_outcome_count": 200,
+      "continuous_range": [
+        5.0,
+        5.1,
+        5.2,
+        5.3,
+        5.4,
+        5.5,
+        5.6,
+        5.7,
+        5.8,
+        5.9,
+        6.0,
+        6.1,
+        6.2,
+        6.3,
+        6.4,
+        6.5,
+        6.6,
+        6.7,
+        6.8,
+        6.9,
+        7.0,
+        7.1,
+        7.2,
+        7.300000000000001,
+        7.4,
+        7.5,
+        7.6,
+        7.7,
+        7.800000000000001,
+        7.9,
+        8.0,
+        8.1,
+        8.2,
+        8.3,
+        8.4,
+        8.5,
+        8.6,
+        8.7,
+        8.8,
+        8.9,
+        9.0,
+        9.100000000000001,
+        9.2,
+        9.3,
+        9.4,
+        9.5,
+        9.600000000000001,
+        9.7,
+        9.8,
+        9.9,
+        10.0,
+        10.1,
+        10.2,
+        10.3,
+        10.4,
+        10.5,
+        10.600000000000001,
+        10.700000000000001,
+        10.8,
+        10.899999999999999,
+        11.0,
+        11.1,
+        11.2,
+        11.3,
+        11.4,
+        11.5,
+        11.600000000000001,
+        11.7,
+        11.8,
+        11.9,
+        12.0,
+        12.1,
+        12.2,
+        12.3,
+        12.4,
+        12.5,
+        12.6,
+        12.7,
+        12.8,
+        12.9,
+        13.0,
+        13.100000000000001,
+        13.200000000000001,
+        13.3,
+        13.4,
+        13.5,
+        13.6,
+        13.7,
+        13.8,
+        13.9,
+        14.0,
+        14.1,
+        14.200000000000001,
+        14.3,
+        14.4,
+        14.5,
+        14.6,
+        14.7,
+        14.8,
+        14.9,
+        15.0,
+        15.1,
+        15.2,
+        15.3,
+        15.4,
+        15.5,
+        15.600000000000001,
+        15.700000000000001,
+        15.8,
+        15.9,
+        16.0,
+        16.1,
+        16.200000000000003,
+        16.3,
+        16.400000000000002,
+        16.5,
+        16.6,
+        16.7,
+        16.799999999999997,
+        16.9,
+        17.0,
+        17.1,
+        17.2,
+        17.3,
+        17.4,
+        17.5,
+        17.6,
+        17.7,
+        17.8,
+        17.9,
+        18.0,
+        18.1,
+        18.200000000000003,
+        18.3,
+        18.4,
+        18.5,
+        18.6,
+        18.700000000000003,
+        18.8,
+        18.900000000000002,
+        19.0,
+        19.1,
+        19.2,
+        19.299999999999997,
+        19.4,
+        19.5,
+        19.6,
+        19.7,
+        19.8,
+        19.9,
+        20.0,
+        20.1,
+        20.2,
+        20.3,
+        20.4,
+        20.5,
+        20.6,
+        20.700000000000003,
+        20.8,
+        20.9,
+        21.0,
+        21.1,
+        21.200000000000003,
+        21.3,
+        21.400000000000002,
+        21.5,
+        21.6,
+        21.7,
+        21.8,
+        21.9,
+        22.0,
+        22.1,
+        22.2,
+        22.3,
+        22.4,
+        22.5,
+        22.6,
+        22.7,
+        22.8,
+        22.9,
+        23.0,
+        23.1,
+        23.2,
+        23.3,
+        23.400000000000002,
+        23.5,
+        23.6,
+        23.700000000000003,
+        23.8,
+        23.900000000000002,
+        24.0,
+        24.1,
+        24.2,
+        24.3,
+        24.4,
+        24.5,
+        24.6,
+        24.7,
+        24.8,
+        24.9,
+        25.0
+      ]
+    },
+    "group_rank": null,
+    "coherence_links": null,
+    "coherence_link_aggregations": null,
+    "description": "This question tracks the exact target policy rate set by the State Bank of Pakistan (SBP) as of May 1, 2026. The policy rate is a critical tool for managing inflation and economic growth in Pakistan, influencing commercial interest rates and the value of the Pakistani Rupee.\n\n`{\"format\":\"bot_tournament_question\",\"info\":{\"hash_id\":\"47ebb9c64990e164\"}}`",
+    "resolution_criteria": "This question resolves to the value of the State Bank of Pakistan (SBP) target policy rate (also known as the 'Policy Rate') in effect at 11:59 PM UTC on May 1, 2026. The resolution will be based on the official 'Monetary Policy Statements' published by the State Bank of Pakistan on its official website (https://www.sbp.org.pk/) or [credible sources](https://www.metaculus.com/faq/#definitions).",
+    "fine_print": "The target policy rate is the primary signaling rate set by the Monetary Policy Committee (MPC). If the SBP transitions to a different primary policy instrument or name for the target rate, the rate that serves the equivalent function of setting the overnight repo/reverse-repo corridor midpoint or target will be used. Data revisions published after May 1, 2026, will not be considered unless they correct a clerical error regarding the rate actually in effect on that date.",
+    "short_title": "What will be the State Bank of Pakistan's target policy rate as of May 1, 2026?",
+    "post_id": 41759,
+    "aggregations": {
+      "unweighted": {
+        "history": [
+          {
+            "start_time": 1769731262.66792,
+            "end_time": 1769731482.067037,
+            "forecaster_count": 1,
+            "interval_lower_bounds": [
+              0.2311706479166262
+            ],
+            "centers": [
+              0.26310307583364073
+            ],
+            "interval_upper_bounds": [
+              0.29503550375065524
+            ]
+          },
+          {
+            "start_time": 1769731482.067037,
+            "end_time": 1769731538.159397,
+            "forecaster_count": 2,
+            "interval_lower_bounds": [
+              0.24032415296293197
+            ],
+            "centers": [
+              0.2699414549427087
+            ],
+            "interval_upper_bounds": [
+              0.2978506231801914
+            ]
+          },
+          {
+            "start_time": 1769731538.159397,
+            "end_time": 1769731923.125092,
+            "forecaster_count": 3,
+            "interval_lower_bounds": [
+              0.243787302858291
+            ],
+            "centers": [
+              0.26711896480263136
+            ],
+            "interval_upper_bounds": [
+              0.2921317405265506
+            ]
+          },
+          {
+            "start_time": 1769731923.125092,
+            "end_time": 1769732152.901929,
+            "forecaster_count": 4,
+            "interval_lower_bounds": [
+              0.23985889774191635
+            ],
+            "centers": [
+              0.26575663179062087
+            ],
+            "interval_upper_bounds": [
+              0.2919433022013092
+            ]
+          },
+          {
+            "start_time": 1769732152.901929,
+            "end_time": 1769732258.108994,
+            "forecaster_count": 5,
+            "interval_lower_bounds": [
+              0.24039243454656994
+            ],
+            "centers": [
+              0.2660903664861777
+            ],
+            "interval_upper_bounds": [
+              0.2916690196413114
+            ]
+          },
+          {
+            "start_time": 1769732258.108994,
+            "end_time": 1769732300.936763,
+            "forecaster_count": 6,
+            "interval_lower_bounds": [
+              0.2367855100009739
+            ],
+            "centers": [
+              0.26153188038099584
+            ],
+            "interval_upper_bounds": [
+              0.2874055731402215
+            ]
+          },
+          {
+            "start_time": 1769732300.936763,
+            "end_time": 1769732655.750635,
+            "forecaster_count": 7,
+            "interval_lower_bounds": [
+              0.2388595074251742
+            ],
+            "centers": [
+              0.2632093867068875
+            ],
+            "interval_upper_bounds": [
+              0.28868268624952825
+            ]
+          },
+          {
+            "start_time": 1769732655.750635,
+            "end_time": 1769732664.293639,
+            "forecaster_count": 8,
+            "interval_lower_bounds": [
+              0.2382479104571297
+            ],
+            "centers": [
+              0.2634372192069389
+            ],
+            "interval_upper_bounds": [
+              0.2899629375061219
+            ]
+          },
+          {
+            "start_time": 1769732664.293639,
+            "end_time": 1769732664.782397,
+            "forecaster_count": 9,
+            "interval_lower_bounds": [
+              0.23853912210690836
+            ],
+            "centers": [
+              0.26451559061872154
+            ],
+            "interval_upper_bounds": [
+              0.29201278397813063
+            ]
+          },
+          {
+            "start_time": 1769732664.782397,
+            "end_time": 1769732747.382832,
+            "forecaster_count": 10,
+            "interval_lower_bounds": [
+              0.23922954330024268
+            ],
+            "centers": [
+              0.26512094039274353
+            ],
+            "interval_upper_bounds": [
+              0.29251628038385336
+            ]
+          },
+          {
+            "start_time": 1769732747.382832,
+            "end_time": 1769733123.804046,
+            "forecaster_count": 11,
+            "interval_lower_bounds": [
+              0.24083326003099997
+            ],
+            "centers": [
+              0.268317172321983
+            ],
+            "interval_upper_bounds": [
+              0.30010271369864855
+            ]
+          },
+          {
+            "start_time": 1769733123.804046,
+            "end_time": 1769733264.607983,
+            "forecaster_count": 12,
+            "interval_lower_bounds": [
+              0.239398619206121
+            ],
+            "centers": [
+              0.2679354703253283
+            ],
+            "interval_upper_bounds": [
+              0.3008888157403647
+            ]
+          },
+          {
+            "start_time": 1769733264.607983,
+            "end_time": 1769733369.775945,
+            "forecaster_count": 13,
+            "interval_lower_bounds": [
+              0.23923805866936335
+            ],
+            "centers": [
+              0.267624278601533
+            ],
+            "interval_upper_bounds": [
+              0.2985284919645441
+            ]
+          },
+          {
+            "start_time": 1769733369.775945,
+            "end_time": 1769733435.95565,
+            "forecaster_count": 14,
+            "interval_lower_bounds": [
+              0.23798215963644137
+            ],
+            "centers": [
+              0.2665593216990156
+            ],
+            "interval_upper_bounds": [
+              0.2964606819201877
+            ]
+          },
+          {
+            "start_time": 1769733435.95565,
+            "end_time": 1769733924.191981,
+            "forecaster_count": 15,
+            "interval_lower_bounds": [
+              0.23713349568437242
+            ],
+            "centers": [
+              0.26635398082190753
+            ],
+            "interval_upper_bounds": [
+              0.2974455924622987
+            ]
+          },
+          {
+            "start_time": 1769733924.191981,
+            "end_time": 1769733941.068577,
+            "forecaster_count": 16,
+            "interval_lower_bounds": [
+              0.23725089370439673
+            ],
+            "centers": [
+              0.26810673357018766
+            ],
+            "interval_upper_bounds": [
+              0.3052882985659855
+            ]
+          },
+          {
+            "start_time": 1769733941.068577,
+            "end_time": 1769733943.552205,
+            "forecaster_count": 17,
+            "interval_lower_bounds": [
+              0.2379615090115636
+            ],
+            "centers": [
+              0.2692166447136482
+            ],
+            "interval_upper_bounds": [
+              0.3074272493449609
+            ]
+          },
+          {
+            "start_time": 1769733943.552205,
+            "end_time": 1769733946.269546,
+            "forecaster_count": 18,
+            "interval_lower_bounds": [
+              0.23748035165473727
+            ],
+            "centers": [
+              0.26889418157476114
+            ],
+            "interval_upper_bounds": [
+              0.30646678522716686
+            ]
+          },
+          {
+            "start_time": 1769733946.269546,
+            "end_time": 1769733946.966653,
+            "forecaster_count": 19,
+            "interval_lower_bounds": [
+              0.23617478298939473
+            ],
+            "centers": [
+              0.2679793365110699
+            ],
+            "interval_upper_bounds": [
+              0.3052692424165371
+            ]
+          },
+          {
+            "start_time": 1769733946.966653,
+            "end_time": 1769733947.93651,
+            "forecaster_count": 20,
+            "interval_lower_bounds": [
+              0.234994381676566
+            ],
+            "centers": [
+              0.26762975973310593
+            ],
+            "interval_upper_bounds": [
+              0.305891029422572
+            ]
+          },
+          {
+            "start_time": 1769733947.93651,
+            "end_time": 1769733952.801664,
+            "forecaster_count": 21,
+            "interval_lower_bounds": [
+              0.23622158508765861
+            ],
+            "centers": [
+              0.26845011741538294
+            ],
+            "interval_upper_bounds": [
+              0.3037309575735281
+            ]
+          },
+          {
+            "start_time": 1769733952.801664,
+            "end_time": 1769733952.811427,
+            "forecaster_count": 22,
+            "interval_lower_bounds": [
+              0.23547536389878257
+            ],
+            "centers": [
+              0.26822845701378656
+            ],
+            "interval_upper_bounds": [
+              0.3030398426343356
+            ]
+          },
+          {
+            "start_time": 1769733952.811427,
+            "end_time": 1769733953.03707,
+            "forecaster_count": 23,
+            "interval_lower_bounds": [
+              0.23368974055082567
+            ],
+            "centers": [
+              0.2670318527173387
+            ],
+            "interval_upper_bounds": [
+              0.3019340503949059
+            ]
+          },
+          {
+            "start_time": 1769733953.03707,
+            "end_time": 1769733953.169143,
+            "forecaster_count": 24,
+            "interval_lower_bounds": [
+              0.23354292077857064
+            ],
+            "centers": [
+              0.26688145552214954
+            ],
+            "interval_upper_bounds": [
+              0.30264327595482843
+            ]
+          },
+          {
+            "start_time": 1769733953.169143,
+            "end_time": 1769733955.87294,
+            "forecaster_count": 25,
+            "interval_lower_bounds": [
+              0.23341227261455963
+            ],
+            "centers": [
+              0.2667421484721139
+            ],
+            "interval_upper_bounds": [
+              0.3032793094796596
+            ]
+          },
+          {
+            "start_time": 1769733955.87294,
+            "end_time": 1769733955.884372,
+            "forecaster_count": 26,
+            "interval_lower_bounds": [
+              0.23329526366855224
+            ],
+            "centers": [
+              0.26661274852057026
+            ],
+            "interval_upper_bounds": [
+              0.30263243772032516
+            ]
+          },
+          {
+            "start_time": 1769733955.884372,
+            "end_time": 1769733956.75868,
+            "forecaster_count": 27,
+            "interval_lower_bounds": [
+              0.2340318601629471
+            ],
+            "centers": [
+              0.2669889592070486
+            ],
+            "interval_upper_bounds": [
+              0.3020460782255545
+            ]
+          },
+          {
+            "start_time": 1769733956.75868,
+            "end_time": 1769733957.435822,
+            "forecaster_count": 28,
+            "interval_lower_bounds": [
+              0.23389336296579954
+            ],
+            "centers": [
+              0.2668610164184793
+            ],
+            "interval_upper_bounds": [
+              0.30262353662686065
+            ]
+          },
+          {
+            "start_time": 1769733957.435822,
+            "end_time": 1769733957.462147,
+            "forecaster_count": 29,
+            "interval_lower_bounds": [
+              0.2336766890246572
+            ],
+            "centers": [
+              0.26660374076474086
+            ],
+            "interval_upper_bounds": [
+              0.301113582805178
+            ]
+          },
+          {
+            "start_time": 1769733957.462147,
+            "end_time": 1769733958.365692,
+            "forecaster_count": 30,
+            "interval_lower_bounds": [
+              0.23319777350274717
+            ],
+            "centers": [
+              0.2664958394184705
+            ],
+            "interval_upper_bounds": [
+              0.30065679631377673
+            ]
+          },
+          {
+            "start_time": 1769733958.365692,
+            "end_time": 1769733959.150608,
+            "forecaster_count": 31,
+            "interval_lower_bounds": [
+              0.23203711934345153
+            ],
+            "centers": [
+              0.2662198083798373
+            ],
+            "interval_upper_bounds": [
+              0.30125548780424155
+            ]
+          },
+          {
+            "start_time": 1769733959.150608,
+            "end_time": 1769733961.399019,
+            "forecaster_count": 32,
+            "interval_lower_bounds": [
+              0.23162312894655518
+            ],
+            "centers": [
+              0.2661275379168456
+            ],
+            "interval_upper_bounds": [
+              0.30180610449632966
+            ]
+          },
+          {
+            "start_time": 1769733961.399019,
+            "end_time": 1769733964.480584,
+            "forecaster_count": 33,
+            "interval_lower_bounds": [
+              0.23160483408894617
+            ],
+            "centers": [
+              0.2660405736740827
+            ],
+            "interval_upper_bounds": [
+              0.30138061014786754
+            ]
+          },
+          {
+            "start_time": 1769733964.480584,
+            "end_time": 1769733966.068883,
+            "forecaster_count": 34,
+            "interval_lower_bounds": [
+              0.23061890120950818
+            ],
+            "centers": [
+              0.2652614960243629
+            ],
+            "interval_upper_bounds": [
+              0.30049165665367
+            ]
+          },
+          {
+            "start_time": 1769733966.068883,
+            "end_time": 1769733966.684258,
+            "forecaster_count": 35,
+            "interval_lower_bounds": [
+              0.2302714814470101
+            ],
+            "centers": [
+              0.2654117999696558
+            ],
+            "interval_upper_bounds": [
+              0.30195388938033185
+            ]
+          },
+          {
+            "start_time": 1769733966.684258,
+            "end_time": 1769733968.232142,
+            "forecaster_count": 36,
+            "interval_lower_bounds": [
+              0.22899564687466
+            ],
+            "centers": [
+              0.2649819484218004
+            ],
+            "interval_upper_bounds": [
+              0.30156628047993317
+            ]
+          },
+          {
+            "start_time": 1769733968.232142,
+            "end_time": 1769733969.688867,
+            "forecaster_count": 37,
+            "interval_lower_bounds": [
+              0.22971755188953694
+            ],
+            "centers": [
+              0.26632590718638566
+            ],
+            "interval_upper_bounds": [
+              0.30732058580872723
+            ]
+          },
+          {
+            "start_time": 1769733969.688867,
+            "end_time": 1769733971.407199,
+            "forecaster_count": 38,
+            "interval_lower_bounds": [
+              0.22886455683503204
+            ],
+            "centers": [
+              0.26578662851571155
+            ],
+            "interval_upper_bounds": [
+              0.30685973369052566
+            ]
+          },
+          {
+            "start_time": 1769733971.407199,
+            "end_time": 1769733972.635102,
+            "forecaster_count": 39,
+            "interval_lower_bounds": [
+              0.2288882721526582
+            ],
+            "centers": [
+              0.2657162279331955
+            ],
+            "interval_upper_bounds": [
+              0.3063611300049304
+            ]
+          },
+          {
+            "start_time": 1769733972.635102,
+            "end_time": 1769733974.879129,
+            "forecaster_count": 40,
+            "interval_lower_bounds": [
+              0.22860490995408822
+            ],
+            "centers": [
+              0.2656494267160589
+            ],
+            "interval_upper_bounds": [
+              0.3058941005672438
+            ]
+          },
+          {
+            "start_time": 1769733974.879129,
+            "end_time": 1769733975.439557,
+            "forecaster_count": 41,
+            "interval_lower_bounds": [
+              0.22863660667200936
+            ],
+            "centers": [
+              0.26558595570813387
+            ],
+            "interval_upper_bounds": [
+              0.305443510410612
+            ]
+          },
+          {
+            "start_time": 1769733975.439557,
+            "end_time": 1769733975.595958,
+            "forecaster_count": 42,
+            "interval_lower_bounds": [
+              0.22837188218255475
+            ],
+            "centers": [
+              0.26552557193682214
+            ],
+            "interval_upper_bounds": [
+              0.3050517523252935
+            ]
+          },
+          {
+            "start_time": 1769733975.595958,
+            "end_time": 1769733977.003593,
+            "forecaster_count": 43,
+            "interval_lower_bounds": [
+              0.22811567036074087
+            ],
+            "centers": [
+              0.2654680555047608
+            ],
+            "interval_upper_bounds": [
+              0.30538448417980335
+            ]
+          },
+          {
+            "start_time": 1769733977.003593,
+            "end_time": 1769733978.732702,
+            "forecaster_count": 44,
+            "interval_lower_bounds": [
+              0.2279831100569527
+            ],
+            "centers": [
+              0.2655935707439283
+            ],
+            "interval_upper_bounds": [
+              0.3065030062429538
+            ]
+          },
+          {
+            "start_time": 1769733978.732702,
+            "end_time": 1769733981.479254,
+            "forecaster_count": 45,
+            "interval_lower_bounds": [
+              0.2273567095473089
+            ],
+            "centers": [
+              0.26542702107003247
+            ],
+            "interval_upper_bounds": [
+              0.3067691894471716
+            ]
+          },
+          {
+            "start_time": 1769733981.479254,
+            "end_time": 1769733982.071023,
+            "forecaster_count": 46,
+            "interval_lower_bounds": [
+              0.22674942786947194
+            ],
+            "centers": [
+              0.2652642990989881
+            ],
+            "interval_upper_bounds": [
+              0.3073461306262492
+            ]
+          },
+          {
+            "start_time": 1769733982.071023,
+            "end_time": 1769733982.081792,
+            "forecaster_count": 47,
+            "interval_lower_bounds": [
+              0.22730867891263415
+            ],
+            "centers": [
+              0.2658976038267904
+            ],
+            "interval_upper_bounds": [
+              0.30692311101610253
+            ]
+          },
+          {
+            "start_time": 1769733982.081792,
+            "end_time": 1769733983.378713,
+            "forecaster_count": 48,
+            "interval_lower_bounds": [
+              0.22708533926174634
+            ],
+            "centers": [
+              0.2658380159541027
+            ],
+            "interval_upper_bounds": [
+              0.3065578801960053
+            ]
+          },
+          {
+            "start_time": 1769733983.378713,
+            "end_time": 1769733983.429333,
+            "forecaster_count": 49,
+            "interval_lower_bounds": [
+              0.22576458406055092
+            ],
+            "centers": [
+              0.2652379805781184
+            ],
+            "interval_upper_bounds": [
+              0.3061696821162377
+            ]
+          },
+          {
+            "start_time": 1769733983.429333,
+            "end_time": 1769733985.385952,
+            "forecaster_count": 50,
+            "interval_lower_bounds": [
+              0.2255702690273755
+            ],
+            "centers": [
+              0.26519364149433566
+            ],
+            "interval_upper_bounds": [
+              0.30672165975272603
+            ]
+          },
+          {
+            "start_time": 1769733985.385952,
+            "end_time": 1769733986.19445,
+            "forecaster_count": 51,
+            "interval_lower_bounds": [
+              0.2261209913035936
+            ],
+            "centers": [
+              0.2653470085512791
+            ],
+            "interval_upper_bounds": [
+              0.30571480568703846
+            ]
+          },
+          {
+            "start_time": 1769733986.19445,
+            "end_time": 1769733988.304157,
+            "forecaster_count": 52,
+            "interval_lower_bounds": [
+              0.22555938135721423
+            ],
+            "centers": [
+              0.2649615793597167
+            ],
+            "interval_upper_bounds": [
+              0.3053771461104597
+            ]
+          },
+          {
+            "start_time": 1769733988.304157,
+            "end_time": 1769733996.211612,
+            "forecaster_count": 53,
+            "interval_lower_bounds": [
+              0.22467533792528382
+            ],
+            "centers": [
+              0.2647946319919768
+            ],
+            "interval_upper_bounds": [
+              0.3056433819005162
+            ]
+          },
+          {
+            "start_time": 1769733996.211612,
+            "end_time": 1769733996.212376,
+            "forecaster_count": 54,
+            "interval_lower_bounds": [
+              0.2238544459461732
+            ],
+            "centers": [
+              0.26449171757752954
+            ],
+            "interval_upper_bounds": [
+              0.3059755150037145
+            ]
+          },
+          {
+            "start_time": 1769733996.212376,
+            "end_time": 1769733997.143881,
+            "forecaster_count": 55,
+            "interval_lower_bounds": [
+              0.22414480920121768
+            ],
+            "centers": [
+              0.2644652008689628
+            ],
+            "interval_upper_bounds": [
+              0.3056270107734249
+            ]
+          },
+          {
+            "start_time": 1769733997.143881,
+            "end_time": 1769733998.682776,
+            "forecaster_count": 56,
+            "interval_lower_bounds": [
+              0.22442290545526059
+            ],
+            "centers": [
+              0.26397242674837096
+            ],
+            "interval_upper_bounds": [
+              0.30468948413062036
+            ]
+          },
+          {
+            "start_time": 1769733998.682776,
+            "end_time": 1769734003.089879,
+            "forecaster_count": 57,
+            "interval_lower_bounds": [
+              0.22296035470667644
+            ],
+            "centers": [
+              0.2636649133482407
+            ],
+            "interval_upper_bounds": [
+              0.3047821375707974
+            ]
+          },
+          {
+            "start_time": 1769734003.089879,
+            "end_time": 1769734003.53867,
+            "forecaster_count": 58,
+            "interval_lower_bounds": [
+              0.22263076747952978
+            ],
+            "centers": [
+              0.26342671877111334
+            ],
+            "interval_upper_bounds": [
+              0.3043473682170224
+            ]
+          },
+          {
+            "start_time": 1769734003.53867,
+            "end_time": 1769734003.902068,
+            "forecaster_count": 59,
+            "interval_lower_bounds": [
+              0.22199255134382448
+            ],
+            "centers": [
+              0.2630904467188326
+            ],
+            "interval_upper_bounds": [
+              0.3040558263017859
+            ]
+          },
+          {
+            "start_time": 1769734003.902068,
+            "end_time": 1769734017.535974,
+            "forecaster_count": 60,
+            "interval_lower_bounds": [
+              0.22236710047655553
+            ],
+            "centers": [
+              0.2637169177672348
+            ],
+            "interval_upper_bounds": [
+              0.30692812834783006
+            ]
+          },
+          {
+            "start_time": 1769734017.535974,
+            "end_time": 1769734032.697942,
+            "forecaster_count": 61,
+            "interval_lower_bounds": [
+              0.22176554095215953
+            ],
+            "centers": [
+              0.2633825722205476
+            ],
+            "interval_upper_bounds": [
+              0.30661680240824685
+            ]
+          },
+          {
+            "start_time": 1769734032.697942,
+            "end_time": 1769734036.980005,
+            "forecaster_count": 62,
+            "interval_lower_bounds": [
+              0.22244630039355545
+            ],
+            "centers": [
+              0.263774470861579
+            ],
+            "interval_upper_bounds": [
+              0.30626493518886966
+            ]
+          },
+          {
+            "start_time": 1769734036.980005,
+            "end_time": 1769734040.329071,
+            "forecaster_count": 63,
+            "interval_lower_bounds": [
+              0.22269771124470344
+            ],
+            "centers": [
+              0.26376290090757815
+            ],
+            "interval_upper_bounds": [
+              0.3059698593059922
+            ]
+          },
+          {
+            "start_time": 1769734040.329071,
+            "end_time": 1769734041.685514,
+            "forecaster_count": 64,
+            "interval_lower_bounds": [
+              0.2220596963508443
+            ],
+            "centers": [
+              0.26365587786434214
+            ],
+            "interval_upper_bounds": [
+              0.3064355478400659
+            ]
+          },
+          {
+            "start_time": 1769734041.685514,
+            "end_time": 1769734043.493063,
+            "forecaster_count": 65,
+            "interval_lower_bounds": [
+              0.2220533707857374
+            ],
+            "centers": [
+              0.2636465918272605
+            ],
+            "interval_upper_bounds": [
+              0.30612187026581095
+            ]
+          },
+          {
+            "start_time": 1769734043.493063,
+            "end_time": 1769734046.245806,
+            "forecaster_count": 66,
+            "interval_lower_bounds": [
+              0.22145249817252682
+            ],
+            "centers": [
+              0.26351140148391194
+            ],
+            "interval_upper_bounds": [
+              0.3063281883539342
+            ]
+          },
+          {
+            "start_time": 1769734046.245806,
+            "end_time": 1769734059.312575,
+            "forecaster_count": 67,
+            "interval_lower_bounds": [
+              0.222103338257286
+            ],
+            "centers": [
+              0.26369003993144324
+            ],
+            "interval_upper_bounds": [
+              0.305514283298811
+            ]
+          },
+          {
+            "start_time": 1769734059.312575,
+            "end_time": 1769734070.597075,
+            "forecaster_count": 68,
+            "interval_lower_bounds": [
+              0.2228894837696634
+            ],
+            "centers": [
+              0.26456378023470234
+            ],
+            "interval_upper_bounds": [
+              0.30948589673108434
+            ]
+          },
+          {
+            "start_time": 1769734070.597075,
+            "end_time": 1769734075.512174,
+            "forecaster_count": 69,
+            "interval_lower_bounds": [
+              0.223160051327139
+            ],
+            "centers": [
+              0.26469145984683745
+            ],
+            "interval_upper_bounds": [
+              0.30829742231731866
+            ]
+          },
+          {
+            "start_time": 1769734075.512174,
+            "end_time": 1769734104.536874,
+            "forecaster_count": 70,
+            "interval_lower_bounds": [
+              0.22256691306164156
+            ],
+            "centers": [
+              0.2645848835176816
+            ],
+            "interval_upper_bounds": [
+              0.3084492723489789
+            ]
+          },
+          {
+            "start_time": 1769734104.536874,
+            "end_time": 1769734128.667553,
+            "forecaster_count": 71,
+            "interval_lower_bounds": [
+              0.2230123797636015
+            ],
+            "centers": [
+              0.2643388057780238
+            ],
+            "interval_upper_bounds": [
+              0.30765380133870984
+            ]
+          },
+          {
+            "start_time": 1769734128.667553,
+            "end_time": 1769734150.818073,
+            "forecaster_count": 72,
+            "interval_lower_bounds": [
+              0.22323822337757393
+            ],
+            "centers": [
+              0.26423897941135016
+            ],
+            "interval_upper_bounds": [
+              0.30781651185271713
+            ]
+          },
+          {
+            "start_time": 1769734150.818073,
+            "end_time": 1769734163.45024,
+            "forecaster_count": 73,
+            "interval_lower_bounds": [
+              0.2234498543482505
+            ],
+            "centers": [
+              0.2642219345226123
+            ],
+            "interval_upper_bounds": [
+              0.307972142074562
+            ]
+          },
+          {
+            "start_time": 1769734163.45024,
+            "end_time": 1769734169.773789,
+            "forecaster_count": 74,
+            "interval_lower_bounds": [
+              0.22366863855370703
+            ],
+            "centers": [
+              0.26420539360823325
+            ],
+            "interval_upper_bounds": [
+              0.30759149034056305
+            ]
+          },
+          {
+            "start_time": 1769734169.773789,
+            "end_time": 1769734230.161667,
+            "forecaster_count": 75,
+            "interval_lower_bounds": [
+              0.22397755214100712
+            ],
+            "centers": [
+              0.2640336741044417
+            ],
+            "interval_upper_bounds": [
+              0.30629686050009597
+            ]
+          },
+          {
+            "start_time": 1769734230.161667,
+            "end_time": 1769734268.411629,
+            "forecaster_count": 76,
+            "interval_lower_bounds": [
+              0.22419759621997923
+            ],
+            "centers": [
+              0.2637914358290799
+            ],
+            "interval_upper_bounds": [
+              0.30511728899474155
+            ]
+          },
+          {
+            "start_time": 1769734268.411629,
+            "end_time": 1769734451.128288,
+            "forecaster_count": 77,
+            "interval_lower_bounds": [
+              0.2243827497587219
+            ],
+            "centers": [
+              0.26359083055789706
+            ],
+            "interval_upper_bounds": [
+              0.3043159728456439
+            ]
+          },
+          {
+            "start_time": 1769734451.128288,
+            "end_time": 1769734720.685005,
+            "forecaster_count": 78,
+            "interval_lower_bounds": [
+              0.22489061383559972
+            ],
+            "centers": [
+              0.2637676033290676
+            ],
+            "interval_upper_bounds": [
+              0.30405275392921827
+            ]
+          },
+          {
+            "start_time": 1769734720.685005,
+            "end_time": 1769734854.63029,
+            "forecaster_count": 79,
+            "interval_lower_bounds": [
+              0.22472182091375648
+            ],
+            "centers": [
+              0.2637541618482575
+            ],
+            "interval_upper_bounds": [
+              0.30424975739475807
+            ]
+          },
+          {
+            "start_time": 1769734854.63029,
+            "end_time": 1769734870.880551,
+            "forecaster_count": 80,
+            "interval_lower_bounds": [
+              0.2252346608831985
+            ],
+            "centers": [
+              0.2641615630132169
+            ],
+            "interval_upper_bounds": [
+              0.30355506574506674
+            ]
+          },
+          {
+            "start_time": 1769734870.880551,
+            "end_time": 1769734939.804894,
+            "forecaster_count": 81,
+            "interval_lower_bounds": [
+              0.22560747537096681
+            ],
+            "centers": [
+              0.2648808197115006
+            ],
+            "interval_upper_bounds": [
+              0.30693165492886987
+            ]
+          },
+          {
+            "start_time": 1769734939.804894,
+            "end_time": 1769735112.473845,
+            "forecaster_count": 82,
+            "interval_lower_bounds": [
+              0.22585963422420136
+            ],
+            "centers": [
+              0.26465221311809023
+            ],
+            "interval_upper_bounds": [
+              0.30581418752201217
+            ]
+          },
+          {
+            "start_time": 1769735112.473845,
+            "end_time": 1769735490.008308,
+            "forecaster_count": 83,
+            "interval_lower_bounds": [
+              0.22574625843443344
+            ],
+            "centers": [
+              0.264623050114007
+            ],
+            "interval_upper_bounds": [
+              0.3059491601915257
+            ]
+          },
+          {
+            "start_time": 1769735490.008308,
+            "end_time": 1769735496.880548,
+            "forecaster_count": 84,
+            "interval_lower_bounds": [
+              0.2259973425535996
+            ],
+            "centers": [
+              0.2644961108611159
+            ],
+            "interval_upper_bounds": [
+              0.3049872801535041
+            ]
+          },
+          {
+            "start_time": 1769735496.880548,
+            "end_time": 1769735569.75839,
+            "forecaster_count": 85,
+            "interval_lower_bounds": [
+              0.22592888881063317
+            ],
+            "centers": [
+              0.26463741110056477
+            ],
+            "interval_upper_bounds": [
+              0.3053076546695511
+            ]
+          },
+          {
+            "start_time": 1769735569.75839,
+            "end_time": 1769735940.416644,
+            "forecaster_count": 86,
+            "interval_lower_bounds": [
+              0.2260778730481272
+            ],
+            "centers": [
+              0.2651008180436577
+            ],
+            "interval_upper_bounds": [
+              0.3077179051414916
+            ]
+          },
+          {
+            "start_time": 1769735940.416644,
+            "end_time": 1769736270.846612,
+            "forecaster_count": 87,
+            "interval_lower_bounds": [
+              0.22653901997695883
+            ],
+            "centers": [
+              0.26519707015459554
+            ],
+            "interval_upper_bounds": [
+              0.30669278354680907
+            ]
+          },
+          {
+            "start_time": 1769736270.846612,
+            "end_time": 1769736397.945727,
+            "forecaster_count": 88,
+            "interval_lower_bounds": [
+              0.22683322639796796
+            ],
+            "centers": [
+              0.26501131203074946
+            ],
+            "interval_upper_bounds": [
+              0.3057299777119963
+            ]
+          },
+          {
+            "start_time": 1769736397.945727,
+            "end_time": null,
+            "forecaster_count": 89,
+            "interval_lower_bounds": [
+              0.2271682568753471
+            ],
+            "centers": [
+              0.26491498289721355
+            ],
+            "interval_upper_bounds": [
+              0.30496773403059785
+            ]
+          }
+        ],
+        "latest": {
+          "start_time": 1769736397.945727,
+          "end_time": null,
+          "forecaster_count": 89,
+          "interval_lower_bounds": [
+            0.2271682568753471
+          ],
+          "centers": [
+            0.26491498289721355
+          ],
+          "interval_upper_bounds": [
+            0.30496773403059785
+          ],
+          "forecast_values": [
+            0.04262239099550563,
+            0.044114252867415736,
+            0.04560621884157302,
+            0.047098292144943814,
+            0.0485904758977528,
+            0.050084779725842694,
+            0.05157984251460674,
+            0.05307502549662919,
+            0.054570331933707854,
+            0.05606576529550561,
+            0.05756132872471911,
+            0.05907530549101123,
+            0.060589419206741546,
+            0.06210367325056182,
+            0.06361807111460671,
+            0.06513261635617976,
+            0.06676297610449437,
+            0.0684041844213483,
+            0.07004955438539327,
+            0.07169846709662922,
+            0.07335035274719101,
+            0.07544382573483147,
+            0.07753892904157303,
+            0.07963556798089888,
+            0.08173372784943825,
+            0.0838350968966292,
+            0.08633464082921348,
+            0.08884437157865166,
+            0.09136510625056181,
+            0.09389624160898877,
+            0.09644886502808982,
+            0.10089795268426968,
+            0.10535759338764053,
+            0.10983004712247202,
+            0.11440234093258433,
+            0.11906376120337084,
+            0.12679791547415736,
+            0.13463306077415738,
+            0.14260932684382033,
+            0.15073599682134825,
+            0.159439537341573,
+            0.17390861293033716,
+            0.18873022164382033,
+            0.20393954596966293,
+            0.22002652901011233,
+            0.2380064819033708,
+            0.2656635326730337,
+            0.29315238284269673,
+            0.3217525467831461,
+            0.35190296865730336,
+            0.3865955540494381,
+            0.42567929202359556,
+            0.4626406463955056,
+            0.5006462248337078,
+            0.5393554811820225,
+            0.5919184175685395,
+            0.6286764241629215,
+            0.6589142765292139,
+            0.686581171194382,
+            0.7127549381044944,
+            0.7379264932022472,
+            0.7500784187314606,
+            0.7619010945707867,
+            0.7735521319876402,
+            0.7848523825617975,
+            0.7960950656011236,
+            0.8019422746438203,
+            0.8077973638471908,
+            0.8136435737415731,
+            0.8193471208730334,
+            0.825049590069663,
+            0.8287455922629217,
+            0.8321720828898878,
+            0.8355588299022477,
+            0.8389150251730335,
+            0.8422917924348311,
+            0.8446622564157302,
+            0.8470296718966291,
+            0.8493877073146068,
+            0.8517328798426965,
+            0.8540790382292133,
+            0.8556296511168544,
+            0.857060105435955,
+            0.858487771829213,
+            0.8599127098685391,
+            0.8613349427179772,
+            0.8627827376831465,
+            0.8641988480382023,
+            0.8656481984943811,
+            0.8670987105033707,
+            0.8685948359539326,
+            0.8698119662191006,
+            0.8710272836168541,
+            0.8722407812617977,
+            0.8734524524887639,
+            0.8746622909438206,
+            0.8758732684651682,
+            0.8770944749179768,
+            0.8783152396831461,
+            0.8795357739561801,
+            0.8807560239258426,
+            0.881988740957303,
+            0.8832210747011235,
+            0.8844548038719101,
+            0.8855791523325847,
+            0.8866481259494376,
+            0.8877121993224721,
+            0.8887756449719102,
+            0.8898384191651683,
+            0.8908763900359546,
+            0.8918413375764045,
+            0.8928203979179777,
+            0.8937986273438208,
+            0.894775989652809,
+            0.895574392647191,
+            0.8963125076707867,
+            0.8970496549505618,
+            0.8977858035089886,
+            0.8985209235808991,
+            0.8992549865808989,
+            0.8999879651157305,
+            0.9007198328741579,
+            0.9014505646831455,
+            0.9021804207550563,
+            0.9029101193314605,
+            0.9036396551662925,
+            0.9043324634157308,
+            0.9050250988606738,
+            0.9057175567674154,
+            0.9064098326337079,
+            0.907101922030337,
+            0.9079113554786519,
+            0.908720594430337,
+            0.9095296351235954,
+            0.9103384740696627,
+            0.9111471079101122,
+            0.9119555335494381,
+            0.9127637480977527,
+            0.9135717488516855,
+            0.9143795333426965,
+            0.9151870993280894,
+            0.9160079940842696,
+            0.9168286663853933,
+            0.9176491146460676,
+            0.9184693374033708,
+            0.9192893334359552,
+            0.9201091017471908,
+            0.920928641486517,
+            0.9217479520404491,
+            0.9225670329831465,
+            0.9252663515674151,
+            0.9260849725449437,
+            0.9269033637786522,
+            0.9277215255707865,
+            0.9285394584078659,
+            0.9293571629876404,
+            0.9301746401292139,
+            0.930991890838202,
+            0.9318089162595504,
+            0.9326257177157307,
+            0.9334422966640453,
+            0.9341445663966287,
+            0.9348466169853928,
+            0.9355484502707867,
+            0.9362500682797755,
+            0.9369514731011235,
+            0.9376338648707865,
+            0.9383160480674154,
+            0.9389980251359553,
+            0.9396797986325843,
+            0.9403613712168539,
+            0.9409293920662921,
+            0.9414972175202249,
+            0.9420648504977527,
+            0.9426322939359546,
+            0.943199550860674,
+            0.9437666243752808,
+            0.9443335175842699,
+            0.9449002336898878,
+            0.9454667759370783,
+            0.9460331475955054,
+            0.9465719321584272,
+            0.9471105527595511,
+            0.9476490127561793,
+            0.9481873154999997,
+            0.9487254643752815,
+            0.9492634627932582,
+            0.9498013141179776,
+            0.9503390217955059,
+            0.9508765891808989,
+            0.9514140196898878,
+            0.951962284608989,
+            0.9525104193932586,
+            0.9530584273505615,
+            0.9536063118483148,
+            0.9541540761876404,
+            0.9547017235865167,
+            0.9552492573415737,
+            0.9557966806471913,
+            0.9563439966494389,
+            0.9570035680584262
+          ],
+          "means": null,
+          "histogram": null
+        },
+        "score_data": {},
+        "movement": {
+          "divergence": 0.0,
+          "direction": "unchanged",
+          "movement": 0.0,
+          "period": "3600.0",
+          "option_index": null
+        }
+      }
+    },
+    "average_coverage": null,
+    "my_forecasts": {
+      "history": [
+        {
+          "question_id": 41499,
+          "author_id": 290288,
+          "start_time": 1769734939.804894,
+          "end_time": null,
+          "forecast_values": [
+            0.01,
+            0.0100994933,
+            0.0101989866,
+            0.01029848,
+            0.0103979733,
+            0.0104974666,
+            0.0105969599,
+            0.0106964532,
+            0.0107959465,
+            0.0108954399,
+            0.0109949332,
+            0.0110944265,
+            0.0111939198,
+            0.0112934131,
+            0.0113929065,
+            0.0114923998,
+            0.0115918931,
+            0.0116913864,
+            0.0117908797,
+            0.011890373,
+            0.0119898664,
+            0.0120893597,
+            0.012188853,
+            0.0122883463,
+            0.0123878396,
+            0.012487333,
+            0.0125868263,
+            0.0126863196,
+            0.0127858129,
+            0.0128853062,
+            0.0129847995,
+            0.0130842929,
+            0.0131837862,
+            0.0134021601,
+            0.0149330099,
+            0.0171837759,
+            0.0212929635,
+            0.0263217859,
+            0.0338371504,
+            0.0429251809,
+            0.0507803008,
+            0.057587714,
+            0.0645537078,
+            0.0751395618,
+            0.0953589613,
+            0.1234060294,
+            0.1954259829,
+            0.2321275789,
+            0.2692902643,
+            0.3120462738,
+            0.3815522242,
+            0.5530227214,
+            0.5973437081,
+            0.6340135034,
+            0.6795978231,
+            0.7516272003,
+            0.8968526071,
+            0.9244020888,
+            0.9403592832,
+            0.9525124228,
+            0.9615979255,
+            0.9655050968,
+            0.9692275044,
+            0.9727936021,
+            0.9761778614,
+            0.9793561691,
+            0.9806121654,
+            0.9817113917,
+            0.9826343132,
+            0.9833624589,
+            0.9838783686,
+            0.983977862,
+            0.9840773553,
+            0.9841768486,
+            0.9842763419,
+            0.9843758352,
+            0.9844753286,
+            0.9845748219,
+            0.9846743152,
+            0.9847738085,
+            0.9848733018,
+            0.9849727951,
+            0.9850722885,
+            0.9851717818,
+            0.9852712751,
+            0.9853707684,
+            0.9854702617,
+            0.9855697551,
+            0.9856692484,
+            0.9857687417,
+            0.985868235,
+            0.9859677283,
+            0.9860672216,
+            0.986166715,
+            0.9862662083,
+            0.9863657016,
+            0.9864651949,
+            0.9865646882,
+            0.9866641816,
+            0.9867636749,
+            0.9868631682,
+            0.9869626615,
+            0.9870621548,
+            0.9871616481,
+            0.9872611415,
+            0.9873606348,
+            0.9874601281,
+            0.9875596214,
+            0.9876591147,
+            0.9877586081,
+            0.9878581014,
+            0.9879575947,
+            0.988057088,
+            0.9881565813,
+            0.9882560746,
+            0.988355568,
+            0.9884550613,
+            0.9885545546,
+            0.9886540479,
+            0.9887535412,
+            0.9888530346,
+            0.9889525279,
+            0.9890520212,
+            0.9891515145,
+            0.9892510078,
+            0.9893505011,
+            0.9894499945,
+            0.9895494878,
+            0.9896489811,
+            0.9897484744,
+            0.9898479677,
+            0.9899474611,
+            0.9900469544,
+            0.9901464477,
+            0.990245941,
+            0.9903454343,
+            0.9904449276,
+            0.990544421,
+            0.9906439143,
+            0.9907434076,
+            0.9908429009,
+            0.9909423942,
+            0.9910418875,
+            0.9911413809,
+            0.9912408742,
+            0.9913403675,
+            0.9914398608,
+            0.9915393541,
+            0.9916388475,
+            0.9917383408,
+            0.9918378341,
+            0.9919373274,
+            0.9920368207,
+            0.992136314,
+            0.9922358074,
+            0.9923353007,
+            0.992434794,
+            0.9925342873,
+            0.9926337806,
+            0.992733274,
+            0.9928327673,
+            0.9929322606,
+            0.9930317539,
+            0.9931312472,
+            0.9932307405,
+            0.9933302339,
+            0.9934297272,
+            0.9935292205,
+            0.9936287138,
+            0.9937282071,
+            0.9938277005,
+            0.9939271938,
+            0.9940266871,
+            0.9941261804,
+            0.9942256737,
+            0.994325167,
+            0.9944246604,
+            0.9945241537,
+            0.994623647,
+            0.9947231403,
+            0.9948226336,
+            0.994922127,
+            0.9950216203,
+            0.9951211136,
+            0.9952206069,
+            0.9953201002,
+            0.9954195935,
+            0.9955190869,
+            0.9956185802,
+            0.9957180735,
+            0.9958175668,
+            0.9959170601,
+            0.9960165535,
+            0.9961160468,
+            0.9962155401,
+            0.9963150334,
+            0.9964145267,
+            0.99651402,
+            0.9966135134,
+            0.9967130067,
+            0.9968125
+          ],
+          "interval_lower_bounds": [
+            0.2374046191640392
+          ],
+          "centers": [
+            0.2534538820885859
+          ],
+          "interval_upper_bounds": [
+            0.2748870460662542
+          ],
+          "distribution_input": null
+        }
+      ],
+      "latest": {
+        "question_id": 41499,
+        "author_id": 290288,
+        "start_time": 1769734939.804894,
+        "end_time": null,
+        "forecast_values": [
+          0.01,
+          0.0100994933,
+          0.0101989866,
+          0.01029848,
+          0.0103979733,
+          0.0104974666,
+          0.0105969599,
+          0.0106964532,
+          0.0107959465,
+          0.0108954399,
+          0.0109949332,
+          0.0110944265,
+          0.0111939198,
+          0.0112934131,
+          0.0113929065,
+          0.0114923998,
+          0.0115918931,
+          0.0116913864,
+          0.0117908797,
+          0.011890373,
+          0.0119898664,
+          0.0120893597,
+          0.012188853,
+          0.0122883463,
+          0.0123878396,
+          0.012487333,
+          0.0125868263,
+          0.0126863196,
+          0.0127858129,
+          0.0128853062,
+          0.0129847995,
+          0.0130842929,
+          0.0131837862,
+          0.0134021601,
+          0.0149330099,
+          0.0171837759,
+          0.0212929635,
+          0.0263217859,
+          0.0338371504,
+          0.0429251809,
+          0.0507803008,
+          0.057587714,
+          0.0645537078,
+          0.0751395618,
+          0.0953589613,
+          0.1234060294,
+          0.1954259829,
+          0.2321275789,
+          0.2692902643,
+          0.3120462738,
+          0.3815522242,
+          0.5530227214,
+          0.5973437081,
+          0.6340135034,
+          0.6795978231,
+          0.7516272003,
+          0.8968526071,
+          0.9244020888,
+          0.9403592832,
+          0.9525124228,
+          0.9615979255,
+          0.9655050968,
+          0.9692275044,
+          0.9727936021,
+          0.9761778614,
+          0.9793561691,
+          0.9806121654,
+          0.9817113917,
+          0.9826343132,
+          0.9833624589,
+          0.9838783686,
+          0.983977862,
+          0.9840773553,
+          0.9841768486,
+          0.9842763419,
+          0.9843758352,
+          0.9844753286,
+          0.9845748219,
+          0.9846743152,
+          0.9847738085,
+          0.9848733018,
+          0.9849727951,
+          0.9850722885,
+          0.9851717818,
+          0.9852712751,
+          0.9853707684,
+          0.9854702617,
+          0.9855697551,
+          0.9856692484,
+          0.9857687417,
+          0.985868235,
+          0.9859677283,
+          0.9860672216,
+          0.986166715,
+          0.9862662083,
+          0.9863657016,
+          0.9864651949,
+          0.9865646882,
+          0.9866641816,
+          0.9867636749,
+          0.9868631682,
+          0.9869626615,
+          0.9870621548,
+          0.9871616481,
+          0.9872611415,
+          0.9873606348,
+          0.9874601281,
+          0.9875596214,
+          0.9876591147,
+          0.9877586081,
+          0.9878581014,
+          0.9879575947,
+          0.988057088,
+          0.9881565813,
+          0.9882560746,
+          0.988355568,
+          0.9884550613,
+          0.9885545546,
+          0.9886540479,
+          0.9887535412,
+          0.9888530346,
+          0.9889525279,
+          0.9890520212,
+          0.9891515145,
+          0.9892510078,
+          0.9893505011,
+          0.9894499945,
+          0.9895494878,
+          0.9896489811,
+          0.9897484744,
+          0.9898479677,
+          0.9899474611,
+          0.9900469544,
+          0.9901464477,
+          0.990245941,
+          0.9903454343,
+          0.9904449276,
+          0.990544421,
+          0.9906439143,
+          0.9907434076,
+          0.9908429009,
+          0.9909423942,
+          0.9910418875,
+          0.9911413809,
+          0.9912408742,
+          0.9913403675,
+          0.9914398608,
+          0.9915393541,
+          0.9916388475,
+          0.9917383408,
+          0.9918378341,
+          0.9919373274,
+          0.9920368207,
+          0.992136314,
+          0.9922358074,
+          0.9923353007,
+          0.992434794,
+          0.9925342873,
+          0.9926337806,
+          0.992733274,
+          0.9928327673,
+          0.9929322606,
+          0.9930317539,
+          0.9931312472,
+          0.9932307405,
+          0.9933302339,
+          0.9934297272,
+          0.9935292205,
+          0.9936287138,
+          0.9937282071,
+          0.9938277005,
+          0.9939271938,
+          0.9940266871,
+          0.9941261804,
+          0.9942256737,
+          0.994325167,
+          0.9944246604,
+          0.9945241537,
+          0.994623647,
+          0.9947231403,
+          0.9948226336,
+          0.994922127,
+          0.9950216203,
+          0.9951211136,
+          0.9952206069,
+          0.9953201002,
+          0.9954195935,
+          0.9955190869,
+          0.9956185802,
+          0.9957180735,
+          0.9958175668,
+          0.9959170601,
+          0.9960165535,
+          0.9961160468,
+          0.9962155401,
+          0.9963150334,
+          0.9964145267,
+          0.99651402,
+          0.9966135134,
+          0.9967130067,
+          0.9968125
+        ],
+        "interval_lower_bounds": [
+          0.2374046191640392
+        ],
+        "centers": [
+          0.2534538820885859
+        ],
+        "interval_upper_bounds": [
+          0.2748870460662542
+        ],
+        "distribution_input": null
+      },
+      "score_data": {}
+    }
+  },
+  "user_permission": "forecaster",
+  "vote": {
+    "score": 0,
+    "user_vote": null
+  },
+  "forecasts_count": 89,
+  "subscriptions": [],
+  "unread_comment_count": 0,
+  "last_viewed_at": "2026-01-30T02:56:57.841476Z",
+  "private_note": null,
+  "key_factors": [],
+  "is_current_content_translated": false
+}

@@ -1,7 +1,12 @@
 {
   "question_id": 41594,
+<<<<<<<< HEAD:data/41594_20260129_161716/metadata.json
+  "timestamp": "20260129_161716",
+  "created_at": "2026-01-29T16:18:37.880197+00:00",
+========
   "timestamp": "20260129_160745",
   "created_at": "2026-01-29T16:08:57.919936+00:00",
+>>>>>>>> origin/claude/rebase-against-main-z1ynq:data/41594_20260129_160745/metadata.json
   "config_hash": "1614097f24eb",
   "config_snapshot": {
     "mode": "dry_run",
@@ -161,6 +166,16 @@
     "total_calls": 26,
     "successful_calls": 26,
     "failed_calls": 0,
+<<<<<<<< HEAD:data/41594_20260129_161716/metadata.json
+    "total_input_tokens": 97124,
+    "total_output_tokens": 12627,
+    "total_cost": 0.1282072
+  },
+  "timing": {
+    "start": "2026-01-29T16:17:15.411964+00:00",
+    "end": "2026-01-29T16:18:37.879839+00:00",
+    "duration_seconds": 82.467875
+========
     "total_input_tokens": 99833,
     "total_output_tokens": 12402,
     "total_cost": 0.12947440000000002
@@ -169,6 +184,7 @@
     "start": "2026-01-29T16:07:44.837697+00:00",
     "end": "2026-01-29T16:08:57.919810+00:00",
     "duration_seconds": 73.082113
+>>>>>>>> origin/claude/rebase-against-main-z1ynq:data/41594_20260129_160745/metadata.json
   },
   "errors": [],
   "analysis": {

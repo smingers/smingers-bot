@@ -2,52 +2,56 @@
 """
 GitHub Actions entry point for automated forecasting.
 
-Modes:
-  - aib: Forecast new questions only (skip already forecasted)
+Question selection modes:
+  - new-only: Forecast new questions only (skip already forecasted)
   - reforecast: Forecast new + re-forecast old questions
 
 Usage:
-  python run_bot.py --tournament 32916 --mode aib
-  python run_bot.py --tournament 32917 --mode reforecast --reforecast-days 7
+  python run_bot.py --tournament 32916 --question-selection new-only
+  python run_bot.py --tournament 32917 --question-selection reforecast --reforecast-threshold-days 7
 """
 
-import asyncio
 import argparse
+import asyncio
 import logging
 import sys
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 
+from src.bot import ExtractionError, SubmissionError
 from src.bot.forecaster import Forecaster
-from src.bot import ExtractionError
 from src.config import ResolvedConfig
-from src.runner import run_forecasts, format_prediction
+from src.runner import format_prediction, run_forecasts
 from src.sources import get_source, list_sources
 from src.utils.metaculus_api import MetaculusClient
 
 logger = logging.getLogger(__name__)
 
 
-async def run_forecast(
+async def forecast_metaculus_questions(
     tournament_id: str,
-    mode: str = "aib",
-    reforecast_days: int = 7,
+    question_selection: str = "new-only",
+    reforecast_threshold_days: int = 7,
     limit: int = 50,
     source_name: str = "metaculus",
 ):
     """
-    Run automated forecasting for a tournament.
+    Run automated forecasting for Metaculus questions from a tournament.
 
     Args:
         tournament_id: Tournament ID or slug (e.g., "32916", "minibench")
-        mode: "aib" (new only) or "reforecast" (new + old)
-        reforecast_days: For reforecast mode, re-forecast if older than this
+        question_selection: "new-only" (new questions only) or "reforecast" (new + old)
+        reforecast_threshold_days: For reforecast mode, re-forecast questions older than this
         limit: Maximum questions to forecast per run
         source_name: Question source (default: "metaculus")
+
+    Returns:
+        Number of new/unforecasted questions that were available (0 if none or early exit).
+        Used by CI to decide whether to run lower-priority tournaments.
     """
-    resolved = ResolvedConfig.from_yaml("config.yaml", mode="production")
+    resolved = ResolvedConfig.from_yaml("config.yaml", mode="live")
 
     # Get the source (defaults to Metaculus)
     source = get_source(source_name) if source_name else None
@@ -66,26 +70,26 @@ async def run_forecast(
 
         if not questions:
             logger.info("No open questions found. Exiting.")
-            return
+            return 0
 
         # Get my past forecasts
         my_forecasts = await client.get_my_forecasts(tournament_id_parsed)
         forecasted_ids = set(my_forecasts.keys()) if my_forecasts else set()
         logger.info(f"Already forecasted: {len(forecasted_ids)} questions")
 
-        # Filter questions based on mode
+        # Filter questions based on question_selection
         questions_to_forecast = []
 
-        if mode == "aib":
-            # AIB mode: only forecast new questions (skip already forecasted)
+        if question_selection == "new-only":
+            # New-only mode: only forecast new questions (skip already forecasted)
             for q in questions:
                 if q.id not in forecasted_ids:
                     questions_to_forecast.append(q)
-            logger.info(f"AIB mode: {len(questions_to_forecast)} new questions to forecast")
+            logger.info(f"new-only: {len(questions_to_forecast)} new questions to forecast")
 
-        elif mode == "reforecast":
+        elif question_selection == "reforecast":
             # Reforecast mode: new questions + old forecasts needing update
-            cutoff = datetime.now(timezone.utc) - timedelta(days=reforecast_days)
+            cutoff = datetime.now(UTC) - timedelta(days=reforecast_threshold_days)
 
             for q in questions:
                 if q.id not in forecasted_ids:
@@ -101,12 +105,14 @@ async def run_forecast(
                         # No timestamp available, include to be safe
                         questions_to_forecast.append(q)
 
-            logger.info(f"Reforecast mode: {len(questions_to_forecast)} questions "
-                       f"(new + older than {reforecast_days} days)")
+            logger.info(
+                f"reforecast: {len(questions_to_forecast)} questions "
+                f"(new + older than {reforecast_threshold_days} days)"
+            )
 
         if not questions_to_forecast:
             logger.info("No questions need forecasting. Exiting.")
-            return
+            return 0
 
     # Forecast questions using shared runner
     questions_to_process = questions_to_forecast[:limit]
@@ -119,7 +125,12 @@ async def run_forecast(
         logger.info(f"  ✓ Prediction: {format_prediction(result)}")
 
     def on_error(question, error):
-        error_type = "EXTRACTION FAILED" if isinstance(error, ExtractionError) else "FAILED"
+        if isinstance(error, ExtractionError):
+            error_type = "EXTRACTION FAILED"
+        elif isinstance(error, SubmissionError):
+            error_type = "SUBMISSION FAILED"
+        else:
+            error_type = "FAILED"
         logger.error(f"  ✗ {error_type}: {error}")
 
     async with Forecaster(resolved, source=source) as forecaster:
@@ -132,50 +143,56 @@ async def run_forecast(
         )
 
     # Print summary and log failures
-    result.print_summary(tournament_id=tournament_id, mode=mode)
-    result.write_failure_log(mode=mode, source="run_bot.py", tournament_id=tournament_id)
+    result.print_summary(tournament_id=tournament_id, question_selection=question_selection)
+    result.write_failure_log(
+        question_selection=question_selection, source="run_bot.py", tournament_id=tournament_id
+    )
 
     # Exit codes:
     # 0 = all success
-    # 1 = all failed OR any extraction errors (critical)
-    # (partial success with non-extraction errors is considered OK)
+    # 1 = all failed OR any critical errors (extraction or submission)
+    # (partial success with non-critical errors is considered OK)
     if result.success_count == 0 and result.error_count > 0:
         logger.error("All forecasts failed!")
         sys.exit(1)
-    elif result.has_extraction_errors:
-        logger.error(f"{result.extraction_error_count} extraction error(s) - these questions need attention!")
+    elif result.has_critical_errors:
+        if result.has_extraction_errors:
+            logger.error(
+                f"{result.extraction_error_count} extraction error(s) - these questions need attention!"
+            )
+        if result.has_submission_errors:
+            logger.error(
+                f"{result.submission_error_count} submission error(s) - forecasts generated but NOT submitted!"
+            )
         sys.exit(1)
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="GitHub Actions forecasting entry point"
-    )
+    parser = argparse.ArgumentParser(description="GitHub Actions forecasting entry point")
     parser.add_argument(
-        "--tournament", "-t",
+        "--tournament",
+        "-t",
         required=True,
-        help="Tournament ID or slug (e.g., 32916, minibench, main-site)"
+        help="Tournament ID or slug (e.g., 32916, spring-aib-2026)",
     )
     parser.add_argument(
-        "--mode", "-m",
-        choices=["aib", "reforecast"],
-        default="aib",
-        help="aib=new only, reforecast=new+refresh old"
+        "--question-selection",
+        "-s",
+        choices=["new-only", "reforecast"],
+        default="new-only",
+        help="new-only=forecast new questions only, reforecast=new+refresh old",
     )
     parser.add_argument(
-        "--reforecast-days",
+        "--reforecast-threshold-days",
         type=int,
         default=7,
-        help="Re-forecast if older than this many days (reforecast mode only)"
+        help="Re-forecast questions older than this many days (reforecast mode only)",
     )
     parser.add_argument(
-        "--limit",
-        type=int,
-        default=50,
-        help="Maximum questions to forecast per run"
+        "--limit", type=int, default=50, help="Maximum questions to forecast per run"
     )
     parser.add_argument(
-        "--source", "-s",
+        "--source",
         type=str,
         default="metaculus",
         choices=list_sources(),
@@ -185,19 +202,20 @@ def main():
     args = parser.parse_args()
 
     logging.basicConfig(
-        level=logging.INFO,
-        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+        level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
     )
     # Suppress noisy trafilatura warnings (failed scrapes are handled gracefully)
     logging.getLogger("trafilatura").setLevel(logging.CRITICAL)
 
-    asyncio.run(run_forecast(
-        tournament_id=args.tournament,
-        mode=args.mode,
-        reforecast_days=args.reforecast_days,
-        limit=args.limit,
-        source_name=args.source,
-    ))
+    asyncio.run(
+        forecast_metaculus_questions(
+            tournament_id=args.tournament,
+            question_selection=args.question_selection,
+            reforecast_threshold_days=args.reforecast_threshold_days,
+            limit=args.limit,
+            source_name=args.source,
+        )
+    )
 
 
 if __name__ == "__main__":

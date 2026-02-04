@@ -1,0 +1,196 @@
+{
+  "centralized_research": {
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Clarence Thomas retirement speculation 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Supreme Court vacancy rumors February 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Retrieve full time-series of Metaculus question 41072 community prediction since Jan 1 2026 and summarize trends; list any SCOTUS retirement or court-expansion news reported between 2026-01-20 and 2026-02-03 that could affect forecasts.",
+          "tool": "Agent",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google",
+        "Google News"
+      ],
+      "llm_cost": 0.2974,
+      "llm_cost_summarization": 0.182,
+      "llm_cost_agentic": 0.1154,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "Supreme Court vacancy speculation 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Clarence Thomas retirement rumors 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Latest news about possible US Supreme Court retirements or legislation altering the Court's size in 2026",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "Will the community prediction be higher than 26.00% on 2026-02-11 for the Metaculus question \"Will the composition of the US Supreme Court change in 2026?\"?",
+          "tool": "AskNews",
+          "deep_research_query": "Latest news about possible US Supreme Court retirements or legislation altering the Court's size in 2026"
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Google News",
+        "AskNews"
+      ],
+      "llm_cost": 0.1869,
+      "llm_cost_summarization": 0.182,
+      "llm_cost_agentic": 0.0049,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5018,
+        "token_output": 1736,
+        "cost": 0.041094,
+        "duration_seconds": 56.89109683036804,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15387,
+        "token_output": 2655,
+        "cost": 0.085986,
+        "duration_seconds": 69.50814151763916,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5018,
+        "token_output": 1783,
+        "cost": 0.041799,
+        "duration_seconds": 56.89115524291992,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14778,
+        "token_output": 2372,
+        "cost": 0.079914,
+        "duration_seconds": 69.50811767578125,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4537,
+        "token_output": 3155,
+        "cost": 0.05210975,
+        "duration_seconds": 56.89119601249695,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13838,
+        "token_output": 3661,
+        "cost": 0.0754705,
+        "duration_seconds": 69.50809288024902,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4537,
+        "token_output": 1721,
+        "cost": 0.022842,
+        "duration_seconds": 56.89122986793518,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14089,
+        "token_output": 1514,
+        "cost": 0.04029,
+        "duration_seconds": 69.50806760787964,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4537,
+        "token_output": 2010,
+        "cost": 0.025154000000000003,
+        "duration_seconds": 56.89125680923462,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13218,
+        "token_output": 1687,
+        "cost": 0.039932,
+        "duration_seconds": 69.50804352760315,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0242,
+    "step2_search": 0.2974,
+    "step3_outside_view": 0.183,
+    "step5_inside_view": 0.3216
+  },
+  "total_pipeline_cost": 0.8262
+}

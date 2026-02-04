@@ -1,0 +1,7 @@
+Analysis:
+The SBP has kept its policy rate at 22 % from June 2023 through most of 2024–25 under IMF-linked tightening but began its first easing cycle in late-2025, trimming the rate to 21 % in November 2025 and to 20 % on 22 January 2026.  Market commentary now focuses on the pace of further cuts between February and May 2026, hinging on inflation’s fall from 9 – 10 % YoY toward the SBP’s 5 – 7 % target band, continued IMF programme compliance, fiscal consolidation in the FY26 budget (due June 2026), and the rupee’s stability after the January sukuk issuance.  To form an inside view we need: (1) the official January 2026 Monetary Policy Statement confirming the current 20 % rate and SBP’s forward-looking language; (2) fresh analyst notes from banks/brokers (e.g., AKD, Topline, JS Global, Standard Chartered) and multilateral briefings (IMF, World Bank) giving their baseline for cumulative cuts by mid-2026; and (3) news on CPI prints, FX reserves, and any IMF 10th review conditions that could accelerate or slow easing.  The search queries below aim to surface these primary sources and expert forecasts published in the last few days.
+
+Search queries:
+1. SBP policy rate January 2026 (Google)
+2. Pakistan interest rate expectations 2026 (Google News)
+3. Gather January 2026 MPS details and economists’ forecasts for SBP cuts into May 2026 (Assistant)

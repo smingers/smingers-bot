@@ -1,0 +1,5 @@
+{
+  "percentiles": null,
+  "cdf_length": 0,
+  "error": "No valid percentiles extracted. Last 300 chars: ': 71 + 0.25(13) \u2248 74\\n- 80th percentile: 71 + 0.84(13) \u2248 82\\n- 90th percentile: 71 + 1.28(13) \u2248 88\\n\\nRounding and ensuring monotonicity while respecting tail uncertainty:\\n\\n**Percentile 10: 54**\\n**Percentile 20: 60**\\n**Percentile 40: 68**\\n**Percentile 60: 74**\\n**Percentile 80: 82**\\n**Percentile 90: 88**'"
+}

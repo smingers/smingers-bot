@@ -6,20 +6,21 @@ Implements binary-specific extraction and aggregation logic.
 """
 
 import logging
-from datetime import datetime
-from typing import Any, Dict, List, Optional, Tuple
+from collections.abc import Callable
 from dataclasses import dataclass, field
+from datetime import datetime
+from typing import Any
 
-from ..utils.llm import LLMClient
 from ..storage.artifact_store import ArtifactStore
+from ..utils.llm import LLMClient
 from .base_forecaster import BaseForecaster
-from .extractors import extract_binary_probability_percent, AgentResult
 from .exceptions import InsufficientPredictionsError
+from .extractors import AgentResult, extract_binary_probability_percent
 from .prompts import (
-    BINARY_PROMPT_HISTORICAL,
+    BINARY_INSIDE_VIEW_PROMPT,
+    BINARY_OUTSIDE_VIEW_PROMPT,
     BINARY_PROMPT_CURRENT,
-    BINARY_PROMPT_1,
-    BINARY_PROMPT_2,
+    BINARY_PROMPT_HISTORICAL,
 )
 from .search import QuestionDetails
 
@@ -29,12 +30,13 @@ logger = logging.getLogger(__name__)
 @dataclass
 class BinaryForecastResult:
     """Complete result from binary forecasting pipeline."""
+
     final_probability: float
-    agent_results: List[AgentResult]
+    agent_results: list[AgentResult]
     historical_context: str
     current_context: str
-    probabilities: List[Optional[float]]
-    weights: List[float]
+    probabilities: list[float | None]
+    weights: list[float]
     timestamp: str = field(default_factory=lambda: datetime.now().isoformat())
 
 
@@ -48,13 +50,13 @@ class BinaryForecaster(BaseForecaster):
     - Weighted average aggregation
     """
 
-    def _get_prompt_templates(self) -> Tuple[str, str, str, str]:
+    def _get_prompt_templates(self) -> tuple[str, str, str, str]:
         """Return binary-specific prompt templates."""
         return (
             BINARY_PROMPT_HISTORICAL,
             BINARY_PROMPT_CURRENT,
-            BINARY_PROMPT_1,
-            BINARY_PROMPT_2,
+            BINARY_OUTSIDE_VIEW_PROMPT,
+            BINARY_INSIDE_VIEW_PROMPT,
         )
 
     def _get_question_details(self, **question_params) -> QuestionDetails:
@@ -66,39 +68,27 @@ class BinaryForecaster(BaseForecaster):
             description=question_params.get("question_text", ""),
         )
 
-    def _format_step1_prompt(
+    def _format_outside_view_prompt(
         self,
         prompt_template: str,
         historical_context: str,
         **question_params,
     ) -> str:
-        """Format Step 1 prompt with historical context."""
-        return prompt_template.format(
-            title=question_params.get("question_title", ""),
-            today=question_params.get("today", ""),
-            resolution_criteria=question_params.get("resolution_criteria", ""),
-            fine_print=question_params.get("fine_print", ""),
-            open_time=question_params.get("open_time", ""),
-            scheduled_resolve_time=question_params.get("scheduled_resolve_time", ""),
-            context=historical_context,
-        )
+        """Format outside view prompt with historical context."""
+        params = self._get_common_prompt_params(**question_params)
+        params["context"] = historical_context
+        return prompt_template.format(**params)
 
-    def _format_step2_prompt(
+    def _format_inside_view_prompt(
         self,
         prompt_template: str,
         context: str,
         **question_params,
     ) -> str:
-        """Format Step 2 prompt with cross-pollinated context."""
-        return prompt_template.format(
-            title=question_params.get("question_title", ""),
-            today=question_params.get("today", ""),
-            resolution_criteria=question_params.get("resolution_criteria", ""),
-            fine_print=question_params.get("fine_print", ""),
-            open_time=question_params.get("open_time", ""),
-            scheduled_resolve_time=question_params.get("scheduled_resolve_time", ""),
-            context=context,
-        )
+        """Format inside view prompt with cross-pollinated context."""
+        params = self._get_common_prompt_params(**question_params)
+        params["context"] = context
+        return prompt_template.format(**params)
 
     def _extract_prediction(self, output: str, **question_params) -> float:
         """Extract probability percentage from agent output."""
@@ -106,14 +96,14 @@ class BinaryForecaster(BaseForecaster):
 
     def _aggregate_results(
         self,
-        agent_results: List[AgentResult],
-        agents: List[Dict],
-        write: callable,
+        agent_results: list[AgentResult],
+        agents: list[dict],
+        log: Callable[[str], Any],
     ) -> float:
         """Compute weighted average of probabilities."""
         probabilities = [r.probability for r in agent_results]
         weights = [a["weight"] for a in agents]
-        valid_probs = [(p, w) for p, w in zip(probabilities, weights) if p is not None]
+        valid_probs = [(p, w) for p, w in zip(probabilities, weights, strict=True) if p is not None]
 
         if not valid_probs:
             error_msg = (
@@ -121,10 +111,8 @@ class BinaryForecaster(BaseForecaster):
                 f"Probabilities: {probabilities}, Errors: {[r.error for r in agent_results]}"
             )
             logger.error(error_msg)
-            write(f"FATAL ERROR: {error_msg}")
-            raise InsufficientPredictionsError(
-                error_msg, valid_count=0, total_count=len(agents)
-            )
+            log(f"FATAL ERROR: {error_msg}")
+            raise InsufficientPredictionsError(error_msg, valid_count=0, total_count=len(agents))
 
         weighted_sum = sum(p * w for p, w in valid_probs)
         weight_sum = sum(w for _, w in valid_probs)
@@ -132,9 +120,9 @@ class BinaryForecaster(BaseForecaster):
         # Normalize to [0.001, 0.999]
         final_prob = max(0.001, min(0.999, final_prob_pct / 100))
 
-        write(f"\nProbabilities: {probabilities}")
-        write(f"Weights: {weights}")
-        write(f"Final probability: {final_prob:.3f} ({final_prob*100:.1f}%)")
+        log(f"\nProbabilities: {probabilities}")
+        log(f"Weights: {weights}")
+        log(f"Final probability: {final_prob:.3f} ({final_prob * 100:.1f}%)")
 
         return final_prob
 
@@ -143,18 +131,18 @@ class BinaryForecaster(BaseForecaster):
         agent_id: str,
         model: str,
         weight: float,
-        step1_output: str,
-        step2_output: str,
+        outside_view_output: str,
+        inside_view_output: str,
         prediction: Any,
-        error: Optional[str],
+        error: str | None,
     ) -> AgentResult:
         """Build AgentResult with probability field."""
         return AgentResult(
             agent_id=agent_id,
             model=model,
             weight=weight,
-            step1_output=step1_output,
-            step2_output=step2_output,
+            outside_view_output=outside_view_output,
+            inside_view_output=inside_view_output,
             probability=prediction,
             error=error,
         )
@@ -162,10 +150,10 @@ class BinaryForecaster(BaseForecaster):
     def _build_result(
         self,
         final_prediction: float,
-        agent_results: List[AgentResult],
+        agent_results: list[AgentResult],
         historical_context: str,
         current_context: str,
-        agents: List[Dict],
+        agents: list[dict],
         **question_params,
     ) -> BinaryForecastResult:
         """Build BinaryForecastResult."""
@@ -178,7 +166,7 @@ class BinaryForecaster(BaseForecaster):
             weights=[a["weight"] for a in agents],
         )
 
-    def _get_extracted_data(self, result: AgentResult) -> Dict:
+    def _get_extracted_data(self, result: AgentResult) -> dict:
         """Get data for extracted prediction artifact."""
         return {
             "probability": result.probability,
@@ -187,10 +175,10 @@ class BinaryForecaster(BaseForecaster):
 
     def _get_aggregation_data(
         self,
-        agent_results: List[AgentResult],
-        agents: List[Dict],
+        agent_results: list[AgentResult],
+        agents: list[dict],
         final_prediction: float,
-    ) -> Dict:
+    ) -> dict:
         """Get data for aggregation artifact."""
         return {
             "individual_probabilities": [r.probability for r in agent_results],
@@ -209,7 +197,7 @@ class BinaryForecaster(BaseForecaster):
         fine_print: str = "",
         open_time: str = "",
         scheduled_resolve_time: str = "",
-        write: callable = print,
+        log: Callable[[str], Any] = print,
     ) -> BinaryForecastResult:
         """
         Generate a forecast for a binary question.
@@ -222,13 +210,13 @@ class BinaryForecaster(BaseForecaster):
             fine_print: Additional resolution details
             open_time: When the question opened for forecasting
             scheduled_resolve_time: When the question resolves
-            write: Logging function (default: print)
+            log: Logging function (default: print)
 
         Returns:
             BinaryForecastResult with final probability and all agent outputs
         """
         return await super().forecast(
-            write=write,
+            log=log,
             question_title=question_title,
             question_text=question_text,
             background_info=background_info,
@@ -243,10 +231,10 @@ class BinaryForecaster(BaseForecaster):
 async def get_binary_forecast(
     question_details: dict,
     config: dict,
-    llm_client: Optional[LLMClient] = None,
-    artifact_store: Optional[ArtifactStore] = None,
-    write: callable = print,
-) -> Tuple[float, str]:
+    llm_client: LLMClient | None = None,
+    artifact_store: ArtifactStore | None = None,
+    log: Callable[[str], Any] = print,
+) -> tuple[float, str]:
     """
     Convenience function to get a binary forecast.
 
@@ -255,7 +243,7 @@ async def get_binary_forecast(
         config: Configuration dict
         llm_client: Optional LLMClient
         artifact_store: Optional ArtifactStore
-        write: Logging function
+        log: Logging function
 
     Returns:
         Tuple of (final_probability, formatted_outputs)
@@ -267,14 +255,14 @@ async def get_binary_forecast(
         question_text=question_details.get("description", ""),
         resolution_criteria=question_details.get("resolution_criteria", ""),
         fine_print=question_details.get("fine_print", ""),
-        write=write,
+        log=log,
     )
 
     # Format outputs for display
     formatted_outputs = "\n\n".join(
-        f"=== Forecaster {i+1} ===\n"
+        f"=== Forecaster {i + 1} ===\n"
         f"Model: {r.model}\n"
-        f"Output:\n{r.step2_output[:1000]}...\n"
+        f"Output:\n{r.inside_view_output[:1000]}...\n"
         f"Predicted Probability: {r.probability if r.probability is not None else 'N/A'}%"
         for i, r in enumerate(result.agent_results)
     )

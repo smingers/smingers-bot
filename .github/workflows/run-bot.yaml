@@ -8,14 +8,14 @@ on:
         required: false
         type: string
       mode:
-        description: 'Run mode'
+        description: 'Run mode for single question test'
         required: false
         type: choice
-        default: 'production'
+        default: 'live'
         options:
-          - production
-          - dry_run_heavy
-          - dry_run
+          - live
+          - preview
+          - test
   schedule:
     - cron: "*/30 * * * *"  # Every 30 minutes
 
@@ -62,7 +62,17 @@ jobs:
           key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
 
       - name: Install dependencies
+        id: install_deps
+        continue-on-error: true
         run: poetry install --no-interaction --no-root
+
+      - name: Retry install on failure (clear cache)
+        if: steps.install_deps.outcome == 'failure'
+        run: |
+          echo "First install failed, clearing cache and retrying..."
+          rm -rf .venv
+          poetry cache clear --all -n
+          poetry install --no-interaction --no-root
 
       # ============================================================
       # TEST MODE: Single question forecast
@@ -72,7 +82,7 @@ jobs:
         run: |
           poetry run python main.py \
             --question ${{ github.event.inputs.test_question_id }} \
-            --mode ${{ github.event.inputs.mode || 'production' }}
+            --mode ${{ github.event.inputs.mode || 'live' }}
         env:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           METACULUS_TOKEN: ${{ secrets.METACULUS_TOKEN }}
@@ -84,13 +94,14 @@ jobs:
       # AIB TOURNAMENTS (ENABLED)
       # ============================================================
 
-      - name: Forecast Seasonal AIB
+      - name: Forecast spring-aib-2026
         if: ${{ github.event_name == 'schedule' || github.event.inputs.test_question_id == '' }}
-        id: forecast_aib
+        id: forecast_spring_aib
+        continue-on-error: true
         run: |
           poetry run python run_bot.py \
             --tournament 32916 \
-            --mode aib \
+            --question-selection new-only \
             --limit 50
         env:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
@@ -99,31 +110,21 @@ jobs:
           ASKNEWS_CLIENT_SECRET: ${{ secrets.ASKNEWS_CLIENT_SECRET }}
           SERPER_API_KEY: ${{ secrets.SERPER_API_KEY }}
 
-      # ============================================================
-      # FAILURE NOTIFICATION
-      # If any forecasts failed due to extraction errors, this step
-      # creates a visible annotation in the GitHub Actions UI
-      # ============================================================
-      - name: Check for failures
-        if: failure()
+      - name: Forecast MiniBench
+        if: ${{ github.event_name == 'schedule' || github.event.inputs.test_question_id == '' }}
+        id: forecast_minibench
+        continue-on-error: true
         run: |
-          echo "::error::One or more forecasts failed! Check the logs above for details."
-          echo "::error::Look for 'EXTRACTION ERRORS' or 'FAILED QUESTIONS' in the output."
-          echo ""
-          echo "To retry failed questions manually:"
-          echo "  python main.py --question <QUESTION_ID> --mode production"
-
-      # - name: Forecast MiniBench
-      #   run: |
-      #     poetry run python run_bot.py \
-      #       --tournament minibench \
-      #       --mode aib \
-      #       --limit 50
-      #   env:
-      #     OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
-      #     METACULUS_TOKEN: ${{ secrets.METACULUS_TOKEN }}
-      #     ASKNEWS_CLIENT_ID: ${{ secrets.ASKNEWS_CLIENT_ID }}
-      #     ASKNEWS_CLIENT_SECRET: ${{ secrets.ASKNEWS_CLIENT_SECRET }}
+          poetry run python run_bot.py \
+            --tournament minibench \
+            --question-selection new-only \
+            --limit 50
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          METACULUS_TOKEN: ${{ secrets.METACULUS_TOKEN }}
+          ASKNEWS_CLIENT_ID: ${{ secrets.ASKNEWS_CLIENT_ID }}
+          ASKNEWS_CLIENT_SECRET: ${{ secrets.ASKNEWS_CLIENT_SECRET }}
+          SERPER_API_KEY: ${{ secrets.SERPER_API_KEY }}
 
       # ============================================================
       # OPTIONAL TOURNAMENTS (DISABLED - uncomment to enable)
@@ -134,7 +135,7 @@ jobs:
       #   run: |
       #     poetry run python run_bot.py \
       #       --tournament 32917 \
-      #       --mode reforecast \
+      #       --question-selection reforecast \
       #       --reforecast-days 7 \
       #       --limit 20
       #   env:
@@ -147,7 +148,7 @@ jobs:
       #   run: |
       #     poetry run python run_bot.py \
       #       --tournament main-site \
-      #       --mode reforecast \
+      #       --question-selection reforecast \
       #       --reforecast-days 7 \
       #       --limit 10
       #   env:
@@ -175,3 +176,24 @@ jobs:
             git pull --rebase
             git push
           fi
+
+      # ============================================================
+      # FAIL IF ANY FORECASTS HAD ERRORS
+      # This runs after data is committed, so we preserve artifacts
+      # but still get a red X on the workflow
+      # ============================================================
+      - name: Check for forecast failures
+        if: ${{ steps.forecast_spring_aib.outcome == 'failure' || steps.forecast_minibench.outcome == 'failure' }}
+        run: |
+          echo "::error::One or more forecast steps failed!"
+          echo ""
+          if [ "${{ steps.forecast_spring_aib.outcome }}" == "failure" ]; then
+            echo "::error::spring-aib-2026 had failures - check logs for SUBMISSION ERRORS or EXTRACTION ERRORS"
+          fi
+          if [ "${{ steps.forecast_minibench.outcome }}" == "failure" ]; then
+            echo "::error::MiniBench had failures - check logs for SUBMISSION ERRORS or EXTRACTION ERRORS"
+          fi
+          echo ""
+          echo "To retry failed questions manually:"
+          echo "  python main.py --question <QUESTION_ID> --mode live"
+          exit 1

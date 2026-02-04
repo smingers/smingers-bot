@@ -1,0 +1,13 @@
+Analysis:
+The SBP’s policy rate has been on an aggressive tightening cycle since late-2021, driven by a combination of a large current-account deficit, a severe depreciation of the rupee and—most importantly—persistently high inflation that peaked above 38 % y/y in mid-2023.  Starting from 7 % in September 2021, the rate was lifted in rapid steps to 22 % by late-June 2023.  Throughout 2024 the Monetary Policy Committee (MPC) kept the stance unchanged despite a gradual fall in headline CPI toward the mid-teens, citing sticky core inflation, fiscal slippage risks and the need to secure an extended IMF facility.  Minutes and forward guidance in 2025 (Dec-2024, Mar-2025, Jul-2025, Nov-2025 statements) continued to emphasise “higher for longer” until inflation was “unequivocally on a downward path” and real rates turned positive on a 12-month-ahead basis.  By January 2026, headline inflation has eased to about 10 % y/y and short-term expectations have fallen, creating market debate over the timing and magnitude of the first easing.  However, real rates are still only marginally positive, the rupee remains fragile (USD/PKR ≈ 312), and the IMF’s 9-month Stand-By Agreement (expiring March 2026) demands “ongoing monetary restraint”.  Historically, once the SBP starts an easing cycle it tends to reduce in measured 100–150 bp increments every 2-3 meetings (e.g., the 2020–21 and 2012-14 episodes).  The MPC meets roughly every 6–8 weeks; between now (30 Jan 2026) and 1 May 2026 there will likely be two meetings (mid-March and late-April).  Even if the first cut occurs in March, the April meeting would probably pause to assess FX and inflation data heading into the FY-27 budget in June.  Therefore, the most relevant historical context is:
+
+• The speed and size of initial cuts after previous peaks (typically cautious).
+• The requirement, under past IMF programmes, for the SBP to maintain positive real rates until inflation is firmly in single digits.
+• The reaction of the rupee whenever the SBP switched from tightening to easing (sharp depreciation episodes in 2019 and 2020 led to temporary pauses).
+
+Taking these precedents together, a reasonable outside view is that the rate on 1 May 2026 will still be close to the peak, perhaps down one 100 bp step at most, meaning 21 % or 20 %.  Larger cuts before that date would break with SBP’s historical pattern under IMF surveillance.
+
+Search queries:
+1. State Bank of Pakistan policy rate history (Google)
+2. SBP Monetary Policy Committee April 2025 decision (Google News)
+3. Provide timeline of SBP policy rate changes 2021-2026, include IMF programme conditions and real interest rate commentary (Agent)

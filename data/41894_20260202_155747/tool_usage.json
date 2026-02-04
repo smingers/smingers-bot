@@ -1,0 +1,196 @@
+{
+  "centralized_research": {
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Sinners Oscar nominations record 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Sinners frontrunner awards predictions 2026 Oscars",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Summarize guild and critics awards results for Sinners 2025 film and compare category strengths vs competitors ahead of 98th Oscars",
+          "tool": "Agent",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google",
+        "Google News"
+      ],
+      "llm_cost": 0.2633,
+      "llm_cost_summarization": 0.194,
+      "llm_cost_agentic": 0.0693,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Sinners Oscar odds 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Sinners leads 2026 Oscar race",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Recent expert predictions on how many Oscars Sinners will win at the 2026 ceremony including guild awards impact",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 19
+        },
+        {
+          "query": "How many Oscars will Sinners win at the 2026 Academy Awards?",
+          "tool": "AskNews",
+          "deep_research_query": "Recent expert predictions on how many Oscars Sinners will win at the 2026 ceremony including guild awards impact"
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Google News",
+        "AskNews"
+      ],
+      "llm_cost": 0.1769,
+      "llm_cost_summarization": 0.1714,
+      "llm_cost_agentic": 0.0055,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7608,
+        "token_output": 2991,
+        "cost": 0.067689,
+        "duration_seconds": 72.71517300605774,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15521,
+        "token_output": 3284,
+        "cost": 0.09582299999999999,
+        "duration_seconds": 87.80038452148438,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7608,
+        "token_output": 2042,
+        "cost": 0.053454,
+        "duration_seconds": 72.71522688865662,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13722,
+        "token_output": 2716,
+        "cost": 0.081906,
+        "duration_seconds": 87.8003499507904,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6733,
+        "token_output": 2315,
+        "cost": 0.044192749999999996,
+        "duration_seconds": 72.71526837348938,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12696,
+        "token_output": 2776,
+        "cost": 0.061082,
+        "duration_seconds": 87.80031371116638,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6733,
+        "token_output": 1989,
+        "cost": 0.029378,
+        "duration_seconds": 72.71529936790466,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12380,
+        "token_output": 3532,
+        "cost": 0.053016,
+        "duration_seconds": 87.8002781867981,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6733,
+        "token_output": 2558,
+        "cost": 0.03393,
+        "duration_seconds": 72.71533226966858,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11977,
+        "token_output": 2081,
+        "cost": 0.040602,
+        "duration_seconds": 87.80024290084839,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0134,
+    "step2_search": 0.2633,
+    "step3_outside_view": 0.2286,
+    "step5_inside_view": 0.3324
+  },
+  "total_pipeline_cost": 0.8378
+}

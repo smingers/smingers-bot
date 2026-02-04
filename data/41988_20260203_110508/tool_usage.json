@@ -1,0 +1,196 @@
+{
+  "centralized_research": {
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "CSX historical weekly price volatility",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "CSX stock forecast February 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide CSX upcoming events between 2026-02-03 and 2026-02-10, recent earnings, dividend schedule, and five-year history of one-week returns; assess probability close higher on 2026-02-10.",
+          "tool": "Agent",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Agent",
+        "Google News"
+      ],
+      "llm_cost": 0.3024,
+      "llm_cost_summarization": 0.1626,
+      "llm_cost_agentic": 0.1398,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "CSX 2026 earnings guidance",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "CSX Q4 2025 results",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Recent news on CSX fourth-quarter 2025 earnings and 2026 demand outlook",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 16
+        },
+        {
+          "query": "Will CSX's market close price on 2026-02-10 be higher than its market close price on 2026-02-03?",
+          "tool": "AskNews",
+          "deep_research_query": "Recent news on CSX fourth-quarter 2025 earnings and 2026 demand outlook"
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "AskNews",
+        "Google News"
+      ],
+      "llm_cost": 0.1707,
+      "llm_cost_summarization": 0.1626,
+      "llm_cost_agentic": 0.0081,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5604,
+        "token_output": 1759,
+        "cost": 0.043197,
+        "duration_seconds": 46.64867281913757,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15008,
+        "token_output": 3626,
+        "cost": 0.099414,
+        "duration_seconds": 103.74494099617004,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5604,
+        "token_output": 1862,
+        "cost": 0.044742000000000004,
+        "duration_seconds": 46.64874219894409,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14375,
+        "token_output": 3968,
+        "cost": 0.10264500000000001,
+        "duration_seconds": 103.74492120742798,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4934,
+        "token_output": 1615,
+        "cost": 0.031244499999999998,
+        "duration_seconds": 46.64878606796265,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13386,
+        "token_output": 2086,
+        "cost": 0.0526295,
+        "duration_seconds": 103.74489712715149,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4934,
+        "token_output": 1330,
+        "cost": 0.020508,
+        "duration_seconds": 46.64881920814514,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13149,
+        "token_output": 1414,
+        "cost": 0.03761,
+        "duration_seconds": 103.74487566947937,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4934,
+        "token_output": 1500,
+        "cost": 0.021868,
+        "duration_seconds": 46.64884567260742,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12602,
+        "token_output": 1503,
+        "cost": 0.037228,
+        "duration_seconds": 103.74485325813293,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0152,
+    "step2_search": 0.3024,
+    "step3_outside_view": 0.1616,
+    "step5_inside_view": 0.3295
+  },
+  "total_pipeline_cost": 0.8086
+}

@@ -8,9 +8,8 @@ while logging all prompts, responses, and costs.
 import asyncio
 import logging
 import time
-from typing import Optional, Any, Literal
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 import litellm
 from litellm import acompletion
@@ -64,7 +63,20 @@ MODEL_COSTS = {
 
 @dataclass
 class LLMResponse:
-    """Response from an LLM call with metadata."""
+    """
+    Response from an LLM API call with usage and cost metadata.
+
+    Attributes:
+        content: The text content returned by the model
+        model: Model identifier used (e.g., "openrouter/anthropic/claude-sonnet-4")
+        input_tokens: Number of tokens in the input prompt
+        output_tokens: Number of tokens in the model's response
+        cost: Estimated cost in USD (based on MODEL_COSTS)
+        latency_ms: Round-trip time for the API call in milliseconds
+        timestamp: ISO 8601 timestamp when the response was received
+        raw_response: Original API response dict (for debugging/auditing)
+    """
+
     content: str
     model: str
     input_tokens: int
@@ -72,17 +84,36 @@ class LLMResponse:
     cost: float
     latency_ms: int
     timestamp: str
-    raw_response: Optional[dict] = None
+    finish_reason: str | None = None  # "stop", "length", "content_filter", etc.
+    raw_response: dict | None = None
+
+    @property
+    def was_truncated(self) -> bool:
+        """Returns True if the response was truncated due to hitting max_tokens."""
+        return self.finish_reason == "length"
 
 
 @dataclass
 class LLMCall:
-    """Record of an LLM call for logging."""
+    """
+    Record of an LLM call for logging and cost tracking.
+
+    Used by CostTracker to maintain a history of all API calls made during
+    a forecasting session, including both successful responses and errors.
+
+    Attributes:
+        model: Model identifier used for this call
+        messages: List of message dicts sent to the API (role + content)
+        response: LLMResponse if successful, None if call failed
+        error: Error message string if call failed, None if successful
+        timestamp: ISO 8601 timestamp when the call was initiated
+    """
+
     model: str
     messages: list[dict]
-    response: Optional[LLMResponse]
-    error: Optional[str] = None
-    timestamp: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+    response: LLMResponse | None
+    error: str | None = None
+    timestamp: str = field(default_factory=lambda: datetime.now(UTC).isoformat())
 
 
 class CostTracker:
@@ -135,9 +166,9 @@ def reset_cost_tracker() -> None:
     _cost_tracker.reset()
 
 
-def estimate_cost(model: str, input_tokens: int, output_tokens: int) -> float:
-    """Estimate cost for a given model and token counts."""
-    costs = MODEL_COSTS.get(model, {"input": 5.0, "output": 15.0})  # Default to expensive estimate
+def calculate_cost(model: str, input_tokens: int, output_tokens: int) -> float:
+    """Calculate cost for a given model and token counts using the MODEL_COSTS table."""
+    costs = MODEL_COSTS.get(model, {"input": 5.0, "output": 15.0})  # Default to expensive fallback
     input_cost = (input_tokens / 1_000_000) * costs["input"]
     output_cost = (output_tokens / 1_000_000) * costs["output"]
     return input_cost + output_cost
@@ -156,17 +187,23 @@ class LLMClient:
         print(response.content)
     """
 
+    # Default timeout for LLM calls (4 minutes)
+    # Most calls complete in <2 min; this catches hung requests
+    DEFAULT_TIMEOUT_SECONDS = 240
+
     def __init__(
         self,
         log_calls: bool = True,
         track_costs: bool = True,
         max_retries: int = 3,
         retry_delay: float = 1.0,
+        timeout_seconds: float | None = None,
     ):
         self.log_calls = log_calls
         self.track_costs = track_costs
         self.max_retries = max_retries
         self.retry_delay = retry_delay
+        self.timeout_seconds = timeout_seconds or self.DEFAULT_TIMEOUT_SECONDS
         self.call_history: list[LLMCall] = []
 
     async def complete(
@@ -174,9 +211,9 @@ class LLMClient:
         model: str,
         messages: list[dict],
         temperature: float = 0.7,
-        max_tokens: Optional[int] = None,
-        system: Optional[str] = None,
-        **kwargs
+        max_tokens: int | None = None,
+        system: str | None = None,
+        **kwargs,
     ) -> LLMResponse:
         """
         Make a completion request to an LLM.
@@ -202,24 +239,28 @@ class LLMClient:
             try:
                 start_time = time.time()
 
-                # Make the API call via litellm
-                response = await acompletion(
-                    model=model,
-                    messages=messages,
-                    temperature=temperature,
-                    max_tokens=max_tokens,
-                    **kwargs
+                # Make the API call via litellm with timeout
+                response = await asyncio.wait_for(
+                    acompletion(
+                        model=model,
+                        messages=messages,
+                        temperature=temperature,
+                        max_tokens=max_tokens,
+                        **kwargs,
+                    ),
+                    timeout=self.timeout_seconds,
                 )
 
                 latency_ms = int((time.time() - start_time) * 1000)
 
                 # Extract response data
                 content = response.choices[0].message.content
+                finish_reason = response.choices[0].finish_reason
                 usage = response.usage
 
                 input_tokens = usage.prompt_tokens if usage else 0
                 output_tokens = usage.completion_tokens if usage else 0
-                cost = estimate_cost(model, input_tokens, output_tokens)
+                cost = calculate_cost(model, input_tokens, output_tokens)
 
                 llm_response = LLMResponse(
                     content=content,
@@ -228,7 +269,8 @@ class LLMClient:
                     output_tokens=output_tokens,
                     cost=cost,
                     latency_ms=latency_ms,
-                    timestamp=datetime.now(timezone.utc).isoformat(),
+                    timestamp=datetime.now(UTC).isoformat(),
+                    finish_reason=finish_reason,
                     raw_response=response.model_dump() if hasattr(response, "model_dump") else None,
                 )
 
@@ -241,6 +283,16 @@ class LLMClient:
                 self._log_call(call)
 
                 return llm_response
+
+            except TimeoutError:
+                last_error = f"Timeout after {self.timeout_seconds}s"
+                logger.warning(
+                    f"LLM call timed out (attempt {attempt + 1}/{self.max_retries}): "
+                    f"model={model}, timeout={self.timeout_seconds}s"
+                )
+
+                if attempt < self.max_retries - 1:
+                    await asyncio.sleep(self.retry_delay * (attempt + 1))
 
             except Exception as e:
                 last_error = str(e)
@@ -326,12 +378,7 @@ class LLMClient:
 
 
 # Convenience function for simple calls
-async def complete(
-    model: str,
-    prompt: str,
-    system: Optional[str] = None,
-    **kwargs
-) -> str:
+async def complete(model: str, prompt: str, system: str | None = None, **kwargs) -> str:
     """
     Simple completion helper.
 
@@ -346,9 +393,6 @@ async def complete(
     """
     client = LLMClient()
     response = await client.complete(
-        model=model,
-        messages=[{"role": "user", "content": prompt}],
-        system=system,
-        **kwargs
+        model=model, messages=[{"role": "user", "content": prompt}], system=system, **kwargs
     )
     return response.content
