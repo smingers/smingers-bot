@@ -128,6 +128,9 @@ You are currently analyzing a forecasting question to generate an outside view p
 The forecasting question is:
 {title}
 
+Question background:
+{background}
+
 This question's outcome will be determined by the specific criteria below. These criteria have not yet been satisfied:
 {resolution_criteria}
 
@@ -177,6 +180,9 @@ You are currently analyzing a forecasting question to generate a final, inside v
 
 The forecasting question is:
 {title}
+
+Question background:
+{background}
 
 This question's outcome will be determined by the specific criteria below. These criteria have not yet been satisfied:
 {resolution_criteria}
@@ -374,6 +380,9 @@ You are currently analyzing a forecasting question to generate an outside view p
 The forecasting question is:
 {title}
 
+Question background:
+{background}
+
 The options are: {options}
 
 This question's outcome will be determined by the specific criteria below. These criteria have not yet been satisfied:
@@ -426,6 +435,9 @@ You are currently analyzing a forecasting question to generate a final, inside v
 
 The forecasting question is:
 {title}
+
+Question background:
+{background}
 
 The options are:
 {options}
@@ -624,6 +636,9 @@ You are currently analyzing a numeric forecasting question to generate a final, 
 The forecasting question is:
 {title}
 
+Question background:
+{background}
+
 This question's outcome will be determined by the specific criteria below. These criteria have not yet been satisfied:
 {resolution_criteria}
 
@@ -695,6 +710,9 @@ You are a professional forecaster interviewing for a job.
 
 Your interview question is:
 {title}
+
+Question background:
+{background}
 
 {resolution_criteria}
 

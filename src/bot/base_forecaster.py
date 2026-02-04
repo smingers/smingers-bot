@@ -104,16 +104,21 @@ class BaseForecaster(ForecasterMixin, ABC):
         """
         Extract common prompt parameters used across all question types.
 
-        These 6 parameters are used in every prompt template. Subclasses can
+        These 7 parameters are used in every prompt template. Subclasses can
         extend by adding type-specific params (e.g., options, units, bounds_info).
 
         Returns:
-            Dict with title, today, resolution_criteria, fine_print,
+            Dict with title, today, background, resolution_criteria, fine_print,
             open_time, and scheduled_resolve_time.
         """
+        # Use background_info if available, fall back to question_text
+        background = question_params.get("background_info", "") or question_params.get(
+            "question_text", ""
+        )
         return {
             "title": question_params.get("question_title", ""),
             "today": question_params.get("today", ""),
+            "background": background,
             "resolution_criteria": question_params.get("resolution_criteria", ""),
             "fine_print": question_params.get("fine_print", ""),
             "open_time": question_params.get("open_time", ""),
