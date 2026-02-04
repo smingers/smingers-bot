@@ -543,7 +543,12 @@ class Forecaster:
             # Submit via source or legacy client
             if self.source:
                 # Use new source abstraction
-                generic_question = question.to_generic_question()
+                # If it's already a generic Question (e.g., from local source), use it directly
+                # If it's a MetaculusQuestion, convert it
+                if hasattr(question, 'to_generic_question'):
+                    generic_question = question.to_generic_question()
+                else:
+                    generic_question = question
                 prediction = Prediction(
                     question_id=generic_question.id,
                     question_type=question.question_type,
