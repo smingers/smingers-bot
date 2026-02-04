@@ -60,8 +60,25 @@ class MetaculusQuestion:
         open_upper_bound/open_lower_bound: Whether bounds can be exceeded
         zero_point: Reference point for log-scale questions
         cdf_size: Number of CDF points (201 for numeric, 102 for discrete)
+
+    Additional metadata (stored but NOT passed to forecasting prompts):
+        page_url: Direct URL to the question page
+        published_time: When the question was published/visible
+        actual_resolution_time: When the question actually resolved (if resolved)
+        cp_reveal_time: When community prediction becomes visible
+        close_time: When forecasting closes (alias for scheduled_close_time)
+        num_predictions: Total number of predictions made
+        already_forecasted: Whether we've already forecasted this question
+        tournament_slugs: List of tournament slugs this question belongs to
+        default_project_id: ID of the default project/tournament
+        includes_bots_in_aggregates: Whether bot predictions count in aggregates
+        question_weight: Weight of question in tournament scoring
+        resolution_string: Raw resolution value (yes/no/number/annulled)
+        categories: List of category dicts (id, name, slug, emoji)
+        group_label: For group questions, the sub-question label
     """
 
+    # === Core fields (used in forecasting pipeline) ===
     id: int
     question_id: int
     title: str
@@ -98,6 +115,33 @@ class MetaculusQuestion:
     # Community data
     community_prediction: float | None = None
     num_forecasters: int | None = None
+
+    # === Additional metadata (NOT used in forecasting prompts) ===
+    # These fields are stored for analytics/debugging but not passed to LLMs
+
+    # URL and timing
+    page_url: str | None = None  # e.g., "https://www.metaculus.com/questions/12345"
+    published_time: str | None = None  # When question became visible
+    actual_resolution_time: str | None = None  # When question resolved (if resolved)
+    cp_reveal_time: str | None = None  # When CP becomes visible
+    close_time: str | None = None  # When forecasting closes
+
+    # Prediction metadata
+    num_predictions: int | None = None  # Total predictions count
+    already_forecasted: bool | None = None  # Have we forecasted this?
+
+    # Tournament/project info
+    tournament_slugs: list[str] | None = None  # e.g., ["spring-aib-2026", "minibench"]
+    default_project_id: int | None = None  # Primary tournament ID
+    includes_bots_in_aggregates: bool | None = None  # Do bot predictions count?
+    question_weight: float | None = None  # Scoring weight in tournament
+
+    # Resolution info
+    resolution_string: str | None = None  # Raw resolution: "yes", "no", "0.5", "annulled"
+
+    # Categorization
+    categories: list[dict] | None = None  # [{id, name, slug, emoji, description}]
+    group_label: str | None = None  # For group questions: "September 2024", etc.
 
     # Raw data for reference
     raw: dict = None
@@ -206,7 +250,48 @@ class MetaculusQuestion:
             except (TypeError, ValueError):
                 nominal_lower_bound = None
 
+        # Extract tournament slugs from projects
+        tournament_slugs = []
+        projects = data.get("projects", {})
+        if projects:
+            # Try tournament list first
+            tournaments = projects.get("tournament", [])
+            if tournaments:
+                tournament_slugs = [str(t.get("slug", "")) for t in tournaments if t.get("slug")]
+            # Fall back to question_series
+            if not tournament_slugs:
+                question_series = projects.get("question_series", [])
+                if question_series:
+                    tournament_slugs = [
+                        str(q.get("slug", "")) for q in question_series if q.get("slug")
+                    ]
+
+        # Extract default project ID
+        default_project_id = None
+        if projects and "default_project" in projects:
+            default_project_id = projects["default_project"].get("id")
+
+        # Extract categories
+        categories = None
+        if projects and "category" in projects:
+            categories = projects.get("category", [])
+
+        # Check if already forecasted
+        already_forecasted = False
+        try:
+            my_forecasts = question_data.get("my_forecasts", {})
+            history = my_forecasts.get("history") if my_forecasts else None
+            already_forecasted = history is not None and len(history) > 0
+        except Exception:
+            pass
+
+        # Get group label for group questions
+        group_label = question_data.get("label")
+        if group_label is not None and str(group_label).strip() == "":
+            group_label = None
+
         return cls(
+            # Core fields
             id=post_id,
             question_id=question_id,
             title=data.get("title", ""),
@@ -245,6 +330,21 @@ class MetaculusQuestion:
             # Community data
             community_prediction=community_pred,
             num_forecasters=data.get("nr_forecasters"),
+            # Additional metadata (NOT used in forecasting prompts)
+            page_url=f"https://www.metaculus.com/questions/{post_id}",
+            published_time=data.get("published_at"),
+            actual_resolution_time=question_data.get("actual_resolve_time"),
+            cp_reveal_time=question_data.get("cp_reveal_time"),
+            close_time=question_data.get("scheduled_close_time"),
+            num_predictions=data.get("forecasts_count"),
+            already_forecasted=already_forecasted,
+            tournament_slugs=tournament_slugs if tournament_slugs else None,
+            default_project_id=default_project_id,
+            includes_bots_in_aggregates=question_data.get("include_bots_in_aggregates"),
+            question_weight=question_data.get("question_weight"),
+            resolution_string=question_data.get("resolution"),
+            categories=categories,
+            group_label=group_label,
             raw=data,
         )
 
