@@ -323,17 +323,35 @@ class Forecaster:
             log=lambda msg: logger.info(msg),
         )
 
-        # Derive percentiles from CDF if needed (for logging/display)
-        # The CDF is the primary output for Metaculus submission
+        # Derive percentiles from CDF for logging/display
+        # The CDF contains cumulative probabilities at evenly-spaced CDF locations.
+        # To get the value at a percentile, we find where CDF crosses that probability,
+        # then convert the CDF location to an actual value (handling log scaling if needed).
         final_percentiles = {}
         cdf_size = question.cdf_size
         if result.final_cdf and len(result.final_cdf) == cdf_size:
-            # CDF maps [0,1] to values - extract key percentiles
-            for pct in [1, 5, 10, 25, 50, 75, 90, 95, 99]:
-                idx = int(pct * (cdf_size - 1) / 100)  # Scale index based on CDF size
-                if idx < len(result.final_cdf):
-                    # Approximate value from CDF position
-                    final_percentiles[str(pct)] = result.final_cdf[idx]
+            cdf = result.final_cdf
+            for pct in [10, 25, 50, 75, 90]:
+                target_prob = pct / 100.0
+                # Find index where CDF first exceeds target probability
+                for i, cdf_val in enumerate(cdf):
+                    if cdf_val >= target_prob:
+                        # Interpolate to get precise CDF location (0-1)
+                        if i > 0 and cdf[i] != cdf[i - 1]:
+                            frac = (target_prob - cdf[i - 1]) / (cdf[i] - cdf[i - 1])
+                            cdf_location = ((i - 1) + frac) / (cdf_size - 1)
+                        else:
+                            cdf_location = i / (cdf_size - 1)
+                        # Convert CDF location to actual value (handles log scaling)
+                        if zero_point is None:
+                            value = lower_bound + (upper_bound - lower_bound) * cdf_location
+                        else:
+                            deriv_ratio = (upper_bound - zero_point) / (lower_bound - zero_point)
+                            value = lower_bound + (upper_bound - lower_bound) * (
+                                deriv_ratio**cdf_location - 1
+                            ) / (deriv_ratio - 1)
+                        final_percentiles[str(pct)] = round(value, 4)
+                        break
 
         return {
             "final_percentiles": final_percentiles,
