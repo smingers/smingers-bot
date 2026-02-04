@@ -5,6 +5,7 @@ AI Forecasting Bot - Main Entry Point
 Supports multiple forecast sources:
 - metaculus (default): Forecast on Metaculus prediction questions
 - ecclesia: Forecast on Ecclesia business questions
+- local: Forecast on custom questions stored as YAML files
 
 Usage:
     # Forecast a specific question by ID
@@ -15,6 +16,9 @@ Usage:
 
     # Specify source explicitly (default: metaculus)
     python main.py --source metaculus --question 12345
+
+    # Forecast a local question (YAML file in data/local_questions/)
+    python main.py --source local --question my_question --mode test
 
     # Run modes:
     #   test    - fast models (Haiku), no submission
@@ -252,6 +256,107 @@ async def forecast_ecclesia_question(
         raise
 
 
+async def forecast_local_question(
+    question_id: str,
+    config_path: str = "config.yaml",
+    mode: str = None,
+):
+    """Forecast a local question stored as YAML file."""
+    resolved = ResolvedConfig.from_yaml(config_path, mode=mode)
+    source_config = resolved.to_dict()
+
+    # Create shared components
+    llm_client = LLMClient()
+    artifact_store = ArtifactStore("data")
+
+    source = get_source("local", source_config, llm_client, artifact_store)
+
+    try:
+        async with source:
+            # Fetch and display question info
+            question = await source.fetch_question(question_id)
+
+            print(f"\n{'=' * 60}")
+            print(f"FORECASTING LOCAL QUESTION: {question_id}")
+            print(f"Title: {question.title}")
+            print(f"Type: {question.question_type}")
+            print(f"Mode: {resolved.mode}")
+            print(f"{'=' * 60}\n")
+
+            # Run the forecast
+            forecast = await source.run_forecast(question_id, log=print)
+
+            print(f"\n{'=' * 60}")
+            print("FORECAST COMPLETE")
+            print(f"{'=' * 60}")
+            print(f"Question: {question.title}")
+            print(f"Type: {forecast.question_type}")
+
+            # Format prediction based on type
+            if forecast.question_type == "binary":
+                print(f"Prediction: {forecast.prediction:.1%}")
+                # Show individual agent results
+                if forecast.agent_results:
+                    probs = [
+                        r.probability for r in forecast.agent_results if r.probability is not None
+                    ]
+                    if probs:
+                        # Agent probabilities are already in percentage form (0-100)
+                        print(f"Agent probabilities: {[f'{p:.1f}%' for p in probs]}")
+            elif forecast.question_type == "numeric":
+                # For numeric, prediction is a CDF list
+                if isinstance(forecast.prediction, list):
+                    # Extract approximate percentiles from 201-point CDF
+                    cdf = forecast.prediction
+                    n = len(cdf)
+                    p10_idx = int(0.10 * (n - 1))
+                    p50_idx = int(0.50 * (n - 1))
+                    p90_idx = int(0.90 * (n - 1))
+                    print(
+                        f"Prediction (CDF points): p10={cdf[p10_idx]:.3f}, p50={cdf[p50_idx]:.3f}, p90={cdf[p90_idx]:.3f}"
+                    )
+                else:
+                    print(f"Prediction: {forecast.prediction}")
+            elif forecast.question_type == "multiple_choice":
+                dist = forecast.prediction
+                if isinstance(dist, dict):
+                    best = max(dist.items(), key=lambda x: x[1])
+                    print(f"Prediction: {best[0]} ({best[1]:.1%})")
+                    print(f"Distribution: {dist}")
+                else:
+                    print(f"Prediction: {dist}")
+
+            print(f"Cost: ${llm_client.get_session_costs()['cost']:.4f}")
+
+            # For local source, always "save" but indicate mode
+            converted = source.convert_forecast(forecast)
+            result = await source.submit_forecast(question_id, converted)
+            mode_label = (
+                "TEST"
+                if resolved.mode == "test"
+                else ("PREVIEW" if resolved.mode == "preview" else "LIVE")
+            )
+            print(f"\nStatus: {mode_label} - {result['message']}")
+
+            return forecast
+
+    except FileNotFoundError as e:
+        print(f"\n{'!' * 60}")
+        print("QUESTION NOT FOUND")
+        print(f"{'!' * 60}")
+        print(f"{e}")
+        print(f"{'!' * 60}")
+        sys.exit(1)
+
+    except Exception as e:
+        print(f"\n{'!' * 60}")
+        print("FORECAST FAILED")
+        print(f"{'!' * 60}")
+        print(f"Error: {e}")
+        print(f"{'!' * 60}")
+        raise
+
+
 async def forecast_unforecasted_questions(
     tournament_id: int | str,
     config_path: str = "config.yaml",
@@ -324,7 +429,7 @@ def main():
         "-s",
         type=str,
         default="metaculus",
-        help="Forecast source: metaculus (default), ecclesia",
+        help="Forecast source: metaculus (default), ecclesia, local",
     )
     parser.add_argument(
         "--list-sources", action="store_true", help="List available forecast sources"
@@ -407,6 +512,16 @@ def main():
             asyncio.run(
                 forecast_ecclesia_question(
                     bet_id=bet_id,
+                    config_path=args.config,
+                    mode=args.mode,
+                )
+            )
+        elif args.source == "local":
+            # Local source uses string question IDs (filename or explicit id)
+            question_id = str(args.question) if args.question else args.url
+            asyncio.run(
+                forecast_local_question(
+                    question_id=question_id,
                     config_path=args.config,
                     mode=args.mode,
                 )
