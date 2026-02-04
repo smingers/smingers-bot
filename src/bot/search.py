@@ -234,6 +234,10 @@ class SearchPipeline:
                         )
                     )
                 elif source == "Google Trends":
+                    # Check if Google Trends is enabled in config
+                    if not self.config.get("research", {}).get("google_trends_enabled", True):
+                        logger.info(f"Search[{search_id}]: Google Trends disabled, skipping query")
+                        continue
                     query_sources.append((query, source))
                     tasks.append(self._google_trends_search(query))
                 elif source == "Agent":
@@ -1039,7 +1043,7 @@ Current value: {current:.0f}
 90-day mean: {mean:.1f}
 90-day std dev: {std:.1f}
 
-BASE RATE ANALYSIS (critical for forecasting):
+BASE RATE ANALYSIS (critical for forecasting, using ~12-day windows as approximation):
 - In {pct_lte_3:.0f}% of 12-day windows, the value changed by ≤3 points ("Doesn't change")
 - In {pct_gt_3:.0f}% of 12-day windows, the value changed by >3 points
 
