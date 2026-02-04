@@ -1,0 +1,38 @@
+id: "india_pakistan_strike"
+title: "Before 28 November 2026, will India or Pakistan execute a military strike within the other's territory (excluding Kashmir) resulting in 2+ fatalities?"
+question_type: binary
+
+description: |
+  On 22 April 2025, militants in Indian-administered Kashmir killed dozens of tourists
+  in the worst attack in the region in years, with India and Pakistan exchanging strikes
+  in May 2025. This question asks whether the national military forces, militia, and/or
+  law enforcement personnel (Forces) of India or Pakistan will execute a military strike
+  or strikes within the territory of the other, excluding Kashmiri territory, resulting
+  in two or more fatalities before 28 November 2026.
+
+resolution_criteria: |
+  Resolves YES if the national military forces, militia, and/or law enforcement personnel
+  (Forces) of India or Pakistan execute a military strike or strikes within the territory
+  of the other, excluding Kashmiri territory, resulting in two or more fatalities.
+
+  A strike or strikes must result in two or more fatalities among any persons (Forces or
+  civilians) of both sides (total, not each) to count, both the strike and the fatalities
+  must occur during the question's open period to count, and the two or more fatalities
+  must occur within 96 hours of each other to count.
+
+  The strike must be announced or acknowledged by the government of the attacking country
+  as being executed by that country to count, and both the strike and the
+  announcement/acknowledgment must occur during the question's open period to count.
+
+  A strike or strikes in the territorial waters of either country will count.
+
+fine_print: |
+  - Indian Forces executing a strike or strikes in Pakistan-administered Kashmiri territory
+    (i.e., Azad Kashmir and Gilgit-Baltistan) will NOT count.
+  - Pakistani Forces executing a strike or strikes in Indian-administered Kashmiri territory
+    (i.e., Jammu & Kashmir and Ladakh union territories) will NOT count.
+  - Actions not executed by the Forces will NOT count (e.g., intelligence services).
+  - Cyberattacks alone will NOT count.
+  - The strike must be officially announced or acknowledged by the attacking government to count.
+
+scheduled_resolve_time: "2026-11-28T00:00:00Z"

@@ -1,0 +1,38 @@
+# Example numeric (continuous) question
+# Copy this template and modify for your own questions
+
+id: "numeric_example"
+title: "What will be the average price of a gallon of regular gasoline in the US in July 2026?"
+question_type: numeric
+
+description: |
+  This question asks about the national average price for a gallon of regular
+  unleaded gasoline in the United States during July 2026.
+
+resolution_criteria: |
+  Resolves to the average of the weekly national average prices for regular
+  gasoline as reported by the U.S. Energy Information Administration (EIA)
+  for the weeks falling within July 2026.
+
+  Source: https://www.eia.gov/petroleum/gasdiesel/
+
+fine_print: |
+  - Uses regular (not mid-grade or premium) gasoline prices
+  - Uses the "U.S. Regular All Formulations Retail Gasoline Prices"
+  - If EIA methodology changes significantly, moderator discretion applies
+  - Prices are in nominal USD (not inflation-adjusted)
+
+# Required for numeric questions: bounds define the range
+lower_bound: 1.50
+upper_bound: 8.00
+
+# Optional: whether values outside bounds are possible
+open_lower_bound: false  # Price can't go below $1.50
+open_upper_bound: true   # Price could potentially exceed $8.00
+
+# Optional: units for display
+unit_of_measure: "USD per gallon"
+
+# Optional: timing
+# open_time: "2026-01-01T00:00:00Z"
+# scheduled_resolve_time: "2026-08-15T00:00:00Z"

@@ -1,0 +1,37 @@
+# Example multiple choice question
+# Copy this template and modify for your own questions
+
+id: "multiple_choice_example"
+title: "Which company will be the first to land humans on Mars?"
+question_type: multiple_choice
+
+description: |
+  Several organizations are actively working toward crewed Mars missions.
+  This question asks which entity will be the first to successfully land
+  humans on the surface of Mars.
+
+resolution_criteria: |
+  Resolves to the option corresponding to the organization that is first to
+  successfully land at least one human on the surface of Mars, where the
+  human(s) survive the landing and are able to communicate with Earth.
+
+  If multiple organizations collaborate on a single mission, resolves to
+  whichever organization is designated as the primary mission operator.
+
+fine_print: |
+  - "Landing" requires touching down on Mars surface (not just orbit)
+  - At least one human must survive the landing
+  - The landing must be intentional (not a crash landing)
+  - "Other" covers any organization not explicitly listed
+
+# Required for multiple choice: list of options
+options:
+  - "SpaceX"
+  - "NASA"
+  - "China National Space Administration"
+  - "Blue Origin"
+  - "Other"
+
+# Optional: timing
+# open_time: "2026-01-01T00:00:00Z"
+# scheduled_resolve_time: "2050-01-01T00:00:00Z"
