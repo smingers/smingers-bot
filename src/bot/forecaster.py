@@ -139,15 +139,16 @@ class Forecaster:
         # Get question using source or legacy metaculus client
         if question is None:
             if self.source:
-                # Use new source abstraction
+                # Use new source abstraction - keep as generic Question
                 if question_url:
-                    generic_question = await self.source.get_question_by_url(question_url)
+                    question = await self.source.get_question_by_url(question_url)
                 elif question_id:
-                    generic_question = await self.source.get_question(str(question_id))
+                    question = await self.source.get_question(str(question_id))
                 else:
                     raise ValueError("Must provide question_id, question_url, or question object")
-                # Convert to MetaculusQuestion for internal compatibility
-                question = MetaculusQuestion.from_generic_question(generic_question)
+                # For Metaculus source, convert to MetaculusQuestion for full compatibility
+                if self.source.name == "metaculus":
+                    question = MetaculusQuestion.from_generic_question(question)
             else:
                 # Use legacy MetaculusClient
                 if question_url:
@@ -156,9 +157,10 @@ class Forecaster:
                     question = await self.metaculus.get_question(question_id)
                 else:
                     raise ValueError("Must provide question_id, question_url, or question object")
-        elif isinstance(question, Question):
-            # Convert generic Question to MetaculusQuestion for internal compatibility
-            question = MetaculusQuestion.from_generic_question(question)
+        elif isinstance(question, Question) and not isinstance(question, MetaculusQuestion):
+            # Only convert generic Questions from Metaculus source
+            if self.source and self.source.name == "metaculus":
+                question = MetaculusQuestion.from_generic_question(question)
 
         logger.info(
             f"Forecasting: {question.title} (ID: {question.id}, Type: {question.question_type})"
