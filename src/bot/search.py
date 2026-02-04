@@ -49,6 +49,32 @@ class SearchResult:
     date: str | None = None
 
 
+@dataclass
+class AgenticSearchStepData:
+    """Data captured for a single step of agentic search."""
+
+    step_number: int
+    queries_executed: list[tuple[str, str]]  # (query, source) pairs
+    search_results_raw: str  # Raw search results fed to LLM
+    analysis_after_step: str  # Analysis produced after this step
+
+
+@dataclass
+class AgenticSearchResult:
+    """
+    Result from agentic search with full instrumentation.
+
+    The `analysis` field contains the final output that gets passed to forecasters.
+    The other fields provide visibility into the search process for debugging/analysis.
+    """
+
+    analysis: str  # Final analysis (this is what goes to forecasters)
+    steps_taken: int
+    queries_executed: list[str]  # All queries across all steps
+    step_data: list[AgenticSearchStepData]  # Per-step details
+    error: str | None = None
+
+
 # Article summarization prompt template
 ARTICLE_SUMMARY_PROMPT = """
 You are an assistant to a superforecaster and your task involves high-quality information retrieval to help the forecaster make the most informed forecasts. Forecasting involves parsing through an immense trove of internet articles and web content. To make this easier for the forecaster, you read entire articles and extract the key pieces of the articles relevant to the question. The key pieces generally include:
@@ -309,12 +335,36 @@ class SearchPipeline:
                             f"\n<Asknews_articles>\nQuery: {query}\n{result}</Asknews_articles>\n"
                         )
                     elif source == "Agent":
-                        # Agent returns 1 synthesized analysis (not multiple raw contents)
+                        # Agent returns AgenticSearchResult with instrumentation
+                        agentic_result: AgenticSearchResult = result
+                        analysis = agentic_result.analysis
+
                         # Count as 1 if substantial content exists, 0 if error or empty
-                        num_results = 1 if len(result) > 500 and "Error:" not in result[:100] else 0
-                        formatted_results += (
-                            f"\n<Agent_report>\nQuery: {query}\n{result}</Agent_report>\n"
-                        )
+                        num_results = 1 if len(analysis) > 500 and not agentic_result.error else 0
+
+                        # Format for prompt (same as before - just the analysis)
+                        if agentic_result.error:
+                            formatted_results += f"\n<Agent_report>\nQuery: {query}\nError: {agentic_result.error}\n</Agent_report>\n"
+                        else:
+                            formatted_results += (
+                                f"\n<Agent_report>\nQuery: {query}\n{analysis}</Agent_report>\n"
+                            )
+
+                        # Store instrumentation data in metadata
+                        metadata["queries"][i]["agentic_instrumentation"] = {
+                            "steps_taken": agentic_result.steps_taken,
+                            "queries_executed": agentic_result.queries_executed,
+                            "step_data": [
+                                {
+                                    "step_number": sd.step_number,
+                                    "queries_executed": sd.queries_executed,
+                                    "search_results_chars": len(sd.search_results_raw),
+                                    "analysis_chars": len(sd.analysis_after_step),
+                                }
+                                for sd in agentic_result.step_data
+                            ],
+                            "error": agentic_result.error,
+                        }
                     elif source == "Google Trends":
                         # Google Trends returns 1 data block with statistics
                         num_results = 1 if "Error" not in result[:100] else 0
@@ -795,12 +845,15 @@ class SearchPipeline:
     # Agentic Search
     # -------------------------------------------------------------------------
 
-    async def _agentic_search(self, query: str) -> str:
+    async def _agentic_search(self, query: str) -> AgenticSearchResult:
         """
         Perform iterative agentic search using LLM.
 
         The LLM generates search queries, analyzes results, and iterates
         until it has enough information or reaches max steps.
+
+        Returns:
+            AgenticSearchResult with analysis and full instrumentation data.
         """
         logger.info(f"[agentic_search] Starting research for: {query}")
 
@@ -808,6 +861,7 @@ class SearchPipeline:
         current_analysis = ""
         all_search_queries: list[str] = []
         search_results = ""
+        step_data_list: list[AgenticSearchStepData] = []
 
         # Get model for agentic search from active models (respects mode)
         active_models = self.config.get("active_models", {})
@@ -857,7 +911,13 @@ class SearchPipeline:
                 )
                 if not analysis_match:
                     logger.warning("[agentic_search] Could not parse analysis from response")
-                    return f"Error: Failed to parse analysis at step {step + 1}"
+                    return AgenticSearchResult(
+                        analysis="",
+                        steps_taken=step + 1,
+                        queries_executed=all_search_queries,
+                        step_data=step_data_list,
+                        error=f"Failed to parse analysis at step {step + 1}",
+                    )
 
                 if step > 0:
                     current_analysis = analysis_match.group(1).strip()
@@ -872,7 +932,13 @@ class SearchPipeline:
 
                 if step == 0 and not search_queries_match:
                     logger.warning("[agentic_search] No search queries in initial response")
-                    return "Error: Failed to generate initial search queries"
+                    return AgenticSearchResult(
+                        analysis="",
+                        steps_taken=step + 1,
+                        queries_executed=all_search_queries,
+                        step_data=step_data_list,
+                        error="Failed to generate initial search queries",
+                    )
 
                 if not search_queries_match or step == max_steps - 1:
                     if step > 0:
@@ -888,7 +954,13 @@ class SearchPipeline:
                 if not search_queries_with_source:
                     if step == 0:
                         logger.warning("[agentic_search] No valid queries in initial response")
-                        return "Error: Failed to parse initial search queries"
+                        return AgenticSearchResult(
+                            analysis="",
+                            steps_taken=step + 1,
+                            queries_executed=all_search_queries,
+                            step_data=step_data_list,
+                            error="Failed to parse initial search queries",
+                        )
                     else:
                         logger.info("[agentic_search] No new queries, completing research")
                         break
@@ -929,18 +1001,46 @@ class SearchPipeline:
                     f"[agentic_search] Step {step + 1}: Search complete, {len(search_results)} chars"
                 )
 
+                # Record step data for instrumentation
+                step_data_list.append(
+                    AgenticSearchStepData(
+                        step_number=step + 1,
+                        queries_executed=search_queries_with_source,
+                        search_results_raw=search_results,
+                        analysis_after_step=current_analysis,
+                    )
+                )
+
             except Exception as e:
                 logger.error(f"[agentic_search] Error at step {step + 1}: {e}")
                 if current_analysis:
                     break
                 else:
-                    return f"Error during agentic search: {e}"
+                    return AgenticSearchResult(
+                        analysis="",
+                        steps_taken=step + 1,
+                        queries_executed=all_search_queries,
+                        step_data=step_data_list,
+                        error=f"Error during agentic search: {e}",
+                    )
 
         if not current_analysis:
-            return "Error: No analysis was generated during the research process"
+            return AgenticSearchResult(
+                analysis="",
+                steps_taken=step + 1,
+                queries_executed=all_search_queries,
+                step_data=step_data_list,
+                error="No analysis was generated during the research process",
+            )
 
         logger.info(f"[agentic_search] Complete: {step + 1} steps")
-        return current_analysis
+        return AgenticSearchResult(
+            analysis=current_analysis,
+            steps_taken=step + 1,
+            queries_executed=all_search_queries,
+            step_data=step_data_list,
+            error=None,
+        )
 
     async def _google_search_agentic(self, query: str, is_news: bool = False) -> str:
         """

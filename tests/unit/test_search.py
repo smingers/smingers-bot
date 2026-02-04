@@ -12,7 +12,7 @@ from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
 
-from src.bot.search import QuestionDetails, SearchPipeline
+from src.bot.search import AgenticSearchResult, QuestionDetails, SearchPipeline
 
 # ============================================================================
 # Query Parsing Tests
@@ -144,8 +144,17 @@ class TestSearchPipelineProcessQueries:
     ):
         """Metadata includes tools_used set."""
         # We need to mock the actual search methods
+        mock_agentic_result = AgenticSearchResult(
+            analysis="Test analysis",
+            steps_taken=1,
+            queries_executed=["test query"],
+            step_data=[],
+            error=None,
+        )
         with patch.object(SearchPipeline, "_google_search_and_scrape", AsyncMock(return_value="")):
-            with patch.object(SearchPipeline, "_agentic_search", AsyncMock(return_value="")):
+            with patch.object(
+                SearchPipeline, "_agentic_search", AsyncMock(return_value=mock_agentic_result)
+            ):
                 pipeline = SearchPipeline(config)
                 # Mock the http_client with async-compatible aclose
                 mock_client = MagicMock()
@@ -187,8 +196,17 @@ class TestSearchPipelineProcessQueries:
     @pytest.mark.asyncio
     async def test_tracks_query_count(self, config, question_details, llm_search_queries_response):
         """Metadata tracks number of queries."""
+        mock_agentic_result = AgenticSearchResult(
+            analysis="Test analysis",
+            steps_taken=1,
+            queries_executed=["test query"],
+            step_data=[],
+            error=None,
+        )
         with patch.object(SearchPipeline, "_google_search_and_scrape", AsyncMock(return_value="")):
-            with patch.object(SearchPipeline, "_agentic_search", AsyncMock(return_value="")):
+            with patch.object(
+                SearchPipeline, "_agentic_search", AsyncMock(return_value=mock_agentic_result)
+            ):
                 pipeline = SearchPipeline(config)
                 # Mock the http_client with async-compatible aclose
                 mock_client = MagicMock()
