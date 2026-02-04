@@ -1,0 +1,196 @@
+{
+  "centralized_research": {
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Metaculus Netanyahu 2026 prediction",
+          "tool": "Google",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "Netanyahu coalition crisis February 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Retrieve full daily history of community prediction for Metaculus question 40966 since launch; list any significant Israeli political/legal events between 2026-01-15 and 2026-02-04 that could influence forecasts.",
+          "tool": "Agent",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Google News",
+        "Agent"
+      ],
+      "llm_cost": 0.2002,
+      "llm_cost_summarization": 0.155,
+      "llm_cost_agentic": 0.0452,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "Netanyahu coalition crisis February 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Israel election polls February 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Latest developments Netanyahu resignation prospects February 2026",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "Will the community prediction be higher than 30.00% on 2026-02-11 for the Metaculus question \"Will Benjamin Netanyahu cease to be Prime Minister of Israel during 2026?\"?",
+          "tool": "AskNews",
+          "deep_research_query": "Latest developments Netanyahu resignation prospects February 2026"
+        }
+      ],
+      "tools_used": [
+        "AskNews",
+        "Google",
+        "Google News"
+      ],
+      "llm_cost": 0.1612,
+      "llm_cost_summarization": 0.155,
+      "llm_cost_agentic": 0.0063,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4817,
+        "token_output": 1909,
+        "cost": 0.043086,
+        "duration_seconds": 51.171879291534424,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14238,
+        "token_output": 2928,
+        "cost": 0.086634,
+        "duration_seconds": 73.01214122772217,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4817,
+        "token_output": 1689,
+        "cost": 0.039786,
+        "duration_seconds": 51.17193675041199,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13641,
+        "token_output": 2173,
+        "cost": 0.073518,
+        "duration_seconds": 73.01212096214294,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4336,
+        "token_output": 2031,
+        "cost": 0.036022,
+        "duration_seconds": 51.17197847366333,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12442,
+        "token_output": 2258,
+        "cost": 0.0533855,
+        "duration_seconds": 73.01209712028503,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4336,
+        "token_output": 1761,
+        "cost": 0.02276,
+        "duration_seconds": 51.17201805114746,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12343,
+        "token_output": 1937,
+        "cost": 0.040181999999999995,
+        "duration_seconds": 73.01207280158997,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4336,
+        "token_output": 2148,
+        "cost": 0.025856,
+        "duration_seconds": 51.17204976081848,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12217,
+        "token_output": 1797,
+        "cost": 0.03881,
+        "duration_seconds": 73.01204872131348,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0169,
+    "step2_search": 0.2002,
+    "step3_outside_view": 0.1675,
+    "step5_inside_view": 0.2925
+  },
+  "total_pipeline_cost": 0.6771
+}
