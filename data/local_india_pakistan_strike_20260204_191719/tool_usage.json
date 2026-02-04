@@ -1,0 +1,196 @@
+{
+  "centralized_research": {
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "India Pakistan military tensions recent years",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Cross-border military strikes between India Pakistan",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Analyze the historical patterns of military escalation between India and Pakistan, focusing on their responses to terrorist attacks, diplomatic relations, and potential triggers for cross-border military action. What are the key factors that might increase or decrease the likelihood of a military strike outside Kashmir?",
+          "tool": "Agent",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Agent",
+        "Google News"
+      ],
+      "llm_cost": 0.0618,
+      "llm_cost_summarization": 0.0378,
+      "llm_cost_agentic": 0.024,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "India Pakistan military tensions 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "India Pakistan border conflict latest news",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Current geopolitical tensions and potential military confrontation between India and Pakistan in 2026",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "Before 28 November 2026, will India or Pakistan execute a military strike within the other's territory (excluding Kashmir) resulting in 2+ fatalities?",
+          "tool": "AskNews",
+          "deep_research_query": "Current geopolitical tensions and potential military confrontation between India and Pakistan in 2026"
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Google News",
+        "AskNews"
+      ],
+      "llm_cost": 0.0387,
+      "llm_cost_summarization": 0.0378,
+      "llm_cost_agentic": 0.0009,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-3.5-haiku",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4437,
+        "token_output": 722,
+        "cost": 0.0064376,
+        "duration_seconds": 17.453529119491577,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13777,
+        "token_output": 666,
+        "cost": 0.0136856,
+        "duration_seconds": 19.864343643188477,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-3.5-haiku",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4437,
+        "token_output": 719,
+        "cost": 0.0064256,
+        "duration_seconds": 17.45366096496582,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13762,
+        "token_output": 776,
+        "cost": 0.0141136,
+        "duration_seconds": 19.86396288871765,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/anthropic/claude-3.5-haiku",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4437,
+        "token_output": 751,
+        "cost": 0.0065536,
+        "duration_seconds": 17.453667163848877,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13775,
+        "token_output": 644,
+        "cost": 0.013596000000000002,
+        "duration_seconds": 19.86358404159546,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/anthropic/claude-3.5-haiku",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4437,
+        "token_output": 707,
+        "cost": 0.0063776,
+        "duration_seconds": 17.45379877090454,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13807,
+        "token_output": 712,
+        "cost": 0.0138936,
+        "duration_seconds": 19.863117218017578,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/anthropic/claude-3.5-haiku",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4437,
+        "token_output": 779,
+        "cost": 0.0066656,
+        "duration_seconds": 17.453810930252075,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13835,
+        "token_output": 595,
+        "cost": 0.013448000000000002,
+        "duration_seconds": 19.862990856170654,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0036,
+    "step2_search": 0.0618,
+    "step3_outside_view": 0.0325,
+    "step5_inside_view": 0.0687
+  },
+  "total_pipeline_cost": 0.1667
+}

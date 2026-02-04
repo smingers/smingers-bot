@@ -25,7 +25,7 @@ When asked to analyze a forecast run using this template:
 2. Cross-pollination structure for this pipeline:
    - Step 2 instance 1 (Sonnet 4.5): receives Step 1 output 1
    - Step 2 instance 2 (Sonnet 4.5): receives Step 1 output 4
-   - Step 2 instance 3 (o3-mini): receives Step 1 output 2
+   - Step 2 instance 3 (GPT5.2): receives Step 1 output 2
    - Step 2 instance 4 (o3): receives Step 1 output 3
    - Step 2 instance 5 (o3): receives Step 1 output 5
 
