@@ -1,0 +1,8 @@
+Analysis:
+The term “ilhan omar net worth” is a niche‐interest, event-driven query whose search volumes usually spike only when (a) Representative Omar is in the headlines for ethics / finance stories, (b) annual personal-financial-disclosure forms hit the news, or (c) partisan media circulate net-worth memes.  A quick skim of the 90-day Google Trends chart (US) shows an overall low baseline with isolated single-day pops of 40-60; most day-to-day moves are in the ±5 band, meaning a >3-point swing in nine days happens but not frequently.  Looking forward, there are no scheduled disclosures, court dates, or elections in the Feb 5-14 window, and Congress will be in recess until Feb 25, limiting headline risk.  Absent an unforeseen controversy, the base-rate expectation is “no meaningful change,” but we still need to check (1) whether any fresh stories about her finances are brewing, (2) recent volatility statistics, and (3) the exact 30-day distribution of daily deltas.  The following searches will collect that evidence.
+
+Search queries:
+1. Ilhan Omar net worth controversy 2026 (Google)  
+2. Ilhan Omar finances February 2026 (Google News)  
+3. Provide recent Google Trends spikes for “ilhan omar net worth”, identify associated news events, and return daily change statistics for Jan 1–Feb 3 2026; also flag any scheduled events Feb 5-14 that could affect search interest. (Agent)  
+4. ilhan omar net worth (Google Trends)
