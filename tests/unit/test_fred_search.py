@@ -249,6 +249,31 @@ class TestFredSearch:
         mock_fred.search.assert_not_called()
 
     @pytest.mark.asyncio
+    async def test_series_id_fallback_to_search(
+        self, pipeline, mock_search_results, mock_series_data
+    ):
+        """Falls back to text search when series ID lookup fails."""
+        mock_fred = MagicMock()
+        # get_series_info raises -> not a valid series ID
+        mock_fred.get_series_info.side_effect = Exception("Bad series id")
+        # Fallback search succeeds
+        mock_fred.search.return_value = mock_search_results
+        mock_fred.get_series.return_value = mock_series_data
+
+        with patch("src.bot.search.asyncio.to_thread", side_effect=_sync_to_thread):
+            with patch("fredapi.Fred", return_value=mock_fred):
+                # Reset cached client so our mock is used
+                pipeline._fred_client = None
+                result = await pipeline._fred_search("NOTREAL")
+
+        # Should have tried get_series_info, failed, then fallen back to search
+        mock_fred.get_series_info.assert_called_once_with("NOTREAL")
+        mock_fred.search.assert_called_once_with("NOTREAL")
+        # Should still produce valid output from the fallback search
+        assert '<FREDData series="UNRATE"' in result
+        assert "Unemployment Rate" in result
+
+    @pytest.mark.asyncio
     async def test_empty_search_results(self, pipeline):
         """Returns error message when no series found."""
         mock_fred = MagicMock()

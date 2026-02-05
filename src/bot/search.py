@@ -3,7 +3,7 @@ Search Pipeline
 
 Key differences from previous approach:
 1. Forecasters generate search queries directly in their responses
-2. Queries are tagged with source (Google, Google News, Agent)
+2. Queries are tagged with source (Google, Google News, Google Trends, FRED, Agent)
 3. AskNews is called programmatically for current search (not LLM-controlled)
 4. Agentic search uses GPT to iteratively research
 5. Articles are summarized with question context
@@ -15,6 +15,7 @@ import os
 import re
 import traceback
 from dataclasses import dataclass
+from datetime import timedelta
 from typing import Any
 
 import dateparser
@@ -114,6 +115,8 @@ class SearchPipeline:
     - Google News (news search via Serper)
     - AskNews (news + deep research, called programmatically for current search)
     - Agent (agentic search with iterative GPT analysis)
+    - Google Trends (historical trend data for search terms)
+    - FRED (Federal Reserve Economic Data for economic indicators)
     """
 
     def __init__(self, config: dict, llm_client: LLMClient | None = None):
@@ -137,6 +140,7 @@ class SearchPipeline:
         self.asknews_client_id = os.getenv("ASKNEWS_CLIENT_ID")
         self.asknews_secret = os.getenv("ASKNEWS_CLIENT_SECRET") or os.getenv("ASKNEWS_SECRET")
         self.fred_api_key = os.getenv("FRED_API_KEY")
+        self._fred_client = None  # Lazily initialized in _get_fred_client
 
         # Rate limiter for AskNews calls (free tier has concurrency limit)
         self._asknews_rate_limiter = asyncio.Semaphore(1)
@@ -1314,7 +1318,9 @@ Note: Google Trends values are relative (0-100 scale), not absolute search volum
             cleaned_query = self._extract_fred_query(query)
             logger.info(f"[fred_search] Searching for: '{cleaned_query}'")
 
-            fred = Fred(api_key=self.fred_api_key)
+            if self._fred_client is None:
+                self._fred_client = Fred(api_key=self.fred_api_key)
+            fred = self._fred_client
 
             # If query looks like a series ID (all uppercase, no spaces, 2-20 chars),
             # try fetching it directly
@@ -1397,8 +1403,6 @@ Note: Google Trends values are relative (0-100 scale), not absolute search volum
             latest_date = data.index[-1].strftime("%Y-%m-%d")
             start_date = data.index[0].strftime("%Y-%m-%d")
 
-            from datetime import timedelta
-
             now = data.index[-1]
 
             stats_lines = []
@@ -1419,7 +1423,7 @@ Note: Google Trends values are relative (0-100 scale), not absolute search volum
 
             # Recent changes
             change_lines = []
-            for label, months in [("1-month", 1), ("3-month", 3), ("6-month", 6), ("12-month", 12)]:
+            for label, months in [("1-month", 1), ("3-month", 3), ("6-month", 6)]:
                 cutoff = now - timedelta(days=months * 30)
                 past_data = data[data.index <= cutoff]
                 if not past_data.empty:
