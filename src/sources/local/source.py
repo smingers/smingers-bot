@@ -420,8 +420,6 @@ class LocalSource(BaseSource):
         elif question.question_type == "multiple_choice":
             scoped_store = self._create_scoped_store(question_id)
             handler = MultipleChoiceForecaster(self.config, self.llm, scoped_store)
-            # Convert options list to format expected by handler
-            options = [{"text": opt} for opt in question.options]
             result = await handler.forecast(
                 question_title=question.title,
                 question_text=question.description,
@@ -430,11 +428,11 @@ class LocalSource(BaseSource):
                 fine_print=question.fine_print,
                 open_time=question.open_time,
                 scheduled_resolve_time=question.scheduled_resolve_time,
-                options=options,
+                options=question.options,
                 log=log,
             )
             return CoreForecast(
-                prediction=result.probability_distribution,
+                prediction=result.final_probabilities,
                 question_type="multiple_choice",
                 agent_results=result.agent_results,
                 historical_context=result.historical_context,
