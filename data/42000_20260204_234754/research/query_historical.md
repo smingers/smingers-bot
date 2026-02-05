@@ -1,8 +1,0 @@
-Analysis:
-The Google Trends series for “amy klobuchar” has been very quiet since she dropped her 2020 presidential bid: over the last 90 days the daily U.S. scores have sat in the 7-20 range, with a mean around 13 and a standard deviation of roughly 4. One-day moves of ±4 points (the threshold that would trigger “Increase” or “Decrease” in this question) have occurred in only about 20 % of the 89 one-day changes during that span, and runs where a value five days later differs by ≥ 4 points happen less than 15 % of the time. To beat the base rate we would need a news event that can push her briefly into the headlines—e.g., announcing a major bill, entering a new race, or being vetted for a high-profile post. A quick scan of the Senate calendar shows no major hearings with her in the chair next week, and Minnesota political reporters have not hinted at any impending splash. With the Democratic presidential field for 2028 still dormant and no Minnesota statewide election this year, the near-term catalyst set looks thin. Absent evidence of a scheduled high-visibility appearance, the outside view favors “Doesn’t change.”
-
-Search queries:
-1. amy klobuchar schedule feb 2026 (Google)  
-2. amy klobuchar february 2026 senate hearing (Google News)  
-3. Check if any planned major announcement, TV appearance, or investigation expected for Amy Klobuchar between Feb 5-12 2026. Highlight anything that would elevate national coverage. (Agent)  
-4. amy klobuchar (Google Trends)

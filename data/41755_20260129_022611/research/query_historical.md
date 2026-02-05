@@ -1,7 +1,0 @@
-Analysis:
-To gauge whether the Bank of Japan (BOJ) is likely to raise its policy rate again before 1 May 2026 we first need a clear record of (a) every BOJ rate change since it exited negative rates, (b) the macro-conditions that preceded each hike, and (c) the current level and date of the most recent hike. These historical data points allow us to build an outside-view baseline: how frequently the BOJ has hiked once it started, the economic thresholds that triggered previous actions, and any policy guidance signalling future moves. Therefore the most useful context will be: (1) a concise timeline of BOJ policy-rate decisions from 2023-2026, (2) market and analyst expectations for additional hikes gathered from late-2025/early-2026 news flow, and (3) official BOJ statements describing conditions required for further tightening. The three searches below target those needs.
-
-Search queries:
-1. Bank of Japan rate hike 2025 (Google)  
-2. BOJ next rate hike expectations 2026 (Google News)  
-3. Provide a chronological list of every Bank of Japan policy interest-rate change from January 2023 through January 2026, including meeting dates, new rates, vote tallies, and key forward-guidance language; then summarize economists’ consensus on further hikes as of January 2026. (Agent)

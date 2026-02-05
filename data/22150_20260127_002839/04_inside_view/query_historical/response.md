@@ -1,7 +1,0 @@
-Analysis:
-The key to judging whether the United States could ever overtake China in total population before the year 2200 is to understand (a) the long-run fertility, mortality and migration trends of both countries, and (b) what the authoritative population‐projection agencies (UN DESA, U.S. Census Bureau’s International Data Base, Wittgenstein Centre, Lancet, etc.) have already projected out to 2100 or beyond.  Historical context should therefore include: when China is expected to fall below 1 billion, how steep the decline is after its 2022 population peak, how far U.S. growth continues given immigration assumptions, and whether any published scenario already shows crossover in the 21st or 22nd century.  Locating UN tables, peer-reviewed projections, and recent news coverage on China’s fertility collapse will provide the best “outside view” baseline.
-
-Search queries:
-1. UN population projections China United States 2100 (Google)  
-2. China fertility collapse population outlook (Google News)  
-3. Summarize major UN, US Census, and academic projections comparing China and U.S. total population; identify any scenario where U.S. population exceeds China before 2200; include numeric crossover year if projected. (Perplexity)

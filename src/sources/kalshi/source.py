@@ -296,7 +296,7 @@ class KalshiSource(BaseSource):
         artifacts = None
         scoped_store = None
         if self.artifact_store:
-            artifacts = self.artifact_store.create_forecast_artifacts(f"kalshi_{question.id}")
+            artifacts = self.artifact_store.create_forecast_artifacts(question.id)
             scoped_store = ScopedArtifactStore(self.artifact_store, artifacts)
             self.artifact_store.save_question(artifacts, question.raw)
 

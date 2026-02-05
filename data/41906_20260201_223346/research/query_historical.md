@@ -1,7 +1,0 @@
-Analysis:
-To judge the likelihood that the Trump administration will again start a formal process to cut ≥ $1 billion in federal funds to New York City, the best outside-view evidence is (a) every earlier instance in which Trump—or any recent president—has formally tried to target a single city’s funding, (b) the legal / administrative mechanisms that were actually used (executive orders, OMB directives, agency rulemaking, bill language sent to Congress), and (c) how often Trump has moved from rhetorical threats to documented action. Key episodes include the 2017–2020 “anarchist jurisdictions” effort, the 2020 sanctuary-city DOJ grants litigation, and the just-reported January 2026 $18 billion transit hold. We also need details on the scale, timeline, and documentation of those past moves so we can judge whether a fresh initiative before 1 May 2026 is plausible.
-
-Search queries:
-1. Trump formal process cut funding New York City (Google)
-2. $18 billion transit funding withheld NYC 2026 (Google News)
-3. Provide a chronological list (2017-2026) of every documented executive order, OMB directive, DOJ or DOT action, or administration-requested bill that sought to reduce or withhold at least $1 billion in federal funds specifically from New York City, including dates, amount, mechanism used, and eventual outcome. (Agent)

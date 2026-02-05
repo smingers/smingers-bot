@@ -1,5 +1,0 @@
-{
-  "percentiles": null,
-  "cdf_length": 0,
-  "error": "Percentiles are inverted: P1=16.0 > P99=-38.0. Percentile values must increase (P1 should be lowest, P99 highest)."
-}

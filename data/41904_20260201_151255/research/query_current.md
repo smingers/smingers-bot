@@ -1,7 +1,0 @@
-Analysis:
-The key to judging whether the newly-formed, centrist-liberal Tisza Party can overtake the long-dominant Fidesz–KDNP coalition is fresh, post-January 2026 opinion polling and seat-projection analysis.  Relevant coverage will likely discuss: 1) nationwide vote-intention trends since Péter Magyar’s Tisza formally registered in late 2025; 2) whether the opposition cooperation pact (Tisza + smaller parties) is holding; 3) district-by-district modelling under Hungary’s mixed electoral system (single-member constituencies plus party lists); 4) shifts in rural vs. urban support and turnout expectations; and 5) reactions to the latest EU funding freeze and inflation data that could hurt Fidesz.  Recent polling averages showed Tisza briefly leading in vote share in January, but seat-conversion remains uncertain because of Fidesz’s gerrymandered districts and incumbency resources.  Therefore, the most valuable articles are those giving February 2026 polling, updated seat simulations, and expert commentary on party alliances or possible electoral-law tweaks before the April 2026 vote.
-
-Search queries:
-1. Tisza Party polling Hungary 2026 (Google)
-2. Hungary election polls Fidesz Tisza (Google News)
-3. Latest 2026 Hungarian election polling comparing Tisza Party and Fidesz seat projections [AskNews] (AskNews)
