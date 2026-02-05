@@ -3,7 +3,7 @@ Search Pipeline
 
 Key differences from previous approach:
 1. Forecasters generate search queries directly in their responses
-2. Queries are tagged with source (Google, Google News, Agent)
+2. Queries are tagged with source (Google, Google News, Google Trends, FRED, Agent)
 3. AskNews is called programmatically for current search (not LLM-controlled)
 4. Agentic search uses GPT to iteratively research
 5. Articles are summarized with question context
@@ -15,6 +15,7 @@ import os
 import re
 import traceback
 from dataclasses import dataclass
+from datetime import timedelta
 from typing import Any
 
 import dateparser
@@ -114,6 +115,8 @@ class SearchPipeline:
     - Google News (news search via Serper)
     - AskNews (news + deep research, called programmatically for current search)
     - Agent (agentic search with iterative GPT analysis)
+    - Google Trends (historical trend data for search terms)
+    - FRED (Federal Reserve Economic Data for economic indicators)
     """
 
     def __init__(self, config: dict, llm_client: LLMClient | None = None):
@@ -136,6 +139,8 @@ class SearchPipeline:
         self.serper_key = os.getenv("SERPER_API_KEY") or os.getenv("SERPER_KEY")
         self.asknews_client_id = os.getenv("ASKNEWS_CLIENT_ID")
         self.asknews_secret = os.getenv("ASKNEWS_CLIENT_SECRET") or os.getenv("ASKNEWS_SECRET")
+        self.fred_api_key = os.getenv("FRED_API_KEY")
+        self._fred_client = None  # Lazily initialized in _get_fred_client
 
         # Rate limiter for AskNews calls (free tier has concurrency limit)
         self._asknews_rate_limiter = asyncio.Semaphore(1)
@@ -206,14 +211,14 @@ class SearchPipeline:
             # Parse queries with sources
             # Format: 1. "text" (Source) or 1. text (Source) or 1. text [Source]
             search_queries = re.findall(
-                r'(?:\d+\.\s*)?(["\']?(.*?)["\']?)\s*[\(\[](Google|Google News|Google Trends|Agent|AskNews)[\)\]]',
+                r'(?:\d+\.\s*)?(["\']?(.*?)["\']?)\s*[\(\[](Google|Google News|Google Trends|Agent|AskNews|FRED)[\)\]]',
                 queries_text,
             )
 
             # Fallback to unquoted queries
             if not search_queries:
                 search_queries = re.findall(
-                    r"(?:\d+\.\s*)?([^(\[\n]+)\s*[\(\[](Google|Google News|Google Trends|Agent|AskNews)[\)\]]",
+                    r"(?:\d+\.\s*)?([^(\[\n]+)\s*[\(\[](Google|Google News|Google Trends|Agent|AskNews|FRED)[\)\]]",
                     queries_text,
                 )
 
@@ -268,6 +273,12 @@ class SearchPipeline:
                     tasks.append(
                         self._google_trends_search(query, question_details=question_details)
                     )
+                elif source == "FRED":
+                    if not self.config.get("research", {}).get("fred_enabled", True):
+                        logger.info(f"Search[{search_id}]: FRED disabled, skipping query")
+                        continue
+                    query_sources.append((query, source))
+                    tasks.append(self._fred_search(query))
                 elif source == "Agent":
                     query_sources.append((query, source))
                     # Build context string from question details for agentic search
@@ -329,6 +340,10 @@ class SearchPipeline:
                         )
                     elif source == "Google Trends":
                         formatted_results += f'<GoogleTrendsData term="{query}">\nError: {result}\n</GoogleTrendsData>\n'
+                    elif source == "FRED":
+                        formatted_results += (
+                            f'<FREDData query="{query}">\nError: {result}\n</FREDData>\n'
+                        )
                     else:
                         formatted_results += (
                             f'\n<Summary query="{query}">\nError: {result}\n</Summary>\n'
@@ -375,6 +390,9 @@ class SearchPipeline:
                         }
                     elif source == "Google Trends":
                         # Google Trends returns 1 data block with statistics
+                        num_results = 1 if "Error" not in result[:100] else 0
+                        formatted_results += f"\n{result}\n"
+                    elif source == "FRED":
                         num_results = 1 if "Error" not in result[:100] else 0
                         formatted_results += f"\n{result}\n"
                     else:
@@ -1275,6 +1293,219 @@ Note: Google Trends values are relative (0-100 scale), not absolute search volum
                 return query[idx:].strip().strip("\"'")
 
         # Last resort: return the whole query
+        return query.strip()
+
+    # -------------------------------------------------------------------------
+    # FRED (Federal Reserve Economic Data)
+    # -------------------------------------------------------------------------
+
+    async def _fred_search(self, query: str) -> str:
+        """
+        Search FRED for an economic data series and return historical data with statistics.
+
+        The query can be a plain-language description (e.g., "US unemployment rate")
+        or a known FRED series ID (e.g., "UNRATE").
+        """
+        try:
+            from fredapi import Fred
+
+            if not self.fred_api_key:
+                logger.warning("[fred_search] No FRED_API_KEY set, skipping")
+                return (
+                    f'<FREDData query="{query}">\nError: FRED_API_KEY not configured.\n</FREDData>'
+                )
+
+            cleaned_query = self._extract_fred_query(query)
+            logger.info(f"[fred_search] Searching for: '{cleaned_query}'")
+
+            if self._fred_client is None:
+                self._fred_client = Fred(api_key=self.fred_api_key)
+            fred = self._fred_client
+
+            # If query looks like a series ID (all uppercase, no spaces, 2-20 chars),
+            # try fetching it directly
+            is_series_id = (
+                cleaned_query == cleaned_query.upper()
+                and " " not in cleaned_query
+                and 2 <= len(cleaned_query) <= 20
+            )
+
+            series_id = None
+            series_title = None
+            series_units = None
+            series_frequency = None
+
+            if is_series_id:
+                try:
+                    info = await asyncio.to_thread(fred.get_series_info, cleaned_query)
+                    series_id = cleaned_query
+                    series_title = info.get("title", cleaned_query)
+                    series_units = info.get("units", "N/A")
+                    series_frequency = info.get("frequency", "N/A")
+                    logger.info(
+                        f"[fred_search] Direct series ID match: {series_id} - {series_title}"
+                    )
+                except Exception:
+                    logger.info(
+                        f"[fred_search] '{cleaned_query}' not a valid series ID, falling back to search"
+                    )
+                    is_series_id = False
+
+            if series_id is None:
+                # Search for matching series
+                search_results = await asyncio.to_thread(fred.search, cleaned_query)
+
+                if search_results is None or search_results.empty:
+                    logger.warning(f"[fred_search] No series found for: '{cleaned_query}'")
+                    return f'<FREDData query="{cleaned_query}">\nNo matching FRED series found for "{cleaned_query}".\n</FREDData>'
+
+                # Sort by popularity (descending) and pick the top result
+                if "popularity" in search_results.columns:
+                    search_results = search_results.sort_values("popularity", ascending=False)
+
+                top = search_results.iloc[0]
+                series_id = top.name  # Index is the series ID
+                series_title = top.get("title", series_id)
+                series_units = top.get("units", "N/A")
+                series_frequency = top.get("frequency", "N/A")
+
+                # Log top 3 for visibility
+                for j, (sid, row) in enumerate(search_results.head(3).iterrows()):
+                    pop = row.get("popularity", "?")
+                    logger.info(
+                        f"[fred_search] Candidate {j + 1}: {sid} - {row.get('title', '?')} "
+                        f"(popularity={pop})"
+                    )
+
+            # Fetch the full time series
+            logger.info(f"[fred_search] Fetching data for series: {series_id}")
+            data = await asyncio.to_thread(fred.get_series, series_id)
+
+            if data is None or data.empty:
+                return (
+                    f'<FREDData series="{series_id}" query="{cleaned_query}">\n'
+                    f"FRED series {series_id} ({series_title}) found but contains no observations.\n"
+                    f"</FREDData>"
+                )
+
+            # Drop NaN values for statistics
+            data = data.dropna()
+
+            if data.empty:
+                return (
+                    f'<FREDData series="{series_id}" query="{cleaned_query}">\n'
+                    f"FRED series {series_id} ({series_title}) found but all values are NaN.\n"
+                    f"</FREDData>"
+                )
+
+            # Compute statistics
+            latest_value = data.iloc[-1]
+            latest_date = data.index[-1].strftime("%Y-%m-%d")
+            start_date = data.index[0].strftime("%Y-%m-%d")
+
+            now = data.index[-1]
+
+            stats_lines = []
+            for label, years in [("1-year", 1), ("5-year", 5), ("10-year", 10)]:
+                cutoff = now - timedelta(days=years * 365)
+                window = data[data.index >= cutoff]
+                if len(window) >= 2:
+                    stats_lines.append(
+                        f"- {label}: mean={window.mean():.2f}, min={window.min():.2f}, "
+                        f"max={window.max():.2f}"
+                    )
+            # All-time
+            stats_lines.append(
+                f"- All-time: mean={data.mean():.2f}, min={data.min():.2f}, "
+                f"max={data.max():.2f} (since {start_date})"
+            )
+            stats_block = "\n".join(stats_lines)
+
+            # Recent changes
+            change_lines = []
+            for label, months in [("1-month", 1), ("3-month", 3), ("6-month", 6)]:
+                cutoff = now - timedelta(days=months * 30)
+                past_data = data[data.index <= cutoff]
+                if not past_data.empty:
+                    past_value = past_data.iloc[-1]
+                    abs_change = latest_value - past_value
+                    pct_change = (abs_change / past_value * 100) if past_value != 0 else 0
+                    sign = "+" if abs_change >= 0 else ""
+                    change_lines.append(
+                        f"- {label} change: {sign}{abs_change:.2f} ({sign}{pct_change:.1f}%)"
+                    )
+
+            # Year-over-year
+            yoy_cutoff = now - timedelta(days=365)
+            yoy_data = data[data.index <= yoy_cutoff]
+            if not yoy_data.empty:
+                yoy_value = yoy_data.iloc[-1]
+                yoy_change = latest_value - yoy_value
+                yoy_pct = (yoy_change / yoy_value * 100) if yoy_value != 0 else 0
+                sign = "+" if yoy_change >= 0 else ""
+                change_lines.append(
+                    f"- Year-over-year: {latest_value:.2f} vs {yoy_value:.2f} "
+                    f"({sign}{yoy_pct:.1f}%)"
+                )
+            changes_block = "\n".join(change_lines) if change_lines else "- Insufficient data"
+
+            # Recent values table (last 12 data points)
+            recent = data.tail(12)
+            recent_lines = ["Date,Value"]
+            for date, value in recent.items():
+                recent_lines.append(f"{date.strftime('%Y-%m-%d')},{value:.2f}")
+            recent_csv = "\n".join(recent_lines)
+
+            output = f"""<FREDData series="{series_id}" query="{cleaned_query}">
+FRED Economic Data: {series_title}
+Series ID: {series_id}
+Units: {series_units}
+Frequency: {series_frequency}
+Latest observation: {latest_value:.2f} ({latest_date})
+
+HISTORICAL STATISTICS:
+{stats_block}
+
+RECENT CHANGES:
+{changes_block}
+
+RECENT VALUES ({series_frequency}):
+{recent_csv}
+
+Source: Federal Reserve Economic Data (FRED), St. Louis Fed
+</FREDData>"""
+
+            logger.info(
+                f"[fred_search] Successfully retrieved {series_id} ({series_title}): "
+                f"latest={latest_value:.2f} ({latest_date}), {len(data)} observations"
+            )
+            return output
+
+        except Exception as e:
+            logger.error(f"[fred_search] Error: {e}\n{traceback.format_exc()}")
+            return f'<FREDData query="{query}">\nError retrieving FRED data: {e}\n</FREDData>'
+
+    def _extract_fred_query(self, query: str) -> str:
+        """Extract the search term from a query like 'FRED data for US unemployment rate'."""
+        # Try to find quoted term first
+        quoted = re.search(r'["\']([^"\']+)["\']', query)
+        if quoted:
+            return quoted.group(1)
+
+        # Strip common prefixes
+        query_lower = query.lower()
+        for phrase in [
+            "fred data for ",
+            "fred series for ",
+            "fred series ",
+            "fred data ",
+            "fred ",
+            "economic data for ",
+            "economic data ",
+        ]:
+            if query_lower.startswith(phrase):
+                return query[len(phrase) :].strip().strip("\"'")
+
         return query.strip()
 
     # -------------------------------------------------------------------------
