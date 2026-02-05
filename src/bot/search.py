@@ -268,7 +268,13 @@ class SearchPipeline:
                     tasks.append(self._google_trends_search(query))
                 elif source == "Agent":
                     query_sources.append((query, source))
-                    tasks.append(self._agentic_search(query))
+                    # Build context string from question details for agentic search
+                    agentic_context = (
+                        f"Question: {question_details.title}\n\n"
+                        f"Description:\n{question_details.description}\n\n"
+                        f"Resolution criteria:\n{question_details.resolution_criteria}"
+                    )
+                    tasks.append(self._agentic_search(query, context=agentic_context))
                 elif source == "AskNews":
                     # Store the LLM-generated query for Deep Research
                     # The actual AskNews call will be added below with include_asknews
@@ -845,12 +851,17 @@ class SearchPipeline:
     # Agentic Search
     # -------------------------------------------------------------------------
 
-    async def _agentic_search(self, query: str) -> AgenticSearchResult:
+    async def _agentic_search(self, query: str, context: str = "") -> AgenticSearchResult:
         """
         Perform iterative agentic search using LLM.
 
         The LLM generates search queries, analyzes results, and iterates
         until it has enough information or reaches max steps.
+
+        Args:
+            query: The research query/goal to investigate.
+            context: Optional context about the forecasting question to help
+                guide the research (e.g., what's already known, resolution criteria).
 
         Returns:
             AgenticSearchResult with analysis and full instrumentation data.
@@ -875,7 +886,7 @@ class SearchPipeline:
             try:
                 # Build prompt
                 if step == 0:
-                    prompt = INITIAL_SEARCH_PROMPT.format(query=query)
+                    prompt = INITIAL_SEARCH_PROMPT.format(query=query, context=context)
                 else:
                     if current_analysis:
                         previous_section = (
