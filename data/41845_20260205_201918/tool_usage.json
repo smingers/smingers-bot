@@ -1,0 +1,396 @@
+{
+  "centralized_research": {
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "global under-5 deaths 2024 UNICEF",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "under-5 mortality report 2024 UNICEF",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "Retrieve latest UN IGME provisional 2024 under-five death estimates and methodological notes; list any 2025 draft presentations or country vital-registration updates",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 7,
+            "queries_executed": [
+              "IGME provisional 2024 under five deaths",
+              "childmortality.org provisional 2024 estimates methodology",
+              "IGME methodological notes 2024 estimation",
+              "IGME 2025 draft presentation child mortality",
+              "UN IGME vital registration updates 2025",
+              "UN IGME technical annex 2024 pdf",
+              "childmortality.org provisional 2024 country tables",
+              "IGME 2025 slide deck child mortality",
+              "vital registration update 2024 child mortality",
+              "UNICEF under five mortality 2023 provisional",
+              "childmortality.org 2024 technical annex pdf",
+              "IGME 2024 country tables xlsx",
+              "IGME vital registration update 2024 notice",
+              "IGME 2025 presentation pdf",
+              "All queries followed by either",
+              "childmortality.org Levels and Trends 2024 pdf",
+              "childmortality.org \"Technical Annex 2024\" filetype:xlsx",
+              "IGME 2025 consultation slide deck",
+              "site:unicef.org IGME 2025 presentation",
+              "vital registration completeness Brazil 2024 IGME",
+              "IGME 2024 technical annex pdf",
+              "childmortality.org country tables 2024",
+              "IGME 2025 slide deck mortality",
+              "IGME vital registration update 2024",
+              "UN under-five deaths 2025 draft",
+              "childmortality.org technical annex 2024 pdf",
+              "IGME 2025 consultation presentation",
+              "UN IGME VR update 2024 notice",
+              "UNICEF WHO under-five 2023 provisional",
+              "child mortality 4.8 million 2023 IGME"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "IGME provisional 2024 under five deaths",
+                    "Google"
+                  ],
+                  [
+                    "childmortality.org provisional 2024 estimates methodology",
+                    "Google"
+                  ],
+                  [
+                    "IGME methodological notes 2024 estimation",
+                    "Google"
+                  ],
+                  [
+                    "IGME 2025 draft presentation child mortality",
+                    "Google"
+                  ],
+                  [
+                    "UN IGME vital registration updates 2025",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 75259,
+                "analysis_chars": 0
+              },
+              {
+                "step_number": 2,
+                "queries_executed": [
+                  [
+                    "UN IGME technical annex 2024 pdf",
+                    "Google"
+                  ],
+                  [
+                    "childmortality.org provisional 2024 country tables",
+                    "Google"
+                  ],
+                  [
+                    "IGME 2025 slide deck child mortality",
+                    "Google"
+                  ],
+                  [
+                    "vital registration update 2024 child mortality",
+                    "Google"
+                  ],
+                  [
+                    "UNICEF under five mortality 2023 provisional",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 60368,
+                "analysis_chars": 4415
+              },
+              {
+                "step_number": 3,
+                "queries_executed": [
+                  [
+                    "childmortality.org 2024 technical annex pdf",
+                    "Google"
+                  ],
+                  [
+                    "IGME 2024 country tables xlsx",
+                    "Google"
+                  ],
+                  [
+                    "IGME vital registration update 2024 notice",
+                    "Google"
+                  ],
+                  [
+                    "IGME 2025 presentation pdf",
+                    "Google"
+                  ],
+                  [
+                    "All queries followed by either",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 49716,
+                "analysis_chars": 5711
+              },
+              {
+                "step_number": 4,
+                "queries_executed": [
+                  [
+                    "childmortality.org Levels and Trends 2024 pdf",
+                    "Google"
+                  ],
+                  [
+                    "childmortality.org \"Technical Annex 2024\" filetype:xlsx",
+                    "Google"
+                  ],
+                  [
+                    "IGME 2025 consultation slide deck",
+                    "Google"
+                  ],
+                  [
+                    "site:unicef.org IGME 2025 presentation",
+                    "Google"
+                  ],
+                  [
+                    "vital registration completeness Brazil 2024 IGME",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 27091,
+                "analysis_chars": 4542
+              },
+              {
+                "step_number": 5,
+                "queries_executed": [
+                  [
+                    "IGME 2024 technical annex pdf",
+                    "Google"
+                  ],
+                  [
+                    "childmortality.org country tables 2024",
+                    "Google"
+                  ],
+                  [
+                    "IGME 2025 slide deck mortality",
+                    "Google"
+                  ],
+                  [
+                    "IGME vital registration update 2024",
+                    "Google News"
+                  ],
+                  [
+                    "UN under-five deaths 2025 draft",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 57738,
+                "analysis_chars": 4241
+              },
+              {
+                "step_number": 6,
+                "queries_executed": [
+                  [
+                    "childmortality.org technical annex 2024 pdf",
+                    "Google"
+                  ],
+                  [
+                    "IGME 2025 consultation presentation",
+                    "Google"
+                  ],
+                  [
+                    "UN IGME VR update 2024 notice",
+                    "Google"
+                  ],
+                  [
+                    "UNICEF WHO under-five 2023 provisional",
+                    "Google"
+                  ],
+                  [
+                    "child mortality 4.8 million 2023 IGME",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 39439,
+                "analysis_chars": 5007
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Google News",
+        "Agent"
+      ],
+      "llm_cost": 0.3629,
+      "llm_cost_summarization": 0.0892,
+      "llm_cost_agentic": 0.2736,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "global under 5 deaths 2024",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "UNICEF child mortality 2024 estimates",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "Recent statements 2025 2026 UNICEF IGME preliminary under-five deaths 2024 figures",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 17
+        },
+        {
+          "query": "What will be the total median number of global under-5 child deaths reported in UNICEF's 2026 report for 2024?",
+          "tool": "AskNews",
+          "deep_research_query": "Recent statements 2025 2026 UNICEF IGME preliminary under-five deaths 2024 figures"
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "AskNews",
+        "Google News"
+      ],
+      "llm_cost": 0.0964,
+      "llm_cost_summarization": 0.0892,
+      "llm_cost_agentic": 0.0072,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5277,
+        "token_output": 1845,
+        "cost": 0.043506,
+        "duration_seconds": 43.62403106689453,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14703,
+        "token_output": 2365,
+        "cost": 0.079584,
+        "duration_seconds": 55.780062198638916,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5277,
+        "token_output": 1927,
+        "cost": 0.044736,
+        "duration_seconds": 43.62409067153931,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13904,
+        "token_output": 2043,
+        "cost": 0.072357,
+        "duration_seconds": 55.780030250549316,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4595,
+        "token_output": 2275,
+        "cost": 0.03989125,
+        "duration_seconds": 43.624131202697754,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13240,
+        "token_output": 2164,
+        "cost": 0.053466,
+        "duration_seconds": 55.77999758720398,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4595,
+        "token_output": 1703,
+        "cost": 0.022814,
+        "duration_seconds": 43.62415885925293,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12978,
+        "token_output": 1561,
+        "cost": 0.038444,
+        "duration_seconds": 55.77996563911438,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4595,
+        "token_output": 1492,
+        "cost": 0.021126,
+        "duration_seconds": 43.62420153617859,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12323,
+        "token_output": 1368,
+        "cost": 0.035590000000000004,
+        "duration_seconds": 55.779935121536255,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0176,
+    "step2_search": 0.3629,
+    "step3_outside_view": 0.1721,
+    "step5_inside_view": 0.2794
+  },
+  "total_pipeline_cost": 0.832
+}

@@ -1,0 +1,5 @@
+{
+  "percentiles": null,
+  "cdf_length": 0,
+  "error": "No valid percentiles extracted. Last 300 chars: '160k spread, ~3.5% of central value)\\n\\nThis represents reasonable uncertainty for measuring a past event where we have one strong preliminary estimate.\\n\\n---\\n\\n**Percentile 10:** 4.52\\n**Percentile 20:** 4.56\\n**Percentile 40:** 4.59\\n**Percentile 60:** 4.62\\n**Percentile 80:** 4.66\\n**Percentile 90:** 4.68'"
+}
