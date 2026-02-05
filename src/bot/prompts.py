@@ -813,6 +813,9 @@ INITIAL_SEARCH_PROMPT = """You are an expert research assistant tasked with cond
 
 Query to research: {query}
 
+Context about the forecasting question this research supports:
+{context}
+
 Your task:
 1. Analyze the query to understand what information is needed
 2. Identify the key aspects that need to be researched
