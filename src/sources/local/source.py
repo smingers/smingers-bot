@@ -347,7 +347,7 @@ class LocalSource(BaseSource):
         """Create a scoped artifact store for a forecast, or None if no store configured."""
         if not self.artifact_store:
             return None
-        artifacts = self.artifact_store.create_forecast_artifacts(f"local_{question_id}")
+        artifacts = self.artifact_store.create_forecast_artifacts(question_id)
         return ScopedArtifactStore(self.artifact_store, artifacts)
 
     async def run_forecast(

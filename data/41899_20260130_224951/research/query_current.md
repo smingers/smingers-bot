@@ -1,7 +1,0 @@
-Analysis:
-Rivian currently delivers only the R1T/R1S and EDV vans but plans to start customer deliveries of the lower-priced R2 in 2026. The key to forecasting Q1-2026 deliveries is: (1) Rivian’s recent quarterly delivery trend (roughly 15–17 k per quarter in 2025), (2) stated 2026 production guidance in earnings calls or investor presentations, (3) ramp timing for the new R2—validation builds have begun (Electrek, 2026-01-15) but we need management comments on when volume deliveries start in Q1, and (4) analyst reports revising forecasts after the validation-unit news. The most relevant current information will therefore be any January 2026 articles or analyst notes quoting Rivian management guidance or Wall Street consensus for 2026 deliveries, especially Q1. I will search for official statements, SEC filings, earnings-call transcripts, and reputable news/industry analysis that discuss expected production and delivery numbers for early 2026.
-
-Search queries:
-1. Rivian delivery guidance 2026 (Google)  
-2. Rivian Q1 2026 deliveries forecast (Google News)  
-3. Please find the latest analyst and company guidance on Rivian vehicle delivery projections for 2025 through Q1 2026, including details on the R2 launch ramp. (Assistant)

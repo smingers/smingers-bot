@@ -1,7 +1,0 @@
-Analysis:
-Only four months in the forecast window means that understanding how many failures typically occur in the first third of a year is key.  From 2001-2025 the FDIC list shows that (1) failures are highly clustered: 2008-2013 averaged 15-20 failures in Jan-Apr, while 2014-2022 usually had zero; (2) when the interest-rate shock of 2023 hit, three sizable banks (SVB, Signature, First Republic) failed in March-May, two of them inside the Jan-Apr window; 2024 and 2025 each recorded just one small failure, both in the summer, meaning zero for Jan-Apr.  Recession probabilities for 2026 are elevated but still below 40 %, rates are expected to drift down modestly, and bank balance-sheet stress tests in mid-2025 found capital and liquidity above regulatory minima.  Hence the outside view suggests that “0 or 1” failures is far more common than “2 or 3+” unless a systemic shock similar to 2008-2009 or March 2023 erupts, which currently lacks clear catalysts.  Useful historical context includes: (a) yearly counts of Jan-Apr failures 2001-2025; (b) details of the 2023 episode; (c) macro-financial indicators—deposit outflows, unrealized losses on securities, CRE exposure—that correlate with spikes in failures.
-
-Search queries:
-1. FDIC failed bank list 2025 (Google)
-2. US bank failures April 2025 (Google News)
-3. Provide annual counts of FDIC-insured bank failures occurring between January 1 and April 30 for each year 2001-2025, plus summary of macro conditions corresponding to high-failure years. (Agent)

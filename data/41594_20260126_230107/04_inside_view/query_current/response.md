@@ -1,7 +1,0 @@
-Analysis:
-The likelihood of a direct U-S attack on Iran before April 2026 hinges on several evolving factors: (1) the status of Iran’s nuclear program and any International Atomic Energy Agency findings suggesting weaponization; (2) regional escalation involving Iran-backed militias (Iraq, Syria, Yemen, Lebanon) that might prompt Washington to retaliate directly against Tehran; (3) political incentives for the Biden administration in an election year, including domestic appetite for a new conflict; and (4) Israel–Iran dynamics that could draw in the United States. The most relevant information to monitor therefore includes: recent U-S or Israeli strikes attributed to deterring Iran, Pentagon or White House statements about “direct action,” Congressional resolutions or authorizations, large U-S force deployments to the Gulf, and disclosures about Iran’s uranium enrichment or missile testing. News since late 2025—especially any spike in drone or missile exchanges, naval incidents in the Strait of Hormuz, and classified leaks about strike planning—will be critical to update probabilities.
-
-Search queries:
-1. US Iran attack possibility 2026 (Google)
-2. US Iran tensions January 2026 (Google News)
-3. List recent reports on US plans or threats to strike Iran and any military incidents from December 2025 to January 2026 [Assistant] (Assistant)

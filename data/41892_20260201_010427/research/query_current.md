@@ -1,6 +1,0 @@
-Analysis:
-We need up-to-date polling, seat-projection or expert commentary published after the snap election was announced (late 2025) that gives an idea of (a) the LDP’s national vote‐intention share, (b) district–level match-ups in the 289 single-member seats, (c) proportional-representation polling for the 176 PR seats, and (d) how Komeito, Ishin, CDP and the new Mirai Party are splitting the anti-LDP vote.  Recent pieces by NHK, Kyodo, Nikkei, the Asahi, Jiji, FNN/Sankei, and polling aggregators such as JX Press or Minna no Yoron are most relevant; foreign press (FT, Economist, Reuters, Bloomberg) often summarize them.  We also need to see whether the LDP–Komeito electoral cooperation pact was fully restored (important for vote-splitting in Tokyo, Hokkaido and Kansai) and whether the bribery scandal swirling around two LDP factions in January damaged late momentum.  Finally, look for seat-by-seat forecasts issued this week by Nikkei or NHK that translate polling into seats; a credible projection showing “LDP 230–250 seats” would heavily sway the forecast.
-
-Search queries:
-1. 2026 Japan election opinion polls (Google)  
-2. LDP majority projections 2026 election (Google News)

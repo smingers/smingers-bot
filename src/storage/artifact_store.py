@@ -5,7 +5,7 @@ Persists all intermediate outputs from the forecasting pipeline.
 Nothing is ephemeral - every step produces a recorded artifact.
 
 Directory structure per question:
-    data/{question_id}_{timestamp}/
+    data/{source}/{question_id}_{timestamp}/
         question.json              # Full raw question from Metaculus API
         research/
             query_historical.md        # LLM-generated historical search queries
@@ -72,10 +72,18 @@ class ArtifactStore:
     Manages storage of all forecasting artifacts.
 
     See module docstring for directory structure.
+
+    When a source name is provided, artifacts are stored under
+    a source-specific subdirectory: data/{source}/{question_id}_{timestamp}/
+    Otherwise, they go directly under the base dir (legacy behavior).
     """
 
-    def __init__(self, base_dir: str | Path = "./data"):
-        self.base_dir = Path(base_dir)
+    def __init__(self, base_dir: str | Path = "./data", source: str | None = None):
+        self._root_dir = Path(base_dir)
+        if source:
+            self.base_dir = self._root_dir / source
+        else:
+            self.base_dir = self._root_dir
         self.base_dir.mkdir(parents=True, exist_ok=True)
 
     def create_forecast_artifacts(self, question_id: int | str) -> ForecastArtifactPaths:

@@ -1,7 +1,0 @@
-Analysis:
-To judge the likely CPI 12-month rate for March 2026 we need (a) the path of headline CPI in the recent past, especially the same-month figures for 2023-25, (b) the Bank of England’s and OBR’s latest published forecasts that explicitly include Q1 2026 or “2026 H1”, and (c) any market-implied or private-sector consensus forecasts that may have appeared in the news since late-2025.  Collecting the historical ONS D7G7 series will give us trend, base effects and seasonality, while the BoE/OBR material anchors the central expectations.  News coverage may reveal whether forecasters have recently revised 2026 outlooks because of energy prices, fiscal changes or sterling moves.  Therefore the searches focus on: (1) the ONS historical data; (2) current media reports about 2026 UK inflation forecasts; and (3) a detailed agent query to pull together the full CPI series plus the most recent official forecasts.
-
-Search queries:
-1. UK CPI historical annual rates ONS (Google)  
-2. Bank of England 2026 inflation forecast (Google News)  
-3. Provide UK CPI YoY 2010-2025 from ONS D7G7 and summarise latest BoE and OBR forecasts for headline CPI in Q1 2026, including any numeric projections for March 2026. (Agent)

@@ -1,7 +1,0 @@
-Analysis:
-The United States’ Corruption Perceptions Index (CPI) score has drifted downward for most of the last decade: from 76 in 2015 to 67 in 2020, 69 in 2021, 67 in 2022, and a record-low 65 in the 2024 release.  Understanding (1) the full historical series since the 100-point scale began in 2012, (2) the drivers Transparency International cites for the U.S. decline—polarised politics, threats to election integrity, money in politics, weak ethics rules for Congress and the Supreme Court—and (3) any legislative, judicial or enforcement changes during 2024-25 that could plausibly push the 2025 score up or down is the most relevant background for an outside-view forecast.  We also want to know how volatile the index normally is for peer countries (±1–3 points per year is typical) and whether methodological tweaks are expected.
-
-Search queries:
-1. United States Corruption Perceptions Index scores history (Google)
-2. Transparency International 2024 CPI United States ranking news (Google News)
-3. Provide full CPI time series for United States 2012-2024, note annual score changes, discuss any 2024-25 U.S. anti-corruption reforms or scandals likely to affect 2025 CPI score, include comparisons with peer OECD countries (Agent)
