@@ -8,6 +8,7 @@ to integrate with the core forecasting engine.
 # Import sources to register them
 from . import (
     ecclesia,  # noqa: F401 - registers @register_source("ecclesia")
+    kalshi,  # noqa: F401 - registers @register_source("kalshi")
     local,  # noqa: F401 - registers @register_source("local")
     metaculus,  # noqa: F401 - registers @register_source("metaculus")
 )

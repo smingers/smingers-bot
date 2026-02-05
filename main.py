@@ -357,6 +357,82 @@ async def forecast_local_question(
         raise
 
 
+async def forecast_kalshi_question(
+    question_id: str,
+    config_path: str = "config.yaml",
+    mode: str = None,
+):
+    """Forecast a Kalshi prediction market event."""
+    resolved = ResolvedConfig.from_yaml(config_path, mode=mode)
+    source_config = resolved.to_dict()
+
+    # Create shared components
+    llm_client = LLMClient()
+    artifact_store = ArtifactStore("data")
+
+    source = get_source("kalshi", source_config, llm_client, artifact_store)
+
+    try:
+        async with source:
+            # Fetch and display event info
+            question = await source.fetch_question(question_id)
+            market_prices = question.raw.get("market_prices", {})
+
+            print(f"\n{'=' * 60}")
+            print(f"FORECASTING KALSHI EVENT: {question.id}")
+            print(f"Title: {question.title}")
+            print(f"Options: {len(question.options)} markets")
+            print(f"Mode: {resolved.mode}")
+            print(f"{'=' * 60}\n")
+
+            # Run the forecast
+            forecast = await source.run_forecast(question_id, log=print)
+
+            print(f"\n{'=' * 60}")
+            print("FORECAST COMPLETE")
+            print(f"{'=' * 60}")
+            print(f"Question: {question.title}")
+            print(f"Type: {forecast.question_type} ({len(question.options)} options)")
+
+            # Display comparison table: Bot vs Kalshi market prices
+            dist = forecast.prediction
+            if isinstance(dist, dict):
+                print(f"\n{'Candidate':<30s} {'Bot':>8s} {'Kalshi':>8s} {'Delta':>8s}")
+                print("-" * 58)
+
+                # Sort by bot probability descending
+                sorted_options = sorted(dist.items(), key=lambda x: x[1], reverse=True)
+                for option_name, bot_prob in sorted_options:
+                    prices = market_prices.get(option_name, {})
+                    kalshi_prob = prices.get("implied_probability", 0)
+                    delta = bot_prob - kalshi_prob
+                    print(f"{option_name:<30s} {bot_prob:>7.1%} {kalshi_prob:>7.1%} {delta:>+7.1%}")
+            else:
+                print(f"Prediction: {dist}")
+
+            print(f"\nCost: ${llm_client.get_session_costs()['cost']:.4f}")
+
+            # Save locally
+            converted = source.convert_forecast(forecast)
+            result = await source.submit_forecast(question_id, converted)
+            mode_label = (
+                "TEST"
+                if resolved.mode == "test"
+                else ("PREVIEW" if resolved.mode == "preview" else "LIVE")
+            )
+            print(f"\nStatus: {mode_label} - {result['message']}")
+
+            return forecast
+
+    except Exception as e:
+        print(f"\n{'!' * 60}")
+        print("FORECAST FAILED")
+        print(f"{'!' * 60}")
+        print(f"Error: {e}")
+        print(f"{'!' * 60}")
+        raise
+
+
 async def forecast_unforecasted_questions(
     tournament_id: int | str,
     config_path: str = "config.yaml",
@@ -429,7 +505,7 @@ def main():
         "-s",
         type=str,
         default="metaculus",
-        help="Forecast source: metaculus (default), ecclesia, local",
+        help="Forecast source: metaculus (default), ecclesia, local, kalshi",
     )
     parser.add_argument(
         "--list-sources", action="store_true", help="List available forecast sources"
@@ -521,6 +597,16 @@ def main():
             question_id = str(args.question) if args.question else args.url
             asyncio.run(
                 forecast_local_question(
+                    question_id=question_id,
+                    config_path=args.config,
+                    mode=args.mode,
+                )
+            )
+        elif args.source == "kalshi":
+            # Kalshi uses event tickers or URLs
+            question_id = str(args.question) if args.question else args.url
+            asyncio.run(
+                forecast_kalshi_question(
                     question_id=question_id,
                     config_path=args.config,
                     mode=args.mode,
