@@ -40,17 +40,26 @@ def _parse_event_ticker(question_id: str) -> str:
     Accepts:
         "KXPRESNOMD-28"
         "https://kalshi.com/markets/kxpresnomd/democratic-primary-winner/kxpresnomd-28"
+
+    Raises:
+        ValueError: If the input is empty or yields an empty ticker.
     """
+    if not question_id or not question_id.strip():
+        raise ValueError("Event ticker or URL must not be empty")
+
     # If it looks like a URL, extract the last path segment and uppercase it
     if "kalshi.com" in question_id:
         # URL format: .../markets/{series}/{slug}/{event_ticker}
         path = question_id.rstrip("/").split("/")
-        # Last segment is the event ticker
         ticker = path[-1].upper()
-        return ticker
+    else:
+        # Direct event ticker
+        ticker = question_id.strip().upper()
 
-    # Otherwise treat as a direct event ticker
-    return question_id.upper()
+    if not ticker:
+        raise ValueError(f"Could not extract event ticker from: {question_id}")
+
+    return ticker
 
 
 def _build_resolution_criteria(event: KalshiEvent) -> str:
@@ -150,6 +159,9 @@ class KalshiSource(BaseSource):
 
     def _convert_event_to_question(self, event: KalshiEvent) -> Question:
         """Convert a Kalshi event with markets into a multiple choice Question."""
+        if not event.markets:
+            raise ValueError(f"Event {event.event_ticker} has no markets — cannot create question")
+
         # Sort markets by ask price descending for readability
         sorted_markets = sorted(event.markets, key=lambda m: m.yes_ask, reverse=True)
 
@@ -265,7 +277,7 @@ class KalshiSource(BaseSource):
         self,
         question_id: str,
         log=print,
-    ) -> CoreForecast:
+    ) -> tuple[CoreForecast, Question]:
         """
         Run a full forecast using the MultipleChoiceForecaster handler.
 
@@ -274,7 +286,7 @@ class KalshiSource(BaseSource):
             log: Logging callback
 
         Returns:
-            CoreForecast with probability distribution across all options
+            Tuple of (CoreForecast, Question) — forecast result and the fetched question
         """
         start_time = datetime.now()
 
@@ -309,7 +321,7 @@ class KalshiSource(BaseSource):
                     "source": "kalshi",
                     "event_ticker": question.id,
                     "question_type": "multiple_choice",
-                    "probability_distribution": result.probability_distribution,
+                    "probability_distribution": result.final_probabilities,
                     "num_options": len(question.options),
                 },
             )
@@ -334,10 +346,12 @@ class KalshiSource(BaseSource):
                 },
             )
 
-        return CoreForecast(
-            prediction=result.probability_distribution,
+        forecast = CoreForecast(
+            prediction=result.final_probabilities,
             question_type="multiple_choice",
             agent_results=result.agent_results,
             historical_context=result.historical_context,
             current_context=result.current_context,
         )
+
+        return forecast, question
