@@ -199,7 +199,7 @@ async def forecast_ecclesia_question(
 
     # Create shared components
     llm_client = LLMClient()
-    artifact_store = ArtifactStore("data", source="ecclesia")
+    artifact_store = ArtifactStore("data/ecclesia")
 
     source = get_source("ecclesia", source_config, llm_client, artifact_store)
 
@@ -268,7 +268,7 @@ async def forecast_local_question(
 
     # Create shared components
     llm_client = LLMClient()
-    artifact_store = ArtifactStore("data", source="local")
+    artifact_store = ArtifactStore("data/local")
 
     source = get_source("local", source_config, llm_client, artifact_store)
 
@@ -369,7 +369,7 @@ async def forecast_kalshi_question(
 
     # Create shared components
     llm_client = LLMClient()
-    artifact_store = ArtifactStore("data", source="kalshi")
+    artifact_store = ArtifactStore("data/kalshi")
 
     source = get_source("kalshi", source_config, llm_client, artifact_store)
 

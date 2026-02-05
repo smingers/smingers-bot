@@ -44,15 +44,6 @@ data/configs/*
 !data/configs/.gitkeep
 data/*.db
 
-# Forecast artifacts by source (keep directory structure, ignore contents)
-data/metaculus/*
-!data/metaculus/.gitkeep
-data/ecclesia/*
-!data/ecclesia/.gitkeep
-data/kalshi/*
-!data/kalshi/.gitkeep
-data/local/*
-!data/local/.gitkeep
 
 # Jupyter
 .ipynb_checkpoints/

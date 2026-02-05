@@ -79,9 +79,9 @@ class Forecaster:
         self.metaculus = MetaculusClient()
         llm_timeout = self.resolved_config.get("llm", {}).get("timeout_seconds")
         self.llm = LLMClient(timeout_seconds=llm_timeout)
+        storage_base = self.resolved_config.get("storage", {}).get("base_dir", "./data")
         self.artifact_store = ArtifactStore(
-            base_dir=self.resolved_config.get("storage", {}).get("base_dir", "./data"),
-            source="metaculus",
+            base_dir=f"{storage_base}/metaculus",
         )
         self.database = ForecastDatabase(
             db_path=self.resolved_config.get("storage", {}).get(
