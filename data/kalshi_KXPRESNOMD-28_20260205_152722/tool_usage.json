@@ -1,0 +1,371 @@
+{
+  "centralized_research": {
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "2028 Democratic presidential field Politico",
+          "tool": "Google",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "Kamala Harris 2028 nomination early polling",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Summarize current endorsements, fundraising, exploratory committees for potential 2028 Democratic presidential candidates; highlight any public statements by Biden, Harris, Whitmer, Newsom, Shapiro, Buttigieg since Jan 2025; compare with historical primary timelines 2004-2020",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 7,
+            "queries_executed": [
+              "2028 Democratic exploratory committees filings",
+              "2028 Democratic fundraising potential candidates",
+              "Biden 2028 run statement 2025",
+              "Whitmer presidential speculation comments 2028",
+              "Democratic primary announcement dates 2004 2020",
+              "Democratic exploratory committee filing 2028",
+              "Biden 2025 interview 2028 plans",
+              "Whitmer leadership PAC fundraising 2026",
+              "Democratic 2008 exploratory committee dates",
+              "Obama 2007 exploratory announcement date",
+              "Biden 2025 2028 plans interview",
+              "Whitmer leadership PAC 2025 fundraising",
+              "Shapiro presidential speculation 2025",
+              "Biden 2025 interview on 2028 plans",
+              "Whitmer leadership PAC receipts 2026",
+              "Shapiro leadership PAC FEC filing",
+              "Buttigieg Win the Era 2025 totals",
+              "FEC year-end 2025 leadership PAC reports",
+              "Whitmer federal leadership PAC 2025 totals",
+              "Fight for the People super PAC FEC",
+              "Biden 2025 interview future plans",
+              "Gretchen Whitmer leadership PAC report 2025",
+              "Fight for the People PAC totals",
+              "Joe Biden interview about 2028 plans",
+              "Harris 2026 speech 2028 ambition"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "2028 Democratic exploratory committees filings",
+                    "Google"
+                  ],
+                  [
+                    "2028 Democratic fundraising potential candidates",
+                    "Google News"
+                  ],
+                  [
+                    "Biden 2028 run statement 2025",
+                    "Google News"
+                  ],
+                  [
+                    "Whitmer presidential speculation comments 2028",
+                    "Google News"
+                  ],
+                  [
+                    "Democratic primary announcement dates 2004 2020",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 84203,
+                "analysis_chars": 0
+              },
+              {
+                "step_number": 2,
+                "queries_executed": [
+                  [
+                    "Democratic exploratory committee filing 2028",
+                    "Google"
+                  ],
+                  [
+                    "Biden 2025 interview 2028 plans",
+                    "Google News"
+                  ],
+                  [
+                    "Whitmer leadership PAC fundraising 2026",
+                    "Google"
+                  ],
+                  [
+                    "Democratic 2008 exploratory committee dates",
+                    "Google"
+                  ],
+                  [
+                    "Obama 2007 exploratory announcement date",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 80060,
+                "analysis_chars": 9807
+              },
+              {
+                "step_number": 3,
+                "queries_executed": [
+                  [
+                    "Biden 2025 2028 plans interview",
+                    "Google News"
+                  ],
+                  [
+                    "Whitmer leadership PAC 2025 fundraising",
+                    "Google"
+                  ],
+                  [
+                    "Shapiro presidential speculation 2025",
+                    "Google News"
+                  ]
+                ],
+                "search_results_chars": 44534,
+                "analysis_chars": 6171
+              },
+              {
+                "step_number": 4,
+                "queries_executed": [
+                  [
+                    "Biden 2025 interview on 2028 plans",
+                    "Google News"
+                  ],
+                  [
+                    "Whitmer leadership PAC receipts 2026",
+                    "Google"
+                  ],
+                  [
+                    "Shapiro leadership PAC FEC filing",
+                    "Google"
+                  ],
+                  [
+                    "Buttigieg Win the Era 2025 totals",
+                    "Google"
+                  ],
+                  [
+                    "FEC year-end 2025 leadership PAC reports",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 77804,
+                "analysis_chars": 7602
+              },
+              {
+                "step_number": 5,
+                "queries_executed": [
+                  [
+                    "Whitmer federal leadership PAC 2025 totals",
+                    "Google"
+                  ],
+                  [
+                    "Fight for the People super PAC FEC",
+                    "Google"
+                  ],
+                  [
+                    "Biden 2025 interview future plans",
+                    "Google News"
+                  ]
+                ],
+                "search_results_chars": 47990,
+                "analysis_chars": 7530
+              },
+              {
+                "step_number": 6,
+                "queries_executed": [
+                  [
+                    "Gretchen Whitmer leadership PAC report 2025",
+                    "Google"
+                  ],
+                  [
+                    "Fight for the People PAC totals",
+                    "Google"
+                  ],
+                  [
+                    "Joe Biden interview about 2028 plans",
+                    "Google News"
+                  ],
+                  [
+                    "Harris 2026 speech 2028 ambition",
+                    "Google News"
+                  ]
+                ],
+                "search_results_chars": 72705,
+                "analysis_chars": 8072
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "Agent"
+      ],
+      "llm_cost": 0.4689,
+      "llm_cost_summarization": 0.1321,
+      "llm_cost_agentic": 0.3368,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "2028 Democratic presidential candidates speculation",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "2028 Democratic primary potential contenders",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Latest reports on leading 2028 Democratic presidential contenders and any exploratory committees in U.S. politics",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 17
+        },
+        {
+          "query": "2028 Democratic nominee for President? (In 2028)",
+          "tool": "AskNews",
+          "deep_research_query": "Latest reports on leading 2028 Democratic presidential contenders and any exploratory committees in U.S. politics"
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "AskNews"
+      ],
+      "llm_cost": 0.1385,
+      "llm_cost_summarization": 0.1321,
+      "llm_cost_agentic": 0.0064,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6341,
+        "token_output": 2286,
+        "cost": 0.053313,
+        "duration_seconds": 83.74713802337646,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15878,
+        "token_output": 4040,
+        "cost": 0.108234,
+        "duration_seconds": 96.47568106651306,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6341,
+        "token_output": 1981,
+        "cost": 0.048738000000000004,
+        "duration_seconds": 83.74727892875671,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13613,
+        "token_output": 4122,
+        "cost": 0.102669,
+        "duration_seconds": 96.47565412521362,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "cost": 0.0,
+        "duration_seconds": 83.747318983078,
+        "error": "Response truncated after 4000 tokens (limit: 4000)"
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "cost": 0.0,
+        "duration_seconds": 96.47558307647705,
+        "error": "Response truncated after 4000 tokens (limit: 4000)"
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "cost": 0.0,
+        "duration_seconds": 83.7473521232605,
+        "error": "Response truncated after 3968 tokens (limit: 4000)"
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11900,
+        "token_output": 3798,
+        "cost": 0.054184,
+        "duration_seconds": 96.47553300857544,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5323,
+        "token_output": 3610,
+        "cost": 0.039526,
+        "duration_seconds": 83.74738097190857,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13301,
+        "token_output": 2535,
+        "cost": 0.046882,
+        "duration_seconds": 96.47548580169678,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0133,
+    "step2_search": 0.4689,
+    "step3_outside_view": 0.2493,
+    "step5_inside_view": 0.3918
+  },
+  "total_pipeline_cost": 1.1233
+}
