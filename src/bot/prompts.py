@@ -308,6 +308,7 @@ Your query for google and google news are processed by classical search engines,
 For agent:
 Your query will be processed by a reasoning model equipped with capable web crawlers and designed to generate lengthy, detailed responses. As such, you may use a longer query with detailed instructions. It is possible to ask multiple questions.
 Nonetheless, you are advised to keep your query to at most four sentences.
+If you are also including a Google Trends query, do not ask the agent to search for Google Trends data, trend statistics, or historical search interest values — that data is being retrieved separately. Instead, direct the agent to focus on news events, scheduled catalysts, and contextual factors.
 
 For Google Trends:
 If the question is about Google Trends data for a specific search term, use this source to retrieve actual historical data and base rate statistics. Your query should be the search term itself (e.g., "hospital" or "luigi mangione"). This will return 90-day historical data with computed statistics about typical volatility, which is critical for establishing base rates.

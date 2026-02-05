@@ -4,41 +4,41 @@
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────────────────┐
-│                                    ENTRY POINTS                                          │
+│                                    ENTRY POINTS                                         │
 ├─────────────────────────────────────────────────────────────────────────────────────────┤
-│                                                                                          │
+│                                                                                         │
 │   main.py (Interactive CLI)              run_bot.py (GitHub Actions)                    │
 │   ─────────────────────────              ──────────────────────────                     │
 │   python main.py                         python run_bot.py                              │
 │     --question 41594                       --tournament 32916                           │
-│     --mode test|preview|live               --question-selection new-only|reforecast    │
-│                                                                                          │
+│     --mode test|preview|live               --question-selection new-only|reforecast     │
+│                                                                                         │
 └─────────────────────────────────────────────────────────────────────────────────────────┘
                                            │
                                            ▼
 ┌─────────────────────────────────────────────────────────────────────────────────────────┐
-│                              FORECASTER ORCHESTRATOR                                     │
-│                              (src/bot/forecaster.py)                                     │
+│                              FORECASTER ORCHESTRATOR                                    │
+│                              (src/bot/forecaster.py)                                    │
 ├─────────────────────────────────────────────────────────────────────────────────────────┤
-│                                                                                          │
-│   1. Fetch question from Metaculus API                                                   │
-│   2. Create artifact directory: data/{question_id}_{timestamp}/                          │
-│   3. Route to type-specific handler based on question_type                               │
-│                                                                                          │
+│                                                                                         │
+│   1. Fetch question from Metaculus API                                                  │
+│   2. Create artifact directory: data/{question_id}_{timestamp}/                         │
+│   3. Route to type-specific handler based on question_type                              │
+│                                                                                         │
 │              ┌────────────────┬─────────────────┬──────────────────┐                    │
 │              ▼                ▼                 ▼                  │                    │
 │         ┌────────┐      ┌─────────┐      ┌─────────────────┐       │                    │
 │         │ BINARY │      │ NUMERIC │      │ MULTIPLE CHOICE │       │                    │
 │         └────────┘      └─────────┘      └─────────────────┘       │                    │
-│              │                │                 │                  │                    │
-│              └────────────────┴─────────────────┘                  │                    │
+│              │               │                 │                   │                    │
+│              └───────────────┴─────────────────┘                   │                    │
 │                              │                                     │                    │
 │                              ▼                                     │                    │
 │                    ┌───────────────────┐                           │                    │
 │                    │ 6-STEP PIPELINE   │ ◄─────────────────────────┘                    │
 │                    │ (base_forecaster) │                                                │
 │                    └───────────────────┘                                                │
-│                                                                                          │
+│                                                                                         │
 └─────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -48,12 +48,12 @@
 
 ```
 ╔═══════════════════════════════════════════════════════════════════════════════════════════╗
-║  STEP 1: QUERY GENERATION                                                                  ║
-║  ─────────────────────────                                                                 ║
-║                                                                                            ║
-║  INPUT:  Question title, description, resolution_criteria, fine_print                      ║
-║  MODEL:  test=Haiku, quality=o3                                                            ║
-║                                                                                            ║
+║  STEP 1: QUERY GENERATION                                                                 ║
+║  ─────────────────────────                                                                ║
+║                                                                                           ║
+║  INPUT:  Question title, description, resolution_criteria, fine_print                     ║
+║  MODEL:  test=Haiku, quality=o3                                                           ║
+║                                                                                           ║
 ║  ┌─────────────────────────┐         ┌─────────────────────────┐                          ║
 ║  │   HISTORICAL QUERIES    │         │    CURRENT QUERIES      │                          ║
 ║  │   ──────────────────    │         │    ───────────────      │                          ║
@@ -66,14 +66,14 @@
 ║              ▼                                   ▼                                        ║
 ║  OUTPUT: 3-5 search queries          OUTPUT: 3-5 search queries                           ║
 ║  SAVED:  historical_queries.md       SAVED:  current_queries.md                           ║
-║                                                                                            ║
+║                                                                                           ║
 ╚═══════════════════════════════════════════════════════════════════════════════════════════╝
                                            │
                                            ▼
 ╔═══════════════════════════════════════════════════════════════════════════════════════════╗
-║  STEP 2: SEARCH EXECUTION                                                                  ║
-║  ────────────────────────                                                                  ║
-║                                                                                            ║
+║  STEP 2: SEARCH EXECUTION                                                                 ║
+║  ────────────────────────                                                                 ║
+║                                                                                           ║
 ║  ┌────────────────────────────────────┐   ┌────────────────────────────────────┐          ║
 ║  │      HISTORICAL SEARCH             │   │       CURRENT SEARCH               │          ║
 ║  │      (for outside view)            │   │       (for inside view)            │          ║
