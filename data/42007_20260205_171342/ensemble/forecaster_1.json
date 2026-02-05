@@ -1,0 +1,5 @@
+{
+  "percentiles": null,
+  "cdf_length": 0,
+  "error": "No valid percentiles extracted. Last 300 chars: 'tains modest right skew (credit-sensitive nature)\\n- Keeps 80% interval at ~10 bps (reasonable for 5 business days)\\n- Allows tail risk for unexpected events\\n\\n**Percentile 10**: 3.58\\n**Percentile 20**: 3.60\\n**Percentile 40**: 3.63\\n**Percentile 60**: 3.65\\n**Percentile 80**: 3.68\\n**Percentile 90**: 3.71'"
+}

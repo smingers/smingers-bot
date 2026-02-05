@@ -1,0 +1,290 @@
+{
+  "centralized_research": {
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "AMERIBOR daily rate February 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "AMERIBOR interest rate trend 2025",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 2
+        },
+        {
+          "query": "Download FRED series AMERIBOR last 180 days and summarize daily mean, median, st-dev, and relationship to EFFR",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 4,
+            "queries_executed": [
+              "AMERIBOR FRED CSV download",
+              "EFFR FRED CSV download",
+              "FRED API observations AMERIBOR",
+              "AMERIBOR versus EFFR correlation",
+              "AMERIBOR calculation methodology AFX",
+              "AMERIBOR last 180 days CSV",
+              "EFFR 2025-2026 daily CSV",
+              "AMERIBOR EFFR daily spread analysis",
+              "All queries followed by either",
+              "AMERIBOR CSV download 180 days",
+              "FRED API AMERIBOR observations",
+              "EFFR AMERIBOR correlation study",
+              "AMERIBOR overnight unsecured rate FRED"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "AMERIBOR FRED CSV download",
+                    "Google"
+                  ],
+                  [
+                    "EFFR FRED CSV download",
+                    "Google"
+                  ],
+                  [
+                    "FRED API observations AMERIBOR",
+                    "Google"
+                  ],
+                  [
+                    "AMERIBOR versus EFFR correlation",
+                    "Google"
+                  ],
+                  [
+                    "AMERIBOR calculation methodology AFX",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 64659,
+                "analysis_chars": 0
+              },
+              {
+                "step_number": 2,
+                "queries_executed": [
+                  [
+                    "AMERIBOR last 180 days CSV",
+                    "Google"
+                  ],
+                  [
+                    "EFFR 2025-2026 daily CSV",
+                    "Google"
+                  ],
+                  [
+                    "AMERIBOR EFFR daily spread analysis",
+                    "Google News"
+                  ],
+                  [
+                    "All queries followed by either",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 23814,
+                "analysis_chars": 5266
+              },
+              {
+                "step_number": 3,
+                "queries_executed": [
+                  [
+                    "AMERIBOR CSV download 180 days",
+                    "Google"
+                  ],
+                  [
+                    "FRED API AMERIBOR observations",
+                    "Google"
+                  ],
+                  [
+                    "EFFR AMERIBOR correlation study",
+                    "Google"
+                  ],
+                  [
+                    "AMERIBOR overnight unsecured rate FRED",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 45194,
+                "analysis_chars": 5207
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "Agent"
+      ],
+      "llm_cost": 0.2478,
+      "llm_cost_summarization": 0.0993,
+      "llm_cost_agentic": 0.1485,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "AMERIBOR rate Fed policy 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "AMERIBOR daily fixing February 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "Latest commentary on AMERIBOR overnight rate trends and expectations following Jan 2026 Fed meeting",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "What will be the value of \"Overnight Unsecured AMERIBOR Benchmark Interest Rate\" on 2026-02-12?",
+          "tool": "AskNews",
+          "deep_research_query": "Latest commentary on AMERIBOR overnight rate trends and expectations following Jan 2026 Fed meeting"
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "AskNews"
+      ],
+      "llm_cost": 0.1056,
+      "llm_cost_summarization": 0.0993,
+      "llm_cost_agentic": 0.0063,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5706,
+        "token_output": 1619,
+        "cost": 0.041403,
+        "duration_seconds": 45.610862731933594,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12252,
+        "token_output": 2041,
+        "cost": 0.067371,
+        "duration_seconds": 55.4701030254364,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5706,
+        "token_output": 2040,
+        "cost": 0.047718,
+        "duration_seconds": 45.610921144485474,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11693,
+        "token_output": 1842,
+        "cost": 0.062709,
+        "duration_seconds": 55.47007131576538,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5041,
+        "token_output": 2265,
+        "cost": 0.040531750000000005,
+        "duration_seconds": 45.610963344573975,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11426,
+        "token_output": 2181,
+        "cost": 0.050529500000000005,
+        "duration_seconds": 55.47003674507141,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5041,
+        "token_output": 1691,
+        "cost": 0.02361,
+        "duration_seconds": 45.611000537872314,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11364,
+        "token_output": 1765,
+        "cost": 0.036848000000000006,
+        "duration_seconds": 55.47000432014465,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5041,
+        "token_output": 1641,
+        "cost": 0.02321,
+        "duration_seconds": 45.61103177070618,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 10418,
+        "token_output": 1882,
+        "cost": 0.035892,
+        "duration_seconds": 55.46997404098511,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0181,
+    "step2_search": 0.2478,
+    "step3_outside_view": 0.1765,
+    "step5_inside_view": 0.2533
+  },
+  "total_pipeline_cost": 0.6957
+}
