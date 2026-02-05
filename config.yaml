@@ -120,6 +120,9 @@ research:
   # Google Trends (historical data for trends questions)
   google_trends_enabled: true
 
+  # FRED (Federal Reserve Economic Data)
+  fred_enabled: true
+
   # Article scraping
   scraping_enabled: true
   max_articles_to_scrape: 10
