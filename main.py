@@ -375,19 +375,14 @@ async def forecast_kalshi_question(
 
     try:
         async with source:
-            # Fetch and display event info
-            question = await source.fetch_question(question_id)
-            market_prices = question.raw.get("market_prices", {})
-
             print(f"\n{'=' * 60}")
-            print(f"FORECASTING KALSHI EVENT: {question.id}")
-            print(f"Title: {question.title}")
-            print(f"Options: {len(question.options)} markets")
+            print(f"FORECASTING KALSHI EVENT: {question_id}")
             print(f"Mode: {resolved.mode}")
             print(f"{'=' * 60}\n")
 
-            # Run the forecast
-            forecast = await source.run_forecast(question_id, log=print)
+            # Run the forecast (also returns the fetched question)
+            forecast, question = await source.run_forecast(question_id, log=print)
+            market_prices = question.raw.get("market_prices", {})
 
             print(f"\n{'=' * 60}")
             print("FORECAST COMPLETE")
