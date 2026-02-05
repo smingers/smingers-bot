@@ -265,7 +265,9 @@ class SearchPipeline:
                         logger.info(f"Search[{search_id}]: Google Trends disabled, skipping query")
                         continue
                     query_sources.append((query, source))
-                    tasks.append(self._google_trends_search(query))
+                    tasks.append(
+                        self._google_trends_search(query, question_details=question_details)
+                    )
                 elif source == "Agent":
                     query_sources.append((query, source))
                     # Build context string from question details for agentic search
@@ -1100,12 +1102,16 @@ class SearchPipeline:
     # Google Trends
     # -------------------------------------------------------------------------
 
-    async def _google_trends_search(self, query: str) -> str:
+    async def _google_trends_search(
+        self, query: str, question_details: QuestionDetails | None = None
+    ) -> str:
         """
         Get Google Trends historical data and compute base rate statistics.
 
         Query should be the search term (e.g., "hospital", "luigi mangione").
-        Returns formatted statistics for forecaster consumption.
+        Returns formatted statistics for forecaster consumption including:
+        - Directional base rates (increase vs decrease separately)
+        - Window-matched analysis (uses question's actual timeframe if available)
         """
         try:
             from trendspy import Trends
@@ -1113,6 +1119,10 @@ class SearchPipeline:
             # Extract the term - query might be "Google Trends data for hospital" or just "hospital"
             term = self._extract_trends_term(query)
             logger.info(f"[google_trends_search] Fetching data for term: '{term}'")
+
+            # Try to extract window length from question details
+            window_days = self._extract_trends_window(question_details)
+            logger.info(f"[google_trends_search] Using window of {window_days} days")
 
             # Run synchronous trendspy call in thread pool
             def fetch_trends():
@@ -1130,12 +1140,14 @@ class SearchPipeline:
             mean = df[term].mean()
             std = df[term].std()
 
-            # Compute base rate for "Doesn't change" (±3 threshold)
+            # Compute base rates with directional split
             # Calculate all possible N-day changes where N matches the question window
-            # Default to 12-day windows (common for these questions)
-            changes = df[term].diff(periods=12).dropna().abs()
-            pct_gt_3 = (changes > 3).mean() * 100
-            pct_lte_3 = 100 - pct_gt_3
+            changes = df[term].diff(periods=window_days).dropna()
+
+            # Directional analysis (without abs())
+            pct_increase_gt_3 = (changes > 3).mean() * 100
+            pct_decrease_gt_3 = (changes < -3).mean() * 100
+            pct_no_change = (changes.abs() <= 3).mean() * 100
 
             # Recent trend
             last_7 = df[term].iloc[-7:].mean()
@@ -1147,6 +1159,12 @@ class SearchPipeline:
             else:
                 trend = "stable"
 
+            # Generate daily data table (last 30 days for context)
+            daily_data_lines = ["Date,Value"]
+            for date, row in df.tail(30).iterrows():
+                daily_data_lines.append(f"{date.strftime('%Y-%m-%d')},{int(row[term])}")
+            daily_data_csv = "\n".join(daily_data_lines)
+
             stats = f"""<GoogleTrendsData term="{term}">
 Google Trends US data for "{term}" (last 90 days):
 
@@ -1154,24 +1172,93 @@ Current value: {current:.0f}
 90-day mean: {mean:.1f}
 90-day std dev: {std:.1f}
 
-BASE RATE ANALYSIS (critical for forecasting, using ~12-day windows as approximation):
-- In {pct_lte_3:.0f}% of 12-day windows, the value changed by ≤3 points ("Doesn't change")
-- In {pct_gt_3:.0f}% of 12-day windows, the value changed by >3 points
+BASE RATE ANALYSIS (using {window_days}-day windows to match question timeframe):
+- In {pct_no_change:.0f}% of {window_days}-day windows, the value changed by ≤3 points ("Doesn't change")
+- In {pct_increase_gt_3:.0f}% of {window_days}-day windows, the value INCREASED by >3 points
+- In {pct_decrease_gt_3:.0f}% of {window_days}-day windows, the value DECREASED by >3 points
 
 Recent trend: {trend} (last 7 days avg: {last_7:.1f} vs prior 7 days: {prior_7:.1f})
+
+DAILY VALUES (last 30 days):
+{daily_data_csv}
 
 Note: Google Trends values are relative (0-100 scale), not absolute search volumes.
 </GoogleTrendsData>"""
 
             logger.info(
                 f"[google_trends_search] Successfully retrieved data for '{term}': "
-                f"current={current:.0f}, mean={mean:.1f}, std={std:.1f}"
+                f"current={current:.0f}, mean={mean:.1f}, std={std:.1f}, "
+                f"window={window_days}d, increase={pct_increase_gt_3:.0f}%, "
+                f"decrease={pct_decrease_gt_3:.0f}%, no_change={pct_no_change:.0f}%"
             )
             return stats
 
         except Exception as e:
             logger.error(f"[google_trends_search] Error: {e}")
             return f'<GoogleTrendsData term="{query}">\nError retrieving data: {e}\n</GoogleTrendsData>'
+
+    def _extract_trends_window(self, question_details: QuestionDetails | None) -> int:
+        """
+        Extract the forecast window length in days from question details.
+
+        Looks for JSON metadata in the description with trend_start and trend_end dates.
+        Falls back to 10 days if not found.
+        """
+        if question_details is None:
+            return 10  # Default fallback
+
+        import json
+        from datetime import datetime
+
+        # Look for JSON block in description with trend dates
+        # Format: {"format":"trends_interest_change_magnitude","info":{"trend_start":"2026-02-05","trend_end":"2026-02-14"}}
+        description = question_details.description or ""
+
+        # Find JSON block (typically wrapped in backticks)
+        json_match = re.search(r"`(\{[^`]+\})`", description)
+        if json_match:
+            try:
+                data = json.loads(json_match.group(1))
+                info = data.get("info", {})
+                trend_start = info.get("trend_start")
+                trend_end = info.get("trend_end")
+
+                if trend_start and trend_end:
+                    start_date = datetime.strptime(trend_start, "%Y-%m-%d")
+                    end_date = datetime.strptime(trend_end, "%Y-%m-%d")
+                    window_days = (end_date - start_date).days
+                    if 1 <= window_days <= 90:  # Sanity check
+                        logger.info(
+                            f"[_extract_trends_window] Extracted window: {window_days} days "
+                            f"({trend_start} to {trend_end})"
+                        )
+                        return window_days
+            except (json.JSONDecodeError, ValueError) as e:
+                logger.warning(f"[_extract_trends_window] Failed to parse JSON: {e}")
+
+        # Fallback: try to find dates in resolution criteria
+        resolution = question_details.resolution_criteria or ""
+        # Look for date patterns like "2026-02-05" and "2026-02-14"
+        dates = re.findall(r"(\d{4}-\d{2}-\d{2})", resolution)
+        if len(dates) >= 2:
+            try:
+                # Use the first two distinct dates found
+                unique_dates = list(dict.fromkeys(dates))  # Remove duplicates, preserve order
+                if len(unique_dates) >= 2:
+                    start_date = datetime.strptime(unique_dates[0], "%Y-%m-%d")
+                    end_date = datetime.strptime(unique_dates[1], "%Y-%m-%d")
+                    window_days = abs((end_date - start_date).days)
+                    if 1 <= window_days <= 90:
+                        logger.info(
+                            f"[_extract_trends_window] Extracted window from resolution: "
+                            f"{window_days} days"
+                        )
+                        return window_days
+            except ValueError as e:
+                logger.warning(f"[_extract_trends_window] Failed to parse dates: {e}")
+
+        logger.info("[_extract_trends_window] Using default window of 10 days")
+        return 10  # Default fallback
 
     def _extract_trends_term(self, query: str) -> str:
         """Extract the search term from a query like 'Google Trends data for "hospital"'"""
