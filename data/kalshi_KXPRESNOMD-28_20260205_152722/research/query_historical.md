@@ -1,0 +1,11 @@
+Analysis:
+The Democratic nominee in an open-seat year is usually someone who already enjoys high national name recognition, can quickly consolidate party elites, and has previously run (or served) on a national ticket.  Since President Biden is term-limited in 2028, the “next-in-line” pattern (1960 LBJ, 2000 Gore, 2016 Clinton) points first to Vice-President Kamala Harris.  Governors with successful records in large or swing states (Whitmer-MI, Newsom-CA, Shapiro-PA, Beshear-KY, Cooper-NC, Polis-CO) also fit historical precedent: every open Democratic contest since 1972 has included at least one sitting or former governor in the final two.  Cabinet secretaries, senators and rising House stars (Buttigieg, Warnock, Kelly, Booker, Fetterman, Ocasio-Cortez) matter mostly if they can win early primaries where governors often struggle.  Key early catalysts to monitor: 1) Harris’s favorability after 2026 mid-terms, 2) fund-raising totals reported to the FEC in April & July 2027, 3) endorsements from Biden, Obama and organized labor, 4) whether Whitmer or Newsom publicly form exploratory committees in late-2026.  Polling in invisible-primary period historically starts to harden about 9-12 months before Iowa (e.g., Clinton 2015, Biden 2019).  Therefore the most relevant historical information is elite endorsements, fund-raising league tables, and early-state polling from past cycles (2004, 2008, 2016, 2020) to calibrate base rates for momentum shifts.  We should gather:  
+• 2028 speculation pieces from national outlets (Politico, NYT, WaPo).  
+• State-level reporting on Whitmer, Newsom, Harris, Shapiro exploratory moves.  
+• Data on VP nomination track record.  
+• Historical Democratic primary polling vs. final outcome (for outside-view).
+
+Search queries:
+1. 2028 Democratic presidential field Politico (Google)  
+2. Kamala Harris 2028 nomination early polling (Google News)  
+3. Summarize current endorsements, fundraising, exploratory committees for potential 2028 Democratic presidential candidates; highlight any public statements by Biden, Harris, Whitmer, Newsom, Shapiro, Buttigieg since Jan 2025; compare with historical primary timelines 2004-2020 (Agent)
