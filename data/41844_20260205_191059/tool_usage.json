@@ -1,0 +1,280 @@
+{
+  "centralized_research": {
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Nigeria adult bank account 2024",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "financial inclusion Nigeria Central Bank 2024",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide latest CBN or EFInA figures for Nigerian adult bank-account ownership 2017-2024, note any 95 % target assessment, and cite sources.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 4,
+            "queries_executed": [
+              "EFInA 2023 Nigeria bank account share",
+              "EFInA 2021 Nigeria bank account ownership",
+              "CBN financial inclusion progress report 2023",
+              "Nigeria 95% financial inclusion target status",
+              "EFInA 2018 Nigeria bank account data",
+              "EFInA 2023 banked percentage table",
+              "CBN annual financial inclusion report 2022",
+              "EFInA 2018 banked percentage",
+              "CBN financial inclusion report 2021",
+              "EFInA 2023 banked dataset download",
+              "CBN progress financial inclusion 2022"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "EFInA 2023 Nigeria bank account share",
+                    "Google"
+                  ],
+                  [
+                    "EFInA 2021 Nigeria bank account ownership",
+                    "Google"
+                  ],
+                  [
+                    "CBN financial inclusion progress report 2023",
+                    "Google"
+                  ],
+                  [
+                    "Nigeria 95% financial inclusion target status",
+                    "Google News"
+                  ],
+                  [
+                    "EFInA 2018 Nigeria bank account data",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 68528,
+                "analysis_chars": 0
+              },
+              {
+                "step_number": 2,
+                "queries_executed": [
+                  [
+                    "EFInA 2023 banked percentage table",
+                    "Google"
+                  ],
+                  [
+                    "CBN annual financial inclusion report 2022",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 36440,
+                "analysis_chars": 5303
+              },
+              {
+                "step_number": 3,
+                "queries_executed": [
+                  [
+                    "EFInA 2018 banked percentage",
+                    "Google"
+                  ],
+                  [
+                    "CBN financial inclusion report 2021",
+                    "Google"
+                  ],
+                  [
+                    "EFInA 2023 banked dataset download",
+                    "Google"
+                  ],
+                  [
+                    "CBN progress financial inclusion 2022",
+                    "Google News"
+                  ]
+                ],
+                "search_results_chars": 68273,
+                "analysis_chars": 6603
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "Agent"
+      ],
+      "llm_cost": 0.3557,
+      "llm_cost_summarization": 0.1669,
+      "llm_cost_agentic": 0.1888,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Nigeria adults bank account statistics",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Central Bank Nigeria financial inclusion 2024",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Latest 2024-2026 reports on Nigeria achieving 95 percent financial inclusion for adults, bank account ownership goals",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 17
+        },
+        {
+          "query": "Will 95% or more of Nigerians have a bank account before 2025?",
+          "tool": "AskNews",
+          "deep_research_query": "Latest 2024-2026 reports on Nigeria achieving 95 percent financial inclusion for adults, bank account ownership goals"
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "AskNews"
+      ],
+      "llm_cost": 0.1758,
+      "llm_cost_summarization": 0.1669,
+      "llm_cost_agentic": 0.0089,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6771,
+        "token_output": 1873,
+        "cost": 0.04840800000000001,
+        "duration_seconds": 53.35604906082153,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15223,
+        "token_output": 2379,
+        "cost": 0.08135400000000001,
+        "duration_seconds": 65.0537919998169,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6771,
+        "token_output": 1963,
+        "cost": 0.049758,
+        "duration_seconds": 53.35616064071655,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14634,
+        "token_output": 2488,
+        "cost": 0.081222,
+        "duration_seconds": 65.05376839637756,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5963,
+        "token_output": 2684,
+        "cost": 0.048011250000000005,
+        "duration_seconds": 53.356200218200684,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13689,
+        "token_output": 2711,
+        "cost": 0.06190975,
+        "duration_seconds": 65.05374360084534,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5963,
+        "token_output": 1673,
+        "cost": 0.02531,
+        "duration_seconds": 53.35626149177551,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14197,
+        "token_output": 1672,
+        "cost": 0.04177,
+        "duration_seconds": 65.05371952056885,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5963,
+        "token_output": 2069,
+        "cost": 0.028478000000000003,
+        "duration_seconds": 53.356301069259644,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13303,
+        "token_output": 1447,
+        "cost": 0.038182,
+        "duration_seconds": 65.05369472503662,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0141,
+    "step2_search": 0.3557,
+    "step3_outside_view": 0.2,
+    "step5_inside_view": 0.3044
+  },
+  "total_pipeline_cost": 0.8742
+}

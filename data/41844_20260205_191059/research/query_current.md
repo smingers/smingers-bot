@@ -1,0 +1,7 @@
+Analysis:
+The “95 % banked Nigerians by 2024” target looks extremely ambitious. World Bank Findex shows Nigeria at 45 % in 2021 (released 2022), and the Central Bank of Nigeria’s own Financial Inclusion Newsletter (Q4-2024) reportedly still places adult “formal‐account” ownership below 70 %. Major obstacles frequently cited in 2023-2024 coverage include persistent cash-dominance, network connectivity gaps, and distrust after the 2023 naira redesign. To assess whether any late-2024 surge has occurred—or whether CBN has published a new dataset that could satisfy the resolution criteria—we need the most up-to-date CBN statements, financial inclusion survey results, and independent analyses released in 2024-2026. Priority sources: 1) Central Bank of Nigeria bulletins or speeches, 2) publications from EFInA (Enhancing Financial Innovation & Access) which partners with CBN on biennial surveys, 3) World Bank Findex updates, 4) reputable Nigerian business media (BusinessDay, Premium Times, The Nation, Vanguard, Punch, Nairametrics), and 5) wire services (Reuters, Bloomberg) for any late-breaking 2025 data.  
+
+Search queries:
+1. Nigeria adults bank account statistics (Google)  
+2. Central Bank Nigeria financial inclusion 2024 (Google News)  
+3. Latest 2024-2026 reports on Nigeria achieving 95 percent financial inclusion for adults, bank account ownership goals (AskNews)
