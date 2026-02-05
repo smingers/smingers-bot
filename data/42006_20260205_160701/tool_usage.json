@@ -1,0 +1,243 @@
+{
+  "centralized_research": {
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "Ilhan Omar Feb 2026 news",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Ilhan Omar February 2026 events",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Upcoming House schedule Ilhan Omar February 2026; check planned appearances, controversies, or votes that could elevate media coverage between 5 Feb and 14 Feb 2026.  Prioritize official House calendar, Minnesota events, and major national stories involving Omar.  Summarize any credible catalysts.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "ilhan omar february 2026 schedule",
+              "house floor schedule february 2026",
+              "ilhan omar minnesota events february 2026",
+              "ilhan omar controversy 2026",
+              "ilhan omar committee appearances february 2026"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "ilhan omar february 2026 schedule",
+                    "Google"
+                  ],
+                  [
+                    "house floor schedule february 2026",
+                    "Google"
+                  ],
+                  [
+                    "ilhan omar minnesota events february 2026",
+                    "Google"
+                  ],
+                  [
+                    "ilhan omar controversy 2026",
+                    "Google News"
+                  ],
+                  [
+                    "ilhan omar committee appearances february 2026",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 64586,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "ilhan omar",
+          "tool": "Google Trends",
+          "success": true,
+          "num_results": 0
+        }
+      ],
+      "tools_used": [
+        "Google Trends",
+        "Agent",
+        "Google News",
+        "Google"
+      ],
+      "llm_cost": 0.214,
+      "llm_cost_summarization": 0.1598,
+      "llm_cost_agentic": 0.0542,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Ilhan Omar February 2026 events",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Ilhan Omar controversy February 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "What events or controversies involving US Representative Ilhan Omar are expected between February 5 and 14 2026?",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 20
+        },
+        {
+          "query": "Will the interest in \u201cilhan omar\u201d change between 2026-02-05 and 2026-02-14 according to Google Trends?",
+          "tool": "AskNews",
+          "deep_research_query": "What events or controversies involving US Representative Ilhan Omar are expected between February 5 and 14 2026?"
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "AskNews"
+      ],
+      "llm_cost": 0.1415,
+      "llm_cost_summarization": 0.1348,
+      "llm_cost_agentic": 0.0067,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8190,
+        "token_output": 2129,
+        "cost": 0.056505,
+        "duration_seconds": 61.49406051635742,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13904,
+        "token_output": 2665,
+        "cost": 0.081687,
+        "duration_seconds": 87.59967255592346,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8190,
+        "token_output": 1799,
+        "cost": 0.051555000000000004,
+        "duration_seconds": 61.49416255950928,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12810,
+        "token_output": 3394,
+        "cost": 0.08934,
+        "duration_seconds": 87.59964799880981,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7317,
+        "token_output": 2337,
+        "cost": 0.04552275,
+        "duration_seconds": 61.494199991226196,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11998,
+        "token_output": 2339,
+        "cost": 0.0537425,
+        "duration_seconds": 87.59962010383606,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7317,
+        "token_output": 1693,
+        "cost": 0.028178,
+        "duration_seconds": 61.49422907829285,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12090,
+        "token_output": 1755,
+        "cost": 0.038220000000000004,
+        "duration_seconds": 87.59959268569946,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7317,
+        "token_output": 1781,
+        "cost": 0.028881999999999998,
+        "duration_seconds": 61.49426579475403,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11112,
+        "token_output": 1730,
+        "cost": 0.036064,
+        "duration_seconds": 87.59956669807434,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0167,
+    "step2_search": 0.214,
+    "step3_outside_view": 0.2106,
+    "step5_inside_view": 0.2991
+  },
+  "total_pipeline_cost": 0.7405
+}
