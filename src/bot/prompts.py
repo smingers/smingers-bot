@@ -68,7 +68,10 @@ Nonetheless, you are advised to keep your query to at most four sentences.
 For FRED:
 If the question involves economic indicators, financial data, interest rates, employment, GDP, inflation, trade statistics, or any quantitative economic metric, use FRED (Federal Reserve Economic Data) to retrieve official historical data. Your query should describe the economic indicator (e.g., "US unemployment rate" or "consumer price index") or use a known FRED series ID directly (e.g., "UNRATE" or "CPIAUCSL"). This returns historical data with computed statistics for establishing base rates.
 
-You should format your answer exactly as below, always formatting the source in brackets () **on the same line as and after** the query. Do not wrap your query in quotes. Be sure to include two queries for Google/Google News and one for Agent. Add a FRED query if the question involves economic/financial data.
+For yFinance:
+If the question involves stock prices, ETF values, corporate earnings, market capitalization, company fundamentals, or options-implied expectations for publicly traded securities, use yFinance to retrieve market data. Your query should be a ticker symbol (e.g., "AAPL" or "SPY") optionally followed by a brief description of what data you need (e.g., "AAPL price history and fundamentals" or "TSLA options data"). This returns historical prices, key financial metrics, and options-implied probability distributions.
+
+You should format your answer exactly as below, always formatting the source in brackets () **on the same line as and after** the query. Do not wrap your query in quotes. Be sure to include two queries for Google/Google News and one for Agent. Add a FRED query if the question involves economic/financial data. Add a yFinance query if the question involves stocks, ETFs, or publicly traded securities.
 
 Analysis:
 {{Your initial impression/analysis of the forecasting question followed by reasoning about the most relevant historical context needed to generate an outside view.}}
@@ -78,6 +81,7 @@ Search queries:
 2. [Query details] (Google News)
 3. [Query details] (Agent)
 4. [economic indicator query] (FRED) -- only if question involves economic/financial data
+5. [ticker symbol] (yFinance) -- only if question involves stocks, ETFs, or publicly traded securities
 
 """
 
@@ -320,7 +324,10 @@ If the question is about Google Trends data for a specific search term, use this
 For FRED:
 If the question involves economic indicators, financial data, interest rates, employment, GDP, inflation, trade statistics, or any quantitative economic metric, use FRED (Federal Reserve Economic Data) to retrieve official historical data. Your query should describe the economic indicator (e.g., "US unemployment rate" or "consumer price index") or use a known FRED series ID directly (e.g., "UNRATE" or "CPIAUCSL"). This returns historical data with computed statistics for establishing base rates.
 
-You should format your answer exactly as below, always formatting the source in brackets () **on the same line as and after** the query. Do not wrap your query in quotes. Be sure to include two queries for Google/Google News and one for Agent. Add a Google Trends query if the question involves Google Trends data. Add a FRED query if the question involves economic/financial data.
+For yFinance:
+If the question involves stock prices, ETF values, corporate earnings, market capitalization, company fundamentals, or options-implied expectations for publicly traded securities, use yFinance to retrieve market data. Your query should be a ticker symbol (e.g., "AAPL" or "SPY") optionally followed by a brief description of what data you need (e.g., "AAPL price history and fundamentals" or "TSLA options data"). This returns historical prices, key financial metrics, and options-implied probability distributions.
+
+You should format your answer exactly as below, always formatting the source in brackets () **on the same line as and after** the query. Do not wrap your query in quotes. Be sure to include two queries for Google/Google News and one for Agent. Add a Google Trends query if the question involves Google Trends data. Add a FRED query if the question involves economic/financial data. Add a yFinance query if the question involves stocks, ETFs, or publicly traded securities.
 
 Analysis:
 {{Your initial impression/analysis of the forecasting question followed by reasoning about the most relevant historical context needed to generate an outside view.}}
@@ -331,6 +338,7 @@ Search queries:
 3. [Query details] (Agent)
 4. [search term] (Google Trends) -- only if question involves Google Trends data
 5. [economic indicator query] (FRED) -- only if question involves economic/financial data
+6. [ticker symbol] (yFinance) -- only if question involves stocks, ETFs, or publicly traded securities
 """
 
 MULTIPLE_CHOICE_PROMPT_CURRENT = """
@@ -582,7 +590,10 @@ Nonetheless, you are advised to keep your query to at most three sentences.
 For FRED:
 If the question involves economic indicators, financial data, interest rates, employment, GDP, inflation, trade statistics, or any quantitative economic metric, use FRED (Federal Reserve Economic Data) to retrieve official historical data. Your query should describe the economic indicator (e.g., "US unemployment rate" or "consumer price index") or use a known FRED series ID directly (e.g., "UNRATE" or "CPIAUCSL"). This returns historical data with computed statistics for establishing base rates.
 
-You should format your answer exactly as below, always formatting the source in brackets () **on the same line as and after** the query. Do not wrap your query in quotes or brackets. Be sure to include two queries for Google/Google News and one for Agent. Add a FRED query if the question involves economic/financial data.
+For yFinance:
+If the question involves stock prices, ETF values, corporate earnings, market capitalization, company fundamentals, or options-implied expectations for publicly traded securities, use yFinance to retrieve market data. Your query should be a ticker symbol (e.g., "AAPL" or "SPY") optionally followed by a brief description of what data you need (e.g., "AAPL price history and fundamentals" or "TSLA options data"). This returns historical prices, key financial metrics, and options-implied probability distributions.
+
+You should format your answer exactly as below, always formatting the source in brackets () **on the same line as and after** the query. Do not wrap your query in quotes or brackets. Be sure to include two queries for Google/Google News and one for Agent. Add a FRED query if the question involves economic/financial data. Add a yFinance query if the question involves stocks, ETFs, or publicly traded securities.
 
 Analysis:
 {{Your initial impression/analysis of the forecasting question followed by reasoning about the most relevant historical context needed to generate an outside view.}}
@@ -592,6 +603,7 @@ Search queries:
 2. [Query details] (Google News)
 3. [Query details] (Agent)
 4. [economic indicator query] (FRED) -- only if question involves economic/financial data
+5. [ticker symbol] (yFinance) -- only if question involves stocks, ETFs, or publicly traded securities
 """
 
 

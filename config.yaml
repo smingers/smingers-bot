@@ -123,6 +123,9 @@ research:
   # FRED (Federal Reserve Economic Data)
   fred_enabled: true
 
+  # yFinance (stock/ETF prices, fundamentals, options)
+  yfinance_enabled: true
+
   # Article scraping
   scraping_enabled: true
   max_articles_to_scrape: 10
