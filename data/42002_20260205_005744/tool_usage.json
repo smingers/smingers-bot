@@ -1,0 +1,391 @@
+{
+  "centralized_research": {
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Public Integrity Section consultation requirement history",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "DOJ remove PIN consultation requirement",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "Give a weekly table of community prediction for Metaculus question 38209 through 2026-02-05, flagging jumps over 5 pp. Also list and source all 2024-2026 DOJ statements, leaks, or media reports about ending the PIN consultation rule, noting dates and status. Conclude with present policy status.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 7,
+            "queries_executed": [
+              "Metaculus 38209 timeline data",
+              "DOJ end PIN consultation rule",
+              "Public Integrity Section consultation requirement",
+              "Justice Manual Public Integrity Section update",
+              "internal memo ending PIN consultation",
+              "Metaculus 38209 forecast history",
+              "site:metaculus.com 38209 csv",
+              "\u201cJustice Manual\u201d \u201cSection 9-85\u201d 2026",
+              "DOJ \u201cPublic Integrity Section\u201d consultation suspended 2026",
+              "Metaculus 38209 probability csv",
+              "Metaculus question 38209 archive",
+              "Justice Manual 9 85 update 2026",
+              "DOJ Public Integrity consultation 2026",
+              "AG Bondi memorandum public integrity 2026",
+              "Metaculus API question 38209",
+              "site:github.com metaculus 38209",
+              "Justice Manual 9-85 revision 2026",
+              "\u201cconsultation requirement is suspended\u201d 2026",
+              "DOJ press release public integrity 2026",
+              "Metaculus question 38209 API endpoint",
+              "Metaculus 38209 forecast history csv",
+              "\"Section 9-85\" revision 2026 site:justice.gov",
+              "Public Integrity consultation Federal Register 2025-2026",
+              "Department of Justice memo \"consultation requirement\" 2026",
+              "Metaculus GraphQL question 38209",
+              "site:metaculus.com \"history\" \"probability\" 38209",
+              "Public Integrity consultation rule 2026 memo",
+              "site:federalregister.gov Public Integrity Section",
+              "Justice Manual Public Integrity update 2026"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "Metaculus 38209 timeline data",
+                    "Google"
+                  ],
+                  [
+                    "DOJ end PIN consultation rule",
+                    "Google News"
+                  ],
+                  [
+                    "Public Integrity Section consultation requirement",
+                    "Google"
+                  ],
+                  [
+                    "Justice Manual Public Integrity Section update",
+                    "Google"
+                  ],
+                  [
+                    "internal memo ending PIN consultation",
+                    "Google News"
+                  ]
+                ],
+                "search_results_chars": 56446,
+                "analysis_chars": 0
+              },
+              {
+                "step_number": 2,
+                "queries_executed": [
+                  [
+                    "Metaculus 38209 forecast history",
+                    "Google"
+                  ],
+                  [
+                    "site:metaculus.com 38209 csv",
+                    "Google"
+                  ],
+                  [
+                    "\u201cJustice Manual\u201d \u201cSection 9-85\u201d 2026",
+                    "Google"
+                  ],
+                  [
+                    "DOJ \u201cPublic Integrity Section\u201d consultation suspended 2026",
+                    "Google News"
+                  ]
+                ],
+                "search_results_chars": 20364,
+                "analysis_chars": 3004
+              },
+              {
+                "step_number": 3,
+                "queries_executed": [
+                  [
+                    "Metaculus 38209 probability csv",
+                    "Google"
+                  ],
+                  [
+                    "Metaculus question 38209 archive",
+                    "Google"
+                  ],
+                  [
+                    "Justice Manual 9 85 update 2026",
+                    "Google"
+                  ],
+                  [
+                    "DOJ Public Integrity consultation 2026",
+                    "Google News"
+                  ],
+                  [
+                    "AG Bondi memorandum public integrity 2026",
+                    "Google News"
+                  ]
+                ],
+                "search_results_chars": 67752,
+                "analysis_chars": 4556
+              },
+              {
+                "step_number": 4,
+                "queries_executed": [
+                  [
+                    "Metaculus API question 38209",
+                    "Google"
+                  ],
+                  [
+                    "site:github.com metaculus 38209",
+                    "Google"
+                  ],
+                  [
+                    "Justice Manual 9-85 revision 2026",
+                    "Google"
+                  ],
+                  [
+                    "\u201cconsultation requirement is suspended\u201d 2026",
+                    "Google"
+                  ],
+                  [
+                    "DOJ press release public integrity 2026",
+                    "Google News"
+                  ]
+                ],
+                "search_results_chars": 59309,
+                "analysis_chars": 5823
+              },
+              {
+                "step_number": 5,
+                "queries_executed": [
+                  [
+                    "Metaculus question 38209 API endpoint",
+                    "Google"
+                  ],
+                  [
+                    "Metaculus 38209 forecast history csv",
+                    "Google"
+                  ],
+                  [
+                    "\"Section 9-85\" revision 2026 site:justice.gov",
+                    "Google"
+                  ],
+                  [
+                    "Public Integrity consultation Federal Register 2025-2026",
+                    "Google"
+                  ],
+                  [
+                    "Department of Justice memo \"consultation requirement\" 2026",
+                    "Google News"
+                  ]
+                ],
+                "search_results_chars": 36630,
+                "analysis_chars": 5984
+              },
+              {
+                "step_number": 6,
+                "queries_executed": [
+                  [
+                    "Metaculus GraphQL question 38209",
+                    "Google"
+                  ],
+                  [
+                    "site:metaculus.com \"history\" \"probability\" 38209",
+                    "Google"
+                  ],
+                  [
+                    "Public Integrity consultation rule 2026 memo",
+                    "Google"
+                  ],
+                  [
+                    "site:federalregister.gov Public Integrity Section",
+                    "Google"
+                  ],
+                  [
+                    "Justice Manual Public Integrity update 2026",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 55552,
+                "analysis_chars": 6231
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "Agent"
+      ],
+      "llm_cost": 0.42,
+      "llm_cost_summarization": 0.1687,
+      "llm_cost_agentic": 0.2513,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "DOJ remove Public Integrity consultation requirement",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "U.S. attorneys Public Integrity policy February",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide articles from 2025-2026 about Department of Justice efforts or announcements to eliminate the requirement that U.S. attorneys consult the Public Integrity Section before prosecuting lawmakers.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "Will the community prediction be higher than 47.00% on 2026-02-15 for the Metaculus question \"Will the DOJ officially remove the requirement for U.S. attorneys to consult with the Public Integrity Section before prosecuting lawmakers before November 4, 2026?\"?",
+          "tool": "AskNews",
+          "deep_research_query": "Provide articles from 2025-2026 about Department of Justice efforts or announcements to eliminate the requirement that U.S. attorneys consult the Public Integrity Section before prosecuting lawmakers."
+        }
+      ],
+      "tools_used": [
+        "AskNews",
+        "Google News",
+        "Google"
+      ],
+      "llm_cost": 0.1776,
+      "llm_cost_summarization": 0.1687,
+      "llm_cost_agentic": 0.0089,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5501,
+        "token_output": 1913,
+        "cost": 0.045198,
+        "duration_seconds": 53.03153467178345,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17771,
+        "token_output": 1992,
+        "cost": 0.08319299999999999,
+        "duration_seconds": 61.167149782180786,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5501,
+        "token_output": 2019,
+        "cost": 0.046787999999999996,
+        "duration_seconds": 53.031590700149536,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16981,
+        "token_output": 1696,
+        "cost": 0.076383,
+        "duration_seconds": 61.16712546348572,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4943,
+        "token_output": 2589,
+        "cost": 0.04489625,
+        "duration_seconds": 53.03163003921509,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15875,
+        "token_output": 2760,
+        "cost": 0.06642125,
+        "duration_seconds": 61.167097330093384,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4943,
+        "token_output": 1766,
+        "cost": 0.024014,
+        "duration_seconds": 53.031659841537476,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15798,
+        "token_output": 1557,
+        "cost": 0.044052,
+        "duration_seconds": 61.16706991195679,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4943,
+        "token_output": 1619,
+        "cost": 0.022838,
+        "duration_seconds": 53.03168988227844,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15163,
+        "token_output": 2146,
+        "cost": 0.047493999999999995,
+        "duration_seconds": 61.16704273223877,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.025,
+    "step2_search": 0.42,
+    "step3_outside_view": 0.1837,
+    "step5_inside_view": 0.3175
+  },
+  "total_pipeline_cost": 0.9463
+}
