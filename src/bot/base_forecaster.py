@@ -64,6 +64,17 @@ CROSS_POLLINATION_MAP: dict[int, tuple[int, str]] = {
 }
 
 
+# Sentinel prefix for failed outside view outputs. Used at the creation point
+# (error handling in step 3) and checked by _is_failed_output(). Using an
+# explicit sentinel avoids relying on natural exception string formats.
+_FAILED_OUTPUT_PREFIX = "[FAILED] "
+
+
+def _is_failed_output(output: str) -> bool:
+    """Check if an outside view output represents a failure (error or truncation)."""
+    return output.startswith(_FAILED_OUTPUT_PREFIX)
+
+
 class BaseForecaster(ForecasterMixin, ABC):
     """
     Abstract base class for all question type forecasters.
@@ -276,7 +287,7 @@ class BaseForecaster(ForecasterMixin, ABC):
 
             if isinstance(result, Exception):
                 log(f"\nForecaster_{i + 1} outside view ERROR: {result}")
-                outside_view_outputs.append(f"Error: {result}")
+                outside_view_outputs.append(f"{_FAILED_OUTPUT_PREFIX}{result}")
                 outside_view_metrics.error = str(result)
                 outside_view_metrics.duration_seconds = duration
             else:
@@ -293,7 +304,7 @@ class BaseForecaster(ForecasterMixin, ABC):
         if self.artifact_store:
             self.artifact_store.save_outside_view_prompt(outside_view_prompt)
             for i, output in enumerate(outside_view_outputs):
-                if not isinstance(output, Exception) and not output.startswith("Error:"):
+                if not _is_failed_output(output):
                     self.artifact_store.save_forecaster_outside_view(i + 1, output)
 
         step3_end_cost = snapshot_cost("step3_outside_view", step2_end_cost)
@@ -306,14 +317,33 @@ class BaseForecaster(ForecasterMixin, ABC):
         context_map = {}
         for i in range(5):
             source_idx, label = CROSS_POLLINATION_MAP[i]
-            if isinstance(outside_view_outputs[source_idx], Exception):
-                logger.warning(
-                    f"Cross-pollination source forecaster {source_idx + 1} failed; "
-                    f"forecaster {i + 1} will receive empty context"
-                )
-                source_output = ""
-            else:
-                source_output = outside_view_outputs[source_idx]
+            source_output = outside_view_outputs[source_idx]
+
+            # If the designated source failed, fall back to another valid outside view
+            if _is_failed_output(source_output):
+                fallback_idx = None
+                # Try self first (preserves diversity), then scan for any valid output
+                if not _is_failed_output(outside_view_outputs[i]):
+                    fallback_idx = i
+                else:
+                    for j in range(5):
+                        if not _is_failed_output(outside_view_outputs[j]):
+                            fallback_idx = j
+                            break
+
+                if fallback_idx is not None:
+                    source_output = outside_view_outputs[fallback_idx]
+                    logger.warning(
+                        f"Cross-pollination source forecaster {source_idx + 1} failed; "
+                        f"forecaster {i + 1} will receive forecaster {fallback_idx + 1}'s output instead"
+                    )
+                else:
+                    logger.warning(
+                        f"Cross-pollination source forecaster {source_idx + 1} failed; "
+                        f"no valid outside views available; forecaster {i + 1} will receive empty context"
+                    )
+                    source_output = ""
+
             context_map[i] = f"Current context: {current_context}\n{label}: {source_output}"
 
         # =========================================================================
@@ -393,7 +423,7 @@ class BaseForecaster(ForecasterMixin, ABC):
                 model=agent["model"],
                 weight=agent["weight"],
                 outside_view_output=outside_view_outputs[i]
-                if not isinstance(outside_view_outputs[i], Exception)
+                if not _is_failed_output(outside_view_outputs[i])
                 else "",
                 inside_view_output=output if not isinstance(output, Exception) else "",
                 prediction=prediction,
