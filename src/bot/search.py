@@ -1000,7 +1000,7 @@ class SearchPipeline:
                 # Extract queries with sources
                 queries_text = search_queries_match.group(1).strip()
                 search_queries_with_source = re.findall(
-                    r"\d+\.\s*([^(]+?)\s*\((Google|Google News|yFinance)\)",
+                    r"\d+\.\s*([^(]+?)\s*\((Google|Google News|yFinance|FRED)\)",
                     queries_text,
                 )
 
@@ -1030,6 +1030,7 @@ class SearchPipeline:
 
                 # Execute searches
                 yfinance_enabled = self.config.get("research", {}).get("yfinance_enabled", True)
+                fred_enabled = self.config.get("research", {}).get("fred_enabled", True)
                 search_tasks = []
                 executed_queries = []
                 for sq, source in search_queries_with_source:
@@ -1039,6 +1040,11 @@ class SearchPipeline:
                             logger.info(f"[agentic_search] yFinance disabled, skipping: {sq}")
                             continue
                         search_tasks.append(self._yfinance_search(sq))
+                    elif source == "FRED":
+                        if not fred_enabled:
+                            logger.info(f"[agentic_search] FRED disabled, skipping: {sq}")
+                            continue
+                        search_tasks.append(self._fred_search(sq))
                     else:
                         search_tasks.append(
                             self._google_search_agentic(sq, is_news=(source == "Google News"))

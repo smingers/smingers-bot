@@ -243,6 +243,8 @@ def normalize_percentile_line(s: str) -> str:
     s = DASH_RE.sub("-", s)
     # Strip bullets from the start, then strip any remaining whitespace
     s = s.strip().lstrip(BULLET_CHARS).strip()
+    # Remove markdown bold/italic markers (e.g., **Percentile 10**: 3.58)
+    s = s.replace("*", "")
     # Remove thousands-sep commas & NBSPs
     s = s.replace(",", "").replace("\u00a0", "")
     return s.lower()
