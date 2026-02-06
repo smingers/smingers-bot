@@ -1,0 +1,396 @@
+{
+  "centralized_research": {
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Metaculus United States Greenland sovereignty prediction",
+          "tool": "Google",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "United States Greenland sovereignty 2026 news",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Fetch time series of community prediction for Metaculus question 41502 over last 3 months, list significant daily changes with dates, correlate with major Greenland-US sovereignty news, and give current community prediction and number of forecasters.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 7,
+            "queries_executed": [
+              "Metaculus API question timeseries endpoint",
+              "Metaculus 41502 prediction data api",
+              "Greenland US sovereignty news 2026",
+              "Greenland Denmark US military option",
+              "Metaculus forecasters count field documentation",
+              "Metaculus API forecast timeseries",
+              "Metaculus /questions/41502/timeseries",
+              "question 41502 community_prediction field",
+              "Metaculus num_forecasters JSON",
+              "Greenland sovereignty Metaculus question 41502",
+              "metaculus \"forecast_timeseries\"",
+              "\"api2/questions/*/timeseries\" metaculus",
+              "metaculus 41502 api json",
+              "metaculus community_prediction field name",
+              "metaculus historic forecasts download",
+              "metaculus prediction_timeseries json key",
+              "\"prediction_timeseries\" site:github.com metaculus",
+              "api2 questions timeseries metaculus",
+              "\"timeseries\" metaculus question api",
+              "Analysis explains what is available and what is missing; current values still missing because source is not public.  \n4. All queries followed by",
+              "metaculus 41502 format json",
+              "metaculus graphql question 41502",
+              "\"prediction_timeseries\" stackoverflow",
+              "metaculus api token historic forecasts",
+              "41502 community_prediction metaculus",
+              "Metaculus question 41502 api2",
+              "Metaculus 41502 prediction_timeseries",
+              "Metaculus historic forecasts 41502",
+              "api2 timeseries metaculus login",
+              "Greenland sovereignty January 2026"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "Metaculus API question timeseries endpoint",
+                    "Google"
+                  ],
+                  [
+                    "Metaculus 41502 prediction data api",
+                    "Google"
+                  ],
+                  [
+                    "Greenland US sovereignty news 2026",
+                    "Google News"
+                  ],
+                  [
+                    "Greenland Denmark US military option",
+                    "Google News"
+                  ],
+                  [
+                    "Metaculus forecasters count field documentation",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 76413,
+                "analysis_chars": 0
+              },
+              {
+                "step_number": 2,
+                "queries_executed": [
+                  [
+                    "Metaculus API forecast timeseries",
+                    "Google"
+                  ],
+                  [
+                    "Metaculus /questions/41502/timeseries",
+                    "Google"
+                  ],
+                  [
+                    "question 41502 community_prediction field",
+                    "Google"
+                  ],
+                  [
+                    "Metaculus num_forecasters JSON",
+                    "Google"
+                  ],
+                  [
+                    "Greenland sovereignty Metaculus question 41502",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 64810,
+                "analysis_chars": 3133
+              },
+              {
+                "step_number": 3,
+                "queries_executed": [
+                  [
+                    "metaculus \"forecast_timeseries\"",
+                    "Google"
+                  ],
+                  [
+                    "\"api2/questions/*/timeseries\" metaculus",
+                    "Google"
+                  ],
+                  [
+                    "metaculus 41502 api json",
+                    "Google"
+                  ],
+                  [
+                    "metaculus community_prediction field name",
+                    "Google"
+                  ],
+                  [
+                    "metaculus historic forecasts download",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 71520,
+                "analysis_chars": 2991
+              },
+              {
+                "step_number": 4,
+                "queries_executed": [
+                  [
+                    "metaculus prediction_timeseries json key",
+                    "Google"
+                  ],
+                  [
+                    "\"prediction_timeseries\" site:github.com metaculus",
+                    "Google"
+                  ],
+                  [
+                    "api2 questions timeseries metaculus",
+                    "Google"
+                  ],
+                  [
+                    "\"timeseries\" metaculus question api",
+                    "Google"
+                  ],
+                  [
+                    "Analysis explains what is available and what is missing; current values still missing because source is not public.  \n4. All queries followed by",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 74543,
+                "analysis_chars": 4004
+              },
+              {
+                "step_number": 5,
+                "queries_executed": [
+                  [
+                    "metaculus 41502 format json",
+                    "Google"
+                  ],
+                  [
+                    "metaculus graphql question 41502",
+                    "Google"
+                  ],
+                  [
+                    "\"prediction_timeseries\" stackoverflow",
+                    "Google"
+                  ],
+                  [
+                    "metaculus api token historic forecasts",
+                    "Google"
+                  ],
+                  [
+                    "41502 community_prediction metaculus",
+                    "Google News"
+                  ]
+                ],
+                "search_results_chars": 33049,
+                "analysis_chars": 2897
+              },
+              {
+                "step_number": 6,
+                "queries_executed": [
+                  [
+                    "Metaculus question 41502 api2",
+                    "Google"
+                  ],
+                  [
+                    "Metaculus 41502 prediction_timeseries",
+                    "Google"
+                  ],
+                  [
+                    "Metaculus historic forecasts 41502",
+                    "Google"
+                  ],
+                  [
+                    "api2 timeseries metaculus login",
+                    "Google"
+                  ],
+                  [
+                    "Greenland sovereignty January 2026",
+                    "Google News"
+                  ]
+                ],
+                "search_results_chars": 39193,
+                "analysis_chars": 3598
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Google News",
+        "Agent"
+      ],
+      "llm_cost": 0.4072,
+      "llm_cost_summarization": 0.1674,
+      "llm_cost_agentic": 0.2398,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "United States Greenland sovereignty 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "US Denmark negotiations Greenland February 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Recent statements about U.S. gaining sovereignty over Greenland during 2026 and any legislative or diplomatic actions as of February 2026",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 24
+        },
+        {
+          "query": "Will the community prediction be higher than 10.00% on 2026-02-14 for the Metaculus question \"Will the United States gain formal sovereignty over any part of Greenland during 2026?\"?",
+          "tool": "AskNews",
+          "deep_research_query": "Recent statements about U.S. gaining sovereignty over Greenland during 2026 and any legislative or diplomatic actions as of February 2026"
+        }
+      ],
+      "tools_used": [
+        "AskNews",
+        "Google",
+        "Google News"
+      ],
+      "llm_cost": 0.1758,
+      "llm_cost_summarization": 0.1674,
+      "llm_cost_agentic": 0.0085,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5291,
+        "token_output": 1993,
+        "cost": 0.045767999999999996,
+        "duration_seconds": 58.93825960159302,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 19302,
+        "token_output": 2222,
+        "cost": 0.091236,
+        "duration_seconds": 61.871848821640015,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5291,
+        "token_output": 2281,
+        "cost": 0.050088,
+        "duration_seconds": 58.93836832046509,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 18477,
+        "token_output": 2222,
+        "cost": 0.088761,
+        "duration_seconds": 61.87180805206299,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4666,
+        "token_output": 2609,
+        "cost": 0.0446915,
+        "duration_seconds": 58.93840456008911,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17180,
+        "token_output": 2738,
+        "cost": 0.068397,
+        "duration_seconds": 61.87176585197449,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4666,
+        "token_output": 1942,
+        "cost": 0.024868,
+        "duration_seconds": 58.938483476638794,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16673,
+        "token_output": 1546,
+        "cost": 0.045714000000000005,
+        "duration_seconds": 61.87170457839966,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4666,
+        "token_output": 1973,
+        "cost": 0.025116,
+        "duration_seconds": 58.93854260444641,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16271,
+        "token_output": 1829,
+        "cost": 0.047174,
+        "duration_seconds": 61.87165355682373,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0151,
+    "step2_search": 0.4072,
+    "step3_outside_view": 0.1905,
+    "step5_inside_view": 0.3413
+  },
+  "total_pipeline_cost": 0.954
+}
