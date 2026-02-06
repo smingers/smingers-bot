@@ -135,8 +135,8 @@ class TestResolveYfinanceTicker:
 
     def test_multi_word_query(self, pipeline):
         result = pipeline._resolve_yfinance_ticker("apple inc stock")
-        # first word "apple" doesn't match ticker pattern, falls to last resort
-        assert result == "APPLEINC STOCK" or isinstance(result, str)
+        # first word "apple" matches ticker pattern (1-5 alpha, case-insensitive)
+        assert result == "APPLE"
 
 
 # ============================================================================

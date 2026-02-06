@@ -11,11 +11,12 @@ Key differences from previous approach:
 
 import asyncio
 import logging
+import math
 import os
 import re
 import traceback
 from dataclasses import dataclass
-from datetime import timedelta
+from datetime import datetime, timedelta
 from typing import Any
 
 import dateparser
@@ -1028,23 +1029,27 @@ class SearchPipeline:
                 all_search_queries.extend([q for q, _ in search_queries_with_source])
 
                 # Execute searches
+                yfinance_enabled = self.config.get("research", {}).get("yfinance_enabled", True)
                 search_tasks = []
+                executed_queries = []
                 for sq, source in search_queries_with_source:
                     logger.debug(f"[agentic_search] Searching: {sq} (Source: {source})")
                     if source == "yFinance":
+                        if not yfinance_enabled:
+                            logger.info(f"[agentic_search] yFinance disabled, skipping: {sq}")
+                            continue
                         search_tasks.append(self._yfinance_search(sq))
                     else:
                         search_tasks.append(
                             self._google_search_agentic(sq, is_news=(source == "Google News"))
                         )
+                    executed_queries.append((sq, source))
 
                 search_results_list = await asyncio.gather(*search_tasks, return_exceptions=True)
 
                 # Format search results
                 search_results = ""
-                for (sq, source), result in zip(
-                    search_queries_with_source, search_results_list, strict=True
-                ):
+                for (sq, source), result in zip(executed_queries, search_results_list, strict=True):
                     if isinstance(result, Exception):
                         search_results += (
                             f"\nSearch query: {sq} (Source: {source})\nError: {result}\n"
@@ -1250,7 +1255,6 @@ Note: Google Trends values are relative (0-100 scale), not absolute search volum
             return 10  # Default fallback
 
         import json
-        from datetime import datetime
 
         # Look for JSON block in description with trend dates
         # Format: {"format":"trends_interest_change_magnitude","info":{"trend_start":"2026-02-05","trend_end":"2026-02-14"}}
@@ -1553,25 +1557,10 @@ Source: Federal Reserve Economic Data (FRED), St. Louis Fed
             ticker_symbol = self._resolve_yfinance_ticker(cleaned_query)
             logger.info(f"[yfinance_search] Resolved ticker: '{ticker_symbol}'")
 
-            # Fetch data (all synchronous yfinance calls wrapped in to_thread)
-            def fetch_data(symbol=None):
-                t = yf.Ticker(symbol or ticker_symbol)
-                info = t.info or {}
-                hist_1y = t.history(period="1y")
-                hist_5y = t.history(period="5y")
-
-                # Options data (not available for all tickers)
-                options_chains = []
-                try:
-                    expiries = list(t.options)[:3]
-                    for exp in expiries:
-                        options_chains.append((exp, t.option_chain(exp)))
-                except Exception:
-                    pass
-
-                return info, hist_1y, hist_5y, options_chains
-
-            info, hist_1y, hist_5y, options_chains = await asyncio.to_thread(fetch_data)
+            # Fetch data (synchronous yfinance calls wrapped in to_thread)
+            info, hist_1y, hist_5y, options_chains = await asyncio.to_thread(
+                self._fetch_yfinance_data, yf, ticker_symbol
+            )
 
             # Validate - need at least some data
             current_price = info.get("regularMarketPrice") or info.get("currentPrice")
@@ -1581,7 +1570,7 @@ Source: Federal Reserve Economic Data (FRED), St. Louis Fed
                     f"[yfinance_search] No data for '{ticker_symbol}', "
                     f"searching yfinance for '{cleaned_query}'..."
                 )
-                resolved = await self._search_yfinance_ticker(yf, cleaned_query, fetch_data)
+                resolved = await self._search_yfinance_ticker(cleaned_query)
                 if resolved is not None:
                     ticker_symbol, info, hist_1y, hist_5y, options_chains = resolved
                     current_price = info.get("regularMarketPrice") or info.get("currentPrice")
@@ -1679,17 +1668,19 @@ Source: Federal Reserve Economic Data (FRED), St. Louis Fed
 
         # Direct ticker only
         if re.match(f"^{ticker_pattern}$", stripped, re.IGNORECASE):
-            return stripped.upper() if not stripped.startswith("^") else stripped
+            return "^" + stripped[1:].upper() if stripped.startswith("^") else stripped.upper()
 
         # First word might be a ticker followed by description: "^TWII price history"
         first_word = stripped.split()[0] if stripped.split() else stripped
         if re.match(f"^{ticker_pattern}$", first_word, re.IGNORECASE):
-            return first_word.upper() if not first_word.startswith("^") else first_word
+            return (
+                "^" + first_word[1:].upper() if first_word.startswith("^") else first_word.upper()
+            )
 
         # Last resort: uppercase the whole thing (may not work well for names)
         return stripped.upper().replace(" ", "")
 
-    async def _search_yfinance_ticker(self, yf, cleaned_query: str, fetch_data):
+    async def _search_yfinance_ticker(self, cleaned_query: str):
         """Fallback: search Yahoo Finance to find the correct ticker symbol.
 
         Called when the initial ticker guess returns no data. Tries multiple
@@ -1700,6 +1691,7 @@ Source: Federal Reserve Economic Data (FRED), St. Louis Fed
             Tuple of (ticker_symbol, info, hist_1y, hist_5y, options_chains)
             or None if no valid ticker was found.
         """
+        import yfinance as yf
         from yfinance import Search
 
         # Build search terms from the query — try multiple variations
@@ -1741,7 +1733,7 @@ Source: Federal Reserve Economic Data (FRED), St. Louis Fed
                     f"({quote.get('shortname', '')}) from search '{term}'"
                 )
                 try:
-                    data = await asyncio.to_thread(fetch_data, symbol)
+                    data = await asyncio.to_thread(self._fetch_yfinance_data, yf, symbol)
                     info, hist_1y, hist_5y, options_chains = data
                     price = info.get("regularMarketPrice") or info.get("currentPrice")
                     has_data = price is not None or (hist_1y is not None and not hist_1y.empty)
@@ -1755,6 +1747,27 @@ Source: Federal Reserve Economic Data (FRED), St. Louis Fed
                     continue
 
         return None
+
+    @staticmethod
+    def _fetch_yfinance_data(yf, symbol: str):
+        """Fetch price history, info, and options data for a yFinance ticker.
+
+        Runs synchronously — call via asyncio.to_thread.
+        """
+        t = yf.Ticker(symbol)
+        info = t.info or {}
+        hist_1y = t.history(period="1y")
+        hist_5y = t.history(period="5y")
+
+        options_chains = []
+        try:
+            expiries = list(t.options)[:3]
+            for exp in expiries:
+                options_chains.append((exp, t.option_chain(exp)))
+        except Exception:
+            pass
+
+        return info, hist_1y, hist_5y, options_chains
 
     def _format_yf_header(self, ticker_symbol: str, info: dict) -> str:
         """Format the header section with company info."""
@@ -1908,9 +1921,6 @@ Source: Federal Reserve Economic Data (FRED), St. Louis Fed
         """Format options-implied data from option chains."""
         if not options_chains or current_price is None:
             return ""
-
-        import math
-        from datetime import datetime
 
         lines = ["\nOPTIONS-IMPLIED DATA:"]
 
