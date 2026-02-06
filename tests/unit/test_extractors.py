@@ -217,19 +217,19 @@ class TestNormalizeProbabilities:
         assert all(p == pytest.approx(1 / 3) for p in result)
 
     def test_clamping_high_values(self):
-        """Test that values > 99 are clamped before normalizing."""
-        result = normalize_probabilities([150.0, 50.0])  # 150 should become 99
+        """Test that values > 99.9 are clamped before normalizing."""
+        result = normalize_probabilities([150.0, 50.0])  # 150 should become 99.9
         assert sum(result) == pytest.approx(1.0)
-        # 99/(99+50) and 50/(99+50)
-        assert result[0] == pytest.approx(99 / 149)
-        assert result[1] == pytest.approx(50 / 149)
+        # 99.9/(99.9+50) and 50/(99.9+50)
+        assert result[0] == pytest.approx(99.9 / 149.9)
+        assert result[1] == pytest.approx(50 / 149.9)
 
     def test_clamping_low_values(self):
-        """Test that values < 1 are clamped to 1 before normalizing."""
-        result = normalize_probabilities([0.0, 100.0])  # 0 should become 1
-        # 1/(1+99) and 99/(1+99)
-        assert result[0] == pytest.approx(1 / 100)
-        assert result[1] == pytest.approx(99 / 100)
+        """Test that values < 0.1 are clamped to 0.1 before normalizing."""
+        result = normalize_probabilities([0.0, 100.0])  # 0 should become 0.1
+        # 0.1/(0.1+99.9) and 99.9/(0.1+99.9)
+        assert result[0] == pytest.approx(0.1 / 100)
+        assert result[1] == pytest.approx(99.9 / 100)
 
     def test_rounding_correction(self):
         """Test that sum is exactly 1.0 after rounding correction."""

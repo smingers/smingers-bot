@@ -1,0 +1,236 @@
+{
+  "centralized_research": {
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "US planning strikes Iran 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Trump warns military action Iran protests",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Summarize 2024-2026 US-Iran military incidents, current US force deployments in region, and official U.S. statements suggesting potential attack on Iran; include developments through 5 Feb 2026.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "US Iran military incidents 2024-2026",
+              "US force deployments Persian Gulf 2026",
+              "Trump warns strike Iran January 2026",
+              "CENTCOM statement Iran attack threat 2025",
+              "carrier strike group Strait of Hormuz 2026"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "US Iran military incidents 2024-2026",
+                    "Google News"
+                  ],
+                  [
+                    "US force deployments Persian Gulf 2026",
+                    "Google"
+                  ],
+                  [
+                    "Trump warns strike Iran January 2026",
+                    "Google News"
+                  ],
+                  [
+                    "CENTCOM statement Iran attack threat 2025",
+                    "Google"
+                  ],
+                  [
+                    "carrier strike group Strait of Hormuz 2026",
+                    "Google News"
+                  ]
+                ],
+                "search_results_chars": 87750,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "Agent"
+      ],
+      "llm_cost": 0.2804,
+      "llm_cost_summarization": 0.2188,
+      "llm_cost_agentic": 0.0617,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "United States attack Iran preparations 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Pentagon Iran strike debate February 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Latest 2026 reporting on possible U.S. military strikes against Iran and Trump administration decisions",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 22
+        },
+        {
+          "query": "Will the United States attack Iran before April 2026?",
+          "tool": "AskNews",
+          "deep_research_query": "Latest 2026 reporting on possible U.S. military strikes against Iran and Trump administration decisions"
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "AskNews"
+      ],
+      "llm_cost": 0.1549,
+      "llm_cost_summarization": 0.1486,
+      "llm_cost_agentic": 0.0063,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 9182,
+        "token_output": 2953,
+        "cost": 0.071841,
+        "duration_seconds": 128.19404196739197,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 19811,
+        "token_output": 2823,
+        "cost": 0.10177800000000001,
+        "duration_seconds": 164.40394282341003,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 9182,
+        "token_output": 2633,
+        "cost": 0.067041,
+        "duration_seconds": 128.1942720413208,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 18472,
+        "token_output": 3645,
+        "cost": 0.110091,
+        "duration_seconds": 164.4037959575653,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8183,
+        "token_output": 3019,
+        "cost": 0.05658625,
+        "duration_seconds": 128.19435906410217,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17425,
+        "token_output": 3361,
+        "cost": 0.07754775,
+        "duration_seconds": 164.40361309051514,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8183,
+        "token_output": 2525,
+        "cost": 0.036566,
+        "duration_seconds": 128.1944169998169,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16872,
+        "token_output": 1488,
+        "cost": 0.045648,
+        "duration_seconds": 164.40340185165405,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8183,
+        "token_output": 1977,
+        "cost": 0.032182,
+        "duration_seconds": 128.19444298744202,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16114,
+        "token_output": 1632,
+        "cost": 0.045284,
+        "duration_seconds": 164.4032483100891,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0158,
+    "step2_search": 0.2804,
+    "step3_outside_view": 0.2642,
+    "step5_inside_view": 0.3803
+  },
+  "total_pipeline_cost": 0.9408
+}

@@ -109,7 +109,7 @@ async def forecast_question(
                         if hasattr(r, "probability") and r.probability
                     ]
                     if probs:
-                        print(f"Agent probabilities: {[f'{p:.0%}' for p in probs]}")
+                        print(f"Agent probabilities: {[f'{p:.0f}%' for p in probs]}")
             elif question_type == "numeric":
                 percentiles = result.get("prediction", {})
                 median = percentiles.get("50", percentiles.get(50, 0))

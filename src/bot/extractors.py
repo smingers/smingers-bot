@@ -199,8 +199,9 @@ def normalize_probabilities(probs: list[float]) -> list[float]:
     """
     Normalize probabilities to sum to 1.0.
 
-    Clamps each probability to [1, 99] before normalizing. This is a Metaculus
-    platform constraint - they don't accept 0% or 100% for any option.
+    Clamps each probability to [0.1, 99.9] before normalizing. The Metaculus
+    API accepts values as low as 0.1% for multiple choice options (verified
+    empirically), matching the 0.001 floor used for binary questions.
 
     Args:
         probs: List of raw probability values (as percentages)
@@ -208,8 +209,8 @@ def normalize_probabilities(probs: list[float]) -> list[float]:
     Returns:
         List of normalized probabilities summing to 1.0
     """
-    # Clamp to [1, 99] (Metaculus constraint: no 0% or 100%)
-    probs = [max(min(p, 99), 1) for p in probs]
+    # Clamp to [0.1, 99.9] (Metaculus API accepts this; matches binary floor)
+    probs = [max(min(p, 99.9), 0.1) for p in probs]
 
     # Normalize
     total = sum(probs)

@@ -1,0 +1,941 @@
+{
+  "id": 36030,
+  "title": "What will be the value of the Taiwan Stock Index (TAIEX) at the end of 2026?",
+  "short_title": "What will be the value of Taiwan Stock Index at end of 2026?",
+  "url_title": "What will be the value of Taiwan Stock Index at end of 2026?",
+  "slug": "what-will-be-the-value-of-taiwan-stock-index-at-end-of-2026",
+  "author_id": 115666,
+  "author_username": "Cato",
+  "coauthors": [],
+  "created_at": "2025-03-15T11:36:58.699303Z",
+  "published_at": "2025-03-17T22:19:32.345181Z",
+  "edited_at": "2026-01-09T16:12:48.810940Z",
+  "curation_status": "approved",
+  "curation_status_updated_at": "2025-03-17T22:19:32.345178Z",
+  "comment_count": 2,
+  "status": "open",
+  "resolved": false,
+  "actual_close_time": null,
+  "scheduled_close_time": "2026-12-01T00:00:00Z",
+  "scheduled_resolve_time": "2027-01-31T00:00:00Z",
+  "actual_resolve_time": null,
+  "open_time": "2025-03-21T22:17:00Z",
+  "nr_forecasters": 7,
+  "html_metadata_json": null,
+  "projects": {
+    "leaderboard_tag": [
+      {
+        "id": 32927,
+        "name": "2025-2026 Leaderboard",
+        "slug": "2025_2026_leaderboard",
+        "type": "leaderboard_tag"
+      }
+    ],
+    "site_main": [
+      {
+        "id": 144,
+        "type": "site_main",
+        "name": "Metaculus Community",
+        "slug": null,
+        "header_image": null,
+        "prize_pool": null,
+        "start_date": null,
+        "close_date": null,
+        "forecasting_end_date": null,
+        "html_metadata_json": null,
+        "is_ongoing": null,
+        "user_permission": null,
+        "order": 0,
+        "created_at": "2023-11-08T16:55:29.484707Z",
+        "edited_at": "2025-12-15T13:27:26.396036Z",
+        "score_type": null,
+        "default_permission": "forecaster",
+        "visibility": "normal",
+        "show_on_homepage": false,
+        "is_current_content_translated": false,
+        "bot_leaderboard_status": "exclude_and_show",
+        "description_preview": "-"
+      }
+    ],
+    "default_project": {
+      "id": 144,
+      "type": "site_main",
+      "name": "Metaculus Community",
+      "slug": null,
+      "header_image": null,
+      "prize_pool": null,
+      "start_date": null,
+      "close_date": null,
+      "forecasting_end_date": null,
+      "html_metadata_json": null,
+      "is_ongoing": null,
+      "user_permission": null,
+      "order": 0,
+      "created_at": "2023-11-08T16:55:29.484707Z",
+      "edited_at": "2025-12-15T13:27:26.396036Z",
+      "score_type": null,
+      "default_permission": "forecaster",
+      "visibility": "normal",
+      "show_on_homepage": false,
+      "is_current_content_translated": false,
+      "bot_leaderboard_status": "exclude_and_show",
+      "description_preview": "-"
+    },
+    "category": [
+      {
+        "id": 3698,
+        "name": "Economy & Business",
+        "slug": "economy-business",
+        "emoji": "\ud83d\udcbc",
+        "description": "Economy & Business",
+        "type": "category"
+      },
+      {
+        "id": 3687,
+        "name": "Geopolitics",
+        "slug": "geopolitics",
+        "emoji": "\ud83c\udf0d",
+        "description": "Geopolitics",
+        "type": "category"
+      }
+    ]
+  },
+  "question": {
+    "id": 35466,
+    "title": "What will be the value of the Taiwan Stock Index (TAIEX) at the end of 2026?",
+    "created_at": "2025-03-15T11:36:58.699686Z",
+    "open_time": "2025-03-21T22:17:00Z",
+    "cp_reveal_time": "2025-03-25T22:17:00Z",
+    "spot_scoring_time": "2025-03-25T22:17:00Z",
+    "scheduled_resolve_time": "2027-01-31T00:00:00Z",
+    "actual_resolve_time": null,
+    "resolution_set_time": null,
+    "scheduled_close_time": "2026-12-01T00:00:00Z",
+    "actual_close_time": "2026-12-01T00:00:00Z",
+    "type": "numeric",
+    "options": [],
+    "all_options_ever": null,
+    "options_history": null,
+    "group_variable": "",
+    "status": "open",
+    "possibilities": null,
+    "resolution": null,
+    "include_bots_in_aggregates": false,
+    "question_weight": 1.0,
+    "default_score_type": "peer",
+    "default_aggregation_method": "recency_weighted",
+    "label": "",
+    "unit": "",
+    "open_upper_bound": true,
+    "open_lower_bound": false,
+    "inbound_outcome_count": null,
+    "scaling": {
+      "range_min": 0.0,
+      "range_max": 50000.0,
+      "nominal_min": 0.0,
+      "nominal_max": 50000.0,
+      "zero_point": null,
+      "open_upper_bound": true,
+      "open_lower_bound": false,
+      "inbound_outcome_count": null,
+      "continuous_range": [
+        0.0,
+        250.0,
+        500.0,
+        750.0,
+        1000.0,
+        1250.0,
+        1500.0,
+        1750.0000000000002,
+        2000.0,
+        2250.0,
+        2500.0,
+        2750.0,
+        3000.0,
+        3250.0,
+        3500.0000000000005,
+        3750.0,
+        4000.0,
+        4250.0,
+        4500.0,
+        4750.0,
+        5000.0,
+        5250.0,
+        5500.0,
+        5750.0,
+        6000.0,
+        6250.0,
+        6500.0,
+        6750.0,
+        7000.000000000001,
+        7249.999999999999,
+        7500.0,
+        7750.0,
+        8000.0,
+        8250.0,
+        8500.0,
+        8750.0,
+        9000.0,
+        9250.0,
+        9500.0,
+        9750.0,
+        10000.0,
+        10250.0,
+        10500.0,
+        10750.0,
+        11000.0,
+        11250.0,
+        11500.0,
+        11750.0,
+        12000.0,
+        12250.0,
+        12500.0,
+        12750.0,
+        13000.0,
+        13250.0,
+        13500.0,
+        13750.000000000002,
+        14000.000000000002,
+        14250.000000000002,
+        14499.999999999998,
+        14750.0,
+        15000.0,
+        15250.0,
+        15500.0,
+        15750.0,
+        16000.0,
+        16250.0,
+        16500.0,
+        16750.0,
+        17000.0,
+        17250.0,
+        17500.0,
+        17750.0,
+        18000.0,
+        18250.0,
+        18500.0,
+        18750.0,
+        19000.0,
+        19250.0,
+        19500.0,
+        19750.0,
+        20000.0,
+        20250.0,
+        20500.0,
+        20750.0,
+        21000.0,
+        21250.0,
+        21500.0,
+        21750.0,
+        22000.0,
+        22250.0,
+        22500.0,
+        22750.0,
+        23000.0,
+        23250.0,
+        23500.0,
+        23750.0,
+        24000.0,
+        24250.0,
+        24500.0,
+        24750.0,
+        25000.0,
+        25250.0,
+        25500.0,
+        25750.0,
+        26000.0,
+        26250.0,
+        26500.0,
+        26750.0,
+        27000.0,
+        27250.000000000004,
+        27500.000000000004,
+        27750.000000000004,
+        28000.000000000004,
+        28250.000000000004,
+        28500.000000000004,
+        28750.000000000004,
+        28999.999999999996,
+        29250.0,
+        29500.0,
+        29750.0,
+        30000.0,
+        30250.0,
+        30500.0,
+        30750.0,
+        31000.0,
+        31250.0,
+        31500.0,
+        31750.0,
+        32000.0,
+        32250.0,
+        32500.0,
+        32750.0,
+        33000.0,
+        33250.0,
+        33500.0,
+        33750.0,
+        34000.0,
+        34250.0,
+        34500.0,
+        34750.0,
+        35000.0,
+        35250.0,
+        35500.0,
+        35750.0,
+        36000.0,
+        36250.0,
+        36500.0,
+        36750.0,
+        37000.0,
+        37250.0,
+        37500.0,
+        37750.0,
+        38000.0,
+        38250.0,
+        38500.0,
+        38750.0,
+        39000.0,
+        39250.0,
+        39500.0,
+        39750.0,
+        40000.0,
+        40250.0,
+        40500.0,
+        40750.0,
+        41000.0,
+        41250.0,
+        41500.0,
+        41750.0,
+        42000.0,
+        42250.0,
+        42500.0,
+        42750.0,
+        43000.0,
+        43250.0,
+        43500.0,
+        43750.0,
+        44000.0,
+        44250.0,
+        44500.0,
+        44750.0,
+        45000.0,
+        45250.0,
+        45500.0,
+        45750.0,
+        46000.0,
+        46250.0,
+        46500.0,
+        46750.0,
+        47000.0,
+        47250.0,
+        47500.0,
+        47750.0,
+        48000.0,
+        48250.0,
+        48500.0,
+        48750.0,
+        49000.0,
+        49250.0,
+        49500.0,
+        49750.0,
+        50000.0
+      ]
+    },
+    "group_rank": null,
+    "coherence_links": null,
+    "coherence_link_aggregations": null,
+    "description": "The [Taiwan Stock Exchange](https://www.twse.com.tw/en/) (TWSE) is the primary stock exchange in Taiwan. At the end of 2023 TWSE had [approximately 1000 listings](https://www.twse.com.tw/downloads/zh/about/company/factbook/2024/1.01.html) with an aggregate market capitalization of [over 2x the country's GDP](https://www.twse.com.tw/downloads/zh/about/company/factbook/2024/1.02.html). The largest listed company is Taiwan Semiconductor, [with almost 10x the market capitalization of the next largest, which is Mediatek](https://www.twse.com.tw/downloads/zh/about/company/factbook/2024/1.04.html). While [the exchange is dominated by electronics designers and manufacturers](https://www.twse.com.tw/downloads/zh/about/company/factbook/2024/1.03.html), prominent exceptions include [Formosa Petrochemical](https://www.fpcc.com.tw/en) and [Cathay Financial Holdings](https://www.cathayholdings.com/en/holdings/intro/intro/about).\n\nThe most widely reported index for stocks on TWSE is the \"Taiwan Stock Exchange Capitalization Weighted Index\" or TAIEX. At the end of 2024 its value was approximately 23000.\n\n![](https://cdn.metaculus.com/user_uploaded/%C3%A5%C2%BE%C3%A7_1B9Nm4L.png)\n\n([Image source](https://taiwanindex.com.tw/en/indexes/t00/history?interval=five_years))\n\nThe same price index is also tracked by Trading Economics: [https://tradingeconomics.com/taiwan/stock-market](https://tradingeconomics.com/taiwan/stock-market)\n\nEvents such as an [invasion by China](https://www.metaculus.com/questions/11480/chinese-invasion-of-taiwan/), [blockade by China](https://www.metaculus.com/questions/12309/china-engages-in-a-blockade-against-taiwan/), or [armed conflict with China](https://www.metaculus.com/questions/7792/100-deaths-in-chinataiwan-conflict-by-2026/) would plausibly lead TAIEX to drop significantly.",
+    "resolution_criteria": "Resolves as the value of the Price Index of the Taiwan Stock Exchange Capitalization-Weighted Stock Index (TAIEX) at the close of the final trading day in 2026. Resolution source: [https://taiwanindex.com.tw/en/indexes/t00/history?interval=five\\_years](https://taiwanindex.com.tw/en/indexes/t00/history?interval=five_years)",
+    "fine_print": "The resolution value will be at the precision that it is presented by the resolution source. For example, the final trading day in 2024 was December 31, and the value presented was 23035.1; this would be the number used for resolution.\n\nIf the Taiwan Stock Market Index ceases to exist before the end of 2026, the question will be **annulled**.",
+    "short_title": "What will be the value of Taiwan Stock Index at end of 2026?",
+    "post_id": 36030,
+    "aggregations": {
+      "recency_weighted": {
+        "history": [
+          {
+            "start_time": 1742759554.868756,
+            "end_time": 1742768637.34052,
+            "forecaster_count": 1,
+            "interval_lower_bounds": [
+              0.35027668037411713
+            ],
+            "centers": [
+              0.43812570540379986
+            ],
+            "interval_upper_bounds": [
+              0.5266797112342821
+            ]
+          },
+          {
+            "start_time": 1742768637.34052,
+            "end_time": 1742782693.869092,
+            "forecaster_count": 2,
+            "interval_lower_bounds": [
+              0.34594529521808204
+            ],
+            "centers": [
+              0.45031506008585737
+            ],
+            "interval_upper_bounds": [
+              0.5585614066622843
+            ]
+          },
+          {
+            "start_time": 1742782693.869092,
+            "end_time": 1742797068.642375,
+            "forecaster_count": 3,
+            "interval_lower_bounds": [
+              0.397755462163706
+            ],
+            "centers": [
+              0.47046187147903956
+            ],
+            "interval_upper_bounds": [
+              0.5467282882473182
+            ]
+          },
+          {
+            "start_time": 1742797068.642375,
+            "end_time": 1742966405.33258,
+            "forecaster_count": 4,
+            "interval_lower_bounds": [
+              0.3913530802425077
+            ],
+            "centers": [
+              0.4493976061022063
+            ],
+            "interval_upper_bounds": [
+              0.5142498823991335
+            ]
+          },
+          {
+            "start_time": 1742966405.33258,
+            "end_time": 1743086964.968569,
+            "forecaster_count": 5,
+            "interval_lower_bounds": [
+              0.39952062153895485
+            ],
+            "centers": [
+              0.45667848864103705
+            ],
+            "interval_upper_bounds": [
+              0.5189252161255679
+            ]
+          },
+          {
+            "start_time": 1743086964.968569,
+            "end_time": 1743380491.263559,
+            "forecaster_count": 5,
+            "interval_lower_bounds": [
+              0.39872795028778585
+            ],
+            "centers": [
+              0.4569377416143823
+            ],
+            "interval_upper_bounds": [
+              0.5195156726835034
+            ]
+          },
+          {
+            "start_time": 1743380491.263559,
+            "end_time": 1753159035.827061,
+            "forecaster_count": 5,
+            "interval_lower_bounds": [
+              0.389184477574209
+            ],
+            "centers": [
+              0.4561012468077279
+            ],
+            "interval_upper_bounds": [
+              0.5266037705398048
+            ]
+          },
+          {
+            "start_time": 1753159035.827061,
+            "end_time": 1753448268.524025,
+            "forecaster_count": 5,
+            "interval_lower_bounds": [
+              0.3931673839811576
+            ],
+            "centers": [
+              0.4572626512955644
+            ],
+            "interval_upper_bounds": [
+              0.5244662739615954
+            ]
+          },
+          {
+            "start_time": 1753448268.524025,
+            "end_time": 1753480249.869092,
+            "forecaster_count": 5,
+            "interval_lower_bounds": [
+              0.3992254332210511
+            ],
+            "centers": [
+              0.46124812411026944
+            ],
+            "interval_upper_bounds": [
+              0.529227318168967
+            ]
+          },
+          {
+            "start_time": 1753480249.869092,
+            "end_time": 1753701711.381543,
+            "forecaster_count": 4,
+            "interval_lower_bounds": [
+              0.3916521785603224
+            ],
+            "centers": [
+              0.4573258211271009
+            ],
+            "interval_upper_bounds": [
+              0.5292462669542732
+            ]
+          },
+          {
+            "start_time": 1753701711.381543,
+            "end_time": 1753701717.967822,
+            "forecaster_count": 5,
+            "interval_lower_bounds": [
+              0.3978948427864868
+            ],
+            "centers": [
+              0.46489026611176143
+            ],
+            "interval_upper_bounds": [
+              0.5332404928175981
+            ]
+          },
+          {
+            "start_time": 1753701717.967822,
+            "end_time": 1757651701.178249,
+            "forecaster_count": 5,
+            "interval_lower_bounds": [
+              0.3978948427864868
+            ],
+            "centers": [
+              0.46489026611176143
+            ],
+            "interval_upper_bounds": [
+              0.5332404928175981
+            ]
+          },
+          {
+            "start_time": 1757651701.178249,
+            "end_time": 1760022615.61231,
+            "forecaster_count": 5,
+            "interval_lower_bounds": [
+              0.4082176812474528
+            ],
+            "centers": [
+              0.4759436659256079
+            ],
+            "interval_upper_bounds": [
+              0.5430472837028308
+            ]
+          },
+          {
+            "start_time": 1760022615.61231,
+            "end_time": 1761080126.564854,
+            "forecaster_count": 5,
+            "interval_lower_bounds": [
+              0.41605868459060685
+            ],
+            "centers": [
+              0.49029148241107967
+            ],
+            "interval_upper_bounds": [
+              0.5633058109534277
+            ]
+          },
+          {
+            "start_time": 1761080126.564854,
+            "end_time": 1762956251.812961,
+            "forecaster_count": 5,
+            "interval_lower_bounds": [
+              0.41192730799368754
+            ],
+            "centers": [
+              0.4849451047423505
+            ],
+            "interval_upper_bounds": [
+              0.5575835788613565
+            ]
+          },
+          {
+            "start_time": 1762956251.812961,
+            "end_time": 1763197810.539534,
+            "forecaster_count": 5,
+            "interval_lower_bounds": [
+              0.41688791077365345
+            ],
+            "centers": [
+              0.4921959398372102
+            ],
+            "interval_upper_bounds": [
+              0.5664655764852949
+            ]
+          },
+          {
+            "start_time": 1763197810.539534,
+            "end_time": 1764181727.180747,
+            "forecaster_count": 5,
+            "interval_lower_bounds": [
+              0.42000985890307146
+            ],
+            "centers": [
+              0.500435974829613
+            ],
+            "interval_upper_bounds": [
+              0.5820263292848386
+            ]
+          },
+          {
+            "start_time": 1764181727.180747,
+            "end_time": 1764181733.821079,
+            "forecaster_count": 5,
+            "interval_lower_bounds": [
+              0.4343246175727093
+            ],
+            "centers": [
+              0.5093299096538807
+            ],
+            "interval_upper_bounds": [
+              0.5830544828520434
+            ]
+          },
+          {
+            "start_time": 1764181733.821079,
+            "end_time": 1764409451.857221,
+            "forecaster_count": 5,
+            "interval_lower_bounds": [
+              0.4317187868193424
+            ],
+            "centers": [
+              0.5056684480593255
+            ],
+            "interval_upper_bounds": [
+              0.5796173063742301
+            ]
+          },
+          {
+            "start_time": 1764409451.857221,
+            "end_time": 1764483552.78696,
+            "forecaster_count": 6,
+            "interval_lower_bounds": [
+              0.4622204166588737
+            ],
+            "centers": [
+              0.5620125550643427
+            ],
+            "interval_upper_bounds": [
+              1.0
+            ]
+          },
+          {
+            "start_time": 1764483552.78696,
+            "end_time": 1764514400.597233,
+            "forecaster_count": 6,
+            "interval_lower_bounds": [
+              0.4637978558688253
+            ],
+            "centers": [
+              0.5365952696923865
+            ],
+            "interval_upper_bounds": [
+              0.707418245447521
+            ]
+          },
+          {
+            "start_time": 1764514400.597233,
+            "end_time": 1764514403.828031,
+            "forecaster_count": 6,
+            "interval_lower_bounds": [
+              0.4760019256340213
+            ],
+            "centers": [
+              0.5423695655262869
+            ],
+            "interval_upper_bounds": [
+              0.6450180585433642
+            ]
+          },
+          {
+            "start_time": 1764514403.828031,
+            "end_time": 1767975158.375601,
+            "forecaster_count": 6,
+            "interval_lower_bounds": [
+              0.4760019256340213
+            ],
+            "centers": [
+              0.5423695655262869
+            ],
+            "interval_upper_bounds": [
+              0.6450180585433642
+            ]
+          },
+          {
+            "start_time": 1767975158.375601,
+            "end_time": 1772259552.353,
+            "forecaster_count": 6,
+            "interval_lower_bounds": [
+              0.48233666302250666
+            ],
+            "centers": [
+              0.5554821320465596
+            ],
+            "interval_upper_bounds": [
+              0.6524019792512535
+            ]
+          }
+        ],
+        "latest": {
+          "start_time": 1767975158.375601,
+          "end_time": 1772259552.353,
+          "forecaster_count": 6,
+          "interval_lower_bounds": [
+            0.48233666302250666
+          ],
+          "centers": [
+            0.5554821320465596
+          ],
+          "interval_upper_bounds": [
+            0.6524019792512535
+          ],
+          "forecast_values": [
+            0.0,
+            6.827232072047759e-05,
+            0.00013773560104308986,
+            0.00020846811746607312,
+            0.0002805535098382795,
+            0.0003540809142190563,
+            0.0004291455386100835,
+            0.0005058489999559333,
+            0.0005842998478530465,
+            0.0006646139122568322,
+            0.0007469150183114063,
+            0.0008313353998298691,
+            0.0009180165025409844,
+            0.0010071093905668676,
+            0.001098775663432719,
+            0.0011931882400464788,
+            0.001290532078045528,
+            0.0013910052456914325,
+            0.0014948198119452243,
+            0.0016022029579091663,
+            0.0017133982237897178,
+            0.0018286667668230639,
+            0.001948288863886551,
+            0.0020725651659157934,
+            0.002201818942301552,
+            0.002336397386964294,
+            0.002476674105739763,
+            0.0026230510682766868,
+            0.002775961441544297,
+            0.0029358719706424185,
+            0.00310328639909561,
+            0.0032787486414144187,
+            0.003462846616217883,
+            0.003656216445213033,
+            0.0038595471001159876,
+            0.004073585687198615,
+            0.004299143001806348,
+            0.0045371003537142416,
+            0.004788416550661908,
+            0.00505413627659703,
+            0.0053353988348638455,
+            0.005633448884846132,
+            0.005949647421919893,
+            0.006285485029466371,
+            0.0066425961619984005,
+            0.007022775531446408,
+            0.007427996226920971,
+            0.007860430371142361,
+            0.00832247190987893,
+            0.00881676247308515,
+            0.00934621985009615,
+            0.00991407034934622,
+            0.010523883976917201,
+            0.01117961413825361,
+            0.01188564079007882,
+            0.012646818388185413,
+            0.013468527378844899,
+            0.014356730649507285,
+            0.015318033190640058,
+            0.016359745709647704,
+            0.017489950667059086,
+            0.01871756959569514,
+            0.020052430315962228,
+            0.021505331323437165,
+            0.0230881006676052,
+            0.024813645415405292,
+            0.026695987067202852,
+            0.028750278197623786,
+            0.0309927934010676,
+            0.033440889407977736,
+            0.036112927424863064,
+            0.03902815247596514,
+            0.04220652619528753,
+            0.045668511668659525,
+            0.04943481388072493,
+            0.05352608341653527,
+            0.05796259841398369,
+            0.06276394596298676,
+            0.06794873032617485,
+            0.0735343403204151,
+            0.07953680817131079,
+            0.08597079065658063,
+            0.09284969005766738,
+            0.10018592050213547,
+            0.1079912999387063,
+            0.11627752617379786,
+            0.12505666897590537,
+            0.1343415934520212,
+            0.1441462172196397,
+            0.15448550969143507,
+            0.1653751563105591,
+            0.1768308436025214,
+            0.18886716168643033,
+            0.20149616697699713,
+            0.21472569564707816,
+            0.22855755465384128,
+            0.24298574447396906,
+            0.25799487385734554,
+            0.27355891758915846,
+            0.28964044211140555,
+            0.30619038628961903,
+            0.3231492748104233,
+            0.3404506250791616,
+            0.35801970922737675,
+            0.3757744574896666,
+            0.39362768978484164,
+            0.4114897415286646,
+            0.4292713701732209,
+            0.44689643262368184,
+            0.4643174326811205,
+            0.48149599898949075,
+            0.49839929322710497,
+            0.514999587527363,
+            0.5312736910325182,
+            0.5472022903965659,
+            0.5627692605155836,
+            0.5779609935115178,
+            0.5927657847540498,
+            0.6071733044408202,
+            0.6211741745441957,
+            0.6347596623062346,
+            0.6479214924499775,
+            0.6606517741627139,
+            0.6729427152916241,
+            0.684784371800098,
+            0.6961662670549138,
+            0.7070791373945396,
+            0.717515328326367,
+            0.7274691493709796,
+            0.7369371720148019,
+            0.7459184528385029,
+            0.7544146693636186,
+            0.7624301647569204,
+            0.7699719037714535,
+            0.7770493482279817,
+            0.7836742635623004,
+            0.7898604717481775,
+            0.7956235660566846,
+            0.8009806032210027,
+            0.8059497872952115,
+            0.8105501580951807,
+            0.8148012935760041,
+            0.8187230347162455,
+            0.8223352377797689,
+            0.8256575572173056,
+            0.8287092610306203,
+            0.8315090774047906,
+            0.8340750726447149,
+            0.8364245571111855,
+            0.838574017254925,
+            0.8405390703223752,
+            0.8423344387751994,
+            0.8439739415979775,
+            0.845470499332735,
+            0.8468361502232349,
+            0.8480820754106154,
+            0.8492186304768993,
+            0.8502553821793005,
+            0.8512011483377704,
+            0.8520640396932582,
+            0.8528515030030227,
+            0.8535703638915155,
+            0.8542268693880107,
+            0.8548267293289797,
+            0.8553751563696895,
+            0.8558769039077666,
+            0.856336302610537,
+            0.8567572944606752,
+            0.8571434649194103,
+            0.8574980728435145,
+            0.8578240786156811,
+            0.8581241697490125,
+            0.858400784981792,
+            0.8586561363852694,
+            0.8588922295972105,
+            0.8591108825873219,
+            0.8593137425874239,
+            0.8595023018644785,
+            0.8596779119618698,
+            0.8598417967366421,
+            0.8599950642609265,
+            0.8601387176456925,
+            0.8602736648131865,
+            0.8604007276346191,
+            0.8605206498626184,
+            0.8606341045553338,
+            0.8607417008284549,
+            0.8608439899609726,
+            0.8609414707222074,
+            0.8610345946286686,
+            0.8611237700989652,
+            0.8612093669886641,
+            0.8612917198321975,
+            0.8613711316120377,
+            0.8614478764522648,
+            0.8615222025127398,
+            0.8615943345757195,
+            0.8616644760648294,
+            0.8617328112382379,
+            0.8617995069008169,
+            0.8618647142412197
+          ],
+          "means": null,
+          "histogram": null
+        },
+        "score_data": {},
+        "movement": {
+          "divergence": 0.0,
+          "direction": "unchanged",
+          "movement": 0.0,
+          "period": "604800.0",
+          "option_index": null
+        }
+      }
+    },
+    "average_coverage": null,
+    "my_forecasts": {
+      "history": [],
+      "latest": null,
+      "score_data": {}
+    }
+  },
+  "user_permission": "forecaster",
+  "vote": {
+    "score": 1,
+    "user_vote": null
+  },
+  "forecasts_count": 23,
+  "subscriptions": [],
+  "unread_comment_count": 0,
+  "last_viewed_at": "2026-02-05T21:59:57.375848Z",
+  "private_note": null,
+  "key_factors": [],
+  "is_current_content_translated": false
+}

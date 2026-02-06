@@ -652,9 +652,9 @@ class MetaculusClient:
         Returns:
             API response dict
         """
-        # Clamp probabilities to [0.01, 0.99] to avoid extreme values
-        # (matches metaculus-forecasting-tools behavior)
-        clamped = {k: max(0.01, min(0.99, v)) for k, v in probabilities.items()}
+        # Clamp probabilities to [0.001, 0.999] to avoid literal 0/1
+        # (matches binary question floor; API verified to accept these values)
+        clamped = {k: max(0.001, min(0.999, v)) for k, v in probabilities.items()}
 
         # Normalize to sum to 1
         total = sum(clamped.values())

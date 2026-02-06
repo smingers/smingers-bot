@@ -1,0 +1,5186 @@
+{
+  "id": 41594,
+  "title": "Will the United States attack Iran before April 2026?",
+  "short_title": "Will the U.S. attack Iran before April 2026?",
+  "url_title": "Will the U.S. attack Iran before April 2026?",
+  "slug": "will-the-us-attack-iran-before-april-2026",
+  "author_id": 103907,
+  "author_username": "darkives",
+  "coauthors": [],
+  "created_at": "2026-01-17T18:58:49.294817Z",
+  "published_at": "2026-01-19T22:51:59Z",
+  "edited_at": "2026-02-06T00:50:55.588767Z",
+  "curation_status": "approved",
+  "curation_status_updated_at": "2026-01-19T22:57:26.955939Z",
+  "comment_count": 21,
+  "status": "open",
+  "resolved": false,
+  "actual_close_time": null,
+  "scheduled_close_time": "2026-04-01T00:00:00Z",
+  "scheduled_resolve_time": "2026-04-01T00:00:00Z",
+  "actual_resolve_time": null,
+  "open_time": "2026-01-21T17:00:00Z",
+  "nr_forecasters": 157,
+  "html_metadata_json": null,
+  "projects": {
+    "leaderboard_tag": [
+      {
+        "id": 32925,
+        "name": "2026 Leaderboard",
+        "slug": "2026_leaderboard",
+        "type": "leaderboard_tag"
+      }
+    ],
+    "tournament": [
+      {
+        "id": 32921,
+        "type": "tournament",
+        "name": "Metaculus Cup Spring 2026",
+        "slug": "metaculus-cup-spring-2026",
+        "header_image": "https://cdn.metaculus.com/cup-cover.jpg",
+        "prize_pool": "5000.00",
+        "start_date": "2026-01-07T17:00:00Z",
+        "close_date": "2026-05-01T00:00:00Z",
+        "forecasting_end_date": "2026-05-01T00:00:00Z",
+        "html_metadata_json": {
+          "image_url": "https://cdn.metaculus.com/user_uploaded/image_8.png"
+        },
+        "is_ongoing": true,
+        "user_permission": null,
+        "order": 0,
+        "created_at": "2025-12-29T12:43:16.555925Z",
+        "edited_at": "2026-02-06T00:57:39.806026Z",
+        "score_type": "peer_tournament",
+        "default_permission": "forecaster",
+        "visibility": "normal",
+        "show_on_homepage": true,
+        "is_current_content_translated": false,
+        "bot_leaderboard_status": "exclude_and_show",
+        "description_preview": "<p>Welcome to the Metaculus Cup! Forecasting novices and veterans are invited to make predictions on new topical questions each week while c"
+      }
+    ],
+    "default_project": {
+      "id": 32921,
+      "type": "tournament",
+      "name": "Metaculus Cup Spring 2026",
+      "slug": "metaculus-cup-spring-2026",
+      "header_image": "https://cdn.metaculus.com/cup-cover.jpg",
+      "prize_pool": "5000.00",
+      "start_date": "2026-01-07T17:00:00Z",
+      "close_date": "2026-05-01T00:00:00Z",
+      "forecasting_end_date": "2026-05-01T00:00:00Z",
+      "html_metadata_json": {
+        "image_url": "https://cdn.metaculus.com/user_uploaded/image_8.png"
+      },
+      "is_ongoing": true,
+      "user_permission": null,
+      "order": 0,
+      "created_at": "2025-12-29T12:43:16.555925Z",
+      "edited_at": "2026-02-06T00:57:39.806026Z",
+      "score_type": "peer_tournament",
+      "default_permission": "forecaster",
+      "visibility": "normal",
+      "show_on_homepage": true,
+      "is_current_content_translated": false,
+      "bot_leaderboard_status": "exclude_and_show",
+      "description_preview": "<p>Welcome to the Metaculus Cup! Forecasting novices and veterans are invited to make predictions on new topical questions each week while c"
+    },
+    "category": [
+      {
+        "id": 3687,
+        "name": "Geopolitics",
+        "slug": "geopolitics",
+        "emoji": "\ud83c\udf0d",
+        "description": "Geopolitics",
+        "type": "category"
+      }
+    ]
+  },
+  "question": {
+    "id": 41340,
+    "title": "Will the United States attack Iran before April 2026?",
+    "created_at": "2026-01-17T18:58:49.295277Z",
+    "open_time": "2026-01-21T17:00:00Z",
+    "cp_reveal_time": "2026-01-23T17:00:00Z",
+    "spot_scoring_time": "2026-01-23T17:00:00Z",
+    "scheduled_resolve_time": "2026-04-01T00:00:00Z",
+    "actual_resolve_time": null,
+    "resolution_set_time": null,
+    "scheduled_close_time": "2026-04-01T00:00:00Z",
+    "actual_close_time": "2026-04-01T00:00:00Z",
+    "type": "binary",
+    "options": null,
+    "all_options_ever": null,
+    "options_history": null,
+    "group_variable": "",
+    "status": "open",
+    "possibilities": null,
+    "resolution": null,
+    "include_bots_in_aggregates": false,
+    "question_weight": 1.0,
+    "default_score_type": "peer",
+    "default_aggregation_method": "recency_weighted",
+    "label": "",
+    "unit": "",
+    "open_upper_bound": false,
+    "open_lower_bound": false,
+    "inbound_outcome_count": null,
+    "scaling": {
+      "range_min": null,
+      "range_max": null,
+      "nominal_min": null,
+      "nominal_max": null,
+      "zero_point": null,
+      "open_upper_bound": false,
+      "open_lower_bound": false,
+      "inbound_outcome_count": null,
+      "continuous_range": null
+    },
+    "group_rank": null,
+    "coherence_links": null,
+    "coherence_link_aggregations": [
+      {
+        "id": 126,
+        "question1_id": 41209,
+        "question2_id": 41340,
+        "type": "causal",
+        "question1": {
+          "id": 41209,
+          "title": "Will the United States intervene militarily in Venezuela again before May 2026?",
+          "created_at": "2026-01-06T01:56:22.708620Z",
+          "open_time": "2026-01-07T17:00:00Z",
+          "cp_reveal_time": "2026-01-08T17:00:00Z",
+          "spot_scoring_time": "2026-01-08T17:00:00Z",
+          "scheduled_resolve_time": "2026-04-30T23:00:00Z",
+          "actual_resolve_time": null,
+          "resolution_set_time": null,
+          "scheduled_close_time": "2026-04-29T23:00:00Z",
+          "actual_close_time": "2026-04-29T23:00:00Z",
+          "type": "binary",
+          "options": null,
+          "all_options_ever": null,
+          "options_history": null,
+          "group_variable": "",
+          "status": "open",
+          "possibilities": null,
+          "resolution": null,
+          "include_bots_in_aggregates": false,
+          "question_weight": 1.0,
+          "default_score_type": "peer",
+          "default_aggregation_method": "recency_weighted",
+          "label": "",
+          "unit": "",
+          "open_upper_bound": false,
+          "open_lower_bound": false,
+          "inbound_outcome_count": null,
+          "scaling": {
+            "range_min": null,
+            "range_max": null,
+            "nominal_min": null,
+            "nominal_max": null,
+            "zero_point": null,
+            "open_upper_bound": false,
+            "open_lower_bound": false,
+            "inbound_outcome_count": null,
+            "continuous_range": null
+          },
+          "group_rank": null,
+          "coherence_links": null,
+          "coherence_link_aggregations": null,
+          "post_id": 41485,
+          "aggregations": {
+            "recency_weighted": {
+              "history": [],
+              "latest": null,
+              "score_data": {},
+              "movement": null
+            }
+          },
+          "average_coverage": null
+        },
+        "question2": {
+          "id": 41340,
+          "title": "Will the United States attack Iran before April 2026?",
+          "created_at": "2026-01-17T18:58:49.295277Z",
+          "open_time": "2026-01-21T17:00:00Z",
+          "cp_reveal_time": "2026-01-23T17:00:00Z",
+          "spot_scoring_time": "2026-01-23T17:00:00Z",
+          "scheduled_resolve_time": "2026-04-01T00:00:00Z",
+          "actual_resolve_time": null,
+          "resolution_set_time": null,
+          "scheduled_close_time": "2026-04-01T00:00:00Z",
+          "actual_close_time": "2026-04-01T00:00:00Z",
+          "type": "binary",
+          "options": null,
+          "all_options_ever": null,
+          "options_history": null,
+          "group_variable": "",
+          "status": "open",
+          "possibilities": null,
+          "resolution": null,
+          "include_bots_in_aggregates": false,
+          "question_weight": 1.0,
+          "default_score_type": "peer",
+          "default_aggregation_method": "recency_weighted",
+          "label": "",
+          "unit": "",
+          "open_upper_bound": false,
+          "open_lower_bound": false,
+          "inbound_outcome_count": null,
+          "scaling": {
+            "range_min": null,
+            "range_max": null,
+            "nominal_min": null,
+            "nominal_max": null,
+            "zero_point": null,
+            "open_upper_bound": false,
+            "open_lower_bound": false,
+            "inbound_outcome_count": null,
+            "continuous_range": null
+          },
+          "group_rank": null,
+          "coherence_links": null,
+          "coherence_link_aggregations": null,
+          "post_id": 41594,
+          "aggregations": {
+            "recency_weighted": {
+              "history": [],
+              "latest": null,
+              "score_data": {},
+              "movement": null
+            }
+          },
+          "average_coverage": null
+        },
+        "links_nr": 1,
+        "direction": 1,
+        "strength": 2.0,
+        "rsem": null,
+        "votes": {
+          "aggregated_data": [],
+          "user_vote": null,
+          "count": 0
+        }
+      },
+      {
+        "id": 127,
+        "question1_id": 41340,
+        "question2_id": 41316,
+        "type": "causal",
+        "question1": {
+          "id": 41340,
+          "title": "Will the United States attack Iran before April 2026?",
+          "created_at": "2026-01-17T18:58:49.295277Z",
+          "open_time": "2026-01-21T17:00:00Z",
+          "cp_reveal_time": "2026-01-23T17:00:00Z",
+          "spot_scoring_time": "2026-01-23T17:00:00Z",
+          "scheduled_resolve_time": "2026-04-01T00:00:00Z",
+          "actual_resolve_time": null,
+          "resolution_set_time": null,
+          "scheduled_close_time": "2026-04-01T00:00:00Z",
+          "actual_close_time": "2026-04-01T00:00:00Z",
+          "type": "binary",
+          "options": null,
+          "all_options_ever": null,
+          "options_history": null,
+          "group_variable": "",
+          "status": "open",
+          "possibilities": null,
+          "resolution": null,
+          "include_bots_in_aggregates": false,
+          "question_weight": 1.0,
+          "default_score_type": "peer",
+          "default_aggregation_method": "recency_weighted",
+          "label": "",
+          "unit": "",
+          "open_upper_bound": false,
+          "open_lower_bound": false,
+          "inbound_outcome_count": null,
+          "scaling": {
+            "range_min": null,
+            "range_max": null,
+            "nominal_min": null,
+            "nominal_max": null,
+            "zero_point": null,
+            "open_upper_bound": false,
+            "open_lower_bound": false,
+            "inbound_outcome_count": null,
+            "continuous_range": null
+          },
+          "group_rank": null,
+          "coherence_links": null,
+          "coherence_link_aggregations": null,
+          "post_id": 41594,
+          "aggregations": {
+            "recency_weighted": {
+              "history": [],
+              "latest": null,
+              "score_data": {},
+              "movement": null
+            }
+          },
+          "average_coverage": null
+        },
+        "question2": {
+          "id": 41316,
+          "title": "Will Jerome Powell cease to be a governor of the Federal Reserve Board before his term ends?",
+          "created_at": "2026-01-14T20:05:45.637902Z",
+          "open_time": "2026-01-18T19:20:30Z",
+          "cp_reveal_time": "2026-01-22T19:20:30Z",
+          "spot_scoring_time": "2026-01-22T19:20:30Z",
+          "scheduled_resolve_time": "2028-02-01T04:00:00Z",
+          "actual_resolve_time": null,
+          "resolution_set_time": null,
+          "scheduled_close_time": "2028-01-31T04:00:00Z",
+          "actual_close_time": "2028-01-31T04:00:00Z",
+          "type": "binary",
+          "options": null,
+          "all_options_ever": null,
+          "options_history": null,
+          "group_variable": "",
+          "status": "open",
+          "possibilities": null,
+          "resolution": null,
+          "include_bots_in_aggregates": false,
+          "question_weight": 1.0,
+          "default_score_type": "peer",
+          "default_aggregation_method": "recency_weighted",
+          "label": "",
+          "unit": "",
+          "open_upper_bound": false,
+          "open_lower_bound": false,
+          "inbound_outcome_count": null,
+          "scaling": {
+            "range_min": null,
+            "range_max": null,
+            "nominal_min": null,
+            "nominal_max": null,
+            "zero_point": null,
+            "open_upper_bound": false,
+            "open_lower_bound": false,
+            "inbound_outcome_count": null,
+            "continuous_range": null
+          },
+          "group_rank": null,
+          "coherence_links": null,
+          "coherence_link_aggregations": null,
+          "post_id": 41577,
+          "aggregations": {
+            "recency_weighted": {
+              "history": [],
+              "latest": null,
+              "score_data": {},
+              "movement": null
+            }
+          },
+          "average_coverage": null
+        },
+        "links_nr": 1,
+        "direction": 1,
+        "strength": 2.0,
+        "rsem": null,
+        "votes": {
+          "aggregated_data": [],
+          "user_vote": null,
+          "count": 0
+        }
+      },
+      {
+        "id": 129,
+        "question1_id": 41293,
+        "question2_id": 41340,
+        "type": "causal",
+        "question1": {
+          "id": 41293,
+          "title": "Will Laura Fern\u00e1ndez Delgado win the Costa Rican presidential election?",
+          "created_at": "2026-01-13T01:59:36.776841Z",
+          "open_time": "2026-01-21T17:00:00Z",
+          "cp_reveal_time": "2026-01-24T17:00:00Z",
+          "spot_scoring_time": "2026-01-24T17:00:00Z",
+          "scheduled_resolve_time": "2026-04-07T05:00:00Z",
+          "actual_resolve_time": "2026-02-01T14:00:00Z",
+          "resolution_set_time": "2026-02-03T10:23:33.301363Z",
+          "scheduled_close_time": "2026-04-05T05:00:00Z",
+          "actual_close_time": "2026-02-01T14:00:00Z",
+          "type": "binary",
+          "options": null,
+          "all_options_ever": null,
+          "options_history": null,
+          "group_variable": "",
+          "status": "resolved",
+          "possibilities": null,
+          "resolution": "yes",
+          "include_bots_in_aggregates": false,
+          "question_weight": 1.0,
+          "default_score_type": "peer",
+          "default_aggregation_method": "recency_weighted",
+          "label": "",
+          "unit": "",
+          "open_upper_bound": false,
+          "open_lower_bound": false,
+          "inbound_outcome_count": null,
+          "scaling": {
+            "range_min": null,
+            "range_max": null,
+            "nominal_min": null,
+            "nominal_max": null,
+            "zero_point": null,
+            "open_upper_bound": false,
+            "open_lower_bound": false,
+            "inbound_outcome_count": null,
+            "continuous_range": null
+          },
+          "group_rank": null,
+          "coherence_links": null,
+          "coherence_link_aggregations": null,
+          "post_id": 41555,
+          "aggregations": {
+            "recency_weighted": {
+              "history": [],
+              "latest": null,
+              "score_data": {},
+              "movement": null
+            }
+          },
+          "average_coverage": null
+        },
+        "question2": {
+          "id": 41340,
+          "title": "Will the United States attack Iran before April 2026?",
+          "created_at": "2026-01-17T18:58:49.295277Z",
+          "open_time": "2026-01-21T17:00:00Z",
+          "cp_reveal_time": "2026-01-23T17:00:00Z",
+          "spot_scoring_time": "2026-01-23T17:00:00Z",
+          "scheduled_resolve_time": "2026-04-01T00:00:00Z",
+          "actual_resolve_time": null,
+          "resolution_set_time": null,
+          "scheduled_close_time": "2026-04-01T00:00:00Z",
+          "actual_close_time": "2026-04-01T00:00:00Z",
+          "type": "binary",
+          "options": null,
+          "all_options_ever": null,
+          "options_history": null,
+          "group_variable": "",
+          "status": "open",
+          "possibilities": null,
+          "resolution": null,
+          "include_bots_in_aggregates": false,
+          "question_weight": 1.0,
+          "default_score_type": "peer",
+          "default_aggregation_method": "recency_weighted",
+          "label": "",
+          "unit": "",
+          "open_upper_bound": false,
+          "open_lower_bound": false,
+          "inbound_outcome_count": null,
+          "scaling": {
+            "range_min": null,
+            "range_max": null,
+            "nominal_min": null,
+            "nominal_max": null,
+            "zero_point": null,
+            "open_upper_bound": false,
+            "open_lower_bound": false,
+            "inbound_outcome_count": null,
+            "continuous_range": null
+          },
+          "group_rank": null,
+          "coherence_links": null,
+          "coherence_link_aggregations": null,
+          "post_id": 41594,
+          "aggregations": {
+            "recency_weighted": {
+              "history": [],
+              "latest": null,
+              "score_data": {},
+              "movement": null
+            }
+          },
+          "average_coverage": null
+        },
+        "links_nr": 1,
+        "direction": 1,
+        "strength": 2.0,
+        "rsem": null,
+        "votes": {
+          "aggregated_data": [],
+          "user_vote": null,
+          "count": 0
+        }
+      },
+      {
+        "id": 130,
+        "question1_id": 41081,
+        "question2_id": 41340,
+        "type": "causal",
+        "question1": {
+          "id": 41081,
+          "title": "Will there be at least one podium sweep at the 2026 Winter Olympic Games?",
+          "created_at": "2026-01-02T18:55:07.719479Z",
+          "open_time": "2026-01-07T17:00:00Z",
+          "cp_reveal_time": "2026-01-11T17:00:00Z",
+          "spot_scoring_time": "2026-01-11T17:00:00Z",
+          "scheduled_resolve_time": "2026-02-22T17:00:00Z",
+          "actual_resolve_time": null,
+          "resolution_set_time": null,
+          "scheduled_close_time": "2026-02-20T01:00:00Z",
+          "actual_close_time": "2026-02-20T01:00:00Z",
+          "type": "binary",
+          "options": null,
+          "all_options_ever": null,
+          "options_history": null,
+          "group_variable": "",
+          "status": "open",
+          "possibilities": null,
+          "resolution": null,
+          "include_bots_in_aggregates": false,
+          "question_weight": 1.0,
+          "default_score_type": "peer",
+          "default_aggregation_method": "recency_weighted",
+          "label": "",
+          "unit": "",
+          "open_upper_bound": false,
+          "open_lower_bound": false,
+          "inbound_outcome_count": null,
+          "scaling": {
+            "range_min": null,
+            "range_max": null,
+            "nominal_min": null,
+            "nominal_max": null,
+            "zero_point": null,
+            "open_upper_bound": false,
+            "open_lower_bound": false,
+            "inbound_outcome_count": null,
+            "continuous_range": null
+          },
+          "group_rank": null,
+          "coherence_links": null,
+          "coherence_link_aggregations": null,
+          "post_id": 41370,
+          "aggregations": {
+            "recency_weighted": {
+              "history": [],
+              "latest": null,
+              "score_data": {},
+              "movement": null
+            }
+          },
+          "average_coverage": null
+        },
+        "question2": {
+          "id": 41340,
+          "title": "Will the United States attack Iran before April 2026?",
+          "created_at": "2026-01-17T18:58:49.295277Z",
+          "open_time": "2026-01-21T17:00:00Z",
+          "cp_reveal_time": "2026-01-23T17:00:00Z",
+          "spot_scoring_time": "2026-01-23T17:00:00Z",
+          "scheduled_resolve_time": "2026-04-01T00:00:00Z",
+          "actual_resolve_time": null,
+          "resolution_set_time": null,
+          "scheduled_close_time": "2026-04-01T00:00:00Z",
+          "actual_close_time": "2026-04-01T00:00:00Z",
+          "type": "binary",
+          "options": null,
+          "all_options_ever": null,
+          "options_history": null,
+          "group_variable": "",
+          "status": "open",
+          "possibilities": null,
+          "resolution": null,
+          "include_bots_in_aggregates": false,
+          "question_weight": 1.0,
+          "default_score_type": "peer",
+          "default_aggregation_method": "recency_weighted",
+          "label": "",
+          "unit": "",
+          "open_upper_bound": false,
+          "open_lower_bound": false,
+          "inbound_outcome_count": null,
+          "scaling": {
+            "range_min": null,
+            "range_max": null,
+            "nominal_min": null,
+            "nominal_max": null,
+            "zero_point": null,
+            "open_upper_bound": false,
+            "open_lower_bound": false,
+            "inbound_outcome_count": null,
+            "continuous_range": null
+          },
+          "group_rank": null,
+          "coherence_links": null,
+          "coherence_link_aggregations": null,
+          "post_id": 41594,
+          "aggregations": {
+            "recency_weighted": {
+              "history": [],
+              "latest": null,
+              "score_data": {},
+              "movement": null
+            }
+          },
+          "average_coverage": null
+        },
+        "links_nr": 0,
+        "direction": null,
+        "strength": null,
+        "rsem": null,
+        "votes": {
+          "aggregated_data": [],
+          "user_vote": null,
+          "count": 0
+        }
+      }
+    ],
+    "description": "In 1979, the people of Iran [overthrew](https://en.wikipedia.org/wiki/Iranian_Revolution) the United States\u2013backed Shah Mohammad Reza Pahlavi and installed an Islamic government, [relations between the two countries](https://en.wikipedia.org/wiki/Iran%E2%80%93United_States_relations) have since ranged from hostile to non-existent ever since.\n\nDecades later, in his first term, U.S. President Donald Trump [increased pressure on Iran](https://en.wikipedia.org/wiki/Iran%E2%80%93United_States_relations_during_the_first_Trump_administration) by means of sanctions, withdrew from an [international agreement](https://en.wikipedia.org/wiki/Joint_Comprehensive_Plan_of_Action) to limit Iran's nuclear program, and [assassinated](https://en.wikipedia.org/wiki/Assassination_of_Qasem_Soleimani) the highest-ranking Iranian military official while they were in Iraq.\n\nIn June 2025, Israel launched an attack on Iran's military and nuclear facilities, sparking a [twelve-day war](https://en.wikipedia.org/wiki/Iran%E2%80%93Israel_war) between the countries, which ended shortly after the U.S. [dropped \"bunker-buster\" bombs](https://en.wikipedia.org/wiki/United_States_strikes_on_Iranian_nuclear_sites) on three Iranian nuclear sites.\n\nIn December 2025, [protests](https://en.wikipedia.org/wiki/2025%E2%80%932026_Iranian_protests) erupted across Iran in what has been described as the largest popular demonstrations in the country since the 1979 revolution. The protests take place in the context of an [economic crisis](https://en.wikipedia.org/wiki/Iranian_economic_crisis) exacerbated by international sanctions, while the Iranian government has responded by [killing thousands of protesters](https://en.wikipedia.org/wiki/2026_Iran_massacres).&#x20;\n\nU.S. President Trump has previously [threatened](https://www.reuters.com/world/middle-east/iran-warns-retaliation-if-trump-strikes-us-withdraws-some-personnel-bases-2026-01-14/) that the U.S. would intervene on behalf of the protesters, while he has also called for [\"new leadership\" for Iran](https://www.politico.com/news/2026/01/17/trump-to-politico-its-time-to-look-for-new-leadership-in-iran-00735528). Reza Pahlavi, the son of the deposed shah, [attempted to position](https://apnews.com/article/iran-protests-reza-pahlavi-trump-shah-63348442feefaaf1cdd7fffc142b2062) himself as a future leader of a secular Iranian state.\n\n[According to Sentinel](https://blog.sentinel-team.org/p/trump-administration-mulls-strikes), a foresight team that aims to anticipate large-scale catastrophes:\n\n> Forecasters think there\u2019s a 59% chance (55% to 65%) that the US strikes Iranian territory by March 31, 2026, and a 26.5% chance (10% to 51%) that Ayatollah Khamenei is out of power by then, for any reason (including death). Last week, they gave an aggregate estimate of 43% that the Iranian regime will fall by the end of 2026. Some readers, including some sharp prediction market traders, think those probabilities are too high.",
+    "resolution_criteria": "This question will resolve as **Yes** if, before April 1, 2026, the United States carries out a military attack against Iran's territory or military personnel, according to credible sources.",
+    "fine_print": "To qualify for this question, the attack must physically affect Iran's territory or military personnel: cyberattacks, warning shots in international waters, or other actions without immediate physical impact will not count.\n\nIf it is disputed whether the United States is responsible for an attack, this question will refer to credible sources or may resolve as ambiguous.",
+    "short_title": "Will the U.S. attack Iran before April 2026?",
+    "post_id": 41594,
+    "aggregations": {
+      "recency_weighted": {
+        "history": [
+          {
+            "start_time": 1769015069.351973,
+            "end_time": 1769022251.149099,
+            "forecaster_count": 1,
+            "interval_lower_bounds": [
+              0.49
+            ],
+            "centers": [
+              0.49
+            ],
+            "interval_upper_bounds": [
+              0.49
+            ]
+          },
+          {
+            "start_time": 1769022251.149099,
+            "end_time": 1769029716.083415,
+            "forecaster_count": 8,
+            "interval_lower_bounds": [
+              0.35
+            ],
+            "centers": [
+              0.42
+            ],
+            "interval_upper_bounds": [
+              0.5
+            ]
+          },
+          {
+            "start_time": 1769029716.083415,
+            "end_time": 1769037653.085651,
+            "forecaster_count": 11,
+            "interval_lower_bounds": [
+              0.35
+            ],
+            "centers": [
+              0.38
+            ],
+            "interval_upper_bounds": [
+              0.46
+            ]
+          },
+          {
+            "start_time": 1769037653.085651,
+            "end_time": 1769043661.721575,
+            "forecaster_count": 14,
+            "interval_lower_bounds": [
+              0.38
+            ],
+            "centers": [
+              0.42
+            ],
+            "interval_upper_bounds": [
+              0.491
+            ]
+          },
+          {
+            "start_time": 1769043661.721575,
+            "end_time": 1769049612.706369,
+            "forecaster_count": 17,
+            "interval_lower_bounds": [
+              0.4
+            ],
+            "centers": [
+              0.5
+            ],
+            "interval_upper_bounds": [
+              0.67
+            ]
+          },
+          {
+            "start_time": 1769049612.706369,
+            "end_time": 1769058296.53792,
+            "forecaster_count": 19,
+            "interval_lower_bounds": [
+              0.38
+            ],
+            "centers": [
+              0.5
+            ],
+            "interval_upper_bounds": [
+              0.6
+            ]
+          },
+          {
+            "start_time": 1769058296.53792,
+            "end_time": 1769063110.32508,
+            "forecaster_count": 22,
+            "interval_lower_bounds": [
+              0.4
+            ],
+            "centers": [
+              0.5
+            ],
+            "interval_upper_bounds": [
+              0.59
+            ]
+          },
+          {
+            "start_time": 1769063110.32508,
+            "end_time": 1769070017.881105,
+            "forecaster_count": 24,
+            "interval_lower_bounds": [
+              0.4
+            ],
+            "centers": [
+              0.5
+            ],
+            "interval_upper_bounds": [
+              0.59
+            ]
+          },
+          {
+            "start_time": 1769070017.881105,
+            "end_time": 1769077760.25881,
+            "forecaster_count": 28,
+            "interval_lower_bounds": [
+              0.4
+            ],
+            "centers": [
+              0.5
+            ],
+            "interval_upper_bounds": [
+              0.59
+            ]
+          },
+          {
+            "start_time": 1769077760.25881,
+            "end_time": 1769087828.09631,
+            "forecaster_count": 30,
+            "interval_lower_bounds": [
+              0.38
+            ],
+            "centers": [
+              0.45
+            ],
+            "interval_upper_bounds": [
+              0.51
+            ]
+          },
+          {
+            "start_time": 1769087828.09631,
+            "end_time": 1769091156.456568,
+            "forecaster_count": 34,
+            "interval_lower_bounds": [
+              0.3
+            ],
+            "centers": [
+              0.485
+            ],
+            "interval_upper_bounds": [
+              0.6
+            ]
+          },
+          {
+            "start_time": 1769091156.456568,
+            "end_time": 1769101747.88184,
+            "forecaster_count": 36,
+            "interval_lower_bounds": [
+              0.3
+            ],
+            "centers": [
+              0.51
+            ],
+            "interval_upper_bounds": [
+              0.6
+            ]
+          },
+          {
+            "start_time": 1769101747.88184,
+            "end_time": 1769105293.85339,
+            "forecaster_count": 39,
+            "interval_lower_bounds": [
+              0.25
+            ],
+            "centers": [
+              0.5
+            ],
+            "interval_upper_bounds": [
+              0.6
+            ]
+          },
+          {
+            "start_time": 1769105293.85339,
+            "end_time": 1769113067.077331,
+            "forecaster_count": 41,
+            "interval_lower_bounds": [
+              0.3
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.65
+            ]
+          },
+          {
+            "start_time": 1769113067.077331,
+            "end_time": 1769119522.843708,
+            "forecaster_count": 43,
+            "interval_lower_bounds": [
+              0.25
+            ],
+            "centers": [
+              0.51
+            ],
+            "interval_upper_bounds": [
+              0.6
+            ]
+          },
+          {
+            "start_time": 1769119522.843708,
+            "end_time": 1769132347.134405,
+            "forecaster_count": 45,
+            "interval_lower_bounds": [
+              0.3
+            ],
+            "centers": [
+              0.52
+            ],
+            "interval_upper_bounds": [
+              0.6
+            ]
+          },
+          {
+            "start_time": 1769132347.134405,
+            "end_time": 1769141192.11796,
+            "forecaster_count": 48,
+            "interval_lower_bounds": [
+              0.39
+            ],
+            "centers": [
+              0.5
+            ],
+            "interval_upper_bounds": [
+              0.6
+            ]
+          },
+          {
+            "start_time": 1769141192.11796,
+            "end_time": 1769146618.926494,
+            "forecaster_count": 50,
+            "interval_lower_bounds": [
+              0.35
+            ],
+            "centers": [
+              0.5
+            ],
+            "interval_upper_bounds": [
+              0.6
+            ]
+          },
+          {
+            "start_time": 1769146618.926494,
+            "end_time": 1769154812.487446,
+            "forecaster_count": 51,
+            "interval_lower_bounds": [
+              0.39
+            ],
+            "centers": [
+              0.52
+            ],
+            "interval_upper_bounds": [
+              0.65
+            ]
+          },
+          {
+            "start_time": 1769154812.487446,
+            "end_time": 1769159543.534751,
+            "forecaster_count": 52,
+            "interval_lower_bounds": [
+              0.39
+            ],
+            "centers": [
+              0.53
+            ],
+            "interval_upper_bounds": [
+              0.6
+            ]
+          },
+          {
+            "start_time": 1769159543.534751,
+            "end_time": 1769178009.418512,
+            "forecaster_count": 53,
+            "interval_lower_bounds": [
+              0.39
+            ],
+            "centers": [
+              0.53
+            ],
+            "interval_upper_bounds": [
+              0.6
+            ]
+          },
+          {
+            "start_time": 1769178009.418512,
+            "end_time": 1769180285.302518,
+            "forecaster_count": 53,
+            "interval_lower_bounds": [
+              0.39
+            ],
+            "centers": [
+              0.53
+            ],
+            "interval_upper_bounds": [
+              0.59
+            ]
+          },
+          {
+            "start_time": 1769180285.302518,
+            "end_time": 1769188211.965011,
+            "forecaster_count": 54,
+            "interval_lower_bounds": [
+              0.39
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.6
+            ]
+          },
+          {
+            "start_time": 1769188211.965011,
+            "end_time": 1769195411.380546,
+            "forecaster_count": 54,
+            "interval_lower_bounds": [
+              0.43
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.6
+            ]
+          },
+          {
+            "start_time": 1769195411.380546,
+            "end_time": 1769201429.387744,
+            "forecaster_count": 54,
+            "interval_lower_bounds": [
+              0.47
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.6
+            ]
+          },
+          {
+            "start_time": 1769201429.387744,
+            "end_time": 1769206535.10745,
+            "forecaster_count": 55,
+            "interval_lower_bounds": [
+              0.39
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.6
+            ]
+          },
+          {
+            "start_time": 1769206535.10745,
+            "end_time": 1769217738.237824,
+            "forecaster_count": 56,
+            "interval_lower_bounds": [
+              0.5
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.7
+            ]
+          },
+          {
+            "start_time": 1769217738.237824,
+            "end_time": 1769221993.200729,
+            "forecaster_count": 57,
+            "interval_lower_bounds": [
+              0.45
+            ],
+            "centers": [
+              0.57
+            ],
+            "interval_upper_bounds": [
+              0.7
+            ]
+          },
+          {
+            "start_time": 1769221993.200729,
+            "end_time": 1769227227.307642,
+            "forecaster_count": 59,
+            "interval_lower_bounds": [
+              0.42
+            ],
+            "centers": [
+              0.57
+            ],
+            "interval_upper_bounds": [
+              0.602
+            ]
+          },
+          {
+            "start_time": 1769227227.307642,
+            "end_time": 1769246902.498034,
+            "forecaster_count": 59,
+            "interval_lower_bounds": [
+              0.42
+            ],
+            "centers": [
+              0.59
+            ],
+            "interval_upper_bounds": [
+              0.75
+            ]
+          },
+          {
+            "start_time": 1769246902.498034,
+            "end_time": 1769248442.21897,
+            "forecaster_count": 60,
+            "interval_lower_bounds": [
+              0.52
+            ],
+            "centers": [
+              0.59
+            ],
+            "interval_upper_bounds": [
+              0.75
+            ]
+          },
+          {
+            "start_time": 1769248442.21897,
+            "end_time": 1769261168.811139,
+            "forecaster_count": 61,
+            "interval_lower_bounds": [
+              0.43
+            ],
+            "centers": [
+              0.59
+            ],
+            "interval_upper_bounds": [
+              0.7
+            ]
+          },
+          {
+            "start_time": 1769261168.811139,
+            "end_time": 1769262871.536307,
+            "forecaster_count": 65,
+            "interval_lower_bounds": [
+              0.43
+            ],
+            "centers": [
+              0.56
+            ],
+            "interval_upper_bounds": [
+              0.642
+            ]
+          },
+          {
+            "start_time": 1769262871.536307,
+            "end_time": 1769271734.387638,
+            "forecaster_count": 66,
+            "interval_lower_bounds": [
+              0.5
+            ],
+            "centers": [
+              0.56
+            ],
+            "interval_upper_bounds": [
+              0.602
+            ]
+          },
+          {
+            "start_time": 1769271734.387638,
+            "end_time": 1769276391.393593,
+            "forecaster_count": 70,
+            "interval_lower_bounds": [
+              0.36
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.6
+            ]
+          },
+          {
+            "start_time": 1769276391.393593,
+            "end_time": 1769288752.304501,
+            "forecaster_count": 71,
+            "interval_lower_bounds": [
+              0.42
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.6
+            ]
+          },
+          {
+            "start_time": 1769288752.304501,
+            "end_time": 1769298619.013345,
+            "forecaster_count": 74,
+            "interval_lower_bounds": [
+              0.35
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.602
+            ]
+          },
+          {
+            "start_time": 1769298619.013345,
+            "end_time": 1769314301.740658,
+            "forecaster_count": 75,
+            "interval_lower_bounds": [
+              0.36
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.6
+            ]
+          },
+          {
+            "start_time": 1769314301.740658,
+            "end_time": 1769324203.839,
+            "forecaster_count": 75,
+            "interval_lower_bounds": [
+              0.36
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.67
+            ]
+          },
+          {
+            "start_time": 1769324203.839,
+            "end_time": 1769332795.047172,
+            "forecaster_count": 74,
+            "interval_lower_bounds": [
+              0.36
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.7
+            ]
+          },
+          {
+            "start_time": 1769332795.047172,
+            "end_time": 1769344107.869655,
+            "forecaster_count": 75,
+            "interval_lower_bounds": [
+              0.43
+            ],
+            "centers": [
+              0.56
+            ],
+            "interval_upper_bounds": [
+              0.7
+            ]
+          },
+          {
+            "start_time": 1769344107.869655,
+            "end_time": 1769354422.570502,
+            "forecaster_count": 76,
+            "interval_lower_bounds": [
+              0.43
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.642
+            ]
+          },
+          {
+            "start_time": 1769354422.570502,
+            "end_time": 1769358863.837378,
+            "forecaster_count": 78,
+            "interval_lower_bounds": [
+              0.5
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.7
+            ]
+          },
+          {
+            "start_time": 1769358863.837378,
+            "end_time": 1769367450.450634,
+            "forecaster_count": 79,
+            "interval_lower_bounds": [
+              0.5
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.642
+            ]
+          },
+          {
+            "start_time": 1769367450.450634,
+            "end_time": 1769372997.188747,
+            "forecaster_count": 82,
+            "interval_lower_bounds": [
+              0.5
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.7
+            ]
+          },
+          {
+            "start_time": 1769372997.188747,
+            "end_time": 1769377615.314003,
+            "forecaster_count": 85,
+            "interval_lower_bounds": [
+              0.52
+            ],
+            "centers": [
+              0.56
+            ],
+            "interval_upper_bounds": [
+              0.7
+            ]
+          },
+          {
+            "start_time": 1769377615.314003,
+            "end_time": 1769391312.927279,
+            "forecaster_count": 87,
+            "interval_lower_bounds": [
+              0.5
+            ],
+            "centers": [
+              0.57
+            ],
+            "interval_upper_bounds": [
+              0.8
+            ]
+          },
+          {
+            "start_time": 1769391312.927279,
+            "end_time": 1769416539.091451,
+            "forecaster_count": 89,
+            "interval_lower_bounds": [
+              0.53
+            ],
+            "centers": [
+              0.57
+            ],
+            "interval_upper_bounds": [
+              0.79
+            ]
+          },
+          {
+            "start_time": 1769416539.091451,
+            "end_time": 1769427827.415516,
+            "forecaster_count": 90,
+            "interval_lower_bounds": [
+              0.47
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.7
+            ]
+          },
+          {
+            "start_time": 1769427827.415516,
+            "end_time": 1769440465.81825,
+            "forecaster_count": 90,
+            "interval_lower_bounds": [
+              0.5
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.7
+            ]
+          },
+          {
+            "start_time": 1769440465.81825,
+            "end_time": 1769445832.420897,
+            "forecaster_count": 90,
+            "interval_lower_bounds": [
+              0.52
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.7
+            ]
+          },
+          {
+            "start_time": 1769445832.420897,
+            "end_time": 1769454068.408378,
+            "forecaster_count": 92,
+            "interval_lower_bounds": [
+              0.47
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.66
+            ]
+          },
+          {
+            "start_time": 1769454068.408378,
+            "end_time": 1769459746.299171,
+            "forecaster_count": 93,
+            "interval_lower_bounds": [
+              0.39
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.62
+            ]
+          },
+          {
+            "start_time": 1769459746.299171,
+            "end_time": 1769479985.273336,
+            "forecaster_count": 94,
+            "interval_lower_bounds": [
+              0.29
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.66
+            ]
+          },
+          {
+            "start_time": 1769479985.273336,
+            "end_time": 1769499226.752691,
+            "forecaster_count": 96,
+            "interval_lower_bounds": [
+              0.35
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.6
+            ]
+          },
+          {
+            "start_time": 1769499226.752691,
+            "end_time": 1769515425.702955,
+            "forecaster_count": 97,
+            "interval_lower_bounds": [
+              0.4
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.642
+            ]
+          },
+          {
+            "start_time": 1769515425.702955,
+            "end_time": 1769527706.303313,
+            "forecaster_count": 98,
+            "interval_lower_bounds": [
+              0.35
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.7
+            ]
+          },
+          {
+            "start_time": 1769527706.303313,
+            "end_time": 1769530130.513955,
+            "forecaster_count": 99,
+            "interval_lower_bounds": [
+              0.32
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.62
+            ]
+          },
+          {
+            "start_time": 1769530130.513955,
+            "end_time": 1769543668.165293,
+            "forecaster_count": 99,
+            "interval_lower_bounds": [
+              0.35
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.68
+            ]
+          },
+          {
+            "start_time": 1769543668.165293,
+            "end_time": 1769559121.815345,
+            "forecaster_count": 99,
+            "interval_lower_bounds": [
+              0.35
+            ],
+            "centers": [
+              0.538
+            ],
+            "interval_upper_bounds": [
+              0.65
+            ]
+          },
+          {
+            "start_time": 1769559121.815345,
+            "end_time": 1769568457.147971,
+            "forecaster_count": 99,
+            "interval_lower_bounds": [
+              0.35
+            ],
+            "centers": [
+              0.52
+            ],
+            "interval_upper_bounds": [
+              0.62
+            ]
+          },
+          {
+            "start_time": 1769568457.147971,
+            "end_time": 1769575870.012436,
+            "forecaster_count": 99,
+            "interval_lower_bounds": [
+              0.35
+            ],
+            "centers": [
+              0.52
+            ],
+            "interval_upper_bounds": [
+              0.62
+            ]
+          },
+          {
+            "start_time": 1769575870.012436,
+            "end_time": 1769586931.345001,
+            "forecaster_count": 99,
+            "interval_lower_bounds": [
+              0.35
+            ],
+            "centers": [
+              0.52
+            ],
+            "interval_upper_bounds": [
+              0.62
+            ]
+          },
+          {
+            "start_time": 1769586931.345001,
+            "end_time": 1769593060.777,
+            "forecaster_count": 100,
+            "interval_lower_bounds": [
+              0.35
+            ],
+            "centers": [
+              0.5
+            ],
+            "interval_upper_bounds": [
+              0.65
+            ]
+          },
+          {
+            "start_time": 1769593060.777,
+            "end_time": 1769601067.948948,
+            "forecaster_count": 99,
+            "interval_lower_bounds": [
+              0.35
+            ],
+            "centers": [
+              0.5
+            ],
+            "interval_upper_bounds": [
+              0.65
+            ]
+          },
+          {
+            "start_time": 1769601067.948948,
+            "end_time": 1769605287.216024,
+            "forecaster_count": 100,
+            "interval_lower_bounds": [
+              0.35
+            ],
+            "centers": [
+              0.51
+            ],
+            "interval_upper_bounds": [
+              0.6
+            ]
+          },
+          {
+            "start_time": 1769605287.216024,
+            "end_time": 1769618927.060608,
+            "forecaster_count": 101,
+            "interval_lower_bounds": [
+              0.32
+            ],
+            "centers": [
+              0.5
+            ],
+            "interval_upper_bounds": [
+              0.6
+            ]
+          },
+          {
+            "start_time": 1769618927.060608,
+            "end_time": 1769624159.401866,
+            "forecaster_count": 102,
+            "interval_lower_bounds": [
+              0.32
+            ],
+            "centers": [
+              0.51
+            ],
+            "interval_upper_bounds": [
+              0.59
+            ]
+          },
+          {
+            "start_time": 1769624159.401866,
+            "end_time": 1769632109.444677,
+            "forecaster_count": 102,
+            "interval_lower_bounds": [
+              0.32
+            ],
+            "centers": [
+              0.51
+            ],
+            "interval_upper_bounds": [
+              0.59
+            ]
+          },
+          {
+            "start_time": 1769632109.444677,
+            "end_time": 1769637943.428772,
+            "forecaster_count": 103,
+            "interval_lower_bounds": [
+              0.35
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.6
+            ]
+          },
+          {
+            "start_time": 1769637943.428772,
+            "end_time": 1769646221.829584,
+            "forecaster_count": 103,
+            "interval_lower_bounds": [
+              0.35
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.65
+            ]
+          },
+          {
+            "start_time": 1769646221.829584,
+            "end_time": 1769652273.141251,
+            "forecaster_count": 103,
+            "interval_lower_bounds": [
+              0.369
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.69
+            ]
+          },
+          {
+            "start_time": 1769652273.141251,
+            "end_time": 1769664164.237933,
+            "forecaster_count": 104,
+            "interval_lower_bounds": [
+              0.36
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.65
+            ]
+          },
+          {
+            "start_time": 1769664164.237933,
+            "end_time": 1769667245.90531,
+            "forecaster_count": 105,
+            "interval_lower_bounds": [
+              0.36
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.6
+            ]
+          },
+          {
+            "start_time": 1769667245.90531,
+            "end_time": 1769671392.681962,
+            "forecaster_count": 105,
+            "interval_lower_bounds": [
+              0.35
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.59
+            ]
+          },
+          {
+            "start_time": 1769671392.681962,
+            "end_time": 1769680861.330496,
+            "forecaster_count": 106,
+            "interval_lower_bounds": [
+              0.32
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.59
+            ]
+          },
+          {
+            "start_time": 1769680861.330496,
+            "end_time": 1769702141.459061,
+            "forecaster_count": 106,
+            "interval_lower_bounds": [
+              0.35
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.59
+            ]
+          },
+          {
+            "start_time": 1769702141.459061,
+            "end_time": 1769705910.625024,
+            "forecaster_count": 107,
+            "interval_lower_bounds": [
+              0.36
+            ],
+            "centers": [
+              0.52
+            ],
+            "interval_upper_bounds": [
+              0.59
+            ]
+          },
+          {
+            "start_time": 1769705910.625024,
+            "end_time": 1769717923.511965,
+            "forecaster_count": 107,
+            "interval_lower_bounds": [
+              0.36
+            ],
+            "centers": [
+              0.52
+            ],
+            "interval_upper_bounds": [
+              0.65
+            ]
+          },
+          {
+            "start_time": 1769717923.511965,
+            "end_time": 1769719984.426039,
+            "forecaster_count": 109,
+            "interval_lower_bounds": [
+              0.4
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.66
+            ]
+          },
+          {
+            "start_time": 1769719984.426039,
+            "end_time": 1769732264.654062,
+            "forecaster_count": 110,
+            "interval_lower_bounds": [
+              0.35
+            ],
+            "centers": [
+              0.52
+            ],
+            "interval_upper_bounds": [
+              0.66
+            ]
+          },
+          {
+            "start_time": 1769732264.654062,
+            "end_time": 1769732921.942952,
+            "forecaster_count": 110,
+            "interval_lower_bounds": [
+              0.36
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.67
+            ]
+          },
+          {
+            "start_time": 1769732921.942952,
+            "end_time": 1769737955.129992,
+            "forecaster_count": 111,
+            "interval_lower_bounds": [
+              0.36
+            ],
+            "centers": [
+              0.52
+            ],
+            "interval_upper_bounds": [
+              0.66
+            ]
+          },
+          {
+            "start_time": 1769737955.129992,
+            "end_time": 1769744970.91274,
+            "forecaster_count": 111,
+            "interval_lower_bounds": [
+              0.4
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.665
+            ]
+          },
+          {
+            "start_time": 1769744970.91274,
+            "end_time": 1769745603.512573,
+            "forecaster_count": 111,
+            "interval_lower_bounds": [
+              0.4
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.665
+            ]
+          },
+          {
+            "start_time": 1769745603.512573,
+            "end_time": 1769752080.838352,
+            "forecaster_count": 112,
+            "interval_lower_bounds": [
+              0.4
+            ],
+            "centers": [
+              0.51
+            ],
+            "interval_upper_bounds": [
+              0.665
+            ]
+          },
+          {
+            "start_time": 1769752080.838352,
+            "end_time": 1769752426.342406,
+            "forecaster_count": 112,
+            "interval_lower_bounds": [
+              0.4
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.665
+            ]
+          },
+          {
+            "start_time": 1769752426.342406,
+            "end_time": 1769759846.903993,
+            "forecaster_count": 112,
+            "interval_lower_bounds": [
+              0.4
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.665
+            ]
+          },
+          {
+            "start_time": 1769759846.903993,
+            "end_time": 1769760061.359146,
+            "forecaster_count": 112,
+            "interval_lower_bounds": [
+              0.4
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.665
+            ]
+          },
+          {
+            "start_time": 1769760061.359146,
+            "end_time": 1769762450.401485,
+            "forecaster_count": 113,
+            "interval_lower_bounds": [
+              0.46
+            ],
+            "centers": [
+              0.56
+            ],
+            "interval_upper_bounds": [
+              0.665
+            ]
+          },
+          {
+            "start_time": 1769762450.401485,
+            "end_time": 1769784078.57154,
+            "forecaster_count": 113,
+            "interval_lower_bounds": [
+              0.4
+            ],
+            "centers": [
+              0.56
+            ],
+            "interval_upper_bounds": [
+              0.665
+            ]
+          },
+          {
+            "start_time": 1769784078.57154,
+            "end_time": 1769787696.963947,
+            "forecaster_count": 113,
+            "interval_lower_bounds": [
+              0.4
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.66
+            ]
+          },
+          {
+            "start_time": 1769787696.963947,
+            "end_time": 1769791254.104816,
+            "forecaster_count": 113,
+            "interval_lower_bounds": [
+              0.4
+            ],
+            "centers": [
+              0.56
+            ],
+            "interval_upper_bounds": [
+              0.66
+            ]
+          },
+          {
+            "start_time": 1769791254.104816,
+            "end_time": 1769799017.342085,
+            "forecaster_count": 114,
+            "interval_lower_bounds": [
+              0.4
+            ],
+            "centers": [
+              0.56
+            ],
+            "interval_upper_bounds": [
+              0.665
+            ]
+          },
+          {
+            "start_time": 1769799017.342085,
+            "end_time": 1769800114.577876,
+            "forecaster_count": 115,
+            "interval_lower_bounds": [
+              0.46
+            ],
+            "centers": [
+              0.56
+            ],
+            "interval_upper_bounds": [
+              0.665
+            ]
+          },
+          {
+            "start_time": 1769800114.577876,
+            "end_time": 1769804578.016449,
+            "forecaster_count": 115,
+            "interval_lower_bounds": [
+              0.46
+            ],
+            "centers": [
+              0.56
+            ],
+            "interval_upper_bounds": [
+              0.67
+            ]
+          },
+          {
+            "start_time": 1769804578.016449,
+            "end_time": 1769818232.116934,
+            "forecaster_count": 115,
+            "interval_lower_bounds": [
+              0.4
+            ],
+            "centers": [
+              0.56
+            ],
+            "interval_upper_bounds": [
+              0.67
+            ]
+          },
+          {
+            "start_time": 1769818232.116934,
+            "end_time": 1769818365.097601,
+            "forecaster_count": 115,
+            "interval_lower_bounds": [
+              0.4
+            ],
+            "centers": [
+              0.56
+            ],
+            "interval_upper_bounds": [
+              0.67
+            ]
+          },
+          {
+            "start_time": 1769818365.097601,
+            "end_time": 1769820118.108937,
+            "forecaster_count": 116,
+            "interval_lower_bounds": [
+              0.38
+            ],
+            "centers": [
+              0.56
+            ],
+            "interval_upper_bounds": [
+              0.665
+            ]
+          },
+          {
+            "start_time": 1769820118.108937,
+            "end_time": 1769820126.125029,
+            "forecaster_count": 117,
+            "interval_lower_bounds": [
+              0.36
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.665
+            ]
+          },
+          {
+            "start_time": 1769820126.125029,
+            "end_time": 1769821712.037319,
+            "forecaster_count": 117,
+            "interval_lower_bounds": [
+              0.36
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.665
+            ]
+          },
+          {
+            "start_time": 1769821712.037319,
+            "end_time": 1769831285.287828,
+            "forecaster_count": 117,
+            "interval_lower_bounds": [
+              0.38
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.66
+            ]
+          },
+          {
+            "start_time": 1769831285.287828,
+            "end_time": 1769831296.493563,
+            "forecaster_count": 117,
+            "interval_lower_bounds": [
+              0.38
+            ],
+            "centers": [
+              0.56
+            ],
+            "interval_upper_bounds": [
+              0.66
+            ]
+          },
+          {
+            "start_time": 1769831296.493563,
+            "end_time": 1769835370.587078,
+            "forecaster_count": 117,
+            "interval_lower_bounds": [
+              0.38
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.65
+            ]
+          },
+          {
+            "start_time": 1769835370.587078,
+            "end_time": 1769837594.16638,
+            "forecaster_count": 118,
+            "interval_lower_bounds": [
+              0.35
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.63
+            ]
+          },
+          {
+            "start_time": 1769837594.16638,
+            "end_time": 1769838633.790533,
+            "forecaster_count": 118,
+            "interval_lower_bounds": [
+              0.36
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.642
+            ]
+          },
+          {
+            "start_time": 1769838633.790533,
+            "end_time": 1769851974.079935,
+            "forecaster_count": 118,
+            "interval_lower_bounds": [
+              0.34
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.642
+            ]
+          },
+          {
+            "start_time": 1769851974.079935,
+            "end_time": 1769852016.651598,
+            "forecaster_count": 119,
+            "interval_lower_bounds": [
+              0.34
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.642
+            ]
+          },
+          {
+            "start_time": 1769852016.651598,
+            "end_time": 1769854434.489027,
+            "forecaster_count": 119,
+            "interval_lower_bounds": [
+              0.34
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.642
+            ]
+          },
+          {
+            "start_time": 1769854434.489027,
+            "end_time": 1769861875.006684,
+            "forecaster_count": 120,
+            "interval_lower_bounds": [
+              0.34
+            ],
+            "centers": [
+              0.56
+            ],
+            "interval_upper_bounds": [
+              0.665
+            ]
+          },
+          {
+            "start_time": 1769861875.006684,
+            "end_time": 1769874163.336225,
+            "forecaster_count": 120,
+            "interval_lower_bounds": [
+              0.35
+            ],
+            "centers": [
+              0.56
+            ],
+            "interval_upper_bounds": [
+              0.665
+            ]
+          },
+          {
+            "start_time": 1769874163.336225,
+            "end_time": 1769874749.368434,
+            "forecaster_count": 120,
+            "interval_lower_bounds": [
+              0.36
+            ],
+            "centers": [
+              0.56
+            ],
+            "interval_upper_bounds": [
+              0.67
+            ]
+          },
+          {
+            "start_time": 1769874749.368434,
+            "end_time": 1769875505.332596,
+            "forecaster_count": 121,
+            "interval_lower_bounds": [
+              0.38
+            ],
+            "centers": [
+              0.58
+            ],
+            "interval_upper_bounds": [
+              0.7
+            ]
+          },
+          {
+            "start_time": 1769875505.332596,
+            "end_time": 1769876054.128212,
+            "forecaster_count": 121,
+            "interval_lower_bounds": [
+              0.38
+            ],
+            "centers": [
+              0.59
+            ],
+            "interval_upper_bounds": [
+              0.7
+            ]
+          },
+          {
+            "start_time": 1769876054.128212,
+            "end_time": 1769880080.091301,
+            "forecaster_count": 121,
+            "interval_lower_bounds": [
+              0.38
+            ],
+            "centers": [
+              0.59
+            ],
+            "interval_upper_bounds": [
+              0.7
+            ]
+          },
+          {
+            "start_time": 1769880080.091301,
+            "end_time": 1769884079.389718,
+            "forecaster_count": 121,
+            "interval_lower_bounds": [
+              0.38
+            ],
+            "centers": [
+              0.59
+            ],
+            "interval_upper_bounds": [
+              0.7
+            ]
+          },
+          {
+            "start_time": 1769884079.389718,
+            "end_time": 1769884147.072159,
+            "forecaster_count": 121,
+            "interval_lower_bounds": [
+              0.39
+            ],
+            "centers": [
+              0.58
+            ],
+            "interval_upper_bounds": [
+              0.7
+            ]
+          },
+          {
+            "start_time": 1769884147.072159,
+            "end_time": 1769887786.511958,
+            "forecaster_count": 122,
+            "interval_lower_bounds": [
+              0.4
+            ],
+            "centers": [
+              0.59
+            ],
+            "interval_upper_bounds": [
+              0.7
+            ]
+          },
+          {
+            "start_time": 1769887786.511958,
+            "end_time": 1769889646.07781,
+            "forecaster_count": 122,
+            "interval_lower_bounds": [
+              0.39
+            ],
+            "centers": [
+              0.59
+            ],
+            "interval_upper_bounds": [
+              0.7
+            ]
+          },
+          {
+            "start_time": 1769889646.07781,
+            "end_time": 1769894883.427954,
+            "forecaster_count": 122,
+            "interval_lower_bounds": [
+              0.39
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.75
+            ]
+          },
+          {
+            "start_time": 1769894883.427954,
+            "end_time": 1769897685.819006,
+            "forecaster_count": 122,
+            "interval_lower_bounds": [
+              0.4
+            ],
+            "centers": [
+              0.59
+            ],
+            "interval_upper_bounds": [
+              0.75
+            ]
+          },
+          {
+            "start_time": 1769897685.819006,
+            "end_time": 1769898418.119536,
+            "forecaster_count": 122,
+            "interval_lower_bounds": [
+              0.42
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.7
+            ]
+          },
+          {
+            "start_time": 1769898418.119536,
+            "end_time": 1769904133.872417,
+            "forecaster_count": 122,
+            "interval_lower_bounds": [
+              0.42
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.7
+            ]
+          },
+          {
+            "start_time": 1769904133.872417,
+            "end_time": 1769904215.40466,
+            "forecaster_count": 122,
+            "interval_lower_bounds": [
+              0.42
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.7
+            ]
+          },
+          {
+            "start_time": 1769904215.40466,
+            "end_time": 1769904221.992666,
+            "forecaster_count": 122,
+            "interval_lower_bounds": [
+              0.42
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.7
+            ]
+          },
+          {
+            "start_time": 1769904221.992666,
+            "end_time": 1769904224.793561,
+            "forecaster_count": 122,
+            "interval_lower_bounds": [
+              0.42
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.7
+            ]
+          },
+          {
+            "start_time": 1769904224.793561,
+            "end_time": 1769904225.787955,
+            "forecaster_count": 122,
+            "interval_lower_bounds": [
+              0.42
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.7
+            ]
+          },
+          {
+            "start_time": 1769904225.787955,
+            "end_time": 1769904293.519755,
+            "forecaster_count": 122,
+            "interval_lower_bounds": [
+              0.42
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.7
+            ]
+          },
+          {
+            "start_time": 1769904293.519755,
+            "end_time": 1769904294.958828,
+            "forecaster_count": 122,
+            "interval_lower_bounds": [
+              0.42
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.7
+            ]
+          },
+          {
+            "start_time": 1769904294.958828,
+            "end_time": 1769908861.606643,
+            "forecaster_count": 122,
+            "interval_lower_bounds": [
+              0.42
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.7
+            ]
+          },
+          {
+            "start_time": 1769908861.606643,
+            "end_time": 1769913573.578103,
+            "forecaster_count": 122,
+            "interval_lower_bounds": [
+              0.42
+            ],
+            "centers": [
+              0.59
+            ],
+            "interval_upper_bounds": [
+              0.7
+            ]
+          },
+          {
+            "start_time": 1769913573.578103,
+            "end_time": 1769913590.952952,
+            "forecaster_count": 122,
+            "interval_lower_bounds": [
+              0.42
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.7
+            ]
+          },
+          {
+            "start_time": 1769913590.952952,
+            "end_time": 1769914284.968815,
+            "forecaster_count": 122,
+            "interval_lower_bounds": [
+              0.42
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.7
+            ]
+          },
+          {
+            "start_time": 1769914284.968815,
+            "end_time": 1769914302.31411,
+            "forecaster_count": 122,
+            "interval_lower_bounds": [
+              0.42
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.74
+            ]
+          },
+          {
+            "start_time": 1769914302.31411,
+            "end_time": 1769915060.186898,
+            "forecaster_count": 122,
+            "interval_lower_bounds": [
+              0.42
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.7
+            ]
+          },
+          {
+            "start_time": 1769915060.186898,
+            "end_time": 1769918803.970195,
+            "forecaster_count": 122,
+            "interval_lower_bounds": [
+              0.42
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.7
+            ]
+          },
+          {
+            "start_time": 1769918803.970195,
+            "end_time": 1769921431.584681,
+            "forecaster_count": 122,
+            "interval_lower_bounds": [
+              0.48
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.7
+            ]
+          },
+          {
+            "start_time": 1769921431.584681,
+            "end_time": 1769925667.876513,
+            "forecaster_count": 122,
+            "interval_lower_bounds": [
+              0.48
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.7
+            ]
+          },
+          {
+            "start_time": 1769925667.876513,
+            "end_time": 1769926985.34239,
+            "forecaster_count": 122,
+            "interval_lower_bounds": [
+              0.5
+            ],
+            "centers": [
+              0.642
+            ],
+            "interval_upper_bounds": [
+              0.7
+            ]
+          },
+          {
+            "start_time": 1769926985.34239,
+            "end_time": 1769939215.343729,
+            "forecaster_count": 122,
+            "interval_lower_bounds": [
+              0.5
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.7
+            ]
+          },
+          {
+            "start_time": 1769939215.343729,
+            "end_time": 1769941035.871828,
+            "forecaster_count": 122,
+            "interval_lower_bounds": [
+              0.5
+            ],
+            "centers": [
+              0.642
+            ],
+            "interval_upper_bounds": [
+              0.7
+            ]
+          },
+          {
+            "start_time": 1769941035.871828,
+            "end_time": 1769941044.450635,
+            "forecaster_count": 123,
+            "interval_lower_bounds": [
+              0.46
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.7
+            ]
+          },
+          {
+            "start_time": 1769941044.450635,
+            "end_time": 1769944519.799397,
+            "forecaster_count": 123,
+            "interval_lower_bounds": [
+              0.46
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.7
+            ]
+          },
+          {
+            "start_time": 1769944519.799397,
+            "end_time": 1769949737.42831,
+            "forecaster_count": 123,
+            "interval_lower_bounds": [
+              0.48
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.7
+            ]
+          },
+          {
+            "start_time": 1769949737.42831,
+            "end_time": 1769949774.774556,
+            "forecaster_count": 124,
+            "interval_lower_bounds": [
+              0.5
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.69
+            ]
+          },
+          {
+            "start_time": 1769949774.774556,
+            "end_time": 1769958332.699991,
+            "forecaster_count": 124,
+            "interval_lower_bounds": [
+              0.5
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.69
+            ]
+          },
+          {
+            "start_time": 1769958332.699991,
+            "end_time": 1769960067.256515,
+            "forecaster_count": 124,
+            "interval_lower_bounds": [
+              0.5
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.69
+            ]
+          },
+          {
+            "start_time": 1769960067.256515,
+            "end_time": 1769965651.506485,
+            "forecaster_count": 125,
+            "interval_lower_bounds": [
+              0.5
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.7
+            ]
+          },
+          {
+            "start_time": 1769965651.506485,
+            "end_time": 1769971126.60228,
+            "forecaster_count": 125,
+            "interval_lower_bounds": [
+              0.5
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.69
+            ]
+          },
+          {
+            "start_time": 1769971126.60228,
+            "end_time": 1769978706.700983,
+            "forecaster_count": 125,
+            "interval_lower_bounds": [
+              0.51
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.68
+            ]
+          },
+          {
+            "start_time": 1769978706.700983,
+            "end_time": 1769979954.872329,
+            "forecaster_count": 125,
+            "interval_lower_bounds": [
+              0.48
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.67
+            ]
+          },
+          {
+            "start_time": 1769979954.872329,
+            "end_time": 1769986335.020349,
+            "forecaster_count": 126,
+            "interval_lower_bounds": [
+              0.45
+            ],
+            "centers": [
+              0.56
+            ],
+            "interval_upper_bounds": [
+              0.67
+            ]
+          },
+          {
+            "start_time": 1769986335.020349,
+            "end_time": 1769997054.472148,
+            "forecaster_count": 126,
+            "interval_lower_bounds": [
+              0.45
+            ],
+            "centers": [
+              0.56
+            ],
+            "interval_upper_bounds": [
+              0.67
+            ]
+          },
+          {
+            "start_time": 1769997054.472148,
+            "end_time": 1769997059.209676,
+            "forecaster_count": 126,
+            "interval_lower_bounds": [
+              0.45
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.67
+            ]
+          },
+          {
+            "start_time": 1769997059.209676,
+            "end_time": 1770000916.045655,
+            "forecaster_count": 126,
+            "interval_lower_bounds": [
+              0.45
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.67
+            ]
+          },
+          {
+            "start_time": 1770000916.045655,
+            "end_time": 1770000916.526379,
+            "forecaster_count": 127,
+            "interval_lower_bounds": [
+              0.45
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.66
+            ]
+          },
+          {
+            "start_time": 1770000916.526379,
+            "end_time": 1770000924.186227,
+            "forecaster_count": 128,
+            "interval_lower_bounds": [
+              0.38
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.66
+            ]
+          },
+          {
+            "start_time": 1770000924.186227,
+            "end_time": 1770006746.708434,
+            "forecaster_count": 129,
+            "interval_lower_bounds": [
+              0.4
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.67
+            ]
+          },
+          {
+            "start_time": 1770006746.708434,
+            "end_time": 1770006838.667264,
+            "forecaster_count": 130,
+            "interval_lower_bounds": [
+              0.42
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.67
+            ]
+          },
+          {
+            "start_time": 1770006838.667264,
+            "end_time": 1770012511.327395,
+            "forecaster_count": 130,
+            "interval_lower_bounds": [
+              0.42
+            ],
+            "centers": [
+              0.56
+            ],
+            "interval_upper_bounds": [
+              0.66
+            ]
+          },
+          {
+            "start_time": 1770012511.327395,
+            "end_time": 1770045040.658134,
+            "forecaster_count": 131,
+            "interval_lower_bounds": [
+              0.45
+            ],
+            "centers": [
+              0.59
+            ],
+            "interval_upper_bounds": [
+              0.68
+            ]
+          },
+          {
+            "start_time": 1770045040.658134,
+            "end_time": 1770054274.955319,
+            "forecaster_count": 131,
+            "interval_lower_bounds": [
+              0.45
+            ],
+            "centers": [
+              0.56
+            ],
+            "interval_upper_bounds": [
+              0.67
+            ]
+          },
+          {
+            "start_time": 1770054274.955319,
+            "end_time": 1770056699.868121,
+            "forecaster_count": 131,
+            "interval_lower_bounds": [
+              0.45
+            ],
+            "centers": [
+              0.57
+            ],
+            "interval_upper_bounds": [
+              0.67
+            ]
+          },
+          {
+            "start_time": 1770056699.868121,
+            "end_time": 1770058576.271983,
+            "forecaster_count": 131,
+            "interval_lower_bounds": [
+              0.45
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.67
+            ]
+          },
+          {
+            "start_time": 1770058576.271983,
+            "end_time": 1770066218.80789,
+            "forecaster_count": 131,
+            "interval_lower_bounds": [
+              0.45
+            ],
+            "centers": [
+              0.57
+            ],
+            "interval_upper_bounds": [
+              0.66
+            ]
+          },
+          {
+            "start_time": 1770066218.80789,
+            "end_time": 1770066581.597802,
+            "forecaster_count": 132,
+            "interval_lower_bounds": [
+              0.45
+            ],
+            "centers": [
+              0.57
+            ],
+            "interval_upper_bounds": [
+              0.68
+            ]
+          },
+          {
+            "start_time": 1770066581.597802,
+            "end_time": 1770066597.941936,
+            "forecaster_count": 132,
+            "interval_lower_bounds": [
+              0.45
+            ],
+            "centers": [
+              0.57
+            ],
+            "interval_upper_bounds": [
+              0.67
+            ]
+          },
+          {
+            "start_time": 1770066597.941936,
+            "end_time": 1770066600.589028,
+            "forecaster_count": 131,
+            "interval_lower_bounds": [
+              0.45
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.66
+            ]
+          },
+          {
+            "start_time": 1770066600.589028,
+            "end_time": 1770075142.451587,
+            "forecaster_count": 132,
+            "interval_lower_bounds": [
+              0.45
+            ],
+            "centers": [
+              0.57
+            ],
+            "interval_upper_bounds": [
+              0.67
+            ]
+          },
+          {
+            "start_time": 1770075142.451587,
+            "end_time": 1770075151.286216,
+            "forecaster_count": 132,
+            "interval_lower_bounds": [
+              0.45
+            ],
+            "centers": [
+              0.57
+            ],
+            "interval_upper_bounds": [
+              0.67
+            ]
+          },
+          {
+            "start_time": 1770075151.286216,
+            "end_time": 1770097903.223986,
+            "forecaster_count": 132,
+            "interval_lower_bounds": [
+              0.45
+            ],
+            "centers": [
+              0.57
+            ],
+            "interval_upper_bounds": [
+              0.67
+            ]
+          },
+          {
+            "start_time": 1770097903.223986,
+            "end_time": 1770104650.451077,
+            "forecaster_count": 132,
+            "interval_lower_bounds": [
+              0.45
+            ],
+            "centers": [
+              0.57
+            ],
+            "interval_upper_bounds": [
+              0.66
+            ]
+          },
+          {
+            "start_time": 1770104650.451077,
+            "end_time": 1770117509.290382,
+            "forecaster_count": 132,
+            "interval_lower_bounds": [
+              0.45
+            ],
+            "centers": [
+              0.57
+            ],
+            "interval_upper_bounds": [
+              0.64
+            ]
+          },
+          {
+            "start_time": 1770117509.290382,
+            "end_time": 1770119031.402133,
+            "forecaster_count": 132,
+            "interval_lower_bounds": [
+              0.45
+            ],
+            "centers": [
+              0.57
+            ],
+            "interval_upper_bounds": [
+              0.64
+            ]
+          },
+          {
+            "start_time": 1770119031.402133,
+            "end_time": 1770119224.394371,
+            "forecaster_count": 132,
+            "interval_lower_bounds": [
+              0.45
+            ],
+            "centers": [
+              0.56
+            ],
+            "interval_upper_bounds": [
+              0.64
+            ]
+          },
+          {
+            "start_time": 1770119224.394371,
+            "end_time": 1770119229.068359,
+            "forecaster_count": 133,
+            "interval_lower_bounds": [
+              0.45
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.64
+            ]
+          },
+          {
+            "start_time": 1770119229.068359,
+            "end_time": 1770129470.26506,
+            "forecaster_count": 133,
+            "interval_lower_bounds": [
+              0.45
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.64
+            ]
+          },
+          {
+            "start_time": 1770129470.26506,
+            "end_time": 1770140913.224975,
+            "forecaster_count": 133,
+            "interval_lower_bounds": [
+              0.45
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.63
+            ]
+          },
+          {
+            "start_time": 1770140913.224975,
+            "end_time": 1770146367.835703,
+            "forecaster_count": 133,
+            "interval_lower_bounds": [
+              0.42
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.63
+            ]
+          },
+          {
+            "start_time": 1770146367.835703,
+            "end_time": 1770153899.06169,
+            "forecaster_count": 133,
+            "interval_lower_bounds": [
+              0.42
+            ],
+            "centers": [
+              0.54
+            ],
+            "interval_upper_bounds": [
+              0.63
+            ]
+          },
+          {
+            "start_time": 1770153899.06169,
+            "end_time": 1770164619.482855,
+            "forecaster_count": 133,
+            "interval_lower_bounds": [
+              0.42
+            ],
+            "centers": [
+              0.54
+            ],
+            "interval_upper_bounds": [
+              0.66
+            ]
+          },
+          {
+            "start_time": 1770164619.482855,
+            "end_time": 1770169713.287674,
+            "forecaster_count": 134,
+            "interval_lower_bounds": [
+              0.42
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.7
+            ]
+          },
+          {
+            "start_time": 1770169713.287674,
+            "end_time": 1770175825.513191,
+            "forecaster_count": 135,
+            "interval_lower_bounds": [
+              0.45
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.72
+            ]
+          },
+          {
+            "start_time": 1770175825.513191,
+            "end_time": 1770178204.58663,
+            "forecaster_count": 135,
+            "interval_lower_bounds": [
+              0.45
+            ],
+            "centers": [
+              0.59
+            ],
+            "interval_upper_bounds": [
+              0.72
+            ]
+          },
+          {
+            "start_time": 1770178204.58663,
+            "end_time": 1770182141.608344,
+            "forecaster_count": 135,
+            "interval_lower_bounds": [
+              0.45
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.75
+            ]
+          },
+          {
+            "start_time": 1770182141.608344,
+            "end_time": 1770192599.438122,
+            "forecaster_count": 135,
+            "interval_lower_bounds": [
+              0.46
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.75
+            ]
+          },
+          {
+            "start_time": 1770192599.438122,
+            "end_time": 1770194221.845622,
+            "forecaster_count": 135,
+            "interval_lower_bounds": [
+              0.46
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.75
+            ]
+          },
+          {
+            "start_time": 1770194221.845622,
+            "end_time": 1770194994.724027,
+            "forecaster_count": 135,
+            "interval_lower_bounds": [
+              0.47
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.75
+            ]
+          },
+          {
+            "start_time": 1770194994.724027,
+            "end_time": 1770196954.587767,
+            "forecaster_count": 135,
+            "interval_lower_bounds": [
+              0.47
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.75
+            ]
+          },
+          {
+            "start_time": 1770196954.587767,
+            "end_time": 1770197164.847079,
+            "forecaster_count": 135,
+            "interval_lower_bounds": [
+              0.47
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.75
+            ]
+          },
+          {
+            "start_time": 1770197164.847079,
+            "end_time": 1770198764.121709,
+            "forecaster_count": 135,
+            "interval_lower_bounds": [
+              0.47
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.75
+            ]
+          },
+          {
+            "start_time": 1770198764.121709,
+            "end_time": 1770205867.604,
+            "forecaster_count": 135,
+            "interval_lower_bounds": [
+              0.47
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.75
+            ]
+          },
+          {
+            "start_time": 1770205867.604,
+            "end_time": 1770210827.765213,
+            "forecaster_count": 134,
+            "interval_lower_bounds": [
+              0.47
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.75
+            ]
+          },
+          {
+            "start_time": 1770210827.765213,
+            "end_time": 1770211203.824303,
+            "forecaster_count": 135,
+            "interval_lower_bounds": [
+              0.47
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.75
+            ]
+          },
+          {
+            "start_time": 1770211203.824303,
+            "end_time": 1770212854.65362,
+            "forecaster_count": 135,
+            "interval_lower_bounds": [
+              0.47
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.74
+            ]
+          },
+          {
+            "start_time": 1770212854.65362,
+            "end_time": 1770227318.940352,
+            "forecaster_count": 135,
+            "interval_lower_bounds": [
+              0.47
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.74
+            ]
+          },
+          {
+            "start_time": 1770227318.940352,
+            "end_time": 1770227346.724976,
+            "forecaster_count": 135,
+            "interval_lower_bounds": [
+              0.5
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.74
+            ]
+          },
+          {
+            "start_time": 1770227346.724976,
+            "end_time": 1770227534.200084,
+            "forecaster_count": 135,
+            "interval_lower_bounds": [
+              0.5
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.74
+            ]
+          },
+          {
+            "start_time": 1770227534.200084,
+            "end_time": 1770228030.095811,
+            "forecaster_count": 135,
+            "interval_lower_bounds": [
+              0.5
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.74
+            ]
+          },
+          {
+            "start_time": 1770228030.095811,
+            "end_time": 1770229955.531598,
+            "forecaster_count": 135,
+            "interval_lower_bounds": [
+              0.5
+            ],
+            "centers": [
+              0.61
+            ],
+            "interval_upper_bounds": [
+              0.74
+            ]
+          },
+          {
+            "start_time": 1770229955.531598,
+            "end_time": 1770229979.823272,
+            "forecaster_count": 135,
+            "interval_lower_bounds": [
+              0.54
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.74
+            ]
+          },
+          {
+            "start_time": 1770229979.823272,
+            "end_time": 1770230145.356317,
+            "forecaster_count": 135,
+            "interval_lower_bounds": [
+              0.54
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.74
+            ]
+          },
+          {
+            "start_time": 1770230145.356317,
+            "end_time": 1770230256.9044,
+            "forecaster_count": 135,
+            "interval_lower_bounds": [
+              0.54
+            ],
+            "centers": [
+              0.61
+            ],
+            "interval_upper_bounds": [
+              0.74
+            ]
+          },
+          {
+            "start_time": 1770230256.9044,
+            "end_time": 1770230551.687608,
+            "forecaster_count": 135,
+            "interval_lower_bounds": [
+              0.53
+            ],
+            "centers": [
+              0.61
+            ],
+            "interval_upper_bounds": [
+              0.74
+            ]
+          },
+          {
+            "start_time": 1770230551.687608,
+            "end_time": 1770231422.735775,
+            "forecaster_count": 135,
+            "interval_lower_bounds": [
+              0.53
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.72
+            ]
+          },
+          {
+            "start_time": 1770231422.735775,
+            "end_time": 1770231487.515847,
+            "forecaster_count": 135,
+            "interval_lower_bounds": [
+              0.53
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.71
+            ]
+          },
+          {
+            "start_time": 1770231487.515847,
+            "end_time": 1770232028.542163,
+            "forecaster_count": 135,
+            "interval_lower_bounds": [
+              0.5
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.71
+            ]
+          },
+          {
+            "start_time": 1770232028.542163,
+            "end_time": 1770232035.720775,
+            "forecaster_count": 135,
+            "interval_lower_bounds": [
+              0.5
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.74
+            ]
+          },
+          {
+            "start_time": 1770232035.720775,
+            "end_time": 1770232038.594569,
+            "forecaster_count": 135,
+            "interval_lower_bounds": [
+              0.5
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.74
+            ]
+          },
+          {
+            "start_time": 1770232038.594569,
+            "end_time": 1770232085.030499,
+            "forecaster_count": 135,
+            "interval_lower_bounds": [
+              0.5
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.74
+            ]
+          },
+          {
+            "start_time": 1770232085.030499,
+            "end_time": 1770232088.262692,
+            "forecaster_count": 135,
+            "interval_lower_bounds": [
+              0.5
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.74
+            ]
+          },
+          {
+            "start_time": 1770232088.262692,
+            "end_time": 1770232544.798319,
+            "forecaster_count": 135,
+            "interval_lower_bounds": [
+              0.5
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.74
+            ]
+          },
+          {
+            "start_time": 1770232544.798319,
+            "end_time": 1770232585.984879,
+            "forecaster_count": 135,
+            "interval_lower_bounds": [
+              0.5
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.74
+            ]
+          },
+          {
+            "start_time": 1770232585.984879,
+            "end_time": 1770233043.234351,
+            "forecaster_count": 135,
+            "interval_lower_bounds": [
+              0.53
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.74
+            ]
+          },
+          {
+            "start_time": 1770233043.234351,
+            "end_time": 1770233757.81471,
+            "forecaster_count": 135,
+            "interval_lower_bounds": [
+              0.53
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.74
+            ]
+          },
+          {
+            "start_time": 1770233757.81471,
+            "end_time": 1770234038.11416,
+            "forecaster_count": 135,
+            "interval_lower_bounds": [
+              0.502
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.72
+            ]
+          },
+          {
+            "start_time": 1770234038.11416,
+            "end_time": 1770234855.326863,
+            "forecaster_count": 136,
+            "interval_lower_bounds": [
+              0.502
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.76
+            ]
+          },
+          {
+            "start_time": 1770234855.326863,
+            "end_time": 1770235587.460574,
+            "forecaster_count": 136,
+            "interval_lower_bounds": [
+              0.53
+            ],
+            "centers": [
+              0.61
+            ],
+            "interval_upper_bounds": [
+              0.74
+            ]
+          },
+          {
+            "start_time": 1770235587.460574,
+            "end_time": 1770236445.584909,
+            "forecaster_count": 137,
+            "interval_lower_bounds": [
+              0.53
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.74
+            ]
+          },
+          {
+            "start_time": 1770236445.584909,
+            "end_time": 1770237431.817674,
+            "forecaster_count": 137,
+            "interval_lower_bounds": [
+              0.53
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.72
+            ]
+          },
+          {
+            "start_time": 1770237431.817674,
+            "end_time": 1770237438.023699,
+            "forecaster_count": 137,
+            "interval_lower_bounds": [
+              0.502
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.72
+            ]
+          },
+          {
+            "start_time": 1770237438.023699,
+            "end_time": 1770237496.17225,
+            "forecaster_count": 137,
+            "interval_lower_bounds": [
+              0.502
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.72
+            ]
+          },
+          {
+            "start_time": 1770237496.17225,
+            "end_time": 1770238471.254471,
+            "forecaster_count": 137,
+            "interval_lower_bounds": [
+              0.53
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.72
+            ]
+          },
+          {
+            "start_time": 1770238471.254471,
+            "end_time": 1770241313.081422,
+            "forecaster_count": 138,
+            "interval_lower_bounds": [
+              0.502
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.72
+            ]
+          },
+          {
+            "start_time": 1770241313.081422,
+            "end_time": 1770242655.500091,
+            "forecaster_count": 138,
+            "interval_lower_bounds": [
+              0.502
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.72
+            ]
+          },
+          {
+            "start_time": 1770242655.500091,
+            "end_time": 1770245694.11302,
+            "forecaster_count": 138,
+            "interval_lower_bounds": [
+              0.502
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.72
+            ]
+          },
+          {
+            "start_time": 1770245694.11302,
+            "end_time": 1770246660.572783,
+            "forecaster_count": 138,
+            "interval_lower_bounds": [
+              0.502
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.74
+            ]
+          },
+          {
+            "start_time": 1770246660.572783,
+            "end_time": 1770251732.564169,
+            "forecaster_count": 138,
+            "interval_lower_bounds": [
+              0.48
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.74
+            ]
+          },
+          {
+            "start_time": 1770251732.564169,
+            "end_time": 1770251889.722446,
+            "forecaster_count": 139,
+            "interval_lower_bounds": [
+              0.5
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.72
+            ]
+          },
+          {
+            "start_time": 1770251889.722446,
+            "end_time": 1770252128.792463,
+            "forecaster_count": 139,
+            "interval_lower_bounds": [
+              0.502
+            ],
+            "centers": [
+              0.61
+            ],
+            "interval_upper_bounds": [
+              0.8
+            ]
+          },
+          {
+            "start_time": 1770252128.792463,
+            "end_time": 1770252595.736188,
+            "forecaster_count": 140,
+            "interval_lower_bounds": [
+              0.502
+            ],
+            "centers": [
+              0.61
+            ],
+            "interval_upper_bounds": [
+              0.827
+            ]
+          },
+          {
+            "start_time": 1770252595.736188,
+            "end_time": 1770255659.850006,
+            "forecaster_count": 141,
+            "interval_lower_bounds": [
+              0.48
+            ],
+            "centers": [
+              0.61
+            ],
+            "interval_upper_bounds": [
+              0.827
+            ]
+          },
+          {
+            "start_time": 1770255659.850006,
+            "end_time": 1770255879.619539,
+            "forecaster_count": 141,
+            "interval_lower_bounds": [
+              0.46
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.8
+            ]
+          },
+          {
+            "start_time": 1770255879.619539,
+            "end_time": 1770255883.388029,
+            "forecaster_count": 141,
+            "interval_lower_bounds": [
+              0.4
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.75
+            ]
+          },
+          {
+            "start_time": 1770255883.388029,
+            "end_time": 1770257073.152,
+            "forecaster_count": 141,
+            "interval_lower_bounds": [
+              0.4
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.75
+            ]
+          },
+          {
+            "start_time": 1770257073.152,
+            "end_time": 1770261493.419891,
+            "forecaster_count": 140,
+            "interval_lower_bounds": [
+              0.4
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.75
+            ]
+          },
+          {
+            "start_time": 1770261493.419891,
+            "end_time": 1770263082.173206,
+            "forecaster_count": 141,
+            "interval_lower_bounds": [
+              0.4
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.74
+            ]
+          },
+          {
+            "start_time": 1770263082.173206,
+            "end_time": 1770263533.821316,
+            "forecaster_count": 141,
+            "interval_lower_bounds": [
+              0.45
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.8
+            ]
+          },
+          {
+            "start_time": 1770263533.821316,
+            "end_time": 1770267171.498408,
+            "forecaster_count": 142,
+            "interval_lower_bounds": [
+              0.39
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.74
+            ]
+          },
+          {
+            "start_time": 1770267171.498408,
+            "end_time": 1770269482.783463,
+            "forecaster_count": 142,
+            "interval_lower_bounds": [
+              0.39
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.72
+            ]
+          },
+          {
+            "start_time": 1770269482.783463,
+            "end_time": 1770269484.623346,
+            "forecaster_count": 142,
+            "interval_lower_bounds": [
+              0.4
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.71
+            ]
+          },
+          {
+            "start_time": 1770269484.623346,
+            "end_time": 1770270964.066254,
+            "forecaster_count": 142,
+            "interval_lower_bounds": [
+              0.4
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.71
+            ]
+          },
+          {
+            "start_time": 1770270964.066254,
+            "end_time": 1770271086.185924,
+            "forecaster_count": 142,
+            "interval_lower_bounds": [
+              0.4
+            ],
+            "centers": [
+              0.6
+            ],
+            "interval_upper_bounds": [
+              0.71
+            ]
+          },
+          {
+            "start_time": 1770271086.185924,
+            "end_time": 1770271197.638582,
+            "forecaster_count": 143,
+            "interval_lower_bounds": [
+              0.39
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.71
+            ]
+          },
+          {
+            "start_time": 1770271197.638582,
+            "end_time": 1770271919.638499,
+            "forecaster_count": 144,
+            "interval_lower_bounds": [
+              0.39
+            ],
+            "centers": [
+              0.54
+            ],
+            "interval_upper_bounds": [
+              0.71
+            ]
+          },
+          {
+            "start_time": 1770271919.638499,
+            "end_time": 1770274335.685544,
+            "forecaster_count": 144,
+            "interval_lower_bounds": [
+              0.4
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.71
+            ]
+          },
+          {
+            "start_time": 1770274335.685544,
+            "end_time": 1770274340.820377,
+            "forecaster_count": 144,
+            "interval_lower_bounds": [
+              0.4
+            ],
+            "centers": [
+              0.54
+            ],
+            "interval_upper_bounds": [
+              0.69
+            ]
+          },
+          {
+            "start_time": 1770274340.820377,
+            "end_time": 1770277643.259884,
+            "forecaster_count": 144,
+            "interval_lower_bounds": [
+              0.4
+            ],
+            "centers": [
+              0.54
+            ],
+            "interval_upper_bounds": [
+              0.69
+            ]
+          },
+          {
+            "start_time": 1770277643.259884,
+            "end_time": 1770277700.172567,
+            "forecaster_count": 144,
+            "interval_lower_bounds": [
+              0.4
+            ],
+            "centers": [
+              0.54
+            ],
+            "interval_upper_bounds": [
+              0.68
+            ]
+          },
+          {
+            "start_time": 1770277700.172567,
+            "end_time": 1770277723.045846,
+            "forecaster_count": 144,
+            "interval_lower_bounds": [
+              0.4
+            ],
+            "centers": [
+              0.54
+            ],
+            "interval_upper_bounds": [
+              0.68
+            ]
+          },
+          {
+            "start_time": 1770277723.045846,
+            "end_time": 1770277912.822827,
+            "forecaster_count": 144,
+            "interval_lower_bounds": [
+              0.4
+            ],
+            "centers": [
+              0.54
+            ],
+            "interval_upper_bounds": [
+              0.68
+            ]
+          },
+          {
+            "start_time": 1770277912.822827,
+            "end_time": 1770278485.279791,
+            "forecaster_count": 144,
+            "interval_lower_bounds": [
+              0.39
+            ],
+            "centers": [
+              0.52
+            ],
+            "interval_upper_bounds": [
+              0.63
+            ]
+          },
+          {
+            "start_time": 1770278485.279791,
+            "end_time": 1770281712.64494,
+            "forecaster_count": 144,
+            "interval_lower_bounds": [
+              0.39
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.63
+            ]
+          },
+          {
+            "start_time": 1770281712.64494,
+            "end_time": 1770282482.150565,
+            "forecaster_count": 145,
+            "interval_lower_bounds": [
+              0.35
+            ],
+            "centers": [
+              0.54
+            ],
+            "interval_upper_bounds": [
+              0.63
+            ]
+          },
+          {
+            "start_time": 1770282482.150565,
+            "end_time": 1770283732.334978,
+            "forecaster_count": 145,
+            "interval_lower_bounds": [
+              0.35
+            ],
+            "centers": [
+              0.52
+            ],
+            "interval_upper_bounds": [
+              0.63
+            ]
+          },
+          {
+            "start_time": 1770283732.334978,
+            "end_time": 1770289539.317158,
+            "forecaster_count": 145,
+            "interval_lower_bounds": [
+              0.35
+            ],
+            "centers": [
+              0.52
+            ],
+            "interval_upper_bounds": [
+              0.63
+            ]
+          },
+          {
+            "start_time": 1770289539.317158,
+            "end_time": 1770290030.996597,
+            "forecaster_count": 146,
+            "interval_lower_bounds": [
+              0.39
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.68
+            ]
+          },
+          {
+            "start_time": 1770290030.996597,
+            "end_time": 1770291426.379452,
+            "forecaster_count": 146,
+            "interval_lower_bounds": [
+              0.39
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.63
+            ]
+          },
+          {
+            "start_time": 1770291426.379452,
+            "end_time": 1770291816.033604,
+            "forecaster_count": 147,
+            "interval_lower_bounds": [
+              0.35
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.63
+            ]
+          },
+          {
+            "start_time": 1770291816.033604,
+            "end_time": 1770291858.591524,
+            "forecaster_count": 148,
+            "interval_lower_bounds": [
+              0.35
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.7
+            ]
+          },
+          {
+            "start_time": 1770291858.591524,
+            "end_time": 1770293436.988277,
+            "forecaster_count": 148,
+            "interval_lower_bounds": [
+              0.35
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.7
+            ]
+          },
+          {
+            "start_time": 1770293436.988277,
+            "end_time": 1770297504.621756,
+            "forecaster_count": 149,
+            "interval_lower_bounds": [
+              0.39
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.68
+            ]
+          },
+          {
+            "start_time": 1770297504.621756,
+            "end_time": 1770298187.800848,
+            "forecaster_count": 149,
+            "interval_lower_bounds": [
+              0.39
+            ],
+            "centers": [
+              0.56
+            ],
+            "interval_upper_bounds": [
+              0.68
+            ]
+          },
+          {
+            "start_time": 1770298187.800848,
+            "end_time": 1770298812.936349,
+            "forecaster_count": 150,
+            "interval_lower_bounds": [
+              0.39
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.68
+            ]
+          },
+          {
+            "start_time": 1770298812.936349,
+            "end_time": 1770298986.215737,
+            "forecaster_count": 151,
+            "interval_lower_bounds": [
+              0.35
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.68
+            ]
+          },
+          {
+            "start_time": 1770298986.215737,
+            "end_time": 1770302774.420118,
+            "forecaster_count": 152,
+            "interval_lower_bounds": [
+              0.39
+            ],
+            "centers": [
+              0.54
+            ],
+            "interval_upper_bounds": [
+              0.67
+            ]
+          },
+          {
+            "start_time": 1770302774.420118,
+            "end_time": 1770306724.326354,
+            "forecaster_count": 152,
+            "interval_lower_bounds": [
+              0.39
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.65
+            ]
+          },
+          {
+            "start_time": 1770306724.326354,
+            "end_time": 1770308649.11252,
+            "forecaster_count": 153,
+            "interval_lower_bounds": [
+              0.39
+            ],
+            "centers": [
+              0.54
+            ],
+            "interval_upper_bounds": [
+              0.65
+            ]
+          },
+          {
+            "start_time": 1770308649.11252,
+            "end_time": 1770309720.367518,
+            "forecaster_count": 153,
+            "interval_lower_bounds": [
+              0.39
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.65
+            ]
+          },
+          {
+            "start_time": 1770309720.367518,
+            "end_time": 1770310728.172968,
+            "forecaster_count": 153,
+            "interval_lower_bounds": [
+              0.4
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.63
+            ]
+          },
+          {
+            "start_time": 1770310728.172968,
+            "end_time": 1770311333.206289,
+            "forecaster_count": 154,
+            "interval_lower_bounds": [
+              0.4
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.63
+            ]
+          },
+          {
+            "start_time": 1770311333.206289,
+            "end_time": 1770315282.099408,
+            "forecaster_count": 154,
+            "interval_lower_bounds": [
+              0.45
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.62
+            ]
+          },
+          {
+            "start_time": 1770315282.099408,
+            "end_time": 1770320112.142939,
+            "forecaster_count": 154,
+            "interval_lower_bounds": [
+              0.45
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.61
+            ]
+          },
+          {
+            "start_time": 1770320112.142939,
+            "end_time": 1770320118.700656,
+            "forecaster_count": 154,
+            "interval_lower_bounds": [
+              0.45
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.6
+            ]
+          },
+          {
+            "start_time": 1770320118.700656,
+            "end_time": 1770324544.350383,
+            "forecaster_count": 154,
+            "interval_lower_bounds": [
+              0.45
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.6
+            ]
+          },
+          {
+            "start_time": 1770324544.350383,
+            "end_time": 1770332040.701976,
+            "forecaster_count": 154,
+            "interval_lower_bounds": [
+              0.45
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.6
+            ]
+          },
+          {
+            "start_time": 1770332040.701976,
+            "end_time": 1770332730.061633,
+            "forecaster_count": 154,
+            "interval_lower_bounds": [
+              0.45
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.62
+            ]
+          },
+          {
+            "start_time": 1770332730.061633,
+            "end_time": 1770336173.7993,
+            "forecaster_count": 154,
+            "interval_lower_bounds": [
+              0.45
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.65
+            ]
+          },
+          {
+            "start_time": 1770336173.7993,
+            "end_time": 1770336273.686559,
+            "forecaster_count": 155,
+            "interval_lower_bounds": [
+              0.45
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.68
+            ]
+          },
+          {
+            "start_time": 1770336273.686559,
+            "end_time": 1770336396.817446,
+            "forecaster_count": 156,
+            "interval_lower_bounds": [
+              0.45
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.68
+            ]
+          },
+          {
+            "start_time": 1770336396.817446,
+            "end_time": 1770337107.588241,
+            "forecaster_count": 156,
+            "interval_lower_bounds": [
+              0.45
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.68
+            ]
+          },
+          {
+            "start_time": 1770337107.588241,
+            "end_time": 1770338606.789047,
+            "forecaster_count": 156,
+            "interval_lower_bounds": [
+              0.45
+            ],
+            "centers": [
+              0.55
+            ],
+            "interval_upper_bounds": [
+              0.65
+            ]
+          },
+          {
+            "start_time": 1770338606.789047,
+            "end_time": 1770338799.267465,
+            "forecaster_count": 156,
+            "interval_lower_bounds": [
+              0.45
+            ],
+            "centers": [
+              0.56
+            ],
+            "interval_upper_bounds": [
+              0.68
+            ]
+          },
+          {
+            "start_time": 1770338799.267465,
+            "end_time": 1770338814.959408,
+            "forecaster_count": 156,
+            "interval_lower_bounds": [
+              0.45
+            ],
+            "centers": [
+              0.57
+            ],
+            "interval_upper_bounds": [
+              0.68
+            ]
+          },
+          {
+            "start_time": 1770338814.959408,
+            "end_time": 1770338817.158504,
+            "forecaster_count": 156,
+            "interval_lower_bounds": [
+              0.45
+            ],
+            "centers": [
+              0.57
+            ],
+            "interval_upper_bounds": [
+              0.68
+            ]
+          },
+          {
+            "start_time": 1770338817.158504,
+            "end_time": 1770338821.01974,
+            "forecaster_count": 156,
+            "interval_lower_bounds": [
+              0.45
+            ],
+            "centers": [
+              0.57
+            ],
+            "interval_upper_bounds": [
+              0.68
+            ]
+          },
+          {
+            "start_time": 1770338821.01974,
+            "end_time": 1770339036.448326,
+            "forecaster_count": 156,
+            "interval_lower_bounds": [
+              0.45
+            ],
+            "centers": [
+              0.57
+            ],
+            "interval_upper_bounds": [
+              0.68
+            ]
+          },
+          {
+            "start_time": 1770339036.448326,
+            "end_time": 1770339045.210013,
+            "forecaster_count": 157,
+            "interval_lower_bounds": [
+              0.45
+            ],
+            "centers": [
+              0.56
+            ],
+            "interval_upper_bounds": [
+              0.66
+            ]
+          },
+          {
+            "start_time": 1770339045.210013,
+            "end_time": 1770860683.094,
+            "forecaster_count": 157,
+            "interval_lower_bounds": [
+              0.45
+            ],
+            "centers": [
+              0.56
+            ],
+            "interval_upper_bounds": [
+              0.66
+            ]
+          }
+        ],
+        "latest": {
+          "start_time": 1770339045.210013,
+          "end_time": 1770860683.094,
+          "forecaster_count": 157,
+          "interval_lower_bounds": [
+            0.45
+          ],
+          "centers": [
+            0.56
+          ],
+          "interval_upper_bounds": [
+            0.66
+          ],
+          "forecast_values": [
+            0.43999999999999995,
+            0.56
+          ],
+          "means": [
+            0.554649195859684
+          ],
+          "histogram": [
+            [
+              0.03852894158380564,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.003190319842782378,
+              0.48137899104118187,
+              0.0,
+              0.04066679946823913,
+              5.097308676200543e-05,
+              0.0,
+              1.0,
+              0.0007184162194738851,
+              0.0034330387202218923,
+              0.0,
+              0.0,
+              0.3408648879554927,
+              0.0004851829117117352,
+              0.0006530795175512224,
+              0.2370634197570541,
+              0.010125379826670774,
+              0.39592922487399335,
+              0.0029623862981098376,
+              0.1976510905830328,
+              0.0025477986635491097,
+              0.0,
+              0.17210776255486968,
+              0.0073416550341739275,
+              0.0,
+              0.2439458565803017,
+              0.020864418221832576,
+              0.6318172010506208,
+              0.0003166137025467285,
+              0.0,
+              0.030974873110016437,
+              0.46631946524554446,
+              0.38074117876078506,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              2.148488649285801,
+              0.7520052178142235,
+              0.0,
+              0.5986497156150932,
+              0.45720474822521273,
+              0.32867490949192846,
+              0.0,
+              0.27156857144110275,
+              9.970055684701335e-05,
+              0.16558569532010214,
+              2.24721908258181,
+              0.7548441800792729,
+              1.743153655966596,
+              0.0,
+              0.02373962329934059,
+              1.460229151727424,
+              0.19482633335506244,
+              0.2119668869082058,
+              0.2593377017958156,
+              0.0,
+              0.5255499156889294,
+              0.9608200990619539,
+              0.013811252333548945,
+              0.491809634299603,
+              0.008362503845086383,
+              1.1682310546389094,
+              0.21654344408693302,
+              0.15474876385721958,
+              0.0,
+              0.8178011374361869,
+              0.00017390859029303986,
+              0.0,
+              0.0,
+              0.0,
+              0.0012321284089031497,
+              0.07673643441174927,
+              6.118937703355429e-05,
+              0.0,
+              0.1567840600448841,
+              0.0,
+              0.07373562931032643,
+              0.0,
+              0.13610749061059552,
+              0.0007889565731449242,
+              0.0,
+              0.5390846028224182,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              1.757782971501601,
+              0.0,
+              0.002018483553059274,
+              0.0,
+              0.13280153432949396
+            ]
+          ]
+        },
+        "score_data": {},
+        "movement": {
+          "divergence": 0.009297843440014854,
+          "direction": "up",
+          "movement": 0.040000000000000036,
+          "period": "604800.0",
+          "option_index": null
+        }
+      }
+    },
+    "average_coverage": null,
+    "my_forecasts": {
+      "history": [
+        {
+          "question_id": 41340,
+          "author_id": 290288,
+          "start_time": 1769416929.225087,
+          "end_time": 1769468713.667236,
+          "forecast_values": [
+            0.9402,
+            0.059800000000000006
+          ],
+          "interval_lower_bounds": null,
+          "centers": null,
+          "interval_upper_bounds": null,
+          "distribution_input": null
+        },
+        {
+          "question_id": 41340,
+          "author_id": 290288,
+          "start_time": 1769468713.667236,
+          "end_time": null,
+          "forecast_values": [
+            0.8942857142857144,
+            0.1057142857142857
+          ],
+          "interval_lower_bounds": null,
+          "centers": null,
+          "interval_upper_bounds": null,
+          "distribution_input": null
+        }
+      ],
+      "latest": {
+        "question_id": 41340,
+        "author_id": 290288,
+        "start_time": 1769468713.667236,
+        "end_time": null,
+        "forecast_values": [
+          0.8942857142857144,
+          0.1057142857142857
+        ],
+        "interval_lower_bounds": null,
+        "centers": null,
+        "interval_upper_bounds": null,
+        "distribution_input": null
+      },
+      "score_data": {}
+    }
+  },
+  "user_permission": "forecaster",
+  "vote": {
+    "score": 5,
+    "user_vote": null
+  },
+  "forecasts_count": 629,
+  "subscriptions": [],
+  "unread_comment_count": 0,
+  "last_viewed_at": "2026-02-05T22:35:39.492445Z",
+  "private_note": null,
+  "key_factors": [
+    {
+      "id": 1429,
+      "author": {
+        "id": 119188,
+        "username": "exmateriae",
+        "is_bot": false,
+        "is_staff": false,
+        "metadata": {
+          "pro_details": {
+            "pro_end_date": null,
+            "is_current_pro": true,
+            "pro_start_date": "1/6/2025"
+          }
+        }
+      },
+      "comment_id": 646022,
+      "vote": {
+        "score": 4.0,
+        "aggregated_data": [
+          {
+            "score": 5,
+            "count": 2
+          }
+        ],
+        "user_vote": null,
+        "count": 2
+      },
+      "question_id": null,
+      "question": null,
+      "question_option": "",
+      "freshness": 3.741059020197905,
+      "driver": {
+        "text": "US military buildup suggests likelihood of attack",
+        "impact_direction": 1,
+        "certainty": null
+      },
+      "base_rate": null,
+      "news": null,
+      "post": {
+        "id": 41594,
+        "question_type": "binary",
+        "unit": ""
+      }
+    },
+    {
+      "id": 1430,
+      "author": {
+        "id": 119188,
+        "username": "exmateriae",
+        "is_bot": false,
+        "is_staff": false,
+        "metadata": {
+          "pro_details": {
+            "pro_end_date": null,
+            "is_current_pro": true,
+            "pro_start_date": "1/6/2025"
+          }
+        }
+      },
+      "comment_id": 646022,
+      "vote": {
+        "score": 4.0,
+        "aggregated_data": [
+          {
+            "score": 5,
+            "count": 2
+          }
+        ],
+        "user_vote": null,
+        "count": 2
+      },
+      "question_id": null,
+      "question": null,
+      "question_option": "",
+      "freshness": 3.7410687338198385,
+      "driver": null,
+      "base_rate": null,
+      "news": {
+        "itn_article_id": null,
+        "url": "https://www.aljazeera.com/news/2026/1/29/how-does-us-military-build-up-off-iran-compare-to-the-june-2025-strikes",
+        "title": "How does US military build-up off Iran compare to the June 2025 strikes?",
+        "img_url": "https://www.aljazeera.com/favicon_aje.ico",
+        "source": "aljazeera.com",
+        "published_at": "2026-01-31T02:14:32.984000Z",
+        "impact_direction": 1,
+        "certainty": null
+      },
+      "post": {
+        "id": 41594,
+        "question_type": "binary",
+        "unit": ""
+      }
+    },
+    {
+      "id": 1432,
+      "author": {
+        "id": 119188,
+        "username": "exmateriae",
+        "is_bot": false,
+        "is_staff": false,
+        "metadata": {
+          "pro_details": {
+            "pro_end_date": null,
+            "is_current_pro": true,
+            "pro_start_date": "1/6/2025"
+          }
+        }
+      },
+      "comment_id": 646022,
+      "vote": {
+        "score": 3.0,
+        "aggregated_data": [
+          {
+            "score": 5,
+            "count": 1
+          },
+          {
+            "score": 2,
+            "count": 1
+          }
+        ],
+        "user_vote": null,
+        "count": 2
+      },
+      "question_id": null,
+      "question": null,
+      "question_option": "",
+      "freshness": 2.8206219982064797,
+      "driver": {
+        "text": "The IRGC and the regime overall have not been so weak for a long time",
+        "impact_direction": 1,
+        "certainty": null
+      },
+      "base_rate": null,
+      "news": null,
+      "post": {
+        "id": 41594,
+        "question_type": "binary",
+        "unit": ""
+      }
+    },
+    {
+      "id": 1431,
+      "author": {
+        "id": 119188,
+        "username": "exmateriae",
+        "is_bot": false,
+        "is_staff": false,
+        "metadata": {
+          "pro_details": {
+            "pro_end_date": null,
+            "is_current_pro": true,
+            "pro_start_date": "1/6/2025"
+          }
+        }
+      },
+      "comment_id": 646022,
+      "vote": {
+        "score": 3.0,
+        "aggregated_data": [
+          {
+            "score": 5,
+            "count": 1
+          }
+        ],
+        "user_vote": null,
+        "count": 1
+      },
+      "question_id": null,
+      "question": null,
+      "question_option": "",
+      "freshness": 2.8206233601239745,
+      "driver": {
+        "text": "Netanyahu needs major wins for the election at the end of the year",
+        "impact_direction": 1,
+        "certainty": null
+      },
+      "base_rate": null,
+      "news": null,
+      "post": {
+        "id": 41594,
+        "question_type": "binary",
+        "unit": ""
+      }
+    },
+    {
+      "id": 1510,
+      "author": {
+        "id": 245211,
+        "username": "Russell-viper",
+        "is_bot": false,
+        "is_staff": false,
+        "metadata": null
+      },
+      "comment_id": 653474,
+      "vote": {
+        "score": 2.0,
+        "aggregated_data": [],
+        "user_vote": null,
+        "count": 0
+      },
+      "question_id": null,
+      "question": null,
+      "question_option": "",
+      "freshness": 2.0,
+      "driver": {
+        "text": "Regional powers oppose US airspace use for strikes",
+        "impact_direction": -1,
+        "certainty": null
+      },
+      "base_rate": null,
+      "news": null,
+      "post": {
+        "id": 41594,
+        "question_type": "binary",
+        "unit": ""
+      }
+    },
+    {
+      "id": 1398,
+      "author": {
+        "id": 290711,
+        "username": "stevefan1999",
+        "is_bot": false,
+        "is_staff": false,
+        "metadata": null
+      },
+      "comment_id": 639409,
+      "vote": {
+        "score": 2.0,
+        "aggregated_data": [],
+        "user_vote": null,
+        "count": 0
+      },
+      "question_id": null,
+      "question": null,
+      "question_option": "",
+      "freshness": 2.0,
+      "driver": null,
+      "base_rate": null,
+      "news": {
+        "itn_article_id": null,
+        "url": "https://www.middleeasteye.net/news/turkey-plans-buffer-zone-if-iran-government-fall",
+        "title": "Turkey plans buffer zone if Iran government falls",
+        "img_url": "https://www.middleeasteye.net/sites/default/files/MEE%20Purple.png",
+        "source": "middleeasteye.net",
+        "published_at": "2026-01-28T05:58:39.368000Z",
+        "impact_direction": 1,
+        "certainty": null
+      },
+      "post": {
+        "id": 41594,
+        "question_type": "binary",
+        "unit": ""
+      }
+    },
+    {
+      "id": 1399,
+      "author": {
+        "id": 290711,
+        "username": "stevefan1999",
+        "is_bot": false,
+        "is_staff": false,
+        "metadata": null
+      },
+      "comment_id": 639411,
+      "vote": {
+        "score": 1.6666666666666667,
+        "aggregated_data": [
+          {
+            "score": 1,
+            "count": 1
+          }
+        ],
+        "user_vote": null,
+        "count": 1
+      },
+      "question_id": null,
+      "question": null,
+      "question_option": "",
+      "freshness": 1.6931864309037126,
+      "driver": null,
+      "base_rate": null,
+      "news": {
+        "itn_article_id": null,
+        "url": "https://www.prokerala.com/news/articles/a1722990.html",
+        "title": "Iran ready for peace process within international law, president tells Saudi crown prince",
+        "img_url": "https://www.prokerala.com/favicon.svg",
+        "source": "prokerala.com",
+        "published_at": "2026-01-28T06:05:44.262000Z",
+        "impact_direction": -1,
+        "certainty": null
+      },
+      "post": {
+        "id": 41594,
+        "question_type": "binary",
+        "unit": ""
+      }
+    }
+  ],
+  "is_current_content_translated": false
+}

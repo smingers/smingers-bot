@@ -1,0 +1,243 @@
+{
+  "centralized_research": {
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "Taiwan stock market forecast 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Taiwan economic outlook semiconductor industry",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Analyze potential economic and geopolitical scenarios affecting Taiwan stock market in 2026, considering semiconductor industry performance and China relations",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "Taiwan semiconductor industry forecast 2026",
+              "China Taiwan economic relations 2026",
+              "Taiwan stock market economic outlook",
+              "Global semiconductor supply chain trends",
+              "Taiwan technology sector investment predictions"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "Taiwan semiconductor industry forecast 2026",
+                    "Google"
+                  ],
+                  [
+                    "China Taiwan economic relations 2026",
+                    "Google News"
+                  ],
+                  [
+                    "Taiwan stock market economic outlook",
+                    "Google"
+                  ],
+                  [
+                    "Global semiconductor supply chain trends",
+                    "Google"
+                  ],
+                  [
+                    "Taiwan technology sector investment predictions",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 92157,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "TWEX",
+          "tool": "yFinance",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "yFinance",
+        "Agent",
+        "Google"
+      ],
+      "llm_cost": 0.0575,
+      "llm_cost_summarization": 0.0362,
+      "llm_cost_agentic": 0.0214,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Taiwan semiconductor industry outlook 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Taiwan stock market geopolitical risks 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Economic and technology trends affecting Taiwan's stock market in the next two years",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 20
+        },
+        {
+          "query": "What will be the value of the Taiwan Stock Index (TAIEX) at the end of 2026?",
+          "tool": "AskNews",
+          "deep_research_query": "Economic and technology trends affecting Taiwan's stock market in the next two years"
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "AskNews",
+        "Google"
+      ],
+      "llm_cost": 0.0378,
+      "llm_cost_summarization": 0.0362,
+      "llm_cost_agentic": 0.0016,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-3.5-haiku",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4850,
+        "token_output": 674,
+        "cost": 0.006576,
+        "duration_seconds": 20.279670000076294,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16175,
+        "token_output": 728,
+        "cost": 0.015852,
+        "duration_seconds": 19.056780099868774,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-3.5-haiku",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4850,
+        "token_output": 800,
+        "cost": 0.00708,
+        "duration_seconds": 20.27988290786743,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16452,
+        "token_output": 746,
+        "cost": 0.016145600000000003,
+        "duration_seconds": 19.05670189857483,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/anthropic/claude-3.5-haiku",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4850,
+        "token_output": 784,
+        "cost": 0.007016,
+        "duration_seconds": 20.279944896697998,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16301,
+        "token_output": 683,
+        "cost": 0.0157728,
+        "duration_seconds": 19.056640148162842,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/anthropic/claude-3.5-haiku",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4850,
+        "token_output": 951,
+        "cost": 0.007684,
+        "duration_seconds": 20.279989004135132,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16285,
+        "token_output": 749,
+        "cost": 0.016024,
+        "duration_seconds": 19.056588172912598,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/anthropic/claude-3.5-haiku",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4850,
+        "token_output": 737,
+        "cost": 0.006828000000000001,
+        "duration_seconds": 20.28002405166626,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16238,
+        "token_output": 734,
+        "cost": 0.0159264,
+        "duration_seconds": 19.056533098220825,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0048,
+    "step2_search": 0.0575,
+    "step3_outside_view": 0.0352,
+    "step5_inside_view": 0.0797
+  },
+  "total_pipeline_cost": 0.1772
+}

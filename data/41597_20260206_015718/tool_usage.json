@@ -1,0 +1,236 @@
+{
+  "centralized_research": {
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "FDIC failed bank list 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "US bank failure February 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide FDIC failed bank entries from 1 Jan 2026 to 5 Feb 2026 and counts of U.S. bank failures occurring Jan-Apr each year 2010-2025; summarize any regulatory or market signals pointing to potential near-term failures",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "FDIC failed banks 2026 list",
+              "FDIC bank failures by year",
+              "FDIC failed banks January 2026",
+              "regulators warn bank stress 2026",
+              "regional bank stock plunge 2026"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "FDIC failed banks 2026 list",
+                    "Google"
+                  ],
+                  [
+                    "FDIC bank failures by year",
+                    "Google"
+                  ],
+                  [
+                    "FDIC failed banks January 2026",
+                    "Google News"
+                  ],
+                  [
+                    "regulators warn bank stress 2026",
+                    "Google News"
+                  ],
+                  [
+                    "regional bank stock plunge 2026",
+                    "Google News"
+                  ]
+                ],
+                "search_results_chars": 71102,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google",
+        "Google News"
+      ],
+      "llm_cost": 0.2129,
+      "llm_cost_summarization": 0.1471,
+      "llm_cost_agentic": 0.0658,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "FDIC failed bank list 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "US bank failure January 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Show news on U.S. banks closed by the FDIC so far in 2026 and expert predictions of more failures before May 2026.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 22
+        },
+        {
+          "query": "How many US banks will fail from January through April 2026?",
+          "tool": "AskNews",
+          "deep_research_query": "Show news on U.S. banks closed by the FDIC so far in 2026 and expert predictions of more failures before May 2026."
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "AskNews",
+        "Google News"
+      ],
+      "llm_cost": 0.1534,
+      "llm_cost_summarization": 0.1471,
+      "llm_cost_agentic": 0.0063,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5897,
+        "token_output": 2280,
+        "cost": 0.05189100000000001,
+        "duration_seconds": 65.29447889328003,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17995,
+        "token_output": 3290,
+        "cost": 0.10333500000000001,
+        "duration_seconds": 73.09879493713379,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5897,
+        "token_output": 2298,
+        "cost": 0.052161,
+        "duration_seconds": 65.29462099075317,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17231,
+        "token_output": 2642,
+        "cost": 0.091323,
+        "duration_seconds": 73.09876704216003,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "cost": 0.0,
+        "duration_seconds": 65.29464983940125,
+        "error": "Response truncated after 4000 tokens (limit: 4000)"
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16007,
+        "token_output": 2708,
+        "cost": 0.06592425,
+        "duration_seconds": 73.09870409965515,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5230,
+        "token_output": 3326,
+        "cost": 0.037068000000000004,
+        "duration_seconds": 65.29467606544495,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13996,
+        "token_output": 3464,
+        "cost": 0.055704000000000004,
+        "duration_seconds": 73.09866070747375,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5230,
+        "token_output": 3019,
+        "cost": 0.034612000000000004,
+        "duration_seconds": 65.29470109939575,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15204,
+        "token_output": 1509,
+        "cost": 0.042480000000000004,
+        "duration_seconds": 73.09861779212952,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.013,
+    "step2_search": 0.2129,
+    "step3_outside_view": 0.2409,
+    "step5_inside_view": 0.3588
+  },
+  "total_pipeline_cost": 0.8256
+}
