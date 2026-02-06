@@ -537,6 +537,9 @@ class TestYfinancePipelineRouting:
             description="Stock market question",
         )
 
+    @pytest.mark.skip(
+        reason="Direct yFinance routing disabled — yFinance now goes through agentic search"
+    )
     @pytest.mark.asyncio
     async def test_yfinance_query_routed_to_handler(self, question_details):
         """yFinance queries are routed to _yfinance_search handler."""
@@ -570,6 +573,9 @@ Search queries:
                 assert "yFinance" in metadata["tools_used"]
                 assert "YFinanceData" in results
 
+    @pytest.mark.skip(
+        reason="Direct yFinance routing disabled — yFinance now goes through agentic search"
+    )
     @pytest.mark.asyncio
     async def test_yfinance_error_formatted_correctly(self, question_details):
         """yFinance exceptions produce properly formatted error blocks."""

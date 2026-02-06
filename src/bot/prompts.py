@@ -68,10 +68,7 @@ Nonetheless, you are advised to keep your query to at most four sentences.
 For FRED:
 If the question involves economic indicators, financial data, interest rates, employment, GDP, inflation, trade statistics, or any quantitative economic metric, use FRED (Federal Reserve Economic Data) to retrieve official historical data. Your query should describe the economic indicator (e.g., "US unemployment rate" or "consumer price index") or use a known FRED series ID directly (e.g., "UNRATE" or "CPIAUCSL"). This returns historical data with computed statistics for establishing base rates.
 
-For yFinance:
-If the question involves stock prices, ETF values, corporate earnings, market capitalization, company fundamentals, or options-implied expectations for publicly traded securities, use yFinance to retrieve market data. Your query should be a ticker symbol (e.g., "AAPL" or "SPY") optionally followed by a brief description of what data you need (e.g., "AAPL price history and fundamentals" or "TSLA options data"). This returns historical prices, key financial metrics, and options-implied probability distributions.
-
-You should format your answer exactly as below, always formatting the source in brackets () **on the same line as and after** the query. Do not wrap your query in quotes. Be sure to include two queries for Google/Google News and one for Agent. Add a FRED query if the question involves economic/financial data. Add a yFinance query if the question involves stocks, ETFs, or publicly traded securities.
+You should format your answer exactly as below, always formatting the source in brackets () **on the same line as and after** the query. Do not wrap your query in quotes. Be sure to include two queries for Google/Google News and one for Agent. Add a FRED query if the question involves economic/financial data.
 
 Analysis:
 {{Your initial impression/analysis of the forecasting question followed by reasoning about the most relevant historical context needed to generate an outside view.}}
@@ -81,7 +78,6 @@ Search queries:
 2. [Query details] (Google News)
 3. [Query details] (Agent)
 4. [economic indicator query] (FRED) -- only if question involves economic/financial data
-5. [ticker symbol] (yFinance) -- only if question involves stocks, ETFs, or publicly traded securities
 
 """
 
@@ -324,10 +320,7 @@ If the question is about Google Trends data for a specific search term, use this
 For FRED:
 If the question involves economic indicators, financial data, interest rates, employment, GDP, inflation, trade statistics, or any quantitative economic metric, use FRED (Federal Reserve Economic Data) to retrieve official historical data. Your query should describe the economic indicator (e.g., "US unemployment rate" or "consumer price index") or use a known FRED series ID directly (e.g., "UNRATE" or "CPIAUCSL"). This returns historical data with computed statistics for establishing base rates.
 
-For yFinance:
-If the question involves stock prices, ETF values, corporate earnings, market capitalization, company fundamentals, or options-implied expectations for publicly traded securities, use yFinance to retrieve market data. Your query should be a ticker symbol (e.g., "AAPL" or "SPY") optionally followed by a brief description of what data you need (e.g., "AAPL price history and fundamentals" or "TSLA options data"). This returns historical prices, key financial metrics, and options-implied probability distributions.
-
-You should format your answer exactly as below, always formatting the source in brackets () **on the same line as and after** the query. Do not wrap your query in quotes. Be sure to include two queries for Google/Google News and one for Agent. Add a Google Trends query if the question involves Google Trends data. Add a FRED query if the question involves economic/financial data. Add a yFinance query if the question involves stocks, ETFs, or publicly traded securities.
+You should format your answer exactly as below, always formatting the source in brackets () **on the same line as and after** the query. Do not wrap your query in quotes. Be sure to include two queries for Google/Google News and one for Agent. Add a Google Trends query if the question involves Google Trends data. Add a FRED query if the question involves economic/financial data.
 
 Analysis:
 {{Your initial impression/analysis of the forecasting question followed by reasoning about the most relevant historical context needed to generate an outside view.}}
@@ -338,7 +331,6 @@ Search queries:
 3. [Query details] (Agent)
 4. [search term] (Google Trends) -- only if question involves Google Trends data
 5. [economic indicator query] (FRED) -- only if question involves economic/financial data
-6. [ticker symbol] (yFinance) -- only if question involves stocks, ETFs, or publicly traded securities
 """
 
 MULTIPLE_CHOICE_PROMPT_CURRENT = """
@@ -590,10 +582,7 @@ Nonetheless, you are advised to keep your query to at most three sentences.
 For FRED:
 If the question involves economic indicators, financial data, interest rates, employment, GDP, inflation, trade statistics, or any quantitative economic metric, use FRED (Federal Reserve Economic Data) to retrieve official historical data. Your query should describe the economic indicator (e.g., "US unemployment rate" or "consumer price index") or use a known FRED series ID directly (e.g., "UNRATE" or "CPIAUCSL"). This returns historical data with computed statistics for establishing base rates.
 
-For yFinance:
-If the question involves stock prices, ETF values, corporate earnings, market capitalization, company fundamentals, or options-implied expectations for publicly traded securities, use yFinance to retrieve market data. Your query should be a ticker symbol (e.g., "AAPL" or "SPY") optionally followed by a brief description of what data you need (e.g., "AAPL price history and fundamentals" or "TSLA options data"). This returns historical prices, key financial metrics, and options-implied probability distributions.
-
-You should format your answer exactly as below, always formatting the source in brackets () **on the same line as and after** the query. Do not wrap your query in quotes or brackets. Be sure to include two queries for Google/Google News and one for Agent. Add a FRED query if the question involves economic/financial data. Add a yFinance query if the question involves stocks, ETFs, or publicly traded securities.
+You should format your answer exactly as below, always formatting the source in brackets () **on the same line as and after** the query. Do not wrap your query in quotes or brackets. Be sure to include two queries for Google/Google News and one for Agent. Add a FRED query if the question involves economic/financial data.
 
 Analysis:
 {{Your initial impression/analysis of the forecasting question followed by reasoning about the most relevant historical context needed to generate an outside view.}}
@@ -603,7 +592,6 @@ Search queries:
 2. [Query details] (Google News)
 3. [Query details] (Agent)
 4. [economic indicator query] (FRED) -- only if question involves economic/financial data
-5. [ticker symbol] (yFinance) -- only if question involves stocks, ETFs, or publicly traded securities
 """
 
 
@@ -854,6 +842,8 @@ Important guidelines:
 - Please phrase the queries in a way optimal for keyword optimized search (i.e., the phrase you search is likely to appear on desired web pages). Avoid writing overly specific queries. Limit to six words.
 - You can list up to 5 search queries
 
+For yFinance: use a Yahoo Finance ticker symbol to retrieve market data (e.g., "AAPL", "^GSPC"). Indices use the ^ prefix. If the ticker fails, you can search Google for the correct symbol and retry.
+
 Important formatting instructions: You should format your answer EXACTLY as below, always formatting the source in brackets () **on the same line as and after** the query. DO NOT use any quotes in your queries.
 
 Analysis:
@@ -863,6 +853,7 @@ Search queries:
 1. [Query details] (Google)
 2. [Query details] (Google News)
 3. [Query details] (Google)
+4. [ticker symbol] (yFinance) -- only if query involves stocks, indices, or securities
 (Additional queries in the same format, if needed, up to five queries)
 
 
@@ -891,8 +882,9 @@ Important guidelines:
 - Include all nuanced details available from the search results
 - Be objective: present facts without personal opinions
 - Only generate new search queries if they would materially improve your answer
-- Choose your source as Google or Google News based on the type of information needed.
-- Please phrase the queries in a way optimal for keyword optimized search (i.e., the phrase you search is likely to appear on desired web pages). Avoid writing overly specific queries. Limit to six words.
+- Choose your source as Google, Google News, or yFinance based on the type of information needed.
+- For yFinance: use a Yahoo Finance ticker symbol to retrieve market data. If a previous yFinance query failed, search Google for the correct ticker and retry.
+- Please phrase Google/Google News queries in a way optimal for keyword optimized search (i.e., the phrase you search is likely to appear on desired web pages). Avoid writing overly specific queries. Limit to six words.
 - List a maximum of five search queries, being conservative and using only the maximum number of queries when really necessary.
 - If your analysis is sufficiently complete, omit the "Search queries:" section entirely to signal completion. Absence of regex match for 'Search queries:' will signal that this is your final research step.
 - If you encounter difficulties retrieving the exact information being requested (paywall or information unavailable), please consider adding queries to look for alternative sources/proxies for the same data. If utilizing these sources, you must add the alternative source used as a disclaimer in your analysis. Alternatively, consider how you might obtain a small subset of the data requested (perhaps by viewing snapshots at specific times). Some information is better than no information in your conclusion.
@@ -909,6 +901,7 @@ Search queries:
 1. [Query details] (Google)
 2. [Query details] (Google News)
 3. [Query details] (Google)
+4. [ticker symbol] (yFinance) -- only if query involves stocks, indices, or securities
 (Additional queries in the same format, if needed, up to five queries)
 
 Use the following verification checklist at the end of your response

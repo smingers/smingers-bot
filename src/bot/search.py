@@ -280,12 +280,18 @@ class SearchPipeline:
                         continue
                     query_sources.append((query, source))
                     tasks.append(self._fred_search(query))
-                elif source == "yFinance":
-                    if not self.config.get("research", {}).get("yfinance_enabled", True):
-                        logger.info(f"Search[{search_id}]: yFinance disabled, skipping query")
-                        continue
-                    query_sources.append((query, source))
-                    tasks.append(self._yfinance_search(query))
+                # NOTE: Direct yFinance queries from the query builder are disabled.
+                # The LLM often guesses wrong ticker symbols (e.g., "TWEX" instead of
+                # "^TWII" for TAIEX) and the direct path has no way to self-correct.
+                # yFinance is now available through agentic search instead, where the
+                # LLM can observe failures and retry with corrected tickers.
+                # Remove this block once the agentic approach is confirmed working well.
+                # elif source == "yFinance":
+                #     if not self.config.get("research", {}).get("yfinance_enabled", True):
+                #         logger.info(f"Search[{search_id}]: yFinance disabled, skipping query")
+                #         continue
+                #     query_sources.append((query, source))
+                #     tasks.append(self._yfinance_search(query))
                 elif source == "Agent":
                     query_sources.append((query, source))
                     # Build context string from question details for agentic search
@@ -993,7 +999,8 @@ class SearchPipeline:
                 # Extract queries with sources
                 queries_text = search_queries_match.group(1).strip()
                 search_queries_with_source = re.findall(
-                    r"\d+\.\s*([^(]+?)\s*\((Google|Google News)\)", queries_text
+                    r"\d+\.\s*([^(]+?)\s*\((Google|Google News|yFinance)\)",
+                    queries_text,
                 )
 
                 if not search_queries_with_source:
@@ -1024,9 +1031,12 @@ class SearchPipeline:
                 search_tasks = []
                 for sq, source in search_queries_with_source:
                     logger.debug(f"[agentic_search] Searching: {sq} (Source: {source})")
-                    search_tasks.append(
-                        self._google_search_agentic(sq, is_news=(source == "Google News"))
-                    )
+                    if source == "yFinance":
+                        search_tasks.append(self._yfinance_search(sq))
+                    else:
+                        search_tasks.append(
+                            self._google_search_agentic(sq, is_news=(source == "Google News"))
+                        )
 
                 search_results_list = await asyncio.gather(*search_tasks, return_exceptions=True)
 
@@ -1544,18 +1554,18 @@ Source: Federal Reserve Economic Data (FRED), St. Louis Fed
             logger.info(f"[yfinance_search] Resolved ticker: '{ticker_symbol}'")
 
             # Fetch data (all synchronous yfinance calls wrapped in to_thread)
-            def fetch_data():
-                ticker = yf.Ticker(ticker_symbol)
-                info = ticker.info or {}
-                hist_1y = ticker.history(period="1y")
-                hist_5y = ticker.history(period="5y")
+            def fetch_data(symbol=None):
+                t = yf.Ticker(symbol or ticker_symbol)
+                info = t.info or {}
+                hist_1y = t.history(period="1y")
+                hist_5y = t.history(period="5y")
 
                 # Options data (not available for all tickers)
                 options_chains = []
                 try:
-                    expiries = list(ticker.options)[:3]
+                    expiries = list(t.options)[:3]
                     for exp in expiries:
-                        options_chains.append((exp, ticker.option_chain(exp)))
+                        options_chains.append((exp, t.option_chain(exp)))
                 except Exception:
                     pass
 
@@ -1566,13 +1576,26 @@ Source: Federal Reserve Economic Data (FRED), St. Louis Fed
             # Validate - need at least some data
             current_price = info.get("regularMarketPrice") or info.get("currentPrice")
             if current_price is None and (hist_1y is None or hist_1y.empty):
-                logger.warning(f"[yfinance_search] No data found for: '{ticker_symbol}'")
-                return (
-                    f'<YFinanceData ticker="{ticker_symbol}" query="{cleaned_query}">\n'
-                    f'No data found for ticker "{ticker_symbol}". '
-                    f"Verify the ticker symbol is correct.\n"
-                    f"</YFinanceData>"
+                # Fallback: search yfinance for the correct ticker
+                logger.info(
+                    f"[yfinance_search] No data for '{ticker_symbol}', "
+                    f"searching yfinance for '{cleaned_query}'..."
                 )
+                resolved = await self._search_yfinance_ticker(yf, cleaned_query, fetch_data)
+                if resolved is not None:
+                    ticker_symbol, info, hist_1y, hist_5y, options_chains = resolved
+                    current_price = info.get("regularMarketPrice") or info.get("currentPrice")
+                else:
+                    logger.warning(
+                        f"[yfinance_search] No data found for '{ticker_symbol}' "
+                        f"and search fallback found no match"
+                    )
+                    return (
+                        f'<YFinanceData ticker="{ticker_symbol}" query="{cleaned_query}">\n'
+                        f'No data found for ticker "{ticker_symbol}". '
+                        f"Verify the ticker symbol is correct.\n"
+                        f"</YFinanceData>"
+                    )
 
             # If no current price from info, use last close from history
             if current_price is None and hist_1y is not None and not hist_1y.empty:
@@ -1645,22 +1668,93 @@ Source: Federal Reserve Economic Data (FRED), St. Louis Fed
     def _resolve_yfinance_ticker(self, cleaned_query: str) -> str:
         """Resolve a cleaned query to a ticker symbol.
 
-        If the query looks like a ticker (1-5 uppercase letters, optional dot for share class),
-        use it directly. Otherwise try the first word as a ticker.
+        Handles standard tickers (AAPL), indices (^GSPC), international
+        tickers (2330.TW), and tickers followed by descriptions.
         """
         stripped = cleaned_query.strip()
 
-        # Direct ticker: "AAPL", "BRK.B", "SPY"
-        if re.match(r"^[A-Z]{1,5}(?:\.[A-Z]{1,2})?$", stripped):
-            return stripped
+        # Ticker pattern: optional ^ prefix, alphanumeric, optional .suffix
+        # Matches: AAPL, ^GSPC, ^TWII, BRK.B, 2330.TW
+        ticker_pattern = r"\^?[A-Z0-9]{1,6}(?:\.[A-Z]{1,2})?"
 
-        # First word might be a ticker followed by description: "AAPL price history"
-        first_word = stripped.split()[0].upper() if stripped.split() else stripped.upper()
-        if re.match(r"^[A-Z]{1,5}(?:\.[A-Z]{1,2})?$", first_word):
-            return first_word
+        # Direct ticker only
+        if re.match(f"^{ticker_pattern}$", stripped, re.IGNORECASE):
+            return stripped.upper() if not stripped.startswith("^") else stripped
+
+        # First word might be a ticker followed by description: "^TWII price history"
+        first_word = stripped.split()[0] if stripped.split() else stripped
+        if re.match(f"^{ticker_pattern}$", first_word, re.IGNORECASE):
+            return first_word.upper() if not first_word.startswith("^") else first_word
 
         # Last resort: uppercase the whole thing (may not work well for names)
         return stripped.upper().replace(" ", "")
+
+    async def _search_yfinance_ticker(self, yf, cleaned_query: str, fetch_data):
+        """Fallback: search Yahoo Finance to find the correct ticker symbol.
+
+        Called when the initial ticker guess returns no data. Tries multiple
+        search terms derived from the query, picks the best match, fetches
+        data, and returns it (or None if nothing works).
+
+        Returns:
+            Tuple of (ticker_symbol, info, hist_1y, hist_5y, options_chains)
+            or None if no valid ticker was found.
+        """
+        from yfinance import Search
+
+        # Build search terms from the query — try multiple variations
+        search_terms = []
+        base = cleaned_query.strip()
+        if base:
+            search_terms.append(base)
+            # If the query is all uppercase (ticker-like), also try with ^ prefix
+            # (Yahoo Finance uses ^ for indices like ^TWII, ^GSPC, ^DJI)
+            if base.isalpha() and base.isupper():
+                search_terms.append(f"^{base}")
+
+        seen_symbols = set()
+        for term in search_terms:
+            try:
+                results = await asyncio.to_thread(lambda t=term: Search(t).quotes)
+            except Exception as e:
+                logger.debug(f"[yfinance_search] Search for '{term}' failed: {e}")
+                continue
+
+            if not results:
+                continue
+
+            # Score candidates: prefer INDEX/ETF types, prefer first results
+            candidates = []
+            for i, quote in enumerate(results[:5]):
+                symbol = quote.get("symbol")
+                if not symbol or symbol in seen_symbols:
+                    continue
+                seen_symbols.add(symbol)
+                # Prefer indices, then ETFs, then equities
+                type_score = {"INDEX": 3, "ETF": 2, "EQUITY": 1}.get(quote.get("quoteType", ""), 0)
+                candidates.append((type_score, -i, symbol, quote))
+
+            # Try candidates in priority order
+            for _type_score, _pos, symbol, quote in sorted(candidates, reverse=True):
+                logger.info(
+                    f"[yfinance_search] Trying fallback ticker '{symbol}' "
+                    f"({quote.get('shortname', '')}) from search '{term}'"
+                )
+                try:
+                    data = await asyncio.to_thread(fetch_data, symbol)
+                    info, hist_1y, hist_5y, options_chains = data
+                    price = info.get("regularMarketPrice") or info.get("currentPrice")
+                    has_data = price is not None or (hist_1y is not None and not hist_1y.empty)
+                    if has_data:
+                        logger.info(
+                            f"[yfinance_search] Fallback success: '{cleaned_query}' -> '{symbol}'"
+                        )
+                        return symbol, info, hist_1y, hist_5y, options_chains
+                except Exception as e:
+                    logger.debug(f"[yfinance_search] Fallback ticker '{symbol}' failed: {e}")
+                    continue
+
+        return None
 
     def _format_yf_header(self, ticker_symbol: str, info: dict) -> str:
         """Format the header section with company info."""
