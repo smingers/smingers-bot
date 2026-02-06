@@ -52,8 +52,9 @@ def setup_logging(verbose: bool = False):
             logging.StreamHandler(sys.stdout),
         ],
     )
-    # Suppress noisy trafilatura warnings (failed scrapes are handled gracefully)
+    # Suppress noisy third-party loggers
     logging.getLogger("trafilatura").setLevel(logging.CRITICAL)
+    logging.getLogger("LiteLLM").setLevel(logging.WARNING)
 
 
 async def list_questions(tournament_id: int | str):

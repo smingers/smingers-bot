@@ -621,8 +621,13 @@ class Forecaster:
                 pred_value = agent_result.probability
                 agent_pred_data = json.dumps({"probability": agent_result.probability})
             elif hasattr(agent_result, "percentiles") and agent_result.percentiles:
-                # Use median for numeric, store all percentiles
+                # Use median (p50) for numeric, or interpolate from p40/p60 if p50 not available
                 pred_value = agent_result.percentiles.get(50, agent_result.percentiles.get("50"))
+                if pred_value is None:
+                    p40 = agent_result.percentiles.get(40)
+                    p60 = agent_result.percentiles.get(60)
+                    if p40 is not None and p60 is not None:
+                        pred_value = (p40 + p60) / 2
                 agent_pred_data = json.dumps({"percentiles": agent_result.percentiles})
             elif hasattr(agent_result, "probabilities") and agent_result.probabilities:
                 # Use max for multiple choice, store full distribution

@@ -3,7 +3,7 @@ Search Pipeline
 
 Key differences from previous approach:
 1. Forecasters generate search queries directly in their responses
-2. Queries are tagged with source (Google, Google News, Google Trends, FRED, Agent)
+2. Queries are tagged with source (Google, Google News, Google Trends, FRED, yFinance, Agent)
 3. AskNews is called programmatically for current search (not LLM-controlled)
 4. Agentic search uses GPT to iteratively research
 5. Articles are summarized with question context
@@ -11,11 +11,12 @@ Key differences from previous approach:
 
 import asyncio
 import logging
+import math
 import os
 import re
 import traceback
 from dataclasses import dataclass
-from datetime import timedelta
+from datetime import datetime, timedelta
 from typing import Any
 
 import dateparser
@@ -117,6 +118,7 @@ class SearchPipeline:
     - Agent (agentic search with iterative GPT analysis)
     - Google Trends (historical trend data for search terms)
     - FRED (Federal Reserve Economic Data for economic indicators)
+    - yFinance (stock/ETF price history, fundamentals, options data)
     """
 
     def __init__(self, config: dict, llm_client: LLMClient | None = None):
@@ -211,14 +213,14 @@ class SearchPipeline:
             # Parse queries with sources
             # Format: 1. "text" (Source) or 1. text (Source) or 1. text [Source]
             search_queries = re.findall(
-                r'(?:\d+\.\s*)?(["\']?(.*?)["\']?)\s*[\(\[](Google|Google News|Google Trends|Agent|AskNews|FRED)[\)\]]',
+                r'(?:\d+\.\s*)?(["\']?(.*?)["\']?)\s*[\(\[](Google|Google News|Google Trends|Agent|AskNews|FRED|yFinance)[\)\]]',
                 queries_text,
             )
 
             # Fallback to unquoted queries
             if not search_queries:
                 search_queries = re.findall(
-                    r"(?:\d+\.\s*)?([^(\[\n]+)\s*[\(\[](Google|Google News|Google Trends|Agent|AskNews|FRED)[\)\]]",
+                    r"(?:\d+\.\s*)?([^(\[\n]+)\s*[\(\[](Google|Google News|Google Trends|Agent|AskNews|FRED|yFinance)[\)\]]",
                     queries_text,
                 )
 
@@ -279,6 +281,18 @@ class SearchPipeline:
                         continue
                     query_sources.append((query, source))
                     tasks.append(self._fred_search(query))
+                # NOTE: Direct yFinance queries from the query builder are disabled.
+                # The LLM often guesses wrong ticker symbols (e.g., "TWEX" instead of
+                # "^TWII" for TAIEX) and the direct path has no way to self-correct.
+                # yFinance is now available through agentic search instead, where the
+                # LLM can observe failures and retry with corrected tickers.
+                # Remove this block once the agentic approach is confirmed working well.
+                # elif source == "yFinance":
+                #     if not self.config.get("research", {}).get("yfinance_enabled", True):
+                #         logger.info(f"Search[{search_id}]: yFinance disabled, skipping query")
+                #         continue
+                #     query_sources.append((query, source))
+                #     tasks.append(self._yfinance_search(query))
                 elif source == "Agent":
                     query_sources.append((query, source))
                     # Build context string from question details for agentic search
@@ -344,6 +358,10 @@ class SearchPipeline:
                         formatted_results += (
                             f'<FREDData query="{query}">\nError: {result}\n</FREDData>\n'
                         )
+                    elif source == "yFinance":
+                        formatted_results += (
+                            f'<YFinanceData query="{query}">\nError: {result}\n</YFinanceData>\n'
+                        )
                     else:
                         formatted_results += (
                             f'\n<Summary query="{query}">\nError: {result}\n</Summary>\n'
@@ -393,6 +411,9 @@ class SearchPipeline:
                         num_results = 1 if "Error" not in result[:100] else 0
                         formatted_results += f"\n{result}\n"
                     elif source == "FRED":
+                        num_results = 1 if "Error" not in result[:100] else 0
+                        formatted_results += f"\n{result}\n"
+                    elif source == "yFinance":
                         num_results = 1 if "Error" not in result[:100] else 0
                         formatted_results += f"\n{result}\n"
                     else:
@@ -979,7 +1000,8 @@ class SearchPipeline:
                 # Extract queries with sources
                 queries_text = search_queries_match.group(1).strip()
                 search_queries_with_source = re.findall(
-                    r"\d+\.\s*([^(]+?)\s*\((Google|Google News)\)", queries_text
+                    r"\d+\.\s*([^(]+?)\s*\((Google|Google News|yFinance)\)",
+                    queries_text,
                 )
 
                 if not search_queries_with_source:
@@ -1007,20 +1029,27 @@ class SearchPipeline:
                 all_search_queries.extend([q for q, _ in search_queries_with_source])
 
                 # Execute searches
+                yfinance_enabled = self.config.get("research", {}).get("yfinance_enabled", True)
                 search_tasks = []
+                executed_queries = []
                 for sq, source in search_queries_with_source:
                     logger.debug(f"[agentic_search] Searching: {sq} (Source: {source})")
-                    search_tasks.append(
-                        self._google_search_agentic(sq, is_news=(source == "Google News"))
-                    )
+                    if source == "yFinance":
+                        if not yfinance_enabled:
+                            logger.info(f"[agentic_search] yFinance disabled, skipping: {sq}")
+                            continue
+                        search_tasks.append(self._yfinance_search(sq))
+                    else:
+                        search_tasks.append(
+                            self._google_search_agentic(sq, is_news=(source == "Google News"))
+                        )
+                    executed_queries.append((sq, source))
 
                 search_results_list = await asyncio.gather(*search_tasks, return_exceptions=True)
 
                 # Format search results
                 search_results = ""
-                for (sq, source), result in zip(
-                    search_queries_with_source, search_results_list, strict=True
-                ):
+                for (sq, source), result in zip(executed_queries, search_results_list, strict=True):
                     if isinstance(result, Exception):
                         search_results += (
                             f"\nSearch query: {sq} (Source: {source})\nError: {result}\n"
@@ -1226,7 +1255,6 @@ Note: Google Trends values are relative (0-100 scale), not absolute search volum
             return 10  # Default fallback
 
         import json
-        from datetime import datetime
 
         # Look for JSON block in description with trend dates
         # Format: {"format":"trends_interest_change_magnitude","info":{"trend_start":"2026-02-05","trend_end":"2026-02-14"}}
@@ -1507,6 +1535,495 @@ Source: Federal Reserve Economic Data (FRED), St. Louis Fed
                 return query[len(phrase) :].strip().strip("\"'")
 
         return query.strip()
+
+    # -------------------------------------------------------------------------
+    # yFinance (Stock/ETF Market Data)
+    # -------------------------------------------------------------------------
+
+    async def _yfinance_search(self, query: str) -> str:
+        """
+        Search yFinance for stock/ETF data and return prices, fundamentals, and options data.
+
+        The query can be a ticker symbol (e.g., "AAPL"), a ticker with description
+        (e.g., "AAPL price history"), or a company name (less reliable).
+        """
+        try:
+            import yfinance as yf
+
+            cleaned_query = self._extract_yfinance_query(query)
+            logger.info(f"[yfinance_search] Searching for: '{cleaned_query}'")
+
+            # Resolve ticker symbol
+            ticker_symbol = self._resolve_yfinance_ticker(cleaned_query)
+            logger.info(f"[yfinance_search] Resolved ticker: '{ticker_symbol}'")
+
+            # Fetch data (synchronous yfinance calls wrapped in to_thread)
+            info, hist_1y, hist_5y, options_chains = await asyncio.to_thread(
+                self._fetch_yfinance_data, yf, ticker_symbol
+            )
+
+            # Validate - need at least some data
+            current_price = info.get("regularMarketPrice") or info.get("currentPrice")
+            if current_price is None and (hist_1y is None or hist_1y.empty):
+                # Fallback: search yfinance for the correct ticker
+                logger.info(
+                    f"[yfinance_search] No data for '{ticker_symbol}', "
+                    f"searching yfinance for '{cleaned_query}'..."
+                )
+                resolved = await self._search_yfinance_ticker(cleaned_query)
+                if resolved is not None:
+                    ticker_symbol, info, hist_1y, hist_5y, options_chains = resolved
+                    current_price = info.get("regularMarketPrice") or info.get("currentPrice")
+                else:
+                    logger.warning(
+                        f"[yfinance_search] No data found for '{ticker_symbol}' "
+                        f"and search fallback found no match"
+                    )
+                    return (
+                        f'<YFinanceData ticker="{ticker_symbol}" query="{cleaned_query}">\n'
+                        f'No data found for ticker "{ticker_symbol}". '
+                        f"Verify the ticker symbol is correct.\n"
+                        f"</YFinanceData>"
+                    )
+
+            # If no current price from info, use last close from history
+            if current_price is None and hist_1y is not None and not hist_1y.empty:
+                current_price = hist_1y["Close"].iloc[-1]
+
+            # Build output sections
+            header = self._format_yf_header(ticker_symbol, info)
+            price_current = self._format_yf_current_price(info, current_price)
+            price_stats = self._format_yf_price_stats(hist_1y, hist_5y)
+            changes = self._format_yf_price_changes(current_price, hist_1y)
+            fundamentals = self._format_yf_fundamentals(info)
+            recent_prices = self._format_yf_recent_prices(hist_1y)
+            options_section = self._format_yf_options(current_price, options_chains)
+            analyst_section = self._format_yf_analyst_targets(info)
+
+            output = f'<YFinanceData ticker="{ticker_symbol}" query="{cleaned_query}">\n'
+            output += header
+            output += price_current
+            output += price_stats
+            output += changes
+            output += fundamentals
+            output += recent_prices
+            output += options_section
+            output += analyst_section
+            output += "\nSource: Yahoo Finance via yfinance\n"
+            output += "</YFinanceData>"
+
+            hist_len = len(hist_1y) if hist_1y is not None else 0
+            logger.info(
+                f"[yfinance_search] Successfully retrieved {ticker_symbol}: "
+                f"price={current_price}, {hist_len} 1y observations"
+            )
+            return output
+
+        except Exception as e:
+            logger.error(f"[yfinance_search] Error: {e}\n{traceback.format_exc()}")
+            return (
+                f'<YFinanceData query="{query}">\n'
+                f"Error retrieving yFinance data: {e}\n"
+                f"</YFinanceData>"
+            )
+
+    def _extract_yfinance_query(self, query: str) -> str:
+        """Extract the ticker/search term from a query like 'yFinance data for AAPL'."""
+        # Try to find quoted term first
+        quoted = re.search(r'["\']([^"\']+)["\']', query)
+        if quoted:
+            return quoted.group(1)
+
+        # Strip common prefixes
+        query_lower = query.lower()
+        for phrase in [
+            "yfinance data for ",
+            "yfinance ticker ",
+            "yfinance ",
+            "stock data for ",
+            "stock price for ",
+            "stock price ",
+            "options data for ",
+            "options for ",
+            "market data for ",
+            "market data ",
+            "ticker ",
+        ]:
+            if query_lower.startswith(phrase):
+                return query[len(phrase) :].strip().strip("\"'")
+
+        return query.strip()
+
+    def _resolve_yfinance_ticker(self, cleaned_query: str) -> str:
+        """Resolve a cleaned query to a ticker symbol.
+
+        Handles standard tickers (AAPL), indices (^GSPC), international
+        tickers (2330.TW), and tickers followed by descriptions.
+        """
+        stripped = cleaned_query.strip()
+
+        # Ticker pattern: optional ^ prefix, alphanumeric, optional .suffix
+        # Matches: AAPL, ^GSPC, ^TWII, BRK.B, 2330.TW
+        ticker_pattern = r"\^?[A-Z0-9]{1,6}(?:\.[A-Z]{1,2})?"
+
+        # Direct ticker only
+        if re.match(f"^{ticker_pattern}$", stripped, re.IGNORECASE):
+            return "^" + stripped[1:].upper() if stripped.startswith("^") else stripped.upper()
+
+        # First word might be a ticker followed by description: "^TWII price history"
+        first_word = stripped.split()[0] if stripped.split() else stripped
+        if re.match(f"^{ticker_pattern}$", first_word, re.IGNORECASE):
+            return (
+                "^" + first_word[1:].upper() if first_word.startswith("^") else first_word.upper()
+            )
+
+        # Last resort: uppercase the whole thing (may not work well for names)
+        return stripped.upper().replace(" ", "")
+
+    async def _search_yfinance_ticker(self, cleaned_query: str):
+        """Fallback: search Yahoo Finance to find the correct ticker symbol.
+
+        Called when the initial ticker guess returns no data. Tries multiple
+        search terms derived from the query, picks the best match, fetches
+        data, and returns it (or None if nothing works).
+
+        Returns:
+            Tuple of (ticker_symbol, info, hist_1y, hist_5y, options_chains)
+            or None if no valid ticker was found.
+        """
+        import yfinance as yf
+        from yfinance import Search
+
+        # Build search terms from the query — try multiple variations
+        search_terms = []
+        base = cleaned_query.strip()
+        if base:
+            search_terms.append(base)
+            # If the query is all uppercase (ticker-like), also try with ^ prefix
+            # (Yahoo Finance uses ^ for indices like ^TWII, ^GSPC, ^DJI)
+            if base.isalpha() and base.isupper():
+                search_terms.append(f"^{base}")
+
+        seen_symbols = set()
+        for term in search_terms:
+            try:
+                results = await asyncio.to_thread(lambda t=term: Search(t).quotes)
+            except Exception as e:
+                logger.debug(f"[yfinance_search] Search for '{term}' failed: {e}")
+                continue
+
+            if not results:
+                continue
+
+            # Score candidates: prefer INDEX/ETF types, prefer first results
+            candidates = []
+            for i, quote in enumerate(results[:5]):
+                symbol = quote.get("symbol")
+                if not symbol or symbol in seen_symbols:
+                    continue
+                seen_symbols.add(symbol)
+                # Prefer indices, then ETFs, then equities
+                type_score = {"INDEX": 3, "ETF": 2, "EQUITY": 1}.get(quote.get("quoteType", ""), 0)
+                candidates.append((type_score, -i, symbol, quote))
+
+            # Try candidates in priority order
+            for _type_score, _pos, symbol, quote in sorted(candidates, reverse=True):
+                logger.info(
+                    f"[yfinance_search] Trying fallback ticker '{symbol}' "
+                    f"({quote.get('shortname', '')}) from search '{term}'"
+                )
+                try:
+                    data = await asyncio.to_thread(self._fetch_yfinance_data, yf, symbol)
+                    info, hist_1y, hist_5y, options_chains = data
+                    price = info.get("regularMarketPrice") or info.get("currentPrice")
+                    has_data = price is not None or (hist_1y is not None and not hist_1y.empty)
+                    if has_data:
+                        logger.info(
+                            f"[yfinance_search] Fallback success: '{cleaned_query}' -> '{symbol}'"
+                        )
+                        return symbol, info, hist_1y, hist_5y, options_chains
+                except Exception as e:
+                    logger.debug(f"[yfinance_search] Fallback ticker '{symbol}' failed: {e}")
+                    continue
+
+        return None
+
+    @staticmethod
+    def _fetch_yfinance_data(yf, symbol: str):
+        """Fetch price history, info, and options data for a yFinance ticker.
+
+        Runs synchronously — call via asyncio.to_thread.
+        """
+        t = yf.Ticker(symbol)
+        info = t.info or {}
+        hist_1y = t.history(period="1y")
+        hist_5y = t.history(period="5y")
+
+        options_chains = []
+        try:
+            expiries = list(t.options)[:3]
+            for exp in expiries:
+                options_chains.append((exp, t.option_chain(exp)))
+        except Exception:
+            pass
+
+        return info, hist_1y, hist_5y, options_chains
+
+    def _format_yf_header(self, ticker_symbol: str, info: dict) -> str:
+        """Format the header section with company info."""
+        name = info.get("longName") or info.get("shortName") or ticker_symbol
+        exchange = info.get("exchange", "")
+        currency = info.get("currency", "USD")
+        sector = info.get("sector", "")
+        industry = info.get("industry", "")
+
+        header = f"MARKET DATA: {name} ({ticker_symbol})\n"
+        if exchange or currency:
+            header += f"Exchange: {exchange} | Currency: {currency}\n"
+        if sector or industry:
+            header += f"Sector: {sector} | Industry: {industry}\n"
+        return header
+
+    def _format_yf_current_price(self, info: dict, current_price: float | None) -> str:
+        """Format the current price section."""
+        if current_price is None:
+            return ""
+
+        currency = info.get("currency", "USD")
+        symbol = "$" if currency == "USD" else ""
+        lines = [f"\nCURRENT PRICE: {symbol}{current_price:.2f}"]
+
+        prev_close = info.get("previousClose")
+        if prev_close:
+            lines.append(f"Previous Close: {symbol}{prev_close:.2f}")
+
+        market_cap = info.get("marketCap")
+        if market_cap:
+            if market_cap >= 1e12:
+                lines.append(f"Market Cap: {symbol}{market_cap / 1e12:.2f}T")
+            elif market_cap >= 1e9:
+                lines.append(f"Market Cap: {symbol}{market_cap / 1e9:.2f}B")
+            elif market_cap >= 1e6:
+                lines.append(f"Market Cap: {symbol}{market_cap / 1e6:.2f}M")
+
+        low_52 = info.get("fiftyTwoWeekLow")
+        high_52 = info.get("fiftyTwoWeekHigh")
+        if low_52 and high_52:
+            lines.append(f"52-Week Range: {symbol}{low_52:.2f} - {symbol}{high_52:.2f}")
+
+        return "\n".join(lines) + "\n"
+
+    def _format_yf_price_stats(self, hist_1y, hist_5y) -> str:
+        """Format price statistics for 1yr and 5yr windows."""
+        lines = []
+
+        if hist_1y is not None and not hist_1y.empty and len(hist_1y) >= 2:
+            close = hist_1y["Close"]
+            lines.append(
+                f"\nPRICE STATISTICS (1-Year):\n"
+                f"- Mean: {close.mean():.2f}, Std Dev: {close.std():.2f}\n"
+                f"- Min: {close.min():.2f}, Max: {close.max():.2f}"
+            )
+
+        if hist_5y is not None and not hist_5y.empty and len(hist_5y) >= 2:
+            close = hist_5y["Close"]
+            lines.append(
+                f"\nPRICE STATISTICS (5-Year):\n"
+                f"- Mean: {close.mean():.2f}, Min: {close.min():.2f}, Max: {close.max():.2f}"
+            )
+
+        return "\n".join(lines) + "\n" if lines else ""
+
+    def _format_yf_price_changes(self, current_price: float | None, hist_1y) -> str:
+        """Format recent price changes (mirrors FRED's RECENT CHANGES)."""
+        if current_price is None or hist_1y is None or hist_1y.empty:
+            return ""
+
+        close = hist_1y["Close"]
+        lines = ["\nRECENT PRICE CHANGES:"]
+
+        for label, days in [
+            ("1-week", 5),
+            ("1-month", 21),
+            ("3-month", 63),
+            ("6-month", 126),
+            ("1-year", 252),
+        ]:
+            if len(close) > days:
+                past_price = close.iloc[-(days + 1)]
+                abs_change = current_price - past_price
+                pct_change = (abs_change / past_price * 100) if past_price != 0 else 0
+                sign = "+" if abs_change >= 0 else ""
+                lines.append(f"- {label}: {sign}{abs_change:.2f} ({sign}{pct_change:.1f}%)")
+
+        return "\n".join(lines) + "\n" if len(lines) > 1 else ""
+
+    def _format_yf_fundamentals(self, info: dict) -> str:
+        """Format key fundamental metrics."""
+        lines = []
+
+        trailing_pe = info.get("trailingPE")
+        forward_pe = info.get("forwardPE")
+        if trailing_pe or forward_pe:
+            pe_parts = []
+            if trailing_pe:
+                pe_parts.append(f"Trailing P/E: {trailing_pe:.1f}")
+            if forward_pe:
+                pe_parts.append(f"Forward P/E: {forward_pe:.1f}")
+            lines.append(" | ".join(pe_parts))
+
+        revenue = info.get("totalRevenue")
+        if revenue:
+            if revenue >= 1e9:
+                lines.append(f"Revenue (TTM): ${revenue / 1e9:.2f}B")
+            elif revenue >= 1e6:
+                lines.append(f"Revenue (TTM): ${revenue / 1e6:.2f}M")
+
+        net_income = info.get("netIncomeToCommon")
+        if net_income:
+            if abs(net_income) >= 1e9:
+                lines.append(f"Net Income (TTM): ${net_income / 1e9:.2f}B")
+            elif abs(net_income) >= 1e6:
+                lines.append(f"Net Income (TTM): ${net_income / 1e6:.2f}M")
+
+        eps = info.get("trailingEps")
+        if eps:
+            lines.append(f"EPS (TTM): ${eps:.2f}")
+
+        div_yield = info.get("dividendYield")
+        if div_yield:
+            lines.append(f"Dividend Yield: {div_yield * 100:.2f}%")
+
+        margin = info.get("profitMargins")
+        if margin:
+            lines.append(f"Profit Margin: {margin * 100:.1f}%")
+
+        if lines:
+            return "\nKEY FUNDAMENTALS:\n- " + "\n- ".join(lines) + "\n"
+        return ""
+
+    def _format_yf_recent_prices(self, hist_1y) -> str:
+        """Format the last 10 trading days as CSV."""
+        if hist_1y is None or hist_1y.empty:
+            return ""
+
+        recent = hist_1y.tail(10)
+        lines = ["\nRECENT DAILY PRICES (last 10 trading days):", "Date,Open,High,Low,Close,Volume"]
+        for date, row in recent.iterrows():
+            date_str = date.strftime("%Y-%m-%d") if hasattr(date, "strftime") else str(date)
+            lines.append(
+                f"{date_str},{row['Open']:.2f},{row['High']:.2f},"
+                f"{row['Low']:.2f},{row['Close']:.2f},{int(row['Volume'])}"
+            )
+        return "\n".join(lines) + "\n"
+
+    def _format_yf_options(self, current_price: float | None, options_chains: list) -> str:
+        """Format options-implied data from option chains."""
+        if not options_chains or current_price is None:
+            return ""
+
+        lines = ["\nOPTIONS-IMPLIED DATA:"]
+
+        for expiry, chain in options_chains:
+            calls = chain.calls
+            puts = chain.puts
+
+            if calls.empty and puts.empty:
+                continue
+
+            lines.append(f"Expiry: {expiry}")
+
+            atm_iv = None
+
+            # ATM implied volatility (closest strike to current price)
+            if not calls.empty and "impliedVolatility" in calls.columns:
+                atm_idx = (calls["strike"] - current_price).abs().idxmin()
+                atm_call = calls.loc[atm_idx]
+                iv = atm_call.get("impliedVolatility")
+                if iv and iv > 0:
+                    atm_iv = iv
+                    lines.append(f"- ATM Implied Volatility (calls): {iv * 100:.1f}%")
+
+            if not puts.empty and "impliedVolatility" in puts.columns:
+                atm_idx = (puts["strike"] - current_price).abs().idxmin()
+                atm_put = puts.loc[atm_idx]
+                iv = atm_put.get("impliedVolatility")
+                if iv and iv > 0:
+                    lines.append(f"- ATM Implied Volatility (puts): {iv * 100:.1f}%")
+
+            # Put/Call open interest ratio
+            total_call_oi = (
+                calls["openInterest"].sum()
+                if "openInterest" in calls.columns and not calls["openInterest"].isna().all()
+                else 0
+            )
+            total_put_oi = (
+                puts["openInterest"].sum()
+                if "openInterest" in puts.columns and not puts["openInterest"].isna().all()
+                else 0
+            )
+            if total_call_oi > 0:
+                pc_ratio = total_put_oi / total_call_oi
+                lines.append(f"- Put/Call Open Interest Ratio: {pc_ratio:.2f}")
+
+            # Highest OI strikes
+            if not calls.empty and "openInterest" in calls.columns:
+                valid_calls = calls.dropna(subset=["openInterest"])
+                if not valid_calls.empty:
+                    max_call = valid_calls.loc[valid_calls["openInterest"].idxmax()]
+                    lines.append(
+                        f"- Highest OI call strike: ${max_call['strike']:.2f} "
+                        f"(OI: {int(max_call['openInterest']):,})"
+                    )
+
+            if not puts.empty and "openInterest" in puts.columns:
+                valid_puts = puts.dropna(subset=["openInterest"])
+                if not valid_puts.empty:
+                    max_put = valid_puts.loc[valid_puts["openInterest"].idxmax()]
+                    lines.append(
+                        f"- Highest OI put strike: ${max_put['strike']:.2f} "
+                        f"(OI: {int(max_put['openInterest']):,})"
+                    )
+
+            # 1-sigma range from IV
+            if atm_iv and atm_iv > 0:
+                try:
+                    days_to_expiry = (datetime.strptime(expiry, "%Y-%m-%d") - datetime.now()).days
+                    if days_to_expiry > 0:
+                        sigma = current_price * atm_iv * math.sqrt(days_to_expiry / 365)
+                        lines.append(
+                            f"- 1-sigma range ({days_to_expiry}d): "
+                            f"${current_price - sigma:.2f} - ${current_price + sigma:.2f}"
+                        )
+                except (ValueError, TypeError):
+                    pass
+
+            lines.append("")  # blank line between expiries
+
+        return "\n".join(lines) + "\n" if len(lines) > 1 else ""
+
+    def _format_yf_analyst_targets(self, info: dict) -> str:
+        """Format analyst price targets."""
+        mean_target = info.get("targetMeanPrice")
+        if not mean_target:
+            return ""
+
+        lines = ["\nANALYST TARGETS:"]
+        low = info.get("targetLowPrice")
+        high = info.get("targetHighPrice")
+        num_analysts = info.get("numberOfAnalystOpinions")
+
+        target_parts = [f"Mean: ${mean_target:.2f}"]
+        if low:
+            target_parts.append(f"Low: ${low:.2f}")
+        if high:
+            target_parts.append(f"High: ${high:.2f}")
+        lines.append("- " + " | ".join(target_parts))
+
+        if num_analysts:
+            lines.append(f"- Number of analysts: {num_analysts}")
+
+        return "\n".join(lines) + "\n"
 
     # -------------------------------------------------------------------------
     # Utility methods

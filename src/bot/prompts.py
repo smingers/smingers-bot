@@ -842,6 +842,8 @@ Important guidelines:
 - Please phrase the queries in a way optimal for keyword optimized search (i.e., the phrase you search is likely to appear on desired web pages). Avoid writing overly specific queries. Limit to six words.
 - You can list up to 5 search queries
 
+For yFinance: use a Yahoo Finance ticker symbol to retrieve market data (e.g., "AAPL", "^GSPC"). Indices use the ^ prefix. If the ticker fails, you can search Google for the correct symbol and retry.
+
 Important formatting instructions: You should format your answer EXACTLY as below, always formatting the source in brackets () **on the same line as and after** the query. DO NOT use any quotes in your queries.
 
 Analysis:
@@ -851,6 +853,7 @@ Search queries:
 1. [Query details] (Google)
 2. [Query details] (Google News)
 3. [Query details] (Google)
+4. [ticker symbol] (yFinance) -- only if query involves stocks, indices, or securities
 (Additional queries in the same format, if needed, up to five queries)
 
 
@@ -879,8 +882,9 @@ Important guidelines:
 - Include all nuanced details available from the search results
 - Be objective: present facts without personal opinions
 - Only generate new search queries if they would materially improve your answer
-- Choose your source as Google or Google News based on the type of information needed.
-- Please phrase the queries in a way optimal for keyword optimized search (i.e., the phrase you search is likely to appear on desired web pages). Avoid writing overly specific queries. Limit to six words.
+- Choose your source as Google, Google News, or yFinance based on the type of information needed.
+- For yFinance: use a Yahoo Finance ticker symbol to retrieve market data. If a previous yFinance query failed, search Google for the correct ticker and retry.
+- Please phrase Google/Google News queries in a way optimal for keyword optimized search (i.e., the phrase you search is likely to appear on desired web pages). Avoid writing overly specific queries. Limit to six words.
 - List a maximum of five search queries, being conservative and using only the maximum number of queries when really necessary.
 - If your analysis is sufficiently complete, omit the "Search queries:" section entirely to signal completion. Absence of regex match for 'Search queries:' will signal that this is your final research step.
 - If you encounter difficulties retrieving the exact information being requested (paywall or information unavailable), please consider adding queries to look for alternative sources/proxies for the same data. If utilizing these sources, you must add the alternative source used as a disclaimer in your analysis. Alternatively, consider how you might obtain a small subset of the data requested (perhaps by viewing snapshots at specific times). Some information is better than no information in your conclusion.
@@ -897,6 +901,7 @@ Search queries:
 1. [Query details] (Google)
 2. [Query details] (Google News)
 3. [Query details] (Google)
+4. [ticker symbol] (yFinance) -- only if query involves stocks, indices, or securities
 (Additional queries in the same format, if needed, up to five queries)
 
 Use the following verification checklist at the end of your response
