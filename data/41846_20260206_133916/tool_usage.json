@@ -1,0 +1,236 @@
+{
+  "centralized_research": {
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "December 2025 coup Africa Latin America",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "February 2026 coup Africa",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "List any successful coups in Africa or Latin America from 28 Nov 2025 to 6 Feb 2026 and provide sources; note whether the sitting executive was removed.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "Africa coup December 2025 February 2026",
+              "Latin America coup December 2025 February 2026",
+              "Guinea-Bissau November 2025 coup date",
+              "January 2026 military coup Africa",
+              "February 2026 coup Latin America president removed"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "Africa coup December 2025 February 2026",
+                    "Google"
+                  ],
+                  [
+                    "Latin America coup December 2025 February 2026",
+                    "Google News"
+                  ],
+                  [
+                    "Guinea-Bissau November 2025 coup date",
+                    "Google"
+                  ],
+                  [
+                    "January 2026 military coup Africa",
+                    "Google"
+                  ],
+                  [
+                    "February 2026 coup Latin America president removed",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 86643,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "Agent"
+      ],
+      "llm_cost": 0.2329,
+      "llm_cost_summarization": 0.1766,
+      "llm_cost_agentic": 0.0563,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "Africa Latin America coup 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Africa coup attempt January February 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide latest credible reports of successful or attempted coups in Africa or Latin America since December 2025, including any military mutinies or government overthrows",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 22
+        },
+        {
+          "query": "Will there be a successful coup in Africa or Latin America before March 1, 2026?",
+          "tool": "AskNews",
+          "deep_research_query": "Provide latest credible reports of successful or attempted coups in Africa or Latin America since December 2025, including any military mutinies or government overthrows"
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "AskNews"
+      ],
+      "llm_cost": 0.1502,
+      "llm_cost_summarization": 0.1417,
+      "llm_cost_agentic": 0.0085,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5931,
+        "token_output": 2079,
+        "cost": 0.048978,
+        "duration_seconds": 57.1959433555603,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 19288,
+        "token_output": 3091,
+        "cost": 0.104229,
+        "duration_seconds": 72.81400227546692,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5931,
+        "token_output": 1827,
+        "cost": 0.045198,
+        "duration_seconds": 57.196009159088135,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 18385,
+        "token_output": 2020,
+        "cost": 0.085455,
+        "duration_seconds": 72.81397366523743,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5192,
+        "token_output": 2846,
+        "cost": 0.048929999999999994,
+        "duration_seconds": 57.19605088233948,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16717,
+        "token_output": 2143,
+        "cost": 0.05925675,
+        "duration_seconds": 72.81394124031067,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5192,
+        "token_output": 2460,
+        "cost": 0.030064,
+        "duration_seconds": 57.19608759880066,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16945,
+        "token_output": 2401,
+        "cost": 0.053098000000000006,
+        "duration_seconds": 72.81391143798828,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5192,
+        "token_output": 2675,
+        "cost": 0.031784,
+        "duration_seconds": 57.19611597061157,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16527,
+        "token_output": 2310,
+        "cost": 0.051533999999999996,
+        "duration_seconds": 72.81388306617737,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0149,
+    "step2_search": 0.2329,
+    "step3_outside_view": 0.205,
+    "step5_inside_view": 0.3536
+  },
+  "total_pipeline_cost": 0.8064
+}
