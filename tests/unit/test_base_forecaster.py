@@ -16,7 +16,12 @@ from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
 
-from src.bot.base_forecaster import CROSS_POLLINATION_MAP, BaseForecaster
+from src.bot.base_forecaster import (
+    _FAILED_OUTPUT_PREFIX,
+    CROSS_POLLINATION_MAP,
+    BaseForecaster,
+    _is_failed_output,
+)
 from src.bot.extractors import AgentResult
 from src.bot.prompts import CLAUDE_CONTEXT, GPT_CONTEXT
 from src.bot.search import QuestionDetails
@@ -268,29 +273,43 @@ class TestCrossPolllinationLogic:
         assert "Current context: Current news context" in context_map[0]
         assert "Outside view prediction:" in context_map[0]
 
-    def test_handles_failed_source_agent(self):
-        """Uses empty string when source agent failed."""
+    def test_handles_failed_source_agent_falls_back_to_self(self):
+        """When designated source failed, falls back to self's outside view."""
         outside_view_outputs = [
             "Output 1",
             "Output 2",
             "Output 3",
-            Exception("Agent 4 failed"),  # Agent 4 (idx 3) failed
+            f"{_FAILED_OUTPUT_PREFIX}Agent 4 failed",  # Agent 4 (idx 3) failed
             "Output 5",
         ]
         current_context = "Current context"
 
-        # Simulate cross-pollination logic with exception handling
+        # Simulate cross-pollination logic with fallback (mirrors base_forecaster.py step 4)
         context_map = {}
         for i in range(5):
             source_idx, label = CROSS_POLLINATION_MAP[i]
-            if isinstance(outside_view_outputs[source_idx], Exception):
-                source_output = ""
-            else:
-                source_output = outside_view_outputs[source_idx]
+            source_output = outside_view_outputs[source_idx]
+
+            if _is_failed_output(source_output):
+                fallback_idx = None
+                if not _is_failed_output(outside_view_outputs[i]):
+                    fallback_idx = i
+                else:
+                    for j in range(5):
+                        if not _is_failed_output(outside_view_outputs[j]):
+                            fallback_idx = j
+                            break
+
+                if fallback_idx is not None:
+                    source_output = outside_view_outputs[fallback_idx]
+                else:
+                    source_output = ""
+
             context_map[i] = f"Current context: {current_context}\n{label}: {source_output}"
 
-        # Agent 2 (idx 1) gets from Agent 4 (idx 3) which failed
-        assert context_map[1].endswith("Outside view prediction: ")
+        # Agent 2 (idx 1) gets from Agent 4 (idx 3) which failed → falls back to self (idx 1)
+        assert "Output 2" in context_map[1]
+        assert _FAILED_OUTPUT_PREFIX not in context_map[1]
 
     def test_uses_correct_source_agent(self):
         """Each agent receives context from correct source per map."""
@@ -307,6 +326,190 @@ class TestCrossPolllinationLogic:
         assert "UNIQUE_OUTPUT_1" in context_map[2]  # Agent 3 <- Agent 2
         assert "UNIQUE_OUTPUT_2" in context_map[3]  # Agent 4 <- Agent 3
         assert "UNIQUE_OUTPUT_4" in context_map[4]  # Agent 5 <- Agent 5
+
+    def test_fallback_scans_for_any_valid_when_self_also_failed(self):
+        """When both designated source and self failed, falls back to first valid output."""
+        # Forecaster 2 (idx 1) gets from Forecaster 4 (idx 3) per map.
+        # Both idx 1 and idx 3 fail → should fall back to first valid (idx 0).
+        outside_view_outputs = [
+            "Valid output from agent 1",
+            f"{_FAILED_OUTPUT_PREFIX}Agent 2 error",
+            f"{_FAILED_OUTPUT_PREFIX}Agent 3 error",
+            f"{_FAILED_OUTPUT_PREFIX}Agent 4 error",
+            "Valid output from agent 5",
+        ]
+        current_context = "Current context"
+
+        context_map = {}
+        for i in range(5):
+            source_idx, label = CROSS_POLLINATION_MAP[i]
+            source_output = outside_view_outputs[source_idx]
+
+            if _is_failed_output(source_output):
+                fallback_idx = None
+                if not _is_failed_output(outside_view_outputs[i]):
+                    fallback_idx = i
+                else:
+                    for j in range(5):
+                        if not _is_failed_output(outside_view_outputs[j]):
+                            fallback_idx = j
+                            break
+
+                if fallback_idx is not None:
+                    source_output = outside_view_outputs[fallback_idx]
+                else:
+                    source_output = ""
+
+            context_map[i] = f"Current context: {current_context}\n{label}: {source_output}"
+
+        # Agent 2 (idx 1): source idx 3 failed, self idx 1 failed → falls back to idx 0
+        assert "Valid output from agent 1" in context_map[1]
+
+        # Agent 3 (idx 2): source idx 1 failed, self idx 2 failed → falls back to idx 0
+        assert "Valid output from agent 1" in context_map[2]
+
+        # Agent 4 (idx 3): source idx 2 failed, self idx 3 failed → falls back to idx 0
+        assert "Valid output from agent 1" in context_map[3]
+
+        # Agent 1 (idx 0): source is self (idx 0), which is valid → no fallback needed
+        assert "Valid output from agent 1" in context_map[0]
+
+        # Agent 5 (idx 4): source is self (idx 4), which is valid → no fallback needed
+        assert "Valid output from agent 5" in context_map[4]
+
+    def test_all_failed_gives_empty_context(self):
+        """When all 5 outside views failed, forecasters receive empty context."""
+        outside_view_outputs = [f"{_FAILED_OUTPUT_PREFIX}Agent {i + 1} error" for i in range(5)]
+        current_context = "Current context"
+
+        context_map = {}
+        for i in range(5):
+            source_idx, label = CROSS_POLLINATION_MAP[i]
+            source_output = outside_view_outputs[source_idx]
+
+            if _is_failed_output(source_output):
+                fallback_idx = None
+                if not _is_failed_output(outside_view_outputs[i]):
+                    fallback_idx = i
+                else:
+                    for j in range(5):
+                        if not _is_failed_output(outside_view_outputs[j]):
+                            fallback_idx = j
+                            break
+
+                if fallback_idx is not None:
+                    source_output = outside_view_outputs[fallback_idx]
+                else:
+                    source_output = ""
+
+            context_map[i] = f"Current context: {current_context}\n{label}: {source_output}"
+
+        # All agents should get empty outside view context
+        for i in range(5):
+            assert _FAILED_OUTPUT_PREFIX not in context_map[i]
+            assert context_map[i].endswith("Outside view prediction: ")
+
+    def test_no_fallback_when_all_sources_valid(self):
+        """When all outputs are valid, normal cross-pollination applies (no fallback)."""
+        outside_view_outputs = [f"Valid output {i}" for i in range(5)]
+        current_context = "Current context"
+
+        context_map = {}
+        for i in range(5):
+            source_idx, label = CROSS_POLLINATION_MAP[i]
+            source_output = outside_view_outputs[source_idx]
+
+            if _is_failed_output(source_output):
+                # This branch should never execute in this test
+                raise AssertionError("Fallback triggered unexpectedly")
+
+            context_map[i] = f"Current context: {current_context}\n{label}: {source_output}"
+
+        # Verify standard mapping applies
+        assert "Valid output 0" in context_map[0]  # Self
+        assert "Valid output 3" in context_map[1]  # From Forecaster 4
+        assert "Valid output 1" in context_map[2]  # From Forecaster 2
+        assert "Valid output 2" in context_map[3]  # From Forecaster 3
+        assert "Valid output 4" in context_map[4]  # Self
+
+    def test_failed_output_not_leaked_into_context(self):
+        """Failed output sentinel string never appears in any forecaster's context."""
+        outside_view_outputs = [
+            "Valid output 0",
+            f"{_FAILED_OUTPUT_PREFIX}TruncationError: Response truncated at 4000 tokens",
+            "Valid output 2",
+            f"{_FAILED_OUTPUT_PREFIX}RuntimeError: API timeout",
+            "Valid output 4",
+        ]
+        current_context = "Current context"
+
+        context_map = {}
+        for i in range(5):
+            source_idx, label = CROSS_POLLINATION_MAP[i]
+            source_output = outside_view_outputs[source_idx]
+
+            if _is_failed_output(source_output):
+                fallback_idx = None
+                if not _is_failed_output(outside_view_outputs[i]):
+                    fallback_idx = i
+                else:
+                    for j in range(5):
+                        if not _is_failed_output(outside_view_outputs[j]):
+                            fallback_idx = j
+                            break
+
+                if fallback_idx is not None:
+                    source_output = outside_view_outputs[fallback_idx]
+                else:
+                    source_output = ""
+
+            context_map[i] = f"Current context: {current_context}\n{label}: {source_output}"
+
+        # No context should contain the failed output sentinel
+        for i in range(5):
+            assert _FAILED_OUTPUT_PREFIX not in context_map[i]
+            assert "TruncationError" not in context_map[i]
+            assert "RuntimeError" not in context_map[i]
+
+
+# ============================================================================
+# Failed Output Detection Tests
+# ============================================================================
+
+
+class TestIsFailedOutput:
+    """Tests for the _is_failed_output() sentinel detection."""
+
+    def test_detects_sentinel_prefix(self):
+        """Correctly identifies outputs with the failed sentinel prefix."""
+        assert _is_failed_output(f"{_FAILED_OUTPUT_PREFIX}Some error") is True
+
+    def test_rejects_valid_output(self):
+        """Does not flag normal outputs as failed."""
+        assert _is_failed_output("Analysis:\n\nThe evidence suggests...") is False
+
+    def test_rejects_empty_string(self):
+        """Empty string is not a failure (it's the all-failed fallback)."""
+        assert _is_failed_output("") is False
+
+    def test_detects_truncation_error(self):
+        """Detects truncation errors tagged with sentinel."""
+        msg = f"{_FAILED_OUTPUT_PREFIX}TruncationError: Response truncated at 4000 tokens"
+        assert _is_failed_output(msg) is True
+
+    def test_detects_runtime_error(self):
+        """Detects runtime errors tagged with sentinel."""
+        msg = f"{_FAILED_OUTPUT_PREFIX}RuntimeError: LLM API error"
+        assert _is_failed_output(msg) is True
+
+    def test_old_error_prefix_not_detected(self):
+        """Old-style 'Error:' prefix is NOT detected (we migrated to sentinel)."""
+        assert _is_failed_output("Error: something went wrong") is False
+
+    def test_sentinel_must_be_at_start(self):
+        """Sentinel only counts at the very start of the string."""
+        msg = f"Some preamble {_FAILED_OUTPUT_PREFIX}error"
+        assert _is_failed_output(msg) is False
 
 
 # ============================================================================

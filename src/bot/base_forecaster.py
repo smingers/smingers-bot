@@ -64,9 +64,15 @@ CROSS_POLLINATION_MAP: dict[int, tuple[int, str]] = {
 }
 
 
+# Sentinel prefix for failed outside view outputs. Used at the creation point
+# (error handling in step 3) and checked by _is_failed_output(). Using an
+# explicit sentinel avoids relying on natural exception string formats.
+_FAILED_OUTPUT_PREFIX = "[FAILED] "
+
+
 def _is_failed_output(output: str) -> bool:
     """Check if an outside view output represents a failure (error or truncation)."""
-    return output.startswith("Error:")
+    return output.startswith(_FAILED_OUTPUT_PREFIX)
 
 
 class BaseForecaster(ForecasterMixin, ABC):
@@ -281,7 +287,7 @@ class BaseForecaster(ForecasterMixin, ABC):
 
             if isinstance(result, Exception):
                 log(f"\nForecaster_{i + 1} outside view ERROR: {result}")
-                outside_view_outputs.append(f"Error: {result}")
+                outside_view_outputs.append(f"{_FAILED_OUTPUT_PREFIX}{result}")
                 outside_view_metrics.error = str(result)
                 outside_view_metrics.duration_seconds = duration
             else:
@@ -298,7 +304,7 @@ class BaseForecaster(ForecasterMixin, ABC):
         if self.artifact_store:
             self.artifact_store.save_outside_view_prompt(outside_view_prompt)
             for i, output in enumerate(outside_view_outputs):
-                if not isinstance(output, Exception) and not output.startswith("Error:"):
+                if not _is_failed_output(output):
                     self.artifact_store.save_forecaster_outside_view(i + 1, output)
 
         step3_end_cost = snapshot_cost("step3_outside_view", step2_end_cost)
