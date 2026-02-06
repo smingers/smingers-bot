@@ -1,0 +1,4 @@
+{
+  "probabilities": [],
+  "error": "Could not extract 'Probabilities' list from response. Last 200 chars: 'n chance than polls indicate. Adjusted upward from 18% to 20% to account for this.\\n\\n6. **Technicalities:** \u2713 Probabilities sum to 100, no % signs, all between 0-100\\n\\n**Probabilities:** [38, 42, 20, 0]'"
+}

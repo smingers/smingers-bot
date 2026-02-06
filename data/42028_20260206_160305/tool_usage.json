@@ -1,0 +1,263 @@
+{
+  "centralized_research": {
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Gorton Denton by-election 2026 polling",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Reform UK campaign Gorton Denton",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide detailed background and historical by-election swings in safe Labour seats, candidate list, demographics, local issues for 2026 Gorton and Denton by-election, including impact of Burnham's blocked candidacy and national polling context",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 3,
+            "queries_executed": [
+              "safe Labour seat by-election swings",
+              "Gorton Denton by-election candidates 2026",
+              "Gorton and Denton constituency demographics",
+              "Burnham candidacy blocked Gorton Denton",
+              "2026 UK national polling Labour",
+              "Labour by-election swing history",
+              "Copeland 2017 swing percentage",
+              "Hartlepool 2021 by-election swing",
+              "Analysis correctly formatted \u2013 yes.  \n2. Search query list follows required format \u2013 yes.  \n3. Analysis is exhaustive given available data \u2013 yes; gaps identified.  \n4. Each query line ends with"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "safe Labour seat by-election swings",
+                    "Google"
+                  ],
+                  [
+                    "Gorton Denton by-election candidates 2026",
+                    "Google News"
+                  ],
+                  [
+                    "Gorton and Denton constituency demographics",
+                    "Google"
+                  ],
+                  [
+                    "Burnham candidacy blocked Gorton Denton",
+                    "Google News"
+                  ],
+                  [
+                    "2026 UK national polling Labour",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 56288,
+                "analysis_chars": 0
+              },
+              {
+                "step_number": 2,
+                "queries_executed": [
+                  [
+                    "Labour by-election swing history",
+                    "Google"
+                  ],
+                  [
+                    "Copeland 2017 swing percentage",
+                    "Google"
+                  ],
+                  [
+                    "Hartlepool 2021 by-election swing",
+                    "Google News"
+                  ],
+                  [
+                    "Analysis correctly formatted \u2013 yes.  \n2. Search query list follows required format \u2013 yes.  \n3. Analysis is exhaustive given available data \u2013 yes; gaps identified.  \n4. Each query line ends with",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 61701,
+                "analysis_chars": 6682
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Agent",
+        "Google News"
+      ],
+      "llm_cost": 0.2662,
+      "llm_cost_summarization": 0.1589,
+      "llm_cost_agentic": 0.1073,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "2026 Gorton Denton byelection candidates",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Gorton and Denton by-election polling",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide latest 2026 Gorton and Denton by-election campaign coverage, candidate list, polling and party chances published since January 2026. Include analyses mentioning Labour, Reform UK or Green prospects.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 22
+        },
+        {
+          "query": "Which Party will win the 2026 Gorton and Denton by-election?",
+          "tool": "AskNews",
+          "deep_research_query": "Provide latest 2026 Gorton and Denton by-election campaign coverage, candidate list, polling and party chances published since January 2026. Include analyses mentioning Labour, Reform UK or Green prospects."
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "AskNews",
+        "Google News"
+      ],
+      "llm_cost": 0.1656,
+      "llm_cost_summarization": 0.1589,
+      "llm_cost_agentic": 0.0066,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7789,
+        "token_output": 2968,
+        "cost": 0.067887,
+        "duration_seconds": 75.07766604423523,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16156,
+        "token_output": 4306,
+        "cost": 0.11305799999999999,
+        "duration_seconds": 103.52373695373535,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7789,
+        "token_output": 2642,
+        "cost": 0.062997,
+        "duration_seconds": 75.07772445678711,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14790,
+        "token_output": 3191,
+        "cost": 0.092235,
+        "duration_seconds": 103.52370762825012,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6807,
+        "token_output": 2486,
+        "cost": 0.04671625,
+        "duration_seconds": 75.07776379585266,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13971,
+        "token_output": 3210,
+        "cost": 0.06938925,
+        "duration_seconds": 103.52367901802063,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6807,
+        "token_output": 1997,
+        "cost": 0.029589999999999998,
+        "duration_seconds": 75.07779335975647,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13443,
+        "token_output": 2097,
+        "cost": 0.043662,
+        "duration_seconds": 103.5236496925354,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6807,
+        "token_output": 2821,
+        "cost": 0.036182,
+        "duration_seconds": 75.07782244682312,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13019,
+        "token_output": 2292,
+        "cost": 0.044374,
+        "duration_seconds": 103.52362298965454,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0173,
+    "step2_search": 0.2662,
+    "step3_outside_view": 0.2434,
+    "step5_inside_view": 0.3627
+  },
+  "total_pipeline_cost": 0.8896
+}

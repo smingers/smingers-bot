@@ -1,0 +1,4 @@
+{
+  "probabilities": [],
+  "error": "Could not extract 'Probabilities' list from response. Last 200 chars: ' Alternatively, Reform wins via perfect left-vote split (25-25), making my 23% too low.\\n\\n6. **Technicalities**: Probabilities sum to 100, range 0-100, no % symbols.\\n\\n**Probabilities**: [35, 23, 40, 2]'"
+}
