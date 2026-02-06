@@ -64,6 +64,11 @@ CROSS_POLLINATION_MAP: dict[int, tuple[int, str]] = {
 }
 
 
+def _is_failed_output(output: str) -> bool:
+    """Check if an outside view output represents a failure (error or truncation)."""
+    return output.startswith("Error:")
+
+
 class BaseForecaster(ForecasterMixin, ABC):
     """
     Abstract base class for all question type forecasters.
@@ -306,14 +311,33 @@ class BaseForecaster(ForecasterMixin, ABC):
         context_map = {}
         for i in range(5):
             source_idx, label = CROSS_POLLINATION_MAP[i]
-            if isinstance(outside_view_outputs[source_idx], Exception):
-                logger.warning(
-                    f"Cross-pollination source forecaster {source_idx + 1} failed; "
-                    f"forecaster {i + 1} will receive empty context"
-                )
-                source_output = ""
-            else:
-                source_output = outside_view_outputs[source_idx]
+            source_output = outside_view_outputs[source_idx]
+
+            # If the designated source failed, fall back to another valid outside view
+            if _is_failed_output(source_output):
+                fallback_idx = None
+                # Try self first (preserves diversity), then scan for any valid output
+                if not _is_failed_output(outside_view_outputs[i]):
+                    fallback_idx = i
+                else:
+                    for j in range(5):
+                        if not _is_failed_output(outside_view_outputs[j]):
+                            fallback_idx = j
+                            break
+
+                if fallback_idx is not None:
+                    source_output = outside_view_outputs[fallback_idx]
+                    logger.warning(
+                        f"Cross-pollination source forecaster {source_idx + 1} failed; "
+                        f"forecaster {i + 1} will receive forecaster {fallback_idx + 1}'s output instead"
+                    )
+                else:
+                    logger.warning(
+                        f"Cross-pollination source forecaster {source_idx + 1} failed; "
+                        f"no valid outside views available; forecaster {i + 1} will receive empty context"
+                    )
+                    source_output = ""
+
             context_map[i] = f"Current context: {current_context}\n{label}: {source_output}"
 
         # =========================================================================
@@ -393,7 +417,7 @@ class BaseForecaster(ForecasterMixin, ABC):
                 model=agent["model"],
                 weight=agent["weight"],
                 outside_view_output=outside_view_outputs[i]
-                if not isinstance(outside_view_outputs[i], Exception)
+                if not _is_failed_output(outside_view_outputs[i])
                 else "",
                 inside_view_output=output if not isinstance(output, Exception) else "",
                 prediction=prediction,
