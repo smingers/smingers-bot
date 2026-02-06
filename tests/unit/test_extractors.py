@@ -446,6 +446,47 @@ class TestNormalizePercentileLine:
         """Test conversion to lowercase."""
         assert normalize_percentile_line("PERCENTILE 50: 100") == "percentile 50: 100"
 
+    def test_removes_markdown_bold(self):
+        """Test removal of markdown bold markers around percentile labels."""
+        # Format 1: **Percentile 10**: 3.58 (bold wraps label only)
+        assert normalize_percentile_line("**Percentile 10**: 3.58") == "percentile 10: 3.58"
+        # Format 2: **Percentile 10: 3.62000** (bold wraps entire line)
+        assert normalize_percentile_line("**Percentile 10: 3.62000**") == "percentile 10: 3.62000"
+
+
+class TestMarkdownBoldPercentileExtraction:
+    """Tests for extraction from markdown-bold formatted percentile lines (Sonnet 4.5 issue)."""
+
+    def test_bold_label_format(self):
+        """Forecaster 1 style: **Percentile X**: value"""
+        text = """
+**Percentile 10**: 3.58
+**Percentile 20**: 3.60
+**Percentile 40**: 3.63
+**Percentile 60**: 3.65
+**Percentile 80**: 3.68
+**Percentile 90**: 3.71
+"""
+        result = extract_percentiles_from_response(text, verbose=False)
+        assert result[10] == 3.58
+        assert result[90] == 3.71
+        assert len(result) == 6
+
+    def test_bold_entire_line_format(self):
+        """Forecaster 2 style: **Percentile X: value**"""
+        text = """
+**Percentile 10: 3.62000**
+**Percentile 20: 3.64000**
+**Percentile 40: 3.65500**
+**Percentile 60: 3.66500**
+**Percentile 80: 3.68000**
+**Percentile 90: 3.70000**
+"""
+        result = extract_percentiles_from_response(text, verbose=False)
+        assert result[10] == 3.62
+        assert result[90] == 3.70
+        assert len(result) == 6
+
 
 # ============================================================================
 # Date Percentile Extraction Tests

@@ -844,6 +844,8 @@ Important guidelines:
 
 For yFinance: use a Yahoo Finance ticker symbol to retrieve market data (e.g., "AAPL", "^GSPC"). Indices use the ^ prefix. If the ticker fails, you can search Google for the correct symbol and retry.
 
+For FRED: use a FRED series ID (e.g., "AMERIBOR", "UNRATE", "CPIAUCSL") or a plain-language description (e.g., "US unemployment rate") to retrieve historical economic data with computed statistics. This returns recent values, mean, median, standard deviation, and trends directly from the Federal Reserve Economic Data API.
+
 Important formatting instructions: You should format your answer EXACTLY as below, always formatting the source in brackets () **on the same line as and after** the query. DO NOT use any quotes in your queries.
 
 Analysis:
@@ -854,6 +856,7 @@ Search queries:
 2. [Query details] (Google News)
 3. [Query details] (Google)
 4. [ticker symbol] (yFinance) -- only if query involves stocks, indices, or securities
+5. [series ID or description] (FRED) -- only if query involves economic/financial data
 (Additional queries in the same format, if needed, up to five queries)
 
 
@@ -882,8 +885,9 @@ Important guidelines:
 - Include all nuanced details available from the search results
 - Be objective: present facts without personal opinions
 - Only generate new search queries if they would materially improve your answer
-- Choose your source as Google, Google News, or yFinance based on the type of information needed.
+- Choose your source as Google, Google News, yFinance, or FRED based on the type of information needed.
 - For yFinance: use a Yahoo Finance ticker symbol to retrieve market data. If a previous yFinance query failed, search Google for the correct ticker and retry.
+- For FRED: use a FRED series ID (e.g., "AMERIBOR", "UNRATE") or a plain-language description to retrieve historical economic data with computed statistics directly from the Federal Reserve Economic Data API.
 - Please phrase Google/Google News queries in a way optimal for keyword optimized search (i.e., the phrase you search is likely to appear on desired web pages). Avoid writing overly specific queries. Limit to six words.
 - List a maximum of five search queries, being conservative and using only the maximum number of queries when really necessary.
 - If your analysis is sufficiently complete, omit the "Search queries:" section entirely to signal completion. Absence of regex match for 'Search queries:' will signal that this is your final research step.
@@ -902,12 +906,13 @@ Search queries:
 2. [Query details] (Google News)
 3. [Query details] (Google)
 4. [ticker symbol] (yFinance) -- only if query involves stocks, indices, or securities
+5. [series ID or description] (FRED) -- only if query involves economic/financial data
 (Additional queries in the same format, if needed, up to five queries)
 
 Use the following verification checklist at the end of your response
 1. Correct formatting for analysis (Analysis: [your analysis])?
 2. Correct formatting for search queries (Search queries: [numbered newline separated search query list following the exact format shown above])?
 3. Analysis as exhaustive as possible, minimally with some useful information (i.e., current values) only if web search results don't turn out too useful?
-4. All queries followed by either (Google), (Google News) in brackets () on the same line as the query?
+4. All queries followed by either (Google), (Google News), (yFinance), or (FRED) in brackets () on the same line as the query?
 
 """
