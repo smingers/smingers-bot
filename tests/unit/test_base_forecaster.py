@@ -634,6 +634,9 @@ class TestForecastPipeline:
         mock_search.execute_searches_from_response = AsyncMock(
             return_value=("Mocked search context", {"tools_used": ["google"]})
         )
+        mock_search.scrape_question_urls = AsyncMock(
+            return_value=("", {"searched": False, "urls_found": 0, "urls": [], "tools_used": []})
+        )
         return mock_search
 
     @pytest.fixture

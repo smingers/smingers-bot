@@ -126,6 +126,10 @@ research:
   # yFinance (stock/ETF prices, fundamentals, options)
   yfinance_enabled: true
 
+  # Scrape URLs found in question text (resolution_criteria, fine_print, description)
+  question_url_scraping_enabled: true
+  question_url_max_scrape: 5
+
   # Article scraping
   scraping_enabled: true
   max_articles_to_scrape: 10
