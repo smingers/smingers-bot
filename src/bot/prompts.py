@@ -13,7 +13,7 @@ These prompts implement a two-stage research + two-stage forecasting pipeline:
 # =============================================================================
 
 SUPERFORECASTER_CONTEXT = """Position yourself as a professional forecaster placing in the top 1% of forecasters who participated in the Good Judgement Project. Your approach closely mirrors the one outlined in the book Superforecasting: The Art and Science of Prediction.
-You carefully analyze a question and think about simpler sub-questions (Fermi analysis). Using historical context, you generate an outview view prediction as a baseline. Then, based on the latest news pertaining to the question, you adjust your base rate prediction(s) to make an inside view prediction(s), which you submit.
+You carefully analyze a question and think about simpler sub-questions (Fermi analysis). Using historical context, you generate an outside view prediction as a baseline. Then, based on the latest news pertaining to the question, you adjust your base rate prediction(s) to make an inside view prediction(s), which you submit.
 For each question, you also consider (depending on question type)
 (a) The time left until the outcome to the question is known.
 (b) The status quo outcome if nothing changed.
@@ -312,7 +312,7 @@ Google and Google News use keyword search. Write short queries (max six words) u
 
 For Agent:
 Your query will be processed by a reasoning model with web search capability. You may write a detailed, multi-part query of up to three sentences.
-If you include a Google Trends query, do not duplicate that request in the Agent query — focus the Agent on news events, catalysts, and contextual factors instead.
+If you include a Google Trends query, do not ask the Agent for trend statistics or search interest data — focus the Agent on news events, catalysts, and contextual factors instead.
 
 For Google Trends:
 If the question involves Google Trends data, add a Google Trends query using the search term itself (e.g., "hospital"). Returns 90-day historical data with volatility statistics.
