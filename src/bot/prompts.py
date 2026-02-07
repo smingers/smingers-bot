@@ -195,16 +195,14 @@ You have completed an outside view prediction and gathered a collection of curre
 Outside view analysis + current information/news articles:
 {context}
 
-The information has been sourced from the internet, so it is advisable to exercise healthy skepticism at your discretion.
+The information has been sourced from the internet. Exercise healthy skepticism toward unverified claims.
 
-Your analysis should have the following components, refering the above historical context and current information:
-(a) Source analysis: Briefly summarize each information source (either web article or Asknews articles), evaluate source quality and date.
+Your analysis should have the following components, referring to the above outside view analysis and current information:
+(a) Source analysis: Briefly summarize each information source (either web article or AskNews article), evaluate source quality and date.
 **Opinions are commonplace in writing. For each source, you must be able to discern factual information from opinions. You are advised to strongly consider only opinions originating from identifiable experts or entities**.
 (b) Evidence analysis: Weight evidence/factors relevant to resolution criteria in the sources based on the below weighing system
-(c) Timeframe analysis: State the prediction timeframe (e.g., how many days/months from now?) and describe how your prediction might change if this was halfed/doubled?
+(c) Timeframe analysis: State the prediction timeframe (e.g., how many days/months from now?) and describe how your prediction might change if this were halved/doubled?
 (d) Justification: Gather the most compelling factors and justify how they shift your outside view base rates. For large shifts, justify how current factors are sufficiently impactful to render the reference class non-analogous to current circumstances.
-
-You are free to include other components to deepen the analysis, at your discretion.
 
 Evidence weighing system for (b):
 Strong evidence (can warrant relatively large prediction shifts)
@@ -225,16 +223,16 @@ Weak evidence (small adjustments):
 - Limited historical parallels
 - Short-term or volatile indicators
 
-Subsequently, calibrate your outside view prediction, considering:
+Subsequently, calibrate your inside view prediction, considering:
 (a) The outcome if the current trend/status quo continued.
-(b) You aim to predict the true probability of an event occuring, not a hedged or overconfident projection of your beliefs.
+(b) You aim to predict the true probability of an event occurring, not a hedged or overconfident projection of your beliefs.
 (c) Small differences in probabilities can be significant: 90% is a 9:1 odds and 99% is a 99:1 odds. How would a +-10% shift in probability resonate with your analysis?
 
-You are suggested to use the below checklist to verify the quality of your forecast **while reasoning**. Adjust your forecast if you have made mistakes. You can very briefly add a shortened version to your answer (see the format below).
+Use the checklist below to verify your forecast **while reasoning**. Adjust if needed.
 
 ------------------------ FORECASTING CHECKLIST ------------------------
 1. Paraphrase the title and resolution criteria in <30 words, including relevant time windows.
-  * Check that your analysis exactly aligns with how variables and resolution criterias are defined. Bait-and-switch errors, while commonplace, are costly.
+  * Check that your analysis exactly aligns with how variables and resolution criteria are defined. Bait-and-switch errors, while commonplace, are costly.
 
 2. State your outside view base rate distribution previously established
   * Check that your final prediction distribution genuinely is rooted to this base rate. If not, verify that current circumstances are vastly different from historic reference classes. Outside first, usually.
@@ -253,7 +251,7 @@ You are suggested to use the below checklist to verify the quality of your forec
 
 ------------------------------------------------------------------------
 
-Format your answer as below, it is very important to follow this format exactly, especially for the final probability, as a regex looking for 'Probability:' will be used to extract your answer.
+Format your answer as below. It is very important to follow this format exactly, especially for the final probability, as a regex looking for 'Probability:' will be used to extract your answer.
 
 Analysis:
 {{Insert your analysis here, following the above components.}}
@@ -454,16 +452,14 @@ You have completed an outside view prediction and gathered a collection of curre
 Outside view analysis + current information/news articles:
 {context}
 
-The information has been sourced from the internet, so it is advisable to exercise healthy skepticism at your discretion.
+The information has been sourced from the internet. Exercise healthy skepticism toward unverified claims.
 
-Your analysis should have the following components, refering the above historical context and current information:
-(a) Source analysis: Briefly summarize each information source (either web article or Asknews articles), evaluate source quality and date.
+Your analysis should have the following components, referring to the above outside view analysis and current information:
+(a) Source analysis: Briefly summarize each information source (either web article or AskNews article), evaluate source quality and date.
 **Opinions are commonplace in writing. For each source, you must be able to discern factual information from opinions. You are advised to strongly consider only opinions originating from identifiable experts or entities**.
 (b) Evidence analysis: Weight evidence/factors relevant to resolution criteria in the sources based on the below weighing system
-(c) Timeframe analysis: State the prediction timeframe (e.g., how many days/months from now?) and describe how your prediction might change if this was halfed/doubled?
+(c) Timeframe analysis: State the prediction timeframe (e.g., how many days/months from now?) and describe how your prediction might change if this were halved/doubled?
 (d) Justification: Gather the most compelling factors and justify how they shift your outside view base rates. For large shifts, justify how current factors are sufficiently impactful to render the reference class non-analogous to current circumstances.
-
-You are free to include other components to deepen the analysis, at your discretion.
 
 Evidence weighing system for (b):
 Strong evidence (can warrant relatively large prediction shifts)
@@ -484,19 +480,18 @@ Weak evidence (small adjustments):
 - Limited historical parallels
 - Short-term or volatile indicators
 
-Subsequently, calibrate your outside view prediction, considering:
+Subsequently, calibrate your inside view prediction, considering:
 (a) The outcome if the current trend/status quo continued.
-(b) You aim to predict the true probability distribution of events occuring, not a hedged or overconfident projection of your beliefs.
+(b) You aim to predict the true probability distribution of events occurring, not a hedged or overconfident projection of your beliefs.
 (c) Small differences in probabilities can be significant: 90% is a 9:1 odds and 99% is a 99:1 odds. How would a +-10% shift in probability across options resonate with your analysis?
 
-Return the final probabilities in the list, in the same order they appear in {options}. Format your answer as below, it is very important to follow this format exactly, especially for the final probability list, as a regex looking for 'Probabilities:' will be used to extract your answer.
+Return the final probabilities in the list, in the same order they appear in {options}. Format your answer as below. It is very important to follow this format exactly, especially for the final probability list, as a regex looking for 'Probabilities:' will be used to extract your answer.
 
-
-You are suggested to use the below checklist to verify the quality of your forecast **while reasoning**. Adjust your forecast if you have made mistakes. You can very briefly add a shortened version to your answer (see the format below).
+Use the checklist below to verify your forecast **while reasoning**. Adjust if needed.
 
 ------------------------ FORECASTING CHECKLIST ------------------------
 1. Paraphrase the possible options and resolution criteria in <30 words, including relevant time windows.
-  * Check that your analysis exactly aligns with how options and resolution criterias are defined. Bait-and-switch errors, while commonplace, are costly.
+  * Check that your analysis exactly aligns with how options and resolution criteria are defined. Bait-and-switch errors, while commonplace, are costly.
 
 2. State your outside view base rate distribution previously established
   * Check that your final prediction distribution genuinely is rooted to this base rate. If not, verify that current circumstances are vastly different from historic reference classes. Outside first, usually.
@@ -721,16 +716,14 @@ IMPORTANT: Today's date is {today}. All dates before today's date are in the PAS
 Outside view analysis + current information/news articles:
 {context}
 
-The information has been sourced from the internet, so it is advisable to exercise healthy skepticism at your discretion.
+The information has been sourced from the internet. Exercise healthy skepticism toward unverified claims.
 
-Your analysis should have the following components, refering the above historical context and current information:
-(a) Source analysis: Briefly summarize each information source (either web article or Asknews articles), evaluate source quality and date.
+Your analysis should have the following components, referring to the above outside view analysis and current information:
+(a) Source analysis: Briefly summarize each information source (either web article or AskNews article), evaluate source quality and date.
 **Opinions are commonplace in writing. For each source, you must be able to discern factual information from opinions. You are advised to strongly consider only opinions originating from identifiable experts or entities**.
 (b) Evidence analysis: Weight evidence/factors relevant to resolution criteria in the sources based on the below weighing system
-(c) Timeframe analysis: State the prediction timeframe (e.g., how many days/months from now?) and describe how your prediction might change if this was halfed/doubled?
+(c) Timeframe analysis: State the prediction timeframe (e.g., how many days/months from now?) and describe how your prediction might change if this were halved/doubled?
 (d) Justification: Gather the most compelling factors and justify how they shift your outside view base rates. For large distribution shifts, justify how current factors are sufficiently impactful to render the reference class non-analogous to current circumstances.
-
-You are free to include other components to deepen the analysis, at your discretion.
 
 Evidence weighing system for (b):
 Strong evidence (can warrant relatively large prediction shifts)
@@ -751,13 +744,13 @@ Weak evidence (small adjustments):
 - Limited historical parallels
 - Short-term or volatile indicators
 
-Subsequently, calibrate your outside view prediction, considering:
+Subsequently, calibrate your inside view prediction, considering:
 (a) The outcome if the current trend continued.
 (b) You aim to predict a true probability distribution, not a hedged smooth distribution or an overconfident extremely narrow distribution. In your thinking, always consider ranges over singular values.
-(c) Small changes in percentile location values can disproportionately reshape the slope and overall distribution of the extrapolated CDF, esepcially near the tails.
+(c) Small changes in percentile values can significantly reshape the distribution, especially near the tails. Choose tail values carefully.
 (d) How would shifting your percentile values by +-10% resonate with your analysis?
 
-You are suggested to use the below checklist to verify the quality of your forecast **while reasoning**. Adjust your forecast if you have made mistakes. You can very briefly add a shortened version to your answer.
+Use the checklist below to verify your forecast **while reasoning**. Adjust if needed.
 
 ------------------------ FORECASTING CHECKLIST ------------------------
 1. Paraphrase the target variable/resolution criteria in <30 words, including units and the time window
@@ -783,19 +776,18 @@ You are suggested to use the below checklist to verify the quality of your forec
 
 ------------------------------------------------------------------------
 
-Format your answer as below, it is very important to follow this format exactly, especially for the final percentile values, as a regex looking for 'Percentile' will be used to extract your answer.
+Format your answer as below. It is very important to follow this format exactly, especially for the final percentile values, as a regex looking for 'Percentile' will be used to extract your answer.
 
 Formatting Instructions:
-- Please notice the units requested and give your answer in these units (e.g. whether you represent a number as 1,000,000 or 1 million).
-- Never use scientific notation.
-- Always start with a smaller number (more negative if negative) and then increase from there. The value for percentile 10 should always be less than the value for percentile 20, and so on.
+- Use the units requested by the question. Never use scientific notation.
+- Percentile values must be strictly increasing (10th = lowest, 90th = highest).
 
-You remind yourself that good forecasters are humble and set wide 90/10 confidence intervals to account for unknown unknowns.
+Set wide 10th/90th percentile intervals to account for unknown unknowns.
 
 Analysis:
 {{Insert your analysis here, following the above components.}}
 
-Probability calibration
+Distribution calibration
 {{Insert your calibration of your inside view prediction here.}}
 
 Checklist:
