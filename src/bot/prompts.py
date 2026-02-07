@@ -234,8 +234,8 @@ Use the checklist below to verify your forecast **while reasoning**. Adjust if n
 1. Paraphrase the title and resolution criteria in <30 words, including relevant time windows.
   * Check that your analysis exactly aligns with how variables and resolution criteria are defined. Bait-and-switch errors, while commonplace, are costly.
 
-2. State your outside view base rate distribution previously established
-  * Check that your final prediction distribution genuinely is rooted to this base rate. If not, verify that current circumstances are vastly different from historic reference classes. Outside first, usually.
+2. State your outside view base rate previously established
+  * Check that your final prediction genuinely is rooted to this base rate. If not, verify that current circumstances are vastly different from historic reference classes. Outside first, usually.
 
 3. Consistency check (write a single line)
   * "{{your prediction}} out of 100 times, {{resolution criteria}} happens." Does this make sense and is it aligned with my justification?
@@ -244,7 +244,7 @@ Use the checklist below to verify your forecast **while reasoning**. Adjust if n
   * Verify the factual validity of each of these pieces of evidence. You do not want your forecast to hinge on a few flimsy, possibly inconsistent, pieces of evidence. Use this to consider shifting confidence up or down.
 
 5. Blind-spot statement
-  * Name the one scenario most likely to make your forecast look silly in hindsight and decide how it might shift the relative probabilities assigned.
+  * Name the one scenario most likely to make your forecast look silly in hindsight and decide how it might shift the probability.
 
 6. Status quo outcome
   * The world changes slowly most of the time. Consider the volatility of the current situation and timeframe to check whether a slight nudge toward the status quo outcome might be advantageous.
@@ -756,8 +756,8 @@ Use the checklist below to verify your forecast **while reasoning**. Adjust if n
 1. Paraphrase the target variable/resolution criteria in <30 words, including units and the time window
   * Check that your analysis exactly aligns with this target variable/resolution criteria. Bait-and-switch errors, while commonplace, are costly.
 
-2. State your outside view base rate previously established
-  * Check that your final prediction genuinely is rooted to this base rate. If not, verify that current circumstances are vastly different from historic reference classes. Outside first, usually.
+2. State your outside view base rate distribution previously established
+  * Check that your final prediction distribution genuinely is rooted to this base rate. If not, verify that current circumstances are vastly different from historic reference classes. Outside first, usually.
 
 3. Consistency check (write a single line)
   * "Implied median = ____; mean = ____; does this make sense and aligned with my justification?"
