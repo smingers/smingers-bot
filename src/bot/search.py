@@ -18,6 +18,7 @@ import traceback
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 from typing import Any
+from urllib.parse import urlparse
 
 import dateparser
 import httpx
@@ -441,6 +442,187 @@ class SearchPipeline:
                 "Error processing some search queries. Partial results may be available.",
                 metadata,
             )
+
+    # -------------------------------------------------------------------------
+    # Question URL Extraction + Scrape
+    # -------------------------------------------------------------------------
+
+    # Minimum word count for scraped content to be worth summarizing.
+    # Lower than the 100-word threshold for regular Google results because
+    # resolution source pages (EIA, FRED) often have sparse data tables.
+    _MIN_QUESTION_URL_CONTENT_WORDS = 50
+
+    # Domains to filter out (internal cross-references, not data sources)
+    _FILTERED_DOMAINS = {
+        "metaculus.com",
+        "www.metaculus.com",
+    }
+
+    # Regex: markdown links [text](url)
+    # Note: won't match URLs with nested parens (e.g., Wikipedia disambiguation pages).
+    # This is acceptable since resolution sources are typically data APIs, not Wikipedia.
+    _MARKDOWN_LINK_RE = re.compile(r"\[([^\]]*)\]\((https?://[^\)]+)\)")
+
+    # Regex: bare URLs not already inside markdown link parens
+    _BARE_URL_RE = re.compile(r"(?<!\()(https?://[^\s\)>\]\"\,]+)")
+
+    @staticmethod
+    def extract_urls_from_question_text(question_details: QuestionDetails) -> list[str]:
+        """
+        Extract unique, scrapable URLs from question text fields.
+
+        Handles both markdown-style [text](url) and bare URLs.
+        Filters out Metaculus internal URLs and deduplicates.
+        Prioritizes resolution_criteria URLs (listed first).
+
+        Args:
+            question_details: Question context containing text fields with URLs
+
+        Returns:
+            Ordered list of unique URLs, resolution_criteria first.
+        """
+        seen: set[str] = set()
+        urls: list[str] = []
+
+        # Process fields in priority order
+        fields = [
+            question_details.resolution_criteria,
+            question_details.fine_print,
+            question_details.description,
+        ]
+
+        for field_text in fields:
+            if not field_text:
+                continue
+
+            # Clean escaped underscores from markdown (Metaculus sometimes has these)
+            cleaned = field_text.replace("\\_", "_")
+
+            # Extract markdown link URLs first
+            for _, url in SearchPipeline._MARKDOWN_LINK_RE.findall(cleaned):
+                normalized = url.rstrip(".,;:")
+                domain = urlparse(normalized).netloc.lower()
+                if domain not in SearchPipeline._FILTERED_DOMAINS and normalized not in seen:
+                    seen.add(normalized)
+                    urls.append(normalized)
+
+            # Extract bare URLs (skip those already found in markdown links)
+            for url in SearchPipeline._BARE_URL_RE.findall(cleaned):
+                normalized = url.rstrip(".,;:")
+                domain = urlparse(normalized).netloc.lower()
+                if domain not in SearchPipeline._FILTERED_DOMAINS and normalized not in seen:
+                    seen.add(normalized)
+                    urls.append(normalized)
+
+        return urls
+
+    async def scrape_question_urls(
+        self,
+        question_details: QuestionDetails,
+    ) -> tuple[str, dict[str, Any]]:
+        """
+        Extract URLs from question text fields, scrape, and summarize them.
+
+        These are structural URLs from the question itself (resolution criteria,
+        fine print, description) -- not from LLM-generated queries.
+
+        Args:
+            question_details: Question context containing text fields with URLs
+
+        Returns:
+            Tuple of (formatted_results_string, metadata_dict)
+        """
+        metadata: dict[str, Any] = {
+            "search_id": "question_urls",
+            "searched": False,
+            "urls_found": 0,
+            "urls_scraped": 0,
+            "urls_summarized": 0,
+            "urls": [],
+            "tools_used": [],
+        }
+
+        # Check config
+        if not self.config.get("research", {}).get("question_url_scraping_enabled", True):
+            return "", metadata
+
+        # Extract URLs
+        urls = self.extract_urls_from_question_text(question_details)
+        metadata["urls_found"] = len(urls)
+
+        if not urls:
+            return "", metadata
+
+        metadata["searched"] = True
+        metadata["tools_used"] = ["QuestionURLScrape"]
+
+        # Cap at configured limit
+        max_urls = self.config.get("research", {}).get("question_url_max_scrape", 5)
+        urls = urls[:max_urls]
+
+        logger.info(f"[question_urls] Found {len(urls)} URLs in question text fields")
+
+        # Scrape URLs using existing infrastructure
+        try:
+            async with ConcurrentContentExtractor() as extractor:
+                results = await extractor.extract_content(urls)
+        except Exception as e:
+            logger.error(f"[question_urls] Scraping failed: {e}")
+            metadata["error"] = str(e)
+            return "", metadata
+
+        # Summarize successfully scraped content
+        summarize_tasks = []
+        valid_urls = []
+
+        for url in urls:
+            extraction = results.get(url, {})
+            content = (extraction.get("content") or "").strip()
+
+            url_meta: dict[str, Any] = {
+                "url": url,
+                "scraped": extraction.get("success", False),
+            }
+
+            if (
+                extraction.get("success")
+                and len(content.split()) >= self._MIN_QUESTION_URL_CONTENT_WORDS
+            ):
+                max_content = self.config.get("research", {}).get("max_content_length", 15000)
+                truncated = content[:max_content]
+                summarize_tasks.append(self._summarize_article(truncated, question_details))
+                valid_urls.append(url)
+                url_meta["content_words"] = len(content.split())
+                metadata["urls_scraped"] += 1
+            else:
+                url_meta["error"] = extraction.get("error", "Insufficient content")
+
+            metadata["urls"].append(url_meta)
+
+        if not summarize_tasks:
+            logger.info("[question_urls] No scrapable content found in question URLs")
+            return "", metadata
+
+        # Run summarizations in parallel
+        summaries = await asyncio.gather(*summarize_tasks, return_exceptions=True)
+
+        # Format output with <QuestionSource> tag (distinct from <Summary> used by
+        # Google search results, <Agent_report>, <FREDData>, <GoogleTrendsData>, etc.)
+        # so forecasters can distinguish resolution-source data from search results.
+        output = ""
+        for url, summary in zip(valid_urls, summaries, strict=True):
+            if isinstance(summary, Exception):
+                logger.error(f"[question_urls] Summarization error for {url}: {summary}")
+            else:
+                output += f'\n<QuestionSource url="{url}">\n{summary}\n</QuestionSource>\n'
+                metadata["urls_summarized"] += 1
+
+        logger.info(
+            f"[question_urls] Scraped {metadata['urls_scraped']}, "
+            f"summarized {metadata['urls_summarized']} of {metadata['urls_found']} URLs"
+        )
+
+        return output, metadata
 
     # -------------------------------------------------------------------------
     # Google Search + Scrape

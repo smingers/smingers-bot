@@ -210,6 +210,7 @@ class BaseForecaster(ForecasterMixin, ABC):
 
         async with SearchPipeline(self.config, self.llm) as search:
             results = await asyncio.gather(
+                search.scrape_question_urls(question_details),
                 search.execute_searches_from_response(
                     historical_output,
                     search_id="historical",
@@ -223,7 +224,18 @@ class BaseForecaster(ForecasterMixin, ABC):
                     include_asknews=True,
                 ),
             )
-            (historical_context, historical_metadata), (current_context, current_metadata) = results
+            (question_url_context, question_url_metadata) = results[0]
+            (historical_context, historical_metadata) = results[1]
+            (current_context, current_metadata) = results[2]
+
+        # Prepend question URL content to historical context
+        # (resolution source data should appear first for forecasters)
+        if question_url_context:
+            historical_context = question_url_context + "\n" + historical_context
+            log(
+                f"\nQuestion URL context ({len(question_url_context)} chars, "
+                f"{question_url_metadata.get('urls_summarized', 0)} URLs summarized)"
+            )
 
         log(f"\nHistorical context ({len(historical_context)} chars)")
         log(f"Current context ({len(current_context)} chars)")
@@ -231,6 +243,21 @@ class BaseForecaster(ForecasterMixin, ABC):
         step2_end_cost = snapshot_cost("step2_search", step1_end_cost)
 
         # Store research metadata
+        metrics.centralized_research["question_urls"] = ResearchMetrics(
+            search_id="question_urls",
+            searched=question_url_metadata.get("searched", False),
+            num_queries=question_url_metadata.get("urls_found", 0),
+            queries=[
+                {
+                    "query": u["url"],
+                    "tool": "QuestionURLScrape",
+                    "success": u.get("scraped", False),
+                    "num_results": 1 if u.get("scraped") else 0,
+                }
+                for u in question_url_metadata.get("urls", [])
+            ],
+            tools_used=question_url_metadata.get("tools_used", []),
+        )
         metrics.centralized_research["historical"] = ResearchMetrics.from_search_metadata(
             historical_metadata
         )
@@ -239,6 +266,10 @@ class BaseForecaster(ForecasterMixin, ABC):
         )
 
         if self.artifact_store:
+            if question_url_context:
+                self.artifact_store.save_search_results(
+                    "question_urls", {"context": question_url_context}
+                )
             self.artifact_store.save_search_results("historical", {"context": historical_context})
             self.artifact_store.save_search_results("current", {"context": current_context})
 

@@ -162,6 +162,7 @@ class PipelineMetrics:
         """Create an empty metrics object ready for population."""
         return cls(
             centralized_research={
+                "question_urls": ResearchMetrics(search_id="question_urls"),
                 "historical": ResearchMetrics(search_id="historical"),
                 "current": ResearchMetrics(search_id="current"),
             },
