@@ -113,21 +113,11 @@ class ForecasterMixin:
             Model response content as string.
 
         Raises:
+            TruncationError: If response was truncated.
             Exception: If model call fails (logged and re-raised).
         """
-        messages = [{"role": "user", "content": prompt}]
-
-        try:
-            response = await self.llm.complete(
-                model=model,
-                messages=messages,
-                system=system_prompt,
-                max_tokens=self._get_max_tokens(model),
-            )
-            return response.content
-        except Exception as e:
-            logger.error(f"Model call failed ({model}): {e}")
-            raise
+        content, _ = await self._call_model_with_metadata(model, prompt, system_prompt)
+        return content
 
     async def _call_model_with_metadata(
         self,

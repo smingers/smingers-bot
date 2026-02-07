@@ -144,36 +144,10 @@ class NumericForecaster(BaseForecaster):
         **question_params,
     ) -> tuple[str, str]:
         """Format query prompts with numeric-specific parameters."""
-        bound_msgs = self._get_bounds_explanation(**question_params)
-        unit = self._get_unit(**question_params)
-        # Use background_info if available, fall back to question_text
-        background = question_params.get("background_info", "") or question_params.get(
-            "question_text", ""
-        )
-
-        historical = prompt_historical.format(
-            title=question_params.get("question_title", ""),
-            today=question_params.get("today", ""),
-            background=background,
-            resolution_criteria=question_params.get("resolution_criteria", ""),
-            fine_print=question_params.get("fine_print", ""),
-            open_time=question_params.get("open_time", ""),
-            scheduled_resolve_time=question_params.get("scheduled_resolve_time", ""),
-            bounds_info=bound_msgs["bounds_info"],
-            units=unit,
-        )
-        current = prompt_current.format(
-            title=question_params.get("question_title", ""),
-            today=question_params.get("today", ""),
-            background=background,
-            resolution_criteria=question_params.get("resolution_criteria", ""),
-            fine_print=question_params.get("fine_print", ""),
-            open_time=question_params.get("open_time", ""),
-            scheduled_resolve_time=question_params.get("scheduled_resolve_time", ""),
-            bounds_info=bound_msgs["bounds_info"],
-            units=unit,
-        )
-        return historical, current
+        params = self._get_common_prompt_params(**question_params)
+        params["bounds_info"] = self._get_bounds_explanation(**question_params)["bounds_info"]
+        params["units"] = self._get_unit(**question_params)
+        return prompt_historical.format(**params), prompt_current.format(**params)
 
     def _format_outside_view_prompt(
         self,

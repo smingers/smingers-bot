@@ -568,3 +568,63 @@ def generate_continuous_cdf(
         )
 
     return cdf
+
+
+def percentiles_from_cdf(
+    cdf: list[float],
+    lower_bound: float,
+    upper_bound: float,
+    zero_point: float | None = None,
+    target_percentiles: list[int] | None = None,
+) -> dict[str, float]:
+    """
+    Extract real-world values at specific percentiles from a CDF.
+
+    Given a CDF (list of cumulative probabilities at evenly-spaced locations),
+    finds where the CDF crosses each target probability and converts the
+    CDF location back to a real-world value.
+
+    The CDF-location-to-value conversion matches the official Metaculus
+    implementation (same math as NumericDistributionGenerator._cdf_location_to_nominal_location).
+
+    Args:
+        cdf: List of CDF values (e.g., 201-point CDF from generate_continuous_cdf)
+        lower_bound: Question lower bound (range_min)
+        upper_bound: Question upper bound (range_max)
+        zero_point: Reference point for log scaling (None for linear)
+        target_percentiles: Percentile points to extract (default: [10, 25, 50, 75, 90])
+
+    Returns:
+        Dict mapping percentile string keys to real-world values.
+        E.g., {"10": 23.5, "25": 34.2, "50": 45.0, "75": 56.1, "90": 67.8}
+    """
+    if target_percentiles is None:
+        target_percentiles = [10, 25, 50, 75, 90]
+
+    cdf_size = len(cdf)
+    result = {}
+
+    for pct in target_percentiles:
+        target_prob = pct / 100.0
+        for i, cdf_val in enumerate(cdf):
+            if cdf_val >= target_prob:
+                # Interpolate to get precise CDF location (0-1)
+                if i > 0 and cdf[i] != cdf[i - 1]:
+                    frac = (target_prob - cdf[i - 1]) / (cdf[i] - cdf[i - 1])
+                    cdf_location = ((i - 1) + frac) / (cdf_size - 1)
+                else:
+                    cdf_location = i / (cdf_size - 1)
+
+                # Convert CDF location to actual value (handles log scaling)
+                if zero_point is None:
+                    value = lower_bound + (upper_bound - lower_bound) * cdf_location
+                else:
+                    deriv_ratio = (upper_bound - zero_point) / (lower_bound - zero_point)
+                    value = lower_bound + (upper_bound - lower_bound) * (
+                        deriv_ratio**cdf_location - 1
+                    ) / (deriv_ratio - 1)
+
+                result[str(pct)] = round(value, 4)
+                break
+
+    return result
