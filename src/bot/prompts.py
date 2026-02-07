@@ -141,19 +141,17 @@ IMPORTANT: Today's date is {today}. All dates before today's date are in the PAS
 Historical context:
 {context}
 
-The information has been sourced from the internet/language models (for agent reports), so it is advisable to exercise healthy skepticism at your discretion.
+The information has been sourced from the internet and language models (for agent reports). Exercise healthy skepticism toward unverified claims.
 
-Your analysis should have the following components, refering the above historical context:
+Your analysis should have the following components, referring to the above historical context:
 (a) Source analysis: Briefly summarize each information source (either web article or Agent report), evaluate source quality and date.
 **Opinions are commonplace in writing. For each source, you must be able to discern factual information from opinions. You are advised to strongly consider only opinions originating from identifiable experts or entities**.
 (b) Reference class analysis: Identify a few possible reference classes and evaluate respective suitabilities to the forecasting question. If applicable, choose the most suitable one.
 (c) Timeframe analysis: State the prediction timeframe (e.g., how many days/months from now?) and examine historical patterns over similar periods
 (d) Justification: Integrate the above factors with other points you found relevant to write a justification for your outside view prediction.
 
-You are free to include other components to deepen the analysis, at your discretion.
-
 Subsequently, calibrate your outside view prediction, considering:
-(a) You aim to predict the true probability of an event occuring, not a hedged or overconfident projection of your beliefs.
+(a) You aim to predict the true probability of an event occurring, not a hedged or overconfident projection of your beliefs.
 (b) Is there a rough figure in the sources you can tether your prediction to?
 (c) Small differences in probabilities can be significant: 90% is a 9:1 odds and 99% is a 99:1 odds.
 (d) Historically, what is the rate of upsets/unexpected outcomes in the domain of this forecasting question? How should this affect your probability?
@@ -167,7 +165,7 @@ Outside view calibration:
 {{Insert your calibration of your outside view prediction here.}}
 
 Outside View Prediction:
-[Provide your outside view prediction here to a 1% significance. It is not necessary for the prediction to be a neat multiple of 5%.]
+Provide your outside view prediction as a percentage. Be precise — don't round to multiples of 5%.
 """
 
 
@@ -396,19 +394,17 @@ IMPORTANT: Today's date is {today}. All dates before today's date are in the PAS
 Historical context:
 {context}
 
-The information has been sourced from the internet/language models (for agent reports), so it is advisable to exercise healthy skepticism at your discretion.
+The information has been sourced from the internet and language models (for agent reports). Exercise healthy skepticism toward unverified claims.
 
-Your analysis should have the following components, refering the above historical context:
+Your analysis should have the following components, referring to the above historical context:
 (a) Source analysis: Briefly summarize each information source (either web article or Agent report), evaluate source quality and date.
 **Opinions are commonplace in writing. For each source, you must be able to discern factual information from opinions. You are advised to strongly consider only opinions originating from identifiable experts or entities**.
 (b) Reference class analysis: Identify a few possible reference classes and evaluate respective suitabilities to the forecasting question. If applicable, choose the most suitable one.
 (c) Timeframe analysis: State the prediction timeframe (e.g., how many days/months from now?) and examine historical patterns over similar periods
 (d) Justification: Integrate the above factors with other points you found relevant to write a justification for your outside view prediction.
 
-You are free to include other components to deepen the analysis, at your discretion.
-
 Subsequently, calibrate your outside view prediction, considering:
-(a) You aim to predict the true probability of events occuring, not a hedged or overconfident projection of your beliefs.
+(a) You aim to predict the true probability of events occurring, not a hedged or overconfident projection of your beliefs.
 (b) Are there previously established distributions concerning the options that you can tether your prediction to?
 (c) Small differences in probabilities can be significant: 90% is a 9:1 odds and 99% is a 99:1 odds.
 (d) Historically, what is the rate of upsets/unexpected outcomes in the domain of this forecasting question? How should this affect your probability distribution?
@@ -422,7 +418,7 @@ Outside view calibration:
 {{Insert your calibration of your outside view prediction here.}}
 
 Outside View Prediction:
-Write your final probabilites (to a 1% significance, there is no need to have them be neat multiples of 5) for the N options in this order {options} as:
+Write your final probabilities as whole percentages for the options in this order {options}:
 Option_A: Probability_A
 Option_B: Probability_B
 ...
@@ -659,34 +655,25 @@ IMPORTANT: Today's date is {today}. All dates before today's date are in the PAS
 Historical context:
 {context}
 
-The information has been sourced from the internet/language models (for agent reports), so it is advisable to exercise healthy skepticism at your discretion.
+The information has been sourced from the internet and language models (for agent reports). Exercise healthy skepticism toward unverified claims.
 
-
-Your analysis should have the following components, refering the above historical context:
+Your analysis should have the following components, referring to the above historical context:
 (a) Source analysis: Briefly summarize each information source (either web article or Agent report), evaluate source quality and date.
 **Opinions are commonplace in writing. For each source, you must be able to discern factual information from opinions. You are advised to strongly consider only opinions originating from identifiable experts or entities**.
 (b) Reference class analysis: Identify a few possible reference classes and evaluate respective suitabilities to the forecasting question. If applicable, choose the most suitable one.
 (c) Timeframe analysis: State the prediction timeframe (e.g., how many days/months from now?) and examine historical patterns over similar periods
 (d) Justification: Integrate the above factors with other points you found relevant to write a justification for your outside view prediction.
 
-You are free to include other components to deepen the analysis, at your discretion.
-
 Subsequently, calibrate your outside view prediction, considering:
 (a) You aim to predict a true probability distribution, not a hedged smooth distribution or an overconfident extremely narrow distribution. In your thinking, always consider ranges over singular values.
 (b) Are there previously established distributions that you can tether your prediction to?
-(c) Small changes in percentile location values can disproportionately reshape the slope and overall distribution of the extrapolated CDF, esepcially near the tails.
+(c) Small changes in percentile values can significantly reshape the distribution, especially near the tails. Choose tail values carefully.
 (d) Historically, what is the rate of upsets/unexpected outcomes in the domain of this forecasting question? How should this affect your CDF distribution?
 
-It might be a good idea to set a wide 90/10 confidence intervals to account for unknown unknowns.
+Set wide 10th/90th percentile intervals to account for unknown unknowns.
 
-For your final outside view prediction, please keep in mind the following:
-- Please notice the units requested (e.g. whether you represent a number as 1,000,000 or 1m).
-- Never use scientific notation.
-
-**CRITICAL: Percentile values MUST be strictly increasing.**
-- Percentile 10 = low value (only 10% of outcomes fall below this)
-- Percentile 90 = high value (90% of outcomes fall below this)
-- Each percentile value must be GREATER than the previous one
+**CRITICAL: Percentile values MUST be strictly increasing** (10th = lowest, 90th = highest).
+Use the units requested by the question. Never use scientific notation.
 
 Format your answer as below:
 
