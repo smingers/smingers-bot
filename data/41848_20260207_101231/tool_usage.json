@@ -1,0 +1,268 @@
+{
+  "centralized_research": {
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Meta youth addiction lawsuit settlement",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Meta state attorneys general lawsuit status",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide a detailed update on People of the State of California v. Meta Platforms, Inc., including latest docket entries, any court-ordered mediation, public statements about settlement talks, and compare timelines of prior multi-state AG tech settlements (Juul, Google Play, Cambridge Analytica, TikTok) highlighting filing-to-settlement durations.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 3,
+            "queries_executed": [
+              "People v Meta docket mediation",
+              "Juul AG lawsuit filing settlement timeline",
+              "Google Play AG lawsuit settlement timeline",
+              "Cambridge Analytica AG lawsuit settlement timeline",
+              "TikTok AG lawsuit settlement timeline",
+              "People v Meta ADR order",
+              "Meta youth harm AG settlement talks",
+              "4:23-cv-05448 docket ADR",
+              "Google Play AG complaint July 2021 pdf",
+              "TikTok AG coalition complaint October 2024"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "People v Meta docket mediation",
+                    "Google"
+                  ],
+                  [
+                    "Juul AG lawsuit filing settlement timeline",
+                    "Google"
+                  ],
+                  [
+                    "Google Play AG lawsuit settlement timeline",
+                    "Google"
+                  ],
+                  [
+                    "Cambridge Analytica AG lawsuit settlement timeline",
+                    "Google"
+                  ],
+                  [
+                    "TikTok AG lawsuit settlement timeline",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 72948,
+                "analysis_chars": 0
+              },
+              {
+                "step_number": 2,
+                "queries_executed": [
+                  [
+                    "People v Meta ADR order",
+                    "Google"
+                  ],
+                  [
+                    "Meta youth harm AG settlement talks",
+                    "Google News"
+                  ],
+                  [
+                    "4:23-cv-05448 docket ADR",
+                    "Google"
+                  ],
+                  [
+                    "Google Play AG complaint July 2021 pdf",
+                    "Google"
+                  ],
+                  [
+                    "TikTok AG coalition complaint October 2024",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 68081,
+                "analysis_chars": 6033
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "Agent"
+      ],
+      "llm_cost": 0.2971,
+      "llm_cost_summarization": 0.1743,
+      "llm_cost_agentic": 0.1228,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Meta youth mental health lawsuit settlement",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Meta attorneys general lawsuit settlement status",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Have any US state attorneys general settled their youth addiction lawsuit against Meta since November 2023?",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 24
+        },
+        {
+          "query": "Before March 1, 2026, will Meta settle the lawsuit brought by state attorneys general alleging the platform(s) were designed to foster compulsive use by minors?",
+          "tool": "AskNews",
+          "deep_research_query": "Have any US state attorneys general settled their youth addiction lawsuit against Meta since November 2023?"
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "AskNews"
+      ],
+      "llm_cost": 0.1862,
+      "llm_cost_summarization": 0.1743,
+      "llm_cost_agentic": 0.0119,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6545,
+        "token_output": 2171,
+        "cost": 0.0522,
+        "duration_seconds": 56.33494305610657,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 19674,
+        "token_output": 3282,
+        "cost": 0.10825200000000001,
+        "duration_seconds": 83.23379898071289,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6545,
+        "token_output": 1772,
+        "cost": 0.046215,
+        "duration_seconds": 56.335001707077026,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 18760,
+        "token_output": 2076,
+        "cost": 0.08742,
+        "duration_seconds": 83.23376703262329,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5800,
+        "token_output": 2812,
+        "cost": 0.049518,
+        "duration_seconds": 56.33504509925842,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16934,
+        "token_output": 2702,
+        "cost": 0.06746250000000001,
+        "duration_seconds": 83.23373484611511,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5800,
+        "token_output": 1859,
+        "cost": 0.026472,
+        "duration_seconds": 56.335084199905396,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17806,
+        "token_output": 1063,
+        "cost": 0.044115999999999995,
+        "duration_seconds": 83.23370409011841,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5800,
+        "token_output": 1823,
+        "cost": 0.026184,
+        "duration_seconds": 56.33511662483215,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16412,
+        "token_output": 1450,
+        "cost": 0.044424,
+        "duration_seconds": 83.23367023468018,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0127,
+    "step2_search": 0.2971,
+    "step3_outside_view": 0.2006,
+    "step5_inside_view": 0.3517
+  },
+  "total_pipeline_cost": 0.8621
+}
