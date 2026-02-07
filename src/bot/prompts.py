@@ -594,6 +594,8 @@ This question's outcome will be determined by the specific criteria below. These
 Additional fine-print:
 {fine_print}
 
+Units for answer: {units}
+
 Question metadata:
 - Opened for forecasting: {open_time}
 - Resolves: {scheduled_resolve_time}
