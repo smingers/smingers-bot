@@ -25,7 +25,7 @@ from ..utils.llm import LLMClient, get_cost_tracker
 from .extractors import AgentResult
 from .handler_mixin import ForecasterMixin
 from .metrics import AgentMetrics, PipelineMetrics, ResearchMetrics
-from .prompts import CLAUDE_CONTEXT, GPT_CONTEXT
+from .prompts import SUPERFORECASTER_CONTEXT
 from .search import QuestionDetails, SearchPipeline
 
 logger = logging.getLogger(__name__)
@@ -265,7 +265,7 @@ class BaseForecaster(ForecasterMixin, ABC):
         outside_view_timings = []
         for agent in agents:
             model = agent["model"]
-            system_prompt = CLAUDE_CONTEXT if "claude" in model.lower() else GPT_CONTEXT
+            system_prompt = SUPERFORECASTER_CONTEXT
 
             # Record start time for this forecaster
             start_time = time.time()
@@ -355,7 +355,7 @@ class BaseForecaster(ForecasterMixin, ABC):
         inside_view_timings = []
         for i, agent in enumerate(agents):
             model = agent["model"]
-            system_prompt = CLAUDE_CONTEXT if "claude" in model.lower() else GPT_CONTEXT
+            system_prompt = SUPERFORECASTER_CONTEXT
 
             inside_view_prompt = self._format_inside_view_prompt(
                 prompt_inside_view, context_map[i], **question_params

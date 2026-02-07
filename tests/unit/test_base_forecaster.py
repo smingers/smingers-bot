@@ -23,7 +23,7 @@ from src.bot.base_forecaster import (
     _is_failed_output,
 )
 from src.bot.extractors import AgentResult
-from src.bot.prompts import CLAUDE_CONTEXT, GPT_CONTEXT
+from src.bot.prompts import SUPERFORECASTER_CONTEXT
 from src.bot.search import QuestionDetails
 from src.storage.artifact_store import ArtifactStore
 from src.utils.llm import LLMClient, LLMResponse
@@ -576,36 +576,23 @@ class TestCostTrackingSnapshot:
 
 
 class TestSystemPromptSelection:
-    """Tests for system prompt selection based on model name."""
+    """Tests for system prompt selection."""
 
-    def test_selects_claude_context_for_claude_models(self):
-        """CLAUDE_CONTEXT selected for claude-* models."""
+    def test_all_models_use_superforecaster_context(self):
+        """All models use the same SUPERFORECASTER_CONTEXT system prompt."""
         models = [
             "openrouter/anthropic/claude-sonnet-4.5",
             "anthropic/claude-3-opus",
             "claude-3-haiku",
-            "CLAUDE-3.5-sonnet",  # Case insensitive
-        ]
-
-        for model in models:
-            # Simulate the logic from forecast()
-            system_prompt = CLAUDE_CONTEXT if "claude" in model.lower() else GPT_CONTEXT
-            assert system_prompt == CLAUDE_CONTEXT, f"Failed for model: {model}"
-
-    def test_selects_gpt_context_for_other_models(self):
-        """GPT_CONTEXT selected for non-claude models."""
-        models = [
             "openrouter/openai/o3",
             "openai/gpt-4",
             "o3-mini-high",
             "gemini-pro",
-            "mistral-large",
         ]
 
         for model in models:
-            # Simulate the logic from forecast()
-            system_prompt = CLAUDE_CONTEXT if "claude" in model.lower() else GPT_CONTEXT
-            assert system_prompt == GPT_CONTEXT, f"Failed for model: {model}"
+            system_prompt = SUPERFORECASTER_CONTEXT
+            assert system_prompt == SUPERFORECASTER_CONTEXT, f"Failed for model: {model}"
 
 
 # ============================================================================
@@ -934,7 +921,7 @@ class TestForecastPipeline:
     async def test_pipeline_uses_correct_system_prompts(
         self, mock_llm_response, mock_search_pipeline, mock_artifact_store
     ):
-        """Pipeline uses CLAUDE_CONTEXT for claude models, GPT_CONTEXT for others."""
+        """Pipeline uses SUPERFORECASTER_CONTEXT for all models."""
         config = {
             "_active_agents": [
                 {"name": "forecaster_1", "model": "anthropic/claude-3", "weight": 1.0},
@@ -980,9 +967,8 @@ class TestForecastPipeline:
                 scheduled_resolve_time="2027-01-15",
             )
 
-            # Check that both CLAUDE_CONTEXT and GPT_CONTEXT were used
+            # Check that SUPERFORECASTER_CONTEXT was used for forecaster calls
             system_prompts = [call.get("system", "") for call in captured_calls if "system" in call]
-            assert any(CLAUDE_CONTEXT in str(sp) for sp in system_prompts), (
-                "CLAUDE_CONTEXT not used"
+            assert any(SUPERFORECASTER_CONTEXT in str(sp) for sp in system_prompts), (
+                "SUPERFORECASTER_CONTEXT not used"
             )
-            assert any(GPT_CONTEXT in str(sp) for sp in system_prompts), "GPT_CONTEXT not used"

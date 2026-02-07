@@ -135,6 +135,14 @@ class TestBinaryProbabilityExtraction:
         # Should not match
         assert not re.search(pattern, "55")  # no percent sign
 
+    def test_bold_probability_label(self):
+        """Test extraction when Probability label is markdown bold."""
+        assert self._extract("**Probability:** 42%") == 42.0
+
+    def test_bold_entire_probability_line(self):
+        """Test extraction when entire Probability line is markdown bold."""
+        assert self._extract("**Probability: 42%**") == 42.0
+
 
 # ============================================================================
 # Multiple Choice Extraction Tests
@@ -199,6 +207,18 @@ class TestMultipleChoiceExtraction:
 
         # Should not match
         assert not re.search(pattern, "probabilities: [10, 20, 70]")  # lowercase
+
+    def test_bold_probabilities_label(self):
+        """Test extraction when Probabilities label is markdown bold."""
+        text = "**Probabilities:** [38, 42, 20, 0]"
+        result = extract_option_probabilities_from_response(text, num_options=4)
+        assert result == [38.0, 42.0, 20.0, 0.0]
+
+    def test_bold_entire_probabilities_line(self):
+        """Test extraction when entire Probabilities line is markdown bold."""
+        text = "**Probabilities: [38, 42, 20, 0]**"
+        result = extract_option_probabilities_from_response(text, num_options=4)
+        assert result == [38.0, 42.0, 20.0, 0.0]
 
 
 class TestNormalizeProbabilities:

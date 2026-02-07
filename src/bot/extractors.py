@@ -135,8 +135,10 @@ def extract_binary_probability_percent(text: str) -> float:
     Raises:
         ValueError: If no probability found
     """
+    # Strip markdown bold/italic markers (e.g., **Probability:** -> Probability:)
+    cleaned = text.strip().replace("*", "")
     # Primary pattern: "Probability: X%"
-    matches = re.findall(r"Probability:\s*([0-9]+(?:\.[0-9]+)?)%", text.strip())
+    matches = re.findall(r"Probability:\s*([0-9]+(?:\.[0-9]+)?)%", cleaned)
     if matches:
         number = float(matches[-1])
         return min(99, max(1, number))
@@ -177,7 +179,9 @@ def extract_multiple_choice_probabilities(
     Raises:
         ValueError: If no probabilities found or wrong number
     """
-    matches = re.findall(r"Probabilities:\s*\[([0-9.,\s]+)\]", text)
+    # Strip markdown bold/italic markers (e.g., **Probabilities:** -> Probabilities:)
+    cleaned = text.replace("*", "")
+    matches = re.findall(r"Probabilities:\s*\[([0-9.,\s]+)\]", cleaned)
     if not matches:
         snippet = text[-200:] if len(text) > 200 else text
         raise ExtractionError(

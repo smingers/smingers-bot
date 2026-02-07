@@ -26,10 +26,6 @@ For each question, you also consider (depending on question type)
 In each of your analyses, you write your rationale clearly and spare little detail so your colleagues can understand the nuances that governed your thoughtful forecast.
 """
 
-# Backward compatibility aliases (these are identical)
-CLAUDE_CONTEXT = SUPERFORECASTER_CONTEXT
-GPT_CONTEXT = SUPERFORECASTER_CONTEXT
-
 
 # =============================================================================
 # BINARY QUESTION PROMPTS
@@ -63,7 +59,7 @@ Your query for google and google news are processed by classical search engines,
 
 For agent:
 Your query will be processed by a reasoning model equipped with capable web crawlers and designed to generate lengthy, detailed responses. As such, you may use a longer query with detailed instructions. It is possible to ask multiple questions.
-Nonetheless, you are advised to keep your query to at most four sentences.
+Nonetheless, you are advised to keep your query to at most three sentences.
 
 For FRED:
 If the question involves economic indicators, financial data, interest rates, employment, GDP, inflation, trade statistics, or any quantitative economic metric, use FRED (Federal Reserve Economic Data) to retrieve official historical data. Your query should describe the economic indicator (e.g., "US unemployment rate" or "consumer price index") or use a known FRED series ID directly (e.g., "UNRATE" or "CPIAUCSL"). This returns historical data with computed statistics for establishing base rates.
@@ -153,7 +149,7 @@ Historical context:
 The information has been sourced from the internet/language models (for agent reports), so it is advisable to exercise healthy skepticism at your discretion.
 
 Your analysis should have the following components, refering the above historical context:
-(a) Source analysis: Briefly summarize each information source (either web article or Agent report), evaluate source quality and data.
+(a) Source analysis: Briefly summarize each information source (either web article or Agent report), evaluate source quality and date.
 **Opinions are commonplace in writing. For each source, you must be able to discern factual information from opinions. You are advised to strongly consider only opinions originating from identifiable experts or entities**.
 (b) Reference class analysis: Identify a few possible reference classes and evaluate respective suitabilities to the forecasting question. If applicable, choose the most suitable one.
 (c) Timeframe analysis: State the prediction timeframe (e.g., how many days/months from now?) and examine historical patterns over similar periods
@@ -166,7 +162,7 @@ Subsequently, calibrate your outside view prediction, considering:
 (b) Is there a rough figure in the sources you can tether your prediction to?
 (c) Small differences in probabilities can be significant: 90% is a 9:1 odds and 99% is a 99:1 odds.
 
-Format you answer as below:
+Format your answer as below:
 
 Analysis:
 {{Insert your analysis here}}
@@ -311,7 +307,7 @@ Your query for google and google news are processed by classical search engines,
 
 For agent:
 Your query will be processed by a reasoning model equipped with capable web crawlers and designed to generate lengthy, detailed responses. As such, you may use a longer query with detailed instructions. It is possible to ask multiple questions.
-Nonetheless, you are advised to keep your query to at most four sentences.
+Nonetheless, you are advised to keep your query to at most three sentences.
 If you are also including a Google Trends query, do not ask the agent to search for Google Trends data, trend statistics, or historical search interest values — that data is being retrieved separately. Instead, direct the agent to focus on news events, scheduled catalysts, and contextual factors.
 
 For Google Trends:
@@ -423,7 +419,7 @@ Subsequently, calibrate your outside view prediction, considering:
 (c) Small differences in probabilities can be significant: 90% is a 9:1 odds and 99% is a 99:1 odds.
 (d) Historically, what is the rate of upsets/unexpected outcomes in the domain of this forecasting question? How should this affect your probability distribution?
 
-Format you answer as below:
+Format your answer as below:
 
 Analysis:
 {{Insert your analysis here, following the above components.}}
@@ -644,7 +640,7 @@ Search queries:
 
 
 NUMERIC_OUTSIDE_VIEW_PROMPT = """
-You are currently analyzing a numeric forecasting question to generate a final, inside view prediction.
+You are currently analyzing a forecasting question to generate an outside view prediction.
 
 The forecasting question is:
 {title}
@@ -668,7 +664,7 @@ IMPORTANT: Today's date is {today}. All dates before today's date are in the PAS
 
 {bounds_info}
 
-Outside view analysis + current information/news articles:
+Historical context:
 {context}
 
 The information has been sourced from the internet/language models (for agent reports), so it is advisable to exercise healthy skepticism at your discretion.
@@ -719,16 +715,18 @@ Percentile 90: XX
 
 
 NUMERIC_INSIDE_VIEW_PROMPT = """
-You are a professional forecaster interviewing for a job.
+You are currently analyzing a forecasting question to generate a final, inside view prediction.
 
-Your interview question is:
+The forecasting question is:
 {title}
 
 Question background:
 {background}
 
+This question's outcome will be determined by the specific criteria below. These criteria have not yet been satisfied:
 {resolution_criteria}
 
+Additional fine-print:
 {fine_print}
 
 Units for answer: {units}
@@ -797,7 +795,12 @@ You are suggested to use the below checklist to verify the quality of your forec
 5. Blind-spot statement
   * Name the one scenario most likely to make your forecast look silly in hindsight and decide whether it would push the outcome up or down.
 
+6. Technicalities
+  * Verify that percentile values are strictly increasing, that units match what the question requests, and that values fall within any stated bounds.
+
 ------------------------------------------------------------------------
+
+Format your answer as below, it is very important to follow this format exactly, especially for the final percentile values, as a regex looking for 'Percentile' will be used to extract your answer.
 
 Formatting Instructions:
 - Please notice the units requested and give your answer in these units (e.g. whether you represent a number as 1,000,000 or 1 million).
@@ -806,15 +809,21 @@ Formatting Instructions:
 
 You remind yourself that good forecasters are humble and set wide 90/10 confidence intervals to account for unknown unknowns.
 
-The last thing you write is your final answer as:
-"
+Analysis:
+{{Insert your analysis here, following the above components.}}
+
+Probability calibration
+{{Insert your calibration of your inside view prediction here.}}
+
+Checklist:
+{{Shortened, brief checklist verification here}}
+
 Percentile 10: XX (lowest number value)
 Percentile 20: XX
 Percentile 40: XX
 Percentile 60: XX
 Percentile 80: XX
 Percentile 90: XX (highest number value)
-"
 """
 
 

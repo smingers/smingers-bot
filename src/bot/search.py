@@ -2,7 +2,7 @@
 Search Pipeline
 
 Key differences from previous approach:
-1. Forecasters generate search queries directly in their responses
+1. Forecasters generate search queries directly in their responses (note: this does not appear to be true)
 2. Queries are tagged with source (Google, Google News, Google Trends, FRED, yFinance, Agent)
 3. AskNews is called programmatically for current search (not LLM-controlled)
 4. Agentic search uses GPT to iteratively research
