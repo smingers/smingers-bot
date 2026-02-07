@@ -1,0 +1,243 @@
+{
+  "centralized_research": {
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "silver price history 2025 2026 April",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "silver price forecast April 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "silver price path 2025-2026 spike drawdown analysis",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "silver price history 2025 2026",
+              "silver rally 2025 drivers analysis",
+              "January 2026 silver spike reasons",
+              "silver price forecast April 2026",
+              "SI=F"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "silver price history 2025 2026",
+                    "Google"
+                  ],
+                  [
+                    "silver rally 2025 drivers analysis",
+                    "Google News"
+                  ],
+                  [
+                    "January 2026 silver spike reasons",
+                    "Google"
+                  ],
+                  [
+                    "silver price forecast April 2026",
+                    "Google News"
+                  ],
+                  [
+                    "SI=F",
+                    "yFinance"
+                  ]
+                ],
+                "search_results_chars": 67869,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "silver price FRED",
+          "tool": "FRED",
+          "success": true,
+          "num_results": 0
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Agent",
+        "FRED",
+        "Google News"
+      ],
+      "llm_cost": 0.2325,
+      "llm_cost_summarization": 0.1649,
+      "llm_cost_agentic": 0.0676,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "silver price forecast 2026 April",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "silver rally 2026 price outlook",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Latest expert forecasts for silver prices through April 2026 and factors driving market volatility",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 20
+        },
+        {
+          "query": "What will be the highest price of silver per troy ounce in April 2026?",
+          "tool": "AskNews",
+          "deep_research_query": "Latest expert forecasts for silver prices through April 2026 and factors driving market volatility"
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "AskNews",
+        "Google News"
+      ],
+      "llm_cost": 0.1389,
+      "llm_cost_summarization": 0.1286,
+      "llm_cost_agentic": 0.0102,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7420,
+        "token_output": 2003,
+        "cost": 0.052305000000000004,
+        "duration_seconds": 59.46160960197449,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14163,
+        "token_output": 3255,
+        "cost": 0.091314,
+        "duration_seconds": 84.55532741546631,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7420,
+        "token_output": 2258,
+        "cost": 0.05613,
+        "duration_seconds": 59.46166777610779,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13359,
+        "token_output": 2444,
+        "cost": 0.076737,
+        "duration_seconds": 84.5552966594696,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6436,
+        "token_output": 2866,
+        "cost": 0.051387,
+        "duration_seconds": 59.46171021461487,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12680,
+        "token_output": 2863,
+        "cost": 0.062272,
+        "duration_seconds": 84.55526328086853,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6436,
+        "token_output": 1515,
+        "cost": 0.024992,
+        "duration_seconds": 59.4617486000061,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12648,
+        "token_output": 1602,
+        "cost": 0.038112,
+        "duration_seconds": 84.55523109436035,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6436,
+        "token_output": 1743,
+        "cost": 0.026816,
+        "duration_seconds": 59.46178126335144,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11472,
+        "token_output": 1886,
+        "cost": 0.038031999999999996,
+        "duration_seconds": 84.55520129203796,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0208,
+    "step2_search": 0.2325,
+    "step3_outside_view": 0.2116,
+    "step5_inside_view": 0.3065
+  },
+  "total_pipeline_cost": 0.7714
+}
