@@ -1,0 +1,258 @@
+{
+  "centralized_research": {
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "OpenAI IPO S-1 filing",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "OpenAI IPO plans 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Summarize all public reports since 2024 on OpenAI\u2019s IPO timing, corporate restructurings, banker engagements, and any SEC registration activity; highlight evidence for or against an S-1 before Mar 15 2026.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 3,
+            "queries_executed": [
+              "OpenAI IPO 2024 reports",
+              "OpenAI corporate restructuring 2024",
+              "OpenAI hires bankers IPO",
+              "OpenAI SEC Form S-1",
+              "Sarah Friar IPO timeline",
+              "openai draft registration statement",
+              "openai form d 2025 securities",
+              "openai hires goldman ipo advisor"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "OpenAI IPO 2024 reports",
+                    "Google News"
+                  ],
+                  [
+                    "OpenAI corporate restructuring 2024",
+                    "Google"
+                  ],
+                  [
+                    "OpenAI hires bankers IPO",
+                    "Google"
+                  ],
+                  [
+                    "OpenAI SEC Form S-1",
+                    "Google"
+                  ],
+                  [
+                    "Sarah Friar IPO timeline",
+                    "Google News"
+                  ]
+                ],
+                "search_results_chars": 66429,
+                "analysis_chars": 0
+              },
+              {
+                "step_number": 2,
+                "queries_executed": [
+                  [
+                    "openai draft registration statement",
+                    "Google"
+                  ],
+                  [
+                    "openai form d 2025 securities",
+                    "Google"
+                  ],
+                  [
+                    "openai hires goldman ipo advisor",
+                    "Google News"
+                  ]
+                ],
+                "search_results_chars": 27309,
+                "analysis_chars": 8074
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "Agent"
+      ],
+      "llm_cost": 0.2595,
+      "llm_cost_summarization": 0.1702,
+      "llm_cost_agentic": 0.0893,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "OpenAI SEC S-1 filing February 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "OpenAI IPO filing deadline March 15 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Are there any public SEC Form S-1 filings for OpenAI or its subsidiaries posted in February 2026 and what do experts say about the timing of a possible IPO?",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 23
+        },
+        {
+          "query": "Will OpenAI file an initial registration statement (S-1) with the SEC to launch an IPO, before March 15, 2026?",
+          "tool": "AskNews",
+          "deep_research_query": "Are there any public SEC Form S-1 filings for OpenAI or its subsidiaries posted in February 2026 and what do experts say about the timing of a possible IPO?"
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "AskNews",
+        "Google"
+      ],
+      "llm_cost": 0.1757,
+      "llm_cost_summarization": 0.1702,
+      "llm_cost_agentic": 0.0054,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6830,
+        "token_output": 2316,
+        "cost": 0.05523,
+        "duration_seconds": 57.265629053115845,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16959,
+        "token_output": 3304,
+        "cost": 0.100437,
+        "duration_seconds": 79.29782271385193,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6830,
+        "token_output": 2443,
+        "cost": 0.057135,
+        "duration_seconds": 57.26570987701416,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15790,
+        "token_output": 3007,
+        "cost": 0.092475,
+        "duration_seconds": 79.29776072502136,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5902,
+        "token_output": 2574,
+        "cost": 0.0463645,
+        "duration_seconds": 57.26578903198242,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14915,
+        "token_output": 2477,
+        "cost": 0.06077925,
+        "duration_seconds": 79.29773354530334,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5902,
+        "token_output": 2138,
+        "cost": 0.028908000000000003,
+        "duration_seconds": 57.265830278396606,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14524,
+        "token_output": 1089,
+        "cost": 0.03776,
+        "duration_seconds": 79.29770731925964,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5902,
+        "token_output": 2213,
+        "cost": 0.029508,
+        "duration_seconds": 57.26586174964905,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14053,
+        "token_output": 1483,
+        "cost": 0.03997,
+        "duration_seconds": 79.29768252372742,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0135,
+    "step2_search": 0.2595,
+    "step3_outside_view": 0.2171,
+    "step5_inside_view": 0.3314
+  },
+  "total_pipeline_cost": 0.8215
+}
