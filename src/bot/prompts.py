@@ -161,11 +161,12 @@ Subsequently, calibrate your outside view prediction, considering:
 (a) You aim to predict the true probability of an event occuring, not a hedged or overconfident projection of your beliefs.
 (b) Is there a rough figure in the sources you can tether your prediction to?
 (c) Small differences in probabilities can be significant: 90% is a 9:1 odds and 99% is a 99:1 odds.
+(d) Historically, what is the rate of upsets/unexpected outcomes in the domain of this forecasting question? How should this affect your probability?
 
 Format your answer as below:
 
 Analysis:
-{{Insert your analysis here}}
+{{Insert your analysis here, following the above components.}}
 
 Outside view calibration:
 {{Insert your calibration of your outside view prediction here.}}
@@ -232,8 +233,9 @@ Weak evidence (small adjustments):
 - Short-term or volatile indicators
 
 Subsequently, calibrate your outside view prediction, considering:
-(a) You aim to predict the true probability of an event occuring, not a hedged or overconfident projection of your beliefs.
-(b) Small differences in probabilities can be significant: 90% is a 9:1 odds and 99% is a 99:1 odds. How would a +-10% shift in probability resonate with your analysis?
+(a) The outcome if the current trend/status quo continued.
+(b) You aim to predict the true probability of an event occuring, not a hedged or overconfident projection of your beliefs.
+(c) Small differences in probabilities can be significant: 90% is a 9:1 odds and 99% is a 99:1 odds. How would a +-10% shift in probability resonate with your analysis?
 
 You are suggested to use the below checklist to verify the quality of your forecast **while reasoning**. Adjust your forecast if you have made mistakes. You can very briefly add a shortened version to your answer (see the format below).
 
@@ -379,7 +381,6 @@ Search queries:
 """
 
 MULTIPLE_CHOICE_OUTSIDE_VIEW_PROMPT = """
-
 You are currently analyzing a forecasting question to generate an outside view prediction.
 
 The forecasting question is:
@@ -404,6 +405,7 @@ IMPORTANT: Today's date is {today}. All dates before today's date are in the PAS
 
 Historical context:
 {context}
+
 The information has been sourced from the internet/language models (for agent reports), so it is advisable to exercise healthy skepticism at your discretion.
 
 Your analysis should have the following components, refering the above historical context:
@@ -412,6 +414,8 @@ Your analysis should have the following components, refering the above historica
 (b) Reference class analysis: Identify a few possible reference classes and evaluate respective suitabilities to the forecasting question. If applicable, choose the most suitable one.
 (c) Timeframe analysis: State the prediction timeframe (e.g., how many days/months from now?) and examine historical patterns over similar periods
 (d) Justification: Integrate the above factors with other points you found relevant to write a justification for your outside view prediction.
+
+You are free to include other components to deepen the analysis, at your discretion.
 
 Subsequently, calibrate your outside view prediction, considering:
 (a) You aim to predict the true probability of events occuring, not a hedged or overconfident projection of your beliefs.
@@ -473,15 +477,17 @@ Your analysis should have the following components, refering the above historica
 (c) Timeframe analysis: State the prediction timeframe (e.g., how many days/months from now?) and describe how your prediction might change if this was halfed/doubled?
 (d) Justification: Gather the most compelling factors and justify how they shift your outside view base rates. For large shifts, justify how current factors are sufficiently impactful to render the reference class non-analogous to current circumstances.
 
+You are free to include other components to deepen the analysis, at your discretion.
+
 Evidence weighing system for (b):
 Strong evidence (can warrant relatively large prediction shifts)
-- Multiple independent, reliable sources confirming same direction
+- Multiple independent, reliable and identifiable (i.e., you can name the direct source) sources confirming same direction
 - Direct causal mechanisms clearly established
 - Historical patterns with strong predictive power
 - Structural/institutional factors that are difficult to change
 
 Moderate evidence (warrant moderate prediction shifts):
-- Single reliable source with clear methodology
+- Single reliable and identifiable source with clear methodology
 - Indirect but logical causal links
 - Similar historical patterns with some differences
 - Current trends with demonstrated momentum
@@ -493,9 +499,9 @@ Weak evidence (small adjustments):
 - Short-term or volatile indicators
 
 Subsequently, calibrate your outside view prediction, considering:
-(a) You aim to predict the true probability distribution of events occuring, not a hedged or overconfident projection of your beliefs.
-(b) Small differences in probabilities can be significant: 90% is a 9:1 odds and 99% is a 99:1 odds. How would a +-10% shift in probability across options resonate with your analysis?
-(c) Are there likely to be any blind spots in your analysis/factors that could sway the outcome (if the resolution is unexpected, what would you think the reason would be)? If yes, should you be less confident on the highest options? If no, should you be more confident on these options?
+(a) The outcome if the current trend/status quo continued.
+(b) You aim to predict the true probability distribution of events occuring, not a hedged or overconfident projection of your beliefs.
+(c) Small differences in probabilities can be significant: 90% is a 9:1 odds and 99% is a 99:1 odds. How would a +-10% shift in probability across options resonate with your analysis?
 
 Return the final probabilities in the list, in the same order they appear in {options}. Format your answer as below, it is very important to follow this format exactly, especially for the final probability list, as a regex looking for 'Probabilities:' will be used to extract your answer.
 
@@ -518,7 +524,10 @@ You are suggested to use the below checklist to verify the quality of your forec
 5. Blind-spot statement
   * Name the one scenario most likely to make your forecast look silly in hindsight and decide how it might shift the relative probabilities assigned.
 
-6. Technicalities
+6. Status quo outcome
+  * The world changes slowly most of the time. Consider the volatility of the current situation and timeframe to check whether a slight nudge toward the status quo outcome might be advantageous.
+
+7. Technicalities
   * Please ensure that the probabilities are between **0 and 100, and that they sum to 100, and are not followed by a % sign**.
 
 ------------------------------------------------------------------------
@@ -543,8 +552,7 @@ Probabilities: [Probability_A, Probability_B, ..., Probability_N]
 NUMERIC_PROMPT_HISTORICAL = """
 You are currently doing research for historical information on the below forecasting question.
 
----
-Forecasting Question:
+The forecasting question is:
 {title}
 
 Question background:
@@ -594,7 +602,6 @@ Search queries:
 NUMERIC_PROMPT_CURRENT = """
 You are currently doing research for current information/news articles on the below forecasting question.
 
----
 The forecasting question is:
 {title}
 
@@ -621,7 +628,7 @@ Your query for google and google news are processed by classical search engines,
 For AskNews:
 Your query for AskNews will be processed more naturally, so feel free to write a sentence-long query in natural language. Avoid using ambiguous acronyms. Specify relevant criteria (e.g., geography, industry, time period) to ensure the correct scope. If desired, you can indicate multiple kinds of news articles you're looking for in your query. Keep your query to a maximum of two sentences. Important note: Do not prefix your query with 'AskNews:' or something similar. Please add the word 'AskNews' enclosed in brackets at the end of the query, referring closely to the example below.
 
-You should format your answer exactly as below, always formatting the source in brackets () (NOT curly brackets, NOT squared brackets [], you need to use normal brackets ()) **on the same line as and after** the query, applicable for Google, Google News and AskNews. Do not wrap your query in quotes. Be sure to include two queries for Google/Google News and one for AskNews.
+You should format your answer exactly as below, always formatting the source in brackets () (NOT curly brackets, NOT square brackets [], you need to use normal brackets ()) **on the same line as and after** the query, applicable for Google, Google News and AskNews. Do not wrap your query in quotes. Be sure to include two queries for Google/Google News and one for AskNews.
 
 Use the following verification checklist:
 1. One query for google?
@@ -739,7 +746,7 @@ IMPORTANT: Today's date is {today}. All dates before today's date are in the PAS
 
 {bounds_info}
 
-Current Context (outside view + relevant evidence):
+Outside view analysis + current information/news articles:
 {context}
 
 The information has been sourced from the internet, so it is advisable to exercise healthy skepticism at your discretion.
@@ -755,13 +762,13 @@ You are free to include other components to deepen the analysis, at your discret
 
 Evidence weighing system for (b):
 Strong evidence (can warrant relatively large prediction shifts)
-- Multiple independent, reliable sources confirming same direction
+- Multiple independent, reliable and identifiable (i.e., you can name the direct source) sources confirming same direction
 - Direct causal mechanisms clearly established
 - Historical patterns with strong predictive power
 - Structural/institutional factors that are difficult to change
 
 Moderate evidence (warrant moderate prediction shifts):
-- Single reliable source with clear methodology
+- Single reliable and identifiable source with clear methodology
 - Indirect but logical causal links
 - Similar historical patterns with some differences
 - Current trends with demonstrated momentum
@@ -776,11 +783,12 @@ Subsequently, calibrate your outside view prediction, considering:
 (a) The outcome if the current trend continued.
 (b) You aim to predict a true probability distribution, not a hedged smooth distribution or an overconfident extremely narrow distribution. In your thinking, always consider ranges over singular values.
 (c) Small changes in percentile location values can disproportionately reshape the slope and overall distribution of the extrapolated CDF, esepcially near the tails.
+(d) How would shifting your percentile values by +-10% resonate with your analysis?
 
 You are suggested to use the below checklist to verify the quality of your forecast **while reasoning**. Adjust your forecast if you have made mistakes. You can very briefly add a shortened version to your answer.
 
 ------------------------ FORECASTING CHECKLIST ------------------------
-1. Paraphrase the target variable/resolution criteria in <20 words, including units and the time window
+1. Paraphrase the target variable/resolution criteria in <30 words, including units and the time window
   * Check that your analysis exactly aligns with this target variable/resolution criteria. Bait-and-switch errors, while commonplace, are costly.
 
 2. State your outside view base rate previously established
@@ -795,7 +803,10 @@ You are suggested to use the below checklist to verify the quality of your forec
 5. Blind-spot statement
   * Name the one scenario most likely to make your forecast look silly in hindsight and decide whether it would push the outcome up or down.
 
-6. Technicalities
+6. Status quo outcome
+  * The world changes slowly most of the time. Consider the volatility of the current situation and timeframe to check whether a slight nudge toward the status quo outcome might be advantageous.
+
+7. Technicalities
   * Verify that percentile values are strictly increasing, that units match what the question requests, and that values fall within any stated bounds.
 
 ------------------------------------------------------------------------
