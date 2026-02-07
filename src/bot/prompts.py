@@ -64,7 +64,7 @@ Nonetheless, you are advised to keep your query to at most three sentences.
 For FRED:
 If the question involves economic indicators, financial data, interest rates, employment, GDP, inflation, trade statistics, or any quantitative economic metric, use FRED (Federal Reserve Economic Data) to retrieve official historical data. Your query should describe the economic indicator (e.g., "US unemployment rate" or "consumer price index") or use a known FRED series ID directly (e.g., "UNRATE" or "CPIAUCSL"). This returns historical data with computed statistics for establishing base rates.
 
-You should format your answer exactly as below, always formatting the source in brackets () **on the same line as and after** the query. Do not wrap your query in quotes. Be sure to include two queries for Google/Google News and one for Agent. Add a FRED query if the question involves economic/financial data.
+You should format your answer exactly as below, always formatting the source in brackets () **on the same line as and after** the query. Do not wrap your query in quotes or brackets. Be sure to include two queries for Google/Google News and one for Agent. Add a FRED query if the question involves economic/financial data.
 
 Analysis:
 {{Your initial impression/analysis of the forecasting question followed by reasoning about the most relevant historical context needed to generate an outside view.}}
@@ -98,13 +98,15 @@ Question metadata:
 
 IMPORTANT: Today's date is {today}. All dates before today's date are in the PAST. All dates after today's date are in the FUTURE. Use today's date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
+Your task is to analyze the forecasting question and write a series of search queries that will be used to find current information/news articles relevant to the question. For each query, indicate whether you wish to utilize google, google news, or AskNews to retrieve information.
+
 For google/google news:
 Your query for google and google news are processed by classical search engines, so please phrase the queries in a way optimal for keyword optimized search (i.e., the phrase you search is likely to appear on desired web pages). Avoid writing overly specific queries. Limit to six words.
 
 For AskNews:
 Your query for AskNews will be processed more naturally, so feel free to write a sentence-long query in natural language. Avoid using ambiguous acronyms. Specify relevant criteria (e.g., geography, industry, time period) to ensure the correct scope. If desired, you can indicate multiple kinds of news articles you're looking for in your query. Keep your query to a maximum of two sentences. Important note: Do not prefix your query with 'AskNews:' or something similar. Please add the word 'AskNews' enclosed in brackets at the end of the query, referring closely to the example below.
 
-You should format your answer exactly as below, always formatting the source in brackets () (NOT curly brackets, NOT square brackets [], you need to use normal brackets ()) **on the same line as and after** the query, applicable for Google, Google News and AskNews. Do not wrap your query in quotes. Be sure to include two queries for Google/Google News and one for AskNews.
+You should format your answer exactly as below, always formatting the source in brackets () (NOT curly brackets, NOT square brackets [], you need to use normal brackets ()) **on the same line as and after** the query, applicable for Google, Google News and AskNews. Do not wrap your query in quotes or brackets. Be sure to include two queries for Google/Google News and one for AskNews.
 
 Use the following verification checklist:
 1. One query for google?
@@ -209,7 +211,7 @@ Your analysis should have the following components, refering the above historica
 **Opinions are commonplace in writing. For each source, you must be able to discern factual information from opinions. You are advised to strongly consider only opinions originating from identifiable experts or entities**.
 (b) Evidence analysis: Weight evidence/factors relevant to resolution criteria in the sources based on the below weighing system
 (c) Timeframe analysis: State the prediction timeframe (e.g., how many days/months from now?) and describe how your prediction might change if this was halfed/doubled?
-(d) Justification: Gather the most compelling factors and justify how they shift your outside view base rate. For large shifts, justify how current factors are sufficiently impactful to render the reference class non-analogous to current circumstances.
+(d) Justification: Gather the most compelling factors and justify how they shift your outside view base rates. For large shifts, justify how current factors are sufficiently impactful to render the reference class non-analogous to current circumstances.
 
 You are free to include other components to deepen the analysis, at your discretion.
 
@@ -304,6 +306,8 @@ Question metadata:
 
 IMPORTANT: Today's date is {today}. All dates before today's date are in the PAST. All dates after today's date are in the FUTURE. Use today's date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
+Your task is to analyze the forecasting question and write a series of search queries that will be used by your assistant to find relevant historical context. For each query, indicate whether you wish to utilize google, google news or the agent to retrieve information.
+
 For google/google news:
 Your query for google and google news are processed by classical search engines, so please phrase the queries in a way optimal for keyword optimized search (i.e., the phrase you search is likely to appear on desired web pages). Avoid writing overly specific queries. Limit to six words.
 
@@ -318,7 +322,7 @@ If the question is about Google Trends data for a specific search term, use this
 For FRED:
 If the question involves economic indicators, financial data, interest rates, employment, GDP, inflation, trade statistics, or any quantitative economic metric, use FRED (Federal Reserve Economic Data) to retrieve official historical data. Your query should describe the economic indicator (e.g., "US unemployment rate" or "consumer price index") or use a known FRED series ID directly (e.g., "UNRATE" or "CPIAUCSL"). This returns historical data with computed statistics for establishing base rates.
 
-You should format your answer exactly as below, always formatting the source in brackets () **on the same line as and after** the query. Do not wrap your query in quotes. Be sure to include two queries for Google/Google News and one for Agent. Add a Google Trends query if the question involves Google Trends data. Add a FRED query if the question involves economic/financial data.
+You should format your answer exactly as below, always formatting the source in brackets () **on the same line as and after** the query. Do not wrap your query in quotes or brackets. Be sure to include two queries for Google/Google News and one for Agent. Add a Google Trends query if the question involves Google Trends data. Add a FRED query if the question involves economic/financial data.
 
 Analysis:
 {{Your initial impression/analysis of the forecasting question followed by reasoning about the most relevant historical context needed to generate an outside view.}}
@@ -363,7 +367,7 @@ Your query for google and google news are processed by classical search engines,
 For AskNews:
 Your query for AskNews will be processed more naturally, so feel free to write a sentence-long query in natural language. Avoid using ambiguous acronyms. Specify relevant criteria (e.g., geography, industry, time period) to ensure the correct scope. If desired, you can indicate multiple kinds of news articles you're looking for in your query. Keep your query to a maximum of two sentences. Important note: Do not prefix your query with 'AskNews:' or something similar. Please add the word 'AskNews' enclosed in brackets at the end of the query, referring closely to the example below.
 
-You should format your answer exactly as below, always formatting the source in brackets () (NOT curly brackets, NOT square brackets [], you need to use normal brackets ()) **on the same line as and after** the query, applicable for Google, Google News and AskNews. Do not wrap your query in quotes. Be sure to include two queries for Google/Google News and one for AskNews.
+You should format your answer exactly as below, always formatting the source in brackets () (NOT curly brackets, NOT square brackets [], you need to use normal brackets ()) **on the same line as and after** the query, applicable for Google, Google News and AskNews. Do not wrap your query in quotes or brackets. Be sure to include two queries for Google/Google News and one for AskNews.
 
 Use the following verification checklist:
 1. One query for google?
@@ -576,6 +580,8 @@ IMPORTANT: Today's date is {today}. All dates before today's date are in the PAS
 
 Note that this is a numeric question, with expected answer format as a discrete CDF (not required for this answer).
 
+Your task is to analyze the forecasting question and write a series of search queries that will be used by your assistant to find relevant historical context. For each query, indicate whether you wish to utilize google, google news or the agent to retrieve information.
+
 For google/google news:
 Your query for google and google news are processed by classical search engines, so please phrase the queries in a way optimal for keyword optimized search (i.e., the phrase you search is likely to appear on desired web pages). Avoid writing overly specific queries. Limit to six words.
 
@@ -622,13 +628,15 @@ IMPORTANT: Today's date is {today}. All dates before today's date are in the PAS
 
 {bounds_info}
 
+Your task is to analyze the forecasting question and write a series of search queries that will be used to find current information/news articles relevant to the question. For each query, indicate whether you wish to utilize google, google news, or AskNews to retrieve information.
+
 For google/google news:
 Your query for google and google news are processed by classical search engines, so please phrase the queries in a way optimal for keyword optimized search (i.e., the phrase you search is likely to appear on desired web pages). Avoid writing overly specific queries. Limit to six words.
 
 For AskNews:
 Your query for AskNews will be processed more naturally, so feel free to write a sentence-long query in natural language. Avoid using ambiguous acronyms. Specify relevant criteria (e.g., geography, industry, time period) to ensure the correct scope. If desired, you can indicate multiple kinds of news articles you're looking for in your query. Keep your query to a maximum of two sentences. Important note: Do not prefix your query with 'AskNews:' or something similar. Please add the word 'AskNews' enclosed in brackets at the end of the query, referring closely to the example below.
 
-You should format your answer exactly as below, always formatting the source in brackets () (NOT curly brackets, NOT square brackets [], you need to use normal brackets ()) **on the same line as and after** the query, applicable for Google, Google News and AskNews. Do not wrap your query in quotes. Be sure to include two queries for Google/Google News and one for AskNews.
+You should format your answer exactly as below, always formatting the source in brackets () (NOT curly brackets, NOT square brackets [], you need to use normal brackets ()) **on the same line as and after** the query, applicable for Google, Google News and AskNews. Do not wrap your query in quotes or brackets. Be sure to include two queries for Google/Google News and one for AskNews.
 
 Use the following verification checklist:
 1. One query for google?
