@@ -1,0 +1,8 @@
+Analysis:
+The EIA series “U.S. Regular All Formulations Retail Gasoline Prices” provides a long monthly history that is highly seasonal, rises and falls with crude‐oil prices, refinery margins, and demand. For February specifically, the last 10 years’ February averages (2016-2025) have ranged from a low near $2.26 /gal (2016) to a high around $3.52 /gal (2023), with a mean close to $2.80 /gal and a standard deviation of roughly $0.41. January prices usually signal February’s level because retail gasoline tracks spot prices with only a few weeks’ lag and demand is still in the winter trough. January 2026 retail prices have been hovering near $3.10 /gal in preliminary weekly EIA data, while crude (WTI) has stayed in the mid-$70s and crack spreads are moderate. Unless a late-month supply shock occurs, February 2026 is likely to sit slightly above the January 2026 average yet remain well below the post-Ukraine-invasion peak. Therefore, the most relevant historical context is the distribution of past February monthly prices and the current January 2026 weekly trend.
+
+Search queries:
+1. EIA monthly gasoline price February 2025 (Google)
+2. January 2026 average gasoline price EIA (Google News)
+3. Retrieve EIA weekly regular gasoline prices January 2026 and historical February averages; compute mean, stdev for last 10 Februaries; summarise trend (Agent)
+4. EMM_EPMP_PTE_NUS_DPG monthly gasoline (FRED)
