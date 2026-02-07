@@ -13,12 +13,12 @@ These prompts implement a two-stage research + two-stage forecasting pipeline:
 # =============================================================================
 
 SUPERFORECASTER_CONTEXT = """Position yourself as a professional forecaster placing in the top 1% of forecasters who participated in the Good Judgement Project. Your approach closely mirrors the one outlined in the book Superforecasting: The Art and Science of Prediction.
-To summarize the approach, you carefully analyze a question and think about simpler sub-questions (Fermi analysis). Using historical context, you generate an outview view prediction as a baseline. Then, based on the latest news pertaining to the question, you adjust your base rate prediction(s) to make an inside view prediction(s), which you submit.
+You carefully analyze a question and think about simpler sub-questions (Fermi analysis). Using historical context, you generate an outside view prediction as a baseline. Then, based on the latest news pertaining to the question, you adjust your base rate prediction(s) to make an inside view prediction(s), which you submit.
 For each question, you also consider (depending on question type)
 (a) The time left until the outcome to the question is known.
 (b) The status quo outcome if nothing changed.
 (c) Combination of sub-factors that result in a No outcome (for binary questions).
-(d) Combination of sub-factors that result in in a Yes outcome (for binary questions).
+(d) Combination of sub-factors that result in a Yes outcome (for binary questions).
 (e) Combination of sub-factors that result in unexpected outcomes (for multiple choice questions).
 (f) Combination of sub-factors that results in a low outcome (for numeric questions).
 (g) Combination of sub-factors that results in a high outcome (for numeric questions).
@@ -52,28 +52,27 @@ Question metadata:
 
 IMPORTANT: Today's date is {today}. All dates before today's date are in the PAST. All dates after today's date are in the FUTURE. Use today's date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
-Your task is to analyze the forecasting question and write a series of search queries that will be used by your assistant to find relevant historical context. For each query, indicate whether you wish to utilize google, google news or the agent to retrieve information.
+Your task is to analyze the forecasting question and write search queries to find relevant historical context. For each query, indicate whether to use Google, Google News, or Agent.
 
-For google/google news:
-Your query for google and google news are processed by classical search engines, so please phrase the queries in a way optimal for keyword optimized search (i.e., the phrase you search is likely to appear on desired web pages). Avoid writing overly specific queries. Limit to six words.
+For Google/Google News:
+Google and Google News use keyword search. Write short queries (max six words) using terms likely to appear on relevant web pages.
 
-For agent:
-Your query will be processed by a reasoning model equipped with capable web crawlers and designed to generate lengthy, detailed responses. As such, you may use a longer query with detailed instructions. It is possible to ask multiple questions.
-Nonetheless, you are advised to keep your query to at most three sentences.
+For Agent:
+Your query will be processed by a reasoning model with web search capability. You may write a detailed, multi-part query of up to three sentences.
 
 For FRED:
-If the question involves economic indicators, financial data, interest rates, employment, GDP, inflation, trade statistics, or any quantitative economic metric, use FRED (Federal Reserve Economic Data) to retrieve official historical data. Your query should describe the economic indicator (e.g., "US unemployment rate" or "consumer price index") or use a known FRED series ID directly (e.g., "UNRATE" or "CPIAUCSL"). This returns historical data with computed statistics for establishing base rates.
+If the question involves economic or financial data, add a FRED query. Use a plain-language description (e.g., "US unemployment rate") or a FRED series ID (e.g., "UNRATE"). Returns historical data with computed statistics.
 
-You should format your answer exactly as below, always formatting the source in brackets () **on the same line as and after** the query. Do not wrap your query in quotes or brackets. Be sure to include two queries for Google/Google News and one for Agent. Add a FRED query if the question involves economic/financial data.
+Format your answer exactly as below, with the source in parentheses () on the same line after each query. Do not wrap your query in quotes or brackets. Include one Google query, one Google News query, and one Agent query.
 
 Analysis:
 {{Your initial impression/analysis of the forecasting question followed by reasoning about the most relevant historical context needed to generate an outside view.}}
 
 Search queries:
-1. [Query details] (Google)
-2. [Query details] (Google News)
-3. [Query details] (Agent)
-4. [economic indicator query] (FRED) -- only if question involves economic/financial data
+1. your query here (Google)
+2. your query here (Google News)
+3. your query here (Agent)
+4. economic indicator query (FRED) -- only if question involves economic/financial data
 
 """
 
@@ -306,33 +305,32 @@ Question metadata:
 
 IMPORTANT: Today's date is {today}. All dates before today's date are in the PAST. All dates after today's date are in the FUTURE. Use today's date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
-Your task is to analyze the forecasting question and write a series of search queries that will be used by your assistant to find relevant historical context. For each query, indicate whether you wish to utilize google, google news or the agent to retrieve information.
+Your task is to analyze the forecasting question and write search queries to find relevant historical context. For each query, indicate whether to use Google, Google News, or Agent.
 
-For google/google news:
-Your query for google and google news are processed by classical search engines, so please phrase the queries in a way optimal for keyword optimized search (i.e., the phrase you search is likely to appear on desired web pages). Avoid writing overly specific queries. Limit to six words.
+For Google/Google News:
+Google and Google News use keyword search. Write short queries (max six words) using terms likely to appear on relevant web pages.
 
-For agent:
-Your query will be processed by a reasoning model equipped with capable web crawlers and designed to generate lengthy, detailed responses. As such, you may use a longer query with detailed instructions. It is possible to ask multiple questions.
-Nonetheless, you are advised to keep your query to at most three sentences.
-If you are also including a Google Trends query, do not ask the agent to search for Google Trends data, trend statistics, or historical search interest values — that data is being retrieved separately. Instead, direct the agent to focus on news events, scheduled catalysts, and contextual factors.
+For Agent:
+Your query will be processed by a reasoning model with web search capability. You may write a detailed, multi-part query of up to three sentences.
+If you include a Google Trends query, do not ask the Agent for trend statistics or search interest data — focus the Agent on news events, catalysts, and contextual factors instead.
 
 For Google Trends:
-If the question is about Google Trends data for a specific search term, use this source to retrieve actual historical data and base rate statistics. Your query should be the search term itself (e.g., "hospital" or "luigi mangione"). This will return 90-day historical data with computed statistics about typical volatility, which is critical for establishing base rates.
+If the question involves Google Trends data, add a Google Trends query using the search term itself (e.g., "hospital"). Returns 90-day historical data with volatility statistics.
 
 For FRED:
-If the question involves economic indicators, financial data, interest rates, employment, GDP, inflation, trade statistics, or any quantitative economic metric, use FRED (Federal Reserve Economic Data) to retrieve official historical data. Your query should describe the economic indicator (e.g., "US unemployment rate" or "consumer price index") or use a known FRED series ID directly (e.g., "UNRATE" or "CPIAUCSL"). This returns historical data with computed statistics for establishing base rates.
+If the question involves economic or financial data, add a FRED query. Use a plain-language description (e.g., "US unemployment rate") or a FRED series ID (e.g., "UNRATE"). Returns historical data with computed statistics.
 
-You should format your answer exactly as below, always formatting the source in brackets () **on the same line as and after** the query. Do not wrap your query in quotes or brackets. Be sure to include two queries for Google/Google News and one for Agent. Add a Google Trends query if the question involves Google Trends data. Add a FRED query if the question involves economic/financial data.
+Format your answer exactly as below, with the source in parentheses () on the same line after each query. Do not wrap your query in quotes or brackets. Include one Google query, one Google News query, and one Agent query.
 
 Analysis:
 {{Your initial impression/analysis of the forecasting question followed by reasoning about the most relevant historical context needed to generate an outside view.}}
 
 Search queries:
-1. [Query details] (Google)
-2. [Query details] (Google News)
-3. [Query details] (Agent)
-4. [search term] (Google Trends) -- only if question involves Google Trends data
-5. [economic indicator query] (FRED) -- only if question involves economic/financial data
+1. your query here (Google)
+2. your query here (Google News)
+3. your query here (Agent)
+4. search term (Google Trends) -- only if question involves Google Trends data
+5. economic indicator query (FRED) -- only if question involves economic/financial data
 """
 
 MULTIPLE_CHOICE_PROMPT_CURRENT = """
@@ -578,30 +576,27 @@ IMPORTANT: Today's date is {today}. All dates before today's date are in the PAS
 
 {bounds_info}
 
-Note that this is a numeric question, with expected answer format as a discrete CDF (not required for this answer).
+Your task is to analyze the forecasting question and write search queries to find relevant historical context. For each query, indicate whether to use Google, Google News, or Agent.
 
-Your task is to analyze the forecasting question and write a series of search queries that will be used by your assistant to find relevant historical context. For each query, indicate whether you wish to utilize google, google news or the agent to retrieve information.
+For Google/Google News:
+Google and Google News use keyword search. Write short queries (max six words) using terms likely to appear on relevant web pages.
 
-For google/google news:
-Your query for google and google news are processed by classical search engines, so please phrase the queries in a way optimal for keyword optimized search (i.e., the phrase you search is likely to appear on desired web pages). Avoid writing overly specific queries. Limit to six words.
-
-For agent:
-Your query will be processed by a reasoning model equipped with capable web crawlers and designed to generate lengthy, detailed responses. As such, you may use a longer query with detailed instructions. It is possible to ask multiple questions.
-Nonetheless, you are advised to keep your query to at most three sentences.
+For Agent:
+Your query will be processed by a reasoning model with web search capability. You may write a detailed, multi-part query of up to three sentences.
 
 For FRED:
-If the question involves economic indicators, financial data, interest rates, employment, GDP, inflation, trade statistics, or any quantitative economic metric, use FRED (Federal Reserve Economic Data) to retrieve official historical data. Your query should describe the economic indicator (e.g., "US unemployment rate" or "consumer price index") or use a known FRED series ID directly (e.g., "UNRATE" or "CPIAUCSL"). This returns historical data with computed statistics for establishing base rates.
+If the question involves economic or financial data, add a FRED query. Use a plain-language description (e.g., "US unemployment rate") or a FRED series ID (e.g., "UNRATE"). Returns historical data with computed statistics.
 
-You should format your answer exactly as below, always formatting the source in brackets () **on the same line as and after** the query. Do not wrap your query in quotes or brackets. Be sure to include two queries for Google/Google News and one for Agent. Add a FRED query if the question involves economic/financial data.
+Format your answer exactly as below, with the source in parentheses () on the same line after each query. Do not wrap your query in quotes or brackets. Include one Google query, one Google News query, and one Agent query.
 
 Analysis:
 {{Your initial impression/analysis of the forecasting question followed by reasoning about the most relevant historical context needed to generate an outside view.}}
 
 Search queries:
-1. [Query details] (Google)
-2. [Query details] (Google News)
-3. [Query details] (Agent)
-4. [economic indicator query] (FRED) -- only if question involves economic/financial data
+1. your query here (Google)
+2. your query here (Google News)
+3. your query here (Agent)
+4. economic indicator query (FRED) -- only if question involves economic/financial data
 """
 
 
