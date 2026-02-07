@@ -1,0 +1,364 @@
+{
+  "centralized_research": {
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Metaculus Cup community vs Nathan Young",
+          "tool": "Google",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "Nathan Young Metaculus Cup interview",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "Provide historical time-series of community prediction for Metaculus question 41508 and past Cup seasons; include any Metaculus notebooks comparing community performance to Nathan Young.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 6,
+            "queries_executed": [
+              "Metaculus question 41508 prediction history",
+              "Metaculus Cup community prediction history",
+              "Nathan Young benchmark Metaculus notebook",
+              "Community versus Nathan Young Metaculus",
+              "Metaculus Cup Spring 2025 leaderboard",
+              "metaculus 41508 api csv",
+              "site:github.com metaculus \"Nathan Young\" notebook",
+              "metaculus cup leaderboard csv",
+              "\"metaculus question 41508\" \"download predictions\"",
+              "\"Metaculus Cup\" \"season archive\"",
+              "api2/questions/41508",
+              "site:metaculus.com Cup leaderboard",
+              "site:blog.metaculus.com Cup results",
+              "site:github.com nathanpsyoung metaculus",
+              "metaculus cup dataset download",
+              "/api2/questions/41508 timeline",
+              "Metaculus Cup leaderboard 2023",
+              "Nathan Young Metaculus notebook",
+              "site:lesswrong.com Metaculus Cup",
+              "site:eaforum.org Nathan Young Metaculus",
+              "metaculus api2 questions timeline GitHub",
+              "metaculus cup leaderboard api",
+              "nathanpsyoung metaculus ipynb",
+              "metaculus cup season 2024 results",
+              "api2 cups season spring 2023"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "Metaculus question 41508 prediction history",
+                    "Google"
+                  ],
+                  [
+                    "Metaculus Cup community prediction history",
+                    "Google"
+                  ],
+                  [
+                    "Nathan Young benchmark Metaculus notebook",
+                    "Google"
+                  ],
+                  [
+                    "Community versus Nathan Young Metaculus",
+                    "Google"
+                  ],
+                  [
+                    "Metaculus Cup Spring 2025 leaderboard",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 43627,
+                "analysis_chars": 0
+              },
+              {
+                "step_number": 2,
+                "queries_executed": [
+                  [
+                    "metaculus 41508 api csv",
+                    "Google"
+                  ],
+                  [
+                    "site:github.com metaculus \"Nathan Young\" notebook",
+                    "Google"
+                  ],
+                  [
+                    "metaculus cup leaderboard csv",
+                    "Google"
+                  ],
+                  [
+                    "\"metaculus question 41508\" \"download predictions\"",
+                    "Google"
+                  ],
+                  [
+                    "\"Metaculus Cup\" \"season archive\"",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 27821,
+                "analysis_chars": 2163
+              },
+              {
+                "step_number": 3,
+                "queries_executed": [
+                  [
+                    "api2/questions/41508",
+                    "Google"
+                  ],
+                  [
+                    "site:metaculus.com Cup leaderboard",
+                    "Google"
+                  ],
+                  [
+                    "site:blog.metaculus.com Cup results",
+                    "Google"
+                  ],
+                  [
+                    "site:github.com nathanpsyoung metaculus",
+                    "Google"
+                  ],
+                  [
+                    "metaculus cup dataset download",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 25520,
+                "analysis_chars": 4503
+              },
+              {
+                "step_number": 4,
+                "queries_executed": [
+                  [
+                    "/api2/questions/41508 timeline",
+                    "Google"
+                  ],
+                  [
+                    "Metaculus Cup leaderboard 2023",
+                    "Google"
+                  ],
+                  [
+                    "Nathan Young Metaculus notebook",
+                    "Google"
+                  ],
+                  [
+                    "site:lesswrong.com Metaculus Cup",
+                    "Google"
+                  ],
+                  [
+                    "site:eaforum.org Nathan Young Metaculus",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 31111,
+                "analysis_chars": 3587
+              },
+              {
+                "step_number": 5,
+                "queries_executed": [
+                  [
+                    "metaculus api2 questions timeline GitHub",
+                    "Google"
+                  ],
+                  [
+                    "metaculus cup leaderboard api",
+                    "Google"
+                  ],
+                  [
+                    "nathanpsyoung metaculus ipynb",
+                    "Google"
+                  ],
+                  [
+                    "metaculus cup season 2024 results",
+                    "Google News"
+                  ],
+                  [
+                    "api2 cups season spring 2023",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 37280,
+                "analysis_chars": 3931
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google",
+        "Google News"
+      ],
+      "llm_cost": 0.1504,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.1504,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Metaculus Cup Spring 2026 community prediction",
+          "tool": "Google",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "Nathan Young Metaculus Cup performance",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "Latest analysis of Metaculus Community vs Nathan Young performance in Spring 2026 Cup",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 22
+        },
+        {
+          "query": "Will the community prediction be higher than 82.00% on 2026-02-14 for the Metaculus question \"Will the Community beat Nathan Young in the Metaculus Cup Spring 2026?\"?",
+          "tool": "AskNews",
+          "deep_research_query": "Latest analysis of Metaculus Community vs Nathan Young performance in Spring 2026 Cup"
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Google News",
+        "AskNews"
+      ],
+      "llm_cost": 0.0348,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0348,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 3003,
+        "token_output": 1122,
+        "cost": 0.025838999999999997,
+        "duration_seconds": 44.35411477088928,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14065,
+        "token_output": 1701,
+        "cost": 0.06770999999999999,
+        "duration_seconds": 46.1311297416687,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 3003,
+        "token_output": 1512,
+        "cost": 0.031689,
+        "duration_seconds": 44.35418224334717,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14198,
+        "token_output": 1686,
+        "cost": 0.067884,
+        "duration_seconds": 46.13110303878784,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 2719,
+        "token_output": 2133,
+        "cost": 0.03462025,
+        "duration_seconds": 44.35422468185425,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12810,
+        "token_output": 1944,
+        "cost": 0.0496335,
+        "duration_seconds": 46.131075620651245,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 2719,
+        "token_output": 1830,
+        "cost": 0.020078,
+        "duration_seconds": 44.35426068305969,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12770,
+        "token_output": 1122,
+        "cost": 0.034516,
+        "duration_seconds": 46.131049156188965,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 2719,
+        "token_output": 1947,
+        "cost": 0.021013999999999998,
+        "duration_seconds": 44.3542914390564,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12231,
+        "token_output": 2438,
+        "cost": 0.043966000000000005,
+        "duration_seconds": 46.131022453308105,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0153,
+    "step2_search": 0.1504,
+    "step3_outside_view": 0.1332,
+    "step5_inside_view": 0.2637
+  },
+  "total_pipeline_cost": 0.5627
+}
