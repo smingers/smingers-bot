@@ -97,29 +97,23 @@ Question metadata:
 
 IMPORTANT: Today's date is {today}. All dates before today's date are in the PAST. All dates after today's date are in the FUTURE. Use today's date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
-Your task is to analyze the forecasting question and write a series of search queries that will be used to find current information/news articles relevant to the question. For each query, indicate whether you wish to utilize google, google news, or AskNews to retrieve information.
+Your task is to analyze the forecasting question and write search queries to find current news relevant to the question. For each query, indicate whether to use Google, Google News, or AskNews.
 
-For google/google news:
-Your query for google and google news are processed by classical search engines, so please phrase the queries in a way optimal for keyword optimized search (i.e., the phrase you search is likely to appear on desired web pages). Avoid writing overly specific queries. Limit to six words.
+For Google/Google News:
+Google and Google News use keyword search. Write short queries (max six words) using terms likely to appear on relevant web pages.
 
 For AskNews:
-Your query for AskNews will be processed more naturally, so feel free to write a sentence-long query in natural language. Avoid using ambiguous acronyms. Specify relevant criteria (e.g., geography, industry, time period) to ensure the correct scope. If desired, you can indicate multiple kinds of news articles you're looking for in your query. Keep your query to a maximum of two sentences. Important note: Do not prefix your query with 'AskNews:' or something similar. Please add the word 'AskNews' enclosed in brackets at the end of the query, referring closely to the example below.
+AskNews supports natural language. Write a query of up to two sentences, specifying relevant scope (e.g., geography, industry, time period). Avoid ambiguous acronyms.
 
-You should format your answer exactly as below, always formatting the source in brackets () (NOT curly brackets, NOT square brackets [], you need to use normal brackets ()) **on the same line as and after** the query, applicable for Google, Google News and AskNews. Do not wrap your query in quotes or brackets. Be sure to include two queries for Google/Google News and one for AskNews.
-
-Use the following verification checklist:
-1. One query for google?
-2. One query for google news?
-3. One query for AskNews?
-4. All queries followed by either (Google), (Google News) or (AskNews) in brackets () on the same line as the query?
+Format your answer exactly as below, with the source in parentheses () on the same line after each query. Do not wrap your query in quotes or brackets. Include one Google query, one Google News query, and one AskNews query.
 
 Analysis:
 {{Your initial impression/analysis of the forecasting question followed by reasoning about the most relevant current information/news articles needed to generate an inside view.}}
 
 Search queries:
-1. [Query details] (Google)
-2. [Query details] (Google News)
-3. [Query details] (AskNews)
+1. your query here (Google)
+2. your query here (Google News)
+3. your query here (AskNews)
 """
 
 
@@ -357,29 +351,23 @@ Question metadata:
 
 IMPORTANT: Today's date is {today}. All dates before today's date are in the PAST. All dates after today's date are in the FUTURE. Use today's date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
-Your task is to analyze the forecasting question and write a series of search queries that will be used to find current information/news articles relevant to the question. For each query, indicate whether you wish to utilize google, google news, or AskNews to retrieve information.
+Your task is to analyze the forecasting question and write search queries to find current news relevant to the question. For each query, indicate whether to use Google, Google News, or AskNews.
 
-For google/google news:
-Your query for google and google news are processed by classical search engines, so please phrase the queries in a way optimal for keyword optimized search. Avoid writing overly specific queries. Limit to six words.
+For Google/Google News:
+Google and Google News use keyword search. Write short queries (max six words) using terms likely to appear on relevant web pages.
 
 For AskNews:
-Your query for AskNews will be processed more naturally, so feel free to write a sentence-long query in natural language. Avoid using ambiguous acronyms. Specify relevant criteria (e.g., geography, industry, time period) to ensure the correct scope. If desired, you can indicate multiple kinds of news articles you're looking for in your query. Keep your query to a maximum of two sentences. Important note: Do not prefix your query with 'AskNews:' or something similar. Please add the word 'AskNews' enclosed in brackets at the end of the query, referring closely to the example below.
+AskNews supports natural language. Write a query of up to two sentences, specifying relevant scope (e.g., geography, industry, time period). Avoid ambiguous acronyms.
 
-You should format your answer exactly as below, always formatting the source in brackets () (NOT curly brackets, NOT square brackets [], you need to use normal brackets ()) **on the same line as and after** the query, applicable for Google, Google News and AskNews. Do not wrap your query in quotes or brackets. Be sure to include two queries for Google/Google News and one for AskNews.
-
-Use the following verification checklist:
-1. One query for google?
-2. One query for google news?
-3. One query for AskNews?
-4. All queries followed by either (Google), (Google News) or (AskNews) in brackets () on the same line as the query?
+Format your answer exactly as below, with the source in parentheses () on the same line after each query. Do not wrap your query in quotes or brackets. Include one Google query, one Google News query, and one AskNews query.
 
 Analysis:
 {{Your initial impression/analysis of the forecasting question followed by reasoning about the most relevant current information/news articles needed to generate an inside view.}}
 
 Search queries:
-1. [Query details] (Google)
-2. [Query details] (Google News)
-3. [Query details] (AskNews)
+1. your query here (Google)
+2. your query here (Google News)
+3. your query here (AskNews)
 """
 
 MULTIPLE_CHOICE_OUTSIDE_VIEW_PROMPT = """
@@ -623,29 +611,23 @@ IMPORTANT: Today's date is {today}. All dates before today's date are in the PAS
 
 {bounds_info}
 
-Your task is to analyze the forecasting question and write a series of search queries that will be used to find current information/news articles relevant to the question. For each query, indicate whether you wish to utilize google, google news, or AskNews to retrieve information.
+Your task is to analyze the forecasting question and write search queries to find current news relevant to the question. For each query, indicate whether to use Google, Google News, or AskNews.
 
-For google/google news:
-Your query for google and google news are processed by classical search engines, so please phrase the queries in a way optimal for keyword optimized search (i.e., the phrase you search is likely to appear on desired web pages). Avoid writing overly specific queries. Limit to six words.
+For Google/Google News:
+Google and Google News use keyword search. Write short queries (max six words) using terms likely to appear on relevant web pages.
 
 For AskNews:
-Your query for AskNews will be processed more naturally, so feel free to write a sentence-long query in natural language. Avoid using ambiguous acronyms. Specify relevant criteria (e.g., geography, industry, time period) to ensure the correct scope. If desired, you can indicate multiple kinds of news articles you're looking for in your query. Keep your query to a maximum of two sentences. Important note: Do not prefix your query with 'AskNews:' or something similar. Please add the word 'AskNews' enclosed in brackets at the end of the query, referring closely to the example below.
+AskNews supports natural language. Write a query of up to two sentences, specifying relevant scope (e.g., geography, industry, time period). Avoid ambiguous acronyms.
 
-You should format your answer exactly as below, always formatting the source in brackets () (NOT curly brackets, NOT square brackets [], you need to use normal brackets ()) **on the same line as and after** the query, applicable for Google, Google News and AskNews. Do not wrap your query in quotes or brackets. Be sure to include two queries for Google/Google News and one for AskNews.
-
-Use the following verification checklist:
-1. One query for google?
-2. One query for google news?
-3. One query for AskNews?
-4. All queries followed by either (Google), (Google News) or (AskNews) in brackets () on the same line as the query?
+Format your answer exactly as below, with the source in parentheses () on the same line after each query. Do not wrap your query in quotes or brackets. Include one Google query, one Google News query, and one AskNews query.
 
 Analysis:
 {{Your initial impression/analysis of the forecasting question followed by reasoning about the most relevant current information/news articles needed to generate an inside view.}}
 
 Search queries:
-1. [Query details] (Google)
-2. [Query details] (Google News)
-3. [Query details] (AskNews)
+1. your query here (Google)
+2. your query here (Google News)
+3. your query here (AskNews)
 """
 
 
