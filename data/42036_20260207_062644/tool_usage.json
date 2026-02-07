@@ -1,0 +1,371 @@
+{
+  "centralized_research": {
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "federal funds target range history",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "FOMC January 2026 meeting decision",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "CME FedWatch February 7 2026 probabilities for Fed funds",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 6,
+            "queries_executed": [
+              "CME FedWatch Feb 2026 probabilities",
+              "FedWatch 26 Feb 2026 FOMC",
+              "CME Fed funds futures Feb 2026 rate",
+              "CME FedWatch probabilities Feb 7 2026",
+              "Fed funds target range probabilities 2026",
+              "CME FedWatch Feb 7 2026 archive",
+              "web.archive.org CME FedWatch 2026-02-07",
+              "FedWatch probabilities screenshot 7 Feb 2026",
+              "March 2026 FOMC FedWatch 7 Feb 2026",
+              "30-Day Fed Funds futures 7 Feb 2026 settlement",
+              "web.archive.org cme fedwatch 7 feb 2026",
+              "FedWatch Feb 7 2026 screenshot",
+              "twitter FedWatch 7 Feb 2026",
+              "Investing.com Fed Rate Monitor 7 Feb 2026",
+              "CME FedWatch historical data download",
+              "web.archive.org cme fedwatch 2026-02-07",
+              "\u201cFedWatch 7 Feb 2026 screenshot\u201d",
+              "FedWatch Feb 7 2026 Twitter",
+              "Investing.com Fed Rate Monitor \u201c07/02/2026\u201d",
+              "FedWatch historical probabilities download",
+              "Wayback Investing.com Fed Rate Monitor Feb 7 2026",
+              "FedWatch Feb 7 2026 site:twitter.com",
+              "March 2026 FOMC probabilities Feb 7",
+              "WIRP historical Feb 7 2026",
+              "CME FedWatch pdf Feb 2026 download"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "CME FedWatch Feb 2026 probabilities",
+                    "Google"
+                  ],
+                  [
+                    "FedWatch 26 Feb 2026 FOMC",
+                    "Google"
+                  ],
+                  [
+                    "CME Fed funds futures Feb 2026 rate",
+                    "Google"
+                  ],
+                  [
+                    "CME FedWatch probabilities Feb 7 2026",
+                    "Google News"
+                  ],
+                  [
+                    "Fed funds target range probabilities 2026",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 62668,
+                "analysis_chars": 0
+              },
+              {
+                "step_number": 2,
+                "queries_executed": [
+                  [
+                    "CME FedWatch Feb 7 2026 archive",
+                    "Google"
+                  ],
+                  [
+                    "web.archive.org CME FedWatch 2026-02-07",
+                    "Google"
+                  ],
+                  [
+                    "FedWatch probabilities screenshot 7 Feb 2026",
+                    "Google News"
+                  ],
+                  [
+                    "March 2026 FOMC FedWatch 7 Feb 2026",
+                    "Google"
+                  ],
+                  [
+                    "30-Day Fed Funds futures 7 Feb 2026 settlement",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 56719,
+                "analysis_chars": 2440
+              },
+              {
+                "step_number": 3,
+                "queries_executed": [
+                  [
+                    "web.archive.org cme fedwatch 7 feb 2026",
+                    "Google"
+                  ],
+                  [
+                    "FedWatch Feb 7 2026 screenshot",
+                    "Google"
+                  ],
+                  [
+                    "twitter FedWatch 7 Feb 2026",
+                    "Google"
+                  ],
+                  [
+                    "Investing.com Fed Rate Monitor 7 Feb 2026",
+                    "Google"
+                  ],
+                  [
+                    "CME FedWatch historical data download",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 68886,
+                "analysis_chars": 4863
+              },
+              {
+                "step_number": 4,
+                "queries_executed": [
+                  [
+                    "web.archive.org cme fedwatch 2026-02-07",
+                    "Google"
+                  ],
+                  [
+                    "\u201cFedWatch 7 Feb 2026 screenshot\u201d",
+                    "Google"
+                  ],
+                  [
+                    "FedWatch Feb 7 2026 Twitter",
+                    "Google"
+                  ],
+                  [
+                    "Investing.com Fed Rate Monitor \u201c07/02/2026\u201d",
+                    "Google"
+                  ],
+                  [
+                    "FedWatch historical probabilities download",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 40767,
+                "analysis_chars": 3890
+              },
+              {
+                "step_number": 5,
+                "queries_executed": [
+                  [
+                    "Wayback Investing.com Fed Rate Monitor Feb 7 2026",
+                    "Google"
+                  ],
+                  [
+                    "FedWatch Feb 7 2026 site:twitter.com",
+                    "Google"
+                  ],
+                  [
+                    "March 2026 FOMC probabilities Feb 7",
+                    "Google News"
+                  ],
+                  [
+                    "WIRP historical Feb 7 2026",
+                    "Google"
+                  ],
+                  [
+                    "CME FedWatch pdf Feb 2026 download",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 65390,
+                "analysis_chars": 4323
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "DFEDTARU",
+          "tool": "FRED",
+          "success": true,
+          "num_results": 0
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Google News",
+        "FRED",
+        "Agent"
+      ],
+      "llm_cost": 0.3956,
+      "llm_cost_summarization": 0.1606,
+      "llm_cost_agentic": 0.235,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "federal funds rate February 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "FOMC decision January 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Latest Federal Reserve target range announcement and any changes before February 28 2026",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 22
+        },
+        {
+          "query": "What will be the upper bound of the Federal Funds Target Range on February 28, 2026?",
+          "tool": "AskNews",
+          "deep_research_query": "Latest Federal Reserve target range announcement and any changes before February 28 2026"
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Google News",
+        "AskNews"
+      ],
+      "llm_cost": 0.1679,
+      "llm_cost_summarization": 0.1606,
+      "llm_cost_agentic": 0.0074,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6661,
+        "token_output": 2060,
+        "cost": 0.050883000000000005,
+        "duration_seconds": 55.207815408706665,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15927,
+        "token_output": 2457,
+        "cost": 0.084636,
+        "duration_seconds": 75.51978754997253,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6661,
+        "token_output": 2006,
+        "cost": 0.050073,
+        "duration_seconds": 55.20787501335144,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15873,
+        "token_output": 3343,
+        "cost": 0.09776400000000002,
+        "duration_seconds": 75.51975393295288,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5922,
+        "token_output": 2994,
+        "cost": 0.052279500000000007,
+        "duration_seconds": 55.20791578292847,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14353,
+        "token_output": 3831,
+        "cost": 0.07875175,
+        "duration_seconds": 75.51972198486328,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "cost": 0.0,
+        "duration_seconds": 55.20795392990112,
+        "error": "Response truncated after 4000 tokens (limit: 4000)"
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14178,
+        "token_output": 1672,
+        "cost": 0.041732,
+        "duration_seconds": 75.5196897983551,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5922,
+        "token_output": 3004,
+        "cost": 0.035876000000000005,
+        "duration_seconds": 55.20800495147705,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13863,
+        "token_output": 3162,
+        "cost": 0.053022,
+        "duration_seconds": 75.5195860862732,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0132,
+    "step2_search": 0.3956,
+    "step3_outside_view": 0.233,
+    "step5_inside_view": 0.3559
+  },
+  "total_pipeline_cost": 0.9976
+}
