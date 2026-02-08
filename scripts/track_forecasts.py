@@ -135,7 +135,7 @@ class ForecastComparison:
 class TrackingData:
     """Aggregated tracking data for a tournament."""
 
-    tournament_id: int
+    tournament_id: int | str
     tournament_name: str
     last_updated: str
     total_forecasts: int
@@ -203,13 +203,13 @@ class ForecastTracker:
             self.user_id = resp.json()["id"]
         return self.user_id
 
-    async def get_tournament_info(self, tournament_id: int) -> dict:
+    async def get_tournament_info(self, tournament_id: int | str) -> dict:
         """Get tournament name and metadata."""
         resp = await self.client.get(f"/projects/{tournament_id}/")
         resp.raise_for_status()
         return resp.json()
 
-    async def get_my_forecasted_questions(self, tournament_id: int) -> list[dict]:
+    async def get_my_forecasted_questions(self, tournament_id: int | str) -> list[dict]:
         """Get all questions I've forecasted in a tournament."""
         user_id = await self.get_user_id()
 
@@ -262,24 +262,23 @@ class ForecastTracker:
         if not my_forecast or not community:
             return None
 
-        # My forecast: forecast_values is [P(option1), P(option2)] for binary
-        # For binary, option1 is typically "Yes", option2 is "No"
+        # My forecast: forecast_values is [P(No), P(Yes)] for binary
         my_values = my_forecast.get("forecast_values", [])
         if not my_values or len(my_values) < 2:
             return None
-        my_prob_yes = my_values[0]  # First value is P(Yes)
+        my_prob_yes = my_values[1]  # Second value is P(Yes)
 
         # Community: similar structure
         comm_values = community.get("forecast_values", [])
         if not comm_values or len(comm_values) < 2:
             # Fallback to centers
             centers = community.get("centers", [])
-            if centers:
-                comm_prob_yes = centers[0]
+            if centers and len(centers) >= 2:
+                comm_prob_yes = centers[1]
             else:
                 return None
         else:
-            comm_prob_yes = comm_values[0]
+            comm_prob_yes = comm_values[1]
 
         return BinaryComparison(
             my_probability=my_prob_yes,
@@ -287,12 +286,29 @@ class ForecastTracker:
             difference=my_prob_yes - comm_prob_yes,
         )
 
+    @staticmethod
+    def denormalize(
+        value: float, range_min: float, range_max: float, zero_point: float | None
+    ) -> float:
+        """Convert a normalized 0-1 value to the actual question scale."""
+        if zero_point is None:
+            return range_min + (range_max - range_min) * value
+        else:
+            deriv_ratio = (range_max - zero_point) / (range_min - zero_point)
+            return range_min + (range_max - range_min) * (deriv_ratio**value - 1) / (
+                deriv_ratio - 1
+            )
+
     def extract_numeric_comparison(
-        self, my_forecast: dict, community: dict
+        self, my_forecast: dict, community: dict, scaling: dict
     ) -> NumericComparison | None:
         """Extract numeric comparison from forecast data."""
         if not my_forecast or not community:
             return None
+
+        range_min = scaling.get("range_min", 0)
+        range_max = scaling.get("range_max", 1)
+        zero_point = scaling.get("zero_point")
 
         # My forecast
         my_centers = my_forecast.get("centers", [])
@@ -302,9 +318,17 @@ class ForecastTracker:
         if not my_centers:
             return None
 
-        my_median = my_centers[0]
-        my_lq = my_lower[0] if my_lower else my_median
-        my_uq = my_upper[0] if my_upper else my_median
+        my_median = self.denormalize(my_centers[0], range_min, range_max, zero_point)
+        my_lq = (
+            self.denormalize(my_lower[0], range_min, range_max, zero_point)
+            if my_lower
+            else my_median
+        )
+        my_uq = (
+            self.denormalize(my_upper[0], range_min, range_max, zero_point)
+            if my_upper
+            else my_median
+        )
 
         # Community
         comm_centers = community.get("centers", [])
@@ -314,9 +338,17 @@ class ForecastTracker:
         if not comm_centers:
             return None
 
-        comm_median = comm_centers[0]
-        comm_lq = comm_lower[0] if comm_lower else comm_median
-        comm_uq = comm_upper[0] if comm_upper else comm_median
+        comm_median = self.denormalize(comm_centers[0], range_min, range_max, zero_point)
+        comm_lq = (
+            self.denormalize(comm_lower[0], range_min, range_max, zero_point)
+            if comm_lower
+            else comm_median
+        )
+        comm_uq = (
+            self.denormalize(comm_upper[0], range_min, range_max, zero_point)
+            if comm_upper
+            else comm_median
+        )
 
         my_iqr = my_uq - my_lq
         comm_iqr = comm_uq - comm_lq
@@ -419,7 +451,8 @@ class ForecastTracker:
         if q_type == "binary":
             comparison = self.extract_binary_comparison(my_latest, comm_latest)
         elif q_type in ("numeric", "date"):
-            comparison = self.extract_numeric_comparison(my_latest, comm_latest)
+            scaling = question.get("scaling", {}) or {}
+            comparison = self.extract_numeric_comparison(my_latest, comm_latest, scaling)
         elif q_type == "multiple_choice":
             options = question.get("options", [])
             comparison = self.extract_mc_comparison(my_latest, comm_latest, options)
@@ -487,7 +520,7 @@ class ForecastTracker:
         return stats
 
     async def track_tournament(
-        self, tournament_id: int, existing_data: TrackingData | None = None
+        self, tournament_id: int | str, existing_data: TrackingData | None = None
     ) -> TrackingData:
         """Track all forecasts in a tournament and compare to community."""
         # Get tournament info
@@ -640,6 +673,10 @@ def print_summary(data: TrackingData):
     for fc in data.forecasts:
         comp = fc.get("comparison")
         if not comp:
+            print(f"\n{fc['question_title'][:60]}...")
+            print(f"  URL: {fc['question_url']}")
+            print(f"  Type: {fc['question_type']}")
+            print("  (comparison data unavailable)")
             continue
 
         print(f"\n{fc['question_title'][:60]}...")
@@ -651,18 +688,24 @@ def print_summary(data: TrackingData):
             print(f"  Community:   {comp['community_probability']:.1%}")
             print(f"  Difference:  {comp['difference']:+.1%}")
         elif comp["type"] == "numeric":
-            print(f"  My median: {comp['my_median']:.4f}")
-            print(f"  Community: {comp['community_median']:.4f}")
+            print(
+                f"  My median: {comp['my_median']:.2f} ({comp['my_lower_quartile']:.2f} - {comp['my_upper_quartile']:.2f})"
+            )
+            print(
+                f"  Community: {comp['community_median']:.2f} ({comp['community_lower_quartile']:.2f} - {comp['community_upper_quartile']:.2f})"
+            )
             print(f"  Uncertainty ratio: {comp['uncertainty_ratio']:.2f}")
         elif comp["type"] == "multiple_choice":
-            print(
-                f"  Max difference: {comp['max_difference_option']} ({comp['max_difference_value']:+.1%})"
-            )
+            for option in comp["my_probabilities"]:
+                my_p = comp["my_probabilities"][option]
+                comm_p = comp["community_probabilities"][option]
+                diff = comp["differences"][option]
+                print(f"  {option}: Me {my_p:.1%} vs Community {comm_p:.1%} ({diff:+.1%})")
 
 
 async def main():
     parser = argparse.ArgumentParser(description="Track forecasts vs community consensus")
-    parser.add_argument("--tournament", "-t", type=int, required=True, help="Tournament ID")
+    parser.add_argument("--tournament", "-t", type=str, required=True, help="Tournament ID or slug")
     parser.add_argument(
         "--output",
         "-o",
@@ -673,11 +716,17 @@ async def main():
 
     args = parser.parse_args()
 
+    # Parse tournament ID: use int if numeric, string slug otherwise
+    try:
+        tournament_id: int | str = int(args.tournament)
+    except ValueError:
+        tournament_id = args.tournament
+
     # Determine output path
     if args.output:
         output_path = Path(args.output)
     else:
-        output_path = Path(f"data/tracking/{args.tournament}.json")
+        output_path = Path(f"data/tracking/{tournament_id}.json")
 
     # Load existing data
     existing = load_existing_data(output_path)
@@ -688,7 +737,7 @@ async def main():
 
     # Track forecasts
     async with ForecastTracker() as tracker:
-        data = await tracker.track_tournament(args.tournament, existing)
+        data = await tracker.track_tournament(tournament_id, existing)
 
     # Save data
     save_tracking_data(data, output_path)

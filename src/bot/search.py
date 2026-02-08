@@ -138,6 +138,12 @@ class SearchPipeline:
             self.llm = LLMClient(timeout_seconds=llm_timeout)
         self.http_client: httpx.AsyncClient | None = None
 
+        # Temperature defaults per task type
+        self._default_temperatures: dict[str, float] = {
+            "article_summarization": 0.1,
+            "agentic_search": 0.3,
+        }
+
         # API keys
         self.serper_key = os.getenv("SERPER_API_KEY") or os.getenv("SERPER_KEY")
         self.asknews_client_id = os.getenv("ASKNEWS_CLIENT_ID")
@@ -147,6 +153,12 @@ class SearchPipeline:
 
         # Rate limiter for AskNews calls (free tier has concurrency limit)
         self._asknews_rate_limiter = asyncio.Semaphore(1)
+
+    def _get_temperature(self, task: str) -> float:
+        """Get configured temperature for a task type from llm.temperature config."""
+        llm_config = self.config.get("llm", {})
+        temp_config = llm_config.get("temperature", {})
+        return float(temp_config.get(task, self._default_temperatures.get(task, 0.7)))
 
     async def __aenter__(self):
         self.http_client = httpx.AsyncClient(timeout=70.0)
@@ -796,6 +808,7 @@ class SearchPipeline:
                 model=model,
                 messages=[{"role": "user", "content": prompt}],
                 max_tokens=1500,
+                temperature=self._get_temperature("article_summarization"),
             )
             # Track summarization cost
             self._current_summarization_cost += response.cost
@@ -1132,6 +1145,7 @@ class SearchPipeline:
                     model=model,
                     messages=[{"role": "user", "content": prompt}],
                     max_tokens=4000,
+                    temperature=self._get_temperature("agentic_search"),
                 )
 
                 # Track agentic search cost

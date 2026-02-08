@@ -193,3 +193,12 @@ llm:
   # Claude Sonnet 4.5 tends to produce longer responses and was hitting the 4000 limit
   model_max_tokens:
     "claude-sonnet-4.5": 5000
+
+  # Temperature settings per task type (0.0 = deterministic, 1.0 = most random)
+  # Utility tasks use low temps for consistency; forecasting uses moderate temps
+  # since diversity already comes from model mixing + cross-pollination.
+  temperature:
+    query_generation: 0.3       # Focused, relevant search queries
+    article_summarization: 0.1  # Faithful extraction of article content
+    agentic_search: 0.3         # Focused iterative research
+    forecasting: 0.5            # Moderate diversity (model mix provides the rest)

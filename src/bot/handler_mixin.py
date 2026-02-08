@@ -76,6 +76,31 @@ class ForecasterMixin:
         active_models = self.config.get("active_models", {})
         return active_models.get(key, self.config.get("models", {}).get(key, default))
 
+    # Default temperatures per task type (used when config doesn't specify)
+    _DEFAULT_TEMPERATURES: dict[str, float] = {
+        "query_generation": 0.3,
+        "article_summarization": 0.1,
+        "agentic_search": 0.3,
+        "forecasting": 0.5,
+    }
+
+    def _get_temperature(self, task: str) -> float:
+        """
+        Get the configured temperature for a given task type.
+
+        Looks up llm.temperature.<task> in config, falling back to sensible defaults.
+
+        Args:
+            task: One of "query_generation", "article_summarization",
+                  "agentic_search", "forecasting"
+
+        Returns:
+            Temperature float between 0.0 and 1.0
+        """
+        llm_config = self.config.get("llm", {})
+        temp_config = llm_config.get("temperature", {})
+        return float(temp_config.get(task, self._DEFAULT_TEMPERATURES.get(task, 0.7)))
+
     def _get_max_tokens(self, model: str | None = None) -> int:
         """
         Get max output tokens from config with fallback to 4000.
@@ -100,6 +125,7 @@ class ForecasterMixin:
         model: str,
         prompt: str,
         system_prompt: str | None = None,
+        temperature: float | None = None,
     ) -> str:
         """
         Call a model via LLMClient.
@@ -108,6 +134,7 @@ class ForecasterMixin:
             model: Model identifier (e.g., "openrouter/anthropic/claude-sonnet-4.5")
             prompt: User prompt text
             system_prompt: Optional system prompt
+            temperature: Sampling temperature (0.0-1.0). If None, uses LLMClient default.
 
         Returns:
             Model response content as string.
@@ -116,7 +143,9 @@ class ForecasterMixin:
             TruncationError: If response was truncated.
             Exception: If model call fails (logged and re-raised).
         """
-        content, _ = await self._call_model_with_metadata(model, prompt, system_prompt)
+        content, _ = await self._call_model_with_metadata(
+            model, prompt, system_prompt, temperature=temperature
+        )
         return content
 
     async def _call_model_with_metadata(
@@ -124,6 +153,7 @@ class ForecasterMixin:
         model: str,
         prompt: str,
         system_prompt: str | None = None,
+        temperature: float | None = None,
     ) -> tuple[str, dict]:
         """
         Call a model via LLMClient and return content + metadata.
@@ -132,6 +162,7 @@ class ForecasterMixin:
             model: Model identifier
             prompt: User prompt text
             system_prompt: Optional system prompt
+            temperature: Sampling temperature (0.0-1.0). If None, uses LLMClient default.
 
         Returns:
             Tuple of (content_string, metadata_dict)
@@ -141,6 +172,10 @@ class ForecasterMixin:
         """
         messages = [{"role": "user", "content": prompt}]
 
+        kwargs = {}
+        if temperature is not None:
+            kwargs["temperature"] = temperature
+
         try:
             max_tokens = self._get_max_tokens(model)
             response = await self.llm.complete(
@@ -148,6 +183,7 @@ class ForecasterMixin:
                 messages=messages,
                 system=system_prompt,
                 max_tokens=max_tokens,
+                **kwargs,
             )
 
             # Check for truncation - response was cut off before completion

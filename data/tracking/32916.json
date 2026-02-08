@@ -1,46 +1,282 @@
 {
   "tournament_id": 32916,
   "tournament_name": "Tournament 32916",
-  "last_updated": "2026-02-01T18:19:16.868546+00:00",
-  "total_forecasts": 19,
-  "binary_count": 13,
-  "numeric_count": 5,
-  "multiple_choice_count": 1,
+  "last_updated": "2026-02-08T15:21:06.540717+00:00",
+  "total_forecasts": 41,
+  "binary_count": 20,
+  "numeric_count": 16,
+  "multiple_choice_count": 2,
   "binary_stats": {
-    "count": 13,
-    "mean_difference": 0.03688461538461538,
-    "abs_mean_difference": 0.10303846153846151,
-    "more_confident_count": 6,
-    "less_confident_count": 1,
-    "aligned_count": 6
+    "count": 20,
+    "mean_difference": -0.03412500000000001,
+    "abs_mean_difference": 0.07712500000000001,
+    "more_confident_count": 1,
+    "less_confident_count": 7,
+    "aligned_count": 12
   },
   "numeric_stats": {
-    "count": 5,
-    "mean_median_difference": 0.024229418840456318,
-    "mean_uncertainty_ratio": 0.6021320935399139,
+    "count": 16,
+    "mean_median_difference": 65980586.03676016,
+    "mean_uncertainty_ratio": 0.678457480311383,
     "more_uncertain_count": 0,
-    "less_uncertain_count": 5
+    "less_uncertain_count": 15
   },
   "multiple_choice_stats": {
-    "count": 1,
-    "mean_max_difference": 0.02547570747919982
+    "count": 2,
+    "mean_max_difference": 0.0763687330852032
   },
   "forecasts": [
+    {
+      "question_id": 42037,
+      "question_title": "What will be the US national average price for regular gasoline (dollars per gallon) for the month of February 2026?",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/42037/",
+      "forecast_timestamp": "2026-02-07T15:16:57.733267+00:00",
+      "snapshot_timestamp": "2026-02-08T15:19:53.337083+00:00",
+      "num_forecasters": 105,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 2.9835212244868647,
+        "community_median": 2.9072125767190817,
+        "my_lower_quartile": 2.8973187396116886,
+        "my_upper_quartile": 3.097971115715743,
+        "community_lower_quartile": 2.774541770167984,
+        "community_upper_quartile": 3.086382133768098,
+        "median_difference": 0.07630864776778301,
+        "my_iqr": 0.2006523761040544,
+        "community_iqr": 0.3118403636001137,
+        "uncertainty_ratio": 0.6434458124265131
+      }
+    },
+    {
+      "question_id": 42036,
+      "question_title": "What will be the upper bound of the Federal Funds Target Range on February 28, 2026?",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/42036/",
+      "forecast_timestamp": "2026-02-07T06:33:44.765779+00:00",
+      "snapshot_timestamp": "2026-02-08T15:19:54.825980+00:00",
+      "num_forecasters": 103,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 3.741126236439971,
+        "community_median": 3.7394100063840603,
+        "my_lower_quartile": 3.4676817532332938,
+        "my_upper_quartile": 3.945283247647848,
+        "community_lower_quartile": 3.437144979827696,
+        "community_upper_quartile": 3.946402625012228,
+        "median_difference": 0.0017162300559108168,
+        "my_iqr": 0.47760149441455413,
+        "community_iqr": 0.5092576451845323,
+        "uncertainty_ratio": 0.9378386341976125
+      }
+    },
+    {
+      "question_id": 42029,
+      "question_title": "What will be the highest price of silver per troy ounce in April 2026?",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/42029/",
+      "forecast_timestamp": "2026-02-07T14:53:15.822784+00:00",
+      "snapshot_timestamp": "2026-02-08T15:19:56.297806+00:00",
+      "num_forecasters": 109,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 89.05312334865131,
+        "community_median": 90.55777051210558,
+        "my_lower_quartile": 72.11001030002666,
+        "my_upper_quartile": 106.89409500403062,
+        "community_lower_quartile": 72.05883184622797,
+        "community_upper_quartile": 111.7320723346602,
+        "median_difference": -1.5046471634542655,
+        "my_iqr": 34.78408470400396,
+        "community_iqr": 39.67324048843223,
+        "uncertainty_ratio": 0.8767643952388051
+      }
+    },
+    {
+      "question_id": 42028,
+      "question_title": "Which Party will win the 2026 Gorton and Denton by-election?",
+      "question_type": "multiple_choice",
+      "question_url": "https://www.metaculus.com/questions/42028/",
+      "forecast_timestamp": "2026-02-06T16:08:43.854860+00:00",
+      "snapshot_timestamp": "2026-02-08T15:19:57.895422+00:00",
+      "num_forecasters": 106,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "multiple_choice",
+        "my_probabilities": {
+          "Labour Party": 0.4166666666666667,
+          "Reform UK": 0.37000000000000005,
+          "Green Party": 0.18333333333333335,
+          "Other": 0.03
+        },
+        "community_probabilities": {
+          "Labour Party": 0.31772392638036806,
+          "Reform UK": 0.3258711656441718,
+          "Green Party": 0.31059509202453994,
+          "Other": 0.04580981595092025
+        },
+        "differences": {
+          "Labour Party": 0.09894274028629862,
+          "Reform UK": 0.04412883435582826,
+          "Green Party": -0.1272617586912066,
+          "Other": -0.01580981595092025
+        },
+        "max_difference_option": "Green Party",
+        "max_difference_value": -0.1272617586912066
+      }
+    },
+    {
+      "question_id": 41935,
+      "question_title": "[Short fuse] What will be the Rotten Tomatoes Rating for \"Melania\" on February 13th, 2026?",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/41935/",
+      "forecast_timestamp": "2026-02-01T21:59:46.297643+00:00",
+      "snapshot_timestamp": "2026-02-08T15:19:59.329068+00:00",
+      "num_forecasters": 109,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 11.744106063414206,
+        "community_median": 11.53795404248233,
+        "my_lower_quartile": 10.0,
+        "my_upper_quartile": 15.215523796637916,
+        "community_lower_quartile": 10.0,
+        "community_upper_quartile": 17.794741788965208,
+        "median_difference": 0.20615202093187612,
+        "my_iqr": 5.215523796637916,
+        "community_iqr": 7.794741788965208,
+        "uncertainty_ratio": 0.6691079625012574
+      }
+    },
+    {
+      "question_id": 41909,
+      "question_title": "What will be the reported Q1 2026 global revenue for Mounjaro?",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/41909/",
+      "forecast_timestamp": "2026-02-02T18:11:05.366482+00:00",
+      "snapshot_timestamp": "2026-02-08T15:20:15.071602+00:00",
+      "num_forecasters": 102,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 7883848505.574997,
+        "community_median": 7096983729.983657,
+        "my_lower_quartile": 7071963763.370418,
+        "my_upper_quartile": 8904659060.353188,
+        "community_lower_quartile": 5845839788.815588,
+        "community_upper_quartile": 8430562247.710495,
+        "median_difference": 786864775.5913401,
+        "my_iqr": 1832695296.98277,
+        "community_iqr": 2584722458.894907,
+        "uncertainty_ratio": 0.7090491633544034
+      }
+    },
+    {
+      "question_id": 41908,
+      "question_title": "Will the WHO Director-General declare a PHEIC for H5N1 before May 1, 2026?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/41908/",
+      "forecast_timestamp": "2026-02-02T16:45:37.609616+00:00",
+      "snapshot_timestamp": "2026-02-08T15:20:16.462599+00:00",
+      "num_forecasters": 110,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.025,
+        "community_probability": 0.08,
+        "difference": -0.055
+      }
+    },
+    {
+      "question_id": 41907,
+      "question_title": "How many vehicles will Tesla deliver globally in Q1 2026?",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/41907/",
+      "forecast_timestamp": "2026-02-02T03:41:29.445186+00:00",
+      "snapshot_timestamp": "2026-02-08T15:20:17.882875+00:00",
+      "num_forecasters": 99,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 356756.94702963595,
+        "community_median": 365231.43492065364,
+        "my_lower_quartile": 329417.1318038709,
+        "my_upper_quartile": 397274.9526679591,
+        "community_lower_quartile": 322529.1300491555,
+        "community_upper_quartile": 417062.95120806544,
+        "median_difference": -8474.487891017692,
+        "my_iqr": 67857.8208640882,
+        "community_iqr": 94533.82115890994,
+        "uncertainty_ratio": 0.717815275339608
+      }
+    },
+    {
+      "question_id": 41906,
+      "question_title": "Will the Trump administration initiate another process to significantly reduce federal funding to New York City before May 1, 2026?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/41906/",
+      "forecast_timestamp": "2026-02-01T22:38:51.761871+00:00",
+      "snapshot_timestamp": "2026-02-08T15:20:19.298420+00:00",
+      "num_forecasters": 110,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.36200000000000004,
+        "community_probability": 0.4,
+        "difference": -0.03799999999999998
+      }
+    },
+    {
+      "question_id": 41905,
+      "question_title": "What will be the reported Q1 2026 global revenue for Zepbound (tirzepatide)?",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/41905/",
+      "forecast_timestamp": "2026-02-01T19:49:05.799708+00:00",
+      "snapshot_timestamp": "2026-02-08T15:20:20.832605+00:00",
+      "num_forecasters": 106,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 4052826065.6805115,
+        "community_median": 4437058467.368671,
+        "my_lower_quartile": 3669433142.167256,
+        "my_upper_quartile": 4677663437.251007,
+        "community_lower_quartile": 3439801482.103288,
+        "community_upper_quartile": 5763490419.511702,
+        "median_difference": -384232401.68815994,
+        "my_iqr": 1008230295.0837512,
+        "community_iqr": 2323688937.4084134,
+        "uncertainty_ratio": 0.433892109590288
+      }
+    },
     {
       "question_id": 41904,
       "question_title": "Will the Tisza Party win more parliamentary seats than Fidesz\u2013KDNP in Hungary\u2019s 2026 parliamentary election?",
       "question_type": "binary",
       "question_url": "https://www.metaculus.com/questions/41904/",
       "forecast_timestamp": "2026-02-01T15:16:52.424920+00:00",
-      "snapshot_timestamp": "2026-02-01T18:18:49.679209+00:00",
+      "snapshot_timestamp": "2026-02-08T15:20:22.264740+00:00",
       "num_forecasters": 106,
       "resolved": false,
       "resolution": null,
       "comparison": {
         "type": "binary",
-        "my_probability": 0.652,
-        "community_probability": 0.54,
-        "difference": 0.11199999999999999
+        "my_probability": 0.348,
+        "community_probability": 0.46,
+        "difference": -0.11200000000000004
       }
     },
     {
@@ -49,15 +285,15 @@
       "question_type": "binary",
       "question_url": "https://www.metaculus.com/questions/41903/",
       "forecast_timestamp": "2026-02-01T14:29:11.473021+00:00",
-      "snapshot_timestamp": "2026-02-01T18:18:51.254312+00:00",
+      "snapshot_timestamp": "2026-02-08T15:20:23.858541+00:00",
       "num_forecasters": 108,
       "resolved": false,
       "resolution": null,
       "comparison": {
         "type": "binary",
-        "my_probability": 0.874,
-        "community_probability": 0.785,
-        "difference": 0.08899999999999997
+        "my_probability": 0.126,
+        "community_probability": 0.215,
+        "difference": -0.089
       }
     },
     {
@@ -66,15 +302,15 @@
       "question_type": "binary",
       "question_url": "https://www.metaculus.com/questions/41901/",
       "forecast_timestamp": "2026-01-31T21:15:11.008226+00:00",
-      "snapshot_timestamp": "2026-02-01T18:18:52.655867+00:00",
+      "snapshot_timestamp": "2026-02-08T15:20:25.263344+00:00",
       "num_forecasters": 111,
       "resolved": false,
       "resolution": null,
       "comparison": {
         "type": "binary",
-        "my_probability": 0.794,
-        "community_probability": 0.6,
-        "difference": 0.19400000000000006
+        "my_probability": 0.20600000000000002,
+        "community_probability": 0.4,
+        "difference": -0.194
       }
     },
     {
@@ -83,15 +319,15 @@
       "question_type": "binary",
       "question_url": "https://www.metaculus.com/questions/41900/",
       "forecast_timestamp": "2026-01-31T12:23:59.386363+00:00",
-      "snapshot_timestamp": "2026-02-01T18:18:54.077172+00:00",
+      "snapshot_timestamp": "2026-02-08T15:20:26.661958+00:00",
       "num_forecasters": 113,
       "resolved": false,
       "resolution": null,
       "comparison": {
         "type": "binary",
-        "my_probability": 0.96,
-        "community_probability": 0.88,
-        "difference": 0.07999999999999996
+        "my_probability": 0.04,
+        "community_probability": 0.12,
+        "difference": -0.07999999999999999
       }
     },
     {
@@ -100,22 +336,22 @@
       "question_type": "numeric",
       "question_url": "https://www.metaculus.com/questions/41899/",
       "forecast_timestamp": "2026-01-30T23:02:07.279550+00:00",
-      "snapshot_timestamp": "2026-02-01T18:18:55.701524+00:00",
+      "snapshot_timestamp": "2026-02-08T15:20:28.211559+00:00",
       "num_forecasters": 106,
       "resolved": false,
       "resolution": null,
       "comparison": {
         "type": "numeric",
-        "my_median": 0.5235451346512499,
-        "community_median": 0.4926485764901327,
-        "my_lower_quartile": 0.4654869644363626,
-        "my_upper_quartile": 0.5956002039354329,
-        "community_lower_quartile": 0.39465879731212594,
-        "community_upper_quartile": 0.6270880823722268,
-        "median_difference": 0.030896558161117138,
-        "my_iqr": 0.13011323949907028,
-        "community_iqr": 0.23242928506010085,
-        "uncertainty_ratio": 0.5597970989990612
+        "my_median": 10470.902693024997,
+        "community_median": 9852.971529802655,
+        "my_lower_quartile": 9309.739288727253,
+        "my_upper_quartile": 11912.004078708658,
+        "community_lower_quartile": 7893.175946242519,
+        "community_upper_quartile": 12541.761647444537,
+        "median_difference": 617.9311632223416,
+        "my_iqr": 2602.2647899814056,
+        "community_iqr": 4648.585701202018,
+        "uncertainty_ratio": 0.559797098999061
       }
     },
     {
@@ -124,15 +360,15 @@
       "question_type": "binary",
       "question_url": "https://www.metaculus.com/questions/41898/",
       "forecast_timestamp": "2026-01-30T19:54:23.082527+00:00",
-      "snapshot_timestamp": "2026-02-01T18:18:57.090335+00:00",
+      "snapshot_timestamp": "2026-02-08T15:20:29.637959+00:00",
       "num_forecasters": 110,
       "resolved": false,
       "resolution": null,
       "comparison": {
         "type": "binary",
-        "my_probability": 0.5660000000000001,
-        "community_probability": 0.6,
-        "difference": -0.03399999999999992
+        "my_probability": 0.434,
+        "community_probability": 0.4,
+        "difference": 0.033999999999999975
       }
     },
     {
@@ -141,15 +377,15 @@
       "question_type": "binary",
       "question_url": "https://www.metaculus.com/questions/41897/",
       "forecast_timestamp": "2026-01-30T06:37:34.658949+00:00",
-      "snapshot_timestamp": "2026-02-01T18:18:58.481897+00:00",
+      "snapshot_timestamp": "2026-02-08T15:20:31.073171+00:00",
       "num_forecasters": 105,
       "resolved": false,
       "resolution": null,
       "comparison": {
         "type": "binary",
-        "my_probability": 0.474,
-        "community_probability": 0.39,
-        "difference": 0.08399999999999996
+        "my_probability": 0.526,
+        "community_probability": 0.61,
+        "difference": -0.08399999999999996
       }
     },
     {
@@ -158,23 +394,47 @@
       "question_type": "numeric",
       "question_url": "https://www.metaculus.com/questions/41896/",
       "forecast_timestamp": "2026-01-30T02:07:48.876939+00:00",
-      "snapshot_timestamp": "2026-02-01T18:18:59.886770+00:00",
+      "snapshot_timestamp": "2026-02-08T15:20:32.508016+00:00",
       "num_forecasters": 96,
       "resolved": false,
       "resolution": null,
       "comparison": {
         "type": "numeric",
-        "my_median": 0.3718071233258948,
-        "community_median": 0.38450945137894194,
-        "my_lower_quartile": 0.3358004843053455,
-        "my_upper_quartile": 0.41462142574635685,
-        "community_lower_quartile": 0.32148022018350547,
-        "community_upper_quartile": 0.447112742900734,
-        "median_difference": -0.012702328053047163,
-        "my_iqr": 0.07882094144101137,
-        "community_iqr": 0.12563252271722852,
-        "uncertainty_ratio": 0.6273928098890457
+        "my_median": 11.154213699776843,
+        "community_median": 11.535283541368258,
+        "my_lower_quartile": 10.074014529160365,
+        "my_upper_quartile": 12.438642772390706,
+        "community_lower_quartile": 9.644406605505164,
+        "community_upper_quartile": 13.41338228702202,
+        "median_difference": -0.3810698415914153,
+        "my_iqr": 2.3646282432303405,
+        "community_iqr": 3.7689756815168565,
+        "uncertainty_ratio": 0.6273928098890454
       }
+    },
+    {
+      "question_id": 41895,
+      "question_title": "How many runs will be scored in the knockout stage of the 2026 World Baseball Classic?",
+      "question_type": "discrete",
+      "question_url": "https://www.metaculus.com/questions/41895/",
+      "forecast_timestamp": "2026-02-04T15:34:28.723348+00:00",
+      "snapshot_timestamp": "2026-02-08T15:20:33.939312+00:00",
+      "num_forecasters": 104,
+      "resolved": false,
+      "resolution": null,
+      "comparison": null
+    },
+    {
+      "question_id": 41894,
+      "question_title": "How many Oscars will Sinners win at the 2026 Academy Awards?",
+      "question_type": "discrete",
+      "question_url": "https://www.metaculus.com/questions/41894/",
+      "forecast_timestamp": "2026-02-02T16:02:17.708786+00:00",
+      "snapshot_timestamp": "2026-02-08T15:20:35.325032+00:00",
+      "num_forecasters": 105,
+      "resolved": false,
+      "resolution": null,
+      "comparison": null
     },
     {
       "question_id": 41893,
@@ -182,7 +442,7 @@
       "question_type": "multiple_choice",
       "question_url": "https://www.metaculus.com/questions/41893/",
       "forecast_timestamp": "2026-02-01T15:49:42.525069+00:00",
-      "snapshot_timestamp": "2026-02-01T18:19:01.372084+00:00",
+      "snapshot_timestamp": "2026-02-08T15:20:36.763687+00:00",
       "num_forecasters": 102,
       "resolved": false,
       "resolution": null,
@@ -228,15 +488,184 @@
       "question_type": "binary",
       "question_url": "https://www.metaculus.com/questions/41892/",
       "forecast_timestamp": "2026-02-01T01:09:16.648369+00:00",
-      "snapshot_timestamp": "2026-02-01T18:19:02.774924+00:00",
+      "snapshot_timestamp": "2026-02-08T15:20:38.147698+00:00",
       "num_forecasters": 102,
       "resolved": false,
       "resolution": null,
       "comparison": {
         "type": "binary",
-        "my_probability": 0.30400000000000005,
-        "community_probability": 0.2625,
-        "difference": 0.04150000000000004
+        "my_probability": 0.696,
+        "community_probability": 0.7375,
+        "difference": -0.04150000000000009
+      }
+    },
+    {
+      "question_id": 41851,
+      "question_title": "Will a nuclear weapon be detonated in or above a European Union state before the following dates? (March 15, 2026)",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/41851/",
+      "forecast_timestamp": "2026-02-08T06:39:02.321983+00:00",
+      "snapshot_timestamp": "2026-02-08T15:20:39.571090+00:00",
+      "num_forecasters": 111,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.01,
+        "community_probability": 0.01,
+        "difference": 0.0
+      }
+    },
+    {
+      "question_id": 41849,
+      "question_title": "Will OpenAI file an initial registration statement (S-1) with the SEC to launch an IPO, before March 15, 2026?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/41849/",
+      "forecast_timestamp": "2026-02-07T15:49:52.613492+00:00",
+      "snapshot_timestamp": "2026-02-08T15:20:40.965666+00:00",
+      "num_forecasters": 113,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.016,
+        "community_probability": 0.05,
+        "difference": -0.034
+      }
+    },
+    {
+      "question_id": 41848,
+      "question_title": "Before March 1, 2026, will Meta settle the lawsuit brought by state attorneys general alleging the platform(s) were designed to foster compulsive use by minors?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/41848/",
+      "forecast_timestamp": "2026-02-07T10:16:27.312546+00:00",
+      "snapshot_timestamp": "2026-02-08T15:20:42.439077+00:00",
+      "num_forecasters": 112,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.04,
+        "community_probability": 0.08,
+        "difference": -0.04
+      }
+    },
+    {
+      "question_id": 41846,
+      "question_title": "Will there be a successful coup in Africa or Latin America before March 1, 2026?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/41846/",
+      "forecast_timestamp": "2026-02-06T13:42:36.871207+00:00",
+      "snapshot_timestamp": "2026-02-08T15:20:43.871819+00:00",
+      "num_forecasters": 108,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.114,
+        "community_probability": 0.15,
+        "difference": -0.03599999999999999
+      }
+    },
+    {
+      "question_id": 41845,
+      "question_title": "What will be the total median number of global under-5 child deaths reported in UNICEF's 2026 report for 2024?",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/41845/",
+      "forecast_timestamp": "2026-02-05T20:26:29.148283+00:00",
+      "snapshot_timestamp": "2026-02-08T15:20:45.485496+00:00",
+      "num_forecasters": 108,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 4.648822664694091,
+        "community_median": 4.672586526613623,
+        "my_lower_quartile": 4.525723186448598,
+        "my_upper_quartile": 4.774342381842863,
+        "community_lower_quartile": 4.515635937333263,
+        "community_upper_quartile": 4.860318908199213,
+        "median_difference": -0.023763861919531948,
+        "my_iqr": 0.2486191953942649,
+        "community_iqr": 0.34468297086595,
+        "uncertainty_ratio": 0.7212981679067485
+      }
+    },
+    {
+      "question_id": 41844,
+      "question_title": "Will 95% or more of Nigerians have a bank account before 2025?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/41844/",
+      "forecast_timestamp": "2026-02-05T19:16:50.089081+00:00",
+      "snapshot_timestamp": "2026-02-08T15:20:46.944600+00:00",
+      "num_forecasters": 113,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.01,
+        "community_probability": 0.01,
+        "difference": 0.0
+      }
+    },
+    {
+      "question_id": 41843,
+      "question_title": "By how much will carbon dioxide emissions change from ground transportation globally between 2020 and 2025?",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/41843/",
+      "forecast_timestamp": "2026-02-04T08:32:47.543082+00:00",
+      "snapshot_timestamp": "2026-02-08T15:20:48.354040+00:00",
+      "num_forecasters": 109,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 9.603130522639482,
+        "community_median": 8.7700991497193,
+        "my_lower_quartile": 3.009927515843593,
+        "my_upper_quartile": 16.05645161290323,
+        "community_lower_quartile": -2.279782233610355,
+        "community_upper_quartile": 18.116058639025937,
+        "median_difference": 0.8330313729201819,
+        "my_iqr": 13.046524097059638,
+        "community_iqr": 20.395840872636292,
+        "uncertainty_ratio": 0.6396659092669854
+      }
+    },
+    {
+      "question_id": 41841,
+      "question_title": "What will the United States score on the 2025 Corruption Perceptions Index?",
+      "question_type": "discrete",
+      "question_url": "https://www.metaculus.com/questions/41841/",
+      "forecast_timestamp": "2026-02-03T22:20:51.028613+00:00",
+      "snapshot_timestamp": "2026-02-08T15:20:49.958584+00:00",
+      "num_forecasters": 106,
+      "resolved": false,
+      "resolution": null,
+      "comparison": null
+    },
+    {
+      "question_id": 41840,
+      "question_title": "What will the seasonally adjusted unemployment rate be in Australia, for the following months? (February 2026)",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/41840/",
+      "forecast_timestamp": "2026-02-03T07:21:18.757101+00:00",
+      "snapshot_timestamp": "2026-02-08T15:20:51.349767+00:00",
+      "num_forecasters": 109,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 4.170402592595713,
+        "community_median": 4.201221650617724,
+        "my_lower_quartile": 4.031321065393208,
+        "my_upper_quartile": 4.358061360001139,
+        "community_lower_quartile": 3.995368356046967,
+        "community_upper_quartile": 4.465301452889527,
+        "median_difference": -0.03081905802201046,
+        "my_iqr": 0.32674029460793097,
+        "community_iqr": 0.4699330968425599,
+        "uncertainty_ratio": 0.695291088887484
       }
     },
     {
@@ -245,15 +674,15 @@
       "question_type": "binary",
       "question_url": "https://www.metaculus.com/questions/41839/",
       "forecast_timestamp": "2026-02-01T16:30:49.999150+00:00",
-      "snapshot_timestamp": "2026-02-01T18:19:04.256388+00:00",
+      "snapshot_timestamp": "2026-02-08T15:20:52.754708+00:00",
       "num_forecasters": 107,
-      "resolved": false,
-      "resolution": null,
+      "resolved": true,
+      "resolution": "no",
       "comparison": {
         "type": "binary",
-        "my_probability": 0.988,
-        "community_probability": 0.96,
-        "difference": 0.028000000000000025
+        "my_probability": 0.012,
+        "community_probability": 0.04,
+        "difference": -0.028
       }
     },
     {
@@ -262,22 +691,22 @@
       "question_type": "numeric",
       "question_url": "https://www.metaculus.com/questions/41838/",
       "forecast_timestamp": "2026-01-31T16:57:07.463721+00:00",
-      "snapshot_timestamp": "2026-02-01T18:19:05.668654+00:00",
+      "snapshot_timestamp": "2026-02-08T15:20:54.168002+00:00",
       "num_forecasters": 107,
-      "resolved": false,
-      "resolution": null,
+      "resolved": true,
+      "resolution": "31618000000.0",
       "comparison": {
         "type": "numeric",
-        "my_median": 0.5740711270949643,
-        "community_median": 0.4807761513329445,
-        "my_lower_quartile": 0.4003429389182016,
-        "my_upper_quartile": 0.7468610969587562,
-        "community_lower_quartile": 0.28114733220527355,
-        "community_upper_quartile": 0.6869661898243554,
-        "median_difference": 0.09329497576201984,
-        "my_iqr": 0.34651815804055464,
-        "community_iqr": 0.4058188576190819,
-        "uncertainty_ratio": 0.8538739674976137
+        "my_median": 32018497889.66475,
+        "community_median": 31365433059.330612,
+        "my_lower_quartile": 30802400572.42741,
+        "my_upper_quartile": 33228027678.711296,
+        "community_lower_quartile": 29968031325.436916,
+        "community_upper_quartile": 32808763328.77049,
+        "median_difference": 653064830.334137,
+        "my_iqr": 2425627106.283886,
+        "community_iqr": 2840732003.3335724,
+        "uncertainty_ratio": 0.8538739674976151
       }
     },
     {
@@ -286,22 +715,22 @@
       "question_type": "numeric",
       "question_url": "https://www.metaculus.com/questions/41760/",
       "forecast_timestamp": "2026-01-30T01:51:30.687100+00:00",
-      "snapshot_timestamp": "2026-02-01T18:19:07.068636+00:00",
+      "snapshot_timestamp": "2026-02-08T15:20:55.570923+00:00",
       "num_forecasters": 94,
       "resolved": false,
       "resolution": null,
       "comparison": {
         "type": "numeric",
-        "my_median": 0.8049902328793856,
-        "community_median": 0.7838712437385662,
-        "my_lower_quartile": 0.7564242433249438,
-        "my_upper_quartile": 0.8494331854196058,
-        "community_lower_quartile": 0.678805478978459,
-        "community_upper_quartile": 0.8694702106563676,
-        "median_difference": 0.021118989140819444,
-        "my_iqr": 0.09300894209466193,
-        "community_iqr": 0.19066473167790865,
-        "uncertainty_ratio": 0.48781408746208305
+        "my_median": 432.0748534931908,
+        "community_median": 431.7580686560785,
+        "my_lower_quartile": 431.34636364987415,
+        "my_upper_quartile": 432.7414977812941,
+        "community_lower_quartile": 430.18208218467686,
+        "community_upper_quartile": 433.0420531598455,
+        "median_difference": 0.31678483711232275,
+        "my_iqr": 1.3951341314199226,
+        "community_iqr": 2.8599709751686646,
+        "uncertainty_ratio": 0.4878140874620749
       }
     },
     {
@@ -310,22 +739,22 @@
       "question_type": "numeric",
       "question_url": "https://www.metaculus.com/questions/41759/",
       "forecast_timestamp": "2026-01-30T01:02:19.804894+00:00",
-      "snapshot_timestamp": "2026-02-01T18:19:08.554839+00:00",
+      "snapshot_timestamp": "2026-02-08T15:20:57.083427+00:00",
       "num_forecasters": 89,
       "resolved": false,
       "resolution": null,
       "comparison": {
         "type": "numeric",
-        "my_median": 0.2534538820885859,
-        "community_median": 0.26491498289721355,
-        "my_lower_quartile": 0.2374046191640392,
-        "my_upper_quartile": 0.2748870460662542,
-        "community_lower_quartile": 0.2271682568753471,
-        "community_upper_quartile": 0.30496773403059785,
-        "median_difference": -0.011461100808627667,
-        "my_iqr": 0.03748242690221498,
-        "community_iqr": 0.07779947715525073,
-        "uncertainty_ratio": 0.4817825038517662
+        "my_median": 10.069077641771717,
+        "community_median": 10.29829965794427,
+        "my_lower_quartile": 9.748092383280785,
+        "my_upper_quartile": 10.497740921325084,
+        "community_lower_quartile": 9.543365137506942,
+        "community_upper_quartile": 11.099354680611956,
+        "median_difference": -0.2292220161725531,
+        "my_iqr": 0.7496485380442994,
+        "community_iqr": 1.5559895431050137,
+        "uncertainty_ratio": 0.48178250385176635
       }
     },
     {
@@ -334,15 +763,15 @@
       "question_type": "binary",
       "question_url": "https://www.metaculus.com/questions/41758/",
       "forecast_timestamp": "2026-01-29T21:19:26.316538+00:00",
-      "snapshot_timestamp": "2026-02-01T18:19:09.992319+00:00",
+      "snapshot_timestamp": "2026-02-08T15:20:58.471374+00:00",
       "num_forecasters": 107,
       "resolved": false,
       "resolution": null,
       "comparison": {
         "type": "binary",
-        "my_probability": 0.848,
-        "community_probability": 0.8,
-        "difference": 0.04799999999999993
+        "my_probability": 0.152,
+        "community_probability": 0.2,
+        "difference": -0.048000000000000015
       }
     },
     {
@@ -351,15 +780,15 @@
       "question_type": "binary",
       "question_url": "https://www.metaculus.com/questions/41757/",
       "forecast_timestamp": "2026-01-29T06:35:25.417363+00:00",
-      "snapshot_timestamp": "2026-02-01T18:19:11.656376+00:00",
+      "snapshot_timestamp": "2026-02-08T15:20:59.867587+00:00",
       "num_forecasters": 107,
       "resolved": false,
       "resolution": null,
       "comparison": {
         "type": "binary",
-        "my_probability": 0.99,
-        "community_probability": 0.98,
-        "difference": 0.010000000000000009
+        "my_probability": 0.01,
+        "community_probability": 0.02,
+        "difference": -0.01
       }
     },
     {
@@ -368,15 +797,15 @@
       "question_type": "binary",
       "question_url": "https://www.metaculus.com/questions/41756/",
       "forecast_timestamp": "2026-01-29T04:55:16.782807+00:00",
-      "snapshot_timestamp": "2026-02-01T18:19:13.063583+00:00",
+      "snapshot_timestamp": "2026-02-08T15:21:01.343971+00:00",
       "num_forecasters": 107,
       "resolved": false,
       "resolution": null,
       "comparison": {
         "type": "binary",
-        "my_probability": 0.45399999999999996,
-        "community_probability": 0.85,
-        "difference": -0.396
+        "my_probability": 0.546,
+        "community_probability": 0.15,
+        "difference": 0.396
       }
     },
     {
@@ -385,15 +814,15 @@
       "question_type": "binary",
       "question_url": "https://www.metaculus.com/questions/41755/",
       "forecast_timestamp": "2026-01-29T02:33:25.381296+00:00",
-      "snapshot_timestamp": "2026-02-01T18:19:14.481131+00:00",
+      "snapshot_timestamp": "2026-02-08T15:21:02.734849+00:00",
       "num_forecasters": 101,
       "resolved": false,
       "resolution": null,
       "comparison": {
         "type": "binary",
-        "my_probability": 0.598,
-        "community_probability": 0.4,
-        "difference": 0.19799999999999995
+        "my_probability": 0.402,
+        "community_probability": 0.6,
+        "difference": -0.19799999999999995
       }
     },
     {
@@ -402,15 +831,39 @@
       "question_type": "binary",
       "question_url": "https://www.metaculus.com/questions/41754/",
       "forecast_timestamp": "2026-01-28T22:23:03.058069+00:00",
-      "snapshot_timestamp": "2026-02-01T18:19:15.867144+00:00",
+      "snapshot_timestamp": "2026-02-08T15:21:04.119922+00:00",
       "num_forecasters": 107,
       "resolved": false,
       "resolution": null,
       "comparison": {
         "type": "binary",
-        "my_probability": 0.975,
-        "community_probability": 0.95,
-        "difference": 0.025000000000000022
+        "my_probability": 0.025,
+        "community_probability": 0.05,
+        "difference": -0.025
+      }
+    },
+    {
+      "question_id": 41569,
+      "question_title": "What will be the closing value of the S&P 500 on March 13, 2026?",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/41569/",
+      "forecast_timestamp": "2026-02-02T14:39:53.465634+00:00",
+      "snapshot_timestamp": "2026-02-08T15:21:05.539453+00:00",
+      "num_forecasters": 106,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 6988.831576538549,
+        "community_median": 6959.188474474852,
+        "my_lower_quartile": 6733.617626130585,
+        "my_upper_quartile": 7231.110143273179,
+        "community_lower_quartile": 6643.853064398106,
+        "community_upper_quartile": 7265.337508913875,
+        "median_difference": 29.64310206369646,
+        "my_iqr": 497.4925171425939,
+        "community_iqr": 621.4844445157696,
+        "uncertainty_ratio": 0.8004906985728594
       }
     }
   ]

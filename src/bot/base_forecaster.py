@@ -185,8 +185,9 @@ class BaseForecaster(ForecasterMixin, ABC):
 
         query_model = self._resolve_model("query_generator", "openrouter/openai/o3")
 
-        historical_task = self._call_model(query_model, historical_prompt)
-        current_task = self._call_model(query_model, current_prompt)
+        query_temp = self._get_temperature("query_generation")
+        historical_task = self._call_model(query_model, historical_prompt, temperature=query_temp)
+        current_task = self._call_model(query_model, current_prompt, temperature=query_temp)
         historical_output, current_output = await asyncio.gather(historical_task, current_task)
 
         log(f"\nHistorical query output:\n{historical_output[:500]}...")
@@ -292,6 +293,7 @@ class BaseForecaster(ForecasterMixin, ABC):
             prompt_outside_view, historical_context, **question_params
         )
 
+        forecast_temp = self._get_temperature("forecasting")
         outside_view_tasks = []
         outside_view_timings = []
         for agent in agents:
@@ -304,7 +306,10 @@ class BaseForecaster(ForecasterMixin, ABC):
 
             outside_view_tasks.append(
                 self._call_model_with_metadata(
-                    model, outside_view_prompt, system_prompt=system_prompt
+                    model,
+                    outside_view_prompt,
+                    system_prompt=system_prompt,
+                    temperature=forecast_temp,
                 )
             )
 
@@ -398,7 +403,10 @@ class BaseForecaster(ForecasterMixin, ABC):
 
             inside_view_tasks.append(
                 self._call_model_with_metadata(
-                    model, inside_view_prompt, system_prompt=system_prompt
+                    model,
+                    inside_view_prompt,
+                    system_prompt=system_prompt,
+                    temperature=forecast_temp,
                 )
             )
 

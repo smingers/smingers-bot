@@ -18,7 +18,7 @@ Usage:
 
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Literal
+from typing import Any, ClassVar, Literal
 
 import yaml
 
@@ -168,6 +168,31 @@ class ResolvedConfig:
         result["active_agents"] = self.active_agents
         result["should_submit"] = self.should_submit
         return result
+
+    # Default temperatures per task type (used when config.yaml doesn't specify)
+    _DEFAULT_TEMPERATURES: ClassVar[dict[str, float]] = {
+        "query_generation": 0.3,
+        "article_summarization": 0.1,
+        "agentic_search": 0.3,
+        "forecasting": 0.5,
+    }
+
+    def get_temperature(self, task: str) -> float:
+        """
+        Get the configured temperature for a given task type.
+
+        Looks up llm.temperature.<task> in config, falling back to sensible defaults.
+
+        Args:
+            task: One of "query_generation", "article_summarization",
+                  "agentic_search", "forecasting"
+
+        Returns:
+            Temperature float between 0.0 and 1.0
+        """
+        llm_config = self.source.get("llm", {})
+        temp_config = llm_config.get("temperature", {})
+        return float(temp_config.get(task, self._DEFAULT_TEMPERATURES.get(task, 0.7)))
 
     def get(self, key: str, default=None):
         """
