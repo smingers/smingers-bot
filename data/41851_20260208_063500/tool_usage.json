@@ -1,0 +1,295 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "http://scienceandglobalsecurity.org/archive/sgs21barrett.pdf",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://european-union.europa.eu/principles-countries-history/country-profiles_en",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "https://www.un.org/disarmament/wmd/nuclear/npt/",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "European Union territory nuclear detonation history",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Russia nuclear threat EU 2025 escalation",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "List all recorded nuclear detonations worldwide and any attempted or accidental nuclear events involving European Union member states; include 2022-2026 Russian or non-state actor threats mentioning potential use in EU territory.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 3,
+            "queries_executed": [
+              "global list nuclear detonations SIPRI",
+              "broken arrow incidents Europe NATO",
+              "Russian nuclear strike threats Europe 2023",
+              "ISIS dirty bomb threat Europe 2024",
+              "Kremlin officials tactical nukes Poland",
+              "number of nuclear tests by country",
+              "broken arrow incidents Europe list",
+              "ISIS dirty bomb Europe 2024",
+              "All queries followed by either"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "global list nuclear detonations SIPRI",
+                    "Google"
+                  ],
+                  [
+                    "broken arrow incidents Europe NATO",
+                    "Google"
+                  ],
+                  [
+                    "Russian nuclear strike threats Europe 2023",
+                    "Google News"
+                  ],
+                  [
+                    "ISIS dirty bomb threat Europe 2024",
+                    "Google News"
+                  ],
+                  [
+                    "Kremlin officials tactical nukes Poland",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 94656,
+                "analysis_chars": 0
+              },
+              {
+                "step_number": 2,
+                "queries_executed": [
+                  [
+                    "number of nuclear tests by country",
+                    "Google"
+                  ],
+                  [
+                    "broken arrow incidents Europe list",
+                    "Google"
+                  ],
+                  [
+                    "ISIS dirty bomb Europe 2024",
+                    "Google News"
+                  ],
+                  [
+                    "All queries followed by either",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 66218,
+                "analysis_chars": 6266
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google News",
+        "Google"
+      ],
+      "llm_cost": 0.316,
+      "llm_cost_summarization": 0.1939,
+      "llm_cost_agentic": 0.1221,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "nuclear weapon detonated EU 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "tactical nuke risk Europe Feb 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide the most recent (since January 2026) reports or official statements about any nuclear weapon explosion or credible imminent nuclear threat inside European Union territory.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 20
+        },
+        {
+          "query": "Will a nuclear weapon be detonated in or above a European Union state before the following dates? (March 15, 2026)",
+          "tool": "AskNews",
+          "deep_research_query": "Provide the most recent (since January 2026) reports or official statements about any nuclear weapon explosion or credible imminent nuclear threat inside European Union territory."
+        }
+      ],
+      "tools_used": [
+        "AskNews",
+        "Google News",
+        "Google"
+      ],
+      "llm_cost": 0.2005,
+      "llm_cost_summarization": 0.1939,
+      "llm_cost_agentic": 0.0067,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8134,
+        "token_output": 2078,
+        "cost": 0.055571999999999996,
+        "duration_seconds": 64.555908203125,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16232,
+        "token_output": 3587,
+        "cost": 0.10250100000000001,
+        "duration_seconds": 92.58747172355652,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8134,
+        "token_output": 2374,
+        "cost": 0.060011999999999996,
+        "duration_seconds": 64.55596232414246,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15714,
+        "token_output": 3108,
+        "cost": 0.093762,
+        "duration_seconds": 92.58745002746582,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7271,
+        "token_output": 2934,
+        "cost": 0.05380025,
+        "duration_seconds": 64.55600190162659,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14811,
+        "token_output": 2338,
+        "cost": 0.058651249999999995,
+        "duration_seconds": 92.58742427825928,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7271,
+        "token_output": 2057,
+        "cost": 0.030997999999999998,
+        "duration_seconds": 64.55603790283203,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14430,
+        "token_output": 1487,
+        "cost": 0.040756,
+        "duration_seconds": 92.58739852905273,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7271,
+        "token_output": 2273,
+        "cost": 0.032726,
+        "duration_seconds": 64.55606651306152,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13722,
+        "token_output": 1690,
+        "cost": 0.040964,
+        "duration_seconds": 92.58737349510193,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0126,
+    "step2_search": 0.316,
+    "step3_outside_view": 0.2331,
+    "step5_inside_view": 0.3366
+  },
+  "total_pipeline_cost": 0.8983
+}
