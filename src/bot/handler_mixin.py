@@ -13,15 +13,6 @@ from .exceptions import TruncationError
 
 logger = logging.getLogger(__name__)
 
-# Default agent configuration (equal weights)
-DEFAULT_AGENTS = [
-    {"name": "forecaster_1", "model": "openrouter/anthropic/claude-sonnet-4.5", "weight": 1.0},
-    {"name": "forecaster_2", "model": "openrouter/anthropic/claude-sonnet-4.5", "weight": 1.0},
-    {"name": "forecaster_3", "model": "openrouter/openai/o3-mini-high", "weight": 1.0},
-    {"name": "forecaster_4", "model": "openrouter/openai/o3", "weight": 1.0},
-    {"name": "forecaster_5", "model": "openrouter/openai/o3", "weight": 1.0},
-]
-
 
 class ForecasterMixin:
     """
@@ -42,7 +33,9 @@ class ForecasterMixin:
         Looks for agents in order:
         1. active_agents (set by mode application)
         2. ensemble.agents (from config file)
-        3. DEFAULT_AGENTS fallback
+
+        Raises ValueError if no agents are configured (config.yaml is the
+        single source of truth for ensemble composition).
 
         Returns:
             List of up to 5 agent configurations with name, model, weight.
@@ -53,7 +46,10 @@ class ForecasterMixin:
             agents = self.config.get("ensemble", {}).get("agents", [])
 
         if not agents:
-            agents = DEFAULT_AGENTS.copy()
+            raise ValueError(
+                "No ensemble agents configured. "
+                "Define agents in config.yaml under ensemble.fast / ensemble.quality."
+            )
 
         return agents[:5]  # Ensure max 5 agents
 

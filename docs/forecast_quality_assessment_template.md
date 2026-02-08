@@ -83,13 +83,28 @@ When asked to analyze a forecast run using this template:
 
 ## 1. Research Query Analysis: Historical vs. Current
 
+### Research Tools by Stage
+
+The pipeline uses different research tools for each stage. Note which were actually active for this forecast (check `search_historical.json` and `search_current.json`):
+
+| Tool | Historical (Outside View) | Current (Inside View) | Actually Used? |
+|------|--------------------------|----------------------|----------------|
+| Google (Serper) | Yes | Yes | |
+| Google News | Yes | Yes | |
+| Agentic Search (Agent) | Yes | No | |
+| AskNews | No | Yes | |
+| FRED | If economic/financial | No | |
+| yFinance | If stocks/securities | No | |
+| Google Trends | If relevant (MC only) | No | |
+| Question URL Scraping | Yes (prepended) | No | |
+
 ### Query Discreteness
 
-**Historical Queries:**
-- [List actual queries from query_historical.md]
+**Historical Queries** (tools: Google, Google News, Agent, optionally FRED/yFinance/Google Trends):
+- [List actual queries from query_historical.md, noting the tool label for each]
 
-**Current Queries:**
-- [List actual queries from query_current.md]
+**Current Queries** (tools: Google, Google News, AskNews):
+- [List actual queries from query_current.md, noting the tool label for each]
 
 **Assessment Table:**
 
@@ -97,23 +112,29 @@ When asked to analyze a forecast run using this template:
 |--------|------------|---------|
 | Temporal focus | | |
 | Content type | | |
+| Tools used | | |
 | Unique contribution | | |
 
 **Analysis:**
 - How discrete vs. overlapping are the query sets?
 - Did historical queries target base rate establishment?
 - Did current queries surface recent decision-relevant events?
+- Were the right tools chosen for each query? (e.g., Agent for complex multi-part research, AskNews for recent news, FRED for economic data)
 - What critical information gaps exist?
 
 ### Do Research Outputs Offer Forecasts?
 
-[Assess whether research outputs remain factual or inappropriately include probability estimates. Research should inform, not forecast.]
+[Assess whether research outputs remain factual or inappropriately include probability estimates. Research should inform, not forecast. Agent reports are particularly prone to this.]
 
 ### Research Quality Summary
 
 - **Key information successfully surfaced:**
 - **Critical information missed:**
-- **Source quality:**
+- **Source quality by tool:**
+  - Google/Google News results:
+  - Agent report(s):
+  - AskNews articles:
+  - FRED/yFinance/Google Trends data (if used):
 
 ---
 

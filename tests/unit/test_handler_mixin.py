@@ -14,7 +14,7 @@ from unittest.mock import AsyncMock, MagicMock
 import pytest
 
 from src.bot.exceptions import TruncationError
-from src.bot.handler_mixin import DEFAULT_AGENTS, ForecasterMixin
+from src.bot.handler_mixin import ForecasterMixin
 from src.utils.llm import LLMClient, LLMResponse
 
 # ============================================================================
@@ -79,16 +79,13 @@ class TestGetAgents:
         assert agents[0]["name"] == "ensemble_1"
         assert agents[0]["weight"] == 1.5
 
-    def test_get_agents_default_fallback(self):
-        """Falls back to DEFAULT_AGENTS when no config available."""
+    def test_get_agents_raises_when_no_config(self):
+        """Raises ValueError when no agents configured anywhere."""
         config = {}
         mixin = TestableForecasterMixin(config)
 
-        agents = mixin._get_agents()
-
-        assert len(agents) == 5
-        assert agents[0]["name"] == DEFAULT_AGENTS[0]["name"]
-        assert agents[0]["model"] == DEFAULT_AGENTS[0]["model"]
+        with pytest.raises(ValueError, match="No ensemble agents configured"):
+            mixin._get_agents()
 
     def test_get_agents_limits_to_five(self):
         """Never returns more than 5 agents."""
@@ -104,17 +101,15 @@ class TestGetAgents:
 
         assert len(agents) == 5
 
-    def test_get_agents_missing_key_uses_default(self):
-        """Missing active_agents key falls back properly."""
+    def test_get_agents_raises_when_ensemble_key_empty(self):
+        """Empty ensemble dict raises ValueError."""
         config = {
             "ensemble": {}  # No agents key
         }
         mixin = TestableForecasterMixin(config)
 
-        agents = mixin._get_agents()
-
-        # Should fall back to DEFAULT_AGENTS
-        assert len(agents) == 5
+        with pytest.raises(ValueError, match="No ensemble agents configured"):
+            mixin._get_agents()
 
     def test_get_agents_none_active_agents_uses_ensemble(self):
         """None value for active_agents falls back to ensemble."""
@@ -426,25 +421,54 @@ class TestGetMaxTokens:
 
 
 # ============================================================================
-# DEFAULT_AGENTS Tests
+# _get_temperature Tests
 # ============================================================================
 
 
-class TestDefaultAgents:
-    """Tests for DEFAULT_AGENTS constant."""
+class TestGetTemperature:
+    """Tests for _get_temperature() config-driven temperature selection."""
 
-    def test_default_agents_has_five(self):
-        """DEFAULT_AGENTS has exactly 5 agents."""
-        assert len(DEFAULT_AGENTS) == 5
+    def test_returns_config_value(self):
+        """Returns temperature from llm.temperature config."""
+        config = {
+            "llm": {
+                "temperature": {
+                    "forecasting": 0.8,
+                    "query_generation": 0.2,
+                }
+            }
+        }
+        mixin = TestableForecasterMixin(config)
 
-    def test_default_agents_have_required_keys(self):
-        """All default agents have name, model, and weight."""
-        for agent in DEFAULT_AGENTS:
-            assert "name" in agent
-            assert "model" in agent
-            assert "weight" in agent
+        assert mixin._get_temperature("forecasting") == 0.8
+        assert mixin._get_temperature("query_generation") == 0.2
 
-    def test_default_agents_equal_weights(self):
-        """All default agents have weight 1.0."""
-        for agent in DEFAULT_AGENTS:
-            assert agent["weight"] == 1.0
+    def test_returns_default_when_not_in_config(self):
+        """Falls back to built-in defaults when config doesn't specify task."""
+        config = {}
+        mixin = TestableForecasterMixin(config)
+
+        assert mixin._get_temperature("forecasting") == 0.5
+        assert mixin._get_temperature("query_generation") == 0.3
+        assert mixin._get_temperature("article_summarization") == 0.1
+        assert mixin._get_temperature("agentic_search") == 0.3
+
+    def test_returns_fallback_for_unknown_task(self):
+        """Returns 0.7 for an unknown task type."""
+        config = {}
+        mixin = TestableForecasterMixin(config)
+
+        assert mixin._get_temperature("unknown_task") == 0.7
+
+    def test_config_overrides_default(self):
+        """Config value overrides built-in default."""
+        config = {
+            "llm": {
+                "temperature": {
+                    "article_summarization": 0.5,  # Override default of 0.1
+                }
+            }
+        }
+        mixin = TestableForecasterMixin(config)
+
+        assert mixin._get_temperature("article_summarization") == 0.5

@@ -250,7 +250,7 @@ class TestCrossPolllinationLogic:
     @pytest.fixture
     def forecaster(self):
         config = {
-            "_active_agents": [
+            "active_agents": [
                 {"name": f"forecaster_{i + 1}", "model": "test-model", "weight": 1.0}
                 for i in range(5)
             ]
@@ -606,11 +606,11 @@ class TestForecastPipeline:
     @pytest.fixture
     def config(self):
         return {
-            "_active_agents": [
+            "active_agents": [
                 {"name": f"forecaster_{i + 1}", "model": "test-model", "weight": 1.0}
                 for i in range(5)
             ],
-            "_active_models": {
+            "active_models": {
                 "query_generator": "test-model",
             },
         }
@@ -926,14 +926,14 @@ class TestForecastPipeline:
     ):
         """Pipeline uses SUPERFORECASTER_CONTEXT for all models."""
         config = {
-            "_active_agents": [
+            "active_agents": [
                 {"name": "forecaster_1", "model": "anthropic/claude-3", "weight": 1.0},
                 {"name": "forecaster_2", "model": "openai/gpt-4", "weight": 1.0},
                 {"name": "forecaster_3", "model": "anthropic/claude-3.5", "weight": 1.0},
                 {"name": "forecaster_4", "model": "openai/o3", "weight": 1.0},
                 {"name": "forecaster_5", "model": "openai/gpt-4o", "weight": 1.0},
             ],
-            "_active_models": {"query_generator": "test-model"},
+            "active_models": {"query_generator": "test-model"},
         }
 
         captured_calls = []

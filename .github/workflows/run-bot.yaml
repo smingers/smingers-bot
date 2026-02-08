@@ -89,6 +89,7 @@ jobs:
           ASKNEWS_CLIENT_ID: ${{ secrets.ASKNEWS_CLIENT_ID }}
           ASKNEWS_CLIENT_SECRET: ${{ secrets.ASKNEWS_CLIENT_SECRET }}
           SERPER_API_KEY: ${{ secrets.SERPER_API_KEY }}
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
 
       # ============================================================
       # AIB TOURNAMENTS (ENABLED)
@@ -109,6 +110,7 @@ jobs:
           ASKNEWS_CLIENT_ID: ${{ secrets.ASKNEWS_CLIENT_ID }}
           ASKNEWS_CLIENT_SECRET: ${{ secrets.ASKNEWS_CLIENT_SECRET }}
           SERPER_API_KEY: ${{ secrets.SERPER_API_KEY }}
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
 
       - name: Forecast MiniBench
         if: ${{ github.event_name == 'schedule' || github.event.inputs.test_question_id == '' }}
@@ -125,6 +127,7 @@ jobs:
           ASKNEWS_CLIENT_ID: ${{ secrets.ASKNEWS_CLIENT_ID }}
           ASKNEWS_CLIENT_SECRET: ${{ secrets.ASKNEWS_CLIENT_SECRET }}
           SERPER_API_KEY: ${{ secrets.SERPER_API_KEY }}
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
 
       # ============================================================
       # OPTIONAL TOURNAMENTS (DISABLED - uncomment to enable)
