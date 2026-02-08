@@ -81,30 +81,9 @@ class MultipleChoiceForecaster(BaseForecaster):
         **question_params,
     ) -> tuple[str, str]:
         """Format query prompts with options parameter."""
-        options = question_params.get("options", [])
-        options_str = str(options)
-
-        historical = prompt_historical.format(
-            title=question_params.get("question_title", ""),
-            today=question_params.get("today", ""),
-            background=question_params.get("question_text", ""),
-            resolution_criteria=question_params.get("resolution_criteria", ""),
-            fine_print=question_params.get("fine_print", ""),
-            open_time=question_params.get("open_time", ""),
-            scheduled_resolve_time=question_params.get("scheduled_resolve_time", ""),
-            options=options_str,
-        )
-        current = prompt_current.format(
-            title=question_params.get("question_title", ""),
-            today=question_params.get("today", ""),
-            background=question_params.get("question_text", ""),
-            resolution_criteria=question_params.get("resolution_criteria", ""),
-            fine_print=question_params.get("fine_print", ""),
-            open_time=question_params.get("open_time", ""),
-            scheduled_resolve_time=question_params.get("scheduled_resolve_time", ""),
-            options=options_str,
-        )
-        return historical, current
+        params = self._get_common_prompt_params(**question_params)
+        params["options"] = str(question_params.get("options", []))
+        return prompt_historical.format(**params), prompt_current.format(**params)
 
     def _format_outside_view_prompt(
         self,

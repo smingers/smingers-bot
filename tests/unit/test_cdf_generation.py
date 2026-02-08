@@ -4,6 +4,7 @@ Tests for CDF generation in numeric forecasting.
 Tests the functions in src/bot/cdf.py:
 - generate_continuous_cdf()
 - get_max_pmf_value()
+- percentiles_from_cdf()
 
 And src/bot/extractors.py:
 - enforce_monotonic_percentiles()
@@ -17,6 +18,7 @@ import pytest
 from src.bot.cdf import (
     generate_continuous_cdf,
     get_max_pmf_value,
+    percentiles_from_cdf,
 )
 from src.bot.exceptions import CDFGenerationError
 from src.bot.extractors import enforce_monotonic_percentiles
@@ -1059,3 +1061,161 @@ class TestAggregationEdgeCases:
         # Should be monotonically increasing
         for i in range(len(combined) - 1):
             assert combined[i] <= combined[i + 1], f"Aggregated CDF not monotonic at index {i}"
+
+
+class TestPercentilesFromCdf:
+    """Tests for percentiles_from_cdf() — extracting real-world values from a CDF."""
+
+    def _make_linear_cdf(self, lower_bound, upper_bound, num_points=201):
+        """Generate a perfectly linear CDF (uniform distribution) for testing."""
+        return [i / (num_points - 1) for i in range(num_points)]
+
+    def test_linear_uniform_distribution(self):
+        """A uniform CDF over [0, 100] should return percentile values matching the percentile."""
+        cdf = self._make_linear_cdf(0, 100)
+        result = percentiles_from_cdf(cdf, lower_bound=0, upper_bound=100)
+
+        assert set(result.keys()) == {"10", "25", "50", "75", "90"}
+        # For a uniform distribution on [0, 100], P10=10, P50=50, P90=90
+        assert result["10"] == pytest.approx(10.0, abs=0.5)
+        assert result["25"] == pytest.approx(25.0, abs=0.5)
+        assert result["50"] == pytest.approx(50.0, abs=0.5)
+        assert result["75"] == pytest.approx(75.0, abs=0.5)
+        assert result["90"] == pytest.approx(90.0, abs=0.5)
+
+    def test_linear_shifted_bounds(self):
+        """Uniform CDF over [200, 300] should shift percentile values accordingly."""
+        cdf = self._make_linear_cdf(200, 300)
+        result = percentiles_from_cdf(cdf, lower_bound=200, upper_bound=300)
+
+        assert result["50"] == pytest.approx(250.0, abs=0.5)
+        assert result["10"] == pytest.approx(210.0, abs=0.5)
+        assert result["90"] == pytest.approx(290.0, abs=0.5)
+
+    def test_custom_target_percentiles(self):
+        """Should support custom target percentile list."""
+        cdf = self._make_linear_cdf(0, 100)
+        result = percentiles_from_cdf(
+            cdf, lower_bound=0, upper_bound=100, target_percentiles=[5, 50, 95]
+        )
+
+        assert set(result.keys()) == {"5", "50", "95"}
+        assert result["5"] == pytest.approx(5.0, abs=0.5)
+        assert result["95"] == pytest.approx(95.0, abs=0.5)
+
+    def test_single_target_percentile(self):
+        """Should work with a single target percentile."""
+        cdf = self._make_linear_cdf(0, 100)
+        result = percentiles_from_cdf(
+            cdf, lower_bound=0, upper_bound=100, target_percentiles=[50]
+        )
+
+        assert result == {"50": pytest.approx(50.0, abs=0.5)}
+
+    def test_log_scaled_question(self):
+        """Log-scaled CDF should produce non-linear percentile spacing."""
+        cdf = self._make_linear_cdf(1, 1000)
+        result_linear = percentiles_from_cdf(cdf, lower_bound=1, upper_bound=1000)
+        result_log = percentiles_from_cdf(
+            cdf, lower_bound=1, upper_bound=1000, zero_point=0
+        )
+
+        # With log scaling, the same CDF location maps to a lower real-world value
+        # because log compression concentrates CDF mass toward the lower bound.
+        # The CDF midpoint maps to ~geometric mean: sqrt(1 * 1000) ≈ 31.6
+        assert result_log["50"] == pytest.approx(31.6, rel=0.1)
+        assert result_log["50"] < result_linear["50"]  # log compresses toward lower bound
+
+    def test_log_scaling_monotonic(self):
+        """Log-scaled percentile values should still be monotonically increasing."""
+        cdf = self._make_linear_cdf(10, 10000)
+        result = percentiles_from_cdf(
+            cdf, lower_bound=10, upper_bound=10000, zero_point=0
+        )
+
+        values = [result[str(p)] for p in [10, 25, 50, 75, 90]]
+        for i in range(len(values) - 1):
+            assert values[i] < values[i + 1], f"P{[10,25,50,75,90][i]} >= P{[10,25,50,75,90][i+1]}"
+
+    def test_with_generated_cdf(self):
+        """Round-trip: generate a CDF from percentiles, then extract percentiles back."""
+        input_percentiles = {10: 20, 25: 35, 50: 50, 75: 65, 90: 80}
+        cdf = generate_continuous_cdf(
+            input_percentiles,
+            open_upper_bound=True,
+            open_lower_bound=True,
+            upper_bound=100,
+            lower_bound=0,
+        )
+
+        result = percentiles_from_cdf(cdf, lower_bound=0, upper_bound=100)
+
+        # Extracted percentiles should be close to the originals
+        # (not exact due to CDF standardization/capping)
+        assert result["50"] == pytest.approx(50.0, abs=5.0)
+        assert result["10"] == pytest.approx(20.0, abs=5.0)
+        assert result["90"] == pytest.approx(80.0, abs=5.0)
+
+    def test_with_generated_cdf_log_scaled(self):
+        """Round-trip with log scaling."""
+        input_percentiles = {10: 20, 25: 50, 50: 100, 75: 300, 90: 700}
+        cdf = generate_continuous_cdf(
+            input_percentiles,
+            open_upper_bound=True,
+            open_lower_bound=True,
+            upper_bound=1000,
+            lower_bound=10,
+            zero_point=0,
+        )
+
+        result = percentiles_from_cdf(
+            cdf, lower_bound=10, upper_bound=1000, zero_point=0
+        )
+
+        # Should recover approximate original values
+        assert result["50"] == pytest.approx(100.0, rel=0.3)
+        # Order should be preserved
+        assert result["10"] < result["25"] < result["50"] < result["75"] < result["90"]
+
+    def test_step_function_cdf(self):
+        """CDF that jumps suddenly (concentrated distribution) should still work."""
+        # CDF that is ~0 until midpoint, then jumps to ~1
+        cdf = []
+        for i in range(201):
+            if i < 95:
+                cdf.append(0.001 * i / 95)  # slowly rise to 0.001
+            elif i < 105:
+                cdf.append(0.001 + 0.998 * (i - 95) / 10)  # jump in the middle
+            else:
+                cdf.append(0.999 + 0.001 * (i - 105) / 95)  # slowly rise to ~1.0
+
+        result = percentiles_from_cdf(cdf, lower_bound=0, upper_bound=100)
+
+        # All percentiles should cluster near 50 (the midpoint)
+        for key in ["10", "25", "50", "75", "90"]:
+            assert 40 <= result[key] <= 60, f"P{key}={result[key]} not near midpoint"
+
+    def test_empty_cdf(self):
+        """Empty CDF returns empty dict (no crash)."""
+        result = percentiles_from_cdf([], lower_bound=0, upper_bound=100)
+        assert result == {}
+
+    def test_small_cdf(self):
+        """Very small CDF (e.g., 3 points) still works."""
+        cdf = [0.0, 0.5, 1.0]
+        result = percentiles_from_cdf(cdf, lower_bound=0, upper_bound=100)
+
+        assert result["50"] == pytest.approx(50.0, abs=1.0)
+
+    def test_discrete_cdf_size(self):
+        """Should work with 102-point CDFs (discrete questions)."""
+        cdf = [i / 101 for i in range(102)]
+        result = percentiles_from_cdf(cdf, lower_bound=0, upper_bound=100)
+
+        assert result["50"] == pytest.approx(50.0, abs=1.0)
+
+    def test_default_percentiles(self):
+        """Default target_percentiles should be [10, 25, 50, 75, 90]."""
+        cdf = self._make_linear_cdf(0, 100)
+        result = percentiles_from_cdf(cdf, lower_bound=0, upper_bound=100)
+        assert set(result.keys()) == {"10", "25", "50", "75", "90"}

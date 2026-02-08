@@ -534,30 +534,8 @@ class BaseForecaster(ForecasterMixin, ABC):
 
         Default implementation uses common fields. Override for custom formatting.
         """
-        # Use background_info if available, fall back to question_text
-        background = question_params.get("background_info", "") or question_params.get(
-            "question_text", ""
-        )
-
-        historical = prompt_historical.format(
-            title=question_params.get("question_title", ""),
-            today=question_params.get("today", ""),
-            background=background,
-            resolution_criteria=question_params.get("resolution_criteria", ""),
-            fine_print=question_params.get("fine_print", ""),
-            open_time=question_params.get("open_time", ""),
-            scheduled_resolve_time=question_params.get("scheduled_resolve_time", ""),
-        )
-        current = prompt_current.format(
-            title=question_params.get("question_title", ""),
-            today=question_params.get("today", ""),
-            background=background,
-            resolution_criteria=question_params.get("resolution_criteria", ""),
-            fine_print=question_params.get("fine_print", ""),
-            open_time=question_params.get("open_time", ""),
-            scheduled_resolve_time=question_params.get("scheduled_resolve_time", ""),
-        )
-        return historical, current
+        params = self._get_common_prompt_params(**question_params)
+        return prompt_historical.format(**params), prompt_current.format(**params)
 
     @abstractmethod
     def _get_prompt_templates(self) -> tuple[str, str, str, str]:
