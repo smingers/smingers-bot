@@ -1,0 +1,7 @@
+Analysis:
+The key to estimating the probability that Sen. Mark Kelly will actually be recalled is understanding (a) the current status of the Pentagon investigation announced 24 Nov 2025, (b) whether the Defense Secretary has ever (or recently) exercised the authority under 10 U.S.C. § 802/§ 688 to bring a retiree back for disciplinary proceedings, and (c) how long such processes have taken in comparable historical cases.  Relevant background therefore includes: prior recalls of retired flag officers (e.g., Gen. Arthur Lichte 2017, Adm. William Moran 2021, Maj. Gen. William Cooley 2022), statements from DoD/OSD or Kelly’s office since November 2025, and legal commentary on recalling a sitting member of Congress.  News coverage since the AP scoop is essential, and a deeper historical list of recall cases will give an outside-view base rate.
+
+Search queries:
+1. Mark Kelly recalled to active duty (Google)
+2. Pentagon investigating Senator Mark Kelly (Google News)
+3. Provide a list of U.S. military retirees who were recalled to active duty for court-martial since 2000 and how long each recall took from investigation announcement to activation; include statutory authority and rank. (Agent)

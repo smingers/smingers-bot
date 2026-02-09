@@ -1,0 +1,254 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": false,
+      "num_queries": 0,
+      "queries": [],
+      "tools_used": [],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "current federal funds target range 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Fed rate outlook March 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide the history of the Federal Funds Target Range upper bound (DFEDTARU) from January 2022 to February 2026 and list every FOMC meeting date with the corresponding change. Summarize any guidance from the December 2025 and January 2026 policy statements on future moves.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "DFEDTARU historical data upper bound",
+              "FOMC meeting dates 2022-2026 changes",
+              "FOMC December 2025 statement guidance",
+              "FOMC January 2026 policy statement",
+              "DFEDTARU"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "DFEDTARU historical data upper bound",
+                    "Google"
+                  ],
+                  [
+                    "FOMC meeting dates 2022-2026 changes",
+                    "Google"
+                  ],
+                  [
+                    "FOMC December 2025 statement guidance",
+                    "Google News"
+                  ],
+                  [
+                    "FOMC January 2026 policy statement",
+                    "Google"
+                  ],
+                  [
+                    "DFEDTARU",
+                    "FRED"
+                  ]
+                ],
+                "search_results_chars": 64000,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "DFEDTARU",
+          "tool": "FRED",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "FRED",
+        "Google News",
+        "Google",
+        "Agent"
+      ],
+      "llm_cost": 0.1962,
+      "llm_cost_summarization": 0.1357,
+      "llm_cost_agentic": 0.0605,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "March 2026 fed funds futures",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "March 2026 FOMC rate expectations",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "What do analysts predict the Federal Reserve\u2019s target range upper bound will be after the March 2026 FOMC meeting in the United States? Provide forecasts updated since January 2026.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 22
+        },
+        {
+          "query": "What will be the upper bound of the Federal Funds Target Range on March 31, 2026?",
+          "tool": "AskNews",
+          "deep_research_query": "What do analysts predict the Federal Reserve\u2019s target range upper bound will be after the March 2026 FOMC meeting in the United States? Provide forecasts updated since January 2026."
+        }
+      ],
+      "tools_used": [
+        "AskNews",
+        "Google News",
+        "Google"
+      ],
+      "llm_cost": 0.1422,
+      "llm_cost_summarization": 0.1357,
+      "llm_cost_agentic": 0.0065,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6882,
+        "token_output": 1843,
+        "cost": 0.048291,
+        "duration_seconds": 161.3981966972351,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16792,
+        "token_output": 2665,
+        "cost": 0.090351,
+        "duration_seconds": 69.8029305934906,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6882,
+        "token_output": 1877,
+        "cost": 0.048801,
+        "duration_seconds": 161.39825081825256,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16208,
+        "token_output": 2608,
+        "cost": 0.087744,
+        "duration_seconds": 69.80289936065674,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "cost": 0.0,
+        "duration_seconds": 161.39828252792358,
+        "error": "Response truncated after 4000 tokens (limit: 4000)"
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15078,
+        "token_output": 3731,
+        "cost": 0.07862050000000001,
+        "duration_seconds": 69.80286622047424,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6075,
+        "token_output": 2803,
+        "cost": 0.034574,
+        "duration_seconds": 161.39831233024597,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14430,
+        "token_output": 2062,
+        "cost": 0.045356,
+        "duration_seconds": 69.80283546447754,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6075,
+        "token_output": 3562,
+        "cost": 0.040646,
+        "duration_seconds": 161.3983383178711,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14544,
+        "token_output": 1893,
+        "cost": 0.044232,
+        "duration_seconds": 69.80280590057373,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0144,
+    "step2_search": 0.1962,
+    "step3_outside_view": 0.2389,
+    "step5_inside_view": 0.3463
+  },
+  "total_pipeline_cost": 0.7958
+}

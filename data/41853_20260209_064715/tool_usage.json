@@ -1,0 +1,268 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "https://www.war.gov/About/Our-Forces/",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://apnews.com/article/pentagon-mark-kelly-troop-investigation-4882f76b05dcdfa3060c284c2c84dd12",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "https://apnews.com/article/trump-military-traitors-sedition-illegal-orders-c5fc3c5bd2fbc6b1204550e4203c24b2",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Mark Kelly recalled to active duty",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Pentagon investigating Senator Mark Kelly",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide a list of U.S. military retirees who were recalled to active duty for court-martial since 2000 and how long each recall took from investigation announcement to activation; include statutory authority and rank.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "retired general recalled court martial",
+              "10 USC 688 recall cases",
+              "retired sailor court-martial recall",
+              "Article 2 UCMJ retiree prosecution",
+              "military retirees recalled since 2000"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "retired general recalled court martial",
+                    "Google"
+                  ],
+                  [
+                    "10 USC 688 recall cases",
+                    "Google"
+                  ],
+                  [
+                    "retired sailor court-martial recall",
+                    "Google News"
+                  ],
+                  [
+                    "Article 2 UCMJ retiree prosecution",
+                    "Google"
+                  ],
+                  [
+                    "military retirees recalled since 2000",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 97135,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "Agent"
+      ],
+      "llm_cost": 0.2836,
+      "llm_cost_summarization": 0.2125,
+      "llm_cost_agentic": 0.0711,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Mark Kelly recalled active duty",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Pentagon investigation Senator Mark Kelly 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide the latest February 2026 coverage on whether the Pentagon has ordered Arizona Senator Mark Kelly back to active duty or initiated court-martial proceedings.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 24
+        },
+        {
+          "query": "Will Arizona Senator Mark Kelly, who urged troops to defy \"illegal\" orders, be recalled to active duty in the US military before April 1, 2026?",
+          "tool": "AskNews",
+          "deep_research_query": "Provide the latest February 2026 coverage on whether the Pentagon has ordered Arizona Senator Mark Kelly back to active duty or initiated court-martial proceedings."
+        }
+      ],
+      "tools_used": [
+        "AskNews",
+        "Google News",
+        "Google"
+      ],
+      "llm_cost": 0.2208,
+      "llm_cost_summarization": 0.2125,
+      "llm_cost_agentic": 0.0084,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8883,
+        "token_output": 2673,
+        "cost": 0.066744,
+        "duration_seconds": 73.06017708778381,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 19113,
+        "token_output": 2948,
+        "cost": 0.10155900000000001,
+        "duration_seconds": 128.14131450653076,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8883,
+        "token_output": 2079,
+        "cost": 0.057833999999999997,
+        "duration_seconds": 73.06028771400452,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17738,
+        "token_output": 2445,
+        "cost": 0.089889,
+        "duration_seconds": 128.14128589630127,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8022,
+        "token_output": 2649,
+        "cost": 0.0511245,
+        "duration_seconds": 73.06032204627991,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16754,
+        "token_output": 2209,
+        "cost": 0.06024550000000001,
+        "duration_seconds": 128.14125895500183,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8022,
+        "token_output": 1995,
+        "cost": 0.032004,
+        "duration_seconds": 73.06035089492798,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16546,
+        "token_output": 1351,
+        "cost": 0.0439,
+        "duration_seconds": 128.1412332057953,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8022,
+        "token_output": 1695,
+        "cost": 0.029604,
+        "duration_seconds": 73.0603756904602,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15779,
+        "token_output": 1395,
+        "cost": 0.042718000000000006,
+        "duration_seconds": 128.14120960235596,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0127,
+    "step2_search": 0.2836,
+    "step3_outside_view": 0.2373,
+    "step5_inside_view": 0.3383
+  },
+  "total_pipeline_cost": 0.8719
+}
