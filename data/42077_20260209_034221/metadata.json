@@ -1,0 +1,201 @@
+{
+  "question_id": 42077,
+  "timestamp": "20260209_034221",
+  "created_at": "2026-02-09T03:45:27.649400+00:00",
+  "config_hash": "d93622f0eecb",
+  "config_snapshot": {
+    "mode": "live",
+    "models": {
+      "fast": {
+        "query_generator": "openrouter/anthropic/claude-3.5-haiku",
+        "article_summarizer": "openrouter/anthropic/claude-3.5-haiku",
+        "agentic_search": "openrouter/anthropic/claude-3.5-haiku"
+      },
+      "quality": {
+        "query_generator": "openrouter/openai/o3",
+        "article_summarizer": "openrouter/anthropic/claude-sonnet-4.5",
+        "agentic_search": "openrouter/openai/o3"
+      }
+    },
+    "ensemble": {
+      "fast": [
+        {
+          "name": "forecaster_1",
+          "model": "openrouter/anthropic/claude-3.5-haiku",
+          "weight": 1.0
+        },
+        {
+          "name": "forecaster_2",
+          "model": "openrouter/anthropic/claude-3.5-haiku",
+          "weight": 1.0
+        },
+        {
+          "name": "forecaster_3",
+          "model": "openrouter/anthropic/claude-3.5-haiku",
+          "weight": 1.0
+        },
+        {
+          "name": "forecaster_4",
+          "model": "openrouter/anthropic/claude-3.5-haiku",
+          "weight": 1.0
+        },
+        {
+          "name": "forecaster_5",
+          "model": "openrouter/anthropic/claude-3.5-haiku",
+          "weight": 1.0
+        }
+      ],
+      "quality": [
+        {
+          "name": "forecaster_1",
+          "model": "openrouter/anthropic/claude-sonnet-4.5",
+          "weight": 1.0
+        },
+        {
+          "name": "forecaster_2",
+          "model": "openrouter/anthropic/claude-sonnet-4.5",
+          "weight": 1.0
+        },
+        {
+          "name": "forecaster_3",
+          "model": "openrouter/openai/gpt-5.2",
+          "weight": 1.0
+        },
+        {
+          "name": "forecaster_4",
+          "model": "openrouter/openai/o3",
+          "weight": 1.0
+        },
+        {
+          "name": "forecaster_5",
+          "model": "openrouter/openai/o3",
+          "weight": 1.0
+        }
+      ],
+      "aggregation": "weighted_average"
+    },
+    "research": {
+      "google_enabled": true,
+      "google_max_results": 10,
+      "asknews_enabled": true,
+      "asknews_max_results": 10,
+      "asknews_hours_back": 72,
+      "agentic_search_enabled": true,
+      "agentic_search_max_steps": 7,
+      "google_trends_enabled": true,
+      "fred_enabled": true,
+      "yfinance_enabled": true,
+      "question_url_scraping_enabled": true,
+      "question_url_max_scrape": 5,
+      "scraping_enabled": true,
+      "max_articles_to_scrape": 10,
+      "max_content_length": 15000,
+      "sources": [
+        {
+          "type": "llm_knowledge",
+          "enabled": true
+        },
+        {
+          "type": "asknews",
+          "enabled": true,
+          "cache_mode": "no_cache"
+        },
+        {
+          "type": "asknews_wiki",
+          "enabled": true,
+          "max_results": 5
+        },
+        {
+          "type": "article_scraping",
+          "enabled": true,
+          "max_articles": 5,
+          "max_content_length": 5000
+        }
+      ]
+    },
+    "submission": {
+      "store_reasoning": true,
+      "tournament_id": null
+    },
+    "storage": {
+      "base_dir": "./data",
+      "database_path": "./data/forecasts.db",
+      "snapshot_configs": true
+    },
+    "logging": {
+      "level": "INFO",
+      "log_llm_calls": true,
+      "track_costs": true
+    },
+    "llm": {
+      "timeout_seconds": 240,
+      "max_output_tokens": 4000,
+      "model_max_tokens": {
+        "claude-sonnet-4.5": 5000
+      },
+      "temperature": {
+        "query_generation": 0.3,
+        "article_summarization": 0.1,
+        "agentic_search": 0.3,
+        "forecasting": 0.5
+      }
+    },
+    "active_models": {
+      "query_generator": "openrouter/openai/o3",
+      "article_summarizer": "openrouter/anthropic/claude-sonnet-4.5",
+      "agentic_search": "openrouter/openai/o3"
+    },
+    "active_agents": [
+      {
+        "name": "forecaster_1",
+        "model": "openrouter/anthropic/claude-sonnet-4.5",
+        "weight": 1.0
+      },
+      {
+        "name": "forecaster_2",
+        "model": "openrouter/anthropic/claude-sonnet-4.5",
+        "weight": 1.0
+      },
+      {
+        "name": "forecaster_3",
+        "model": "openrouter/openai/gpt-5.2",
+        "weight": 1.0
+      },
+      {
+        "name": "forecaster_4",
+        "model": "openrouter/openai/o3",
+        "weight": 1.0
+      },
+      {
+        "name": "forecaster_5",
+        "model": "openrouter/openai/o3",
+        "weight": 1.0
+      }
+    ],
+    "should_submit": true
+  },
+  "costs": {
+    "total_calls": 26,
+    "successful_calls": 26,
+    "failed_calls": 0,
+    "total_input_tokens": 145348,
+    "total_output_tokens": 35204,
+    "total_cost": 0.7901772499999999
+  },
+  "timing": {
+    "start": "2026-02-09T03:42:21.981789+00:00",
+    "end": "2026-02-09T03:45:27.649349+00:00",
+    "duration_seconds": 185.66756
+  },
+  "errors": [],
+  "analysis": {
+    "id": 42077,
+    "title": "How many MPs will Reform UK have on May 7, 2026?",
+    "type": "discrete",
+    "status": "open",
+    "scheduled_close": "2026-02-09T05:01:19Z",
+    "scheduled_resolve": "2026-05-08T01:00:00Z",
+    "community_prediction": null,
+    "num_forecasters": 4
+  }
+}
