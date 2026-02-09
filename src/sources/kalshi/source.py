@@ -17,12 +17,11 @@ from typing import Any
 from ...bot.forecaster import ScopedArtifactStore
 from ...bot.multiple_choice import MultipleChoiceForecaster
 from ...bot.prompts import (
-    CLAUDE_CONTEXT,
-    GPT_CONTEXT,
     MULTIPLE_CHOICE_INSIDE_VIEW_PROMPT,
     MULTIPLE_CHOICE_OUTSIDE_VIEW_PROMPT,
     MULTIPLE_CHOICE_PROMPT_CURRENT,
     MULTIPLE_CHOICE_PROMPT_HISTORICAL,
+    SUPERFORECASTER_CONTEXT,
 )
 from ...core.types import CoreForecast, PromptSet, Question, ResearchContext
 from ...storage.artifact_store import ArtifactStore
@@ -235,8 +234,7 @@ class KalshiSource(BaseSource):
                 current_query=MULTIPLE_CHOICE_PROMPT_CURRENT,
                 outside_view=MULTIPLE_CHOICE_OUTSIDE_VIEW_PROMPT,
                 inside_view=MULTIPLE_CHOICE_INSIDE_VIEW_PROMPT,
-                system_claude=CLAUDE_CONTEXT,
-                system_gpt=GPT_CONTEXT,
+                system_prompt=SUPERFORECASTER_CONTEXT,
             )
         else:
             raise ValueError(

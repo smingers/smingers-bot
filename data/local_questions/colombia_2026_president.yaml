@@ -1,0 +1,27 @@
+id: "colombia_2026_president"
+title: "Who will win the 2026 presidential election in Colombia?"
+question_type: multiple_choice
+
+description: |
+  With President Gustavo Petro term limited, the race to be the next president of
+  Colombia is wide open. The first round of Colombia's next presidential election is
+  scheduled for 31 May 2026, with a runoff scheduled for 21 June 2026, if needed.
+  If a candidate named in the answer options ceases to be a candidate, that person's
+  name will be replaced by the person chosen to replace that candidate under the laws
+  of Colombia if 1) such a replacement is named, and 2) such a replacement is not
+  already named in the answer options.
+
+resolution_criteria: |
+  The name of the person printed on the ballot who ultimately wins will be considered
+  the winner of the election, even if that named candidate is replaced after the ballots
+  for the round that ultimately decides the winner are printed (e.g., Mel Carnahan's
+  "victory" in the 2000 Missouri Senate race).
+
+options:
+  - "Iván Cepeda"
+  - "Abelardo de la Espriella"
+  - "Sergio Fajardo"
+  - "Paloma Valencia"
+  - "Another candidate"
+
+scheduled_resolve_time: "2026-06-22T00:00:00Z"

@@ -17,8 +17,6 @@ from ...bot.prompts import (
     BINARY_OUTSIDE_VIEW_PROMPT,
     BINARY_PROMPT_CURRENT,
     BINARY_PROMPT_HISTORICAL,
-    CLAUDE_CONTEXT,
-    GPT_CONTEXT,
     MULTIPLE_CHOICE_INSIDE_VIEW_PROMPT,
     MULTIPLE_CHOICE_OUTSIDE_VIEW_PROMPT,
     MULTIPLE_CHOICE_PROMPT_CURRENT,
@@ -27,6 +25,7 @@ from ...bot.prompts import (
     NUMERIC_OUTSIDE_VIEW_PROMPT,
     NUMERIC_PROMPT_CURRENT,
     NUMERIC_PROMPT_HISTORICAL,
+    SUPERFORECASTER_CONTEXT,
 )
 from ...core.types import CoreForecast, PromptSet, Question, ResearchContext
 from ...storage.artifact_store import ArtifactStore
@@ -165,8 +164,7 @@ class MetaculusSource(BaseSource):
                 current_query=BINARY_PROMPT_CURRENT,
                 outside_view=BINARY_OUTSIDE_VIEW_PROMPT,
                 inside_view=BINARY_INSIDE_VIEW_PROMPT,
-                system_claude=CLAUDE_CONTEXT,
-                system_gpt=GPT_CONTEXT,
+                system_prompt=SUPERFORECASTER_CONTEXT,
             )
         elif question_type in ("numeric", "discrete", "date"):
             return PromptSet(
@@ -174,8 +172,7 @@ class MetaculusSource(BaseSource):
                 current_query=NUMERIC_PROMPT_CURRENT,
                 outside_view=NUMERIC_OUTSIDE_VIEW_PROMPT,
                 inside_view=NUMERIC_INSIDE_VIEW_PROMPT,
-                system_claude=CLAUDE_CONTEXT,
-                system_gpt=GPT_CONTEXT,
+                system_prompt=SUPERFORECASTER_CONTEXT,
             )
         elif question_type == "multiple_choice":
             return PromptSet(
@@ -183,8 +180,7 @@ class MetaculusSource(BaseSource):
                 current_query=MULTIPLE_CHOICE_PROMPT_CURRENT,
                 outside_view=MULTIPLE_CHOICE_OUTSIDE_VIEW_PROMPT,
                 inside_view=MULTIPLE_CHOICE_INSIDE_VIEW_PROMPT,
-                system_claude=CLAUDE_CONTEXT,
-                system_gpt=GPT_CONTEXT,
+                system_prompt=SUPERFORECASTER_CONTEXT,
             )
         else:
             raise ValueError(f"Unknown question type: {question_type}")
