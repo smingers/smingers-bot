@@ -1,0 +1,344 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 15,
+      "queries": [
+        {
+          "query": "https://netblocks.org/",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://apnews.com/article/iran-traders-protest-rial-currency-ddc955739fb412b642251dee10638f03",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "https://apnews.com/article/iran-gold-silver-jewelry-sales-israel-war-0e774bc3c2fea972ab3225e1864a438e",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "https://apnews.com/article/iran-protests-trump-4e2232877bd1fff11cd80a33db47353d",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "https://apnews.com/video/what-to-know-about-the-protests-in-iran-30bed7d6f14f4865b583c9293df83df2",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Iran internet whitelist lifting NetBlocks",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Iran internet shutdown 2026 heavy filtering",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Search NetBlocks reports on Iran 2019 and 2022 protests, durations until filtering ended, and any instances where NetBlocks said internet \u201creturned to normal\u201d after whitelisting periods. Also collect official Iranian statements on restoration timelines.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 4,
+            "queries_executed": [
+              "NetBlocks Iran 2019 protests whitelist ended",
+              "\"internet returned to normal\" NetBlocks Iran",
+              "NetBlocks Iran 2022 protests filtering duration",
+              "Iranian official statement internet restoration 2019",
+              "Iran minister says internet restored 2022",
+              "NetBlocks November 2019 Iran shutdown end",
+              "NetBlocks 25 November 2019 Iran connectivity restored",
+              "NetBlocks September 2022 Iran mobile data restored",
+              "Iran minister Zarepour says internet restored October 2022",
+              "\u201creturned to normal\u201d NetBlocks tweet 2019 Iran",
+              "NetBlocks 24 November 2019 Iran connectivity",
+              "site:twitter.com/netblocks \"Iran\" \"24 Nov 2019\"",
+              "NetBlocks 15 Oct 2022 Iran mobile data restored",
+              "Zarepour internet restoration October 2022 parliament",
+              "\"returned to normal\" NetBlocks Iran tweet"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "NetBlocks Iran 2019 protests whitelist ended",
+                    "Google"
+                  ],
+                  [
+                    "\"internet returned to normal\" NetBlocks Iran",
+                    "Google"
+                  ],
+                  [
+                    "NetBlocks Iran 2022 protests filtering duration",
+                    "Google"
+                  ],
+                  [
+                    "Iranian official statement internet restoration 2019",
+                    "Google News"
+                  ],
+                  [
+                    "Iran minister says internet restored 2022",
+                    "Google News"
+                  ]
+                ],
+                "search_results_chars": 91290,
+                "analysis_chars": 0
+              },
+              {
+                "step_number": 2,
+                "queries_executed": [
+                  [
+                    "NetBlocks November 2019 Iran shutdown end",
+                    "Google"
+                  ],
+                  [
+                    "NetBlocks 25 November 2019 Iran connectivity restored",
+                    "Google News"
+                  ],
+                  [
+                    "NetBlocks September 2022 Iran mobile data restored",
+                    "Google"
+                  ],
+                  [
+                    "Iran minister Zarepour says internet restored October 2022",
+                    "Google News"
+                  ],
+                  [
+                    "\u201creturned to normal\u201d NetBlocks tweet 2019 Iran",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 100165,
+                "analysis_chars": 4198
+              },
+              {
+                "step_number": 3,
+                "queries_executed": [
+                  [
+                    "NetBlocks 24 November 2019 Iran connectivity",
+                    "Google"
+                  ],
+                  [
+                    "site:twitter.com/netblocks \"Iran\" \"24 Nov 2019\"",
+                    "Google"
+                  ],
+                  [
+                    "NetBlocks 15 Oct 2022 Iran mobile data restored",
+                    "Google News"
+                  ],
+                  [
+                    "Zarepour internet restoration October 2022 parliament",
+                    "Google"
+                  ],
+                  [
+                    "\"returned to normal\" NetBlocks Iran tweet",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 54958,
+                "analysis_chars": 5705
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Agent",
+        "Google"
+      ],
+      "llm_cost": 0.406,
+      "llm_cost_summarization": 0.2496,
+      "llm_cost_agentic": 0.1564,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "NetBlocks Iran whitelist February 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Iran internet filtered NetBlocks 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "What is the current status of Iran\u2019s internet filtering and whitelisting according to NetBlocks reports since early February 2026? Focus on access levels for most users in Iran.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 21
+        },
+        {
+          "query": "Will Iran's Internet not be \"heavily filtered/whitelisted\" for most users before May 2026?",
+          "tool": "AskNews",
+          "deep_research_query": "What is the current status of Iran\u2019s internet filtering and whitelisting according to NetBlocks reports since early February 2026? Focus on access levels for most users in Iran."
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "AskNews",
+        "Google"
+      ],
+      "llm_cost": 0.2338,
+      "llm_cost_summarization": 0.227,
+      "llm_cost_agentic": 0.0067,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 9603,
+        "token_output": 2551,
+        "cost": 0.067074,
+        "duration_seconds": 88.0679361820221,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16789,
+        "token_output": 4055,
+        "cost": 0.11119199999999999,
+        "duration_seconds": 92.76563334465027,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 9603,
+        "token_output": 2437,
+        "cost": 0.065364,
+        "duration_seconds": 88.06799173355103,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15570,
+        "token_output": 3052,
+        "cost": 0.09249,
+        "duration_seconds": 92.7656078338623,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "cost": 0.0,
+        "duration_seconds": 88.06803178787231,
+        "error": "Response truncated after 4000 tokens (limit: 4000)"
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14894,
+        "token_output": 2409,
+        "cost": 0.059790499999999996,
+        "duration_seconds": 92.76557970046997,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8547,
+        "token_output": 2207,
+        "cost": 0.03475,
+        "duration_seconds": 88.06806373596191,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13861,
+        "token_output": 1698,
+        "cost": 0.041306,
+        "duration_seconds": 92.76555252075195,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8547,
+        "token_output": 1798,
+        "cost": 0.031478,
+        "duration_seconds": 88.06809520721436,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13782,
+        "token_output": 1795,
+        "cost": 0.041924,
+        "duration_seconds": 92.76552700996399,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0133,
+    "step2_search": 0.406,
+    "step3_outside_view": 0.2696,
+    "step5_inside_view": 0.3467
+  },
+  "total_pipeline_cost": 1.0356
+}
