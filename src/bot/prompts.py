@@ -832,19 +832,17 @@ For yFinance: use a Yahoo Finance ticker symbol to retrieve market data (e.g., "
 
 For FRED: use a FRED series ID (e.g., "AMERIBOR", "UNRATE", "CPIAUCSL") or a plain-language description (e.g., "US unemployment rate") to retrieve historical economic data with computed statistics. This returns recent values, mean, median, standard deviation, and trends directly from the Federal Reserve Economic Data API.
 
-Important formatting instructions: You should format your answer EXACTLY as below, always formatting the source in brackets () **on the same line as and after** the query. DO NOT use any quotes in your queries.
+Format your answer exactly as below, with the source in parentheses () on the same line after each query. Do not wrap your query in quotes or brackets.
 
 Analysis:
-[Brief analysis of what the query is asking for and what types of information would constitute a thorough answer. This is NOT a full response - just an understanding of what needs to be researched.]
+{{Brief analysis of what the query is asking for and what types of information would constitute a thorough answer. This is NOT a full response - just an understanding of what needs to be researched.}}
 
 Search queries:
-1. [Query details] (Google)
-2. [Query details] (Google News)
-3. [Query details] (Google)
-4. [ticker symbol] (yFinance) -- only if query involves stocks, indices, or securities
-5. [series ID or description] (FRED) -- only if query involves economic/financial data
-(Additional queries in the same format, if needed, up to five queries)
-
+1. your query here (Google)
+2. your query here (Google News)
+3. your query here (Google)
+4. ticker symbol (yFinance) -- only if query involves stocks, indices, or securities
+5. series ID or description (FRED) -- only if query involves economic/financial data
 
 """
 
@@ -882,23 +880,16 @@ Important guidelines:
 - Remember: Write a complete draft, not notes or an outline
 
 
-Important formatting instructions: You should format your answer EXACTLY as below, always formatting the source in brackets () **on the same line as and after** the query. DO NOT use any quotes in your queries. It is essential to follow these formatting instructions as regex will be used to parse your response.
+Format your answer exactly as below, with the source in parentheses () on the same line after each query. Do not wrap your query in quotes or brackets. It is essential to follow these formatting instructions as regex will be used to parse your response.
 
 Analysis:
-[Write your COMPLETE analysis here. This should be a full, comprehensive response that could serve as the final answer. Base your analysis on the search results provided. Cite sources using phrases like "according to [source]" or "as reported by [source]". Be objective and distinguish between facts and opinions. Include all relevant details, statistics, context, and nuances from the search results. Aim for a report length of about 1000 words, keeping the report as structured as possible.]
+{{Write your COMPLETE analysis here. This should be a full, comprehensive response that could serve as the final answer. Base your analysis on the search results provided. Cite sources where relevant. Be objective and distinguish between facts and opinions. Include all relevant details, statistics, context, and nuances from the search results. Aim for a report length of about 1000 words, keeping the report as structured as possible.}}
 
 Search queries:
-1. [Query details] (Google)
-2. [Query details] (Google News)
-3. [Query details] (Google)
-4. [ticker symbol] (yFinance) -- only if query involves stocks, indices, or securities
-5. [series ID or description] (FRED) -- only if query involves economic/financial data
-(Additional queries in the same format, if needed, up to five queries)
-
-Use the following verification checklist at the end of your response
-1. Correct formatting for analysis (Analysis: [your analysis])?
-2. Correct formatting for search queries (Search queries: [numbered newline separated search query list following the exact format shown above])?
-3. Analysis as exhaustive as possible, minimally with some useful information (i.e., current values) only if web search results don't turn out too useful?
-4. All queries followed by either (Google), (Google News), (yFinance), or (FRED) in brackets () on the same line as the query?
+1. your query here (Google)
+2. your query here (Google News)
+3. your query here (Google)
+4. ticker symbol (yFinance) -- only if query involves stocks, indices, or securities
+5. series ID or description (FRED) -- only if query involves economic/financial data
 
 """
