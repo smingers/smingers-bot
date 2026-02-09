@@ -178,8 +178,7 @@ class EcclesiaSource(BaseSource):
                 current_query="",
                 outside_view=BINARY_OUTSIDE_VIEW_PROMPT,
                 inside_view=BINARY_INSIDE_VIEW_PROMPT,
-                system_claude=BUSINESS_FORECASTER_CONTEXT,
-                system_gpt=BUSINESS_FORECASTER_CONTEXT,
+                system_prompt=BUSINESS_FORECASTER_CONTEXT,
             )
         elif question_type == "numeric":
             return PromptSet(
@@ -187,8 +186,7 @@ class EcclesiaSource(BaseSource):
                 current_query="",
                 outside_view=NUMERIC_OUTSIDE_VIEW_PROMPT,
                 inside_view=NUMERIC_INSIDE_VIEW_PROMPT,
-                system_claude=BUSINESS_FORECASTER_CONTEXT,
-                system_gpt=BUSINESS_FORECASTER_CONTEXT,
+                system_prompt=BUSINESS_FORECASTER_CONTEXT,
             )
         elif question_type in ("multiple_choice", "categorical"):
             return PromptSet(
@@ -196,8 +194,7 @@ class EcclesiaSource(BaseSource):
                 current_query="",
                 outside_view=CATEGORICAL_OUTSIDE_VIEW_PROMPT,
                 inside_view=CATEGORICAL_INSIDE_VIEW_PROMPT,
-                system_claude=BUSINESS_FORECASTER_CONTEXT,
-                system_gpt=BUSINESS_FORECASTER_CONTEXT,
+                system_prompt=BUSINESS_FORECASTER_CONTEXT,
             )
         else:
             raise ValueError(f"Unknown question type: {question_type}")
@@ -348,7 +345,7 @@ class EcclesiaSource(BaseSource):
         # Step 1: Run outside view predictions
         log("\n=== Running outside view predictions ===")
         outside_view_outputs = await self._run_agent_step(
-            agents, outside_view_prompt, prompts.system_claude, log, "outside view"
+            agents, outside_view_prompt, prompts.system_prompt, log, "outside view"
         )
 
         # Save outside view outputs
@@ -381,7 +378,7 @@ class EcclesiaSource(BaseSource):
             )
 
             inside_view_tasks.append(
-                self._call_model(agent["model"], inside_view_prompt, prompts.system_claude)
+                self._call_model(agent["model"], inside_view_prompt, prompts.system_prompt)
             )
 
         inside_view_results = await asyncio.gather(*inside_view_tasks, return_exceptions=True)
@@ -517,7 +514,7 @@ class EcclesiaSource(BaseSource):
         # Run outside view
         log("\n=== Running outside view predictions ===")
         outside_view_outputs = await self._run_agent_step(
-            agents, outside_view_prompt, prompts.system_claude, log, "outside view"
+            agents, outside_view_prompt, prompts.system_prompt, log, "outside view"
         )
 
         # Run inside view with cross-pollination
@@ -544,7 +541,7 @@ class EcclesiaSource(BaseSource):
             )
 
             inside_view_tasks.append(
-                self._call_model(agent["model"], inside_view_prompt, prompts.system_claude)
+                self._call_model(agent["model"], inside_view_prompt, prompts.system_prompt)
             )
 
         inside_view_results = await asyncio.gather(*inside_view_tasks, return_exceptions=True)
@@ -653,7 +650,7 @@ class EcclesiaSource(BaseSource):
         # Run outside view
         log("\n=== Running outside view predictions ===")
         outside_view_outputs = await self._run_agent_step(
-            agents, outside_view_prompt, prompts.system_claude, log, "outside view"
+            agents, outside_view_prompt, prompts.system_prompt, log, "outside view"
         )
 
         # Run inside view
@@ -681,7 +678,7 @@ class EcclesiaSource(BaseSource):
             )
 
             inside_view_tasks.append(
-                self._call_model(agent["model"], inside_view_prompt, prompts.system_claude)
+                self._call_model(agent["model"], inside_view_prompt, prompts.system_prompt)
             )
 
         inside_view_results = await asyncio.gather(*inside_view_tasks, return_exceptions=True)

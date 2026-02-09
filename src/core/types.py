@@ -88,9 +88,8 @@ class PromptSet:
     outside_view: str
     inside_view: str
 
-    # Optional system prompts per model family
-    system_claude: str = ""
-    system_gpt: str = ""
+    # System prompt (forecaster persona/context)
+    system_prompt: str = ""
 
 
 @dataclass

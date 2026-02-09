@@ -1,0 +1,296 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": false,
+      "num_queries": 0,
+      "queries": [],
+      "tools_used": [],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "2026 Colombia presidential candidates",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "latest poll Colombia 2026 presidential",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Current alliances, declared candidates, and polling data for Colombia\u2019s 2026 presidential election; include information on Iv\u00e1n Cepeda, Abelardo de la Espriella, Sergio Fajardo, Paloma Valencia, and any emerging outsider candidates. Summarize key events since 2024 that have shifted support.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 4,
+            "queries_executed": [
+              "Colombia 2026 presidential polls",
+              "Iv\u00e1n Cepeda candidatura 2026",
+              "Abelardo de la Espriella presidente 2026",
+              "Sergio Fajardo campa\u00f1a 2026 encuestas",
+              "alianzas electorales Colombia 2026",
+              "Colombia presidential poll February 2026",
+              "Programa Paloma Valencia econom\u00eda 2026",
+              "Analysis section correctly formatted? \u2013 yes  \n2. Search queries section correctly formatted? \u2013 yes  \n3. Analysis exhaustive and cites numeric data? \u2013 yes  \n4. All queries properly labelled with",
+              "encuesta nacional Colombia febrero 2026 post CNE",
+              "programa econ\u00f3mico Sergio Fajardo 2026",
+              "outsider candidato presidencial Colombia 2026",
+              "All queries followed by either"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "Colombia 2026 presidential polls",
+                    "Google"
+                  ],
+                  [
+                    "Iv\u00e1n Cepeda candidatura 2026",
+                    "Google News"
+                  ],
+                  [
+                    "Abelardo de la Espriella presidente 2026",
+                    "Google"
+                  ],
+                  [
+                    "Sergio Fajardo campa\u00f1a 2026 encuestas",
+                    "Google News"
+                  ],
+                  [
+                    "alianzas electorales Colombia 2026",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 77656,
+                "analysis_chars": 0
+              },
+              {
+                "step_number": 2,
+                "queries_executed": [
+                  [
+                    "Colombia presidential poll February 2026",
+                    "Google"
+                  ],
+                  [
+                    "Programa Paloma Valencia econom\u00eda 2026",
+                    "Google News"
+                  ],
+                  [
+                    "Analysis section correctly formatted? \u2013 yes  \n2. Search queries section correctly formatted? \u2013 yes  \n3. Analysis exhaustive and cites numeric data? \u2013 yes  \n4. All queries properly labelled with",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 41048,
+                "analysis_chars": 7360
+              },
+              {
+                "step_number": 3,
+                "queries_executed": [
+                  [
+                    "encuesta nacional Colombia febrero 2026 post CNE",
+                    "Google"
+                  ],
+                  [
+                    "programa econ\u00f3mico Sergio Fajardo 2026",
+                    "Google"
+                  ],
+                  [
+                    "outsider candidato presidencial Colombia 2026",
+                    "Google News"
+                  ],
+                  [
+                    "All queries followed by either",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 53747,
+                "analysis_chars": 7352
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google News",
+        "Google"
+      ],
+      "llm_cost": 0.3266,
+      "llm_cost_summarization": 0.1701,
+      "llm_cost_agentic": 0.1565,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Colombia presidential election 2026 candidates",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Colombia 2026 election polls February 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Give the latest February 2026 polls, candidate declarations, and major campaign developments for the 2026 Colombian presidential election, focusing on Sergio Fajardo, Paloma Valencia, Iv\u00e1n Cepeda, Abelardo de la Espriella and any leading \u201cother\u201d contenders.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "Who will win the 2026 presidential election in Colombia?",
+          "tool": "AskNews",
+          "deep_research_query": "Give the latest February 2026 polls, candidate declarations, and major campaign developments for the 2026 Colombian presidential election, focusing on Sergio Fajardo, Paloma Valencia, Iv\u00e1n Cepeda, Abelardo de la Espriella and any leading \u201cother\u201d contenders."
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "AskNews"
+      ],
+      "llm_cost": 0.1759,
+      "llm_cost_summarization": 0.1701,
+      "llm_cost_agentic": 0.0058,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7359,
+        "token_output": 2547,
+        "cost": 0.060281999999999995,
+        "duration_seconds": 63.61232805252075,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16777,
+        "token_output": 3358,
+        "cost": 0.100701,
+        "duration_seconds": 77.713308095932,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7359,
+        "token_output": 2352,
+        "cost": 0.057357,
+        "duration_seconds": 63.612545013427734,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15693,
+        "token_output": 2922,
+        "cost": 0.09090899999999999,
+        "duration_seconds": 77.71328616142273,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6354,
+        "token_output": 3176,
+        "cost": 0.05558350000000001,
+        "duration_seconds": 63.61255383491516,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14312,
+        "token_output": 2898,
+        "cost": 0.065618,
+        "duration_seconds": 77.71322703361511,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6354,
+        "token_output": 2246,
+        "cost": 0.030676000000000002,
+        "duration_seconds": 63.61272406578064,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14581,
+        "token_output": 1682,
+        "cost": 0.042618,
+        "duration_seconds": 77.7131769657135,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6354,
+        "token_output": 2287,
+        "cost": 0.031004,
+        "duration_seconds": 63.612821102142334,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13587,
+        "token_output": 1883,
+        "cost": 0.042238,
+        "duration_seconds": 77.713143825531,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0104,
+    "step2_search": 0.3266,
+    "step3_outside_view": 0.2349,
+    "step5_inside_view": 0.3421
+  },
+  "total_pipeline_cost": 0.914
+}
