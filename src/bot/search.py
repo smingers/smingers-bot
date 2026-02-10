@@ -1136,6 +1136,7 @@ class SearchPipeline:
 
                     prompt = CONTINUATION_SEARCH_PROMPT.format(
                         query=query,
+                        context=context,
                         previous_section=previous_section,
                         search_results=search_results,
                     )
