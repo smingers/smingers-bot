@@ -1,0 +1,256 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 1,
+      "queries": [
+        {
+          "query": "https://www.ofcom.org.uk/enforcement",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Ofcom Online Safety Act fine",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Ofcom online safety monetary penalty",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "List all Ofcom enforcement cases since 2020 involving the Online Safety Act or video-sharing platform rules, noting if a monetary penalty was imposed; then summarise Ofcom consultations or statements (2023-2026) about using financial penalties under the Online Safety Act",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "Ofcom enforcement video-sharing platform penalty",
+              "Ofcom Online Safety Act enforcement",
+              "Ofcom consultation financial penalties Online Safety",
+              "Ofcom sanctions statements Online Safety 2023",
+              "Ofcom enforcement video platform decisions 2022"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "Ofcom enforcement video-sharing platform penalty",
+                    "Google"
+                  ],
+                  [
+                    "Ofcom Online Safety Act enforcement",
+                    "Google"
+                  ],
+                  [
+                    "Ofcom consultation financial penalties Online Safety",
+                    "Google"
+                  ],
+                  [
+                    "Ofcom sanctions statements Online Safety 2023",
+                    "Google News"
+                  ],
+                  [
+                    "Ofcom enforcement video platform decisions 2022",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 73019,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Google News",
+        "Agent"
+      ],
+      "llm_cost": 0.1996,
+      "llm_cost_summarization": 0.1381,
+      "llm_cost_agentic": 0.0615,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Ofcom Online Safety Act fine",
+          "tool": "Google",
+          "success": true,
+          "num_results": 2
+        },
+        {
+          "query": "Ofcom online safety act enforcement fine",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Show recent UK coverage (2024-2026) of Ofcom\u2019s Online Safety Act investigations or enforcement actions that mention potential or issued monetary penalties.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "Will Ofcom publish at least one enforcement decision under the UK Online Safety Act that includes a monetary penalty amount?",
+          "tool": "AskNews",
+          "deep_research_query": "Show recent UK coverage (2024-2026) of Ofcom\u2019s Online Safety Act investigations or enforcement actions that mention potential or issued monetary penalties."
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "AskNews",
+        "Google News"
+      ],
+      "llm_cost": 0.1446,
+      "llm_cost_summarization": 0.1381,
+      "llm_cost_agentic": 0.0066,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6561,
+        "token_output": 1816,
+        "cost": 0.046923,
+        "duration_seconds": 56.97823882102966,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15139,
+        "token_output": 2313,
+        "cost": 0.08011199999999999,
+        "duration_seconds": 54.59897756576538,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6561,
+        "token_output": 1998,
+        "cost": 0.049653,
+        "duration_seconds": 56.97830414772034,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14735,
+        "token_output": 1949,
+        "cost": 0.07344,
+        "duration_seconds": 54.59895372390747,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5823,
+        "token_output": 2523,
+        "cost": 0.04551225,
+        "duration_seconds": 56.978347063064575,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13622,
+        "token_output": 2574,
+        "cost": 0.0598745,
+        "duration_seconds": 54.59892725944519,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5823,
+        "token_output": 1870,
+        "cost": 0.026605999999999998,
+        "duration_seconds": 56.978381395339966,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13830,
+        "token_output": 1372,
+        "cost": 0.038636000000000004,
+        "duration_seconds": 54.59890079498291,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5823,
+        "token_output": 2056,
+        "cost": 0.028094,
+        "duration_seconds": 56.97840905189514,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13041,
+        "token_output": 1538,
+        "cost": 0.038386,
+        "duration_seconds": 54.598875522613525,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0129,
+    "step2_search": 0.1996,
+    "step3_outside_view": 0.1968,
+    "step5_inside_view": 0.2904
+  },
+  "total_pipeline_cost": 0.6997
+}
