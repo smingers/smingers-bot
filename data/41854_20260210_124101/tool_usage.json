@@ -1,0 +1,298 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "https://fred.stlouisfed.org/series/CSUSHPISA#0",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "https://www.spglobal.com/spdji/en/documents/methodologies/methodology-sp-corelogic-cs-home-price-indices.pdf",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://en.wikipedia.org/wiki/Federal_Reserve_Bank_of_St._Louis",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://fred.stlouisfed.org/graph/graph-landing.php?g=XHP6&width=100%25&height=475",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "Case-Shiller index December 2025",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Case-Shiller home price December 2025 release",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Pull CSUSHPISA values Jan 2024-Nov 2025 and summarize any 2026 forecasts from major banks or CoreLogic reports",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 3,
+            "queries_executed": [
+              "CSUSHPISA 2024 2025 values",
+              "CoreLogic 2026 home price forecast",
+              "Goldman Sachs 2026 home price outlook",
+              "Case-Shiller 2026 forecast banks",
+              "CSUSHPISA",
+              "CSUSHPISA 2024 monthly values",
+              "CoreLogic 2026 US home price forecast"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "CSUSHPISA 2024 2025 values",
+                    "Google"
+                  ],
+                  [
+                    "CoreLogic 2026 home price forecast",
+                    "Google News"
+                  ],
+                  [
+                    "Goldman Sachs 2026 home price outlook",
+                    "Google"
+                  ],
+                  [
+                    "Case-Shiller 2026 forecast banks",
+                    "Google"
+                  ],
+                  [
+                    "CSUSHPISA",
+                    "FRED"
+                  ]
+                ],
+                "search_results_chars": 62449,
+                "analysis_chars": 0
+              },
+              {
+                "step_number": 2,
+                "queries_executed": [
+                  [
+                    "CSUSHPISA 2024 monthly values",
+                    "FRED"
+                  ],
+                  [
+                    "CoreLogic 2026 US home price forecast",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 12251,
+                "analysis_chars": 2594
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "CSUSHPISA",
+          "tool": "FRED",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Agent",
+        "FRED",
+        "Google News"
+      ],
+      "llm_cost": 0.2396,
+      "llm_cost_summarization": 0.16,
+      "llm_cost_agentic": 0.0796,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Case-Shiller index December 2025",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "housing prices forecast 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide recent analyst forecasts for the S&P CoreLogic Case-Shiller U.S. National Home Price Index through January 2026 in the United States housing market.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "What will be the seasonally adjusted S&P/Case-Shiller US National Home Price Index in the following months? (Jan-26)",
+          "tool": "AskNews",
+          "deep_research_query": "Provide recent analyst forecasts for the S&P CoreLogic Case-Shiller U.S. National Home Price Index through January 2026 in the United States housing market."
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "AskNews",
+        "Google News"
+      ],
+      "llm_cost": 0.1666,
+      "llm_cost_summarization": 0.16,
+      "llm_cost_agentic": 0.0067,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6787,
+        "token_output": 1728,
+        "cost": 0.046280999999999996,
+        "duration_seconds": 62.290608167648315,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16640,
+        "token_output": 3041,
+        "cost": 0.09553499999999998,
+        "duration_seconds": 73.97522258758545,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6787,
+        "token_output": 1736,
+        "cost": 0.046401,
+        "duration_seconds": 62.29066324234009,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15807,
+        "token_output": 2286,
+        "cost": 0.081711,
+        "duration_seconds": 73.97518420219421,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6026,
+        "token_output": 2728,
+        "cost": 0.048737499999999996,
+        "duration_seconds": 62.29070425033569,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14641,
+        "token_output": 2544,
+        "cost": 0.061237749999999994,
+        "duration_seconds": 73.97514462471008,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6026,
+        "token_output": 1748,
+        "cost": 0.026036,
+        "duration_seconds": 62.29074454307556,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14884,
+        "token_output": 1723,
+        "cost": 0.043552,
+        "duration_seconds": 73.9751091003418,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6026,
+        "token_output": 2070,
+        "cost": 0.028612,
+        "duration_seconds": 62.29078030586243,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14019,
+        "token_output": 2046,
+        "cost": 0.044406,
+        "duration_seconds": 73.97507524490356,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0142,
+    "step2_search": 0.2396,
+    "step3_outside_view": 0.1961,
+    "step5_inside_view": 0.3264
+  },
+  "total_pipeline_cost": 0.7763
+}
