@@ -1,0 +1,274 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "https://www.tesla.com/cybertruck",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://www.torquenews.com/18004/why-tesla-will-cancel-cybertruck-production-soon",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "https://electrek.co/2025/09/13/tesla-discontinues-cheapest-cybertruck/",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "https://insideevs.com/news/772205/tesla-cybertruck-rwd-discontinued-2025/",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Tesla Cybertruck order page removed",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Cybertruck production halt February 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide latest Tesla SEC filings and Q4 2025 earnings call transcript focusing on Cybertruck guidance. Also include any February 2026 statements from Elon Musk or Tesla spokespeople about Cybertruck future.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "Tesla SEC filings 2026",
+              "Tesla Q4 2025 earnings transcript",
+              "Elon Musk February 2026 Cybertruck",
+              "Tesla spokesperson February 2026 Cybertruck",
+              "Cybertruck guidance February 2026"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "Tesla SEC filings 2026",
+                    "Google"
+                  ],
+                  [
+                    "Tesla Q4 2025 earnings transcript",
+                    "Google"
+                  ],
+                  [
+                    "Elon Musk February 2026 Cybertruck",
+                    "Google News"
+                  ],
+                  [
+                    "Tesla spokesperson February 2026 Cybertruck",
+                    "Google News"
+                  ],
+                  [
+                    "Cybertruck guidance February 2026",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 58152,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "Agent"
+      ],
+      "llm_cost": 0.2441,
+      "llm_cost_summarization": 0.1973,
+      "llm_cost_agentic": 0.0468,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Tesla Cybertruck discontinued February 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Cybertruck orders suspended Tesla 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Has Tesla ended U.S. Cybertruck production or removed online orders since January 2026? Provide latest company statements and credible reports.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 17
+        },
+        {
+          "query": "Will Tesla discontinue the Cybertruck before April 1, 2026?",
+          "tool": "AskNews",
+          "deep_research_query": "Has Tesla ended U.S. Cybertruck production or removed online orders since January 2026? Provide latest company statements and credible reports."
+        }
+      ],
+      "tools_used": [
+        "AskNews",
+        "Google News",
+        "Google"
+      ],
+      "llm_cost": 0.2042,
+      "llm_cost_summarization": 0.1973,
+      "llm_cost_agentic": 0.0069,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8139,
+        "token_output": 2187,
+        "cost": 0.057222,
+        "duration_seconds": 62.96497869491577,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15220,
+        "token_output": 2946,
+        "cost": 0.08985,
+        "duration_seconds": 69.84028148651123,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8139,
+        "token_output": 2561,
+        "cost": 0.062832,
+        "duration_seconds": 62.96506881713867,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14352,
+        "token_output": 2470,
+        "cost": 0.080106,
+        "duration_seconds": 69.840256690979,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7116,
+        "token_output": 3000,
+        "cost": 0.054453,
+        "duration_seconds": 62.96510410308838,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13546,
+        "token_output": 2508,
+        "cost": 0.058817499999999995,
+        "duration_seconds": 69.84022855758667,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7116,
+        "token_output": 1653,
+        "cost": 0.027456,
+        "duration_seconds": 62.96513748168945,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13385,
+        "token_output": 1660,
+        "cost": 0.04005,
+        "duration_seconds": 69.8402009010315,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7116,
+        "token_output": 2262,
+        "cost": 0.032328,
+        "duration_seconds": 62.96547198295593,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12585,
+        "token_output": 2302,
+        "cost": 0.043586,
+        "duration_seconds": 69.84017491340637,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0131,
+    "step2_search": 0.2441,
+    "step3_outside_view": 0.2343,
+    "step5_inside_view": 0.3124
+  },
+  "total_pipeline_cost": 0.8039
+}
