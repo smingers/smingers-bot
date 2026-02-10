@@ -1,0 +1,263 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 1,
+      "queries": [
+        {
+          "query": "https://data.bls.gov/timeseries/LNS14000000",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "US unemployment rate 2025-2026 trend",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "January 2026 unemployment forecast March 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide latest US U-3 unemployment rates through Jan 2026, discuss recent trend and summarize any professional forecasts for March 2026 unemployment; include historical comparisons with late-cycle periods such as 2006-08 and 2018-20.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "BLS unemployment rate January 2026",
+              "March 2026 US unemployment forecast",
+              "2026 unemployment outlook economists survey",
+              "UNRATE",
+              "late cycle unemployment 2008 2020 comparison"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "BLS unemployment rate January 2026",
+                    "Google"
+                  ],
+                  [
+                    "March 2026 US unemployment forecast",
+                    "Google"
+                  ],
+                  [
+                    "2026 unemployment outlook economists survey",
+                    "Google News"
+                  ],
+                  [
+                    "UNRATE",
+                    "FRED"
+                  ],
+                  [
+                    "late cycle unemployment 2008 2020 comparison",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 84712,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "UNRATE",
+          "tool": "FRED",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "FRED",
+        "Google News",
+        "Google",
+        "Agent"
+      ],
+      "llm_cost": 0.2461,
+      "llm_cost_summarization": 0.1833,
+      "llm_cost_agentic": 0.0628,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "January 2026 U-3 unemployment rate",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "US labor market outlook spring 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide recent forecasts for U.S. unemployment through March 2026 from Fed, CBO, and major banks.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "What will the seasonally adjusted U-3 unemployment rate (percent) be in the United States for March 2026?",
+          "tool": "AskNews",
+          "deep_research_query": "Provide recent forecasts for U.S. unemployment through March 2026 from Fed, CBO, and major banks."
+        }
+      ],
+      "tools_used": [
+        "AskNews",
+        "Google News",
+        "Google"
+      ],
+      "llm_cost": 0.182,
+      "llm_cost_summarization": 0.1746,
+      "llm_cost_agentic": 0.0075,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8166,
+        "token_output": 2041,
+        "cost": 0.055112999999999995,
+        "duration_seconds": 50.050946950912476,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17126,
+        "token_output": 2962,
+        "cost": 0.09580799999999999,
+        "duration_seconds": 74.78140592575073,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8166,
+        "token_output": 1876,
+        "cost": 0.052638000000000004,
+        "duration_seconds": 50.05100440979004,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16479,
+        "token_output": 2765,
+        "cost": 0.09091199999999999,
+        "duration_seconds": 74.78137135505676,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7238,
+        "token_output": 2326,
+        "cost": 0.04523049999999999,
+        "duration_seconds": 50.0510458946228,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15206,
+        "token_output": 2362,
+        "cost": 0.0596785,
+        "duration_seconds": 74.7813332080841,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7238,
+        "token_output": 1958,
+        "cost": 0.03014,
+        "duration_seconds": 50.051079988479614,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15249,
+        "token_output": 1601,
+        "cost": 0.043306,
+        "duration_seconds": 74.78129529953003,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7238,
+        "token_output": 1817,
+        "cost": 0.029012,
+        "duration_seconds": 50.05111575126648,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14455,
+        "token_output": 1446,
+        "cost": 0.040478,
+        "duration_seconds": 74.78125810623169,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0118,
+    "step2_search": 0.2461,
+    "step3_outside_view": 0.2121,
+    "step5_inside_view": 0.3302
+  },
+  "total_pipeline_cost": 0.8002
+}
