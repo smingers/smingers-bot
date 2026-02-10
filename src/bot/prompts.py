@@ -824,7 +824,7 @@ Important guidelines:
 - Do NOT attempt to answer the query yet - focus on understanding what needs to be researched
 - Each search query should target a different aspect of the information needed
 - Make queries specific and likely to return accurate, authoritative information
-- Choose your source as Google or Google News based on the type of information needed.
+- Choose your source as Google, Google News, yFinance, or FRED based on the type of information needed.
 - Please phrase the queries in a way optimal for keyword optimized search (i.e., the phrase you search is likely to appear on desired web pages). Avoid writing overly specific queries. Limit to six words.
 - You can list up to 5 search queries
 
@@ -872,13 +872,12 @@ Important guidelines:
 - Choose your source as Google, Google News, yFinance, or FRED based on the type of information needed.
 - For yFinance: use a Yahoo Finance ticker symbol to retrieve market data. If a previous yFinance query failed, search Google for the correct ticker and retry.
 - For FRED: use a FRED series ID (e.g., "AMERIBOR", "UNRATE") or a plain-language description to retrieve historical economic data with computed statistics directly from the Federal Reserve Economic Data API.
-- Please phrase Google/Google News queries in a way optimal for keyword optimized search (i.e., the phrase you search is likely to appear on desired web pages). Avoid writing overly specific queries. Limit to six words.
-- List a maximum of five search queries, being conservative and using only the maximum number of queries when really necessary.
+- Write Google/Google News queries for keyword optimized search. Avoid writing overly specific queries. Limit to six words.
+- List a maximum of five search queries, using only the maximum number of queries when really necessary.
 - If your analysis is sufficiently complete, omit the "Search queries:" section entirely to signal completion. Absence of regex match for 'Search queries:' will signal that this is your final research step.
 - If you encounter difficulties retrieving the exact information being requested (paywall or information unavailable), please consider adding queries to look for alternative sources/proxies for the same data. If utilizing these sources, you must add the alternative source used as a disclaimer in your analysis. Alternatively, consider how you might obtain a small subset of the data requested (perhaps by viewing snapshots at specific times). Some information is better than no information in your conclusion.
 - You can consider searching for specific sites using the site prefix in your query.
 - Remember: Write a complete draft, not notes or an outline
-
 
 Format your answer exactly as below, with the source in parentheses () on the same line after each query. Do not wrap your query in quotes or brackets. It is essential to follow these formatting instructions as regex will be used to parse your response.
 
