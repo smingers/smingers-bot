@@ -1,0 +1,288 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 1,
+      "queries": [
+        {
+          "query": "https://www.who.int/teams/global-malaria-programme/elimination/countries-and-territories-certified-malaria-free-by-who",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "candidate countries malaria-free certification WHO",
+          "tool": "Google",
+          "success": true,
+          "num_results": 2
+        },
+        {
+          "query": "WHO malaria-free certification 2025",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Retrieve WHO press releases, reports, or statements from 2024-2026 that name countries awaiting or about to receive malaria-free certification (e.g., Belize, Bhutan, Timor-Leste, Malaysia) and give expected decision timing; also list all malaria-free certifications since 2015 with month of announcement and calculate average yearly frequency.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 3,
+            "queries_executed": [
+              "WHO \u201cmalaria-free certification\u201d 2024-2026 press release",
+              "Belize Bhutan Malaysia Timor-Leste malaria-free WHO timeline",
+              "WHO Global Malaria Programme \u201cawaiting certification\u201d countries 2025",
+              "\u201cCountries certified malaria-free by WHO\u201d 2015 site:who.int",
+              "WHO World Malaria Report pipeline elimination countries",
+              "WHO malaria-free certification pipeline 2024",
+              "WHO Belize malaria-free certification update",
+              "WHO Bhutan malaria elimination certification timing",
+              "WHO Timor-Leste malaria-free decision 2025",
+              "WHO Malaysia malaria elimination certification plan"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "WHO \u201cmalaria-free certification\u201d 2024-2026 press release",
+                    "Google"
+                  ],
+                  [
+                    "Belize Bhutan Malaysia Timor-Leste malaria-free WHO timeline",
+                    "Google News"
+                  ],
+                  [
+                    "WHO Global Malaria Programme \u201cawaiting certification\u201d countries 2025",
+                    "Google"
+                  ],
+                  [
+                    "\u201cCountries certified malaria-free by WHO\u201d 2015 site:who.int",
+                    "Google"
+                  ],
+                  [
+                    "WHO World Malaria Report pipeline elimination countries",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 36122,
+                "analysis_chars": 0
+              },
+              {
+                "step_number": 2,
+                "queries_executed": [
+                  [
+                    "WHO malaria-free certification pipeline 2024",
+                    "Google"
+                  ],
+                  [
+                    "WHO Belize malaria-free certification update",
+                    "Google"
+                  ],
+                  [
+                    "WHO Bhutan malaria elimination certification timing",
+                    "Google"
+                  ],
+                  [
+                    "WHO Timor-Leste malaria-free decision 2025",
+                    "Google"
+                  ],
+                  [
+                    "WHO Malaysia malaria elimination certification plan",
+                    "Google News"
+                  ]
+                ],
+                "search_results_chars": 68252,
+                "analysis_chars": 4080
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "Agent"
+      ],
+      "llm_cost": 0.2266,
+      "llm_cost_summarization": 0.1263,
+      "llm_cost_agentic": 0.1002,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "WHO malaria-free certification 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "WHO certifies country malaria-free 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "What WHO press releases since January 2026 mention new or pending malaria-free country certifications?",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 17
+        },
+        {
+          "query": "Will WHO publish an update indicating at least one additional country or territory has been certified malaria-free, before May 1, 2026?",
+          "tool": "AskNews",
+          "deep_research_query": "What WHO press releases since January 2026 mention new or pending malaria-free country certifications?"
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "AskNews",
+        "Google"
+      ],
+      "llm_cost": 0.101,
+      "llm_cost_summarization": 0.0948,
+      "llm_cost_agentic": 0.0061,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5775,
+        "token_output": 1873,
+        "cost": 0.04542,
+        "duration_seconds": 55.70176863670349,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14998,
+        "token_output": 2209,
+        "cost": 0.078129,
+        "duration_seconds": 50.10760307312012,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5775,
+        "token_output": 1875,
+        "cost": 0.04545,
+        "duration_seconds": 55.7018346786499,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14225,
+        "token_output": 1999,
+        "cost": 0.07266,
+        "duration_seconds": 50.10757827758789,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4978,
+        "token_output": 2546,
+        "cost": 0.044355500000000006,
+        "duration_seconds": 55.70187568664551,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13032,
+        "token_output": 2581,
+        "cost": 0.05894,
+        "duration_seconds": 50.10755109786987,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4978,
+        "token_output": 2254,
+        "cost": 0.027988,
+        "duration_seconds": 55.70190954208374,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12744,
+        "token_output": 2109,
+        "cost": 0.04236,
+        "duration_seconds": 50.10746765136719,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4978,
+        "token_output": 1915,
+        "cost": 0.025276,
+        "duration_seconds": 55.70193815231323,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12320,
+        "token_output": 2296,
+        "cost": 0.043008,
+        "duration_seconds": 50.10744118690491,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.016,
+    "step2_search": 0.2266,
+    "step3_outside_view": 0.1885,
+    "step5_inside_view": 0.2951
+  },
+  "total_pipeline_cost": 0.7262
+}

@@ -1,0 +1,7 @@
+Analysis:
+To judge the odds of a new certification before 1 May 2026 we need the historical tempo of WHO malaria-free announcements (how many per year and in which months) and which countries are presently in the certification “pipeline.”  Useful context includes: 1) the list of countries already certified and announcement dates (e.g., Cabo Verde 2024, China 2021, El Salvador–Algeria 2021, etc.); 2) WHO statements or national press releases that a country has applied for, or is close to completing, certification (Belize, Bhutan, Timor-Leste, Malaysia, etc.); 3) recent news in 2025-26 hinting at imminent approvals.  Searches should therefore target the WHO malaria-free page, WHO Global Malaria Programme press releases, and current-year news articles about candidate countries.
+
+Search queries:
+1. candidate countries malaria-free certification WHO (Google)
+2. WHO malaria-free certification 2025 (Google News)
+3. Retrieve WHO press releases, reports, or statements from 2024-2026 that name countries awaiting or about to receive malaria-free certification (e.g., Belize, Bhutan, Timor-Leste, Malaysia) and give expected decision timing; also list all malaria-free certifications since 2015 with month of announcement and calculate average yearly frequency. (Agent)
