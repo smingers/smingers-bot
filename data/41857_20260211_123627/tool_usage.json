@@ -1,0 +1,280 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 5,
+      "queries": [
+        {
+          "query": "https://main.knesset.gov.il/EN/Pages/default.aspx",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://main.knesset.gov.il/en/news/pressreleases/pages/press31125r.aspx?",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://main.knesset.gov.il/en/news/pressreleases/pages/press111125q.aspx",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://www.bbc.co.uk/news/articles/cpv13rxpgk9o",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "https://edition.cnn.com/2025/11/10/middleeast/israel-parliament-death-penalty-foreign-media-hnk-intl",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Israeli death penalty terrorists bill history",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Knesset second reading death penalty bill",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Give a timeline of all legislative attempts to introduce a mandatory death penalty for terrorists in Israel, including bill numbers, dates of first, second, and third readings, voting tallies, and reasons for success or failure; emphasise the 2018 Yisrael Beiteinu initiative and compare it with the 2025 Penal Bill Amendment No. 159.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "death penalty for terrorists bill Israel 2018 Knesset",
+              "Penal Bill Amendment 159 death penalty terrorists 2025",
+              "mandatory death penalty terrorists Israel legislative attempts",
+              "Yisrael Beiteinu death penalty bill vote tally",
+              "Knesset previous death penalty terrorists bills reasons failed"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "death penalty for terrorists bill Israel 2018 Knesset",
+                    "Google"
+                  ],
+                  [
+                    "Penal Bill Amendment 159 death penalty terrorists 2025",
+                    "Google"
+                  ],
+                  [
+                    "mandatory death penalty terrorists Israel legislative attempts",
+                    "Google News"
+                  ],
+                  [
+                    "Yisrael Beiteinu death penalty bill vote tally",
+                    "Google"
+                  ],
+                  [
+                    "Knesset previous death penalty terrorists bills reasons failed",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 84297,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Google News",
+        "Agent"
+      ],
+      "llm_cost": 0.2949,
+      "llm_cost_summarization": 0.223,
+      "llm_cost_agentic": 0.072,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Penal Bill death penalty terrorists Knesset",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Israel death penalty for terrorists bill",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide the latest February 2026 developments on Israel\u2019s Penal Bill (Amendment No. 159) instituting a mandatory death penalty for terrorists, and assess its chances of passing second and third readings before April 2026.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "Will Israel pass the Penal Bill (Death Penalty for Terrorists amendment) into law before April 2026?",
+          "tool": "AskNews",
+          "deep_research_query": "Provide the latest February 2026 developments on Israel\u2019s Penal Bill (Amendment No. 159) instituting a mandatory death penalty for terrorists, and assess its chances of passing second and third readings before April 2026."
+        }
+      ],
+      "tools_used": [
+        "AskNews",
+        "Google",
+        "Google News"
+      ],
+      "llm_cost": 0.231,
+      "llm_cost_summarization": 0.223,
+      "llm_cost_agentic": 0.008,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 9955,
+        "token_output": 2331,
+        "cost": 0.06483,
+        "duration_seconds": 60.86489987373352,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16637,
+        "token_output": 3505,
+        "cost": 0.102486,
+        "duration_seconds": 89.23528909683228,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 9955,
+        "token_output": 2073,
+        "cost": 0.06096000000000001,
+        "duration_seconds": 60.864959478378296,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15405,
+        "token_output": 2609,
+        "cost": 0.08535000000000001,
+        "duration_seconds": 89.23526120185852,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8932,
+        "token_output": 2649,
+        "cost": 0.052717,
+        "duration_seconds": 60.8650004863739,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14709,
+        "token_output": 2415,
+        "cost": 0.05955075,
+        "duration_seconds": 89.23523354530334,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8932,
+        "token_output": 1584,
+        "cost": 0.030536,
+        "duration_seconds": 60.865034341812134,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14656,
+        "token_output": 1561,
+        "cost": 0.041800000000000004,
+        "duration_seconds": 89.23520588874817,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8932,
+        "token_output": 1519,
+        "cost": 0.030016,
+        "duration_seconds": 60.86506223678589,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13746,
+        "token_output": 2293,
+        "cost": 0.045836,
+        "duration_seconds": 89.2351667881012,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0142,
+    "step2_search": 0.2949,
+    "step3_outside_view": 0.2391,
+    "step5_inside_view": 0.335
+  },
+  "total_pipeline_cost": 0.8832
+}

@@ -1,0 +1,7 @@
+Analysis:
+To judge whether the Knesset is likely to approve the two remaining readings of the Death-Penalty-for-Terrorists bill by 1 April 2026, we want outside-view evidence on (a) how similar death-penalty bills have fared in the past, (b) the current coalition’s voting discipline and size versus the 61-vote threshold, (c) the positions of key swing parties or MKs, (d) statements by Prime Minister Netanyahu and Attorney-General Baharav-Miara on constitutional risks, and (e) expected timing—how long second- and third-reading procedures usually take for controversial Basic-Law-level amendments.  Useful historical context therefore includes earlier Knesset votes on death-penalty proposals (1995, 2015, 2018), cabinet and committee debates since October 7 2025, and commentary on legal hurdles (High Court review, military jurisdiction).  Media coverage after the first reading (11 Nov 2025) and any government press releases or Knesset committee minutes will show momentum or delays.
+
+Search queries:
+1. Israeli death penalty terrorists bill history (Google)  
+2. Knesset second reading death penalty bill (Google News)  
+3. Give a timeline of all legislative attempts to introduce a mandatory death penalty for terrorists in Israel, including bill numbers, dates of first, second, and third readings, voting tallies, and reasons for success or failure; emphasise the 2018 Yisrael Beiteinu initiative and compare it with the 2025 Penal Bill Amendment No. 159. (Agent)
