@@ -58,7 +58,7 @@ def compute_percentiles_from_cdf(cdf: list[float], scaling: dict) -> dict[str, f
         else:
             return {}
 
-    percentile_targets = [1, 5, 10, 25, 50, 75, 90, 95, 99]
+    percentile_targets = [1, 5, 10, 20, 40, 50, 60, 80, 90, 95, 99]
     result = {}
 
     for p in percentile_targets:
@@ -235,7 +235,7 @@ def load_forecast_detail(data_dir: Path, folder: str) -> dict[str, Any]:
 
         # Get model from metadata
         if metadata:
-            agents = metadata.get("config_snapshot", {}).get("_active_agents", [])
+            agents = metadata.get("config_snapshot", {}).get("active_agents", [])
             if i <= len(agents):
                 agent_data["model"] = agents[i - 1].get("model", "unknown")
 
