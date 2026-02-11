@@ -1,0 +1,268 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "https://www.wsj.com/politics/policy/house-representatives-censure-votes-chaos-db3a33b7",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://www.wsj.com/politics/ethics-probe-of-rep-cory-mills-moves-ahead-as-possible-censure-vote-looms-30b47ad5?mod=article_inline",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://history.house.gov/Institution/Discipline/Expulsion-Censure-Reprimand/",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "recent House censures reprimands list",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "pending censure resolution House 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide all privileged resolutions in the 119th Congress that seek to censure, expel, or reprimand a representative and indicate whether any have scheduled or completed floor votes.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "119th Congress censure resolution congress.gov",
+              "119th Congress expel resolution congress.gov",
+              "119th Congress reprimand resolution house",
+              "House roll call censure 2025-2026",
+              "privileged resolution censure 119th Congress"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "119th Congress censure resolution congress.gov",
+                    "Google"
+                  ],
+                  [
+                    "119th Congress expel resolution congress.gov",
+                    "Google"
+                  ],
+                  [
+                    "119th Congress reprimand resolution house",
+                    "Google"
+                  ],
+                  [
+                    "House roll call censure 2025-2026",
+                    "Google"
+                  ],
+                  [
+                    "privileged resolution censure 119th Congress",
+                    "Google News"
+                  ]
+                ],
+                "search_results_chars": 68984,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google",
+        "Google News"
+      ],
+      "llm_cost": 0.3118,
+      "llm_cost_summarization": 0.2416,
+      "llm_cost_agentic": 0.0701,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "House censure expel reprimand 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "House censure vote February 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Give the latest developments since January 2026 on resolutions to censure, expel, or reprimand U.S. House members.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "Will the US House of Representatives censure, expel or reprimand any of its members before April 1, 2026?",
+          "tool": "AskNews",
+          "deep_research_query": "Give the latest developments since January 2026 on resolutions to censure, expel, or reprimand U.S. House members."
+        }
+      ],
+      "tools_used": [
+        "AskNews",
+        "Google",
+        "Google News"
+      ],
+      "llm_cost": 0.2486,
+      "llm_cost_summarization": 0.2416,
+      "llm_cost_agentic": 0.007,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7928,
+        "token_output": 2582,
+        "cost": 0.062514,
+        "duration_seconds": 61.305055379867554,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 18000,
+        "token_output": 2228,
+        "cost": 0.08742,
+        "duration_seconds": 72.28342962265015,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7928,
+        "token_output": 1446,
+        "cost": 0.045474,
+        "duration_seconds": 61.305126667022705,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16669,
+        "token_output": 2661,
+        "cost": 0.089922,
+        "duration_seconds": 72.28340077400208,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7098,
+        "token_output": 2758,
+        "cost": 0.0510335,
+        "duration_seconds": 61.30517292022705,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15057,
+        "token_output": 2055,
+        "cost": 0.055119749999999995,
+        "duration_seconds": 72.2833743095398,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7098,
+        "token_output": 2885,
+        "cost": 0.037276000000000004,
+        "duration_seconds": 61.305208921432495,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15705,
+        "token_output": 2434,
+        "cost": 0.050882,
+        "duration_seconds": 72.28334760665894,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7098,
+        "token_output": 1602,
+        "cost": 0.027012,
+        "duration_seconds": 61.30523610115051,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14666,
+        "token_output": 1103,
+        "cost": 0.038156,
+        "duration_seconds": 72.28332233428955,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0134,
+    "step2_search": 0.3118,
+    "step3_outside_view": 0.2233,
+    "step5_inside_view": 0.3215
+  },
+  "total_pipeline_cost": 0.8699
+}
