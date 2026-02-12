@@ -187,12 +187,7 @@ llm:
 
   # Maximum output tokens for LLM responses
   # Higher values allow longer responses but increase cost
-  max_output_tokens: 4000
-
-  # Model-specific token limits (override max_output_tokens for specific models)
-  # Claude Sonnet 4.5 tends to produce longer responses and was hitting the 4000 limit
-  model_max_tokens:
-    "claude-sonnet-4.5": 5000
+  max_output_tokens: 5000
 
   # Temperature settings per task type (0.0 = deterministic, 1.0 = most random)
   # Utility tasks use low temps for consistency; forecasting uses moderate temps

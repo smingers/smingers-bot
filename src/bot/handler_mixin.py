@@ -97,24 +97,14 @@ class ForecasterMixin:
         temp_config = llm_config.get("temperature", {})
         return float(temp_config.get(task, self._DEFAULT_TEMPERATURES.get(task, 0.7)))
 
-    def _get_max_tokens(self, model: str | None = None) -> int:
+    def _get_max_tokens(self) -> int:
         """
-        Get max output tokens from config with fallback to 4000.
+        Get max output tokens from config with fallback to 5000.
 
-        Checks for model-specific overrides in llm.model_max_tokens first,
-        then falls back to llm.max_output_tokens, then 4000.
+        Returns llm.max_output_tokens from config, defaulting to 5000.
         """
         llm_config = self.config.get("llm", {})
-        default = llm_config.get("max_output_tokens", 4000)
-
-        # Check for model-specific override
-        if model:
-            model_overrides = llm_config.get("model_max_tokens", {})
-            for model_pattern, max_tokens in model_overrides.items():
-                if model_pattern in model:
-                    return max_tokens
-
-        return default
+        return llm_config.get("max_output_tokens", 5000)
 
     async def _call_model(
         self,
@@ -173,7 +163,7 @@ class ForecasterMixin:
             kwargs["temperature"] = temperature
 
         try:
-            max_tokens = self._get_max_tokens(model)
+            max_tokens = self._get_max_tokens()
             response = await self.llm.complete(
                 model=model,
                 messages=messages,

@@ -182,6 +182,7 @@ class Forecaster:
                     "duration_seconds": (end_time - start_time).total_seconds(),
                 },
                 analysis=analysis,
+                errors=forecast_result.get("pipeline_warnings"),
             )
 
             # Save to database
@@ -267,6 +268,7 @@ class Forecaster:
             "agent_results": result.agent_results,
             "historical_context": result.historical_context,
             "current_context": result.current_context,
+            "pipeline_warnings": forecaster.pipeline_warnings,
         }
 
     async def _forecast_numeric(
@@ -340,6 +342,7 @@ class Forecaster:
             "agent_results": result.agent_results,
             "historical_context": result.historical_context,
             "current_context": result.current_context,
+            "pipeline_warnings": forecaster.pipeline_warnings,
         }
 
     async def _forecast_multiple_choice(
@@ -387,6 +390,7 @@ class Forecaster:
             "historical_context": result.historical_context,
             "current_context": result.current_context,
             "options": result.options,
+            "pipeline_warnings": forecaster.pipeline_warnings,
         }
 
     def _save_without_submitting(

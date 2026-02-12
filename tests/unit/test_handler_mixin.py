@@ -355,13 +355,13 @@ class TestCallModelWithMetadata:
 
 
 class TestGetMaxTokens:
-    """Tests for _get_max_tokens() model-specific limits."""
+    """Tests for _get_max_tokens() config-driven token limits."""
 
     def test_default_max_tokens(self):
-        """Returns 4000 when no config specified."""
+        """Returns 5000 when no config specified."""
         mixin = TestableForecasterMixin({})
 
-        assert mixin._get_max_tokens() == 4000
+        assert mixin._get_max_tokens() == 5000
 
     def test_max_tokens_from_config(self):
         """Returns value from llm.max_output_tokens config."""
@@ -369,55 +369,6 @@ class TestGetMaxTokens:
         mixin = TestableForecasterMixin(config)
 
         assert mixin._get_max_tokens() == 6000
-
-    def test_model_specific_override(self):
-        """Model-specific override takes precedence."""
-        config = {
-            "llm": {
-                "max_output_tokens": 4000,
-                "model_max_tokens": {
-                    "claude-sonnet-4.5": 5000,
-                    "gpt-4": 8000,
-                },
-            }
-        }
-        mixin = TestableForecasterMixin(config)
-
-        # Model with override
-        assert mixin._get_max_tokens("openrouter/anthropic/claude-sonnet-4.5") == 5000
-        assert mixin._get_max_tokens("openrouter/openai/gpt-4") == 8000
-
-        # Model without override uses default
-        assert mixin._get_max_tokens("openrouter/openai/o3") == 4000
-
-    def test_model_pattern_matching(self):
-        """Pattern matching works for partial model names."""
-        config = {
-            "llm": {
-                "max_output_tokens": 4000,
-                "model_max_tokens": {
-                    "claude-sonnet": 5000,  # Matches any claude-sonnet variant
-                },
-            }
-        }
-        mixin = TestableForecasterMixin(config)
-
-        assert mixin._get_max_tokens("openrouter/anthropic/claude-sonnet-4.5") == 5000
-        assert mixin._get_max_tokens("anthropic/claude-sonnet-4") == 5000
-        assert mixin._get_max_tokens("claude-sonnet-3.5") == 5000
-
-    def test_no_model_uses_default(self):
-        """When model is None, returns default."""
-        config = {
-            "llm": {
-                "max_output_tokens": 4000,
-                "model_max_tokens": {"claude-sonnet-4.5": 5000},
-            }
-        }
-        mixin = TestableForecasterMixin(config)
-
-        assert mixin._get_max_tokens(None) == 4000
-        assert mixin._get_max_tokens() == 4000
 
 
 # ============================================================================

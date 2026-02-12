@@ -110,6 +110,7 @@ class BaseForecaster(ForecasterMixin, ABC):
             llm_timeout = config.get("llm", {}).get("timeout_seconds")
             self.llm = LLMClient(timeout_seconds=llm_timeout)
         self.artifact_store = artifact_store
+        self.pipeline_warnings: list[str] = []
 
     def _get_common_prompt_params(self, **question_params) -> dict[str, str]:
         """
@@ -326,6 +327,9 @@ class BaseForecaster(ForecasterMixin, ABC):
                 outside_view_outputs.append(f"{_FAILED_OUTPUT_PREFIX}{result}")
                 outside_view_metrics.error = str(result)
                 outside_view_metrics.duration_seconds = duration
+                self.pipeline_warnings.append(
+                    f"forecaster_{i + 1} outside view failed ({agents[i]['model']}): {result}"
+                )
             else:
                 output, response_metadata = result
                 log(f"\nForecaster_{i + 1} outside view output:\n{output[:300]}...")
@@ -422,6 +426,9 @@ class BaseForecaster(ForecasterMixin, ABC):
                 inside_view_outputs.append(result)
                 inside_view_metrics.error = str(result)
                 inside_view_metrics.duration_seconds = duration
+                self.pipeline_warnings.append(
+                    f"forecaster_{i + 1} inside view failed ({agents[i]['model']}): {result}"
+                )
             else:
                 output, response_metadata = result
                 inside_view_outputs.append(output)
@@ -456,6 +463,9 @@ class BaseForecaster(ForecasterMixin, ABC):
                     log(f"Forecaster_{i + 1} extraction error: {e}")
                     prediction = None
                     error = str(e)
+                    self.pipeline_warnings.append(
+                        f"forecaster_{i + 1} extraction failed ({agent['model']}): {e}"
+                    )
 
             agent_result = self._build_agent_result(
                 agent_id=f"forecaster_{i + 1}",
