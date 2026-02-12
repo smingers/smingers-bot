@@ -1,0 +1,262 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 2,
+      "queries": [
+        {
+          "query": "https://www.usatoday.com/story/news/world/2025/11/11/russia-trump-nuclear-tests/87209795007/",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "https://www.cbsnews.com/news/china-trump-nuclear-weapons-tests-60-minutes-beijing-response/",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Russia nuclear test plans 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Trump resume nuclear testing announcement",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "List all public reports from 2023 to February 12 2026 about United States, Russia, or China preparing for or announcing potential nuclear explosive tests, including official statements, treaty changes, site activity imagery, and intelligence assessments. Summarize dates, actors, and nature of each report.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "Novaya Zemlya nuclear test preparations 2024",
+              "Lop Nur suspected nuclear test 2025",
+              "Nevada Test Site nuclear readiness 2023",
+              "Russia suspends CTBT ratification 2024",
+              "U.S. intelligence China nuclear testing 2023"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "Novaya Zemlya nuclear test preparations 2024",
+                    "Google"
+                  ],
+                  [
+                    "Lop Nur suspected nuclear test 2025",
+                    "Google News"
+                  ],
+                  [
+                    "Nevada Test Site nuclear readiness 2023",
+                    "Google"
+                  ],
+                  [
+                    "Russia suspends CTBT ratification 2024",
+                    "Google"
+                  ],
+                  [
+                    "U.S. intelligence China nuclear testing 2023",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 95730,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Agent",
+        "Google News"
+      ],
+      "llm_cost": 0.3068,
+      "llm_cost_summarization": 0.2334,
+      "llm_cost_agentic": 0.0734,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "United States nuclear test 2026 Nevada",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Russia nuclear detonation 2026 test site",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Have U.S., Russia, or China carried out a confirmed nuclear detonation between November 2025 and February 2026?",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "Will the United States, Russia or China detonate a nuclear device before April 1, 2026?",
+          "tool": "AskNews",
+          "deep_research_query": "Have U.S., Russia, or China carried out a confirmed nuclear detonation between November 2025 and February 2026?"
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Google News",
+        "AskNews"
+      ],
+      "llm_cost": 0.2407,
+      "llm_cost_summarization": 0.2334,
+      "llm_cost_agentic": 0.0073,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 10087,
+        "token_output": 2291,
+        "cost": 0.064626,
+        "duration_seconds": 65.55104160308838,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15701,
+        "token_output": 3633,
+        "cost": 0.101598,
+        "duration_seconds": 78.71937370300293,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 10087,
+        "token_output": 2443,
+        "cost": 0.066906,
+        "duration_seconds": 65.55109882354736,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14377,
+        "token_output": 2288,
+        "cost": 0.07745099999999999,
+        "duration_seconds": 78.71934771537781,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 9006,
+        "token_output": 2349,
+        "cost": 0.048646499999999995,
+        "duration_seconds": 65.55113911628723,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14133,
+        "token_output": 2666,
+        "cost": 0.062056749999999994,
+        "duration_seconds": 78.71931910514832,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 9006,
+        "token_output": 1772,
+        "cost": 0.032188,
+        "duration_seconds": 65.55118036270142,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13615,
+        "token_output": 1703,
+        "cost": 0.040854,
+        "duration_seconds": 78.71929216384888,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 9006,
+        "token_output": 1984,
+        "cost": 0.033884,
+        "duration_seconds": 65.55121564865112,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13180,
+        "token_output": 1471,
+        "cost": 0.038128,
+        "duration_seconds": 78.71926474571228,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0146,
+    "step2_search": 0.3068,
+    "step3_outside_view": 0.2463,
+    "step5_inside_view": 0.3201
+  },
+  "total_pipeline_cost": 0.8878
+}
