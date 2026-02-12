@@ -481,6 +481,129 @@ def analyze_forecast(forecast_dir: Path) -> ForecastAnalysis | None:
     return analysis
 
 
+def _compute_range_distribution(
+    forecasts: list[ForecastAnalysis], qtype: str
+) -> tuple[list[tuple[str, int, int]], list[tuple[str, int, int]]]:
+    """Compute range distribution tables for outside and inside view.
+
+    For binary: buckets are raw percentage-point ranges (0-9, 10-19, ..., 60+).
+    For numeric/discrete/date: ranges are normalized as % of the P50 median value,
+        so different scales are comparable. Buckets: 0-4%, 5-9%, 10-19%, 20-29%, 30+%.
+    For multiple_choice: uses the max-probability summary stat (already 0-1 scale),
+        converted to percentage-point buckets like binary.
+
+    Returns (ov_distribution, iv_distribution) where each is a list of
+    (bucket_label, count, total) tuples.
+    """
+    if qtype in ("binary", "multiple_choice"):
+        # Use raw percentage-point ranges
+        buckets = [
+            ("0–9pp", 0, 0.09),
+            ("10–19pp", 0.10, 0.19),
+            ("20–29pp", 0.20, 0.29),
+            ("30–39pp", 0.30, 0.39),
+            ("40–49pp", 0.40, 0.49),
+            ("50+pp", 0.50, float("inf")),
+        ]
+
+        ov_ranges = [f.outside_view_range for f in forecasts if f.outside_view_range is not None]
+        iv_ranges = [f.inside_view_range for f in forecasts if f.inside_view_range is not None]
+
+        def _bucket_counts(ranges, buckets):
+            result = []
+            total = len(ranges)
+            for label, lo, hi in buckets:
+                count = sum(1 for r in ranges if lo <= r <= hi)
+                result.append((label, count, total))
+            return result
+
+        return _bucket_counts(ov_ranges, buckets), _bucket_counts(iv_ranges, buckets)
+
+    else:
+        # Numeric/discrete/date: normalize range as percentage of median (P50)
+        buckets = [
+            ("0–4%", 0, 4),
+            ("5–9%", 5, 9),
+            ("10–19%", 10, 19),
+            ("20–29%", 20, 29),
+            ("30+%", 30, float("inf")),
+        ]
+
+        def _get_relative_ranges(forecasts, view="outside"):
+            """Compute range as % of median for each forecast."""
+            relative = []
+            for f in forecasts:
+                vals = []
+                for fc in f.forecasters:
+                    v = fc.outside_view if view == "outside" else fc.inside_view
+                    if v is not None:
+                        vals.append(v)
+                if len(vals) >= 2:
+                    median = sorted(vals)[len(vals) // 2]
+                    if abs(median) > 0:
+                        rng = max(vals) - min(vals)
+                        relative.append(rng / abs(median) * 100)
+            return relative
+
+        ov_rel = _get_relative_ranges(forecasts, "outside")
+        iv_rel = _get_relative_ranges(forecasts, "inside")
+
+        def _bucket_counts(ranges, buckets):
+            result = []
+            total = len(ranges)
+            for label, lo, hi in buckets:
+                count = sum(1 for r in ranges if lo <= r <= hi)
+                result.append((label, count, total))
+            return result
+
+        return _bucket_counts(ov_rel, buckets), _bucket_counts(iv_rel, buckets)
+
+
+def _build_range_distribution_html(
+    ov_dist: list[tuple[str, int, int]],
+    iv_dist: list[tuple[str, int, int]],
+    qtype: str,
+) -> str:
+    """Build side-by-side range distribution tables HTML."""
+    title_suffix = (
+        "(percentage points)" if qtype in ("binary", "multiple_choice") else "(% of median)"
+    )
+
+    def _table(title, dist):
+        rows = ""
+        for label, count, total in dist:
+            pct = f"{count / total * 100:.0f}%" if total > 0 else "—"
+            # Bar width proportional to count
+            bar_width = count / total * 100 if total > 0 else 0
+            rows += (
+                f"<tr>"
+                f"<td>{label}</td>"
+                f'<td style="text-align:right; font-family:monospace;">{count}</td>'
+                f'<td style="text-align:right; font-family:monospace; color:var(--text-dim);">{pct}</td>'
+                f'<td style="width:40%;"><div style="background:var(--accent); height:12px; '
+                f'border-radius:2px; width:{bar_width}%; opacity:0.6;"></div></td>'
+                f"</tr>"
+            )
+        return (
+            f'<div class="range-dist-table">'
+            f'<div class="range-dist-title">{title}</div>'
+            f"<table>"
+            f"<thead><tr>"
+            f'<th style="text-align:left;">Range</th>'
+            f'<th style="text-align:right;">Count</th>'
+            f'<th style="text-align:right;">%</th>'
+            f"<th></th>"
+            f"</tr></thead>"
+            f"<tbody>{rows}</tbody>"
+            f"</table></div>"
+        )
+
+    ov_table = _table(f"Outside View Spread {title_suffix}", ov_dist)
+    iv_table = _table(f"Inside View Spread {title_suffix}", iv_dist)
+
+    return f'<div class="range-dist-row">{ov_table}{iv_table}</div>'
+
+
 def generate_html(analyses: list[ForecastAnalysis], output_path: Path):
     """Generate interactive HTML report."""
 
@@ -925,10 +1048,15 @@ def _build_html(
             </div>
             """)
 
+        # Compute range distribution tables
+        ov_dist, iv_dist = _compute_range_distribution(forecasts, qtype)
+        dist_html = _build_range_distribution_html(ov_dist, iv_dist, qtype)
+
         sections.append(f"""
         <section class="type-section" id="type-{qtype}">
             <h2>{qtype.replace("_", " ").title()}</h2>
             {summary_html}
+            {dist_html}
             <div class="forecast-list">
                 {"".join(rows_html)}
             </div>
@@ -1210,6 +1338,45 @@ def _build_html(
     }}
     .filter-bar button:hover {{ border-color: var(--accent); }}
     .filter-bar button.active {{ background: var(--accent); color: #000; border-color: var(--accent); }}
+
+    .range-dist-row {{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-bottom: 20px;
+    }}
+    .range-dist-table {{
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 12px;
+    }}
+    .range-dist-title {{
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--text-dim);
+        margin-bottom: 8px;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+    }}
+    .range-dist-table table {{
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.8rem;
+    }}
+    .range-dist-table th {{
+        padding: 4px 6px;
+        color: var(--text-dim);
+        font-weight: 500;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+        border-bottom: 1px solid var(--border);
+    }}
+    .range-dist-table td {{
+        padding: 3px 6px;
+        border-bottom: 1px solid rgba(48, 54, 61, 0.3);
+    }}
 </style>
 </head>
 <body>

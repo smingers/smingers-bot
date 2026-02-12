@@ -236,25 +236,64 @@
     }
     .filter-bar button:hover { border-color: var(--accent); }
     .filter-bar button.active { background: var(--accent); color: #000; border-color: var(--accent); }
+
+    .range-dist-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-bottom: 20px;
+    }
+    .range-dist-table {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 12px;
+    }
+    .range-dist-title {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--text-dim);
+        margin-bottom: 8px;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+    }
+    .range-dist-table table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.8rem;
+    }
+    .range-dist-table th {
+        padding: 4px 6px;
+        color: var(--text-dim);
+        font-weight: 500;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+        border-bottom: 1px solid var(--border);
+    }
+    .range-dist-table td {
+        padding: 3px 6px;
+        border-bottom: 1px solid rgba(48, 54, 61, 0.3);
+    }
 </style>
 </head>
 <body>
 
 <h1>Ensemble Diversity Analysis</h1>
 <p class="subtitle">
-    119 forecasts analyzed (119 with full outside+inside view data)
+    120 forecasts analyzed (120 with full outside+inside view data)
     &bull; Generated from artifact data
 </p>
 
-<nav><a href="#type-binary">Binary (59)</a> | <a href="#type-numeric">Numeric (38)</a> | <a href="#type-multiple_choice">Multiple Choice (17)</a> | <a href="#type-discrete">Discrete (4)</a> | <a href="#type-date">Date (1)</a></nav>
+<nav><a href="#type-binary">Binary (60)</a> | <a href="#type-numeric">Numeric (38)</a> | <a href="#type-multiple_choice">Multiple Choice (17)</a> | <a href="#type-discrete">Discrete (4)</a> | <a href="#type-date">Date (1)</a></nav>
 
 <div class="global-stats">
     <div class="stat-card">
-        <div class="stat-value">119</div>
+        <div class="stat-value">120</div>
         <div class="stat-label">Total Forecasts</div>
     </div>
     <div class="stat-card">
-        <div class="stat-value">536</div>
+        <div class="stat-value">540</div>
         <div class="stat-label">Forecaster-Level Shifts<br><span class="stat-sublabel">outside view → inside view pairs</span></div>
     </div>
     <div class="stat-card">
@@ -262,7 +301,7 @@
         <div class="stat-label">Avg Prediction Move<br><span class="stat-sublabel">binary only, per forecaster</span></div>
     </div>
     <div class="stat-card">
-        <div class="stat-value">-3.3%</div>
+        <div class="stat-value">-3.4%</div>
         <div class="stat-label">Avg Shift Direction<br><span class="stat-sublabel">binary, + = inside view higher than outside view</span></div>
     </div>
     <div class="stat-card convergence">
@@ -270,7 +309,7 @@
         <div class="stat-label">Converged<br><span class="stat-sublabel">inside view spread &lt; 80% of outside view spread</span></div>
     </div>
     <div class="stat-card">
-        <div class="stat-value">43</div>
+        <div class="stat-value">44</div>
         <div class="stat-label">Stable<br><span class="stat-sublabel">inside view spread ≈ outside view spread</span></div>
     </div>
     <div class="stat-card divergence">
@@ -285,7 +324,7 @@
             
         <div class="type-summary">
             <div class="stat-card">
-                <div class="stat-value">59</div>
+                <div class="stat-value">60</div>
                 <div class="stat-label">Forecasts</div>
             </div>
             <div class="stat-card">
@@ -306,8 +345,123 @@
             </div>
         </div>
         
+            <div class="range-dist-row"><div class="range-dist-table"><div class="range-dist-title">Outside View Spread (percentage points)</div><table><thead><tr><th style="text-align:left;">Range</th><th style="text-align:right;">Count</th><th style="text-align:right;">%</th><th></th></tr></thead><tbody><tr><td>0–9pp</td><td style="text-align:right; font-family:monospace;">16</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">27%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:26.666666666666668%; opacity:0.6;"></div></td></tr><tr><td>10–19pp</td><td style="text-align:right; font-family:monospace;">12</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">20%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:20.0%; opacity:0.6;"></div></td></tr><tr><td>20–29pp</td><td style="text-align:right; font-family:monospace;">14</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">23%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:23.333333333333332%; opacity:0.6;"></div></td></tr><tr><td>30–39pp</td><td style="text-align:right; font-family:monospace;">1</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">2%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:1.6666666666666667%; opacity:0.6;"></div></td></tr><tr><td>40–49pp</td><td style="text-align:right; font-family:monospace;">4</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">7%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:6.666666666666667%; opacity:0.6;"></div></td></tr><tr><td>50+pp</td><td style="text-align:right; font-family:monospace;">7</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">12%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:11.666666666666666%; opacity:0.6;"></div></td></tr></tbody></table></div><div class="range-dist-table"><div class="range-dist-title">Inside View Spread (percentage points)</div><table><thead><tr><th style="text-align:left;">Range</th><th style="text-align:right;">Count</th><th style="text-align:right;">%</th><th></th></tr></thead><tbody><tr><td>0–9pp</td><td style="text-align:right; font-family:monospace;">14</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">23%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:23.333333333333332%; opacity:0.6;"></div></td></tr><tr><td>10–19pp</td><td style="text-align:right; font-family:monospace;">19</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">32%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:31.666666666666664%; opacity:0.6;"></div></td></tr><tr><td>20–29pp</td><td style="text-align:right; font-family:monospace;">10</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">17%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:16.666666666666664%; opacity:0.6;"></div></td></tr><tr><td>30–39pp</td><td style="text-align:right; font-family:monospace;">5</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">8%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:8.333333333333332%; opacity:0.6;"></div></td></tr><tr><td>40–49pp</td><td style="text-align:right; font-family:monospace;">7</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">12%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:11.666666666666666%; opacity:0.6;"></div></td></tr><tr><td>50+pp</td><td style="text-align:right; font-family:monospace;">4</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">7%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:6.666666666666667%; opacity:0.6;"></div></td></tr></tbody></table></div></div>
             <div class="forecast-list">
                 
+            <div class="forecast-card">
+                <div class="forecast-header">
+                    <div class="forecast-title">
+                        <a href="https://www.metaculus.com/questions/42048" target="_blank">Q42048</a>
+                        — Will the ECDC weekly SARS-CoV-2 test positivity series show four consecutive week-over-week increase
+                    </div>
+                    <div class="forecast-meta">
+                        <span class="badge mode-live">live</span>
+                        <span class="badge stable">Stable</span>
+                        <span class="timestamp">20260211_194731</span>
+                    </div>
+                </div>
+                
+                
+    <div class="range-bar-legend">
+        <span class="ov-legend">Outside View</span>
+        <span class="iv-legend">Inside View</span>
+        <span class="final-legend">Aggregated</span>
+    </div>
+    <div class="range-bar">
+        <div class="ov-range" style="left: 16.0%; width: 26.0%"></div>
+        <div class="iv-range" style="left: 11.0%; width: 28.0%"></div>
+        <div class="dot ov" style="left: 28.000000000000004%"></div><div class="dot ov" style="left: 42.0%"></div><div class="dot ov" style="left: 31.0%"></div><div class="dot ov" style="left: 16.0%"></div><div class="dot iv" style="left: 20.0%"></div><div class="dot iv" style="left: 21.0%"></div><div class="dot iv" style="left: 39.0%"></div><div class="dot iv" style="left: 19.0%"></div><div class="dot iv" style="left: 11.0%"></div><div class="dot final" style="left: 22.0%"></div>
+    </div>
+    <div class="range-bar-labels">
+        <span>0%</span>
+        <span>25%</span>
+        <span>50%</span>
+        <span>75%</span>
+        <span>100%</span>
+    </div>
+    
+                <table class="fc-table">
+                    <thead>
+                        <tr>
+                            <th>Agent</th>
+                            <th>Model</th>
+                            <th class="ov">Outside View</th>
+                            <th class="iv">Inside View</th>
+                            <th class="shift">Shift</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                    <tr>
+                        <td class="agent">F1</td>
+                        <td class="model">claude-sonnet-4.5</td>
+                        <td class="val ov">28.0%</td>
+                        <td class="val iv">20.0%</td>
+                        <td class="val shift" style="color: #e67700">-8.0%</td>
+                    </tr>
+                
+                    <tr>
+                        <td class="agent">F2</td>
+                        <td class="model">claude-sonnet-4.5</td>
+                        <td class="val ov">42.0%</td>
+                        <td class="val iv">21.0%</td>
+                        <td class="val shift" style="color: #d63031">-10.0%</td>
+                    </tr>
+                
+                    <tr>
+                        <td class="agent">F3</td>
+                        <td class="model">gpt-5.2</td>
+                        <td class="val ov">—</td>
+                        <td class="val iv">39.0%</td>
+                        <td class="val shift" style="color: #b8860b">-3.0%</td>
+                    </tr>
+                
+                    <tr>
+                        <td class="agent">F4</td>
+                        <td class="model">o3</td>
+                        <td class="val ov">31.0%</td>
+                        <td class="val iv">19.0%</td>
+                        <td class="val shift" style="color: #888">—</td>
+                    </tr>
+                
+                    <tr>
+                        <td class="agent">F5</td>
+                        <td class="model">o3</td>
+                        <td class="val ov">16.0%</td>
+                        <td class="val iv">11.0%</td>
+                        <td class="val shift" style="color: #e67700">-5.0%</td>
+                    </tr>
+                
+                    </tbody>
+                    <tfoot>
+                        
+                        <tr>
+                            <td colspan="2" class="summary-label">Average</td>
+                            <td class="val ov">29.2%</td>
+                            <td class="val iv">22.0%</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="summary-label">Range</td>
+                            <td class="val ov">26.0%</td>
+                            <td class="val iv">28.0%</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="summary-label">Std Dev</td>
+                            <td class="val ov">10.7%</td>
+                            <td class="val iv">10.3%</td>
+                            <td></td>
+                        </tr>
+                        <tr class="final-row">
+                            <td colspan="2" class="summary-label">Final</td>
+                            <td colspan="3" class="val final">22.0%</td>
+                        </tr>
+                
+                    </tfoot>
+                </table>
+            </div>
+            
             <div class="forecast-card">
                 <div class="forecast-header">
                     <div class="forecast-title">
@@ -7063,6 +7217,7 @@
             </div>
         </div>
         
+            <div class="range-dist-row"><div class="range-dist-table"><div class="range-dist-title">Outside View Spread (% of median)</div><table><thead><tr><th style="text-align:left;">Range</th><th style="text-align:right;">Count</th><th style="text-align:right;">%</th><th></th></tr></thead><tbody><tr><td>0–4%</td><td style="text-align:right; font-family:monospace;">22</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">58%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:57.89473684210527%; opacity:0.6;"></div></td></tr><tr><td>5–9%</td><td style="text-align:right; font-family:monospace;">4</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">11%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:10.526315789473683%; opacity:0.6;"></div></td></tr><tr><td>10–19%</td><td style="text-align:right; font-family:monospace;">6</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">16%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:15.789473684210526%; opacity:0.6;"></div></td></tr><tr><td>20–29%</td><td style="text-align:right; font-family:monospace;">0</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">0%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:0.0%; opacity:0.6;"></div></td></tr><tr><td>30+%</td><td style="text-align:right; font-family:monospace;">4</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">11%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:10.526315789473683%; opacity:0.6;"></div></td></tr></tbody></table></div><div class="range-dist-table"><div class="range-dist-title">Inside View Spread (% of median)</div><table><thead><tr><th style="text-align:left;">Range</th><th style="text-align:right;">Count</th><th style="text-align:right;">%</th><th></th></tr></thead><tbody><tr><td>0–4%</td><td style="text-align:right; font-family:monospace;">24</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">63%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:63.1578947368421%; opacity:0.6;"></div></td></tr><tr><td>5–9%</td><td style="text-align:right; font-family:monospace;">1</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">3%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:2.631578947368421%; opacity:0.6;"></div></td></tr><tr><td>10–19%</td><td style="text-align:right; font-family:monospace;">4</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">11%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:10.526315789473683%; opacity:0.6;"></div></td></tr><tr><td>20–29%</td><td style="text-align:right; font-family:monospace;">1</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">3%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:2.631578947368421%; opacity:0.6;"></div></td></tr><tr><td>30+%</td><td style="text-align:right; font-family:monospace;">4</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">11%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:10.526315789473683%; opacity:0.6;"></div></td></tr></tbody></table></div></div>
             <div class="forecast-list">
                 
             <div class="forecast-card">
@@ -10742,6 +10897,7 @@
             </div>
         </div>
         
+            <div class="range-dist-row"><div class="range-dist-table"><div class="range-dist-title">Outside View Spread (percentage points)</div><table><thead><tr><th style="text-align:left;">Range</th><th style="text-align:right;">Count</th><th style="text-align:right;">%</th><th></th></tr></thead><tbody><tr><td>0–9pp</td><td style="text-align:right; font-family:monospace;">2</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">12%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:11.76470588235294%; opacity:0.6;"></div></td></tr><tr><td>10–19pp</td><td style="text-align:right; font-family:monospace;">6</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">35%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:35.294117647058826%; opacity:0.6;"></div></td></tr><tr><td>20–29pp</td><td style="text-align:right; font-family:monospace;">4</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">24%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:23.52941176470588%; opacity:0.6;"></div></td></tr><tr><td>30–39pp</td><td style="text-align:right; font-family:monospace;">4</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">24%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:23.52941176470588%; opacity:0.6;"></div></td></tr><tr><td>40–49pp</td><td style="text-align:right; font-family:monospace;">0</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">0%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:0.0%; opacity:0.6;"></div></td></tr><tr><td>50+pp</td><td style="text-align:right; font-family:monospace;">0</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">0%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:0.0%; opacity:0.6;"></div></td></tr></tbody></table></div><div class="range-dist-table"><div class="range-dist-title">Inside View Spread (percentage points)</div><table><thead><tr><th style="text-align:left;">Range</th><th style="text-align:right;">Count</th><th style="text-align:right;">%</th><th></th></tr></thead><tbody><tr><td>0–9pp</td><td style="text-align:right; font-family:monospace;">2</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">12%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:11.76470588235294%; opacity:0.6;"></div></td></tr><tr><td>10–19pp</td><td style="text-align:right; font-family:monospace;">9</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">53%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:52.94117647058824%; opacity:0.6;"></div></td></tr><tr><td>20–29pp</td><td style="text-align:right; font-family:monospace;">3</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">18%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:17.647058823529413%; opacity:0.6;"></div></td></tr><tr><td>30–39pp</td><td style="text-align:right; font-family:monospace;">2</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">12%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:11.76470588235294%; opacity:0.6;"></div></td></tr><tr><td>40–49pp</td><td style="text-align:right; font-family:monospace;">1</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">6%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:5.88235294117647%; opacity:0.6;"></div></td></tr><tr><td>50+pp</td><td style="text-align:right; font-family:monospace;">0</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">0%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:0.0%; opacity:0.6;"></div></td></tr></tbody></table></div></div>
             <div class="forecast-list">
                 
             <div class="forecast-card">
@@ -12201,6 +12357,7 @@
             </div>
         </div>
         
+            <div class="range-dist-row"><div class="range-dist-table"><div class="range-dist-title">Outside View Spread (% of median)</div><table><thead><tr><th style="text-align:left;">Range</th><th style="text-align:right;">Count</th><th style="text-align:right;">%</th><th></th></tr></thead><tbody><tr><td>0–4%</td><td style="text-align:right; font-family:monospace;">1</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">25%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:25.0%; opacity:0.6;"></div></td></tr><tr><td>5–9%</td><td style="text-align:right; font-family:monospace;">0</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">0%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:0.0%; opacity:0.6;"></div></td></tr><tr><td>10–19%</td><td style="text-align:right; font-family:monospace;">2</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">50%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:50.0%; opacity:0.6;"></div></td></tr><tr><td>20–29%</td><td style="text-align:right; font-family:monospace;">1</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">25%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:25.0%; opacity:0.6;"></div></td></tr><tr><td>30+%</td><td style="text-align:right; font-family:monospace;">0</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">0%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:0.0%; opacity:0.6;"></div></td></tr></tbody></table></div><div class="range-dist-table"><div class="range-dist-title">Inside View Spread (% of median)</div><table><thead><tr><th style="text-align:left;">Range</th><th style="text-align:right;">Count</th><th style="text-align:right;">%</th><th></th></tr></thead><tbody><tr><td>0–4%</td><td style="text-align:right; font-family:monospace;">2</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">50%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:50.0%; opacity:0.6;"></div></td></tr><tr><td>5–9%</td><td style="text-align:right; font-family:monospace;">0</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">0%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:0.0%; opacity:0.6;"></div></td></tr><tr><td>10–19%</td><td style="text-align:right; font-family:monospace;">1</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">25%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:25.0%; opacity:0.6;"></div></td></tr><tr><td>20–29%</td><td style="text-align:right; font-family:monospace;">0</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">0%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:0.0%; opacity:0.6;"></div></td></tr><tr><td>30+%</td><td style="text-align:right; font-family:monospace;">0</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">0%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:0.0%; opacity:0.6;"></div></td></tr></tbody></table></div></div>
             <div class="forecast-list">
                 
             <div class="forecast-card">
@@ -12616,6 +12773,7 @@
             </div>
         </div>
         
+            <div class="range-dist-row"><div class="range-dist-table"><div class="range-dist-title">Outside View Spread (% of median)</div><table><thead><tr><th style="text-align:left;">Range</th><th style="text-align:right;">Count</th><th style="text-align:right;">%</th><th></th></tr></thead><tbody><tr><td>0–4%</td><td style="text-align:right; font-family:monospace;">1</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">100%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:100.0%; opacity:0.6;"></div></td></tr><tr><td>5–9%</td><td style="text-align:right; font-family:monospace;">0</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">0%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:0.0%; opacity:0.6;"></div></td></tr><tr><td>10–19%</td><td style="text-align:right; font-family:monospace;">0</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">0%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:0.0%; opacity:0.6;"></div></td></tr><tr><td>20–29%</td><td style="text-align:right; font-family:monospace;">0</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">0%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:0.0%; opacity:0.6;"></div></td></tr><tr><td>30+%</td><td style="text-align:right; font-family:monospace;">0</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">0%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:0.0%; opacity:0.6;"></div></td></tr></tbody></table></div><div class="range-dist-table"><div class="range-dist-title">Inside View Spread (% of median)</div><table><thead><tr><th style="text-align:left;">Range</th><th style="text-align:right;">Count</th><th style="text-align:right;">%</th><th></th></tr></thead><tbody><tr><td>0–4%</td><td style="text-align:right; font-family:monospace;">1</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">100%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:100.0%; opacity:0.6;"></div></td></tr><tr><td>5–9%</td><td style="text-align:right; font-family:monospace;">0</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">0%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:0.0%; opacity:0.6;"></div></td></tr><tr><td>10–19%</td><td style="text-align:right; font-family:monospace;">0</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">0%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:0.0%; opacity:0.6;"></div></td></tr><tr><td>20–29%</td><td style="text-align:right; font-family:monospace;">0</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">0%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:0.0%; opacity:0.6;"></div></td></tr><tr><td>30+%</td><td style="text-align:right; font-family:monospace;">0</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">0%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:0.0%; opacity:0.6;"></div></td></tr></tbody></table></div></div>
             <div class="forecast-list">
                 
             <div class="forecast-card">
