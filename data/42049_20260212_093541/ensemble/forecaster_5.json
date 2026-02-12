@@ -1,0 +1,5 @@
+{
+  "percentiles": null,
+  "cdf_length": 0,
+  "error": "Need at least 2 valid percentile points (got 1)"
+}
