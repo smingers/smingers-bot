@@ -9,6 +9,7 @@ This document lists all the non-core helper scripts, dashboards, and visualizers
 | HTML Dashboard | `python scripts/dashboard_html.py` | Static HTML dashboard to browse forecasts |
 | Streamlit Dashboard | `streamlit run scripts/dashboard_streamlit.py` | Interactive dashboard with filtering |
 | Forecast Tracker | `python scripts/track_forecasts.py --tournament 32916` | Compare forecasts vs community consensus |
+| Ensemble Diversity Report | `python scripts/ensemble_diversity_report.py` | Analyze forecaster agreement & anchoring across ensemble |
 | Tool Usage Analyzer | `python scripts/analyze_tool_usage.py <path>` | Analyze research tool usage per forecast |
 | Artifact Migration | `python scripts/migrate_artifacts.py` | Backfill missing database fields |
 
@@ -106,6 +107,41 @@ python scripts/analyze_tool_usage.py data/41594_20260128_123456/tool_usage.json
 ---
 
 ## Reports & Assessments
+
+### Ensemble Diversity Report
+
+**Location:** `scripts/ensemble_diversity_report.py`
+
+Generates a static HTML report analyzing how the 5-forecaster ensemble behaves — whether forecasters agree or diverge, how much they shift between outside and inside views, and whether cross-pollination is creating real diversity.
+
+```bash
+# Generate report (scans all artifacts in data/)
+python scripts/ensemble_diversity_report.py
+
+# Custom output path
+python scripts/ensemble_diversity_report.py --output my_report.html
+```
+
+**Default output:** `data/ensemble_diversity_report.html`
+
+**To view the report**, open the HTML file directly in a browser, or serve it locally:
+
+```bash
+cd data && python -m http.server 8765
+# Then open http://localhost:8765/ensemble_diversity_report.html
+```
+
+**What it shows:**
+
+- **Global stats** — total forecasts, avg prediction move, convergence/divergence counts
+- **Per question type** (binary, numeric, multiple choice, discrete, date):
+  - Avg outside view and inside view spread (std dev or coefficient of variation)
+  - Ensemble spread change (do forecasters converge or diverge after the inside view?)
+- **Per forecast** — all 5 forecasters' outside view and inside view predictions, shift from OV → IV, range, std dev, and final aggregated value
+- **Cross-pollination aware** — shifts are computed against the outside view each forecaster actually *received* (not their own), so F2's shift is relative to F4's outside view, etc.
+- **Tags** — each forecast is labeled CONVERGED, STABLE, or DIVERGED based on whether the inside view spread shrank, stayed flat, or grew relative to the outside view spread
+
+**Important:** This is a manual re-run script, not a live dashboard. It scans all artifact directories in `data/` each time it runs, excluding test mode forecasts and pre-refactor (pre Jan 27) artifacts. Re-run it after new forecasts to update.
 
 ### Forecast Quality Assessments (Manual)
 

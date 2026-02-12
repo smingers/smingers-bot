@@ -135,6 +135,7 @@ Additional fine-print:
 Question metadata:
 - Opened for forecasting: {open_time}
 - Resolves: {scheduled_resolve_time}
+- Note: Only events occurring on or after the open date of {open_time} should be considered for resolution, unless the resolution criteria explicitly specify a different time period.
 
 IMPORTANT: Today's date is {today}. All dates before today's date are in the PAST. All dates after today's date are in the FUTURE. Use today's date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
@@ -187,6 +188,7 @@ Additional fine-print:
 Question metadata:
 - Opened for forecasting: {open_time}
 - Resolves: {scheduled_resolve_time}
+- Note: Only events occurring on or after the open date of {open_time} should be considered for resolution, unless the resolution criteria explicitly specify a different time period.
 
 IMPORTANT: Today's date is {today}. All dates before today's date are in the PAST. All dates after today's date are in the FUTURE. Use today's date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
@@ -386,6 +388,7 @@ Additional fine-print:
 Question metadata:
 - Opened for forecasting: {open_time}
 - Resolves: {scheduled_resolve_time}
+- Note: Only events occurring on or after the open date of {open_time} should be considered for resolution, unless the resolution criteria explicitly specify a different time period.
 
 IMPORTANT: Today's date is {today}. All dates before today's date are in the PAST. All dates after today's date are in the FUTURE. Use today's date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
@@ -444,6 +447,7 @@ Additional fine-print:
 Question metadata:
 - Opened for forecasting: {open_time}
 - Resolves: {scheduled_resolve_time}
+- Note: Only events occurring on or after the open date of {open_time} should be considered for resolution, unless the resolution criteria explicitly specify a different time period.
 
 IMPORTANT: Today's date is {today}. All dates before today's date are in the PAST. All dates after today's date are in the FUTURE. Use today's date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
@@ -644,6 +648,7 @@ Units for answer: {units}
 Question metadata:
 - Opened for forecasting: {open_time}
 - Resolves: {scheduled_resolve_time}
+- Note: Only events occurring on or after the open date of {open_time} should be considered for resolution, unless the resolution criteria explicitly specify a different time period.
 
 IMPORTANT: Today's date is {today}. All dates before today's date are in the PAST. All dates after today's date are in the FUTURE. Use today's date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
@@ -710,6 +715,7 @@ Units for answer: {units}
 Question metadata:
 - Opened for forecasting: {open_time}
 - Resolves: {scheduled_resolve_time}
+- Note: Only events occurring on or after the open date of {open_time} should be considered for resolution, unless the resolution criteria explicitly specify a different time period.
 
 IMPORTANT: Today's date is {today}. All dates before today's date are in the PAST. All dates after today's date are in the FUTURE. Use today's date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
