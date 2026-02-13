@@ -1,0 +1,263 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 1,
+      "queries": [
+        {
+          "query": "https://www.eia.gov/dnav/pet/hist/eer_epjk_pf4_rgc_dpgD.htm",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "EIA Gulf Coast jet fuel spot price",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "jet fuel price forecast 2026 Gulf Coast",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide monthly averages for U.S. Gulf Coast Kerosene-Type Jet Fuel spot price since 2015 and list any publicly available forecasts or forward curves indicating expected price levels for March 2026.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "EIA Gulf Coast jet fuel prices",
+              "Gulf Coast jet fuel price forecast 2026",
+              "jet fuel price forecast 2026",
+              "CME Gulf Coast jet fuel futures",
+              "U.S. Gulf Coast jet fuel price"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "EIA Gulf Coast jet fuel prices",
+                    "Google"
+                  ],
+                  [
+                    "Gulf Coast jet fuel price forecast 2026",
+                    "Google"
+                  ],
+                  [
+                    "jet fuel price forecast 2026",
+                    "Google News"
+                  ],
+                  [
+                    "CME Gulf Coast jet fuel futures",
+                    "Google"
+                  ],
+                  [
+                    "U.S. Gulf Coast jet fuel price",
+                    "FRED"
+                  ]
+                ],
+                "search_results_chars": 63013,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "Kerosene-Type Jet Fuel, U.S. Gulf Coast",
+          "tool": "FRED",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "Agent",
+        "FRED"
+      ],
+      "llm_cost": 0.2802,
+      "llm_cost_summarization": 0.2012,
+      "llm_cost_agentic": 0.079,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Gulf Coast jet fuel price",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "jet fuel price forecast 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "What are analysts expecting U.S. Gulf Coast spot jet fuel prices to average in March 2026 and what drivers are they citing?",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 17
+        },
+        {
+          "query": "Will the average daily price of kerosene jet fuel in the US Gulf Coast be greater than $2.50 per gallon in March 2026?",
+          "tool": "AskNews",
+          "deep_research_query": "What are analysts expecting U.S. Gulf Coast spot jet fuel prices to average in March 2026 and what drivers are they citing?"
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "AskNews"
+      ],
+      "llm_cost": 0.2121,
+      "llm_cost_summarization": 0.2012,
+      "llm_cost_agentic": 0.0109,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7155,
+        "token_output": 3393,
+        "cost": 0.07236000000000001,
+        "duration_seconds": 77.00066256523132,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15346,
+        "token_output": 3863,
+        "cost": 0.103983,
+        "duration_seconds": 89.89023637771606,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7155,
+        "token_output": 2829,
+        "cost": 0.0639,
+        "duration_seconds": 77.000723361969,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13634,
+        "token_output": 2250,
+        "cost": 0.074652,
+        "duration_seconds": 89.8902063369751,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6312,
+        "token_output": 2856,
+        "cost": 0.05103,
+        "duration_seconds": 77.00075316429138,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13006,
+        "token_output": 2055,
+        "cost": 0.0515305,
+        "duration_seconds": 89.8901755809784,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6312,
+        "token_output": 3366,
+        "cost": 0.039552000000000004,
+        "duration_seconds": 77.00078535079956,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12392,
+        "token_output": 1836,
+        "cost": 0.039472,
+        "duration_seconds": 89.89014410972595,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6312,
+        "token_output": 2945,
+        "cost": 0.036184,
+        "duration_seconds": 77.00080990791321,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11569,
+        "token_output": 1170,
+        "cost": 0.032498,
+        "duration_seconds": 89.89011359214783,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0121,
+    "step2_search": 0.2802,
+    "step3_outside_view": 0.263,
+    "step5_inside_view": 0.3021
+  },
+  "total_pipeline_cost": 0.8575
+}
