@@ -462,6 +462,17 @@ class TestNormalizePercentileLine:
         assert normalize_percentile_line("1,000") == "1000"
         assert normalize_percentile_line("1,000,000") == "1000000"
 
+    def test_removes_space_thousands_separators(self):
+        """Test removal of spaces used as thousands separators (SI/European convention, common in o3 output)."""
+        assert normalize_percentile_line("Percentile 20: 1 050") == "percentile 20: 1050"
+        assert normalize_percentile_line("Percentile 90: 3 000") == "percentile 90: 3000"
+        assert normalize_percentile_line("Percentile 80: 2 200") == "percentile 80: 2200"
+
+    def test_removes_space_thousands_multi_group(self):
+        """Test removal of multi-group space-separated thousands (e.g., 1 450 000)."""
+        assert normalize_percentile_line("Percentile 90: 1 450 000") == "percentile 90: 1450000"
+        assert normalize_percentile_line("Percentile 10: 1 640 000") == "percentile 10: 1640000"
+
     def test_lowercase(self):
         """Test conversion to lowercase."""
         assert normalize_percentile_line("PERCENTILE 50: 100") == "percentile 50: 100"
@@ -505,6 +516,138 @@ class TestMarkdownBoldPercentileExtraction:
         result = extract_percentiles_from_response(text, verbose=False)
         assert result[10] == 3.62
         assert result[90] == 3.70
+        assert len(result) == 6
+
+
+class TestAlternativeSeparatorExtraction:
+    """Tests for extraction with non-standard separators (≈, =, ~) and space-separated thousands.
+
+    o3 frequently outputs percentiles with ≈ as separator and/or space-separated thousands
+    (SI/European convention), e.g. 'Percentile 20 ≈ 1 050'.
+    """
+
+    def test_approximate_separator(self):
+        """Test extraction with ≈ as separator between percentile key and value."""
+        text = """
+Percentile 10 ≈ 900
+Percentile 20 ≈ 1050
+Percentile 40 ≈ 1300
+Percentile 60 ≈ 1600
+Percentile 80 ≈ 2200
+Percentile 90 ≈ 3000
+"""
+        result = extract_percentiles_from_response(text, verbose=False)
+        assert result[10] == 900
+        assert result[20] == 1050
+        assert result[90] == 3000
+        assert len(result) == 6
+
+    def test_equals_separator(self):
+        """Test extraction with = as separator."""
+        text = """
+Percentile 10 = 500
+Percentile 50 = 1000
+Percentile 90 = 2000
+"""
+        result = extract_percentiles_from_response(text, verbose=False)
+        assert result[10] == 500
+        assert result[50] == 1000
+        assert result[90] == 2000
+
+    def test_tilde_separator(self):
+        """Test extraction with ~ as separator."""
+        text = """
+Percentile 10 ~ 500
+Percentile 90 ~ 2000
+"""
+        result = extract_percentiles_from_response(text, verbose=False)
+        assert result[10] == 500
+        assert result[90] == 2000
+
+    def test_space_thousands_with_colon(self):
+        """Test extraction where values use space-separated thousands with colon separator."""
+        text = """
+Percentile 10: 800
+Percentile 20: 1 050
+Percentile 40: 1 300
+Percentile 60: 1 600
+Percentile 80: 2 200
+Percentile 90: 3 000
+"""
+        result = extract_percentiles_from_response(text, verbose=False)
+        assert result[10] == 800
+        assert result[20] == 1050
+        assert result[40] == 1300
+        assert result[60] == 1600
+        assert result[80] == 2200
+        assert result[90] == 3000
+        assert len(result) == 6
+
+    def test_space_thousands_multi_group(self):
+        """Test extraction with multi-group space-separated thousands (e.g., 1 450 000)."""
+        text = """
+Percentile 10: 1 450 000
+Percentile 20: 1 520 000
+Percentile 40: 1 600 000
+Percentile 60: 1 670 000
+Percentile 80: 1 800 000
+Percentile 90: 1 950 000
+"""
+        result = extract_percentiles_from_response(text, verbose=False)
+        assert result[10] == 1450000
+        assert result[90] == 1950000
+        assert len(result) == 6
+
+    def test_approximate_separator_with_space_thousands(self):
+        """Test the combined case: ≈ separator AND space-separated thousands (actual o3 failure mode)."""
+        text = """
+Percentile 10  ≈ 900 (SC outbreak contained quickly, few new clusters)
+Percentile 20  ≈ 1 050 (growth only +40 %)
+Percentile 40  ≈ 1 300 (reference-class midpoint)
+Percentile 60  ≈ 1 600 (growth +120 %)
+Percentile 80  ≈ 2 200 (one new 500-case outbreak plus continuation)
+Percentile 90  ≈ 3 000 (multiple failures of containment, ≥2 parallel outbreaks)
+"""
+        result = extract_percentiles_from_response(text, verbose=False)
+        assert result[10] == 900
+        assert result[20] == 1050
+        assert result[40] == 1300
+        assert result[60] == 1600
+        assert result[80] == 2200
+        assert result[90] == 3000
+        assert len(result) == 6
+
+    def test_o3_full_response_with_duplicate_blocks(self):
+        """Test extraction from actual o3 output with both ≈ block and final : block (Q42049 Forecaster 5)."""
+        text = """
+Distribution calibration
+The inside-view distribution is centred slightly above the outside-view mode and widened for tail risk.
+
+Percentile 10  ≈ 900 (SC outbreak contained quickly, few new clusters)
+Percentile 20  ≈ 1 050 (growth only +40 %)
+Percentile 40  ≈ 1 300 (reference-class midpoint)
+Percentile 60  ≈ 1 600 (growth +120 %)
+Percentile 80  ≈ 2 200 (one new 500-case outbreak plus continuation)
+Percentile 90  ≈ 3 000 (multiple failures of containment, ≥2 parallel outbreaks)
+
+Checklist:
+1. Target variable: CDC-reported cumulative U.S. measles cases in 2026 as of 24 Apr 2026, integer count.
+
+Percentile 10: 900
+Percentile 20: 1 050
+Percentile 40: 1 300
+Percentile 60: 1 600
+Percentile 80: 2 200
+Percentile 90: 3 000
+"""
+        result = extract_percentiles_from_response(text, verbose=False)
+        # Should take the LAST occurrence (the colon-separated block)
+        assert result[10] == 900
+        assert result[20] == 1050
+        assert result[40] == 1300
+        assert result[60] == 1600
+        assert result[80] == 2200
+        assert result[90] == 3000
         assert len(result) == 6
 
 

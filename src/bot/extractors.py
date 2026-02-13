@@ -94,15 +94,17 @@ VALID_PERCENTILE_KEYS: set[int] = {
 
 # Regex for parsing percentile lines (numeric values)
 # Allows optional trailing text like "(lowest value)" or "(highest value)"
+# Separators: colon, dash, ≈ (approximate), = (equals), ~ (tilde)
 NUM_PATTERN = re.compile(
-    r"^(?:percentile\s*)?(\d{1,3})\s*[:\-]\s*([+-]?\d+(?:\.\d+)?(?:e[+-]?\d+)?)\s*(?:\(.*\))?\s*$",
+    r"^(?:percentile\s*)?(\d{1,3})\s*[:\-≈=~]\s*([+-]?\d+(?:\.\d+)?(?:e[+-]?\d+)?)\s*(?:\(.*\))?\s*$",
     re.IGNORECASE,
 )
 
 # Regex for parsing percentile lines with date values (YYYY-MM-DD or YYYY-MM-DDTHH:MM:SSZ)
 # Note: normalize_percentile_line() lowercases input, so T/Z become t/z
+# Separators: colon, dash, ≈ (approximate), = (equals), ~ (tilde)
 DATE_PATTERN = re.compile(
-    r"^(?:percentile\s*)?(\d{1,3})\s*[:\-]\s*(\d{4}-\d{2}-\d{2}(?:[tT]\d{2}:\d{2}:\d{2}[zZ]?)?)\s*$",
+    r"^(?:percentile\s*)?(\d{1,3})\s*[:\-≈=~]\s*(\d{4}-\d{2}-\d{2}(?:[tT]\d{2}:\d{2}:\d{2}[zZ]?)?)\s*$",
     re.IGNORECASE,
 )
 
@@ -251,6 +253,13 @@ def normalize_percentile_line(s: str) -> str:
     s = s.replace("*", "")
     # Remove thousands-sep commas & NBSPs
     s = s.replace(",", "").replace("\u00a0", "")
+    # Remove spaces used as thousands separators (e.g., "1 050" → "1050", "1 450 000" → "1450000")
+    # A space between two digits is always a thousands separator in percentile lines.
+    # Apply repeatedly for multi-group numbers like "1 450 000" → "1450 000" → "1450000"
+    prev = None
+    while prev != s:
+        prev = s
+        s = re.sub(r"(\d) (\d)", r"\1\2", s)
     return s.lower()
 
 
