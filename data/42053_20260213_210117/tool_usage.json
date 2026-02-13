@@ -1,0 +1,256 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 1,
+      "queries": [
+        {
+          "query": "https://www.cdc.gov/measles/data-research/index.html",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "CDC measles cases by year",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "measles outbreak US 2026 cases",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide CDC-reported U.S. measles case totals for each year 2010-2025. Also list the 2026 cumulative total as of 13 Feb 2026 and summarize major outbreaks contributing to 2024-2026 figures.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "CDC measles annual cases 2010-2023",
+              "CDC measles cases 2024 total",
+              "CDC measles cases 2025 total",
+              "CDC measles cases 2026 February",
+              "U.S. measles outbreak 2024-2025"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "CDC measles annual cases 2010-2023",
+                    "Google"
+                  ],
+                  [
+                    "CDC measles cases 2024 total",
+                    "Google News"
+                  ],
+                  [
+                    "CDC measles cases 2025 total",
+                    "Google News"
+                  ],
+                  [
+                    "CDC measles cases 2026 February",
+                    "Google"
+                  ],
+                  [
+                    "U.S. measles outbreak 2024-2025",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 72308,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "Agent"
+      ],
+      "llm_cost": 0.228,
+      "llm_cost_summarization": 0.1684,
+      "llm_cost_agentic": 0.0596,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "CDC measles 2026 case count",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "U.S. measles cases 2026 outbreak",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Summarize current 2026 U.S. measles case numbers and outbreaks reported by CDC as of February 2026",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "Will the CDC-reported cumulative number of confirmed U.S. measles cases in 2026, as of April 24, 2026, be at least 2,000?",
+          "tool": "AskNews",
+          "deep_research_query": "Summarize current 2026 U.S. measles case numbers and outbreaks reported by CDC as of February 2026"
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "AskNews",
+        "Google"
+      ],
+      "llm_cost": 0.1749,
+      "llm_cost_summarization": 0.1684,
+      "llm_cost_agentic": 0.0065,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7912,
+        "token_output": 2071,
+        "cost": 0.054801,
+        "duration_seconds": 67.89326596260071,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15118,
+        "token_output": 2900,
+        "cost": 0.08885399999999999,
+        "duration_seconds": 69.02773714065552,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7912,
+        "token_output": 2134,
+        "cost": 0.055746000000000004,
+        "duration_seconds": 67.89332628250122,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14223,
+        "token_output": 2401,
+        "cost": 0.078684,
+        "duration_seconds": 69.02771401405334,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6987,
+        "token_output": 3072,
+        "cost": 0.05523525000000001,
+        "duration_seconds": 67.89336943626404,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13501,
+        "token_output": 2365,
+        "cost": 0.05673675,
+        "duration_seconds": 69.02768850326538,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6987,
+        "token_output": 2495,
+        "cost": 0.033934,
+        "duration_seconds": 67.89340782165527,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13638,
+        "token_output": 1446,
+        "cost": 0.038844000000000004,
+        "duration_seconds": 69.02766132354736,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6987,
+        "token_output": 2382,
+        "cost": 0.033030000000000004,
+        "duration_seconds": 67.89343905448914,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12838,
+        "token_output": 2156,
+        "cost": 0.042924000000000004,
+        "duration_seconds": 69.02763605117798,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0132,
+    "step2_search": 0.228,
+    "step3_outside_view": 0.2327,
+    "step5_inside_view": 0.306
+  },
+  "total_pipeline_cost": 0.78
+}
