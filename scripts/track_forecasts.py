@@ -196,17 +196,32 @@ class ForecastTracker:
     async def __aexit__(self, *args):
         await self.close()
 
+    async def _request_with_retry(
+        self, method: str, url: str, retry_count: int = 5, **kwargs
+    ) -> httpx.Response:
+        """Make an HTTP request with retry and exponential backoff on 429."""
+        for attempt in range(retry_count):
+            try:
+                resp = await self.client.request(method, url, **kwargs)
+                resp.raise_for_status()
+                return resp
+            except httpx.HTTPStatusError as e:
+                if e.response.status_code == 429 and attempt < retry_count - 1:
+                    wait_time = 2 ** (attempt + 1)  # 2, 4, 8, 16 seconds
+                    print(f"    Rate limited, waiting {wait_time}s...")
+                    await asyncio.sleep(wait_time)
+                else:
+                    raise
+
     async def get_user_id(self) -> int:
         if self.user_id is None:
-            resp = await self.client.get("/users/me/")
-            resp.raise_for_status()
+            resp = await self._request_with_retry("GET", "/users/me/")
             self.user_id = resp.json()["id"]
         return self.user_id
 
     async def get_tournament_info(self, tournament_id: int | str) -> dict:
         """Get tournament name and metadata."""
-        resp = await self.client.get(f"/projects/{tournament_id}/")
-        resp.raise_for_status()
+        resp = await self._request_with_retry("GET", f"/projects/{tournament_id}/")
         return resp.json()
 
     async def get_my_forecasted_questions(self, tournament_id: int | str) -> list[dict]:
@@ -218,7 +233,8 @@ class ForecastTracker:
         limit = 100
 
         while True:
-            resp = await self.client.get(
+            resp = await self._request_with_retry(
+                "GET",
                 "/posts/",
                 params={
                     "forecaster_id": user_id,
@@ -227,7 +243,6 @@ class ForecastTracker:
                     "offset": offset,
                 },
             )
-            resp.raise_for_status()
             data = resp.json()
 
             results = data.get("results", [])
@@ -239,21 +254,10 @@ class ForecastTracker:
 
         return all_questions
 
-    async def get_question_details(self, post_id: int, retry_count: int = 5) -> dict:
+    async def get_question_details(self, post_id: int) -> dict:
         """Get full question details including my_forecasts and aggregations."""
-        for attempt in range(retry_count):
-            try:
-                resp = await self.client.get(f"/posts/{post_id}/")
-                resp.raise_for_status()
-                return resp.json()
-            except httpx.HTTPStatusError as e:
-                if e.response.status_code == 429 and attempt < retry_count - 1:
-                    # Rate limited - wait and retry with exponential backoff
-                    wait_time = 2 ** (attempt + 1)  # 2, 4, 8, 16 seconds
-                    print(f"    Rate limited, waiting {wait_time}s...")
-                    await asyncio.sleep(wait_time)
-                else:
-                    raise
+        resp = await self._request_with_retry("GET", f"/posts/{post_id}/")
+        return resp.json()
 
     def extract_binary_comparison(
         self, my_forecast: dict, community: dict
