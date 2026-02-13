@@ -31,6 +31,7 @@ MODEL_COSTS = {
     "claude-3-5-haiku-20241022": {"input": 0.80, "output": 4.0},
     "claude-sonnet-4-5-20250929": {"input": 3.0, "output": 15.0},
     "claude-opus-4-5-20251101": {"input": 5.0, "output": 25.0},
+    "claude-opus-4-6-20260204": {"input": 5.0, "output": 25.0},
     "claude-opus-4-20250514": {"input": 15.0, "output": 75.0},
     # OpenAI (direct API)
     "gpt-4o": {"input": 2.5, "output": 10.0},
@@ -44,6 +45,7 @@ MODEL_COSTS = {
     "openrouter/anthropic/claude-3.5-haiku-20241022": {"input": 0.80, "output": 4.0},
     "openrouter/anthropic/claude-sonnet-4.5": {"input": 3.0, "output": 15.0},
     "openrouter/anthropic/claude-opus-4.5": {"input": 5.0, "output": 25.0},
+    "openrouter/anthropic/claude-opus-4.6": {"input": 5.0, "output": 25.0},
     "openrouter/anthropic/claude-sonnet-4": {"input": 3.0, "output": 15.0},
     "openrouter/anthropic/claude-3.5-sonnet": {"input": 3.0, "output": 15.0},
     "openrouter/anthropic/claude-3.5-sonnet-20241022": {"input": 3.0, "output": 15.0},
