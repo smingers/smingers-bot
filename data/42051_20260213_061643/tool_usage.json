@@ -1,0 +1,254 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": false,
+      "num_queries": 0,
+      "queries": [],
+      "tools_used": [],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "federal funds target range history",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "FOMC rate outlook 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Retrieve historical DFEDTARU values since 1990 and summarize how many months after cycle peaks it remained above 5 %; include latest CME FedWatch probabilities for April 2026 contract.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "DFEDTARU",
+              "DFEDTARU history since 1990",
+              "DFEDTARU above five percent months",
+              "CME FedWatch April 2026 probabilities",
+              "April 2026 FedWatch probabilities"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "DFEDTARU",
+                    "FRED"
+                  ],
+                  [
+                    "DFEDTARU history since 1990",
+                    "Google"
+                  ],
+                  [
+                    "DFEDTARU above five percent months",
+                    "Google"
+                  ],
+                  [
+                    "CME FedWatch April 2026 probabilities",
+                    "Google"
+                  ],
+                  [
+                    "April 2026 FedWatch probabilities",
+                    "Google News"
+                  ]
+                ],
+                "search_results_chars": 64687,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "DFEDTARU",
+          "tool": "FRED",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "FRED",
+        "Agent"
+      ],
+      "llm_cost": 0.2189,
+      "llm_cost_summarization": 0.1486,
+      "llm_cost_agentic": 0.0703,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Fed funds futures April 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "2026 fed funds rate forecast",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide the latest consensus among economists, Fed officials, and CME futures traders on where the Federal Reserve\u2019s target range for the federal funds rate will stand by the end of April 2026 in the United States.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "What will be the upper bound of the Federal Funds Target Range on April 30, 2026?",
+          "tool": "AskNews",
+          "deep_research_query": "Provide the latest consensus among economists, Fed officials, and CME futures traders on where the Federal Reserve\u2019s target range for the federal funds rate will stand by the end of April 2026 in the United States."
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "AskNews"
+      ],
+      "llm_cost": 0.1551,
+      "llm_cost_summarization": 0.1486,
+      "llm_cost_agentic": 0.0065,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6581,
+        "token_output": 2347,
+        "cost": 0.054948,
+        "duration_seconds": 90.64522290229797,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16538,
+        "token_output": 3058,
+        "cost": 0.09548400000000001,
+        "duration_seconds": 69.36911511421204,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6581,
+        "token_output": 2178,
+        "cost": 0.052413,
+        "duration_seconds": 90.64527869224548,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15971,
+        "token_output": 2552,
+        "cost": 0.08619299999999999,
+        "duration_seconds": 69.36908102035522,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "cost": 0.0,
+        "duration_seconds": 90.64532089233398,
+        "error": "Response truncated after 5000 tokens (limit: 5000)"
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14735,
+        "token_output": 3601,
+        "cost": 0.07620025,
+        "duration_seconds": 69.36904644966125,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5869,
+        "token_output": 3839,
+        "cost": 0.04245,
+        "duration_seconds": 90.64536094665527,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14234,
+        "token_output": 2956,
+        "cost": 0.052115999999999996,
+        "duration_seconds": 69.36901140213013,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5869,
+        "token_output": 2975,
+        "cost": 0.035538,
+        "duration_seconds": 90.64539766311646,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14133,
+        "token_output": 2749,
+        "cost": 0.050258,
+        "duration_seconds": 69.36897492408752,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.01,
+    "step2_search": 0.2189,
+    "step3_outside_view": 0.2656,
+    "step5_inside_view": 0.3603
+  },
+  "total_pipeline_cost": 0.8548
+}
