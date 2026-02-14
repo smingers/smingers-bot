@@ -210,21 +210,29 @@ def load_forecast(forecast_dir: Path, allow_test_mode: bool = False) -> dict | N
 def compute_divergence_for_forecast(
     forecast: dict, threshold_override: float | None = None
 ) -> dict:
-    """Compute divergence metrics for a loaded forecast."""
+    """Compute divergence metrics for a loaded forecast.
+
+    Reads thresholds from the forecast's config snapshot (config.yaml values
+    at the time the forecast was made). threshold_override takes precedence
+    if provided.
+    """
     qt = forecast["question_type"]
     raw = forecast["raw_predictions"]
+    config_thresholds = (
+        forecast.get("config", {}).get("supervisor", {}).get("divergence_threshold", {})
+    )
 
     if qt == "binary":
         probabilities = [p for p in raw if isinstance(p, (int, float))]
-        threshold = threshold_override or 15.0
+        threshold = threshold_override or config_thresholds.get("binary", 15.0)
         metrics = compute_binary_divergence(probabilities, threshold=threshold)
     elif qt == "numeric":
         pct_dicts = [p for p in raw if isinstance(p, dict)]
-        threshold = threshold_override or 0.25
+        threshold = threshold_override or config_thresholds.get("numeric", 0.25)
         metrics = compute_numeric_divergence(pct_dicts, threshold=threshold)
     elif qt == "multiple_choice":
         prob_lists = [p for p in raw if isinstance(p, list)]
-        threshold = threshold_override or 20.0
+        threshold = threshold_override or config_thresholds.get("multiple_choice", 25.0)
         metrics = compute_multiple_choice_divergence(prob_lists, threshold=threshold)
     else:
         return {

@@ -211,7 +211,7 @@ llm:
 
 supervisor:
   # Master switch - set to true to enable supervisor in the pipeline
-  enabled: true  # TEMPORARY: flip back to false after testing
+  enabled: true
 
   # Model used for supervisor analysis and update
   model:
