@@ -1035,7 +1035,7 @@ the weighted average should be adjusted.
    - **LOW**: The research did not meaningfully resolve the disagreements, or the
      disagreements are fundamentally about judgment rather than facts.
 
-Format your answer exactly as below:
+Format your answer exactly as below. It is very important to follow this format exactly, especially for the final probability, as a regex looking for 'Probability:' will be used to extract your answer.
 
 Resolution of Disagreements:
 {{Which disagreements were resolved, how}}
@@ -1100,7 +1100,13 @@ the weighted average should be adjusted.
    - **MEDIUM**: Research provides some useful information but not conclusive.
    - **LOW**: Research did not meaningfully resolve the disagreements.
 
-Format your answer exactly as below:
+Format your answer exactly as below. It is very important to follow this format exactly, especially for the final percentile values, as a regex looking for 'Percentile' will be used to extract your answer.
+
+Formatting Instructions:
+- Use the units requested by the question. Never use scientific notation.
+- Percentile values MUST be strictly increasing (10th = lowest, 90th = highest).
+
+Set wide 10th/90th percentile intervals to account for unknown unknowns.
 
 Resolution of Disagreements:
 {{Which disagreements were resolved, how}}
@@ -1110,12 +1116,12 @@ Updated Analysis:
 
 Confidence: HIGH/MEDIUM/LOW
 
-Percentile 10: XX
+Percentile 10: XX (lowest number value)
 Percentile 20: XX
 Percentile 40: XX
 Percentile 60: XX
 Percentile 80: XX
-Percentile 90: XX
+Percentile 90: XX (highest number value)
 """
 
 MULTIPLE_CHOICE_SUPERVISOR_UPDATE_PROMPT = """
@@ -1170,7 +1176,9 @@ the weighted average should be adjusted.
    - **MEDIUM**: Research provides some useful information but not conclusive.
    - **LOW**: Research did not meaningfully resolve the disagreements.
 
-Format your answer exactly as below:
+Return the final probabilities in the list, in the same order they appear in {options}. Format your answer exactly as below. It is very important to follow this format exactly, especially for the final probability list, as a regex looking for 'Probabilities:' will be used to extract your answer.
+
+Please ensure that the probabilities are between **0 and 100, and that they sum to 100, and are not followed by a % sign**.
 
 Resolution of Disagreements:
 {{Which disagreements were resolved, how}}

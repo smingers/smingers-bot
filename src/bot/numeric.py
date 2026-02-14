@@ -181,6 +181,19 @@ class NumericForecaster(BaseForecaster):
         params["bounds_info"] = bound_msgs["bounds_info"]
         return prompt_template.format(**params)
 
+    def _percentiles_to_cdf(self, percentiles: dict, question_params: dict) -> list[float]:
+        """Convert a percentiles dict to a CDF list using question bounds."""
+        percentiles = enforce_monotonic_percentiles(percentiles)
+        return generate_continuous_cdf(
+            percentiles,
+            question_params.get("open_upper_bound", True),
+            question_params.get("open_lower_bound", True),
+            question_params.get("upper_bound", 100),
+            question_params.get("lower_bound", 0),
+            question_params.get("zero_point"),
+            num_points=question_params.get("cdf_size", 201),
+        )
+
     def _extract_prediction(self, output: str, **question_params) -> dict[str, Any]:
         """
         Extract percentiles and generate CDF from agent output.
@@ -196,17 +209,7 @@ class NumericForecaster(BaseForecaster):
         else:
             percentiles = extract_percentiles_from_response(output, verbose=True)
 
-        percentiles = enforce_monotonic_percentiles(percentiles)
-
-        cdf = generate_continuous_cdf(
-            percentiles,
-            question_params.get("open_upper_bound", True),
-            question_params.get("open_lower_bound", True),
-            question_params.get("upper_bound", 100),
-            question_params.get("lower_bound", 0),
-            question_params.get("zero_point"),
-            num_points=question_params.get("cdf_size", 201),
-        )
+        cdf = self._percentiles_to_cdf(percentiles, question_params)
 
         return {
             "percentiles": percentiles,
@@ -318,6 +321,22 @@ class NumericForecaster(BaseForecaster):
             if final_prediction
             else [],
         }
+
+    def _convert_supervisor_prediction(self, prediction: Any, question_params: dict) -> list[float]:
+        """Convert supervisor percentiles dict to a CDF list.
+
+        The supervisor returns a percentiles dict (e.g., {10: 23.0, 20: 28.0, ...}).
+        The pipeline expects a CDF list (e.g., 201 or 32 floats). This uses the
+        same percentile → CDF conversion as ensemble forecasters.
+        """
+        if not isinstance(prediction, dict):
+            return prediction
+
+        cdf = self._percentiles_to_cdf(prediction, question_params)
+        logger.info(
+            f"Supervisor percentiles converted to {len(cdf)}-point CDF: {cdf[:3]}...{cdf[-3:]}"
+        )
+        return cdf
 
     # Convenience method matching old interface
     async def forecast(
