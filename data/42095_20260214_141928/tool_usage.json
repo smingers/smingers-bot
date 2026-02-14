@@ -1,0 +1,429 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "https://en.wikipedia.org/wiki/Individual_Neutral_Athletes_at_the_2026_Winter_Olympics",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://www.olympics.com/en/milano-cortina-2026/medals",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://en.wikipedia.org/wiki/Individual_Neutral_Athletes_at_the_2026_Winter_Olympics#Competitors",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://en.wikipedia.org/wiki/2026_Winter_Olympics",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "ROC 2022 Winter Olympics medals",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Individual Neutral Athletes 2026 Winter",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Give historical medal counts won by Russian and Belarusian athletes competing under neutral status at the 2018 and 2022 Winter Olympics, broken down by sport. Also list the number of neutral-status athletes entered in those Games and their medal efficiency. Finally, summarize key IOC conditions for AIN participation in 2026.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 7,
+            "queries_executed": [
+              "2018 OAR medals by sport",
+              "2022 ROC medals by sport",
+              "Olympic Athletes from Russia 2018 roster size",
+              "ROC delegation size Beijing 2022",
+              "IOC conditions Individual Neutral Athletes 2026",
+              "Olympic Athletes from Russia medals by sport 2018",
+              "ROC medals by sport 2022 Winter Olympics",
+              "Olympic Athletes from Russia roster size 2018",
+              "Russian Olympic Committee athletes 2022 roster size Beijing",
+              "IOC \u201cConditions of participation\u201d Individual Neutral Athletes 2026",
+              "OAR 2018 medal table by sport",
+              "ROC 2022 medals by sport Winter Olympics",
+              "Olympic Athletes from Russia 2018 roster 168 169",
+              "IOC \u201cconditions of participation\u201d AIN December 2023 PDF",
+              "OAR 2018 medals by sport Wikipedia",
+              "ROC 2022 medals by sport Wikipedia",
+              "Olympic Athletes from Russia 2018 competitors by sport",
+              "Russian Olympic Committee 2022 athletes by sport",
+              "IOC \u201cConditions of participation\u201d AIN PDF",
+              "Olympic Athletes from Russia medals by sport",
+              "Russian Olympic Committee medals by sport 2022",
+              "OAR 2018 athletes by sport",
+              "ROC 2022 athletes by sport",
+              "\u201cOlympic Athletes from Russia at the 2018 Winter Olympics\u201d medal table",
+              "Olympic Athletes from Russia medal table 2018",
+              "OAR 2018 athletes by sport",
+              "Russian Olympic Committee medal table 2022",
+              "ROC 2022 athletes by sport",
+              "OAR ROC medals breakdown sport"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "2018 OAR medals by sport",
+                    "Google"
+                  ],
+                  [
+                    "2022 ROC medals by sport",
+                    "Google"
+                  ],
+                  [
+                    "Olympic Athletes from Russia 2018 roster size",
+                    "Google"
+                  ],
+                  [
+                    "ROC delegation size Beijing 2022",
+                    "Google"
+                  ],
+                  [
+                    "IOC conditions Individual Neutral Athletes 2026",
+                    "Google News"
+                  ]
+                ],
+                "search_results_chars": 42308,
+                "analysis_chars": 0
+              },
+              {
+                "step_number": 2,
+                "queries_executed": [
+                  [
+                    "Olympic Athletes from Russia medals by sport 2018",
+                    "Google"
+                  ],
+                  [
+                    "ROC medals by sport 2022 Winter Olympics",
+                    "Google"
+                  ],
+                  [
+                    "Olympic Athletes from Russia roster size 2018",
+                    "Google"
+                  ],
+                  [
+                    "Russian Olympic Committee athletes 2022 roster size Beijing",
+                    "Google"
+                  ],
+                  [
+                    "IOC \u201cConditions of participation\u201d Individual Neutral Athletes 2026",
+                    "Google News"
+                  ]
+                ],
+                "search_results_chars": 50983,
+                "analysis_chars": 1348
+              },
+              {
+                "step_number": 3,
+                "queries_executed": [
+                  [
+                    "OAR 2018 medal table by sport",
+                    "Google"
+                  ],
+                  [
+                    "ROC 2022 medals by sport Winter Olympics",
+                    "Google"
+                  ],
+                  [
+                    "Olympic Athletes from Russia 2018 roster 168 169",
+                    "Google"
+                  ],
+                  [
+                    "IOC \u201cconditions of participation\u201d AIN December 2023 PDF",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 48478,
+                "analysis_chars": 3634
+              },
+              {
+                "step_number": 4,
+                "queries_executed": [
+                  [
+                    "OAR 2018 medals by sport Wikipedia",
+                    "Google"
+                  ],
+                  [
+                    "ROC 2022 medals by sport Wikipedia",
+                    "Google"
+                  ],
+                  [
+                    "Olympic Athletes from Russia 2018 competitors by sport",
+                    "Google"
+                  ],
+                  [
+                    "Russian Olympic Committee 2022 athletes by sport",
+                    "Google"
+                  ],
+                  [
+                    "IOC \u201cConditions of participation\u201d AIN PDF",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 44239,
+                "analysis_chars": 3829
+              },
+              {
+                "step_number": 5,
+                "queries_executed": [
+                  [
+                    "Olympic Athletes from Russia medals by sport",
+                    "Google"
+                  ],
+                  [
+                    "Russian Olympic Committee medals by sport 2022",
+                    "Google"
+                  ],
+                  [
+                    "OAR 2018 athletes by sport",
+                    "Google"
+                  ],
+                  [
+                    "ROC 2022 athletes by sport",
+                    "Google News"
+                  ],
+                  [
+                    "\u201cOlympic Athletes from Russia at the 2018 Winter Olympics\u201d medal table",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 74571,
+                "analysis_chars": 3289
+              },
+              {
+                "step_number": 6,
+                "queries_executed": [
+                  [
+                    "Olympic Athletes from Russia medal table 2018",
+                    "Google"
+                  ],
+                  [
+                    "OAR 2018 athletes by sport",
+                    "Google"
+                  ],
+                  [
+                    "Russian Olympic Committee medal table 2022",
+                    "Google"
+                  ],
+                  [
+                    "ROC 2022 athletes by sport",
+                    "Google"
+                  ],
+                  [
+                    "OAR ROC medals breakdown sport",
+                    "Google News"
+                  ]
+                ],
+                "search_results_chars": 49872,
+                "analysis_chars": 3233
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google News",
+        "Google"
+      ],
+      "llm_cost": 0.446,
+      "llm_cost_summarization": 0.1691,
+      "llm_cost_agentic": 0.2768,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "individual neutral athlete medal 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "AIN medal Winter Olympics 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "List any medals won at the 2026 Winter Olympics by athletes competing under the Individual Neutral Athlete designation through February 14 2026. Include event, athlete name, and medal colour.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "Will any Individual Neutral Athlete (Russian and Belarusian athletes) win any medals at the 2026 Winter Olympics?",
+          "tool": "AskNews",
+          "deep_research_query": "List any medals won at the 2026 Winter Olympics by athletes competing under the Individual Neutral Athlete designation through February 14 2026. Include event, athlete name, and medal colour."
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "AskNews",
+        "Google"
+      ],
+      "llm_cost": 0.1771,
+      "llm_cost_summarization": 0.1691,
+      "llm_cost_agentic": 0.008,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5644,
+        "token_output": 1848,
+        "cost": 0.044652,
+        "duration_seconds": 66.76682734489441,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15186,
+        "token_output": 3332,
+        "cost": 0.095538,
+        "duration_seconds": 80.74956059455872,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5644,
+        "token_output": 2164,
+        "cost": 0.049392000000000005,
+        "duration_seconds": 66.76688766479492,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14606,
+        "token_output": 2347,
+        "cost": 0.079023,
+        "duration_seconds": 80.74953985214233,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5003,
+        "token_output": 3179,
+        "cost": 0.053261249999999996,
+        "duration_seconds": 66.766930103302,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13758,
+        "token_output": 3336,
+        "cost": 0.0707805,
+        "duration_seconds": 80.749516248703,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5003,
+        "token_output": 2253,
+        "cost": 0.02803,
+        "duration_seconds": 66.76696228981018,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13980,
+        "token_output": 2112,
+        "cost": 0.044856,
+        "duration_seconds": 80.74948978424072,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5003,
+        "token_output": 1903,
+        "cost": 0.02523,
+        "duration_seconds": 66.76698923110962,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12865,
+        "token_output": 2494,
+        "cost": 0.045682,
+        "duration_seconds": 80.74943137168884,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0143,
+    "step2_search": 0.446,
+    "step3_outside_view": 0.2006,
+    "step5_inside_view": 0.3359
+  },
+  "total_pipeline_cost": 0.9967
+}
