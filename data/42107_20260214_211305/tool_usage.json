@@ -1,0 +1,275 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 1,
+      "queries": [
+        {
+          "query": "https://www.statistik.bayern.de/wahlen/kommunalwahlen/index.html",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Bayern Kommunalwahl 2020 Wahlbeteiligung",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Bayern Kommunalwahl 2026 Prognose Wahlbeteiligung",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide statewide voter turnout percentages for Bavaria\u2019s Kommunalwahlen 2002-2020 from Bayerisches Landesamt f\u00fcr Statistik and recent turnout figures for the 2023 Landtag and 2024 European elections; summarise trends in Bavarian voter participation.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 3,
+            "queries_executed": [
+              "Bayern Kommunalwahl Wahlbeteiligung 2002-2020",
+              "Bayerisches Landesamt Statistik Kommunalwahlen Daten",
+              "Wahlbeteiligung Landtagswahl 2023 Bayern",
+              "Wahlbeteiligung Europawahl 2024 Bayern",
+              "Trend Wahlbeteiligung Bayern Kommunalwahl",
+              "Kommunalwahl 2008 Bayern Wahlbeteiligung",
+              "Kommunalwahl 2002 Bayern Wahlbeteiligung"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "Bayern Kommunalwahl Wahlbeteiligung 2002-2020",
+                    "Google"
+                  ],
+                  [
+                    "Bayerisches Landesamt Statistik Kommunalwahlen Daten",
+                    "Google"
+                  ],
+                  [
+                    "Wahlbeteiligung Landtagswahl 2023 Bayern",
+                    "Google"
+                  ],
+                  [
+                    "Wahlbeteiligung Europawahl 2024 Bayern",
+                    "Google News"
+                  ],
+                  [
+                    "Trend Wahlbeteiligung Bayern Kommunalwahl",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 60402,
+                "analysis_chars": 0
+              },
+              {
+                "step_number": 2,
+                "queries_executed": [
+                  [
+                    "Kommunalwahl 2008 Bayern Wahlbeteiligung",
+                    "Google"
+                  ],
+                  [
+                    "Kommunalwahl 2002 Bayern Wahlbeteiligung",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 22243,
+                "analysis_chars": 2691
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google",
+        "Google News"
+      ],
+      "llm_cost": 0.2538,
+      "llm_cost_summarization": 0.1672,
+      "llm_cost_agentic": 0.0865,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Kommunalwahl Bayern 2026 Wahlbeteiligung Umfrage",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Bayern Kommunalwahl 2026 Wahlbeteiligung",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide recent expert estimates or polling data on expected voter turnout for Bavaria\u2019s 8 March 2026 local elections and compare them with the 2020 turnout rate.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "What will be the statewide voter turnout percentage in Bavaria\u2019s local elections (Kommunalwahlen)?",
+          "tool": "AskNews",
+          "deep_research_query": "Provide recent expert estimates or polling data on expected voter turnout for Bavaria\u2019s 8 March 2026 local elections and compare them with the 2020 turnout rate."
+        }
+      ],
+      "tools_used": [
+        "AskNews",
+        "Google",
+        "Google News"
+      ],
+      "llm_cost": 0.1724,
+      "llm_cost_summarization": 0.1672,
+      "llm_cost_agentic": 0.0051,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6944,
+        "token_output": 1699,
+        "cost": 0.046317,
+        "duration_seconds": 46.459280252456665,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13881,
+        "token_output": 2447,
+        "cost": 0.078348,
+        "duration_seconds": 56.58801817893982,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6944,
+        "token_output": 1917,
+        "cost": 0.049587000000000006,
+        "duration_seconds": 46.4593403339386,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13499,
+        "token_output": 2113,
+        "cost": 0.072192,
+        "duration_seconds": 56.58798551559448,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5740,
+        "token_output": 2558,
+        "cost": 0.045856999999999995,
+        "duration_seconds": 46.45938420295715,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12382,
+        "token_output": 2510,
+        "cost": 0.056808500000000005,
+        "duration_seconds": 56.587949991226196,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5740,
+        "token_output": 1601,
+        "cost": 0.024288,
+        "duration_seconds": 46.4594202041626,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12631,
+        "token_output": 1624,
+        "cost": 0.038253999999999996,
+        "duration_seconds": 56.58791494369507,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5740,
+        "token_output": 1679,
+        "cost": 0.024912,
+        "duration_seconds": 46.45945405960083,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11695,
+        "token_output": 1292,
+        "cost": 0.033726,
+        "duration_seconds": 56.58786368370056,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0108,
+    "step2_search": 0.2538,
+    "step3_outside_view": 0.191,
+    "step5_inside_view": 0.2793,
+    "step6_aggregation": 0.2793,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.7349
+}
