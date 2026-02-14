@@ -1,0 +1,23 @@
+{
+  "confidence": "high",
+  "prediction": {
+    "10": 23.0,
+    "20": 28.0,
+    "40": 33.0,
+    "60": 38.0,
+    "80": 45.0,
+    "90": 52.0
+  },
+  "search_queries": [
+    "IMB Q1 report resolution criteria Metaculus (Google)",
+    "Metaculus \"forecast opening date\" \"do not count\" resolution fine print (Google)",
+    "Singapore Straits piracy incidents January February 2026 (Google News)",
+    "How does the Metaculus fine print statement \"Events before this date do not count toward resolution\" typically apply? Specifically, for a question asking about Q1 2026 piracy incidents that opened on Feb 14, 2026, does this mean only incidents after Feb 14 count, or does it refer to the full calendar Q1? Also, are there any IMB or ReCAAP reports showing piracy incident counts for January-February 2026 in the Singapore Straits or globally? (Agent)"
+  ],
+  "cost": 0.2771,
+  "divergence": {
+    "metric_name": "cv",
+    "metric_value": 0.2623,
+    "threshold": 0.25
+  }
+}

@@ -55,3 +55,12 @@ Success: 0 | Failed: 1
 
 🟡 OTHER Q41910: What will be Namibia's annual inflation rate for March 2026?
   ValueError: Out of range float values are not JSON compliant
+
+======================================================================
+RUN: 2026-02-14T15:51:55.545558+00:00
+Tournament: 32916 | Selection: new-only | Via: run_bot.py
+Success: 0 | Failed: 1
+======================================================================
+
+🟡 OTHER Q42096: How many maritime piracy & armed robbery incidents will the 
+  ValueError: CDF must have exactly 32 values, got 6
