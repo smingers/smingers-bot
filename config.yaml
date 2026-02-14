@@ -197,3 +197,35 @@ llm:
     article_summarization: 0.1  # Faithful extraction of article content
     agentic_search: 0.3         # Focused iterative research
     forecasting: 0.5            # Moderate diversity (model mix provides the rest)
+
+# =============================================================================
+# SUPERVISOR CONFIGURATION
+# =============================================================================
+# Optional supervisor agent that reviews ensemble predictions when forecasters
+# significantly disagree. Based on AIA Forecaster paper (arxiv 2511.07678v1).
+#
+# The supervisor:
+# 1. Analyzes disagreements between 5 forecasters
+# 2. Conducts targeted research to resolve factual disputes
+# 3. Produces an updated forecast that replaces the weighted average
+
+supervisor:
+  # Master switch - set to true to enable supervisor in the pipeline
+  enabled: true
+
+  # Model used for supervisor analysis and update
+  model:
+    fast: "openrouter/anthropic/claude-3.5-haiku"
+    quality: "openrouter/anthropic/claude-opus-4.6"
+
+  # Divergence thresholds - supervisor only runs when ensemble divergence exceeds these
+  divergence_threshold:
+    binary: 15.0         # Std dev of probabilities in percentage points
+    numeric: 0.25        # Coefficient of variation of median estimates
+    multiple_choice: 25.0  # Max per-option range in percentage points
+
+  # Maximum search queries the supervisor can generate
+  max_search_queries: 4
+
+  # Temperature for supervisor LLM calls
+  temperature: 0.3

@@ -50,6 +50,8 @@ class BinaryForecaster(BaseForecaster):
     - Weighted average aggregation
     """
 
+    question_type = "binary"
+
     def _get_prompt_templates(self) -> tuple[str, str, str, str]:
         """Return binary-specific prompt templates."""
         return (

@@ -56,6 +56,8 @@ class NumericForecaster(BaseForecaster):
     - Weighted CDF aggregation
     """
 
+    question_type = "numeric"
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._cdf_size = 201  # Default, updated per-question in _get_question_details

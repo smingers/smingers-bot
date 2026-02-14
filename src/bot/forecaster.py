@@ -677,6 +677,22 @@ class ScopedArtifactStore:
         """Save tool usage tracking data."""
         self.store.save_tool_usage(self.artifacts, tool_usage)
 
+    def save_supervisor_analysis(self, analysis: str) -> None:
+        """Save supervisor disagreement analysis."""
+        self.store.save_supervisor_analysis(self.artifacts, analysis)
+
+    def save_supervisor_research(self, research: str) -> None:
+        """Save supervisor targeted research results."""
+        self.store.save_supervisor_research(self.artifacts, research)
+
+    def save_supervisor_reasoning(self, reasoning: str) -> None:
+        """Save supervisor updated reasoning."""
+        self.store.save_supervisor_reasoning(self.artifacts, reasoning)
+
+    def save_supervisor_result(self, result: dict) -> None:
+        """Save supervisor structured result."""
+        self.store.save_supervisor_result(self.artifacts, result)
+
 
 async def main():
     """CLI entry point for testing."""

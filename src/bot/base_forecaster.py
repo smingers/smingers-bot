@@ -8,6 +8,7 @@ This module provides the common pipeline structure used by all question type han
 4. Cross-pollinate context between agents
 5. Run inside view prediction with 5 forecaster agents
 6. Extract predictions and aggregate
+7. (Optional) Supervisor review when ensemble divergence is high
 
 Subclasses implement type-specific logic by overriding abstract methods.
 """
@@ -22,11 +23,13 @@ from typing import Any
 
 from ..storage.artifact_store import ArtifactStore
 from ..utils.llm import LLMClient, get_cost_tracker
+from .divergence import compute_divergence
 from .extractors import AgentResult
 from .handler_mixin import ForecasterMixin
 from .metrics import AgentMetrics, PipelineMetrics, ResearchMetrics
 from .prompts import SUPERFORECASTER_CONTEXT
 from .search import QuestionDetails, SearchPipeline
+from .supervisor import SupervisorAgent, SupervisorInput
 
 logger = logging.getLogger(__name__)
 
@@ -79,7 +82,8 @@ class BaseForecaster(ForecasterMixin, ABC):
     """
     Abstract base class for all question type forecasters.
 
-    Implements the shared 6-step ensemble pipeline. Subclasses must implement:
+    Implements the shared 7-step ensemble pipeline. Subclasses must implement:
+    - question_type: Class-level string ("binary", "numeric", "multiple_choice")
     - _get_prompt_templates(): Return the 4 prompt templates for this question type
     - _get_question_details(): Build QuestionDetails from question parameters
     - _format_outside_view_prompt(): Format the outside view prompt
@@ -494,12 +498,30 @@ class BaseForecaster(ForecasterMixin, ABC):
         # Aggregate results
         final_prediction = self._aggregate_results(agent_results, agents, log)
 
-        # Save aggregation and metrics
+        # Save aggregation
         if self.artifact_store:
             self.artifact_store.save_aggregation(
                 self._get_aggregation_data(agent_results, agents, final_prediction)
             )
-            # Save pipeline metrics with step costs
+
+        step6_end_cost = snapshot_cost("step6_aggregation", step3_end_cost)
+
+        # =========================================================================
+        # STEP 7: Optional supervisor review
+        # =========================================================================
+        supervisor_config = self.config.get("supervisor", {})
+        if supervisor_config.get("enabled", False):
+            final_prediction = await self._run_supervisor(
+                agent_results=agent_results,
+                agents=agents,
+                final_prediction=final_prediction,
+                question_params=question_params,
+                log=log,
+            )
+            snapshot_cost("step7_supervisor", step6_end_cost)
+
+        # Save metrics (after supervisor so cost is included)
+        if self.artifact_store:
             metrics.step_costs = step_costs
             metrics.total_pipeline_cost = round(cost_tracker.total_cost - pipeline_start_cost, 4)
             self.artifact_store.save_tool_usage(metrics.to_dict())
@@ -740,3 +762,129 @@ class BaseForecaster(ForecasterMixin, ABC):
             "method": "weighted_average",
             "final_prediction": final_prediction,
         }
+
+    # -------------------------------------------------------------------------
+    # Supervisor integration
+    # -------------------------------------------------------------------------
+
+    def _get_forecaster_prediction_value(self, result: AgentResult) -> Any:
+        """Get the prediction value from an AgentResult for supervisor input.
+
+        Returns the type-appropriate prediction: probability for binary,
+        percentiles dict for numeric, probabilities list for multiple choice.
+        """
+        if self.question_type == "binary":
+            return result.probability
+        elif self.question_type == "numeric":
+            return result.percentiles
+        elif self.question_type == "multiple_choice":
+            return result.probabilities
+        return result.probability
+
+    async def _run_supervisor(
+        self,
+        agent_results: list[AgentResult],
+        agents: list[dict],
+        final_prediction: Any,
+        question_params: dict,
+        log: Callable[[str], Any],
+    ) -> Any:
+        """
+        Run supervisor review if ensemble divergence exceeds threshold.
+
+        Returns the (possibly updated) final_prediction.
+        """
+        # Compute divergence
+        divergence = compute_divergence(
+            question_type=self.question_type,
+            agent_results=agent_results,
+            config=self.config,
+        )
+
+        if not divergence.should_trigger_supervisor:
+            log(
+                f"\n=== Step 7: Supervisor skipped "
+                f"({divergence.metric_name}={divergence.metric_value:.2f}, "
+                f"threshold={divergence.threshold:.2f}) ==="
+            )
+            return final_prediction
+
+        log(
+            f"\n=== Step 7: Running supervisor review "
+            f"({divergence.metric_name}={divergence.metric_value:.2f}, "
+            f"threshold={divergence.threshold:.2f}) ==="
+        )
+
+        # Build forecaster predictions for supervisor
+        forecaster_predictions = []
+        for result in agent_results:
+            pred = self._get_forecaster_prediction_value(result)
+            forecaster_predictions.append(
+                {
+                    "agent_id": result.agent_id,
+                    "model": result.model,
+                    "prediction": pred,
+                    "reasoning": result.inside_view_output or "",
+                }
+            )
+
+        supervisor_input = SupervisorInput(
+            question_title=question_params.get("question_title", ""),
+            question_type=self.question_type,
+            resolution_criteria=question_params.get("resolution_criteria", ""),
+            fine_print=question_params.get("fine_print", ""),
+            background=question_params.get("background_info", "")
+            or question_params.get("question_text", ""),
+            open_time=question_params.get("open_time", ""),
+            scheduled_resolve_time=question_params.get("scheduled_resolve_time", ""),
+            today=question_params.get("today", ""),
+            forecaster_predictions=forecaster_predictions,
+            weighted_average_prediction=final_prediction,
+            options=question_params.get("options"),
+            num_options=len(question_params.get("options", []) or []) or None,
+            units=question_params.get("unit_of_measure"),
+            bounds_info=question_params.get("bounds_info"),
+        )
+
+        try:
+            supervisor = SupervisorAgent(self.config, self.llm)
+            result = await supervisor.evaluate(supervisor_input)
+
+            log(f"  Supervisor confidence: {result.confidence.upper()}")
+            log(f"  Supervisor prediction: {result.updated_prediction}")
+            log(f"  Supervisor cost: ${result.cost:.4f}")
+
+            if result.error:
+                log(f"  Supervisor error: {result.error}")
+                log("  Falling back to weighted average")
+                return final_prediction
+
+            # Save artifacts
+            if self.artifact_store:
+                self.artifact_store.save_supervisor_analysis(result.disagreement_analysis)
+                if result.search_context:
+                    self.artifact_store.save_supervisor_research(result.search_context)
+                self.artifact_store.save_supervisor_reasoning(result.reasoning)
+                self.artifact_store.save_supervisor_result(
+                    {
+                        "confidence": result.confidence,
+                        "prediction": result.updated_prediction,
+                        "search_queries": result.search_queries,
+                        "cost": result.cost,
+                        "divergence": {
+                            "metric_name": divergence.metric_name,
+                            "metric_value": divergence.metric_value,
+                            "threshold": divergence.threshold,
+                        },
+                    }
+                )
+
+            log(f"  Using supervisor prediction: {result.updated_prediction}")
+            return result.updated_prediction
+
+        except Exception as e:
+            logger.error(f"Supervisor failed: {e}")
+            log(f"  Supervisor error: {e}")
+            log("  Falling back to weighted average")
+            self.pipeline_warnings.append(f"supervisor failed: {e}")
+            return final_prediction

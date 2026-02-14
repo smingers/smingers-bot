@@ -135,7 +135,7 @@ Additional fine-print:
 Question metadata:
 - Opened for forecasting: {open_time}
 - Resolves: {scheduled_resolve_time}
-- Note: Only events occurring on or after the open date of {open_time} should be considered for resolution, unless the resolution criteria explicitly specify a different time period.
+- Note: Unless the question title specifies otherwise, the Forecast Opening Date of {open_time} should be considered the start of the question's resolution window. Events before this date do not count toward resolution.
 
 IMPORTANT: Today's date is {today}. All dates before today's date are in the PAST. All dates after today's date are in the FUTURE. Use today's date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
@@ -188,7 +188,7 @@ Additional fine-print:
 Question metadata:
 - Opened for forecasting: {open_time}
 - Resolves: {scheduled_resolve_time}
-- Note: Only events occurring on or after the open date of {open_time} should be considered for resolution, unless the resolution criteria explicitly specify a different time period.
+- Note: Unless the question title specifies otherwise, the Forecast Opening Date of {open_time} should be considered the start of the question's resolution window. Events before this date do not count toward resolution.
 
 IMPORTANT: Today's date is {today}. All dates before today's date are in the PAST. All dates after today's date are in the FUTURE. Use today's date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
@@ -388,7 +388,7 @@ Additional fine-print:
 Question metadata:
 - Opened for forecasting: {open_time}
 - Resolves: {scheduled_resolve_time}
-- Note: Only events occurring on or after the open date of {open_time} should be considered for resolution, unless the resolution criteria explicitly specify a different time period.
+- Note: Unless the question title specifies otherwise, the Forecast Opening Date of {open_time} should be considered the start of the question's resolution window. Events before this date do not count toward resolution.
 
 IMPORTANT: Today's date is {today}. All dates before today's date are in the PAST. All dates after today's date are in the FUTURE. Use today's date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
@@ -447,7 +447,7 @@ Additional fine-print:
 Question metadata:
 - Opened for forecasting: {open_time}
 - Resolves: {scheduled_resolve_time}
-- Note: Only events occurring on or after the open date of {open_time} should be considered for resolution, unless the resolution criteria explicitly specify a different time period.
+- Note: Unless the question title specifies otherwise, the Forecast Opening Date of {open_time} should be considered the start of the question's resolution window. Events before this date do not count toward resolution.
 
 IMPORTANT: Today's date is {today}. All dates before today's date are in the PAST. All dates after today's date are in the FUTURE. Use today's date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
@@ -648,7 +648,7 @@ Units for answer: {units}
 Question metadata:
 - Opened for forecasting: {open_time}
 - Resolves: {scheduled_resolve_time}
-- Note: Only events occurring on or after the open date of {open_time} should be considered for resolution, unless the resolution criteria explicitly specify a different time period.
+- Note: Unless the question title specifies otherwise, the Forecast Opening Date of {open_time} should be considered the start of the question's resolution window. Events before this date do not count toward resolution.
 
 IMPORTANT: Today's date is {today}. All dates before today's date are in the PAST. All dates after today's date are in the FUTURE. Use today's date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
@@ -715,7 +715,7 @@ Units for answer: {units}
 Question metadata:
 - Opened for forecasting: {open_time}
 - Resolves: {scheduled_resolve_time}
-- Note: Only events occurring on or after the open date of {open_time} should be considered for resolution, unless the resolution criteria explicitly specify a different time period.
+- Note: Unless the question title specifies otherwise, the Forecast Opening Date of {open_time} should be considered the start of the question's resolution window. Events before this date do not count toward resolution.
 
 IMPORTANT: Today's date is {today}. All dates before today's date are in the PAST. All dates after today's date are in the FUTURE. Use today's date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
@@ -899,4 +899,286 @@ Search queries:
 4. ticker symbol (yFinance) -- only if query involves stocks, indices, or securities
 5. series ID or description (FRED) -- only if query involves economic/financial data
 
+"""
+
+
+# =============================================================================
+# SUPERVISOR AGENT PROMPTS
+# =============================================================================
+# The supervisor reviews ensemble forecaster disagreements and conducts
+# targeted research to resolve factual disputes. Based on the AIA Forecaster
+# paper (arxiv 2511.07678v1).
+
+SUPERVISOR_ANALYSIS_PROMPT = """
+You are a supervisor agent reviewing predictions from 5 independent forecasting agents.
+Your job is to identify key sources of disagreement and generate targeted search queries
+to resolve factual disputes.
+
+The forecasting question is:
+{title}
+
+Question background:
+{background}
+
+Resolution criteria:
+{resolution_criteria}
+
+Fine print:
+{fine_print}
+
+Question metadata:
+- Opened for forecasting: {open_time}
+- Resolves: {scheduled_resolve_time}
+
+- Note: Unless the question title specifies otherwise, the Forecast Opening Date of {open_time} should be considered the start of the question's resolution window. Events before this date do not count toward resolution.
+
+IMPORTANT: Today's date is {today}.
+
+{type_specific_section}
+
+=== FORECASTER PREDICTIONS AND REASONING ===
+
+{forecaster_summaries}
+
+=== CURRENT WEIGHTED AVERAGE ===
+{weighted_average_display}
+
+=== YOUR TASK ===
+
+1. **Disagreement Identification**: Identify the 1-3 most significant points of
+   disagreement between forecasters. For each disagreement, state:
+   - What specific factual claim or assumption differs
+   - Which forecasters are on which side
+   - How much this disagreement affects the final prediction
+
+2. **Root Cause Analysis**: For each disagreement, determine whether it stems from:
+   - Different factual beliefs (verifiable via research)
+   - Different interpretations of the resolution criteria
+   - Different weighting of the same evidence
+   - Different base rate assumptions
+
+3. **Search Queries**: Generate 2-4 targeted search queries designed to resolve
+   the most impactful factual disagreements. Only generate queries for disagreements
+   that CAN be resolved by finding additional facts (not for subjective weighting
+   differences). If all disagreements are judgment-based rather than factual,
+   output NO search queries. Focus exclusively on major disagreements that are
+   responsible for the wide spread among the forecasts.
+
+   For each query, indicate whether to use Google, Google News, or Agent.
+   For Google/Google News: write short keyword queries (max six words).
+   For Agent: you may write a detailed multi-part query of up to three sentences.
+
+Format your answer exactly as below:
+
+Disagreement Analysis:
+{{Your analysis of where and why forecasters disagree}}
+
+Root Causes:
+{{Classification of each disagreement's root cause}}
+
+Search queries:
+1. your query here (Google)
+2. your query here (Google News)
+3. your query here (Agent)
+"""
+
+BINARY_SUPERVISOR_UPDATE_PROMPT = """
+You are a supervisor agent that has reviewed 5 forecasting agents' predictions and
+conducted additional targeted research to resolve their disagreements. Your job is to review
+all the below materials and produce a final forecast.
+
+The forecasting question is:
+{title}
+
+Question background:
+{background}
+
+Resolution criteria:
+{resolution_criteria}
+
+Fine print:
+{fine_print}
+
+Question metadata:
+- Opened for forecasting: {open_time}
+- Resolves: {scheduled_resolve_time}
+
+- Note: Unless the question title specifies otherwise, the Forecast Opening Date of {open_time} should be considered the start of the question's resolution window. Events before this date do not count toward resolution.
+
+IMPORTANT: Today's date is {today}.
+
+=== FORECASTER PREDICTIONS ===
+{forecaster_summaries}
+
+=== DISAGREEMENT ANALYSIS ===
+{disagreement_analysis}
+
+=== TARGETED RESEARCH RESULTS ===
+{research_results}
+
+=== CURRENT WEIGHTED AVERAGE ===
+{weighted_average_display}
+
+=== YOUR TASK ===
+
+Based on your disagreement analysis and the targeted research results, decide whether
+the weighted average should be adjusted.
+
+1. State which factual disagreements the research resolved, and which side the evidence supports.
+2. Only update the prediction if the research provides CLEAR evidence that shifts
+   the balance. If the research is ambiguous or inconclusive, defer to the weighted average.
+3. Assign a confidence level to your update:
+   - **HIGH**: The research clearly resolves a major factual disagreement, and the evidence
+     strongly supports a specific direction. The updated prediction is well-supported.
+   - **MEDIUM**: The research provides some useful information but does not conclusively
+     resolve the disagreement. The update is reasonable but uncertain.
+   - **LOW**: The research did not meaningfully resolve the disagreements, or the
+     disagreements are fundamentally about judgment rather than facts.
+
+Format your answer exactly as below:
+
+Resolution of Disagreements:
+{{Which disagreements were resolved, how}}
+
+Updated Analysis:
+{{Your updated reasoning}}
+
+Confidence: HIGH/MEDIUM/LOW
+
+Probability: ZZ%
+"""
+
+NUMERIC_SUPERVISOR_UPDATE_PROMPT = """
+You are a supervisor agent that has reviewed 5 forecasting agents' predictions and
+conducted additional targeted research to resolve their disagreements. Your job is to review
+all the below materials and produce a final forecast.
+
+The forecasting question is:
+{title}
+
+Question background:
+{background}
+
+Resolution criteria:
+{resolution_criteria}
+
+Fine print:
+{fine_print}
+
+Question metadata:
+- Opened for forecasting: {open_time}
+- Resolves: {scheduled_resolve_time}
+
+- Note: Unless the question title specifies otherwise, the Forecast Opening Date of {open_time} should be considered the start of the question's resolution window. Events before this date do not count toward resolution.
+
+IMPORTANT: Today's date is {today}.
+
+{type_specific_section}
+
+=== FORECASTER PREDICTIONS ===
+{forecaster_summaries}
+
+=== DISAGREEMENT ANALYSIS ===
+{disagreement_analysis}
+
+=== TARGETED RESEARCH RESULTS ===
+{research_results}
+
+=== CURRENT WEIGHTED AVERAGE ===
+{weighted_average_display}
+
+=== YOUR TASK ===
+
+Based on your disagreement analysis and the targeted research results, decide whether
+the weighted average should be adjusted.
+
+1. State which factual disagreements the research resolved, and which side the evidence supports.
+2. Only update the prediction if the research provides CLEAR evidence that shifts
+   the balance. If the research is ambiguous or inconclusive, defer to the weighted average.
+3. Assign a confidence level:
+   - **HIGH**: Research clearly resolves a major factual disagreement.
+   - **MEDIUM**: Research provides some useful information but not conclusive.
+   - **LOW**: Research did not meaningfully resolve the disagreements.
+
+Format your answer exactly as below:
+
+Resolution of Disagreements:
+{{Which disagreements were resolved, how}}
+
+Updated Analysis:
+{{Your updated reasoning}}
+
+Confidence: HIGH/MEDIUM/LOW
+
+Percentile 10: XX
+Percentile 20: XX
+Percentile 40: XX
+Percentile 60: XX
+Percentile 80: XX
+Percentile 90: XX
+"""
+
+MULTIPLE_CHOICE_SUPERVISOR_UPDATE_PROMPT = """
+You are a supervisor agent that has reviewed 5 forecasting agents' predictions and
+conducted additional targeted research to resolve their disagreements. Your job is to review
+all the below materials and produce a final forecast.
+
+The forecasting question is:
+{title}
+
+Question background:
+{background}
+
+Resolution criteria:
+{resolution_criteria}
+
+Fine print:
+{fine_print}
+
+Question metadata:
+- Opened: {open_time}
+- Resolves: {scheduled_resolve_time}
+
+- Note: Unless the question title specifies otherwise, the Forecast Opening Date of {open_time} should be considered the start of the question's resolution window. Events before this date do not count toward resolution.
+
+IMPORTANT: Today's date is {today}.
+
+Options: {options}
+
+=== FORECASTER PREDICTIONS ===
+{forecaster_summaries}
+
+=== DISAGREEMENT ANALYSIS ===
+{disagreement_analysis}
+
+=== TARGETED RESEARCH RESULTS ===
+{research_results}
+
+=== CURRENT WEIGHTED AVERAGE ===
+{weighted_average_display}
+
+=== YOUR TASK ===
+
+Based on your disagreement analysis and the targeted research results, decide whether
+the weighted average should be adjusted.
+
+1. State which factual disagreements the research resolved, and which side the evidence supports.
+2. Only update the prediction if the research provides CLEAR evidence that shifts
+   the balance. If the research is ambiguous or inconclusive, defer to the weighted average.
+3. Assign a confidence level:
+   - **HIGH**: Research clearly resolves a major factual disagreement.
+   - **MEDIUM**: Research provides some useful information but not conclusive.
+   - **LOW**: Research did not meaningfully resolve the disagreements.
+
+Format your answer exactly as below:
+
+Resolution of Disagreements:
+{{Which disagreements were resolved, how}}
+
+Updated Analysis:
+{{Your updated reasoning}}
+
+Confidence: HIGH/MEDIUM/LOW
+
+Probabilities: [Probability_A, Probability_B, ..., Probability_N]
 """

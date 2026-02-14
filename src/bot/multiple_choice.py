@@ -56,6 +56,8 @@ class MultipleChoiceForecaster(BaseForecaster):
     - Weighted average aggregation across options
     """
 
+    question_type = "multiple_choice"
+
     def _get_prompt_templates(self) -> tuple[str, str, str, str]:
         """Return multiple choice-specific prompt templates."""
         return (
