@@ -982,7 +982,7 @@ Search queries:
 3. your query here (Agent)
 """
 
-SUPERVISOR_UPDATE_PROMPT_BINARY = """
+BINARY_SUPERVISOR_UPDATE_PROMPT = """
 You are a supervisor agent that has reviewed 5 forecasting agents' predictions and
 conducted additional targeted research to resolve their disagreements. Your job is to review
 all the below materials and produce a final forecast.
@@ -1048,7 +1048,7 @@ Confidence: HIGH/MEDIUM/LOW
 Probability: ZZ%
 """
 
-SUPERVISOR_UPDATE_PROMPT_NUMERIC = """
+NUMERIC_SUPERVISOR_UPDATE_PROMPT = """
 You are a supervisor agent that has reviewed 5 forecasting agents' predictions and
 conducted additional targeted research to resolve their disagreements. Your job is to review
 all the below materials and produce a final forecast.
@@ -1118,7 +1118,7 @@ Percentile 80: XX
 Percentile 90: XX
 """
 
-SUPERVISOR_UPDATE_PROMPT_MULTIPLE_CHOICE = """
+MULTIPLE_CHOICE_SUPERVISOR_UPDATE_PROMPT = """
 You are a supervisor agent that has reviewed 5 forecasting agents' predictions and
 conducted additional targeted research to resolve their disagreements. Your job is to review
 all the below materials and produce a final forecast.

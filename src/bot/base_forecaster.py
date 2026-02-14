@@ -767,7 +767,7 @@ class BaseForecaster(ForecasterMixin, ABC):
     # Supervisor integration
     # -------------------------------------------------------------------------
 
-    def _get_agent_prediction_value(self, result: AgentResult) -> Any:
+    def _get_forecaster_prediction_value(self, result: AgentResult) -> Any:
         """Get the prediction value from an AgentResult for supervisor input.
 
         Returns the type-appropriate prediction: probability for binary,
@@ -818,7 +818,7 @@ class BaseForecaster(ForecasterMixin, ABC):
         # Build forecaster predictions for supervisor
         forecaster_predictions = []
         for result in agent_results:
-            pred = self._get_agent_prediction_value(result)
+            pred = self._get_forecaster_prediction_value(result)
             forecaster_predictions.append(
                 {
                     "agent_id": result.agent_id,

@@ -22,10 +22,10 @@ from src.bot.extractors import (
     extract_percentiles_from_response,
 )
 from src.bot.prompts import (
+    BINARY_SUPERVISOR_UPDATE_PROMPT,
+    MULTIPLE_CHOICE_SUPERVISOR_UPDATE_PROMPT,
+    NUMERIC_SUPERVISOR_UPDATE_PROMPT,
     SUPERVISOR_ANALYSIS_PROMPT,
-    SUPERVISOR_UPDATE_PROMPT_BINARY,
-    SUPERVISOR_UPDATE_PROMPT_MULTIPLE_CHOICE,
-    SUPERVISOR_UPDATE_PROMPT_NUMERIC,
 )
 from src.bot.search import QuestionDetails, SearchPipeline
 from src.utils.llm import LLMClient, get_cost_tracker
@@ -436,11 +436,11 @@ class SupervisorAgent:
     def _get_update_prompt_template(self, question_type: str) -> str:
         """Get the appropriate update prompt template for the question type."""
         if question_type == "binary":
-            return SUPERVISOR_UPDATE_PROMPT_BINARY
+            return BINARY_SUPERVISOR_UPDATE_PROMPT
         elif question_type == "numeric":
-            return SUPERVISOR_UPDATE_PROMPT_NUMERIC
+            return NUMERIC_SUPERVISOR_UPDATE_PROMPT
         elif question_type == "multiple_choice":
-            return SUPERVISOR_UPDATE_PROMPT_MULTIPLE_CHOICE
+            return MULTIPLE_CHOICE_SUPERVISOR_UPDATE_PROMPT
         else:
             # Default to binary format
-            return SUPERVISOR_UPDATE_PROMPT_BINARY
+            return BINARY_SUPERVISOR_UPDATE_PROMPT
