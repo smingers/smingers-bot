@@ -211,7 +211,7 @@ llm:
 
 supervisor:
   # Master switch - set to true to enable supervisor in the pipeline
-  enabled: false
+  enabled: true  # TEMPORARY: flip back to false after testing
 
   # Model used for supervisor analysis and update
   model:
@@ -220,9 +220,9 @@ supervisor:
 
   # Divergence thresholds - supervisor only runs when ensemble divergence exceeds these
   divergence_threshold:
-    binary: 15.0          # Std dev of probabilities in percentage points
-    numeric: 0.25         # Coefficient of variation of median estimates
-    multiple_choice: 25.0 # Max per-option range in percentage points
+    binary: 15.0         # Std dev of probabilities in percentage points
+    numeric: 0.25        # Coefficient of variation of median estimates
+    multiple_choice: 25.0  # Max per-option range in percentage points
 
   # Maximum search queries the supervisor can generate
   max_search_queries: 4

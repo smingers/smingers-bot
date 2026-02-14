@@ -509,8 +509,10 @@ async def run_batch(args: argparse.Namespace) -> None:
     print("\n=== Batch Summary ===")
     print(f"Total: {len(results_summary)} | Successful: {len(successful)} | Errors: {len(errored)}")
     if successful:
-        overrides = sum(1 for r in successful if r["override"])
-        print(f"Overrides (HIGH confidence): {overrides}/{len(successful)}")
+        high = sum(1 for r in successful if r["confidence"] == "high")
+        medium = sum(1 for r in successful if r["confidence"] == "medium")
+        low = sum(1 for r in successful if r["confidence"] == "low")
+        print(f"Confidence: {high} high, {medium} medium, {low} low")
         print(f"Total cost: ${total_cost:.4f}")
 
 

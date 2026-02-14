@@ -30,7 +30,7 @@ class DivergenceMetrics:
 
 def compute_binary_divergence(
     probabilities: list[float | None],
-    threshold: float = 15.0,
+    threshold: float,
 ) -> DivergenceMetrics:
     """
     Standard deviation of forecaster probabilities (percentage points).
@@ -65,7 +65,7 @@ def compute_binary_divergence(
 
 def compute_numeric_divergence(
     percentile_dicts: list[dict[int, float] | None],
-    threshold: float = 0.25,
+    threshold: float,
 ) -> DivergenceMetrics:
     """
     Coefficient of variation (CV) of median estimates across forecasters.
@@ -121,7 +121,7 @@ def compute_numeric_divergence(
 
 def compute_multiple_choice_divergence(
     probability_lists: list[list[float] | None],
-    threshold: float = 20.0,
+    threshold: float,
 ) -> DivergenceMetrics:
     """
     Maximum per-option range across forecasters (percentage points).
@@ -173,7 +173,7 @@ def compute_multiple_choice_divergence(
 def compute_divergence(
     question_type: str,
     agent_results: list[AgentResult],
-    config: dict | None = None,
+    config: dict,
 ) -> DivergenceMetrics:
     """
     Dispatch to type-specific divergence computation.
@@ -181,28 +181,30 @@ def compute_divergence(
     Args:
         question_type: "binary", "numeric", or "multiple_choice"
         agent_results: List of AgentResult from the ensemble
-        config: Optional config dict with supervisor.divergence_threshold settings
+        config: Config dict with supervisor.divergence_threshold settings.
+            Thresholds must be defined in config.yaml — there are no fallback defaults.
 
     Returns:
         DivergenceMetrics for the given question type
+
+    Raises:
+        KeyError: If the threshold for the given question type is not in config.
     """
-    thresholds = {}
-    if config:
-        thresholds = config.get("supervisor", {}).get("divergence_threshold", {})
+    thresholds = config.get("supervisor", {}).get("divergence_threshold", {})
 
     if question_type == "binary":
         probabilities = [r.probability for r in agent_results]
-        threshold = thresholds.get("binary", 15.0)
+        threshold = thresholds["binary"]
         return compute_binary_divergence(probabilities, threshold=threshold)
 
     elif question_type == "numeric":
         percentile_dicts = [r.percentiles for r in agent_results]
-        threshold = thresholds.get("numeric", 0.25)
+        threshold = thresholds["numeric"]
         return compute_numeric_divergence(percentile_dicts, threshold=threshold)
 
     elif question_type == "multiple_choice":
         probability_lists = [r.probabilities for r in agent_results]
-        threshold = thresholds.get("multiple_choice", 20.0)
+        threshold = thresholds["multiple_choice"]
         return compute_multiple_choice_divergence(probability_lists, threshold=threshold)
 
     else:
