@@ -781,6 +781,14 @@ class BaseForecaster(ForecasterMixin, ABC):
             return result.probabilities
         return result.probability
 
+    def _convert_supervisor_prediction(self, prediction: Any, question_params: dict) -> Any:
+        """Convert supervisor prediction to the format expected by the pipeline.
+
+        For binary and multiple choice, the supervisor output matches the pipeline
+        format directly. Numeric subclass overrides this to convert percentiles → CDF.
+        """
+        return prediction
+
     async def _run_supervisor(
         self,
         agent_results: list[AgentResult],
@@ -879,8 +887,14 @@ class BaseForecaster(ForecasterMixin, ABC):
                     }
                 )
 
+            # Convert supervisor prediction to the format expected by the pipeline
+            # (e.g., for numeric questions, convert percentiles dict → CDF list)
+            converted = self._convert_supervisor_prediction(
+                result.updated_prediction, question_params
+            )
+
             log(f"  Using supervisor prediction: {result.updated_prediction}")
-            return result.updated_prediction
+            return converted
 
         except Exception as e:
             logger.error(f"Supervisor failed: {e}")

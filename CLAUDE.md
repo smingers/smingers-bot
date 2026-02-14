@@ -15,7 +15,7 @@ poetry install
 # Set up environment (copy and edit .env)
 cp .env.template .env
 # Required: OPENROUTER_API_KEY, METACULUS_TOKEN
-# Optional: SERPER_API_KEY, ASKNEWS_CLIENT_ID, ASKNEWS_CLIENT_SECRET
+# Optional: SERPER_API_KEY, ASKNEWS_CLIENT_ID, ASKNEWS_CLIENT_SECRET, FRED_API_KEY
 
 # Run a forecast (test mode: fast models, no submission)
 python main.py --question 41594 --mode test
@@ -70,16 +70,17 @@ Output is saved to `data/tracking/<tournament_id>.json` and progressively update
 ### Forecasting Pipeline
 
 ```
-Question -> Query Generation -> Search (Historical + Current) -> 5-Agent Ensemble -> Aggregation -> Submit
+Question -> Query Generation -> Search (Historical + Current) -> 5-Agent Ensemble -> Aggregation -> [Supervisor] -> Submit
 ```
 
 Each question type handler does its own integrated pipeline:
 1. **Query Generation** - Generate historical queries (outside view) and current queries (inside view)
-2. **Search Execution** - Google/Serper, AskNews, agentic search
+2. **Search Execution** - Google/Serper, AskNews, Google Trends, FRED, yFinance, agentic search
 3. **Outside View Prediction** - 5 forecasters analyze historical context
 4. **Cross-Pollination** - Forecasters share outputs for diverse perspectives
 5. **Inside View Prediction** - 5 forecasters refine with current news
 6. **Aggregation** - Equal-weighted average of forecaster probabilities
+7. **Supervisor (optional)** - If ensemble divergence exceeds threshold, a supervisor agent analyzes disagreements, conducts targeted research, and produces an updated forecast
 
 ### 5-Forecaster Ensemble
 
@@ -111,13 +112,19 @@ metaculus-bot/
 ├── src/
 │   ├── bot/                   # Core forecasting pipeline
 │   │   ├── forecaster.py      # Main orchestrator
+│   │   ├── base_forecaster.py # Shared base class for all handlers
 │   │   ├── binary.py          # Binary question handler
 │   │   ├── numeric.py         # Numeric question handler
 │   │   ├── multiple_choice.py # Multiple choice handler
-│   │   ├── search.py          # Research pipeline
-│   │   ├── prompts.py         # All prompt templates
+│   │   ├── search.py          # Research pipeline (Google, AskNews, FRED, yFinance, agentic)
+│   │   ├── prompts.py         # All prompt templates (incl. supervisor)
 │   │   ├── extractors.py      # Probability extraction logic
 │   │   ├── handler_mixin.py   # Shared handler methods
+│   │   ├── cdf.py             # CDF generation and interpolation
+│   │   ├── supervisor.py      # Supervisor agent for disagreement resolution
+│   │   ├── divergence.py      # Ensemble divergence calculation
+│   │   ├── exceptions.py      # Custom exception types
+│   │   ├── metrics.py         # Typed metrics dataclasses
 │   │   └── content_extractor.py # Web scraping
 │   ├── utils/
 │   │   ├── llm.py             # LLM client with cost tracking
@@ -126,14 +133,11 @@ metaculus-bot/
 │   │   ├── artifact_store.py  # Forecast artifact persistence
 │   │   ├── database.py        # SQLite analytics DB
 │   │   └── report_generator.py # Report generation
+│   ├── runner.py              # Shared runner module for batch forecasting
 │   └── config.py              # Configuration handling
 ├── tests/
 │   ├── conftest.py            # Pytest fixtures
-│   └── unit/
-│       ├── test_extractors.py # Extraction logic tests
-│       ├── test_cdf_generation.py # CDF tests
-│       ├── test_runner.py     # Runner tests
-│       └── test_config.py     # Config tests
+│   └── unit/                  # 22 test files (see Test Infrastructure below)
 ├── data/                      # Forecast artifacts and database
 ├── main.py                    # CLI entry point
 ├── run_bot.py                 # GitHub Actions entry point
@@ -147,20 +151,25 @@ metaculus-bot/
 |------|---------|
 | `main.py` | CLI entry point (interactive use) |
 | `run_bot.py` | Batch/automation entry point (GitHub Actions) |
-| `config.yaml` | All tunable parameters (models, ensemble, research) |
+| `config.yaml` | All tunable parameters (models, ensemble, research, supervisor, LLM) |
 | `src/bot/forecaster.py` | Main pipeline orchestrator |
+| `src/bot/base_forecaster.py` | Shared base class for all question type handlers |
 | `src/bot/binary.py` | Binary question handler |
 | `src/bot/numeric.py` | Numeric/continuous question handler |
 | `src/bot/multiple_choice.py` | Multiple choice question handler |
-| `src/bot/prompts.py` | All prompt templates |
-| `src/bot/search.py` | Search pipeline (Google, AskNews, agentic) |
+| `src/bot/prompts.py` | All prompt templates (incl. supervisor prompts) |
+| `src/bot/search.py` | Search pipeline (Google, AskNews, Google Trends, FRED, yFinance, agentic) |
 | `src/bot/extractors.py` | Probability/percentile extraction from LLM responses |
 | `src/bot/handler_mixin.py` | Shared methods for agent config, model selection |
+| `src/bot/cdf.py` | CDF generation and interpolation for numeric questions |
+| `src/bot/supervisor.py` | Supervisor agent for ensemble disagreement resolution |
+| `src/bot/divergence.py` | Ensemble divergence calculation |
 | `src/bot/content_extractor.py` | Web content extraction |
 | `src/utils/llm.py` | LLM client with cost tracking (via litellm) |
 | `src/utils/metaculus_api.py` | Metaculus API wrapper |
 | `src/storage/artifact_store.py` | Saves all intermediate outputs |
 | `src/storage/database.py` | SQLite analytics database |
+| `src/runner.py` | Shared runner module for batch forecasting |
 | `src/config.py` | Configuration resolution with mode handling |
 
 ### Prompts
@@ -177,6 +186,10 @@ All prompts are in `src/bot/prompts.py`. Key prompts per question type:
 
 **Multiple Choice:** `MULTIPLE_CHOICE_PROMPT_HISTORICAL`, `MULTIPLE_CHOICE_PROMPT_CURRENT`, `MULTIPLE_CHOICE_OUTSIDE_VIEW_PROMPT`, `MULTIPLE_CHOICE_INSIDE_VIEW_PROMPT`
 
+**Supervisor:**
+- `SUPERVISOR_ANALYSIS_PROMPT` - Analyze ensemble disagreement
+- `BINARY_SUPERVISOR_UPDATE_PROMPT` / `NUMERIC_SUPERVISOR_UPDATE_PROMPT` / `MULTIPLE_CHOICE_SUPERVISOR_UPDATE_PROMPT` - Produce updated forecast per question type
+
 Prompts use Python's `.format()` with variables like `{title}`, `{today}`, `{context}`, `{resolution_criteria}`.
 
 ## Configuration
@@ -185,7 +198,9 @@ All tunable parameters are in `config.yaml`:
 
 - **Models**: `models.fast` and `models.quality` for utility tasks (query generation, article summarization, agentic search)
 - **Ensemble**: `ensemble.fast` and `ensemble.quality` define the 5 forecasters
-- **Research**: Google, AskNews, agentic search settings
+- **Research**: Google, AskNews, Google Trends, FRED, yFinance, agentic search settings
+- **LLM**: Temperatures per task type, max_output_tokens, timeout
+- **Supervisor**: Optional supervisor agent for ensemble disagreement
 
 ### Mode Selection
 
@@ -202,9 +217,10 @@ The `--mode` flag controls model tier and submission behavior:
 Research is integrated into each handler. The pipeline:
 1. Generate historical queries (for outside view context)
 2. Generate current queries (for inside view context)
-3. Execute searches via Google (Serper) and AskNews
-4. Optionally run agentic search (iterative LLM-guided research)
-5. Extract and summarize article content
+3. Execute searches via Google (Serper), AskNews, Google Trends, FRED, and yFinance
+4. Scrape URLs found in question text (resolution_criteria, fine_print, description)
+5. Optionally run agentic search (iterative LLM-guided research with access to FRED + yFinance)
+6. Extract and summarize article content
 
 **Configuration in `config.yaml`:**
 ```yaml
@@ -216,6 +232,11 @@ research:
   asknews_hours_back: 72
   agentic_search_enabled: true
   agentic_search_max_steps: 7
+  google_trends_enabled: true
+  fred_enabled: true
+  yfinance_enabled: true
+  question_url_scraping_enabled: true
+  question_url_max_scrape: 5
   scraping_enabled: true
   max_articles_to_scrape: 10
   max_content_length: 15000
@@ -311,9 +332,16 @@ ruff format .
 
 ### Test Infrastructure
 
-Test files in `tests/unit/`:
+22 test files in `tests/unit/`. Key test files:
 - `test_extractors.py` - Probability/percentile extraction (100+ tests)
 - `test_cdf_generation.py` - 201-point CDF generation
+- `test_base_forecaster.py` - Base forecaster with mocked LLM pipeline
+- `test_handler_mixin.py` - Handler mixin methods
+- `test_divergence.py` - Ensemble divergence calculation
+- `test_supervisor.py` - Supervisor agent
+- `test_fred_search.py` - FRED integration
+- `test_yfinance_search.py` - yFinance integration
+- `test_question_url_extraction.py` - URL scraping from question text
 - `test_runner.py` - Batch runner error handling
 - `test_config.py` - Configuration resolution
 
@@ -328,13 +356,14 @@ The bot runs automatically via `.github/workflows/run-bot.yaml`:
 - **Schedule**: Every 30 minutes
 - **Entry point**: `run_bot.py`
 - **Strategy**: `new-only` (forecasts new questions only)
-- **Tournament**: 32916 (spring-aib-2026)
+- **Tournaments**: 32916 (spring-aib-2026) and MiniBench
 
 **Required secrets:**
 - `OPENROUTER_API_KEY` - For all LLM calls
 - `METACULUS_TOKEN` - For Metaculus API
 - `ASKNEWS_CLIENT_ID` / `ASKNEWS_CLIENT_SECRET` - For news search
 - `SERPER_API_KEY` - For Google search (optional but recommended)
+- `FRED_API_KEY` - For FRED economic data (optional)
 
 ### Database
 
@@ -368,6 +397,7 @@ SQLite at `data/forecasts.db` for analytics with three tables:
 **Optional:**
 - `SERPER_API_KEY` - Google search (free tier: 2,500/month)
 - `ASKNEWS_CLIENT_ID` / `ASKNEWS_CLIENT_SECRET` - AskNews (free via Metaculus tournament)
+- `FRED_API_KEY` - Federal Reserve Economic Data (free: https://fred.stlouisfed.org/docs/api/api_key.html)
 
 ## Code Conventions
 
@@ -401,7 +431,7 @@ When doing naming reviews, focus on:
 
 ### Adding New Question Types
 
-1. Create handler in `src/bot/` inheriting from `ForecasterMixin`
+1. Create handler in `src/bot/` inheriting from `BaseForecaster`
 2. Add prompts to `src/bot/prompts.py` (HISTORICAL, CURRENT, OUTSIDE_VIEW_PROMPT, INSIDE_VIEW_PROMPT)
 3. Add extraction logic to `src/bot/extractors.py`
 4. Register in `src/bot/forecaster.py`
