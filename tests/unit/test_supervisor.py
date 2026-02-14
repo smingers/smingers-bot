@@ -268,7 +268,7 @@ class TestModelResolution:
 
 
 class TestSupervisorResult:
-    def test_should_override_high(self):
+    def test_result_stores_confidence(self):
         result = SupervisorResult(
             confidence="high",
             updated_prediction=0.45,
@@ -276,11 +276,10 @@ class TestSupervisorResult:
             search_queries=[],
             search_context="",
             disagreement_analysis="",
-            should_override=True,
         )
-        assert result.should_override
+        assert result.confidence == "high"
 
-    def test_should_not_override_medium(self):
+    def test_result_stores_prediction(self):
         result = SupervisorResult(
             confidence="medium",
             updated_prediction=0.45,
@@ -288,21 +287,8 @@ class TestSupervisorResult:
             search_queries=[],
             search_context="",
             disagreement_analysis="",
-            should_override=False,
         )
-        assert not result.should_override
-
-    def test_should_not_override_low(self):
-        result = SupervisorResult(
-            confidence="low",
-            updated_prediction=0.45,
-            reasoning="test",
-            search_queries=[],
-            search_context="",
-            disagreement_analysis="",
-            should_override=False,
-        )
-        assert not result.should_override
+        assert result.updated_prediction == 0.45
 
 
 # =============================================================================

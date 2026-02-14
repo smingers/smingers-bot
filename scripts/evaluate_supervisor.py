@@ -323,7 +323,6 @@ def _save_supervisor_artifacts(
         "forecaster_predictions": forecast["raw_predictions"],
         "supervisor_prediction": _serialize_prediction(result.updated_prediction),
         "supervisor_confidence": result.confidence,
-        "supervisor_override": result.should_override,
         "supervisor_cost": result.cost,
         "supervisor_error": result.error,
         "search_queries": result.search_queries,
@@ -377,9 +376,7 @@ async def run_single_forecast(args: argparse.Namespace) -> None:
 
     # Print summary
     print()
-    status = "OVERRIDE" if result.should_override else "deferred"
-    print(f"Result: {status}")
-    print(f"  Confidence: {result.confidence.upper()}")
+    print(f"Result: confidence={result.confidence.upper()}")
     print(f"  Prediction: {_serialize_prediction(result.updated_prediction)}")
     print(f"  Search queries: {len(result.search_queries)}")
     for q in result.search_queries:
@@ -485,9 +482,8 @@ async def run_batch(args: argparse.Namespace) -> None:
             )
 
             total_cost += result.cost
-            status = "OVERRIDE" if result.should_override else "deferred"
             print(
-                f"  -> {status} (confidence={result.confidence}, "
+                f"  -> confidence={result.confidence}, "
                 f"pred={_serialize_prediction(result.updated_prediction)}, "
                 f"cost=${result.cost:.4f})"
             )
@@ -497,7 +493,6 @@ async def run_batch(args: argparse.Namespace) -> None:
                     "question_id": qid,
                     "question_type": qt,
                     "confidence": result.confidence,
-                    "override": result.should_override,
                     "cost": result.cost,
                 }
             )

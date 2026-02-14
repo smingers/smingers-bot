@@ -135,7 +135,7 @@ Additional fine-print:
 Question metadata:
 - Opened for forecasting: {open_time}
 - Resolves: {scheduled_resolve_time}
-- Note: Only events occurring on or after the open date of {open_time} should be considered for resolution, unless the resolution criteria explicitly specify a different time period.
+- Note: Unless the question title specifies otherwise, the Forecast Opening Date of {open_time} should be considered the start of the question's resolution window. Events before this date do not count toward resolution.
 
 IMPORTANT: Today's date is {today}. All dates before today's date are in the PAST. All dates after today's date are in the FUTURE. Use today's date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
@@ -188,7 +188,7 @@ Additional fine-print:
 Question metadata:
 - Opened for forecasting: {open_time}
 - Resolves: {scheduled_resolve_time}
-- Note: Only events occurring on or after the open date of {open_time} should be considered for resolution, unless the resolution criteria explicitly specify a different time period.
+- Note: Unless the question title specifies otherwise, the Forecast Opening Date of {open_time} should be considered the start of the question's resolution window. Events before this date do not count toward resolution.
 
 IMPORTANT: Today's date is {today}. All dates before today's date are in the PAST. All dates after today's date are in the FUTURE. Use today's date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
@@ -388,7 +388,7 @@ Additional fine-print:
 Question metadata:
 - Opened for forecasting: {open_time}
 - Resolves: {scheduled_resolve_time}
-- Note: Only events occurring on or after the open date of {open_time} should be considered for resolution, unless the resolution criteria explicitly specify a different time period.
+- Note: Unless the question title specifies otherwise, the Forecast Opening Date of {open_time} should be considered the start of the question's resolution window. Events before this date do not count toward resolution.
 
 IMPORTANT: Today's date is {today}. All dates before today's date are in the PAST. All dates after today's date are in the FUTURE. Use today's date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
@@ -447,7 +447,7 @@ Additional fine-print:
 Question metadata:
 - Opened for forecasting: {open_time}
 - Resolves: {scheduled_resolve_time}
-- Note: Only events occurring on or after the open date of {open_time} should be considered for resolution, unless the resolution criteria explicitly specify a different time period.
+- Note: Unless the question title specifies otherwise, the Forecast Opening Date of {open_time} should be considered the start of the question's resolution window. Events before this date do not count toward resolution.
 
 IMPORTANT: Today's date is {today}. All dates before today's date are in the PAST. All dates after today's date are in the FUTURE. Use today's date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
@@ -648,7 +648,7 @@ Units for answer: {units}
 Question metadata:
 - Opened for forecasting: {open_time}
 - Resolves: {scheduled_resolve_time}
-- Note: Only events occurring on or after the open date of {open_time} should be considered for resolution, unless the resolution criteria explicitly specify a different time period.
+- Note: Unless the question title specifies otherwise, the Forecast Opening Date of {open_time} should be considered the start of the question's resolution window. Events before this date do not count toward resolution.
 
 IMPORTANT: Today's date is {today}. All dates before today's date are in the PAST. All dates after today's date are in the FUTURE. Use today's date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
@@ -715,7 +715,7 @@ Units for answer: {units}
 Question metadata:
 - Opened for forecasting: {open_time}
 - Resolves: {scheduled_resolve_time}
-- Note: Only events occurring on or after the open date of {open_time} should be considered for resolution, unless the resolution criteria explicitly specify a different time period.
+- Note: Unless the question title specifies otherwise, the Forecast Opening Date of {open_time} should be considered the start of the question's resolution window. Events before this date do not count toward resolution.
 
 IMPORTANT: Today's date is {today}. All dates before today's date are in the PAST. All dates after today's date are in the FUTURE. Use today's date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of {today} should not be considered as speculative but rather an historical document.
 
@@ -911,7 +911,7 @@ Search queries:
 
 SUPERVISOR_ANALYSIS_PROMPT = """
 You are a supervisor agent reviewing predictions from 5 independent forecasting agents.
-Your goal is to identify key sources of disagreement and generate targeted search queries
+Your job is to identify key sources of disagreement and generate targeted search queries
 to resolve factual disputes.
 
 The forecasting question is:
@@ -927,10 +927,10 @@ Fine print:
 {fine_print}
 
 Question metadata:
-- Opened: {open_time}
+- Opened for forecasting: {open_time}
 - Resolves: {scheduled_resolve_time}
 
-- Note: Only events occurring on or after the open date of {open_time} should be considered for resolution, unless the resolution criteria explicitly specify a different time period.
+- Note: Unless the question title specifies otherwise, the Forecast Opening Date of {open_time} should be considered the start of the question's resolution window. Events before this date do not count toward resolution.
 
 IMPORTANT: Today's date is {today}.
 
@@ -945,7 +945,7 @@ IMPORTANT: Today's date is {today}.
 
 === YOUR TASK ===
 
-1. **Disagreement Identification**: Identify the 2-3 most significant points of
+1. **Disagreement Identification**: Identify the 1-3 most significant points of
    disagreement between forecasters. For each disagreement, state:
    - What specific factual claim or assumption differs
    - Which forecasters are on which side
@@ -961,7 +961,8 @@ IMPORTANT: Today's date is {today}.
    the most impactful factual disagreements. Only generate queries for disagreements
    that CAN be resolved by finding additional facts (not for subjective weighting
    differences). If all disagreements are judgment-based rather than factual,
-   output NO search queries.
+   output NO search queries. Focus exclusively on major disagreements that are
+   responsible for the wide spread among the forecasts.
 
    For each query, indicate whether to use Google, Google News, or Agent.
    For Google/Google News: write short keyword queries (max six words).
@@ -983,7 +984,8 @@ Search queries:
 
 SUPERVISOR_UPDATE_PROMPT_BINARY = """
 You are a supervisor agent that has reviewed 5 forecasting agents' predictions and
-conducted additional targeted research to resolve their disagreements.
+conducted additional targeted research to resolve their disagreements. Your job is to review
+all the below materials and produce a final forecast.
 
 The forecasting question is:
 {title}
@@ -998,10 +1000,10 @@ Fine print:
 {fine_print}
 
 Question metadata:
-- Opened: {open_time}
+- Opened for forecasting: {open_time}
 - Resolves: {scheduled_resolve_time}
 
-- Note: Only events occurring on or after the open date of {open_time} should be considered for resolution, unless the resolution criteria explicitly specify a different time period.
+- Note: Unless the question title specifies otherwise, the Forecast Opening Date of {open_time} should be considered the start of the question's resolution window. Events before this date do not count toward resolution.
 
 IMPORTANT: Today's date is {today}.
 
@@ -1048,7 +1050,8 @@ Probability: ZZ%
 
 SUPERVISOR_UPDATE_PROMPT_NUMERIC = """
 You are a supervisor agent that has reviewed 5 forecasting agents' predictions and
-conducted additional targeted research to resolve their disagreements.
+conducted additional targeted research to resolve their disagreements. Your job is to review
+all the below materials and produce a final forecast.
 
 The forecasting question is:
 {title}
@@ -1063,10 +1066,10 @@ Fine print:
 {fine_print}
 
 Question metadata:
-- Opened: {open_time}
+- Opened for forecasting: {open_time}
 - Resolves: {scheduled_resolve_time}
 
-- Note: Only events occurring on or after the open date of {open_time} should be considered for resolution, unless the resolution criteria explicitly specify a different time period.
+- Note: Unless the question title specifies otherwise, the Forecast Opening Date of {open_time} should be considered the start of the question's resolution window. Events before this date do not count toward resolution.
 
 IMPORTANT: Today's date is {today}.
 
@@ -1117,7 +1120,8 @@ Percentile 90: XX
 
 SUPERVISOR_UPDATE_PROMPT_MULTIPLE_CHOICE = """
 You are a supervisor agent that has reviewed 5 forecasting agents' predictions and
-conducted additional targeted research to resolve their disagreements.
+conducted additional targeted research to resolve their disagreements. Your job is to review
+all the below materials and produce a final forecast.
 
 The forecasting question is:
 {title}
@@ -1135,7 +1139,7 @@ Question metadata:
 - Opened: {open_time}
 - Resolves: {scheduled_resolve_time}
 
-- Note: Only events occurring on or after the open date of {open_time} should be considered for resolution, unless the resolution criteria explicitly specify a different time period.
+- Note: Unless the question title specifies otherwise, the Forecast Opening Date of {open_time} should be considered the start of the question's resolution window. Events before this date do not count toward resolution.
 
 IMPORTANT: Today's date is {today}.
 

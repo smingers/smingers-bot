@@ -2,14 +2,12 @@
 Supervisor Agent
 
 Reviews ensemble forecaster disagreements, conducts targeted research to
-resolve factual disputes, and optionally overrides the weighted average.
+resolve factual disputes, and produces an updated forecast.
 Based on the AIA Forecaster paper (arxiv 2511.07678v1).
 
 The supervisor operates in two stages:
 1. Analyze disagreements and generate search queries
 2. After research, produce an updated forecast with confidence level
-
-Only HIGH confidence updates override the weighted average.
 """
 
 import logging
@@ -71,22 +69,21 @@ class SupervisorResult:
     search_queries: list[str]  # Queries the supervisor generated
     search_context: str  # Research results obtained
     disagreement_analysis: str  # Stage 1 analysis output
-    should_override: bool  # True only if confidence == "high"
     cost: float = 0.0  # Total LLM + search cost for supervisor
     error: str | None = None
 
 
 class SupervisorAgent:
     """
-    Supervisor agent that reviews ensemble disagreements and optionally overrides.
+    Supervisor agent that reviews ensemble disagreements and overrides with
+    a research-informed forecast.
 
     Follows the AIA Forecaster paper:
     1. Receives all 5 forecasters' reasoning + predictions
     2. Identifies disagreements and their root causes
     3. Generates targeted search queries to resolve disagreements
     4. Conducts research using those queries
-    5. Produces updated forecast with confidence level
-    6. HIGH confidence -> override; medium/low -> fall back to weighted average
+    5. Produces updated forecast that replaces the weighted average
     """
 
     def __init__(
@@ -154,7 +151,6 @@ class SupervisorAgent:
                 search_queries=[],
                 search_context="",
                 disagreement_analysis="",
-                should_override=False,
                 cost=cost,
                 error=str(e),
             )
@@ -299,8 +295,6 @@ class SupervisorAgent:
             prediction = supervisor_input.weighted_average_prediction
             confidence = "low"
 
-        should_override = confidence == "high"
-
         return SupervisorResult(
             confidence=confidence,
             updated_prediction=prediction,
@@ -308,7 +302,6 @@ class SupervisorAgent:
             search_queries=search_queries,
             search_context=search_context,
             disagreement_analysis=analysis,
-            should_override=should_override,
         )
 
     # -------------------------------------------------------------------------

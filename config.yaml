@@ -207,8 +207,7 @@ llm:
 # The supervisor:
 # 1. Analyzes disagreements between 5 forecasters
 # 2. Conducts targeted research to resolve factual disputes
-# 3. Produces an updated forecast with a confidence level
-# 4. Only HIGH confidence updates override the weighted average
+# 3. Produces an updated forecast that replaces the weighted average
 
 supervisor:
   # Master switch - set to true to enable supervisor in the pipeline
@@ -223,7 +222,7 @@ supervisor:
   divergence_threshold:
     binary: 15.0          # Std dev of probabilities in percentage points
     numeric: 0.25         # Coefficient of variation of median estimates
-    multiple_choice: 20.0 # Max per-option range in percentage points
+    multiple_choice: 25.0 # Max per-option range in percentage points
 
   # Maximum search queries the supervisor can generate
   max_search_queries: 4

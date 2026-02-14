@@ -182,6 +182,26 @@ class ArtifactStore:
         self._write_json(artifacts.ensemble_dir / "aggregation.json", aggregation)
 
     # =========================================================================
+    # Supervisor
+    # =========================================================================
+
+    def save_supervisor_analysis(self, artifacts: ForecastArtifactPaths, analysis: str) -> None:
+        """Save the supervisor's disagreement analysis (stage 1 output)."""
+        self._write_text(artifacts.ensemble_dir / "supervisor_analysis.md", analysis)
+
+    def save_supervisor_research(self, artifacts: ForecastArtifactPaths, research: str) -> None:
+        """Save the supervisor's targeted research results."""
+        self._write_text(artifacts.ensemble_dir / "supervisor_research.md", research)
+
+    def save_supervisor_reasoning(self, artifacts: ForecastArtifactPaths, reasoning: str) -> None:
+        """Save the supervisor's updated reasoning (stage 2 output)."""
+        self._write_text(artifacts.ensemble_dir / "supervisor_reasoning.md", reasoning)
+
+    def save_supervisor_result(self, artifacts: ForecastArtifactPaths, result: dict) -> None:
+        """Save the supervisor's structured result."""
+        self._write_json(artifacts.ensemble_dir / "supervisor_result.json", result)
+
+    # =========================================================================
     # Tool Usage
     # =========================================================================
 
