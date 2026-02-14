@@ -1,0 +1,262 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 2,
+      "queries": [
+        {
+          "query": "https://www.airbus.com/en/products-services/commercial-aircraft/market/orders-and-deliveries",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "https://www.airbus.com/en/products-services/commercial-aircraft/orders-and-deliveries",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Airbus monthly deliveries 2025",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Airbus January 2026 deliveries",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Retrieve Airbus Orders & Deliveries spreadsheets 2021-2025 and list February delivery counts; include any 2026 production-rate guidance mentioned in recent press releases.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "Airbus orders deliveries spreadsheet 2021",
+              "Airbus orders deliveries February 2023",
+              "Airbus deliveries xls 2025",
+              "Airbus 2026 production rate guidance",
+              "Airbus ramp 75 jets 2026"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "Airbus orders deliveries spreadsheet 2021",
+                    "Google"
+                  ],
+                  [
+                    "Airbus orders deliveries February 2023",
+                    "Google"
+                  ],
+                  [
+                    "Airbus deliveries xls 2025",
+                    "Google"
+                  ],
+                  [
+                    "Airbus 2026 production rate guidance",
+                    "Google News"
+                  ],
+                  [
+                    "Airbus ramp 75 jets 2026",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 59785,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Agent",
+        "Google"
+      ],
+      "llm_cost": 0.1786,
+      "llm_cost_summarization": 0.1286,
+      "llm_cost_agentic": 0.05,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Airbus January 2026 deliveries",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Airbus delivery target 2026 supply chain",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Summarize latest analyst commentary on Airbus commercial aircraft deliveries expected in February 2026, including production rate and supply-chain factors.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "How many commercial aircraft deliveries will Airbus report for February 2026 ?",
+          "tool": "AskNews",
+          "deep_research_query": "Summarize latest analyst commentary on Airbus commercial aircraft deliveries expected in February 2026, including production rate and supply-chain factors."
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "AskNews"
+      ],
+      "llm_cost": 0.1354,
+      "llm_cost_summarization": 0.1286,
+      "llm_cost_agentic": 0.0067,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5679,
+        "token_output": 1689,
+        "cost": 0.042372,
+        "duration_seconds": 41.44309425354004,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13654,
+        "token_output": 2603,
+        "cost": 0.080007,
+        "duration_seconds": 62.046813011169434,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5679,
+        "token_output": 1586,
+        "cost": 0.040827,
+        "duration_seconds": 41.443161964416504,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13292,
+        "token_output": 2073,
+        "cost": 0.070971,
+        "duration_seconds": 62.04677772521973,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4904,
+        "token_output": 2262,
+        "cost": 0.04025,
+        "duration_seconds": 41.44320464134216,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11765,
+        "token_output": 2020,
+        "cost": 0.04886875,
+        "duration_seconds": 62.04674243927002,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4904,
+        "token_output": 1856,
+        "cost": 0.024656,
+        "duration_seconds": 41.44324254989624,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11867,
+        "token_output": 1479,
+        "cost": 0.035566,
+        "duration_seconds": 62.04670810699463,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4904,
+        "token_output": 1859,
+        "cost": 0.02468,
+        "duration_seconds": 41.44327354431152,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11289,
+        "token_output": 1723,
+        "cost": 0.036362,
+        "duration_seconds": 62.04667544364929,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0115,
+    "step2_search": 0.1786,
+    "step3_outside_view": 0.1728,
+    "step5_inside_view": 0.2718
+  },
+  "total_pipeline_cost": 0.6347
+}
