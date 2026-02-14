@@ -1,0 +1,340 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "https://icc-ccs.org/news/",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://icc-ccs.org",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://icc-ccs.org/global-maritime-piracy-and-armed-robbery-increased-in-2025/",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://icc-ccs.org/imb-piracy-reporting-centre-2/",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "IMB piracy report Q1 2022 incidents",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "IMB Q1 2025 piracy report",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide International Maritime Bureau quarterly reports list with incident counts for every Q1 from 2010 through 2025, citing sources.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 4,
+            "queries_executed": [
+              "IMB first quarter piracy report 2010 pdf",
+              "International Maritime Bureau Q1 2015 incidents",
+              "ICC CCS piracy report 1 January 31 March 2018",
+              "IMB piracy Q1 2022 PDF",
+              "ICC IMB quarterly piracy report archive",
+              "ICC IMB piracy report 1 January 31 March 2011",
+              "site:iccwbo.org \u201c01 January \u2013 31 March 2013\u201d piracy",
+              "\u201cfirst quarter 2016\u201d IMB piracy report pdf",
+              "IMB \u201cQ1 2020\u201d piracy numbers",
+              "\u201cpiracy report\u201d 1 Jan-31 Mar 2012 \u201cInternational Maritime Bureau\u201d",
+              "IMB piracy report April 2010",
+              "\u201c01 Jan \u2013 31 Mar 2012\u201d IMB",
+              "IMB Q1 2017 piracy incidents",
+              "ICC CCS piracy April 2019 report",
+              "IMB 2023 first quarter piracy 27"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "IMB first quarter piracy report 2010 pdf",
+                    "Google"
+                  ],
+                  [
+                    "International Maritime Bureau Q1 2015 incidents",
+                    "Google News"
+                  ],
+                  [
+                    "ICC CCS piracy report 1 January 31 March 2018",
+                    "Google"
+                  ],
+                  [
+                    "IMB piracy Q1 2022 PDF",
+                    "Google"
+                  ],
+                  [
+                    "ICC IMB quarterly piracy report archive",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 34963,
+                "analysis_chars": 0
+              },
+              {
+                "step_number": 2,
+                "queries_executed": [
+                  [
+                    "ICC IMB piracy report 1 January 31 March 2011",
+                    "Google"
+                  ],
+                  [
+                    "site:iccwbo.org \u201c01 January \u2013 31 March 2013\u201d piracy",
+                    "Google"
+                  ],
+                  [
+                    "\u201cfirst quarter 2016\u201d IMB piracy report pdf",
+                    "Google"
+                  ],
+                  [
+                    "IMB \u201cQ1 2020\u201d piracy numbers",
+                    "Google News"
+                  ],
+                  [
+                    "\u201cpiracy report\u201d 1 Jan-31 Mar 2012 \u201cInternational Maritime Bureau\u201d",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 49288,
+                "analysis_chars": 2514
+              },
+              {
+                "step_number": 3,
+                "queries_executed": [
+                  [
+                    "IMB piracy report April 2010",
+                    "Google"
+                  ],
+                  [
+                    "\u201c01 Jan \u2013 31 Mar 2012\u201d IMB",
+                    "Google"
+                  ],
+                  [
+                    "IMB Q1 2017 piracy incidents",
+                    "Google"
+                  ],
+                  [
+                    "ICC CCS piracy April 2019 report",
+                    "Google"
+                  ],
+                  [
+                    "IMB 2023 first quarter piracy 27",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 59102,
+                "analysis_chars": 2477
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Agent",
+        "Google News"
+      ],
+      "llm_cost": 0.3092,
+      "llm_cost_summarization": 0.175,
+      "llm_cost_agentic": 0.1342,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "IMB piracy January 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "maritime piracy incidents 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide recent global maritime piracy and armed robbery incident reports from January 1 to February 14 2026, citing International Maritime Bureau updates and regional naval statements.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "How many maritime piracy & armed robbery incidents will the International Maritime Bureau report for Q1 2026?",
+          "tool": "AskNews",
+          "deep_research_query": "Provide recent global maritime piracy and armed robbery incident reports from January 1 to February 14 2026, citing International Maritime Bureau updates and regional naval statements."
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "AskNews",
+        "Google News"
+      ],
+      "llm_cost": 0.1374,
+      "llm_cost_summarization": 0.1305,
+      "llm_cost_agentic": 0.0069,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6448,
+        "token_output": 2014,
+        "cost": 0.049554,
+        "duration_seconds": 53.74583077430725,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14794,
+        "token_output": 3791,
+        "cost": 0.101247,
+        "duration_seconds": 86.90323758125305,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6448,
+        "token_output": 2165,
+        "cost": 0.051819,
+        "duration_seconds": 53.74591302871704,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14185,
+        "token_output": 2382,
+        "cost": 0.078285,
+        "duration_seconds": 86.9032051563263,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5625,
+        "token_output": 3026,
+        "cost": 0.05220775,
+        "duration_seconds": 53.74595856666565,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13172,
+        "token_output": 3099,
+        "cost": 0.066437,
+        "duration_seconds": 86.90316987037659,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5625,
+        "token_output": 2036,
+        "cost": 0.027538,
+        "duration_seconds": 53.7459979057312,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13051,
+        "token_output": 1683,
+        "cost": 0.039566000000000004,
+        "duration_seconds": 86.90313076972961,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5625,
+        "token_output": 1464,
+        "cost": 0.022962,
+        "duration_seconds": 53.746031522750854,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12288,
+        "token_output": 1804,
+        "cost": 0.039008,
+        "duration_seconds": 86.90309548377991,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0124,
+    "step2_search": 0.3092,
+    "step3_outside_view": 0.2041,
+    "step5_inside_view": 0.3245,
+    "step6_aggregation": 0.3245,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.8502
+}

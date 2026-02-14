@@ -1,0 +1,7 @@
+Analysis:
+To build an outside-view baseline for Q1 2026, I need a time series of IMB-reported incidents by quarter—especially every Q1—from as far back as possible (e.g., 2010-2025).  That lets me see longer-run seasonality (Q1 tends to be higher/lower than annual average) and overall trend acceleration since 2022.  Useful documents are IMB quarterly reports, ICC-CCS press releases, and reputable shipping-industry coverage summarising those numbers.  Because the question excludes Red Sea war attacks, I must confirm that the IMB data I collect use the same definition.  Therefore the key historical context is: (1) Q1 figures for 2021, 2020, 2019, etc.; (2) IMB commentary on geographical shifts or reporting changes that could explain the jump from 41 (2022) to 120+ (2023–25).  General web search should surface PDFs and press releases; Google News will bring up recent coverage; the Agent query can explicitly request a list of Q1 totals for 2010-2025 to speed data collection.  No macro-economic data are directly involved.
+
+Search queries:
+1. IMB piracy report Q1 2022 incidents (Google)
+2. IMB Q1 2025 piracy report (Google News)
+3. Provide International Maritime Bureau quarterly reports list with incident counts for every Q1 from 2010 through 2025, citing sources. (Agent)
