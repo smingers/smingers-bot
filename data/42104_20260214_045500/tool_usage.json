@@ -1,0 +1,294 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 2,
+      "queries": [
+        {
+          "query": "https://en.wikipedia.org/wiki/2026_Chicoutimi_provincial_by-election",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://www.electionsquebec.qc.ca/en/results-and-statistics/provincial-by-election-live-results/",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Chicoutimi 2026 by-election candidates",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Chicoutimi by-election polling 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "List declared candidates and parties for the 23 Feb 2026 Chicoutimi provincial by-election; include any riding-level polls or projections and show Chicoutimi results from the 2012, 2016 by-election, 2018, and 2022 Quebec elections",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 3,
+            "queries_executed": [
+              "Chicoutimi by-election 2026 candidates",
+              "Chicoutimi by-election polling 2026",
+              "Chicoutimi riding election results 2022",
+              "Chicoutimi 2016 provincial by-election results",
+              "Chicoutimi election results 2012 Quebec",
+              "Chicoutimi election results 2022 percentages",
+              "Chicoutimi election results 2018 PQ CAQ",
+              "Chicoutimi 2012 Quebec election results",
+              "Chicoutimi by-election 2016 results CSV",
+              "Chicoutimi by-election poll 2026"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "Chicoutimi by-election 2026 candidates",
+                    "Google"
+                  ],
+                  [
+                    "Chicoutimi by-election polling 2026",
+                    "Google News"
+                  ],
+                  [
+                    "Chicoutimi riding election results 2022",
+                    "Google"
+                  ],
+                  [
+                    "Chicoutimi 2016 provincial by-election results",
+                    "Google"
+                  ],
+                  [
+                    "Chicoutimi election results 2012 Quebec",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 60588,
+                "analysis_chars": 0
+              },
+              {
+                "step_number": 2,
+                "queries_executed": [
+                  [
+                    "Chicoutimi election results 2022 percentages",
+                    "Google"
+                  ],
+                  [
+                    "Chicoutimi election results 2018 PQ CAQ",
+                    "Google"
+                  ],
+                  [
+                    "Chicoutimi 2012 Quebec election results",
+                    "Google"
+                  ],
+                  [
+                    "Chicoutimi by-election 2016 results CSV",
+                    "Google"
+                  ],
+                  [
+                    "Chicoutimi by-election poll 2026",
+                    "Google News"
+                  ]
+                ],
+                "search_results_chars": 77342,
+                "analysis_chars": 3833
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Agent",
+        "Google News"
+      ],
+      "llm_cost": 0.2458,
+      "llm_cost_summarization": 0.1311,
+      "llm_cost_agentic": 0.1147,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Chicoutimi by-election 2026 candidates",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "\u00e9lection partielle Chicoutimi sondage",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide the latest polling data or expert analysis on the 23 Feb 2026 Chicoutimi provincial by-election in Quebec, including who is favoured to win and why.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "Which party will win the Quebec provincial by-election in Chicoutimi scheduled for February 23, 2026?",
+          "tool": "AskNews",
+          "deep_research_query": "Provide the latest polling data or expert analysis on the 23 Feb 2026 Chicoutimi provincial by-election in Quebec, including who is favoured to win and why."
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "AskNews",
+        "Google News"
+      ],
+      "llm_cost": 0.1845,
+      "llm_cost_summarization": 0.1311,
+      "llm_cost_agentic": 0.0534,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5580,
+        "token_output": 1940,
+        "cost": 0.04584,
+        "duration_seconds": 46.29046106338501,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14176,
+        "token_output": 3012,
+        "cost": 0.087708,
+        "duration_seconds": 72.1822280883789,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5580,
+        "token_output": 1825,
+        "cost": 0.044115,
+        "duration_seconds": 46.29059457778931,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13509,
+        "token_output": 2665,
+        "cost": 0.08050199999999999,
+        "duration_seconds": 72.182199716568,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4795,
+        "token_output": 2276,
+        "cost": 0.04025524999999999,
+        "duration_seconds": 46.290637731552124,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12238,
+        "token_output": 2627,
+        "cost": 0.058194499999999996,
+        "duration_seconds": 72.18216896057129,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4795,
+        "token_output": 1888,
+        "cost": 0.024694,
+        "duration_seconds": 46.29067373275757,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12399,
+        "token_output": 1537,
+        "cost": 0.037094,
+        "duration_seconds": 72.18213844299316,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4795,
+        "token_output": 2141,
+        "cost": 0.026718,
+        "duration_seconds": 46.29078149795532,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11832,
+        "token_output": 1464,
+        "cost": 0.035376000000000005,
+        "duration_seconds": 72.1821084022522,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0112,
+    "step2_search": 0.2458,
+    "step3_outside_view": 0.1816,
+    "step5_inside_view": 0.2989
+  },
+  "total_pipeline_cost": 0.7375
+}
