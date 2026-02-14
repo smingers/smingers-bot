@@ -794,16 +794,10 @@ class BaseForecaster(ForecasterMixin, ABC):
 
         Returns the (possibly updated) final_prediction.
         """
-        # Build per-forecaster prediction list for divergence check
-        predictions = []
-        for result in agent_results:
-            pred = self._get_agent_prediction_value(result)
-            predictions.append(pred)
-
         # Compute divergence
         divergence = compute_divergence(
             question_type=self.question_type,
-            predictions=predictions,
+            agent_results=agent_results,
             config=self.config,
         )
 
