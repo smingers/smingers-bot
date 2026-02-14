@@ -1,0 +1,18 @@
+{
+  "confidence": "medium",
+  "prediction": {
+    "10": 37.5,
+    "20": 40.0,
+    "40": 43.5,
+    "60": 46.0,
+    "80": 49.5,
+    "90": 53.0
+  },
+  "search_queries": [
+    "sondage abstention municipales 2026 France (Google News)",
+    "municipales 2026 participation intention vote sondage (Google)",
+    "What do French political scientists and polling institutes (IFOP, CEVIPOF, OpinionWay) project for the abstention rate in the first round of the 2026 French municipal elections? Are there any recent surveys on voter intention to participate, and what is the expected effect of the new uniform proportional list system on turnout in small communes? (Agent)",
+    "scrutin liste proportionnel communes effet participation \u00e9lectorale (Google)"
+  ],
+  "cost": 0.1444
+}

@@ -1,0 +1,36 @@
+{
+  "timestamp": "2026-02-13T22:55:29.088421+00:00",
+  "supervisor_model": {
+    "fast": "openrouter/anthropic/claude-3.5-haiku",
+    "quality": "openrouter/anthropic/claude-opus-4.6"
+  },
+  "question_id": 41856,
+  "question_type": "binary",
+  "question_title": "Will the US House of Representatives censure, expel or reprimand any of its members before April 1, 2026?",
+  "divergence": {
+    "metric_name": "std_dev",
+    "metric_value": 35.33,
+    "threshold": 15.0,
+    "triggered": true,
+    "detail": "std_dev=35.3pp (threshold=15.0pp)"
+  },
+  "weighted_average": 0.622,
+  "forecaster_predictions": [
+    58.0,
+    28.0,
+    99,
+    28.0,
+    98.0
+  ],
+  "supervisor_prediction": 35.0,
+  "supervisor_confidence": "medium",
+  "supervisor_override": false,
+  "supervisor_cost": 0.147,
+  "supervisor_error": null,
+  "search_queries": [
+    "House censure vote 2026 February March (Google News)",
+    "Cory Mills censure vote House 2026 (Google News)",
+    "Has the US House of Representatives censured, expelled, or reprimanded any member since February 11, 2026? Check for any floor votes on censure, expulsion, or reprimand resolutions in February or March 2026, including actions related to Representatives Mills, Cherfilus-McCormick, McIver, or any other member. (Agent)",
+    "Cherfilus-McCormick expulsion resolution House vote (Google News)"
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "timestamp": "2026-02-14T01:48:06.955044+00:00",
+  "supervisor_model": {
+    "fast": "openrouter/anthropic/claude-3.5-haiku",
+    "quality": "openrouter/anthropic/claude-opus-4.6"
+  },
+  "question_id": 42049,
+  "question_type": "numeric",
+  "question_title": "What will be the CDC-reported cumulative number of confirmed U.S. measles cases in 2026, as of April 24, 2026?",
+  "divergence": {
+    "metric_name": "cv",
+    "metric_value": 0.2513,
+    "threshold": 0.25,
+    "triggered": true,
+    "detail": "cv=0.251 (threshold=0.250)"
+  },
+  "weighted_average": null,
+  "forecaster_predictions": [
+    {
+      "10": 1300.0,
+      "20": 1600.0,
+      "40": 1850.0,
+      "60": 2100.0,
+      "80": 2400.0,
+      "90": 3000.0
+    },
+    {
+      "10": 900.0,
+      "20": 1000.0,
+      "40": 1100.0,
+      "60": 1250.0,
+      "80": 1600.0,
+      "90": 2200.0
+    },
+    {
+      "10": 1200.0,
+      "20": 1400.0,
+      "40": 1750.0,
+      "60": 2050.0,
+      "80": 2800.0,
+      "90": 3800.0
+    },
+    {
+      "10": 1200.0,
+      "20": 1500.0,
+      "40": 2000.0,
+      "60": 2500.0,
+      "80": 3500.0,
+      "90": 6000.0
+    },
+    null
+  ],
+  "supervisor_prediction": {
+    "10": 1300.0,
+    "20": 1550.0,
+    "40": 1950.0,
+    "60": 2400.0,
+    "80": 3200.0,
+    "90": 4500.0
+  },
+  "supervisor_confidence": "high",
+  "supervisor_cost": 0.1373,
+  "supervisor_error": null,
+  "search_queries": [
+    "CDC measles cases 2026 February update (Google)",
+    "measles outbreak South Carolina 2026 cases (Google News)",
+    "What is the most recent CDC-reported cumulative number of confirmed U.S. measles cases for 2026, and what is the current weekly rate of new case additions? Also, what is the current status of the South Carolina measles outbreak \u2014 is it growing, plateauing, or declining? Are there any new large outbreaks reported in other states as of February 2026? (Agent)",
+    "new measles outbreaks United States 2026 (Google News)"
+  ]
+}
