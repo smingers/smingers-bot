@@ -1,0 +1,286 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 2,
+      "queries": [
+        {
+          "query": "https://en.wikipedia.org/wiki/2026_Baden-W%C3%BCrttemberg_state_election",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://www.statistik-bw.de/staat-und-gesellschaft/wahlen/landtagswahl/",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Baden-W\u00fcrttemberg election polls 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Greens strongest party Baden-W\u00fcrttemberg 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide: 1) seat totals and vote shares for Alliance 90/The Greens and main rivals in Baden-W\u00fcrttemberg Landtag elections 2011, 2016, 2021; 2) all statewide opinion polls since January 2025 for the 2026 election with sample size and fieldwork dates; 3) summary of Baden-W\u00fcrttemberg\u2019s 2023 electoral-law reform and its projected effect on seat distribution.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 3,
+            "queries_executed": [
+              "Baden-W\u00fcrttemberg Landtagswahl 2011 Ergebnis Sitzverteilung",
+              "Baden-W\u00fcrttemberg Landtagswahl 2016 Ergebnis Sitzverteilung",
+              "Baden-W\u00fcrttemberg Landtagswahl 2021 Ergebnis Sitzverteilung",
+              "Baden-W\u00fcrttemberg Umfragen Landtagswahl 2026 seit 2025",
+              "Baden-W\u00fcrttemberg Wahlrechtsreform 2023 Landtag Auswirkungen",
+              "Baden-W\u00fcrttemberg Umfrage Landtagswahl 2026 2025",
+              "Landtag Baden-W\u00fcrttemberg Wahlumfrage Infratest dimap",
+              "Sitzprojektion neues Wahlrecht Baden-W\u00fcrttemberg 2026"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "Baden-W\u00fcrttemberg Landtagswahl 2011 Ergebnis Sitzverteilung",
+                    "Google"
+                  ],
+                  [
+                    "Baden-W\u00fcrttemberg Landtagswahl 2016 Ergebnis Sitzverteilung",
+                    "Google"
+                  ],
+                  [
+                    "Baden-W\u00fcrttemberg Landtagswahl 2021 Ergebnis Sitzverteilung",
+                    "Google"
+                  ],
+                  [
+                    "Baden-W\u00fcrttemberg Umfragen Landtagswahl 2026 seit 2025",
+                    "Google News"
+                  ],
+                  [
+                    "Baden-W\u00fcrttemberg Wahlrechtsreform 2023 Landtag Auswirkungen",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 62363,
+                "analysis_chars": 0
+              },
+              {
+                "step_number": 2,
+                "queries_executed": [
+                  [
+                    "Baden-W\u00fcrttemberg Umfrage Landtagswahl 2026 2025",
+                    "Google"
+                  ],
+                  [
+                    "Landtag Baden-W\u00fcrttemberg Wahlumfrage Infratest dimap",
+                    "Google News"
+                  ],
+                  [
+                    "Sitzprojektion neues Wahlrecht Baden-W\u00fcrttemberg 2026",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 42215,
+                "analysis_chars": 5546
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google News",
+        "Google"
+      ],
+      "llm_cost": 0.2738,
+      "llm_cost_summarization": 0.1579,
+      "llm_cost_agentic": 0.1159,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Baden-W\u00fcrttemberg 2026 election polls Greens",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Greens Baden-W\u00fcrttemberg polls February 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide the latest February 2026 opinion polls and expert analyses on which party is projected to win the most seats in the 2026 Baden-W\u00fcrttemberg state election in Germany.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "Will Alliance 90/The Greens (B\u00fcndnis 90/Die Gr\u00fcnen) win the most seats in the Baden-W\u00fcrttemberg Landtag election?",
+          "tool": "AskNews",
+          "deep_research_query": "Provide the latest February 2026 opinion polls and expert analyses on which party is projected to win the most seats in the 2026 Baden-W\u00fcrttemberg state election in Germany."
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "AskNews",
+        "Google"
+      ],
+      "llm_cost": 0.1666,
+      "llm_cost_summarization": 0.1579,
+      "llm_cost_agentic": 0.0087,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6559,
+        "token_output": 1706,
+        "cost": 0.045267,
+        "duration_seconds": 59.784849405288696,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13656,
+        "token_output": 2590,
+        "cost": 0.079818,
+        "duration_seconds": 71.41647958755493,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6559,
+        "token_output": 1925,
+        "cost": 0.048552,
+        "duration_seconds": 59.78492856025696,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13123,
+        "token_output": 2681,
+        "cost": 0.07958399999999999,
+        "duration_seconds": 71.41645765304565,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5560,
+        "token_output": 2792,
+        "cost": 0.048818,
+        "duration_seconds": 59.784974098205566,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11846,
+        "token_output": 2865,
+        "cost": 0.060840500000000006,
+        "duration_seconds": 71.41643214225769,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5560,
+        "token_output": 2029,
+        "cost": 0.027352,
+        "duration_seconds": 59.78501057624817,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11926,
+        "token_output": 1393,
+        "cost": 0.034996,
+        "duration_seconds": 71.41640782356262,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5560,
+        "token_output": 2185,
+        "cost": 0.0286,
+        "duration_seconds": 59.78504300117493,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11116,
+        "token_output": 1448,
+        "cost": 0.033816,
+        "duration_seconds": 71.41638398170471,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0092,
+    "step2_search": 0.2738,
+    "step3_outside_view": 0.1986,
+    "step5_inside_view": 0.2891,
+    "step6_aggregation": 0.2891,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.7706
+}
