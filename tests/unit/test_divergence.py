@@ -81,41 +81,66 @@ class TestBinaryDivergence:
 
 
 # =============================================================================
-# Numeric Divergence
+# Numeric Divergence — Range-Normalized Spread
 # =============================================================================
 
 
 class TestNumericDivergence:
-    def test_low_divergence(self):
-        """Similar medians should NOT trigger."""
+    def test_low_rn_spread(self):
+        """Similar medians relative to range should NOT trigger."""
         pcts = [
             {10: 100, 50: 500, 90: 900},
             {10: 110, 50: 510, 90: 910},
             {10: 90, 50: 490, 90: 890},
         ]
-        result = compute_numeric_divergence(pcts, threshold=0.25)
+        result = compute_numeric_divergence(pcts, threshold=0.045, range_min=0, range_max=1000)
         assert not result.should_trigger_supervisor
-        assert result.metric_name == "cv"
+        assert result.metric_name == "rn_spread"
 
-    def test_high_divergence(self):
-        """Very different medians should trigger."""
+    def test_high_rn_spread(self):
+        """Large median spread relative to range should trigger."""
         pcts = [
             {10: 100, 50: 200, 90: 300},
             {10: 500, 50: 800, 90: 1100},
             {10: 50, 50: 100, 90: 150},
         ]
-        result = compute_numeric_divergence(pcts, threshold=0.25)
+        # Medians: 200, 800, 100 -> std_dev ≈ 378, range=1000, rn_spread ≈ 0.378
+        result = compute_numeric_divergence(pcts, threshold=0.045, range_min=0, range_max=1000)
         assert result.should_trigger_supervisor
+        assert result.metric_name == "rn_spread"
+
+    def test_tsa_scale_question(self):
+        """TSA-style question: large values, moderate disagreement on narrow range.
+
+        This is the exact scenario the old CV metric missed: medians around 17M
+        with a 2M spread on a 12M-17M range should trigger.
+        """
+        pcts = [
+            {50: 17_500_000},
+            {50: 19_000_000},
+            {50: 17_000_000},
+            {50: 17_100_000},
+            {50: 19_300_000},
+        ]
+        # std_dev ≈ 1.05M, range = 5M, rn_spread ≈ 0.21
+        result = compute_numeric_divergence(
+            pcts, threshold=0.045, range_min=12_000_000, range_max=17_000_000
+        )
+        assert result.should_trigger_supervisor
+        assert result.metric_name == "rn_spread"
+        assert result.metric_value > 0.1
 
     def test_none_values_excluded(self):
         """None percentile dicts should be filtered."""
         pcts = [{50: 500}, None, {50: 510}]
-        result = compute_numeric_divergence(pcts, threshold=0.25)
+        result = compute_numeric_divergence(pcts, threshold=0.045, range_min=0, range_max=1000)
         assert not result.should_trigger_supervisor
 
     def test_single_valid(self):
         """Single prediction should not trigger."""
-        result = compute_numeric_divergence([{50: 500}, None, None], threshold=0.25)
+        result = compute_numeric_divergence(
+            [{50: 500}, None, None], threshold=0.045, range_min=0, range_max=1000
+        )
         assert not result.should_trigger_supervisor
 
     def test_interpolation_when_no_p50(self):
@@ -125,15 +150,75 @@ class TestNumericDivergence:
             {40: 410, 60: 610},  # Interpolated P50 = 510
             {40: 390, 60: 590},  # Interpolated P50 = 490
         ]
-        result = compute_numeric_divergence(pcts, threshold=0.25)
-        assert result.metric_name == "cv"
-        assert result.metric_value < 0.25
+        result = compute_numeric_divergence(pcts, threshold=0.045, range_min=0, range_max=1000)
+        assert result.metric_name == "rn_spread"
+        assert result.metric_value < 0.045
 
-    def test_zero_mean(self):
-        """Near-zero mean should not crash."""
+    def test_threshold_boundary(self):
+        """Exact threshold value should trigger (>=)."""
+        # std_dev(medians) / range = 0.045 exactly
+        # std_dev([0, x]) = x/sqrt(2), so x/sqrt(2) / 1000 = 0.045
+        # x = 0.045 * 1000 * sqrt(2) ≈ 63.64
+        pcts = [{50: 500}, {50: 563.64}]
+        result = compute_numeric_divergence(pcts, threshold=0.045, range_min=0, range_max=1000)
+        assert result.should_trigger_supervisor
+        assert result.metric_name == "rn_spread"
+
+    def test_custom_threshold(self):
+        """Custom threshold should be respected."""
+        pcts = [{50: 500}, {50: 520}]
+        # std_dev ≈ 14.14, range = 1000, rn_spread ≈ 0.014
+        result_high = compute_numeric_divergence(pcts, threshold=0.10, range_min=0, range_max=1000)
+        assert not result_high.should_trigger_supervisor
+
+        result_low = compute_numeric_divergence(pcts, threshold=0.01, range_min=0, range_max=1000)
+        assert result_low.should_trigger_supervisor
+
+
+class TestNumericDivergenceFallback:
+    """Tests for the CV fallback when range is not available."""
+
+    def test_fallback_when_no_range(self):
+        """Without range params, falls back to CV."""
+        pcts = [
+            {10: 100, 50: 500, 90: 900},
+            {10: 110, 50: 510, 90: 910},
+        ]
+        result = compute_numeric_divergence(pcts, threshold=0.25)
+        assert result.metric_name == "rn_spread_fallback_cv"
+
+    def test_fallback_when_equal_range(self):
+        """range_min == range_max should fall back to CV."""
+        pcts = [{50: 500}, {50: 510}]
+        result = compute_numeric_divergence(pcts, threshold=0.25, range_min=100, range_max=100)
+        assert result.metric_name == "rn_spread_fallback_cv"
+
+    def test_fallback_zero_mean(self):
+        """Near-zero mean should not crash in fallback mode."""
         pcts = [{50: 0.0001}, {50: -0.0001}]
         result = compute_numeric_divergence(pcts, threshold=0.25)
-        assert result.metric_name == "cv"
+        assert result.metric_name == "rn_spread"
+        assert result.metric_value == 0.0
+
+    def test_fallback_high_cv(self):
+        """High CV should trigger in fallback mode."""
+        pcts = [
+            {50: 200},
+            {50: 800},
+            {50: 100},
+        ]
+        # mean=366.67, std_dev≈378.6, cv≈1.03 -> well above 0.25
+        result = compute_numeric_divergence(pcts, threshold=0.25)
+        assert result.metric_name == "rn_spread_fallback_cv"
+        assert result.should_trigger_supervisor
+
+    def test_fallback_low_cv(self):
+        """Low CV should NOT trigger in fallback mode."""
+        pcts = [{50: 500}, {50: 510}]
+        # mean=505, std_dev≈7.07, cv≈0.014 -> below 0.25
+        result = compute_numeric_divergence(pcts, threshold=0.25)
+        assert result.metric_name == "rn_spread_fallback_cv"
+        assert not result.should_trigger_supervisor
 
 
 # =============================================================================
@@ -201,7 +286,7 @@ class TestComputeDivergence:
         "supervisor": {
             "divergence_threshold": {
                 "binary": 15.0,
-                "numeric": 0.25,
+                "numeric": 0.045,
                 "multiple_choice": 25.0,
             }
         }
@@ -228,14 +313,29 @@ class TestComputeDivergence:
         metrics = compute_divergence("binary", results, config=self.SAMPLE_CONFIG)
         assert metrics.metric_name == "std_dev"
 
-    def test_numeric_dispatch(self):
-        """Should dispatch to numeric divergence."""
+    def test_numeric_dispatch_with_range(self):
+        """Should dispatch to numeric divergence with RN spread."""
+        results = [
+            self._make_result(percentiles={50: 100}),
+            self._make_result(percentiles={50: 110}),
+        ]
+        metrics = compute_divergence(
+            "numeric",
+            results,
+            config=self.SAMPLE_CONFIG,
+            range_min=0,
+            range_max=1000,
+        )
+        assert metrics.metric_name == "rn_spread"
+
+    def test_numeric_dispatch_without_range(self):
+        """Without range, should fall back to CV."""
         results = [
             self._make_result(percentiles={50: 100}),
             self._make_result(percentiles={50: 110}),
         ]
         metrics = compute_divergence("numeric", results, config=self.SAMPLE_CONFIG)
-        assert metrics.metric_name == "cv"
+        assert metrics.metric_name == "rn_spread_fallback_cv"
 
     def test_multiple_choice_dispatch(self):
         """Should dispatch to multiple choice divergence."""
@@ -258,7 +358,7 @@ class TestComputeDivergence:
             "supervisor": {
                 "divergence_threshold": {
                     "binary": 5.0,
-                    "numeric": 0.25,
+                    "numeric": 0.045,
                     "multiple_choice": 25.0,
                 }
             }

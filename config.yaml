@@ -221,7 +221,7 @@ supervisor:
   # Divergence thresholds - supervisor only runs when ensemble divergence exceeds these
   divergence_threshold:
     binary: 15.0         # Std dev of probabilities in percentage points
-    numeric: 0.25        # Coefficient of variation of median estimates
+    numeric: 0.045       # Range-normalized spread: std_dev(medians) / (range_max - range_min)
     multiple_choice: 25.0  # Max per-option range in percentage points
 
   # Maximum search queries the supervisor can generate

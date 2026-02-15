@@ -807,6 +807,8 @@ class BaseForecaster(ForecasterMixin, ABC):
             question_type=self.question_type,
             agent_results=agent_results,
             config=self.config,
+            range_min=question_params.get("lower_bound"),
+            range_max=question_params.get("upper_bound"),
         )
 
         if not divergence.should_trigger_supervisor:

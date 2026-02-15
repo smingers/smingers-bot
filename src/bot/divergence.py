@@ -4,7 +4,7 @@ Divergence Metrics for Ensemble Predictions
 Computes whether forecasters disagree enough to warrant supervisor review.
 Each question type has its own metric:
 - Binary: Standard deviation of probabilities (percentage points)
-- Numeric: Coefficient of variation of median estimates
+- Numeric: Range-normalized spread of median estimates: std_dev(medians) / (range_max - range_min)
 - Multiple Choice: Max per-option range across forecasters (percentage points)
 """
 
@@ -66,20 +66,24 @@ def compute_binary_divergence(
 def compute_numeric_divergence(
     percentile_dicts: list[dict[int, float] | None],
     threshold: float,
+    range_min: float | None = None,
+    range_max: float | None = None,
 ) -> DivergenceMetrics:
     """
-    Coefficient of variation (CV) of median estimates across forecasters.
+    Range-normalized spread of median estimates across forecasters.
 
-    CV = std_dev(medians) / abs(mean(medians)).
+    RN spread = std_dev(medians) / (range_max - range_min).
     Uses percentile 50 if available, otherwise interpolates from nearest keys.
 
     Args:
         percentile_dicts: List of percentile dicts (key: percentile, value: estimate).
             None values are excluded.
-        threshold: CV threshold to trigger supervisor.
+        threshold: Range-normalized spread threshold to trigger supervisor.
+        range_min: Question scaling range minimum.
+        range_max: Question scaling range maximum.
 
     Returns:
-        DivergenceMetrics with cv metric.
+        DivergenceMetrics with rn_spread metric.
     """
     medians = []
     for pct_dict in percentile_dicts:
@@ -92,30 +96,42 @@ def compute_numeric_divergence(
     if len(medians) < 2:
         return DivergenceMetrics(
             should_trigger_supervisor=False,
-            metric_name="cv",
+            metric_name="rn_spread",
             metric_value=0.0,
             threshold=threshold,
             detail=f"Too few valid medians ({len(medians)})",
         )
 
-    mean_val = statistics.mean(medians)
-    if abs(mean_val) < 1e-10:
+    if range_min is None or range_max is None or range_max == range_min:
+        # Fall back to CV if range not available
+        mean_val = statistics.mean(medians)
+        if abs(mean_val) < 1e-10:
+            return DivergenceMetrics(
+                should_trigger_supervisor=False,
+                metric_name="rn_spread",
+                metric_value=0.0,
+                threshold=threshold,
+                detail="No range provided and mean is near zero",
+            )
+        std_dev = statistics.stdev(medians)
+        cv = std_dev / abs(mean_val)
         return DivergenceMetrics(
-            should_trigger_supervisor=False,
-            metric_name="cv",
-            metric_value=0.0,
+            should_trigger_supervisor=cv >= threshold,
+            metric_name="rn_spread_fallback_cv",
+            metric_value=round(cv, 4),
             threshold=threshold,
-            detail="Mean is near zero, CV undefined",
+            detail=f"No range provided, fell back to cv={cv:.3f} (threshold={threshold:.3f})",
         )
 
     std_dev = statistics.stdev(medians)
-    cv = std_dev / abs(mean_val)
+    question_range = range_max - range_min
+    rn_spread = std_dev / question_range
     return DivergenceMetrics(
-        should_trigger_supervisor=cv >= threshold,
-        metric_name="cv",
-        metric_value=round(cv, 4),
+        should_trigger_supervisor=rn_spread >= threshold,
+        metric_name="rn_spread",
+        metric_value=round(rn_spread, 4),
         threshold=threshold,
-        detail=f"cv={cv:.3f} (threshold={threshold:.3f})",
+        detail=f"rn_spread={rn_spread:.4f} (threshold={threshold:.3f})",
     )
 
 
@@ -174,6 +190,8 @@ def compute_divergence(
     question_type: str,
     agent_results: list[AgentResult],
     config: dict,
+    range_min: float | None = None,
+    range_max: float | None = None,
 ) -> DivergenceMetrics:
     """
     Dispatch to type-specific divergence computation.
@@ -183,6 +201,8 @@ def compute_divergence(
         agent_results: List of AgentResult from the ensemble
         config: Config dict with supervisor.divergence_threshold settings.
             Thresholds must be defined in config.yaml — there are no fallback defaults.
+        range_min: Question scaling range minimum (numeric questions only).
+        range_max: Question scaling range maximum (numeric questions only).
 
     Returns:
         DivergenceMetrics for the given question type
@@ -200,7 +220,12 @@ def compute_divergence(
     elif question_type == "numeric":
         percentile_dicts = [r.percentiles for r in agent_results]
         threshold = thresholds["numeric"]
-        return compute_numeric_divergence(percentile_dicts, threshold=threshold)
+        return compute_numeric_divergence(
+            percentile_dicts,
+            threshold=threshold,
+            range_min=range_min,
+            range_max=range_max,
+        )
 
     elif question_type == "multiple_choice":
         probability_lists = [r.probabilities for r in agent_results]
