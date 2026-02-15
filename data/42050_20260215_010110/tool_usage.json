@@ -1,0 +1,255 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": false,
+      "num_queries": 0,
+      "queries": [],
+      "tools_used": [],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "DOJ Antitrust merger complaint Microsoft",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Big Tech DOJ merger lawsuit",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide a list of every civil merger-challenge complaint filed by the DOJ Antitrust Division since 2000 where either the acquiring or target company is Alphabet",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": ", Amazon, Apple, Meta (Facebook), or Microsoft, including filing dates and courts.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "DOJ Antitrust case filings Amazon merger",
+              "DOJ lawsuit Apple merger complaint district",
+              "DOJ files merger suit Meta Platforms",
+              "United States v Microsoft merger 2024",
+              "Big Tech merger challenge DOJ 2023"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "DOJ Antitrust case filings Amazon merger",
+                    "Google"
+                  ],
+                  [
+                    "DOJ lawsuit Apple merger complaint district",
+                    "Google"
+                  ],
+                  [
+                    "DOJ files merger suit Meta Platforms",
+                    "Google News"
+                  ],
+                  [
+                    "United States v Microsoft merger 2024",
+                    "Google"
+                  ],
+                  [
+                    "Big Tech merger challenge DOJ 2023",
+                    "Google News"
+                  ]
+                ],
+                "search_results_chars": 103326,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Agent",
+        "Google"
+      ],
+      "llm_cost": 0.2956,
+      "llm_cost_summarization": 0.2314,
+      "llm_cost_agentic": 0.0642,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "big tech pending acquisitions 2026 DOJ",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "DOJ merger challenge big tech 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide current information on any announced acquisitions involving Alphabet, Amazon, Apple, Meta, or Microsoft that are still under U.S. DOJ antitrust review as of February 2026 and are reportedly at risk of a lawsuit before May 1 2026.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 17
+        },
+        {
+          "query": "How many new civil antitrust merger challenges will the DOJ file against 'Big Tech' firms before May 1, 2026?",
+          "tool": "AskNews",
+          "deep_research_query": "Provide current information on any announced acquisitions involving Alphabet, Amazon, Apple, Meta, or Microsoft that are still under U.S. DOJ antitrust review as of February 2026 and are reportedly at risk of a lawsuit before May 1 2026."
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "AskNews",
+        "Google"
+      ],
+      "llm_cost": 0.2191,
+      "llm_cost_summarization": 0.2137,
+      "llm_cost_agentic": 0.0054,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8293,
+        "token_output": 1818,
+        "cost": 0.052149,
+        "duration_seconds": 72.3453049659729,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16178,
+        "token_output": 3215,
+        "cost": 0.09675900000000001,
+        "duration_seconds": 75.56686472892761,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8293,
+        "token_output": 1810,
+        "cost": 0.052029,
+        "duration_seconds": 72.34536528587341,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15862,
+        "token_output": 2441,
+        "cost": 0.084201,
+        "duration_seconds": 75.56683230400085,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7395,
+        "token_output": 3999,
+        "cost": 0.06892725,
+        "duration_seconds": 72.34540748596191,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14175,
+        "token_output": 3922,
+        "cost": 0.07971425,
+        "duration_seconds": 75.56679558753967,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7395,
+        "token_output": 2233,
+        "cost": 0.032654,
+        "duration_seconds": 72.34544706344604,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14326,
+        "token_output": 1800,
+        "cost": 0.043052,
+        "duration_seconds": 75.56676030158997,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7395,
+        "token_output": 2438,
+        "cost": 0.034294,
+        "duration_seconds": 72.34547805786133,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13677,
+        "token_output": 1686,
+        "cost": 0.040842,
+        "duration_seconds": 75.56672596931458,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0144,
+    "step2_search": 0.2956,
+    "step3_outside_view": 0.2401,
+    "step5_inside_view": 0.3446,
+    "step6_aggregation": 0.3446,
+    "step7_supervisor": 0.3498
+  },
+  "total_pipeline_cost": 1.2444
+}

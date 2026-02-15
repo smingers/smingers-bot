@@ -1,0 +1,23 @@
+{
+  "confidence": "high",
+  "prediction": {
+    "10": 0.0,
+    "20": 0.0,
+    "40": 0.0,
+    "60": 0.0,
+    "80": 0.5,
+    "90": 1.0
+  },
+  "search_queries": [
+    "DOJ antitrust division leadership 2026 acting chief (Google News)",
+    "Big Tech acquisition merger 2026 rumored (Google News)",
+    "Has the DOJ Antitrust Division filed or announced any new merger challenges against Alphabet, Amazon, Apple, Meta, or Microsoft since February 2026? Also check whether any of these companies have announced major acquisitions in early 2026 that could be subject to DOJ review. (Agent)",
+    "Gail Slater DOJ antitrust resignation replacement (Google News)"
+  ],
+  "cost": 0.3498,
+  "divergence": {
+    "metric_name": "cv",
+    "metric_value": 1.5199,
+    "threshold": 0.25
+  }
+}

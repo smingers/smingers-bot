@@ -1,0 +1,7 @@
+Analysis:
+To gauge the likelihood of future DOJ merger challenges against Big Tech I first need a clear baseline: How many times has the DOJ Antitrust Division ever gone to court to block or enjoin a merger involving Alphabet/Google, Amazon, Apple, Meta/Facebook, or Microsoft?  Historical frequency, the business units involved, and the time-spacing of those past suits help establish an outside-view rate (e.g., “roughly one every X years” or “almost never”).  The DOJ’s own Antitrust Case Filings database and contemporaneous press coverage are the primary sources, so queries should surface (a) the official civil complaints, (b) secondary summaries of such actions, and (c) commentary on DOJ merger enforcement trends specifically targeting the five giants.  Because most recent Big Tech merger actions were brought by the FTC (e.g., Meta-Within, Microsoft-Activision), finding any DOJ-led suits may require searching back two decades or confirming their absence.  No macroeconomic time-series is directly relevant, so no FRED query is needed.
+
+Search queries:
+1. DOJ Antitrust merger complaint Microsoft (Google)  
+2. Big Tech DOJ merger lawsuit (Google News)  
+3. Provide a list of every civil merger-challenge complaint filed by the DOJ Antitrust Division since 2000 where either the acquiring or target company is Alphabet (Google), Amazon, Apple, Meta (Facebook), or Microsoft, including filing dates and courts. (Agent)
