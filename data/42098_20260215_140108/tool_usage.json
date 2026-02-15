@@ -1,0 +1,270 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "https://www.tsa.gov/travel/passenger-volumes",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "https://www.msn.com/en-us/travel/news/record-breaking-faa-confirms-busiest-travel-day-in-us-history/ar-AA1Rxbvv?apiversion=v2\\&domshim=1\\&noservercache=1\\&noservertelemetry=1\\&batchservertelemetry=1\\&renderwebcomponents=1\\&wcseo=1",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://docs.google.com/spreadsheets/d/1SGT7YNuasO427G9jDUUD0-17G5GVpAgOH8mx9pi2jxE/edit?gid=0#gid=0",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "TSA checkpoint numbers February 2025",
+          "tool": "Google",
+          "success": true,
+          "num_results": 2
+        },
+        {
+          "query": "TSA travel forecast Presidents Day 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Retrieve TSA daily passenger volumes for February 9-15 in years 2019-2025 and list weekly totals with year-over-year percentages. Also note any TSA forecast statements for Feb 9-15 2026.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "TSA passenger volumes dataset download",
+              "TSA checkpoint travel numbers February 2024",
+              "TSA daily passenger counts 2019 2020",
+              "TSA forecast February 2026 travel volumes",
+              "TSA passenger projections Presidents Day 2026"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "TSA passenger volumes dataset download",
+                    "Google"
+                  ],
+                  [
+                    "TSA checkpoint travel numbers February 2024",
+                    "Google"
+                  ],
+                  [
+                    "TSA daily passenger counts 2019 2020",
+                    "Google"
+                  ],
+                  [
+                    "TSA forecast February 2026 travel volumes",
+                    "Google News"
+                  ],
+                  [
+                    "TSA passenger projections Presidents Day 2026",
+                    "Google News"
+                  ]
+                ],
+                "search_results_chars": 55113,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "Agent"
+      ],
+      "llm_cost": 0.2464,
+      "llm_cost_summarization": 0.2011,
+      "llm_cost_agentic": 0.0453,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "TSA checkpoint numbers February 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 2
+        },
+        {
+          "query": "TSA passenger volume Presidents Day 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide TSA daily passenger counts Feb 9-14 2026 and any forecasts for Feb 15 2026 US airport travel.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "What will US airline passenger volume be for these weeks in February 2026, according to the TSA? (February 9, 2026-February 15, 2026)",
+          "tool": "AskNews",
+          "deep_research_query": "Provide TSA daily passenger counts Feb 9-14 2026 and any forecasts for Feb 15 2026 US airport travel."
+        }
+      ],
+      "tools_used": [
+        "AskNews",
+        "Google News",
+        "Google"
+      ],
+      "llm_cost": 0.2077,
+      "llm_cost_summarization": 0.2011,
+      "llm_cost_agentic": 0.0066,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6678,
+        "token_output": 1624,
+        "cost": 0.044394,
+        "duration_seconds": 48.82080936431885,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15078,
+        "token_output": 2810,
+        "cost": 0.08738399999999999,
+        "duration_seconds": 63.61786961555481,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6678,
+        "token_output": 1883,
+        "cost": 0.048279,
+        "duration_seconds": 48.820860385894775,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14792,
+        "token_output": 2364,
+        "cost": 0.079836,
+        "duration_seconds": 63.61782646179199,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5920,
+        "token_output": 2917,
+        "cost": 0.051198,
+        "duration_seconds": 48.82088875770569,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13622,
+        "token_output": 2718,
+        "cost": 0.0618905,
+        "duration_seconds": 63.617783069610596,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5920,
+        "token_output": 2306,
+        "cost": 0.030288,
+        "duration_seconds": 48.82091784477234,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13294,
+        "token_output": 2442,
+        "cost": 0.046124,
+        "duration_seconds": 63.61774230003357,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5920,
+        "token_output": 2727,
+        "cost": 0.033656,
+        "duration_seconds": 48.82094049453735,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13079,
+        "token_output": 2614,
+        "cost": 0.04707,
+        "duration_seconds": 63.617701053619385,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0146,
+    "step2_search": 0.2464,
+    "step3_outside_view": 0.2078,
+    "step5_inside_view": 0.3223,
+    "step6_aggregation": 0.3223,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.7911
+}

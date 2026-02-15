@@ -1,0 +1,270 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "https://www.tsa.gov/travel/passenger-volumes",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "https://www.msn.com/en-us/travel/news/record-breaking-faa-confirms-busiest-travel-day-in-us-history/ar-AA1Rxbvv?apiversion=v2\\&domshim=1\\&noservercache=1\\&noservertelemetry=1\\&batchservertelemetry=1\\&renderwebcomponents=1\\&wcseo=1",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://docs.google.com/spreadsheets/d/1SGT7YNuasO427G9jDUUD0-17G5GVpAgOH8mx9pi2jxE/edit?gid=0#gid=0",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "TSA passenger throughput February 2025",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "TSA checkpoint numbers February 2026 trend",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Retrieve TSA daily passenger volumes Feb 23-Mar 1 for years 2019-2026 and summarize YoY growth",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "TSA checkpoint travel numbers",
+              "TSA passenger volumes Feb 23 2019",
+              "TSA daily passenger volume csv download",
+              "TSA checkpoint numbers Google Sheet",
+              "TSA passenger volumes API endpoint"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "TSA checkpoint travel numbers",
+                    "Google"
+                  ],
+                  [
+                    "TSA passenger volumes Feb 23 2019",
+                    "Google"
+                  ],
+                  [
+                    "TSA daily passenger volume csv download",
+                    "Google"
+                  ],
+                  [
+                    "TSA checkpoint numbers Google Sheet",
+                    "Google"
+                  ],
+                  [
+                    "TSA passenger volumes API endpoint",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 34945,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "Agent"
+      ],
+      "llm_cost": 0.2509,
+      "llm_cost_summarization": 0.2084,
+      "llm_cost_agentic": 0.0425,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "TSA checkpoint numbers February 2025",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Spring 2026 air travel forecast",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Show TSA passenger volumes for February weeks 2024-2026 and any forecasts for late February 2026 U.S. air travel.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "What will US airline passenger volume be for these weeks in February 2026, according to the TSA? (Feb 23, 2026-Mar 1, 2026)",
+          "tool": "AskNews",
+          "deep_research_query": "Show TSA passenger volumes for February weeks 2024-2026 and any forecasts for late February 2026 U.S. air travel."
+        }
+      ],
+      "tools_used": [
+        "AskNews",
+        "Google News",
+        "Google"
+      ],
+      "llm_cost": 0.2165,
+      "llm_cost_summarization": 0.2084,
+      "llm_cost_agentic": 0.0081,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6622,
+        "token_output": 1754,
+        "cost": 0.046176,
+        "duration_seconds": 66.10371494293213,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15736,
+        "token_output": 2259,
+        "cost": 0.081093,
+        "duration_seconds": 62.328540086746216,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6622,
+        "token_output": 1523,
+        "cost": 0.042711,
+        "duration_seconds": 66.1037745475769,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15493,
+        "token_output": 2287,
+        "cost": 0.080784,
+        "duration_seconds": 62.328497886657715,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5850,
+        "token_output": 3578,
+        "cost": 0.060329499999999994,
+        "duration_seconds": 66.10380268096924,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13719,
+        "token_output": 2505,
+        "cost": 0.05907825,
+        "duration_seconds": 62.32845711708069,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5850,
+        "token_output": 3199,
+        "cost": 0.037292,
+        "duration_seconds": 66.10382747650146,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14208,
+        "token_output": 2459,
+        "cost": 0.048088,
+        "duration_seconds": 62.32841515541077,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5850,
+        "token_output": 2172,
+        "cost": 0.029075999999999998,
+        "duration_seconds": 66.10385584831238,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13205,
+        "token_output": 2126,
+        "cost": 0.043418,
+        "duration_seconds": 62.3283748626709,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0122,
+    "step2_search": 0.2509,
+    "step3_outside_view": 0.2156,
+    "step5_inside_view": 0.3125,
+    "step6_aggregation": 0.3125,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.7912
+}
