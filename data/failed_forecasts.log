@@ -73,3 +73,12 @@ Success: 1 | Failed: 1
 
 🟡 OTHER Q42097: What will US airline passenger volume be for these weeks in 
   IntegrityError: NOT NULL constraint failed: forecasts.final_prediction
+
+======================================================================
+RUN: 2026-02-15T15:49:41.817035+00:00
+Tournament: 32916 | Selection: new-only | Via: run_bot.py
+Success: 0 | Failed: 1
+======================================================================
+
+🟡 OTHER Q42099: What will US airline passenger volume be for these weeks in 
+  IntegrityError: NOT NULL constraint failed: forecasts.final_prediction

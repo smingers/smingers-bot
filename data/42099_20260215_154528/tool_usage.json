@@ -1,0 +1,341 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "https://www.tsa.gov/travel/passenger-volumes",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "https://www.msn.com/en-us/travel/news/record-breaking-faa-confirms-busiest-travel-day-in-us-history/ar-AA1Rxbvv?apiversion=v2\\&domshim=1\\&noservercache=1\\&noservertelemetry=1\\&batchservertelemetry=1\\&renderwebcomponents=1\\&wcseo=1",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://docs.google.com/spreadsheets/d/1SGT7YNuasO427G9jDUUD0-17G5GVpAgOH8mx9pi2jxE/edit?gid=0#gid=0",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "TSA checkpoint numbers February 2025",
+          "tool": "Google",
+          "success": true,
+          "num_results": 2
+        },
+        {
+          "query": "TSA travel volumes February 2024",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide TSA daily passenger volumes for February 16-22 in 2023, 2024, and 2025 and give weekly totals with YoY growth",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 4,
+            "queries_executed": [
+              "TSA passenger volumes Feb 2023 site:tsa.gov",
+              "TSA passenger volumes Feb 2024 site:tsa.gov",
+              "TSA passenger volumes Feb 2025 site:tsa.gov",
+              "TSA daily passenger volumes download csv",
+              "TSA checkpoint spreadsheet February data",
+              "tsa checkpoint travel numbers csv",
+              "covid-19 passenger throughput csv",
+              "feb 16 2024 tsa passengers",
+              "feb 16 2023 tsa passengers",
+              "feb 16 2025 tsa passengers",
+              "tsa passenger volumes 2024 archive",
+              "tsa passenger volumes 2023 archive",
+              "tsa checkpoint csv download 2024 2023",
+              "feb 18 2024 tsa passengers",
+              "covid-19 passenger throughput csv 2024"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "TSA passenger volumes Feb 2023 site:tsa.gov",
+                    "Google"
+                  ],
+                  [
+                    "TSA passenger volumes Feb 2024 site:tsa.gov",
+                    "Google"
+                  ],
+                  [
+                    "TSA passenger volumes Feb 2025 site:tsa.gov",
+                    "Google"
+                  ],
+                  [
+                    "TSA daily passenger volumes download csv",
+                    "Google"
+                  ],
+                  [
+                    "TSA checkpoint spreadsheet February data",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 64716,
+                "analysis_chars": 0
+              },
+              {
+                "step_number": 2,
+                "queries_executed": [
+                  [
+                    "tsa checkpoint travel numbers csv",
+                    "Google"
+                  ],
+                  [
+                    "covid-19 passenger throughput csv",
+                    "Google"
+                  ],
+                  [
+                    "feb 16 2024 tsa passengers",
+                    "Google News"
+                  ],
+                  [
+                    "feb 16 2023 tsa passengers",
+                    "Google"
+                  ],
+                  [
+                    "feb 16 2025 tsa passengers",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 65609,
+                "analysis_chars": 3406
+              },
+              {
+                "step_number": 3,
+                "queries_executed": [
+                  [
+                    "tsa passenger volumes 2024 archive",
+                    "Google"
+                  ],
+                  [
+                    "tsa passenger volumes 2023 archive",
+                    "Google"
+                  ],
+                  [
+                    "tsa checkpoint csv download 2024 2023",
+                    "Google"
+                  ],
+                  [
+                    "feb 18 2024 tsa passengers",
+                    "Google News"
+                  ],
+                  [
+                    "covid-19 passenger throughput csv 2024",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 67010,
+                "analysis_chars": 2219
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "AIRRPMRNS",
+          "tool": "FRED",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google",
+        "Google News",
+        "FRED"
+      ],
+      "llm_cost": 0.3508,
+      "llm_cost_summarization": 0.1879,
+      "llm_cost_agentic": 0.1629,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "tsa passenger volumes february 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "presidents day 2026 travel forecast",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide TSA and airline passenger volume projections for the Presidents Day weekend February 14-17 2026 in the United States.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "What will US airline passenger volume be for these weeks in February 2026, according to the TSA? (Feb 16, 2026-Feb 22, 2026)",
+          "tool": "AskNews",
+          "deep_research_query": "Provide TSA and airline passenger volume projections for the Presidents Day weekend February 14-17 2026 in the United States."
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Google News",
+        "AskNews"
+      ],
+      "llm_cost": 0.1942,
+      "llm_cost_summarization": 0.1879,
+      "llm_cost_agentic": 0.0063,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6399,
+        "token_output": 1907,
+        "cost": 0.047802,
+        "duration_seconds": 47.9975266456604,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15456,
+        "token_output": 2637,
+        "cost": 0.085923,
+        "duration_seconds": 68.77447700500488,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6399,
+        "token_output": 1407,
+        "cost": 0.040302000000000004,
+        "duration_seconds": 47.99758815765381,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14738,
+        "token_output": 2681,
+        "cost": 0.08442899999999999,
+        "duration_seconds": 68.77444267272949,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5659,
+        "token_output": 2744,
+        "cost": 0.04831925,
+        "duration_seconds": 47.99763560295105,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13255,
+        "token_output": 2133,
+        "cost": 0.05305825,
+        "duration_seconds": 68.7744026184082,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5659,
+        "token_output": 2378,
+        "cost": 0.030342,
+        "duration_seconds": 47.997668504714966,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13759,
+        "token_output": 1500,
+        "cost": 0.039518,
+        "duration_seconds": 68.77436637878418,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5659,
+        "token_output": 2447,
+        "cost": 0.030893999999999998,
+        "duration_seconds": 47.99770522117615,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12970,
+        "token_output": 1894,
+        "cost": 0.041092000000000004,
+        "duration_seconds": 68.77433061599731,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0149,
+    "step2_search": 0.3508,
+    "step3_outside_view": 0.1977,
+    "step5_inside_view": 0.304,
+    "step6_aggregation": 0.304,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.8674
+}
