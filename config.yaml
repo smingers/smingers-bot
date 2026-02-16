@@ -113,6 +113,16 @@ research:
   asknews_max_results: 10
   asknews_hours_back: 72
 
+  # Tavily AI-optimized search (better content extraction, handles PDFs/JS pages)
+  # When enabled, replaces Google/Serper for web search queries and URL extraction.
+  # Tavily returns clean, LLM-ready content so scraping + summarization steps are skipped.
+  # Free tier: 1,000 credits/month. Sign up at https://tavily.com
+  tavily_enabled: false
+  tavily_search_depth: "advanced"  # "basic" (1 credit) or "advanced" (2 credits, better quality)
+  tavily_max_results: 5
+  tavily_include_answer: true  # Include AI-generated answer summary
+  tavily_extract_enabled: true  # Use Tavily Extract for question URL scraping (handles PDFs)
+
   # Agentic search (iterative LLM-guided research)
   agentic_search_enabled: true
   agentic_search_max_steps: 7

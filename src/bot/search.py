@@ -150,6 +150,7 @@ class SearchPipeline:
         self.asknews_client_id = os.getenv("ASKNEWS_CLIENT_ID")
         self.asknews_secret = os.getenv("ASKNEWS_CLIENT_SECRET") or os.getenv("ASKNEWS_SECRET")
         self.fred_api_key = os.getenv("FRED_API_KEY")
+        self.tavily_api_key = os.getenv("TAVILY_API_KEY")
         self._fred_client = None  # Lazily initialized in _get_fred_client
 
         # Rate limiter for AskNews calls (free tier has concurrency limit)
@@ -160,6 +161,12 @@ class SearchPipeline:
         llm_config = self.config.get("llm", {})
         temp_config = llm_config.get("temperature", {})
         return float(temp_config.get(task, self._default_temperatures.get(task, 0.7)))
+
+    def _is_tavily_enabled(self) -> bool:
+        """Check if Tavily search is enabled and API key is configured."""
+        return bool(
+            self.tavily_api_key and self.config.get("research", {}).get("tavily_enabled", False)
+        )
 
     async def __aenter__(self):
         self.http_client = httpx.AsyncClient(timeout=70.0)
@@ -272,14 +279,24 @@ class SearchPipeline:
 
                 if source in ("Google", "Google News"):
                     query_sources.append((query, source))
-                    tasks.append(
-                        self._google_search_and_scrape(
-                            query=query,
-                            is_news=(source == "Google News"),
-                            question_details=question_details,
-                            date_before=question_details.resolution_date,
+                    if self._is_tavily_enabled():
+                        tasks.append(
+                            self._tavily_search_and_scrape(
+                                query=query,
+                                is_news=(source == "Google News"),
+                                question_details=question_details,
+                                date_before=question_details.resolution_date,
+                            )
                         )
-                    )
+                    else:
+                        tasks.append(
+                            self._google_search_and_scrape(
+                                query=query,
+                                is_news=(source == "Google News"),
+                                question_details=question_details,
+                                date_before=question_details.resolution_date,
+                            )
+                        )
                 elif source == "Google Trends":
                     # Check if Google Trends is enabled in config
                     if not self.config.get("research", {}).get("google_trends_enabled", True):
@@ -580,10 +597,35 @@ class SearchPipeline:
 
         logger.info(f"[question_urls] Found {len(urls)} URLs in question text fields")
 
-        # Scrape URLs using existing infrastructure
+        # Scrape URLs — use Tavily Extract if enabled (handles PDFs, JS pages)
+        # with fallback to standard ConcurrentContentExtractor
+        use_tavily_extract = self._is_tavily_enabled() and self.config.get("research", {}).get(
+            "tavily_extract_enabled", True
+        )
+
         try:
-            async with ConcurrentContentExtractor() as extractor:
-                results = await extractor.extract_content(urls)
+            if use_tavily_extract:
+                logger.info("[question_urls] Using Tavily Extract for URL scraping")
+                metadata["tools_used"] = ["TavilyExtract"]
+                results = await self._tavily_extract_urls(urls)
+
+                # Fall back to standard extractor for any URLs Tavily missed
+                missing_urls = [
+                    u for u in urls if u not in results or not results[u].get("success")
+                ]
+                if missing_urls:
+                    logger.info(
+                        f"[question_urls] Tavily missed {len(missing_urls)} URLs, "
+                        "falling back to standard extractor"
+                    )
+                    async with ConcurrentContentExtractor() as extractor:
+                        fallback_results = await extractor.extract_content(missing_urls)
+                    for url_key, extraction in fallback_results.items():
+                        if url_key not in results or not results.get(url_key, {}).get("success"):
+                            results[url_key] = extraction
+            else:
+                async with ConcurrentContentExtractor() as extractor:
+                    results = await extractor.extract_content(urls)
         except Exception as e:
             logger.error(f"[question_urls] Scraping failed: {e}")
             metadata["error"] = str(e)
@@ -822,6 +864,236 @@ class SearchPipeline:
         except Exception as e:
             logger.error(f"Article summarization failed: {e}")
             return f"Error summarizing article: {e}"
+
+    # -------------------------------------------------------------------------
+    # Tavily Search
+    # -------------------------------------------------------------------------
+
+    async def _tavily_search_and_scrape(
+        self,
+        query: str,
+        is_news: bool,
+        question_details: QuestionDetails,
+        date_before: str | None = None,
+    ) -> str:
+        """
+        Search via Tavily API and return formatted results.
+
+        Tavily returns clean, LLM-ready content directly, so no separate
+        scraping or HTML extraction is needed. This replaces the
+        Google search → scrape → summarize pipeline when Tavily is enabled.
+
+        Falls back to Google/Serper if Tavily fails.
+        """
+        try:
+            from tavily import AsyncTavilyClient
+        except ImportError:
+            logger.warning("tavily-python not installed, falling back to Google")
+            return await self._google_search_and_scrape(
+                query, is_news, question_details, date_before
+            )
+
+        research_config = self.config.get("research", {})
+        search_depth = research_config.get("tavily_search_depth", "advanced")
+        max_results = research_config.get("tavily_max_results", 5)
+        include_answer = research_config.get("tavily_include_answer", True)
+
+        try:
+            client = AsyncTavilyClient(api_key=self.tavily_api_key)
+
+            # Tavily doesn't have a separate news mode, but topic="news" focuses on news
+            topic = "news" if is_news else "general"
+
+            logger.info(f"[tavily_search] query='{query}' topic={topic} depth={search_depth}")
+
+            response = await client.search(
+                query=query,
+                search_depth=search_depth,
+                max_results=max_results,
+                include_raw_content=True,
+                include_answer=include_answer,
+                topic=topic,
+            )
+
+            results = response.get("results", [])
+            answer = response.get("answer")
+
+            if not results and not answer:
+                logger.warning(f"[tavily_search] No results for: '{query}'")
+                return f'<Summary query="{query}">No results returned from Tavily.</Summary>\n'
+
+            output = ""
+
+            # Include AI-generated answer as a high-quality summary
+            if answer:
+                output += (
+                    f'\n<Summary source="tavily-answer" query="{query}">\n{answer}\n</Summary>\n'
+                )
+
+            # Include individual results with their clean content
+            results_added = 0
+            for result in results:
+                if results_added >= 3:
+                    break
+
+                url = result.get("url", "unknown")
+                # Prefer raw_content (full page) over content (snippet)
+                content = result.get("raw_content") or result.get("content", "")
+
+                if not content or len(content.split()) < 50:
+                    continue
+
+                # Tavily content is already clean, but may be long — summarize it
+                truncated = content[:8000]
+                summary = await self._summarize_article(truncated, question_details)
+                output += f'\n<Summary source="{url}">\n{summary}\n</Summary>\n'
+                results_added += 1
+
+            if not output:
+                return (
+                    f'<Summary query="{query}">No usable content from Tavily results.</Summary>\n'
+                )
+
+            logger.info(
+                f"[tavily_search] Returned answer={'yes' if answer else 'no'}, "
+                f"{results_added} article summaries for '{query}'"
+            )
+            return output
+
+        except Exception as e:
+            logger.error(f"[tavily_search] Error: {e}, falling back to Google")
+            return await self._google_search_and_scrape(
+                query, is_news, question_details, date_before
+            )
+
+    async def _tavily_search_agentic(self, query: str, is_news: bool = False) -> str:
+        """
+        Tavily search that returns raw content for agentic search consumption.
+
+        Parallel to _google_search_agentic() but uses Tavily for cleaner content.
+        Falls back to Google if Tavily fails.
+        """
+        try:
+            from tavily import AsyncTavilyClient
+        except ImportError:
+            return await self._google_search_agentic(query, is_news)
+
+        research_config = self.config.get("research", {})
+        search_depth = research_config.get("tavily_search_depth", "advanced")
+        max_results = research_config.get("tavily_max_results", 5)
+
+        try:
+            client = AsyncTavilyClient(api_key=self.tavily_api_key)
+            topic = "news" if is_news else "general"
+
+            logger.debug(f"[tavily_search_agentic] query='{query}' topic={topic}")
+
+            response = await client.search(
+                query=query,
+                search_depth=search_depth,
+                max_results=max_results,
+                include_raw_content=True,
+                include_answer=False,
+                topic=topic,
+            )
+
+            results = response.get("results", [])
+
+            if not results:
+                return f'<RawContent query="{query}">No results from Tavily.</RawContent>\n'
+
+            output = ""
+            results_count = 0
+
+            for result in results:
+                if results_count >= 3:
+                    break
+
+                url = result.get("url", "unknown")
+                content = result.get("raw_content") or result.get("content", "")
+
+                if not content or len(content.split()) < 50:
+                    continue
+
+                truncated = content[:8000]
+                output += f'\n<RawContent source="{url}">\n{truncated}\n</RawContent>\n'
+                results_count += 1
+
+            if not output:
+                return f'<RawContent query="{query}">No usable content from Tavily.</RawContent>\n'
+
+            return output
+
+        except Exception as e:
+            logger.error(f"[tavily_search_agentic] Error: {e}, falling back to Google")
+            return await self._google_search_agentic(query, is_news)
+
+    async def _tavily_extract_urls(
+        self,
+        urls: list[str],
+    ) -> dict[str, dict[str, Any]]:
+        """
+        Extract content from URLs using Tavily Extract API.
+
+        Handles PDFs, JS-rendered pages, and complex sites that the
+        standard httpx + HTML extractor cannot process.
+
+        Returns dict in the same format as ConcurrentContentExtractor.extract_content()
+        for drop-in compatibility.
+        """
+        try:
+            from tavily import AsyncTavilyClient
+        except ImportError:
+            logger.warning("tavily-python not installed, falling back to standard extractor")
+            return {}
+
+        try:
+            client = AsyncTavilyClient(api_key=self.tavily_api_key)
+
+            logger.info(f"[tavily_extract] Extracting content from {len(urls)} URLs")
+
+            response = await client.extract(urls=urls)
+
+            results: dict[str, dict[str, Any]] = {}
+
+            # Process successful extractions
+            for item in response.get("results", []):
+                url = item.get("url", "")
+                raw_content = item.get("raw_content", "")
+
+                if url and raw_content:
+                    # Truncate very long content
+                    max_len = self.config.get("research", {}).get("max_content_length", 15000)
+                    if len(raw_content) > max_len:
+                        raw_content = raw_content[:max_len] + "...[truncated]"
+
+                    results[url] = {
+                        "url": url,
+                        "domain": urlparse(url).netloc,
+                        "content": raw_content,
+                        "success": True,
+                    }
+                    logger.info(f"[tavily_extract] Extracted {len(raw_content)} chars from {url}")
+
+            # Process failed extractions
+            for item in response.get("failed_results", []):
+                url = item.get("url", "")
+                error = item.get("error", "Unknown extraction error")
+                if url:
+                    results[url] = {
+                        "url": url,
+                        "domain": urlparse(url).netloc,
+                        "content": None,
+                        "error": error,
+                        "success": False,
+                    }
+                    logger.warning(f"[tavily_extract] Failed to extract {url}: {error}")
+
+            return results
+
+        except Exception as e:
+            logger.error(f"[tavily_extract] Error: {e}")
+            return {}
 
     # -------------------------------------------------------------------------
     # AskNews
@@ -1249,9 +1521,14 @@ class SearchPipeline:
                             continue
                         search_tasks.append(self._fred_search(sq))
                     else:
-                        search_tasks.append(
-                            self._google_search_agentic(sq, is_news=(source == "Google News"))
-                        )
+                        if self._is_tavily_enabled():
+                            search_tasks.append(
+                                self._tavily_search_agentic(sq, is_news=(source == "Google News"))
+                            )
+                        else:
+                            search_tasks.append(
+                                self._google_search_agentic(sq, is_news=(source == "Google News"))
+                            )
                     executed_queries.append((sq, source))
 
                 search_results_list = await asyncio.gather(*search_tasks, return_exceptions=True)
