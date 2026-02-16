@@ -1,0 +1,264 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 2,
+      "queries": [
+        {
+          "query": "https://openrouter.ai/rankings",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "https://openrouter.ai/",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "OpenRouter rankings Chinese models share",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Chinese LLMs gaining share OpenRouter",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "List Chinese author token share OpenRouter weekly market share history; include Qwen Deepseek Baichuan Moonshot Yi, cached rankings from 2025-2026",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "OpenRouter weekly rankings 2025 archive",
+              "Wayback OpenRouter.ai rankings 2026 snapshots",
+              "Qwen OpenRouter token share history",
+              "Deepseek OpenRouter market share week",
+              "Baichuan Moonshot Yi OpenRouter rankings"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "OpenRouter weekly rankings 2025 archive",
+                    "Google"
+                  ],
+                  [
+                    "Wayback OpenRouter.ai rankings 2026 snapshots",
+                    "Google"
+                  ],
+                  [
+                    "Qwen OpenRouter token share history",
+                    "Google"
+                  ],
+                  [
+                    "Deepseek OpenRouter market share week",
+                    "Google"
+                  ],
+                  [
+                    "Baichuan Moonshot Yi OpenRouter rankings",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 76381,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google News",
+        "Google"
+      ],
+      "llm_cost": 0.2324,
+      "llm_cost_summarization": 0.1803,
+      "llm_cost_agentic": 0.0521,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "OpenRouter market share Chinese models 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Chinese AI models OpenRouter ranking February 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide the latest weekly token-share data for Chinese-authored models on OpenRouter and report any recently announced Chinese LLM releases or pricing changes likely to affect usage through April 2026.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "What will be the Chinese model share on Openrouter for the week of April 19, 2026?",
+          "tool": "AskNews",
+          "deep_research_query": "Provide the latest weekly token-share data for Chinese-authored models on OpenRouter and report any recently announced Chinese LLM releases or pricing changes likely to affect usage through April 2026."
+        }
+      ],
+      "tools_used": [
+        "AskNews",
+        "Google News",
+        "Google"
+      ],
+      "llm_cost": 0.1871,
+      "llm_cost_summarization": 0.1803,
+      "llm_cost_agentic": 0.0067,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7439,
+        "token_output": 2505,
+        "cost": 0.059892,
+        "duration_seconds": 67.10217595100403,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17944,
+        "token_output": 2928,
+        "cost": 0.097752,
+        "duration_seconds": 72.81196928024292,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7439,
+        "token_output": 2168,
+        "cost": 0.054837,
+        "duration_seconds": 67.10223579406738,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16753,
+        "token_output": 2837,
+        "cost": 0.09281400000000001,
+        "duration_seconds": 72.81193542480469,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6571,
+        "token_output": 2480,
+        "cost": 0.04621925,
+        "duration_seconds": 67.10227918624878,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15418,
+        "token_output": 3488,
+        "cost": 0.0758135,
+        "duration_seconds": 72.81189894676208,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6571,
+        "token_output": 1698,
+        "cost": 0.026726,
+        "duration_seconds": 67.10231804847717,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15510,
+        "token_output": 1828,
+        "cost": 0.045644,
+        "duration_seconds": 72.81186199188232,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6571,
+        "token_output": 2324,
+        "cost": 0.031734,
+        "duration_seconds": 67.10235095024109,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14636,
+        "token_output": 1670,
+        "cost": 0.042632,
+        "duration_seconds": 72.81182336807251,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0114,
+    "step2_search": 0.2324,
+    "step3_outside_view": 0.2194,
+    "step5_inside_view": 0.3547,
+    "step6_aggregation": 0.3547,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.8178
+}
