@@ -151,9 +151,14 @@ class SearchPipeline:
         self.fred_api_key = os.getenv("FRED_API_KEY")
         self.tavily_api_key = os.getenv("TAVILY_API_KEY")
         self._fred_client = None  # Lazily initialized in _get_fred_client
+        self._tavily_client = None  # Lazily initialized in _get_tavily_client
 
         # Rate limiter for AskNews calls (free tier has concurrency limit)
         self._asknews_rate_limiter = asyncio.Semaphore(1)
+
+        # Rate limiter for Tavily calls (free tier: 1,000 credits/month,
+        # advanced searches cost 2 credits each)
+        self._tavily_rate_limiter = asyncio.Semaphore(2)
 
     def _get_temperature(self, task: str) -> float:
         """Get configured temperature for a task type from llm.temperature config."""
@@ -166,6 +171,25 @@ class SearchPipeline:
         return bool(
             self.tavily_api_key and self.config.get("research", {}).get("tavily_enabled", False)
         )
+
+    def _get_tavily_client(self):
+        """
+        Get or create a lazily-initialized Tavily client.
+
+        Returns the client, or None if tavily-python is not installed.
+        Similar pattern to _get_fred_client().
+        """
+        if self._tavily_client is not None:
+            return self._tavily_client
+
+        try:
+            from tavily import AsyncTavilyClient
+        except ImportError:
+            logger.warning("tavily-python not installed")
+            return None
+
+        self._tavily_client = AsyncTavilyClient(api_key=self.tavily_api_key)
+        return self._tavily_client
 
     async def __aenter__(self):
         self.http_client = httpx.AsyncClient(timeout=70.0)
@@ -615,8 +639,8 @@ class SearchPipeline:
                     async with ConcurrentContentExtractor() as extractor:
                         fallback_results = await extractor.extract_content(missing_urls)
                     for url_key, extraction in fallback_results.items():
-                        if url_key not in results or not results.get(url_key, {}).get("success"):
-                            results[url_key] = extraction
+                        # missing_urls already filtered for !success, so just assign
+                        results[url_key] = extraction
             else:
                 async with ConcurrentContentExtractor() as extractor:
                     results = await extractor.extract_content(urls)
@@ -874,15 +898,15 @@ class SearchPipeline:
         Search via Tavily API and return formatted results.
 
         Tavily returns clean, LLM-ready content directly, so no separate
-        scraping or HTML extraction is needed. This replaces the
+        scraping, HTML extraction, or LLM summarization is needed. Content
+        snippets from Tavily are used directly. This replaces the
         Google search → scrape → summarize pipeline when Tavily is enabled.
 
         Falls back to Google/Serper if Tavily fails.
         """
-        try:
-            from tavily import AsyncTavilyClient
-        except ImportError:
-            logger.warning("tavily-python not installed, falling back to Google")
+        client = self._get_tavily_client()
+        if client is None:
+            logger.warning("Tavily client unavailable, falling back to Google")
             return await self._google_search_and_scrape(
                 query, is_news, question_details, date_before
             )
@@ -893,21 +917,20 @@ class SearchPipeline:
         include_answer = research_config.get("tavily_include_answer", True)
 
         try:
-            client = AsyncTavilyClient(api_key=self.tavily_api_key)
+            async with self._tavily_rate_limiter:
+                # Tavily doesn't have a separate news mode, but topic="news" focuses on news
+                topic = "news" if is_news else "general"
 
-            # Tavily doesn't have a separate news mode, but topic="news" focuses on news
-            topic = "news" if is_news else "general"
+                logger.info(f"[tavily_search] query='{query}' topic={topic} depth={search_depth}")
 
-            logger.info(f"[tavily_search] query='{query}' topic={topic} depth={search_depth}")
-
-            response = await client.search(
-                query=query,
-                search_depth=search_depth,
-                max_results=max_results,
-                include_raw_content=True,
-                include_answer=include_answer,
-                topic=topic,
-            )
+                response = await client.search(
+                    query=query,
+                    search_depth=search_depth,
+                    max_results=max_results,
+                    include_raw_content=False,
+                    include_answer=include_answer,
+                    topic=topic,
+                )
 
             results = response.get("results", [])
             answer = response.get("answer")
@@ -924,23 +947,21 @@ class SearchPipeline:
                     f'\n<Summary source="tavily-answer" query="{query}">\n{answer}\n</Summary>\n'
                 )
 
-            # Include individual results with their clean content
+            # Include individual results using Tavily's clean content directly
+            # (no LLM summarization needed — Tavily content is already extracted and clean)
             results_added = 0
             for result in results:
-                if results_added >= 3:
+                if results_added >= max_results:
                     break
 
                 url = result.get("url", "unknown")
-                # Prefer raw_content (full page) over content (snippet)
-                content = result.get("raw_content") or result.get("content", "")
+                content = result.get("content", "")
 
                 if not content or len(content.split()) < 50:
                     continue
 
-                # Tavily content is already clean, but may be long — summarize it
                 truncated = content[:8000]
-                summary = await self._summarize_article(truncated, question_details)
-                output += f'\n<Summary source="{url}">\n{summary}\n</Summary>\n'
+                output += f'\n<Summary source="{url}">\n{truncated}\n</Summary>\n'
                 results_added += 1
 
             if not output:
@@ -950,7 +971,7 @@ class SearchPipeline:
 
             logger.info(
                 f"[tavily_search] Returned answer={'yes' if answer else 'no'}, "
-                f"{results_added} article summaries for '{query}'"
+                f"{results_added} results for '{query}'"
             )
             return output
 
@@ -964,12 +985,12 @@ class SearchPipeline:
         """
         Tavily search that returns raw content for agentic search consumption.
 
-        Parallel to _google_search_agentic() but uses Tavily for cleaner content.
-        Falls back to Google if Tavily fails.
+        Uses include_raw_content=True to get full page content for the LLM
+        agent to analyze directly (no summarization). Falls back to Google
+        if Tavily fails.
         """
-        try:
-            from tavily import AsyncTavilyClient
-        except ImportError:
+        client = self._get_tavily_client()
+        if client is None:
             return await self._google_search_agentic(query, is_news)
 
         research_config = self.config.get("research", {})
@@ -977,19 +998,19 @@ class SearchPipeline:
         max_results = research_config.get("tavily_max_results", 5)
 
         try:
-            client = AsyncTavilyClient(api_key=self.tavily_api_key)
-            topic = "news" if is_news else "general"
+            async with self._tavily_rate_limiter:
+                topic = "news" if is_news else "general"
 
-            logger.debug(f"[tavily_search_agentic] query='{query}' topic={topic}")
+                logger.debug(f"[tavily_search_agentic] query='{query}' topic={topic}")
 
-            response = await client.search(
-                query=query,
-                search_depth=search_depth,
-                max_results=max_results,
-                include_raw_content=True,
-                include_answer=False,
-                topic=topic,
-            )
+                response = await client.search(
+                    query=query,
+                    search_depth=search_depth,
+                    max_results=max_results,
+                    include_raw_content=True,
+                    include_answer=False,
+                    topic=topic,
+                )
 
             results = response.get("results", [])
 
@@ -1000,7 +1021,7 @@ class SearchPipeline:
             results_count = 0
 
             for result in results:
-                if results_count >= 3:
+                if results_count >= max_results:
                     break
 
                 url = result.get("url", "unknown")
@@ -1035,18 +1056,15 @@ class SearchPipeline:
         Returns dict in the same format as ConcurrentContentExtractor.extract_content()
         for drop-in compatibility.
         """
-        try:
-            from tavily import AsyncTavilyClient
-        except ImportError:
-            logger.warning("tavily-python not installed, falling back to standard extractor")
+        client = self._get_tavily_client()
+        if client is None:
             return {}
 
         try:
-            client = AsyncTavilyClient(api_key=self.tavily_api_key)
-
             logger.info(f"[tavily_extract] Extracting content from {len(urls)} URLs")
 
-            response = await client.extract(urls=urls)
+            async with self._tavily_rate_limiter:
+                response = await client.extract(urls=urls)
 
             results: dict[str, dict[str, Any]] = {}
 

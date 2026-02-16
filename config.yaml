@@ -115,7 +115,8 @@ research:
 
   # Tavily AI-optimized search (better content extraction, handles PDFs/JS pages)
   # When enabled, replaces Google/Serper for web search queries and URL extraction.
-  # Tavily returns clean, LLM-ready content so scraping + summarization steps are skipped.
+  # Regular search uses Tavily's content snippets directly (no scraping/summarization).
+  # Agentic search uses Tavily's raw_content for full-page content.
   # Free tier: 1,000 credits/month. Sign up at https://tavily.com
   tavily_enabled: false
   tavily_search_depth: "advanced"  # "basic" (1 credit) or "advanced" (2 credits, better quality)
