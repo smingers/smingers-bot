@@ -1,0 +1,264 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 2,
+      "queries": [
+        {
+          "query": "https://en.wikipedia.org/wiki/2026_Wisconsin_Supreme_Court_election",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://myvote.wi.gov/en-us/Election-Results",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Wisconsin Supreme Court 2026 election",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Maria Lazar Chris Taylor race",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide background on 2026 Wisconsin Supreme Court election: candidate biographies, prior statewide election margins (2020-2025), recent fundraising totals, endorsements, and any available polling; include Wisconsin Elections Commission data and reputable news sources published before 16 Feb 2026.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "2026 Wisconsin Supreme Court candidates",
+              "Wisconsin statewide election margins 2020 2025",
+              "Wisconsin Supreme Court 2026 fundraising totals",
+              "Wisconsin Supreme Court 2026 endorsements",
+              "Wisconsin Supreme Court 2026 polling"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "2026 Wisconsin Supreme Court candidates",
+                    "Google"
+                  ],
+                  [
+                    "Wisconsin statewide election margins 2020 2025",
+                    "Google"
+                  ],
+                  [
+                    "Wisconsin Supreme Court 2026 fundraising totals",
+                    "Google News"
+                  ],
+                  [
+                    "Wisconsin Supreme Court 2026 endorsements",
+                    "Google"
+                  ],
+                  [
+                    "Wisconsin Supreme Court 2026 polling",
+                    "Google News"
+                  ]
+                ],
+                "search_results_chars": 70089,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Agent",
+        "Google"
+      ],
+      "llm_cost": 0.1653,
+      "llm_cost_summarization": 0.1079,
+      "llm_cost_agentic": 0.0574,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Wisconsin 2026 Supreme Court polling",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Maria Lazar Chris Taylor 2026 race",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Give me the latest February 2026 coverage of the upcoming April 7 2026 Wisconsin Supreme Court election, including candidate filings, fundraising reports, endorsements, and any public polling.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 16
+        },
+        {
+          "query": "Who will win the Wisconsin Supreme Court election scheduled for April 7, 2026?",
+          "tool": "AskNews",
+          "deep_research_query": "Give me the latest February 2026 coverage of the upcoming April 7 2026 Wisconsin Supreme Court election, including candidate filings, fundraising reports, endorsements, and any public polling."
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "AskNews",
+        "Google"
+      ],
+      "llm_cost": 0.1168,
+      "llm_cost_summarization": 0.1079,
+      "llm_cost_agentic": 0.009,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5568,
+        "token_output": 1972,
+        "cost": 0.04628399999999999,
+        "duration_seconds": 51.611579179763794,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12979,
+        "token_output": 2916,
+        "cost": 0.082677,
+        "duration_seconds": 75.01727247238159,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5568,
+        "token_output": 1857,
+        "cost": 0.044559,
+        "duration_seconds": 51.611637353897095,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12357,
+        "token_output": 2846,
+        "cost": 0.079761,
+        "duration_seconds": 75.01724433898926,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4934,
+        "token_output": 2342,
+        "cost": 0.0414225,
+        "duration_seconds": 51.61168026924133,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11423,
+        "token_output": 2157,
+        "cost": 0.050188250000000004,
+        "duration_seconds": 75.01721477508545,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4934,
+        "token_output": 3027,
+        "cost": 0.034084,
+        "duration_seconds": 51.611716985702515,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11481,
+        "token_output": 1536,
+        "cost": 0.035250000000000004,
+        "duration_seconds": 75.01718640327454,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4934,
+        "token_output": 2084,
+        "cost": 0.02654,
+        "duration_seconds": 51.611748695373535,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 10865,
+        "token_output": 1449,
+        "cost": 0.033322,
+        "duration_seconds": 75.01715993881226,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0104,
+    "step2_search": 0.1653,
+    "step3_outside_view": 0.1929,
+    "step5_inside_view": 0.2812,
+    "step6_aggregation": 0.2812,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.6498
+}
