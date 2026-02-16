@@ -95,8 +95,9 @@ def load_forecast(forecast_dir: Path, allow_test_mode: bool = False) -> dict | N
     if not metadata:
         return None
 
-    # Skip errored forecasts
-    if metadata.get("errors"):
+    # Skip errored forecasts (but not DB write errors, which don't affect forecast data)
+    errors = metadata.get("errors", [])
+    if errors and not all("constraint" in str(e).lower() for e in errors):
         return None
 
     config = metadata.get("config_snapshot", {})
