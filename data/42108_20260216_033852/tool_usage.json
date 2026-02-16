@@ -1,0 +1,281 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": false,
+      "num_queries": 0,
+      "queries": [],
+      "tools_used": [],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "RN municipal results Marseille 2020",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "RN 2026 municipales Marseille Toulouse Lyon",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide historical performance of Rassemblement National and Front National in municipal elections in Marseille, Lyon, and Toulouse since the 1980s, including vote shares, second-round outcomes, prior mayoralties, and report any declared RN-labeled lists or polling for the 2026 contests in these three cities.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 3,
+            "queries_executed": [
+              "municipales Marseille Front National r\u00e9sultats",
+              "municipales Lyon Front National historique",
+              "municipales Toulouse Rassemblement National r\u00e9sultats",
+              "municipales 2026 Marseille Rassemblement National liste",
+              "municipales 2026 Lyon Toulouse RN sondage",
+              "r\u00e9sultats municipales Marseille 1995 Front national",
+              "r\u00e9sultats municipales Lyon 2001 Front national",
+              "minist\u00e8re Int\u00e9rieur municipales Toulouse 2014 FN",
+              "sondage municipales 2026 Lyon RN",
+              "Marseille sondage Allisio Payan f\u00e9vrier 2026"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "municipales Marseille Front National r\u00e9sultats",
+                    "Google"
+                  ],
+                  [
+                    "municipales Lyon Front National historique",
+                    "Google"
+                  ],
+                  [
+                    "municipales Toulouse Rassemblement National r\u00e9sultats",
+                    "Google"
+                  ],
+                  [
+                    "municipales 2026 Marseille Rassemblement National liste",
+                    "Google News"
+                  ],
+                  [
+                    "municipales 2026 Lyon Toulouse RN sondage",
+                    "Google News"
+                  ]
+                ],
+                "search_results_chars": 74737,
+                "analysis_chars": 0
+              },
+              {
+                "step_number": 2,
+                "queries_executed": [
+                  [
+                    "r\u00e9sultats municipales Marseille 1995 Front national",
+                    "Google"
+                  ],
+                  [
+                    "r\u00e9sultats municipales Lyon 2001 Front national",
+                    "Google"
+                  ],
+                  [
+                    "minist\u00e8re Int\u00e9rieur municipales Toulouse 2014 FN",
+                    "Google"
+                  ],
+                  [
+                    "sondage municipales 2026 Lyon RN",
+                    "Google News"
+                  ],
+                  [
+                    "Marseille sondage Allisio Payan f\u00e9vrier 2026",
+                    "Google News"
+                  ]
+                ],
+                "search_results_chars": 85402,
+                "analysis_chars": 3917
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Agent",
+        "Google News"
+      ],
+      "llm_cost": 0.2953,
+      "llm_cost_summarization": 0.1678,
+      "llm_cost_agentic": 0.1276,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "municipales 2026 RN Marseille Lyon Toulouse",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "sondage municipales 2026 Rassemblement National Marseille",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide latest February 2026 coverage of Rassemblement National candidate lists, alliances, and polling for the March 2026 municipal elections in Marseille, Lyon, and Toulouse.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "Will a National Rally\u2013labeled list win the mayoralty of at least one of Marseille, Lyon, or Toulouse in France\u2019s 2026 municipal elections ?",
+          "tool": "AskNews",
+          "deep_research_query": "Provide latest February 2026 coverage of Rassemblement National candidate lists, alliances, and polling for the March 2026 municipal elections in Marseille, Lyon, and Toulouse."
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "AskNews",
+        "Google News"
+      ],
+      "llm_cost": 0.1327,
+      "llm_cost_summarization": 0.1267,
+      "llm_cost_agentic": 0.006,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7244,
+        "token_output": 2005,
+        "cost": 0.05180699999999999,
+        "duration_seconds": 52.96051383018494,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 18757,
+        "token_output": 2944,
+        "cost": 0.10043099999999999,
+        "duration_seconds": 66.31533718109131,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7244,
+        "token_output": 1959,
+        "cost": 0.051116999999999996,
+        "duration_seconds": 52.96058106422424,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17907,
+        "token_output": 2230,
+        "cost": 0.087171,
+        "duration_seconds": 66.31526255607605,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6041,
+        "token_output": 2757,
+        "cost": 0.04916975,
+        "duration_seconds": 52.96062445640564,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15884,
+        "token_output": 3030,
+        "cost": 0.070217,
+        "duration_seconds": 66.31523299217224,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6041,
+        "token_output": 2144,
+        "cost": 0.029234000000000003,
+        "duration_seconds": 52.960662603378296,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16039,
+        "token_output": 2202,
+        "cost": 0.049694,
+        "duration_seconds": 66.31520533561707,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6041,
+        "token_output": 2405,
+        "cost": 0.031322,
+        "duration_seconds": 52.96071457862854,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15549,
+        "token_output": 2493,
+        "cost": 0.051042000000000004,
+        "duration_seconds": 66.3151786327362,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0109,
+    "step2_search": 0.2953,
+    "step3_outside_view": 0.2126,
+    "step5_inside_view": 0.3586,
+    "step6_aggregation": 0.3586,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.8774
+}
