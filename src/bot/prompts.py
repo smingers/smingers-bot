@@ -833,10 +833,8 @@ Important guidelines:
 - Choose your source as Google, Google News, yFinance, or FRED based on the type of information needed.
 - Please phrase the queries in a way optimal for keyword optimized search (i.e., the phrase you search is likely to appear on desired web pages). Avoid writing overly specific queries. Limit to six words.
 - You can list up to 5 search queries
-
-For yFinance: use a Yahoo Finance ticker symbol to retrieve market data (e.g., "AAPL", "^GSPC"). Indices use the ^ prefix. If the ticker fails, you can search Google for the correct symbol and retry.
-
-For FRED: use a FRED series ID (e.g., "AMERIBOR", "UNRATE", "CPIAUCSL") or a plain-language description (e.g., "US unemployment rate") to retrieve historical economic data with computed statistics. This returns recent values, mean, median, standard deviation, and trends directly from the Federal Reserve Economic Data API.
+- For yFinance: use a Yahoo Finance ticker symbol to retrieve market data (e.g., "AAPL", "^GSPC"). Indices use the ^ prefix. If the ticker fails, you can search Google for the correct symbol and retry.
+- For FRED: use a FRED series ID (e.g., "AMERIBOR", "UNRATE", "CPIAUCSL") or a plain-language description (e.g., "US unemployment rate") to retrieve historical economic data with computed statistics. This returns recent values, mean, median, standard deviation, and trends directly from the Federal Reserve Economic Data API.
 
 Format your answer exactly as below, with the source in parentheses () on the same line after each query. Do not wrap your query in quotes or brackets.
 
@@ -852,7 +850,7 @@ Search queries:
 
 """
 
-CONTINUATION_SEARCH_PROMPT = """You are are an expert research assistanct continuing your research to answer a specific query. Based on the search results, provide a comprehensive analysis and identify if additional information is needed.
+CONTINUATION_SEARCH_PROMPT = """You are an expert research assistant continuing your research to answer a specific query. Based on the search results, provide a comprehensive analysis and identify if additional information is needed.
 
 Original query: {query}
 
@@ -870,13 +868,15 @@ Your task:
 3. Identify any remaining information gaps
 4. Generate new search queries if needed (different from previous queries)
 
-Important guidelines:
+Guidelines for analysis:
 - Write a COMPLETE analysis that could serve as the final answer
 - Base your analysis primarily on the search results provided
 - Cite sources from the search results to establish credibility
 - Be objective: present facts without personal opinions
 - Make sure you carry forward key findings from your previous analysis
-- Your analysis must be of the facts you have been able to obtain that are relevant to the query. Do not write a how-to guide to find information you couldn't obtain yourself.
+- NO PROCESS NARRATION: Do not describe a search methodology, next steps, or remaining gaps. This is a finished report, not a research plan.
+
+Guidelines for search:
 - Only generate new search queries if they would materially improve your answer
 - Choose your source as Google, Google News, yFinance, or FRED based on the type of information needed.
 - For yFinance: use a Yahoo Finance ticker symbol to retrieve market data. If a previous yFinance query failed, search Google for the correct ticker and retry.
@@ -884,7 +884,7 @@ Important guidelines:
 - Write Google/Google News queries for keyword optimized search. Avoid writing overly specific queries. Limit to six words.
 - List a maximum of five search queries, using only the maximum number of queries when really necessary.
 - If your analysis is sufficiently complete, omit the "Search queries:" section entirely to signal completion. Absence of regex match for 'Search queries:' will signal that this is your final research step.
-- If you encounter difficulties retrieving the exact information being requested (paywall or information unavailable), look for alternative sources/proxies for the same data. If utilizing these sources, you must add the alternative source used as a disclaimer in your analysis. Alternatively, consider how you might obtain a small subset of the data requested (perhaps by viewing snapshots at specific times). Some information is better than no information in your conclusion.
+- If you encounter difficulties retrieving exact data (paywall or unavailable), search for alternative sources or proxies and present whatever concrete values you find, noting the proxy inline.
 - You can consider searching for specific sites using the site prefix in your query.
 
 Format your answer exactly as below, with the source in parentheses () on the same line after each query. Do not wrap your query in quotes or brackets. It is essential to follow these formatting instructions as regex will be used to parse your response.
