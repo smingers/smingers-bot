@@ -7,9 +7,11 @@ Handles all interactions with the Metaculus API:
 - Getting question details
 """
 
+import json
 import logging
 import os
-from dataclasses import dataclass
+import re
+from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from typing import Any, Literal
 
@@ -371,6 +373,142 @@ class MetaculusQuestion:
 
 
 @dataclass
+class MetaForecastInfo:
+    """Parsed metadata from a meta-forecast question (community prediction movement).
+
+    These are MiniBench-style questions that ask whether the community prediction
+    on a target Metaculus question will rise above a threshold by a given date.
+
+    Detected via the JSON format tag at the end of the question description:
+    `{"format":"metaculus_binary_cp_rises","info":{"post_id":...,"question_id":...,"last_cp":...}}`
+    """
+
+    format: str  # e.g., "metaculus_binary_cp_rises"
+    target_post_id: int  # Post ID of the target question (used in URLs)
+    target_question_id: int  # Internal question ID of the target
+    last_cp: float  # Community prediction at meta-question creation time (0-1 scale)
+
+    @classmethod
+    def from_description(cls, description: str) -> "MetaForecastInfo | None":
+        """Extract meta-forecast info from a question description.
+
+        Looks for the JSON format tag (backtick-wrapped) at the end of the description.
+        Returns None if the question is not a meta-forecast question.
+        """
+        if not description:
+            return None
+
+        match = re.search(r"`(\{[^`]+\})`\s*$", description.strip())
+        if not match:
+            return None
+
+        try:
+            tag = json.loads(match.group(1))
+        except json.JSONDecodeError:
+            return None
+
+        if tag.get("format") != "metaculus_binary_cp_rises":
+            return None
+
+        info = tag.get("info", {})
+        post_id = info.get("post_id")
+        question_id = info.get("question_id")
+        last_cp = info.get("last_cp")
+
+        if post_id is None or question_id is None or last_cp is None:
+            return None
+
+        return cls(
+            format=tag["format"],
+            target_post_id=int(post_id),
+            target_question_id=int(question_id),
+            last_cp=float(last_cp),
+        )
+
+
+@dataclass
+class AggregationHistoryPoint:
+    """A single point in a community prediction history timeseries."""
+
+    start_time: float  # Unix timestamp
+    end_time: float  # Unix timestamp
+    centers: list[float]  # Median values (0-1 scale)
+    forecaster_count: int
+    interval_lower_bounds: list[float] | None = None  # 25th percentile
+    interval_upper_bounds: list[float] | None = None  # 75th percentile
+
+
+@dataclass
+class AggregationHistory:
+    """Community prediction history for a Metaculus question."""
+
+    question_title: str
+    question_post_id: int
+    history: list[AggregationHistoryPoint] = field(default_factory=list)
+    latest_cp: float | None = None  # Most recent community prediction (0-1)
+    aggregation_method: str | None = None  # "recency_weighted" or "unweighted"
+
+    @classmethod
+    def from_api_response(cls, data: dict) -> "AggregationHistory":
+        """Parse aggregation history from a Metaculus API /posts/{id}/ response."""
+        post_id = data.get("id", 0)
+        title = data.get("title", "")
+        question_data = data.get("question", {})
+        aggregations = question_data.get("aggregations") or {}
+
+        # Try recency_weighted first (standard questions), then unweighted (tournament)
+        method = None
+        agg_data = None
+        for method_name in ("recency_weighted", "unweighted"):
+            candidate = aggregations.get(method_name)
+            if candidate and (candidate.get("history") or candidate.get("latest")):
+                method = method_name
+                agg_data = candidate
+                break
+
+        if not agg_data:
+            return cls(
+                question_title=title,
+                question_post_id=post_id,
+            )
+
+        # Parse history points
+        history_points = []
+        for entry in agg_data.get("history") or []:
+            centers = entry.get("centers", [])
+            if not centers:
+                continue
+            history_points.append(
+                AggregationHistoryPoint(
+                    start_time=entry.get("start_time", 0),
+                    end_time=entry.get("end_time", 0),
+                    centers=centers,
+                    forecaster_count=entry.get("forecaster_count", 0),
+                    interval_lower_bounds=entry.get("interval_lower_bounds"),
+                    interval_upper_bounds=entry.get("interval_upper_bounds"),
+                )
+            )
+
+        # Get latest CP
+        latest_cp = None
+        latest = agg_data.get("latest")
+        if latest:
+            latest_centers = latest.get("centers", [])
+            if latest_centers:
+                latest_cp = latest_centers[0]
+        elif history_points:
+            latest_cp = history_points[-1].centers[0]
+
+        return cls(
+            question_title=title,
+            question_post_id=post_id,
+            history=history_points,
+            latest_cp=latest_cp,
+            aggregation_method=method,
+        )
+
+
+@dataclass
 class MyForecast:
     """Represents a forecast I've already made."""
 
@@ -442,13 +580,25 @@ class MetaculusClient:
         """Get a question from its URL."""
         # Extract question ID from URL
         # URLs look like: https://www.metaculus.com/questions/12345/...
-        import re
-
         match = re.search(r"/questions/(\d+)", url)
         if not match:
             raise ValueError(f"Could not extract question ID from URL: {url}")
         question_id = int(match.group(1))
         return await self.get_question(question_id)
+
+    async def get_aggregation_history(self, post_id: int) -> AggregationHistory:
+        """Fetch the community prediction history for a question.
+
+        Args:
+            post_id: The post ID (as used in Metaculus URLs: /questions/{post_id}/)
+
+        Returns:
+            AggregationHistory with the full timeseries of community predictions.
+        """
+        response = await self.client.get(f"/posts/{post_id}/")
+        response.raise_for_status()
+        data = response.json()
+        return AggregationHistory.from_api_response(data)
 
     async def get_tournament_questions(
         self,

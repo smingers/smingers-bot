@@ -243,6 +243,13 @@ class BaseForecaster(ForecasterMixin, ABC):
                 f"{question_url_metadata.get('urls_summarized', 0)} URLs summarized)"
             )
 
+        # Prepend meta-forecast context (target question CP history)
+        # for meta-forecast questions about community prediction movements
+        meta_forecast_context = question_params.get("meta_forecast_context", "")
+        if meta_forecast_context:
+            historical_context = meta_forecast_context + "\n\n" + historical_context
+            log(f"\nMeta-forecast context injected ({len(meta_forecast_context)} chars)")
+
         log(f"\nHistorical context ({len(historical_context)} chars)")
         log(f"Current context ({len(current_context)} chars)")
 

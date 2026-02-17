@@ -1106,9 +1106,7 @@ class TestPercentilesFromCdf:
     def test_single_target_percentile(self):
         """Should work with a single target percentile."""
         cdf = self._make_linear_cdf(0, 100)
-        result = percentiles_from_cdf(
-            cdf, lower_bound=0, upper_bound=100, target_percentiles=[50]
-        )
+        result = percentiles_from_cdf(cdf, lower_bound=0, upper_bound=100, target_percentiles=[50])
 
         assert result == {"50": pytest.approx(50.0, abs=0.5)}
 
@@ -1116,9 +1114,7 @@ class TestPercentilesFromCdf:
         """Log-scaled CDF should produce non-linear percentile spacing."""
         cdf = self._make_linear_cdf(1, 1000)
         result_linear = percentiles_from_cdf(cdf, lower_bound=1, upper_bound=1000)
-        result_log = percentiles_from_cdf(
-            cdf, lower_bound=1, upper_bound=1000, zero_point=0
-        )
+        result_log = percentiles_from_cdf(cdf, lower_bound=1, upper_bound=1000, zero_point=0)
 
         # With log scaling, the same CDF location maps to a lower real-world value
         # because log compression concentrates CDF mass toward the lower bound.
@@ -1129,13 +1125,13 @@ class TestPercentilesFromCdf:
     def test_log_scaling_monotonic(self):
         """Log-scaled percentile values should still be monotonically increasing."""
         cdf = self._make_linear_cdf(10, 10000)
-        result = percentiles_from_cdf(
-            cdf, lower_bound=10, upper_bound=10000, zero_point=0
-        )
+        result = percentiles_from_cdf(cdf, lower_bound=10, upper_bound=10000, zero_point=0)
 
         values = [result[str(p)] for p in [10, 25, 50, 75, 90]]
         for i in range(len(values) - 1):
-            assert values[i] < values[i + 1], f"P{[10,25,50,75,90][i]} >= P{[10,25,50,75,90][i+1]}"
+            assert values[i] < values[i + 1], (
+                f"P{[10, 25, 50, 75, 90][i]} >= P{[10, 25, 50, 75, 90][i + 1]}"
+            )
 
     def test_with_generated_cdf(self):
         """Round-trip: generate a CDF from percentiles, then extract percentiles back."""
@@ -1168,9 +1164,7 @@ class TestPercentilesFromCdf:
             zero_point=0,
         )
 
-        result = percentiles_from_cdf(
-            cdf, lower_bound=10, upper_bound=1000, zero_point=0
-        )
+        result = percentiles_from_cdf(cdf, lower_bound=10, upper_bound=1000, zero_point=0)
 
         # Should recover approximate original values
         assert result["50"] == pytest.approx(100.0, rel=0.3)

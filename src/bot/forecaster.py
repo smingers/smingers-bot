@@ -18,7 +18,12 @@ from ..config import ResolvedConfig
 from ..storage.artifact_store import ArtifactStore, ForecastArtifactPaths
 from ..storage.database import AgentPredictionRecord, ForecastDatabase, ForecastRecord
 from ..utils.llm import LLMClient, get_cost_tracker, reset_cost_tracker
-from ..utils.metaculus_api import MetaculusClient, MetaculusQuestion
+from ..utils.metaculus_api import (
+    AggregationHistory,
+    MetaculusClient,
+    MetaculusQuestion,
+    MetaForecastInfo,
+)
 from .binary import BinaryForecaster
 from .cdf import percentiles_from_cdf
 from .exceptions import QuestionTypeError, SubmissionError
@@ -26,6 +31,114 @@ from .multiple_choice import MultipleChoiceForecaster
 from .numeric import NumericForecaster
 
 logger = logging.getLogger(__name__)
+
+
+def format_meta_forecast_context(
+    meta_info: MetaForecastInfo,
+    history: AggregationHistory,
+) -> str:
+    """Format target question CP history as readable text for the research pipeline.
+
+    Produces a structured summary including:
+    - Target question identification
+    - Baseline CP at meta-question creation
+    - Current live CP
+    - Full history table with dates, CP values, forecaster counts, and confidence intervals
+    - Summary statistics (trend, volatility)
+
+    Args:
+        meta_info: Parsed meta-forecast question metadata
+        history: Aggregation history fetched from the Metaculus API
+
+    Returns:
+        Formatted context string ready to prepend to historical_context
+    """
+    lines = [
+        "=== Target Question: Community Prediction History ===",
+        f'Target question: "{history.question_title}"',
+        f"Target URL: https://www.metaculus.com/questions/{meta_info.target_post_id}/",
+        f"Baseline CP at meta-question creation: {meta_info.last_cp:.2%}",
+    ]
+
+    if history.latest_cp is not None:
+        lines.append(f"Current live CP: {history.latest_cp:.2%}")
+    else:
+        lines.append("Current live CP: not available (CP may not be revealed yet)")
+
+    if not history.history:
+        lines.append("")
+        lines.append(
+            "No historical CP timeseries available for this question. "
+            "The question may be too new or CP history may not be exposed."
+        )
+        lines.append("=== End Target Question History ===")
+        return "\n".join(lines)
+
+    # Build history table
+    lines.append("")
+    lines.append("CP History (chronological):")
+    lines.append(f"{'Date':<20} {'CP':>8} {'Forecasters':>12} {'25th-75th pctile':>18}")
+    lines.append("-" * 62)
+
+    cp_values = []
+    for point in history.history:
+        cp = point.centers[0]
+        cp_values.append(cp)
+        date_str = datetime.fromtimestamp(point.start_time, tz=UTC).strftime("%Y-%m-%d %H:%M")
+
+        # Format confidence interval if available
+        if point.interval_lower_bounds and point.interval_upper_bounds:
+            lower = point.interval_lower_bounds[0]
+            upper = point.interval_upper_bounds[0]
+            ci_str = f"{lower:.2%} - {upper:.2%}"
+        else:
+            ci_str = "n/a"
+
+        lines.append(f"{date_str:<20} {cp:>7.2%} {point.forecaster_count:>12} {ci_str:>18}")
+
+    # Add latest if it differs from last history point
+    if history.latest_cp is not None:
+        last_history_cp = history.history[-1].centers[0] if history.history else None
+        if last_history_cp is None or abs(history.latest_cp - last_history_cp) > 0.0001:
+            lines.append(f"{'(latest)':<20} {history.latest_cp:>7.2%}")
+            cp_values.append(history.latest_cp)
+
+    # Summary statistics
+    if len(cp_values) >= 2:
+        lines.append("")
+        min_cp = min(cp_values)
+        max_cp = max(cp_values)
+        lines.append(f"Range: {min_cp:.2%} - {max_cp:.2%} (spread: {max_cp - min_cp:.2%})")
+
+        first_cp = cp_values[0]
+        last_cp = cp_values[-1]
+        direction = "up" if last_cp > first_cp else "down" if last_cp < first_cp else "flat"
+        lines.append(
+            f"Trend: {first_cp:.2%} -> {last_cp:.2%} ({direction}, "
+            f"net change: {last_cp - first_cp:+.2%})"
+        )
+
+    # Highlight relationship to threshold
+    threshold = meta_info.last_cp
+    if history.latest_cp is not None:
+        diff = history.latest_cp - threshold
+        if diff > 0:
+            lines.append(
+                f"\nCurrent CP ({history.latest_cp:.2%}) is ABOVE "
+                f"the threshold ({threshold:.2%}) by {diff:.2%}"
+            )
+        elif diff < 0:
+            lines.append(
+                f"\nCurrent CP ({history.latest_cp:.2%}) is BELOW "
+                f"the threshold ({threshold:.2%}) by {abs(diff):.2%}"
+            )
+        else:
+            lines.append(
+                f"\nCurrent CP ({history.latest_cp:.2%}) is EXACTLY AT the threshold ({threshold:.2%})"
+            )
+
+    lines.append("=== End Target Question History ===")
+    return "\n".join(lines)
 
 
 class Forecaster:
@@ -240,12 +353,48 @@ class Forecaster:
             "num_forecasters": question.num_forecasters,
         }
 
+    async def _fetch_meta_forecast_context(
+        self,
+        question: MetaculusQuestion,
+    ) -> str:
+        """Detect if this is a meta-forecast question and fetch target CP history.
+
+        For meta-forecast questions (e.g., "Will community prediction rise for X?"),
+        fetches the community prediction history of the target question from the
+        Metaculus API and formats it as readable context for the ensemble.
+
+        Returns:
+            Formatted context string, or empty string if not a meta-forecast question
+            or if fetching fails.
+        """
+        description = question.description or ""
+        meta_info = MetaForecastInfo.from_description(description)
+        if not meta_info:
+            return ""
+
+        logger.info(
+            f"Meta-forecast question detected: target post_id={meta_info.target_post_id}, "
+            f"baseline CP={meta_info.last_cp:.2%}"
+        )
+
+        try:
+            history = await self.metaculus.get_aggregation_history(meta_info.target_post_id)
+            return format_meta_forecast_context(meta_info, history)
+        except Exception as e:
+            logger.warning(f"Failed to fetch target question CP history: {e}")
+            return ""
+
     async def _forecast_binary(
         self,
         question: MetaculusQuestion,
         scoped_store: "ScopedArtifactStore",
     ) -> dict:
         """Run binary forecasting pipeline with 5-agent ensemble."""
+        # Check for meta-forecast question and fetch target CP history
+        meta_forecast_context = await self._fetch_meta_forecast_context(question)
+        if meta_forecast_context:
+            logger.info(f"Injecting meta-forecast context ({len(meta_forecast_context)} chars)")
+
         forecaster = BinaryForecaster(
             config=self.config,
             llm_client=self.llm,
@@ -260,6 +409,7 @@ class Forecaster:
             fine_print=question.raw.get("fine_print", ""),
             open_time=question.open_time or "",
             scheduled_resolve_time=question.scheduled_resolve_time or "",
+            meta_forecast_context=meta_forecast_context,
             log=lambda msg: logger.info(msg),
         )
 
