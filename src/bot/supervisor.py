@@ -350,7 +350,7 @@ class SupervisorAgent:
             return str(prediction)
         elif question_type == "multiple_choice":
             if isinstance(prediction, list):
-                return str([f"{p:.1f}%" for p in prediction])
+                return str([f"{p * 100:.1f}%" for p in prediction])
             return str(prediction)
         return str(prediction)
 

@@ -114,6 +114,14 @@ class TestFormatting:
         result = agent._format_single_prediction(None, "binary")
         assert "extraction failed" in result
 
+    def test_format_single_prediction_mc_shows_percentages(self):
+        """MC predictions (0-1 normalized) should display as percentages."""
+        agent = SupervisorAgent(config={})
+        result = agent._format_single_prediction([0.6, 0.3, 0.1], "multiple_choice")
+        assert "60.0%" in result
+        assert "30.0%" in result
+        assert "10.0%" in result
+
 
 # =============================================================================
 # Extraction Tests
