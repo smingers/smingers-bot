@@ -1,0 +1,249 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": false,
+      "num_queries": 0,
+      "queries": [],
+      "tools_used": [],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Tobago House of Assembly election overturned",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Tobago election petition 2026 lawsuit",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "Provide historical instances where Trinidad and Tobago courts or the Elections and Boundaries Commission nullified or ordered reruns of parliamentary or Tobago House of Assembly elections; include dates, parties involved, outcomes, and average time from filing to decision.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "Trinidad election petition nullified seat",
+              "Tobago House Assembly election petition",
+              "court orders by-election Trinidad Tobago",
+              "Elections and Boundaries Commission rerun Tobago",
+              "nullified parliamentary election Trinidad timeline"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "Trinidad election petition nullified seat",
+                    "Google"
+                  ],
+                  [
+                    "Tobago House Assembly election petition",
+                    "Google"
+                  ],
+                  [
+                    "court orders by-election Trinidad Tobago",
+                    "Google News"
+                  ],
+                  [
+                    "Elections and Boundaries Commission rerun Tobago",
+                    "Google"
+                  ],
+                  [
+                    "nullified parliamentary election Trinidad timeline",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 67549,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Agent",
+        "Google"
+      ],
+      "llm_cost": 0.1352,
+      "llm_cost_summarization": 0.0815,
+      "llm_cost_agentic": 0.0537,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Tobago House Assembly petition 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "Tobago election result challenge 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "What legal proceedings or electoral commission investigations are underway that could overturn the January 12 2026 Tobago House of Assembly election in Trinidad and Tobago?",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 17
+        },
+        {
+          "query": "Will the official result of the Tobago House of Assembly election held on January 12, 2026 be overturned before May 1, 2026?",
+          "tool": "AskNews",
+          "deep_research_query": "What legal proceedings or electoral commission investigations are underway that could overturn the January 12 2026 Tobago House of Assembly election in Trinidad and Tobago?"
+        }
+      ],
+      "tools_used": [
+        "AskNews",
+        "Google News",
+        "Google"
+      ],
+      "llm_cost": 0.0874,
+      "llm_cost_summarization": 0.0815,
+      "llm_cost_agentic": 0.0059,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4347,
+        "token_output": 1598,
+        "cost": 0.037011,
+        "duration_seconds": 49.916531562805176,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11627,
+        "token_output": 2060,
+        "cost": 0.065781,
+        "duration_seconds": 68.10361123085022,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4347,
+        "token_output": 1433,
+        "cost": 0.034536,
+        "duration_seconds": 49.91659188270569,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11140,
+        "token_output": 2791,
+        "cost": 0.075285,
+        "duration_seconds": 68.10359072685242,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 3819,
+        "token_output": 2526,
+        "cost": 0.04204725,
+        "duration_seconds": 49.91663455963135,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 10135,
+        "token_output": 1928,
+        "cost": 0.04472825,
+        "duration_seconds": 68.10356640815735,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 3819,
+        "token_output": 2193,
+        "cost": 0.025182,
+        "duration_seconds": 49.916672706604004,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 10281,
+        "token_output": 1263,
+        "cost": 0.030666,
+        "duration_seconds": 68.10354399681091,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 3819,
+        "token_output": 1504,
+        "cost": 0.01967,
+        "duration_seconds": 49.916703939437866,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 9805,
+        "token_output": 1043,
+        "cost": 0.027954,
+        "duration_seconds": 68.10352087020874,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0103,
+    "step2_search": 0.1352,
+    "step3_outside_view": 0.1584,
+    "step5_inside_view": 0.2444,
+    "step6_aggregation": 0.2444,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.5484
+}

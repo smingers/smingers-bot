@@ -1,0 +1,20 @@
+{
+  "confidence": "medium",
+  "prediction": [
+    0.06,
+    0.12,
+    0.82
+  ],
+  "search_queries": [
+    "Robert Duvall memorial service tribute planned 2026 (Google News)",
+    "Robert Duvall funeral date February 2026 (Google News)",
+    "What is the current Google Trends interest level for \"consigliere\" in the US as of February 17, 2026? Has the value already started declining from the peak of 100 on February 16? Check the URL https://trends.google.com/trends/explore?geo=US&tz=0&q=consigliere&date=2026-01-28%202026-02-27 and report the most recent daily values available. (Agent)",
+    "Godfather TCM tribute streaming event February 2026 (Google News)"
+  ],
+  "cost": 0.1903,
+  "divergence": {
+    "metric_name": "max_option_range",
+    "metric_value": 27.0,
+    "threshold": 25.0
+  }
+}

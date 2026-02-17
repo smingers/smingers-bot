@@ -1,0 +1,271 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 2,
+      "queries": [
+        {
+          "query": "https://trends.google.com/trends/explore?geo=US&tz=0&q=consigliere&date=2026-01-28%202026-02-27",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://trends.google.com/trends/explore?geo=US&tz=0&q=consigliere&date=2026-01-17%202026-02-16",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "consigliere term spike incidents",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "consigliere February 2026 release",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Identify any entertainment premieres, legal cases, or political events scheduled 17\u201327 Feb 2026 that are likely to generate headlines explicitly using the word \u201cconsigliere\u201d; list dates and brief description of each potential catalyst.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "upcoming February 2026 mafia movie release",
+              "Feb 2026 RICO trial consigliere schedule",
+              "Feb 2026 political consigliere testimony",
+              "upcoming tv series consigliere February 2026",
+              "February 2026 book release consigliere"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "upcoming February 2026 mafia movie release",
+                    "Google"
+                  ],
+                  [
+                    "Feb 2026 RICO trial consigliere schedule",
+                    "Google News"
+                  ],
+                  [
+                    "Feb 2026 political consigliere testimony",
+                    "Google"
+                  ],
+                  [
+                    "upcoming tv series consigliere February 2026",
+                    "Google"
+                  ],
+                  [
+                    "February 2026 book release consigliere",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 61057,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "consigliere",
+          "tool": "Google Trends",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google Trends",
+        "Google News",
+        "Google"
+      ],
+      "llm_cost": 0.1869,
+      "llm_cost_summarization": 0.1354,
+      "llm_cost_agentic": 0.0515,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "consigliere movie series February 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "consigliere\" headline Feb 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "Are any U.S. films, TV shows, podcasts, or court cases set for release or hearing between 17 and 27 Feb 2026 that prominently use or reference the term \u201cconsigliere\u201d?",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "Will the interest in \u201cconsigliere\u201d change between 2026-02-17 and 2026-02-27 according to Google Trends?",
+          "tool": "AskNews",
+          "deep_research_query": "Are any U.S. films, TV shows, podcasts, or court cases set for release or hearing between 17 and 27 Feb 2026 that prominently use or reference the term \u201cconsigliere\u201d?"
+        }
+      ],
+      "tools_used": [
+        "AskNews",
+        "Google News",
+        "Google"
+      ],
+      "llm_cost": 0.1446,
+      "llm_cost_summarization": 0.1354,
+      "llm_cost_agentic": 0.0092,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6288,
+        "token_output": 1790,
+        "cost": 0.045714,
+        "duration_seconds": 42.562976598739624,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13281,
+        "token_output": 2599,
+        "cost": 0.07882800000000001,
+        "duration_seconds": 59.160072565078735,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6288,
+        "token_output": 1547,
+        "cost": 0.042068999999999995,
+        "duration_seconds": 42.56304168701172,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12687,
+        "token_output": 1995,
+        "cost": 0.06798599999999999,
+        "duration_seconds": 59.16004395484924,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5550,
+        "token_output": 2128,
+        "cost": 0.039504500000000005,
+        "duration_seconds": 42.56308555603027,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11626,
+        "token_output": 2211,
+        "cost": 0.0512995,
+        "duration_seconds": 59.16001534461975,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5550,
+        "token_output": 1802,
+        "cost": 0.025516,
+        "duration_seconds": 42.56312370300293,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11886,
+        "token_output": 1671,
+        "cost": 0.03714,
+        "duration_seconds": 59.159987449645996,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5550,
+        "token_output": 1725,
+        "cost": 0.0249,
+        "duration_seconds": 42.56315755844116,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11343,
+        "token_output": 1456,
+        "cost": 0.034334,
+        "duration_seconds": 59.15995907783508,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0131,
+    "step2_search": 0.1869,
+    "step3_outside_view": 0.1777,
+    "step5_inside_view": 0.2696,
+    "step6_aggregation": 0.2696,
+    "step7_supervisor": 0.1903
+  },
+  "total_pipeline_cost": 0.8375
+}

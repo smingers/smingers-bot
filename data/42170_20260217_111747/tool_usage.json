@@ -1,0 +1,396 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "https://en.wikipedia.org/wiki/2026_FIFA_World_Cup",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://en.wikipedia.org/wiki/FIFA_World_Cup",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://en.wikipedia.org/wiki/Association_football",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://en.wikipedia.org/wiki/List_of_FIFA_World_Cup_finals",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Metaculus 2026 World Cup first time winner",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "2026 World Cup odds new champion",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Retrieve historical community prediction values for Metaculus question 41090 and any commentary on recent shifts; include archive snapshots if available.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 7,
+            "queries_executed": [
+              "Metaculus 41090 prediction history",
+              "Metaculus 41090 archive snapshots",
+              "Metaculus 41090 comment shifts",
+              "Metaculus 41090 discussion thread",
+              "Metaculus 41090 news coverage",
+              "Metaculus 41090 2026 FIFA World Cup",
+              "site:web.archive.org metaculus.com/questions/41090",
+              "\u201cWill the winner of the 2026 FIFA World Cup be a country that has never won before?\u201d Metaculus",
+              "Metaculus API question 41090 community_prediction",
+              "Metaculus World Cup 2026 prediction history",
+              "api2 metaculus 41090 community prediction",
+              "web.archive.org metaculus.com/questions/41090",
+              "\u201cquestion_id\u201d:41090 metaculus dataset",
+              "Metaculus API question 41090",
+              "\u201c41090\u201d \u201ccommunity_prediction\u201d metaculus",
+              "site:web.archive.org metaculus.com/questions/41090",
+              "Metaculus 41090 probability timeline",
+              "Metaculus FIFA 2026 prediction discussion",
+              "\u201cWill the winner of the 2026 FIFA World Cup be a country that has never won before\u201d Metaculus archive",
+              "metaculus 41090 \"community prediction\" timeline",
+              "\"Will the winner of the 2026 FIFA World Cup be a country that has never won before\" site:archive.today",
+              "metaculus api question 41090 csv"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "Metaculus 41090 prediction history",
+                    "Google"
+                  ],
+                  [
+                    "Metaculus 41090 archive snapshots",
+                    "Google"
+                  ],
+                  [
+                    "Metaculus 41090 comment shifts",
+                    "Google"
+                  ],
+                  [
+                    "Metaculus 41090 discussion thread",
+                    "Google"
+                  ],
+                  [
+                    "Metaculus 41090 news coverage",
+                    "Google News"
+                  ]
+                ],
+                "search_results_chars": 20966,
+                "analysis_chars": 0
+              },
+              {
+                "step_number": 2,
+                "queries_executed": [
+                  [
+                    "Metaculus 41090 2026 FIFA World Cup",
+                    "Google"
+                  ],
+                  [
+                    "site:web.archive.org metaculus.com/questions/41090",
+                    "Google"
+                  ],
+                  [
+                    "\u201cWill the winner of the 2026 FIFA World Cup be a country that has never won before?\u201d Metaculus",
+                    "Google"
+                  ],
+                  [
+                    "Metaculus API question 41090 community_prediction",
+                    "Google"
+                  ],
+                  [
+                    "Metaculus World Cup 2026 prediction history",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 21428,
+                "analysis_chars": 1732
+              },
+              {
+                "step_number": 3,
+                "queries_executed": [
+                  [
+                    "api2 metaculus 41090 community prediction",
+                    "Google"
+                  ],
+                  [
+                    "web.archive.org metaculus.com/questions/41090",
+                    "Google"
+                  ],
+                  [
+                    "\u201cquestion_id\u201d:41090 metaculus dataset",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 7965,
+                "analysis_chars": 2897
+              },
+              {
+                "step_number": 4,
+                "queries_executed": [
+                  [
+                    "Metaculus API question 41090",
+                    "Google"
+                  ],
+                  [
+                    "\u201c41090\u201d \u201ccommunity_prediction\u201d metaculus",
+                    "Google"
+                  ],
+                  [
+                    "site:web.archive.org metaculus.com/questions/41090",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 8559,
+                "analysis_chars": 1871
+              },
+              {
+                "step_number": 5,
+                "queries_executed": [
+                  [
+                    "Metaculus 41090 probability timeline",
+                    "Google"
+                  ],
+                  [
+                    "Metaculus FIFA 2026 prediction discussion",
+                    "Google"
+                  ],
+                  [
+                    "\u201cWill the winner of the 2026 FIFA World Cup be a country that has never won before\u201d Metaculus archive",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 648,
+                "analysis_chars": 1912
+              },
+              {
+                "step_number": 6,
+                "queries_executed": [
+                  [
+                    "metaculus 41090 \"community prediction\" timeline",
+                    "Google"
+                  ],
+                  [
+                    "\"Will the winner of the 2026 FIFA World Cup be a country that has never won before\" site:archive.today",
+                    "Google"
+                  ],
+                  [
+                    "metaculus api question 41090 csv",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 12529,
+                "analysis_chars": 1429
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google News",
+        "Google"
+      ],
+      "llm_cost": 0.2865,
+      "llm_cost_summarization": 0.1837,
+      "llm_cost_agentic": 0.1027,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "2026 World Cup new champion odds",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Portugal Netherlands favourites 2026 World Cup",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Summarize February 2026 betting analyses on first-time 2026 World Cup winners worldwide.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "Will the community prediction be higher than 13.00% on 2026-02-25 for the Metaculus question \"Will the winner of the 2026 FIFA World Cup be a country that has never won before?\"?",
+          "tool": "AskNews",
+          "deep_research_query": "Summarize February 2026 betting analyses on first-time 2026 World Cup winners worldwide."
+        }
+      ],
+      "tools_used": [
+        "AskNews",
+        "Google News",
+        "Google"
+      ],
+      "llm_cost": 0.1909,
+      "llm_cost_summarization": 0.1837,
+      "llm_cost_agentic": 0.0072,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5469,
+        "token_output": 1758,
+        "cost": 0.042776999999999996,
+        "duration_seconds": 46.675060510635376,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14502,
+        "token_output": 2345,
+        "cost": 0.078681,
+        "duration_seconds": 54.247368574142456,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5469,
+        "token_output": 1841,
+        "cost": 0.044022,
+        "duration_seconds": 46.67511582374573,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14330,
+        "token_output": 1989,
+        "cost": 0.072825,
+        "duration_seconds": 54.247345209121704,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4968,
+        "token_output": 2251,
+        "cost": 0.040208,
+        "duration_seconds": 46.67515826225281,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13047,
+        "token_output": 2419,
+        "cost": 0.05669825,
+        "duration_seconds": 54.24732232093811,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4968,
+        "token_output": 1785,
+        "cost": 0.024216,
+        "duration_seconds": 46.675191164016724,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12959,
+        "token_output": 2102,
+        "cost": 0.042734,
+        "duration_seconds": 54.247300148010254,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4968,
+        "token_output": 2045,
+        "cost": 0.026296,
+        "duration_seconds": 46.67521929740906,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12332,
+        "token_output": 1325,
+        "cost": 0.035264,
+        "duration_seconds": 54.24727749824524,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0146,
+    "step2_search": 0.2865,
+    "step3_outside_view": 0.1775,
+    "step5_inside_view": 0.2862,
+    "step6_aggregation": 0.2862,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.7648
+}
