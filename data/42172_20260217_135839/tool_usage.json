@@ -1,0 +1,282 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 14,
+      "queries": [
+        {
+          "query": "https://en.wikipedia.org/wiki/Iranian_Revolution",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://en.wikipedia.org/wiki/Iran%E2%80%93United_States_relations",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://en.wikipedia.org/wiki/Iran%E2%80%93United_States_relations_during_the_first_Trump_administration",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://en.wikipedia.org/wiki/Joint_Comprehensive_Plan_of_Action",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://en.wikipedia.org/wiki/Assassination_of_Qasem_Soleimani",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Metaculus 41594 prediction history chart",
+          "tool": "Google",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "U.S. Iran military tensions Feb 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide latest Metaculus community prediction values and comment excerpts for question 41594; include dates of any large forecast shifts since Jan 2026 and cite sources.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "metaculus 41594 community prediction",
+              "metaculus 41594 prediction history api",
+              "metaculus 41594 comments",
+              "United States attack Iran Metaculus forecast shift",
+              "metaculus time series endpoint"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "metaculus 41594 community prediction",
+                    "Google"
+                  ],
+                  [
+                    "metaculus 41594 prediction history api",
+                    "Google"
+                  ],
+                  [
+                    "metaculus 41594 comments",
+                    "Google"
+                  ],
+                  [
+                    "United States attack Iran Metaculus forecast shift",
+                    "Google News"
+                  ],
+                  [
+                    "metaculus time series endpoint",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 54067,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "Agent"
+      ],
+      "llm_cost": 0.2224,
+      "llm_cost_summarization": 0.1729,
+      "llm_cost_agentic": 0.0495,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "US planning Iran strikes 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Trump considers Iran airstrikes February 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide latest February 2026 reports on possible United States military action against Iran, including troop deployments and official statements.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 17
+        },
+        {
+          "query": "Will the community prediction be higher than 50.00% on 2026-02-28 for the Metaculus question \"Will the United States attack Iran before April 2026?\"?",
+          "tool": "AskNews",
+          "deep_research_query": "Provide latest February 2026 reports on possible United States military action against Iran, including troop deployments and official statements."
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "AskNews"
+      ],
+      "llm_cost": 0.1815,
+      "llm_cost_summarization": 0.1729,
+      "llm_cost_agentic": 0.0085,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6970,
+        "token_output": 1797,
+        "cost": 0.047865,
+        "duration_seconds": 52.46586751937866,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17710,
+        "token_output": 2806,
+        "cost": 0.09522,
+        "duration_seconds": 72.66290020942688,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6970,
+        "token_output": 1903,
+        "cost": 0.049455,
+        "duration_seconds": 52.46592879295349,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17048,
+        "token_output": 2253,
+        "cost": 0.084939,
+        "duration_seconds": 72.66287636756897,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6241,
+        "token_output": 2509,
+        "cost": 0.04604775,
+        "duration_seconds": 52.46597170829773,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15957,
+        "token_output": 2765,
+        "cost": 0.06663474999999999,
+        "duration_seconds": 72.662846326828,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6241,
+        "token_output": 2144,
+        "cost": 0.029634,
+        "duration_seconds": 52.46600866317749,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15671,
+        "token_output": 1406,
+        "cost": 0.04259,
+        "duration_seconds": 72.66278290748596,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6241,
+        "token_output": 1795,
+        "cost": 0.026841999999999998,
+        "duration_seconds": 52.46603965759277,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15100,
+        "token_output": 1336,
+        "cost": 0.040888,
+        "duration_seconds": 72.66275310516357,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.015,
+    "step2_search": 0.2224,
+    "step3_outside_view": 0.1998,
+    "step5_inside_view": 0.3303,
+    "step6_aggregation": 0.3303,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.7675
+}
