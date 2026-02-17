@@ -1,0 +1,20 @@
+{
+  "confidence": "high",
+  "prediction": [
+    0.14,
+    0.62,
+    0.24
+  ],
+  "search_queries": [
+    "Venezuela Google Trends February 2026 interest (Google)",
+    "Venezuela news February 2026 US policy (Google News)",
+    "Please check the Google Trends page at https://trends.google.com/trends/explore?geo=US&tz=0&q=venezuela&date=2026-01-28%202026-02-27 and report what the current daily values are for the most recent available dates (around Feb 14-17, 2026). Also check https://trends.google.com/trends/explore?geo=US&tz=0&q=venezuela&date=2026-01-17%202026-02-16 and report the daily values for the last two weeks. Is the trend stable, declining, or rising? What was the approximate peak value and when did it occur? (Agent)",
+    "Venezuela US sanctions oil February 2026 (Google News)"
+  ],
+  "cost": 0.2659,
+  "divergence": {
+    "metric_name": "max_option_range",
+    "metric_value": 33.0,
+    "threshold": 25.0
+  }
+}
