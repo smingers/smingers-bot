@@ -1,0 +1,265 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 1,
+      "queries": [
+        {
+          "query": "https://finance.yahoo.com/quote/MCO",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "Moody's Q4 2025 earnings results",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "MCO stock outlook Feb 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide recent analyst notes, upcoming corporate events, and key news between 2026-02-17 and 2026-02-28 that could affect Moody's Corporation (MCO) share price; include any SEC filings, guidance changes, or ex-dividend dates",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "MCO analyst rating February 2026",
+              "Moody's corporate events February 2026",
+              "Moody's 8-K filing February 2026",
+              "MCO ex-dividend date 2026",
+              "MCO"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "MCO analyst rating February 2026",
+                    "Google News"
+                  ],
+                  [
+                    "Moody's corporate events February 2026",
+                    "Google"
+                  ],
+                  [
+                    "Moody's 8-K filing February 2026",
+                    "Google"
+                  ],
+                  [
+                    "MCO ex-dividend date 2026",
+                    "Google"
+                  ],
+                  [
+                    "MCO",
+                    "yFinance"
+                  ]
+                ],
+                "search_results_chars": 55163,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "FEDFUNDS",
+          "tool": "FRED",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "FRED",
+        "Google",
+        "Agent"
+      ],
+      "llm_cost": 0.2281,
+      "llm_cost_summarization": 0.1715,
+      "llm_cost_agentic": 0.0566,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "MCO stock outlook February 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Moody's earnings 2026 guidance",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Summarize news from Jan 2026 to today on Moody\u2019s Corporation earnings, guidance, acquisitions, or regulations that might affect its share price.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "Will MCO's market close price on 2026-02-28 be higher than its market close price on 2026-02-17?",
+          "tool": "AskNews",
+          "deep_research_query": "Summarize news from Jan 2026 to today on Moody\u2019s Corporation earnings, guidance, acquisitions, or regulations that might affect its share price."
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "AskNews"
+      ],
+      "llm_cost": 0.1789,
+      "llm_cost_summarization": 0.1715,
+      "llm_cost_agentic": 0.0074,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7606,
+        "token_output": 2152,
+        "cost": 0.055097999999999994,
+        "duration_seconds": 64.39419770240784,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15277,
+        "token_output": 3235,
+        "cost": 0.094356,
+        "duration_seconds": 77.06018233299255,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7606,
+        "token_output": 2619,
+        "cost": 0.062103,
+        "duration_seconds": 64.39430379867554,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14452,
+        "token_output": 2135,
+        "cost": 0.075381,
+        "duration_seconds": 77.0601544380188,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6604,
+        "token_output": 1951,
+        "cost": 0.038871,
+        "duration_seconds": 64.39434456825256,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13921,
+        "token_output": 2210,
+        "cost": 0.05530175,
+        "duration_seconds": 77.06012773513794,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6604,
+        "token_output": 1806,
+        "cost": 0.027656,
+        "duration_seconds": 64.39438247680664,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13180,
+        "token_output": 1494,
+        "cost": 0.038312,
+        "duration_seconds": 77.0601019859314,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6604,
+        "token_output": 2568,
+        "cost": 0.033752,
+        "duration_seconds": 64.39441657066345,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12763,
+        "token_output": 1595,
+        "cost": 0.038286,
+        "duration_seconds": 77.06007671356201,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0135,
+    "step2_search": 0.2281,
+    "step3_outside_view": 0.2175,
+    "step5_inside_view": 0.3016,
+    "step6_aggregation": 0.3016,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.7607
+}

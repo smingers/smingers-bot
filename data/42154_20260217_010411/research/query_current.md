@@ -1,0 +1,7 @@
+Analysis:
+To judge whether Google search interest for “el paso” will meaningfully rise or fall over the next 11 days, I need to know if anything likely to attract nationwide attention is scheduled or unfolding in that window.  Typical drivers of large search spikes include 1) immigration/border-security developments at the El Paso–Juárez crossing, 2) high-profile political visits or campaign rallies, 3) severe weather or natural-disaster warnings, 4) major crime or court cases, 5) notable sports or entertainment events held in El Paso, and 6) infrastructure or public-health emergencies (e.g., migrant releases, airport shutdowns).  Current articles about any planned federal actions at the border, upcoming presidential primary stops in Texas, UTEP or EPFC sports fixtures, festival calendars, or storm forecasts would therefore be the most relevant signals.  I will search broadly on upcoming El Paso events and more narrowly on border-crisis and policy news, using both general web and news-only sources; an AskNews query will solicit forward-looking coverage of scheduled events in the Feb 17–28 window.
+
+Search queries:
+1. El Paso Feb 2026 events (Google)
+2. El Paso border crisis February (Google News)
+3. What major events or visits are planned in El Paso, Texas between February 17 and February 28 2026 that could spike national search interest? (AskNews)

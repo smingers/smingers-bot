@@ -1,0 +1,271 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 2,
+      "queries": [
+        {
+          "query": "https://trends.google.com/trends/explore?geo=US&tz=0&q=jesse%20van%20rootselaar&date=2026-01-29%202026-02-28",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://trends.google.com/trends/explore?geo=US&tz=0&q=jesse%20van%20rootselaar&date=2026-01-17%202026-02-16",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "Jesse van Rootselaar biography",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Jesse van Rootselaar February 2026 event",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Identify Jesse van Rootselaar, notable past spikes in online attention, and any publicly announced events, releases, appearances, competitions, legal proceedings, or publicity campaigns scheduled for 17-28 Feb 2026 that could affect U.S. Google searches. Also note if no significant future catalysts are found.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "Jesse van Rootselaar profile background",
+              "Jesse van Rootselaar February 2026 news",
+              "Jesse van Rootselaar upcoming events 2026",
+              "Jesse van Rootselaar legal case",
+              "Jesse van Rootselaar competition schedule 2026"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "Jesse van Rootselaar profile background",
+                    "Google"
+                  ],
+                  [
+                    "Jesse van Rootselaar February 2026 news",
+                    "Google News"
+                  ],
+                  [
+                    "Jesse van Rootselaar upcoming events 2026",
+                    "Google"
+                  ],
+                  [
+                    "Jesse van Rootselaar legal case",
+                    "Google"
+                  ],
+                  [
+                    "Jesse van Rootselaar competition schedule 2026",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 87351,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "jesse van rootselaar",
+          "tool": "Google Trends",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "Google Trends",
+        "Agent"
+      ],
+      "llm_cost": 0.2579,
+      "llm_cost_summarization": 0.1972,
+      "llm_cost_agentic": 0.0606,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "jesse van rootselaar february 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "jesse van rootselaar announcement",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "What public events, releases, or media appearances involving Jesse van Rootselaar are scheduled or reported for 17\u201328 February 2026?",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 17
+        },
+        {
+          "query": "Will the interest in \u201cjesse van rootselaar\u201d change between 2026-02-17 and 2026-02-28 according to Google Trends?",
+          "tool": "AskNews",
+          "deep_research_query": "What public events, releases, or media appearances involving Jesse van Rootselaar are scheduled or reported for 17\u201328 February 2026?"
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "AskNews"
+      ],
+      "llm_cost": 0.2046,
+      "llm_cost_summarization": 0.1972,
+      "llm_cost_agentic": 0.0074,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7796,
+        "token_output": 1946,
+        "cost": 0.052578,
+        "duration_seconds": 48.39234972000122,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15719,
+        "token_output": 3092,
+        "cost": 0.09353700000000001,
+        "duration_seconds": 83.56158232688904,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7796,
+        "token_output": 1653,
+        "cost": 0.048183,
+        "duration_seconds": 48.39239978790283,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15091,
+        "token_output": 2566,
+        "cost": 0.083763,
+        "duration_seconds": 83.56155228614807,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7063,
+        "token_output": 2247,
+        "cost": 0.04381825,
+        "duration_seconds": 48.39244270324707,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13862,
+        "token_output": 2535,
+        "cost": 0.059748499999999996,
+        "duration_seconds": 83.56152033805847,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7063,
+        "token_output": 2394,
+        "cost": 0.033278,
+        "duration_seconds": 48.39248442649841,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13567,
+        "token_output": 1685,
+        "cost": 0.040614,
+        "duration_seconds": 83.56149077415466,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7063,
+        "token_output": 2373,
+        "cost": 0.03311,
+        "duration_seconds": 48.39251780509949,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13619,
+        "token_output": 1519,
+        "cost": 0.039389999999999994,
+        "duration_seconds": 83.56146192550659,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0133,
+    "step2_search": 0.2579,
+    "step3_outside_view": 0.211,
+    "step5_inside_view": 0.3171,
+    "step6_aggregation": 0.3171,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.7992
+}
