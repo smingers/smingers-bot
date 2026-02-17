@@ -1,0 +1,282 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 5,
+      "queries": [
+        {
+          "query": "https://en.wikipedia.org/wiki/Starship_Propellant_Transfer_Demonstration",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://en.wikipedia.org/wiki/SpaceX_Starship_\\(spacecraft\\",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://en.wikipedia.org/wiki/Artemis_program",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://en.wikipedia.org/wiki/List_of_Starship_launches",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://en.wikipedia.org/wiki/Starship_flight_test_11",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "starship orbital refueling demonstration schedule",
+          "tool": "Google",
+          "success": true,
+          "num_results": 2
+        },
+        {
+          "query": "spacex starship refueling 2026 nasa",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Fetch Metaculus question 41142: current probability, change history since Jan 2025, and top February 2026 comments citing schedule or technical risk. Also list external events those comments reference.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "metaculus.com/questions/41142 probability chart",
+              "metaculus 41142 api history",
+              "\u201c41142\u201d comments February 2026 schedule risk",
+              "Starship propellant transfer 2026 update",
+              "Artemis III delay February 2026"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "metaculus.com/questions/41142 probability chart",
+                    "Google"
+                  ],
+                  [
+                    "metaculus 41142 api history",
+                    "Google"
+                  ],
+                  [
+                    "\u201c41142\u201d comments February 2026 schedule risk",
+                    "Google"
+                  ],
+                  [
+                    "Starship propellant transfer 2026 update",
+                    "Google News"
+                  ],
+                  [
+                    "Artemis III delay February 2026",
+                    "Google News"
+                  ]
+                ],
+                "search_results_chars": 53736,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Agent",
+        "Google News"
+      ],
+      "llm_cost": 0.1913,
+      "llm_cost_summarization": 0.1473,
+      "llm_cost_agentic": 0.0439,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Starship propellant transfer demonstration 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 2
+        },
+        {
+          "query": "SpaceX Starship refueling progress 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide the latest February 2026 information on SpaceX\u2019s planned in-orbit Starship propellant transfer demo, including NASA milestones, flight test schedule, and any announced delays.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "Will the community prediction be higher than 40.00% on 2026-02-26 for the Metaculus question \"Will SpaceX successfully refuel a Starship in orbit during 2026?\"?",
+          "tool": "AskNews",
+          "deep_research_query": "Provide the latest February 2026 information on SpaceX\u2019s planned in-orbit Starship propellant transfer demo, including NASA milestones, flight test schedule, and any announced delays."
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "AskNews",
+        "Google News"
+      ],
+      "llm_cost": 0.1567,
+      "llm_cost_summarization": 0.1473,
+      "llm_cost_agentic": 0.0094,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5260,
+        "token_output": 2173,
+        "cost": 0.048375,
+        "duration_seconds": 57.33190155029297,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16511,
+        "token_output": 2847,
+        "cost": 0.09223800000000001,
+        "duration_seconds": 70.43146228790283,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5260,
+        "token_output": 1827,
+        "cost": 0.043185,
+        "duration_seconds": 57.33195734024048,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15571,
+        "token_output": 2029,
+        "cost": 0.077148,
+        "duration_seconds": 70.43143200874329,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4615,
+        "token_output": 2572,
+        "cost": 0.04408425,
+        "duration_seconds": 57.33200168609619,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14117,
+        "token_output": 2471,
+        "cost": 0.05929875,
+        "duration_seconds": 70.43140363693237,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4615,
+        "token_output": 1816,
+        "cost": 0.023758,
+        "duration_seconds": 57.332042932510376,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14227,
+        "token_output": 1523,
+        "cost": 0.040638,
+        "duration_seconds": 70.43137574195862,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4615,
+        "token_output": 1812,
+        "cost": 0.023726,
+        "duration_seconds": 57.33207583427429,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13496,
+        "token_output": 1480,
+        "cost": 0.038832,
+        "duration_seconds": 70.43134951591492,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0134,
+    "step2_search": 0.1913,
+    "step3_outside_view": 0.1831,
+    "step5_inside_view": 0.3082,
+    "step6_aggregation": 0.3082,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.696
+}

@@ -1,0 +1,331 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 1,
+      "queries": [
+        {
+          "query": "https://fred.stlouisfed.org/series/SOFR",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "SOFR daily rate February 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "SOFR outlook February 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide SOFR daily values Dec 2025\u2013Feb 2026 and list any scheduled FOMC meetings or policy changes before 26 Feb 2026",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 5,
+            "queries_executed": [
+              "SOFR",
+              "FOMC meeting calendar 2026",
+              "FOMC meeting schedule 2025",
+              "Federal Reserve 2026 FOMC dates",
+              "Federal Reserve policy announcements schedule",
+              "SOFR 2025-12-01 to 2026-02-26",
+              "SOFR December 2025 values",
+              "FOMC blackout schedule 2026",
+              "SOFR observation_start 2025-12-01 observation_end 2026-02-13",
+              "SOFR observation_start 2026-02-14 observation_end 2026-02-26",
+              "FOMC calendar 2025-2026",
+              "FOMC meetings 2025 calendar",
+              "FOMC meetings January 2026",
+              "SOFR daily 2026 FRED"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "SOFR",
+                    "FRED"
+                  ],
+                  [
+                    "FOMC meeting calendar 2026",
+                    "Google"
+                  ],
+                  [
+                    "FOMC meeting schedule 2025",
+                    "Google"
+                  ],
+                  [
+                    "Federal Reserve 2026 FOMC dates",
+                    "Google News"
+                  ],
+                  [
+                    "Federal Reserve policy announcements schedule",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 39235,
+                "analysis_chars": 0
+              },
+              {
+                "step_number": 2,
+                "queries_executed": [
+                  [
+                    "SOFR 2025-12-01 to 2026-02-26",
+                    "FRED"
+                  ],
+                  [
+                    "SOFR December 2025 values",
+                    "Google"
+                  ],
+                  [
+                    "FOMC blackout schedule 2026",
+                    "Google News"
+                  ]
+                ],
+                "search_results_chars": 16970,
+                "analysis_chars": 2455
+              },
+              {
+                "step_number": 3,
+                "queries_executed": [
+                  [
+                    "SOFR observation_start 2025-12-01 observation_end 2026-02-13",
+                    "FRED"
+                  ],
+                  [
+                    "SOFR observation_start 2026-02-14 observation_end 2026-02-26",
+                    "FRED"
+                  ],
+                  [
+                    "FOMC calendar 2025-2026",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 6656,
+                "analysis_chars": 3132
+              },
+              {
+                "step_number": 4,
+                "queries_executed": [
+                  [
+                    "FOMC meetings 2025 calendar",
+                    "Google"
+                  ],
+                  [
+                    "FOMC meetings January 2026",
+                    "Google"
+                  ],
+                  [
+                    "SOFR daily 2026 FRED",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 26286,
+                "analysis_chars": 3454
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "SOFR",
+          "tool": "FRED",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Agent",
+        "Google News",
+        "FRED"
+      ],
+      "llm_cost": 0.2506,
+      "llm_cost_summarization": 0.1294,
+      "llm_cost_agentic": 0.1212,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "SOFR rate February 2026 trend",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "repo market February 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide latest commentary from analysts since January 2026 on expected Secured Overnight Financing Rate and overnight repo market conditions in the United States for late February 2026",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "What will be the value of \"Secured Overnight Financing Rate\" on 2026-02-26?",
+          "tool": "AskNews",
+          "deep_research_query": "Provide latest commentary from analysts since January 2026 on expected Secured Overnight Financing Rate and overnight repo market conditions in the United States for late February 2026"
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "AskNews",
+        "Google News"
+      ],
+      "llm_cost": 0.0933,
+      "llm_cost_summarization": 0.0855,
+      "llm_cost_agentic": 0.0078,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6397,
+        "token_output": 1552,
+        "cost": 0.042470999999999995,
+        "duration_seconds": 47.87311816215515,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14061,
+        "token_output": 2558,
+        "cost": 0.080553,
+        "duration_seconds": 60.80588722229004,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6397,
+        "token_output": 1774,
+        "cost": 0.045800999999999994,
+        "duration_seconds": 47.8731734752655,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13527,
+        "token_output": 2493,
+        "cost": 0.077976,
+        "duration_seconds": 60.805853843688965,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5707,
+        "token_output": 2274,
+        "cost": 0.041823250000000006,
+        "duration_seconds": 47.87321496009827,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12653,
+        "token_output": 2652,
+        "cost": 0.05927075,
+        "duration_seconds": 60.80581998825073,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5707,
+        "token_output": 1925,
+        "cost": 0.026814,
+        "duration_seconds": 47.873250246047974,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12411,
+        "token_output": 1583,
+        "cost": 0.037486,
+        "duration_seconds": 60.80578660964966,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5707,
+        "token_output": 1807,
+        "cost": 0.02587,
+        "duration_seconds": 47.873286962509155,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11956,
+        "token_output": 1455,
+        "cost": 0.035552,
+        "duration_seconds": 60.80575466156006,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0136,
+    "step2_search": 0.2506,
+    "step3_outside_view": 0.1828,
+    "step5_inside_view": 0.2908,
+    "step6_aggregation": 0.2908,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.7378
+}

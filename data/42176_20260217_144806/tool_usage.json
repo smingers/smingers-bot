@@ -1,0 +1,276 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "https://en.wikipedia.org/wiki/Brain%E2%80%93computer_interface",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://en.wikipedia.org/wiki/Neuralink",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://www.wired.com/story/neuralink-implant-first-human-patient-demonstration/",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9313199/",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Metaculus 40281 prediction history",
+          "tool": "Google",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "brain-computer interface coding tool announcement",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Retrieve Metaculus question 40281 time-series predictions for last 60 days and summarize latest comments discussing possible near-term BCI tool releases; also identify any scheduled events before Feb 28 2026 that commenters cite as catalysts.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "Metaculus 40281 prediction history",
+              "Metaculus 40281 comments BCI coding",
+              "Brain computer interface coding tool release",
+              "Neuralink coding interface roadmap 2025",
+              "OpenBCI software integration schedule 2025"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "Metaculus 40281 prediction history",
+                    "Google"
+                  ],
+                  [
+                    "Metaculus 40281 comments BCI coding",
+                    "Google"
+                  ],
+                  [
+                    "Brain computer interface coding tool release",
+                    "Google News"
+                  ],
+                  [
+                    "Neuralink coding interface roadmap 2025",
+                    "Google"
+                  ],
+                  [
+                    "OpenBCI software integration schedule 2025",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 51790,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Agent",
+        "Google News"
+      ],
+      "llm_cost": 0.1966,
+      "llm_cost_summarization": 0.1529,
+      "llm_cost_agentic": 0.0437,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "coding tool BCI integration",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "brain-computer interface IDE announcement 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Show 2025-2026 articles about major software development environments or code assistants unveiling first-party brain-computer interface features or partnerships worldwide.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "Will the community prediction be higher than 25.00% on 2026-02-28 for the Metaculus question \"Will any coding tool introduce an integration with brain-computer interface technology before November 2026?\"?",
+          "tool": "AskNews",
+          "deep_research_query": "Show 2025-2026 articles about major software development environments or code assistants unveiling first-party brain-computer interface features or partnerships worldwide."
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "AskNews",
+        "Google News"
+      ],
+      "llm_cost": 0.1619,
+      "llm_cost_summarization": 0.1529,
+      "llm_cost_agentic": 0.009,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5846,
+        "token_output": 1885,
+        "cost": 0.04581299999999999,
+        "duration_seconds": 53.70699119567871,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16288,
+        "token_output": 2615,
+        "cost": 0.088089,
+        "duration_seconds": 65.98944306373596,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5846,
+        "token_output": 1730,
+        "cost": 0.043488,
+        "duration_seconds": 53.7070631980896,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15516,
+        "token_output": 2152,
+        "cost": 0.078828,
+        "duration_seconds": 65.989413022995,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5124,
+        "token_output": 2611,
+        "cost": 0.045521000000000006,
+        "duration_seconds": 53.70710587501526,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14081,
+        "token_output": 2561,
+        "cost": 0.06049575,
+        "duration_seconds": 65.98938298225403,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5124,
+        "token_output": 1289,
+        "cost": 0.020560000000000002,
+        "duration_seconds": 53.70714855194092,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14028,
+        "token_output": 1103,
+        "cost": 0.03688,
+        "duration_seconds": 65.9893581867218,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5124,
+        "token_output": 1495,
+        "cost": 0.022208,
+        "duration_seconds": 53.7071852684021,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13496,
+        "token_output": 1748,
+        "cost": 0.040976,
+        "duration_seconds": 65.98933410644531,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0135,
+    "step2_search": 0.1966,
+    "step3_outside_view": 0.1776,
+    "step5_inside_view": 0.3053,
+    "step6_aggregation": 0.3053,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.6929
+}
