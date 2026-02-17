@@ -589,13 +589,19 @@ class MetaculusClient:
     async def get_aggregation_history(self, post_id: int) -> AggregationHistory:
         """Fetch the community prediction history for a question.
 
+        Uses the /api2/ endpoint which returns aggregation data that the
+        newer /api/posts/ endpoint omits for tournament questions.
+
         Args:
             post_id: The post ID (as used in Metaculus URLs: /questions/{post_id}/)
 
         Returns:
             AggregationHistory with the full timeseries of community predictions.
         """
-        response = await self.client.get(f"/posts/{post_id}/")
+        # The /api/posts/{id}/ endpoint returns aggregations: null for many
+        # tournament questions even after cp_reveal_time. The legacy /api2/
+        # endpoint reliably includes aggregation history.
+        response = await self.client.get(f"https://www.metaculus.com/api2/questions/{post_id}/")
         response.raise_for_status()
         data = response.json()
         return AggregationHistory.from_api_response(data)
