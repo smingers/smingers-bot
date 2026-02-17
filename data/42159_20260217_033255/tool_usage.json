@@ -1,0 +1,271 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 2,
+      "queries": [
+        {
+          "query": "https://trends.google.com/trends/explore?geo=US&tz=0&q=gisele%20pelicot&date=2026-01-27%202026-02-26",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://trends.google.com/trends/explore?geo=US&tz=0&q=gisele%20pelicot&date=2026-01-17%202026-02-16",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "gisele pelicot biography",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "gisele pelicot upcoming event",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Identify any concerts, releases, media appearances, anniversaries, or scheduled events involving \u201cGisele Pelicot\u201d in the United States occurring between February 17 2026 and February 26 2026. List dates, event types, and estimated publicity size.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "Gisele Pelicot tour dates 2026",
+              "Gisele Pelicot February 2026 concert",
+              "Gisele Pelicot album release February",
+              "Gisele Pelicot media appearance 2026",
+              "Gisele Pelicot anniversary February 2026"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "Gisele Pelicot tour dates 2026",
+                    "Google"
+                  ],
+                  [
+                    "Gisele Pelicot February 2026 concert",
+                    "Google News"
+                  ],
+                  [
+                    "Gisele Pelicot album release February",
+                    "Google"
+                  ],
+                  [
+                    "Gisele Pelicot media appearance 2026",
+                    "Google News"
+                  ],
+                  [
+                    "Gisele Pelicot anniversary February 2026",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 66397,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "gisele pelicot",
+          "tool": "Google Trends",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google Trends",
+        "Google",
+        "Agent",
+        "Google News"
+      ],
+      "llm_cost": 0.2261,
+      "llm_cost_summarization": 0.1714,
+      "llm_cost_agentic": 0.0547,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "gisele pelicot upcoming event 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "gisele pelicot february 2026 news",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Are any releases, public appearances, or major announcements involving Gisele Pelicot expected between 17 and 26 February 2026 in the United States?",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "Will the interest in \u201cgisele pelicot\u201d change between 2026-02-17 and 2026-02-26 according to Google Trends?",
+          "tool": "AskNews",
+          "deep_research_query": "Are any releases, public appearances, or major announcements involving Gisele Pelicot expected between 17 and 26 February 2026 in the United States?"
+        }
+      ],
+      "tools_used": [
+        "AskNews",
+        "Google",
+        "Google News"
+      ],
+      "llm_cost": 0.1772,
+      "llm_cost_summarization": 0.1714,
+      "llm_cost_agentic": 0.0059,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6926,
+        "token_output": 2250,
+        "cost": 0.05452799999999999,
+        "duration_seconds": 54.83794689178467,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16225,
+        "token_output": 4260,
+        "cost": 0.112575,
+        "duration_seconds": 94.45129895210266,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6926,
+        "token_output": 1866,
+        "cost": 0.048768,
+        "duration_seconds": 54.83801293373108,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15203,
+        "token_output": 3559,
+        "cost": 0.098994,
+        "duration_seconds": 94.45126867294312,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6054,
+        "token_output": 2464,
+        "cost": 0.0450905,
+        "duration_seconds": 54.83805823326111,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13614,
+        "token_output": 1910,
+        "cost": 0.0505645,
+        "duration_seconds": 94.45123791694641,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6054,
+        "token_output": 1664,
+        "cost": 0.025419999999999998,
+        "duration_seconds": 54.83809566497803,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13670,
+        "token_output": 1925,
+        "cost": 0.04274,
+        "duration_seconds": 94.45120739936829,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6054,
+        "token_output": 1801,
+        "cost": 0.026516,
+        "duration_seconds": 54.83812880516052,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12802,
+        "token_output": 1597,
+        "cost": 0.03838,
+        "duration_seconds": 94.45117664337158,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0143,
+    "step2_search": 0.2261,
+    "step3_outside_view": 0.2003,
+    "step5_inside_view": 0.3433,
+    "step6_aggregation": 0.3433,
+    "step7_supervisor": 0.3352
+  },
+  "total_pipeline_cost": 1.1192
+}

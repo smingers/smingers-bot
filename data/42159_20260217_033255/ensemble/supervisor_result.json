@@ -1,0 +1,20 @@
+{
+  "confidence": "medium",
+  "prediction": [
+    10.0,
+    25.0,
+    65.0
+  ],
+  "search_queries": [
+    "gisele pelicot google trends february 2026 (Google)",
+    "gisele pelicot london reading february 2026 (Google News)",
+    "What is the current Google Trends interest value for \"gisele pelicot\" in the US on February 17, 2026, and what major US media appearances or events are scheduled for Gisele Pelicot between February 18-26, 2026? Also check if there are any upcoming HBO documentary announcements with specific dates. (Agent)",
+    "gisele pelicot memoir US media schedule (Google News)"
+  ],
+  "cost": 0.3352,
+  "divergence": {
+    "metric_name": "max_option_range",
+    "metric_value": 35.0,
+    "threshold": 25.0
+  }
+}
