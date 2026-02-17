@@ -1,0 +1,303 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 2,
+      "queries": [
+        {
+          "query": "https://trends.google.com/trends/explore?geo=US&tz=0&q=pam%20bondi&date=2026-01-29%202026-02-28",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://trends.google.com/trends/explore?geo=US&tz=0&q=pam%20bondi&date=2026-01-17%202026-02-16",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "Pam Bondi February 2026 events",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Pam Bondi Feb 2026 interview OR speech",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "List any scheduled media appearances, legal filings, campaign events, or public statements involving Pam Bondi dated between 2026-02-17 and 2026-02-28; summarize relevance and expected publicity.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 3,
+            "queries_executed": [
+              "Pam Bondi February 2026 appearances schedule",
+              "Pam Bondi Feb 2026 legal filing",
+              "Pam Bondi campaign event February 2026",
+              "Pam Bondi press release Feb 2026",
+              "Pam Bondi TV interview February 2026",
+              "Pam Bondi CPAC 2026 agenda",
+              "Pam Bondi Sunday show guests Feb 23 2026",
+              "Pam Bondi appellate brief due dates",
+              "Department of Justice press advisory February 2026",
+              "Pam Bondi media schedule Feb 2026"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "Pam Bondi February 2026 appearances schedule",
+                    "Google"
+                  ],
+                  [
+                    "Pam Bondi Feb 2026 legal filing",
+                    "Google News"
+                  ],
+                  [
+                    "Pam Bondi campaign event February 2026",
+                    "Google"
+                  ],
+                  [
+                    "Pam Bondi press release Feb 2026",
+                    "Google News"
+                  ],
+                  [
+                    "Pam Bondi TV interview February 2026",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 93400,
+                "analysis_chars": 0
+              },
+              {
+                "step_number": 2,
+                "queries_executed": [
+                  [
+                    "Pam Bondi CPAC 2026 agenda",
+                    "Google"
+                  ],
+                  [
+                    "Pam Bondi Sunday show guests Feb 23 2026",
+                    "Google News"
+                  ],
+                  [
+                    "Pam Bondi appellate brief due dates",
+                    "Google"
+                  ],
+                  [
+                    "Department of Justice press advisory February 2026",
+                    "Google"
+                  ],
+                  [
+                    "Pam Bondi media schedule Feb 2026",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 83111,
+                "analysis_chars": 4109
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "pam bondi",
+          "tool": "Google Trends",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Google Trends",
+        "Google News",
+        "Agent"
+      ],
+      "llm_cost": 0.3081,
+      "llm_cost_summarization": 0.1867,
+      "llm_cost_agentic": 0.1215,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "pam bondi february 2026 schedule",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "pam bondi announcement 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Show any recent or scheduled U.S. news events involving Pam Bondi between February 17 and 28 2026.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "Will the interest in \u201cpam bondi\u201d change between 2026-02-17 and 2026-02-28 according to Google Trends?",
+          "tool": "AskNews",
+          "deep_research_query": "Show any recent or scheduled U.S. news events involving Pam Bondi between February 17 and 28 2026."
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Google News",
+        "AskNews"
+      ],
+      "llm_cost": 0.1932,
+      "llm_cost_summarization": 0.1867,
+      "llm_cost_agentic": 0.0065,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8046,
+        "token_output": 2063,
+        "cost": 0.05508300000000001,
+        "duration_seconds": 52.94227933883667,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16647,
+        "token_output": 2889,
+        "cost": 0.093276,
+        "duration_seconds": 69.81111788749695,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8046,
+        "token_output": 1935,
+        "cost": 0.053163,
+        "duration_seconds": 52.942471981048584,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15807,
+        "token_output": 1985,
+        "cost": 0.077196,
+        "duration_seconds": 69.81108283996582,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7091,
+        "token_output": 1912,
+        "cost": 0.03917725,
+        "duration_seconds": 52.94252324104309,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14438,
+        "token_output": 2536,
+        "cost": 0.0607705,
+        "duration_seconds": 69.81104636192322,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7091,
+        "token_output": 1626,
+        "cost": 0.02719,
+        "duration_seconds": 52.94262742996216,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14279,
+        "token_output": 1583,
+        "cost": 0.041222,
+        "duration_seconds": 69.81101274490356,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7091,
+        "token_output": 1692,
+        "cost": 0.027718,
+        "duration_seconds": 52.942755937576294,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13778,
+        "token_output": 1236,
+        "cost": 0.037444,
+        "duration_seconds": 69.81098103523254,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0125,
+    "step2_search": 0.3081,
+    "step3_outside_view": 0.2023,
+    "step5_inside_view": 0.3099,
+    "step6_aggregation": 0.3099,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.8329
+}
