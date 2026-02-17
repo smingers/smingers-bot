@@ -1,0 +1,264 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 2,
+      "queries": [
+        {
+          "query": "https://www.wto.org/english/thewto_e/acc_e/a1_ethiopia_e.htm",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "https://www.wto.org/english/news_e/news25_e/acc_19mar25_e.htm",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "ethiopia wto accession timeline",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "ethiopia wto membership talks 2025",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Find official WTO working-party documents and statements from 2023-2026 on Ethiopia\u2019s accession progress, including meeting dates, draft schedules, and target of joining by MC14, plus analysis of remaining legislative steps in Ethiopia.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "WTO Ethiopia working party 2024",
+              "WT/ACC/ETH document 2025",
+              "Ethiopia WTO accession MC14 target",
+              "Ethiopia draft goods schedule WTO",
+              "Ethiopia accession legislative reforms WTO"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "WTO Ethiopia working party 2024",
+                    "Google"
+                  ],
+                  [
+                    "WT/ACC/ETH document 2025",
+                    "Google"
+                  ],
+                  [
+                    "Ethiopia WTO accession MC14 target",
+                    "Google News"
+                  ],
+                  [
+                    "Ethiopia draft goods schedule WTO",
+                    "Google"
+                  ],
+                  [
+                    "Ethiopia accession legislative reforms WTO",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 75661,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Google News",
+        "Agent"
+      ],
+      "llm_cost": 0.2273,
+      "llm_cost_summarization": 0.1656,
+      "llm_cost_agentic": 0.0617,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Ethiopia WTO accession status 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Ethiopia joins WTO February 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Summarize developments between March 2025 and February 2026 regarding Ethiopia\u2019s bid to join the World Trade Organization, including any protocol signing, parliamentary ratification, or announced membership date.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 17
+        },
+        {
+          "query": "Will Ethiopia have acceded to the World Trade Organization (WTO) (i.e., become a WTO member) by May 1, 2026?",
+          "tool": "AskNews",
+          "deep_research_query": "Summarize developments between March 2025 and February 2026 regarding Ethiopia\u2019s bid to join the World Trade Organization, including any protocol signing, parliamentary ratification, or announced membership date."
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Google News",
+        "AskNews"
+      ],
+      "llm_cost": 0.1707,
+      "llm_cost_summarization": 0.1656,
+      "llm_cost_agentic": 0.0051,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8096,
+        "token_output": 1941,
+        "cost": 0.053403000000000006,
+        "duration_seconds": 80.20940351486206,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13339,
+        "token_output": 2443,
+        "cost": 0.076662,
+        "duration_seconds": 77.63242816925049,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8096,
+        "token_output": 2814,
+        "cost": 0.066498,
+        "duration_seconds": 80.20946598052979,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12604,
+        "token_output": 2437,
+        "cost": 0.07436699999999999,
+        "duration_seconds": 77.63239431381226,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7090,
+        "token_output": 2647,
+        "cost": 0.0494655,
+        "duration_seconds": 80.20949482917786,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12522,
+        "token_output": 2214,
+        "cost": 0.0529095,
+        "duration_seconds": 77.63235902786255,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7090,
+        "token_output": 1851,
+        "cost": 0.028988,
+        "duration_seconds": 80.20952081680298,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11853,
+        "token_output": 2378,
+        "cost": 0.042730000000000004,
+        "duration_seconds": 77.6323254108429,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7090,
+        "token_output": 2731,
+        "cost": 0.036028,
+        "duration_seconds": 80.20954990386963,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11285,
+        "token_output": 1585,
+        "cost": 0.035250000000000004,
+        "duration_seconds": 77.63229060173035,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0117,
+    "step2_search": 0.2273,
+    "step3_outside_view": 0.2344,
+    "step5_inside_view": 0.2819,
+    "step6_aggregation": 0.2819,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.7553
+}

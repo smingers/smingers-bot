@@ -1,0 +1,265 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 1,
+      "queries": [
+        {
+          "query": "https://fred.stlouisfed.org/series/OBMMIVA30YF",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "OBMMI VA 30-year index history",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "VA mortgage rates Optimal Blue update",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Retrieve FRED series OBMMIVA30YF daily values for past two years and summarize trend, mean, volatility; highlight last 30 days",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "OBMMIVA30YF data download",
+              "30-Year VA mortgage index trend",
+              "Optimal Blue VA mortgage index methodology",
+              "OBMMI VA 30-year rate news",
+              "OBMMIVA30YF"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "OBMMIVA30YF data download",
+                    "Google"
+                  ],
+                  [
+                    "30-Year VA mortgage index trend",
+                    "Google"
+                  ],
+                  [
+                    "Optimal Blue VA mortgage index methodology",
+                    "Google"
+                  ],
+                  [
+                    "OBMMI VA 30-year rate news",
+                    "Google News"
+                  ],
+                  [
+                    "OBMMIVA30YF",
+                    "FRED"
+                  ]
+                ],
+                "search_results_chars": 64500,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "OBMMIVA30YF",
+          "tool": "FRED",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Google News",
+        "FRED",
+        "Agent"
+      ],
+      "llm_cost": 0.2177,
+      "llm_cost_summarization": 0.1595,
+      "llm_cost_agentic": 0.0583,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "OBMMI VA 30-year rate",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "30-Year VA mortgage rate trend",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide recent (past month) U.S. articles discussing changes in the Optimal Blue 30-year fixed Veterans Affairs mortgage index and forecasts through late February 2026.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "What will be the value of \"30-Year Fixed Rate Veterans Affairs Mortgage Index\" on 2026-02-26?",
+          "tool": "AskNews",
+          "deep_research_query": "Provide recent (past month) U.S. articles discussing changes in the Optimal Blue 30-year fixed Veterans Affairs mortgage index and forecasts through late February 2026."
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "AskNews",
+        "Google News"
+      ],
+      "llm_cost": 0.1485,
+      "llm_cost_summarization": 0.1425,
+      "llm_cost_agentic": 0.006,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6522,
+        "token_output": 1922,
+        "cost": 0.048396,
+        "duration_seconds": 46.90073800086975,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15727,
+        "token_output": 2641,
+        "cost": 0.08679600000000001,
+        "duration_seconds": 59.93548798561096,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6522,
+        "token_output": 1715,
+        "cost": 0.045291,
+        "duration_seconds": 46.900795698165894,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14847,
+        "token_output": 2262,
+        "cost": 0.07847100000000001,
+        "duration_seconds": 59.935444355010986,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5804,
+        "token_output": 2376,
+        "cost": 0.043421,
+        "duration_seconds": 46.9008252620697,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13944,
+        "token_output": 2215,
+        "cost": 0.055412,
+        "duration_seconds": 59.935399770736694,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5804,
+        "token_output": 1387,
+        "cost": 0.022704000000000002,
+        "duration_seconds": 46.900851249694824,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13755,
+        "token_output": 1465,
+        "cost": 0.03923,
+        "duration_seconds": 59.935357332229614,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5804,
+        "token_output": 2356,
+        "cost": 0.030456,
+        "duration_seconds": 46.900880575180054,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13432,
+        "token_output": 1839,
+        "cost": 0.041576,
+        "duration_seconds": 59.93530988693237,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0124,
+    "step2_search": 0.2177,
+    "step3_outside_view": 0.1903,
+    "step5_inside_view": 0.3015,
+    "step6_aggregation": 0.3015,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.7219
+}
