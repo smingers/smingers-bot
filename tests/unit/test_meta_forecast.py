@@ -423,12 +423,12 @@ class TestFormatMetaForecastContext:
         assert "Will the US gain sovereignty over Greenland?" in result
         assert "https://www.metaculus.com/questions/41502/" in result
 
-    def test_includes_baseline_cp(self, meta_info, history_with_data):
-        """Output includes baseline CP from meta-question creation."""
+    def test_includes_resolution_threshold(self, meta_info, history_with_data):
+        """Output includes resolution threshold (CP at meta-question creation)."""
         result = format_meta_forecast_context(meta_info, history_with_data)
 
         assert "6.00%" in result
-        assert "Baseline" in result
+        assert "Resolution threshold" in result
 
     def test_includes_current_live_cp(self, meta_info, history_with_data):
         """Output includes the current live CP."""
@@ -470,7 +470,8 @@ class TestFormatMetaForecastContext:
         """Output compares current CP to threshold."""
         result = format_meta_forecast_context(meta_info, history_with_data)
 
-        assert "EXACTLY AT the threshold" in result
+        assert "EXACTLY AT" in result
+        assert "resolution threshold" in result
 
     def test_threshold_above(self, meta_info, history_with_data):
         """Shows ABOVE when current CP exceeds threshold."""

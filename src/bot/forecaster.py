@@ -57,7 +57,7 @@ def format_meta_forecast_context(
         "=== Target Question: Community Prediction History ===",
         f'Target question: "{history.question_title}"',
         f"Target URL: https://www.metaculus.com/questions/{meta_info.target_post_id}/",
-        f"Baseline CP at meta-question creation: {meta_info.last_cp:.2%}",
+        f"Resolution threshold (CP at meta-question creation): {meta_info.last_cp:.2%}",
     ]
 
     if history.latest_cp is not None:
@@ -118,23 +118,26 @@ def format_meta_forecast_context(
             f"net change: {last_cp - first_cp:+.2%})"
         )
 
-    # Highlight relationship to threshold
-    threshold = meta_info.last_cp
+    # Highlight relationship to resolution threshold
+    # (last_cp is the CP at meta-question creation — for "cp_rises" format,
+    # the question resolves YES if the target CP rises above this value)
+    resolution_threshold = meta_info.last_cp
     if history.latest_cp is not None:
-        diff = history.latest_cp - threshold
+        diff = history.latest_cp - resolution_threshold
         if diff > 0:
             lines.append(
                 f"\nCurrent CP ({history.latest_cp:.2%}) is ABOVE "
-                f"the threshold ({threshold:.2%}) by {diff:.2%}"
+                f"the resolution threshold ({resolution_threshold:.2%}) by {diff:.2%}"
             )
         elif diff < 0:
             lines.append(
                 f"\nCurrent CP ({history.latest_cp:.2%}) is BELOW "
-                f"the threshold ({threshold:.2%}) by {abs(diff):.2%}"
+                f"the resolution threshold ({resolution_threshold:.2%}) by {abs(diff):.2%}"
             )
         else:
             lines.append(
-                f"\nCurrent CP ({history.latest_cp:.2%}) is EXACTLY AT the threshold ({threshold:.2%})"
+                f"\nCurrent CP ({history.latest_cp:.2%}) is EXACTLY AT "
+                f"the resolution threshold ({resolution_threshold:.2%})"
             )
 
     lines.append("=== End Target Question History ===")
@@ -390,6 +393,10 @@ class Forecaster:
         scoped_store: "ScopedArtifactStore",
     ) -> dict:
         """Run binary forecasting pipeline with 5-agent ensemble."""
+        # Meta-forecast detection is intentionally binary-only. The MiniBench format
+        # tag is "metaculus_binary_cp_rises" — these are always binary questions asking
+        # whether a target question's CP will rise above a threshold. If new format
+        # variants appear (e.g., numeric), add detection in the corresponding handler.
         # Check for meta-forecast question and fetch target CP history
         meta_forecast_context = await self._fetch_meta_forecast_context(question)
         if meta_forecast_context:

@@ -389,7 +389,7 @@ class MetaForecastInfo:
     last_cp: float  # Community prediction at meta-question creation time (0-1 scale)
 
     @classmethod
-    def from_description(cls, description: str) -> "MetaForecastInfo | None":
+    def from_description(cls, description: str | None) -> "MetaForecastInfo | None":
         """Extract meta-forecast info from a question description.
 
         Looks for the JSON format tag (backtick-wrapped) at the end of the description.

@@ -152,6 +152,11 @@ class BaseForecaster(ForecasterMixin, ABC):
         Args:
             log: Progress logging callback (default: print). Called with status messages.
             **question_params: Question-specific parameters (title, text, criteria, etc.)
+                Common params: question_title, question_text, background_info,
+                resolution_criteria, fine_print, open_time, scheduled_resolve_time.
+                Optional: meta_forecast_context (str) — pre-formatted target question
+                CP history for meta-forecast questions. When present, prepended to
+                historical_context so forecasters see it in the outside view.
 
         Returns:
             Type-specific forecast result object
