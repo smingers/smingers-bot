@@ -1,0 +1,23 @@
+{
+  "confidence": "medium",
+  "prediction": {
+    "10": 38.0,
+    "20": 41.0,
+    "40": 45.0,
+    "60": 48.0,
+    "80": 52.0,
+    "90": 55.0
+  },
+  "search_queries": [
+    "sondage abstention municipales 2026 premier tour (Google News)",
+    "municipales 2026 participation intention vote sondage (Google)",
+    "What do French political analysts and polling institutes predict for the abstention rate in the first round of the 2026 French municipal elections? Are there any recent polls measuring voter intent to participate, and what effect do experts expect from the new uniform proportional list system applying to all communes? (Agent)",
+    "impact scrutin proportionnel petites communes participation municipales (Google)"
+  ],
+  "cost": 0.3705,
+  "divergence": {
+    "metric_name": "rn_spread",
+    "metric_value": 0.0582,
+    "threshold": 0.045
+  }
+}

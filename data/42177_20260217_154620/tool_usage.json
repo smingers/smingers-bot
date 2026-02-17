@@ -1,0 +1,271 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 2,
+      "queries": [
+        {
+          "query": "https://trends.google.com/trends/explore?geo=US&tz=0&q=armenia&date=2026-01-29%202026-02-28",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://trends.google.com/trends/explore?geo=US&tz=0&q=armenia&date=2026-01-17%202026-02-16",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "Armenia Azerbaijan escalation Feb 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Armenia news Feb 2026 United States",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Analyze historical Google Trends spikes for the search term \u201carmenia\u201d in the United States over the past five years. Identify the main real-world events linked to each spike and summarize how long elevated interest usually lasts after the peak. Also list any scheduled or anticipated Armenia-related events between February 17 and February 28 2026 that could influence U.S. search behavior.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "Armenia Azerbaijan conflict 2023",
+              "Armenian Genocide Day April 24",
+              "Armenia protests 2022",
+              "Armenia events February 2026",
+              "Armenia parliamentary election 2026"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "Armenia Azerbaijan conflict 2023",
+                    "Google"
+                  ],
+                  [
+                    "Armenian Genocide Day April 24",
+                    "Google"
+                  ],
+                  [
+                    "Armenia protests 2022",
+                    "Google News"
+                  ],
+                  [
+                    "Armenia events February 2026",
+                    "Google"
+                  ],
+                  [
+                    "Armenia parliamentary election 2026",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 69851,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "armenia",
+          "tool": "Google Trends",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "Agent",
+        "Google Trends"
+      ],
+      "llm_cost": 0.2608,
+      "llm_cost_summarization": 0.1983,
+      "llm_cost_agentic": 0.0625,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Armenia Azerbaijan tensions February 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Armenia political crisis February 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "What significant Armenia-related events are expected or scheduled between 17 and 28 February 2026 that could attract U.S. media coverage?",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "Will the interest in \u201carmenia\u201d change between 2026-02-17 and 2026-02-28 according to Google Trends?",
+          "tool": "AskNews",
+          "deep_research_query": "What significant Armenia-related events are expected or scheduled between 17 and 28 February 2026 that could attract U.S. media coverage?"
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "AskNews"
+      ],
+      "llm_cost": 0.1802,
+      "llm_cost_summarization": 0.1687,
+      "llm_cost_agentic": 0.0115,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8000,
+        "token_output": 2130,
+        "cost": 0.05595,
+        "duration_seconds": 54.52654457092285,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15989,
+        "token_output": 3053,
+        "cost": 0.093762,
+        "duration_seconds": 74.3766770362854,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8000,
+        "token_output": 2156,
+        "cost": 0.05634,
+        "duration_seconds": 54.526655197143555,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14898,
+        "token_output": 2964,
+        "cost": 0.089154,
+        "duration_seconds": 74.37664914131165,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7174,
+        "token_output": 1998,
+        "cost": 0.04052650000000001,
+        "duration_seconds": 54.52670335769653,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14264,
+        "token_output": 2844,
+        "cost": 0.064778,
+        "duration_seconds": 74.37661600112915,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7174,
+        "token_output": 1740,
+        "cost": 0.028268,
+        "duration_seconds": 54.52673959732056,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14023,
+        "token_output": 1918,
+        "cost": 0.04339,
+        "duration_seconds": 74.3765857219696,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7174,
+        "token_output": 1484,
+        "cost": 0.02622,
+        "duration_seconds": 54.526774644851685,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13135,
+        "token_output": 1738,
+        "cost": 0.040174,
+        "duration_seconds": 74.37655639648438,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0193,
+    "step2_search": 0.2608,
+    "step3_outside_view": 0.2073,
+    "step5_inside_view": 0.3313,
+    "step6_aggregation": 0.3313,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.8187
+}

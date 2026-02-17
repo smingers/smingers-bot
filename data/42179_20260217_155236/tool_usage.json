@@ -1,0 +1,282 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 8,
+      "queries": [
+        {
+          "query": "https://en.wikipedia.org/wiki/Grand_Theft_Auto_VI",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://en.wikipedia.org/wiki/Rockstar_Games",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://en.wikipedia.org/wiki/Grand_Theft_Auto_V",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://en.wikipedia.org/wiki/List_of_best-selling_video_games",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://www.gamesradar.com/gta-6-guide/",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "GTA VI November 2026 delay rumors",
+          "tool": "Google",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "Rockstar confirms GTA VI release 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Summarize Feb 2026 reports, investor calls, leaks on GTA VI development status and likelihood of November 2026 launch; include any rating-board listings or marketing milestones.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "GTA VI development status February 2026",
+              "Take-Two Feb 2026 earnings call GTA VI",
+              "GTA VI rating board listing February 2026",
+              "GTA VI marketing milestones November launch",
+              "GTA VI February 2026 leak details"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "GTA VI development status February 2026",
+                    "Google News"
+                  ],
+                  [
+                    "Take-Two Feb 2026 earnings call GTA VI",
+                    "Google"
+                  ],
+                  [
+                    "GTA VI rating board listing February 2026",
+                    "Google"
+                  ],
+                  [
+                    "GTA VI marketing milestones November launch",
+                    "Google"
+                  ],
+                  [
+                    "GTA VI February 2026 leak details",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 55123,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "Agent"
+      ],
+      "llm_cost": 0.1855,
+      "llm_cost_summarization": 0.1334,
+      "llm_cost_agentic": 0.0521,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "GTA VI development progress February 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "GTA VI release date delay 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Summarize February 2026 coverage of Rockstar Games or Take-Two Interactive statements regarding GTA VI\u2019s planned November 2026 release date and any indications of delay or progress. Focus on official announcements, investor calls, and credible industry reporting.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "Will the community prediction be higher than 65.00% on 2026-02-28 for the Metaculus question \"Will GTA VI be released during 2026?\"?",
+          "tool": "AskNews",
+          "deep_research_query": "Summarize February 2026 coverage of Rockstar Games or Take-Two Interactive statements regarding GTA VI\u2019s planned November 2026 release date and any indications of delay or progress. Focus on official announcements, investor calls, and credible industry reporting."
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "AskNews"
+      ],
+      "llm_cost": 0.1409,
+      "llm_cost_summarization": 0.1334,
+      "llm_cost_agentic": 0.0075,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5651,
+        "token_output": 1938,
+        "cost": 0.046023,
+        "duration_seconds": 51.303521156311035,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14229,
+        "token_output": 2795,
+        "cost": 0.084612,
+        "duration_seconds": 62.20136499404907,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5651,
+        "token_output": 1758,
+        "cost": 0.043323,
+        "duration_seconds": 51.303635120391846,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13469,
+        "token_output": 1729,
+        "cost": 0.066342,
+        "duration_seconds": 62.20133852958679,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4970,
+        "token_output": 2107,
+        "cost": 0.0381955,
+        "duration_seconds": 51.30367612838745,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12453,
+        "token_output": 1813,
+        "cost": 0.04717475,
+        "duration_seconds": 62.201313972473145,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4970,
+        "token_output": 1552,
+        "cost": 0.022356,
+        "duration_seconds": 51.30371332168579,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12284,
+        "token_output": 2278,
+        "cost": 0.042792,
+        "duration_seconds": 62.201290130615234,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4970,
+        "token_output": 1673,
+        "cost": 0.023323999999999998,
+        "duration_seconds": 51.30374598503113,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11773,
+        "token_output": 1205,
+        "cost": 0.033186,
+        "duration_seconds": 62.20126700401306,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0151,
+    "step2_search": 0.1855,
+    "step3_outside_view": 0.1732,
+    "step5_inside_view": 0.2741,
+    "step6_aggregation": 0.2741,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.6479
+}

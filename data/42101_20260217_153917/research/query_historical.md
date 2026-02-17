@@ -1,0 +1,7 @@
+Analysis:
+To anchor a forecast, we first need a solid historical baseline: national abstention (or participation) rates in every municipal election since the first direct elections in 1977, with special attention to the comparable pre-COVID cycles (2008 and 2014) and the exceptional 2020 vote. Next, we must look for any recent polling or expert commentary about expected turnout in 2026, and whether institutional changes (uniform proportional lists, new Paris/Lyon/Marseille rules) are expected to mobilise or demobilise voters. These are most likely to appear in French-language political news from the past few weeks. Finally, a concise table or dataset of historical abstention figures will let us quantify the long-term trend and variance—information often compiled by the Interior Ministry, INSEE, or academic think tanks (e.g., Fondapol).
+
+Search queries:
+1. abstention municipales 1977 2020 chiffres (Google)  
+2. sondage participation élections municipales 2026 (Google News)  
+3. Provide a table of national first-round turnout (or abstention) percentages for every French municipal election from 1977 to 2020, citing Interior Ministry or INSEE sources; include 2020 COVID context comments. (Agent)

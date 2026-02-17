@@ -1,0 +1,304 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 5,
+      "queries": [
+        {
+          "query": "https://www.legifrance.gouv.fr/",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://www.lemonde.fr/en/politics/article/2026/01/30/paris-mayoral-election-sophia-chikirou-hopes-to-capitalize-on-radical-left-s-recent-scores_6749962_5.html",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "https://www.fondapol.org/decryptage/les-chiffres-de-labstention-depuis-1959/",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "https://cdn.metaculus.com/user_uploaded/mt1-e1396027474976.jpg",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://www.insee.fr/fr/statistiques/serie/001785275",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "abstention municipales 1977 2020 chiffres",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "sondage participation \u00e9lections municipales 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide a table of national first-round turnout (or abstention) percentages for every French municipal election from 1977 to 2020, citing Interior Ministry or INSEE sources; include 2020 COVID context comments.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 3,
+            "queries_executed": [
+              "taux participation municipales 1977 premier tour",
+              "INSEE participation municipales s\u00e9rie historique",
+              "Minist\u00e8re Int\u00e9rieur r\u00e9sultats municipales 2008",
+              "abstention municipales 2020 coronavirus impact",
+              "INSEE 001785275 municipales participation",
+              "participation municipales 1983 premier tour",
+              "participation municipales 1989 premier tour",
+              "participation municipales 1995 premier tour"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "taux participation municipales 1977 premier tour",
+                    "Google"
+                  ],
+                  [
+                    "INSEE participation municipales s\u00e9rie historique",
+                    "Google"
+                  ],
+                  [
+                    "Minist\u00e8re Int\u00e9rieur r\u00e9sultats municipales 2008",
+                    "Google"
+                  ],
+                  [
+                    "abstention municipales 2020 coronavirus impact",
+                    "Google News"
+                  ],
+                  [
+                    "INSEE 001785275 municipales participation",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 51318,
+                "analysis_chars": 0
+              },
+              {
+                "step_number": 2,
+                "queries_executed": [
+                  [
+                    "participation municipales 1983 premier tour",
+                    "Google"
+                  ],
+                  [
+                    "participation municipales 1989 premier tour",
+                    "Google"
+                  ],
+                  [
+                    "participation municipales 1995 premier tour",
+                    "Google News"
+                  ]
+                ],
+                "search_results_chars": 30656,
+                "analysis_chars": 3187
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google News",
+        "Google"
+      ],
+      "llm_cost": 0.2926,
+      "llm_cost_summarization": 0.2071,
+      "llm_cost_agentic": 0.0854,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "abstention municipales 2026 premier tour",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "sondage intention vote municipales 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide the most recent (January-February 2026) French polling data or expert analyses forecasting turnout or abstention in the first round of the March 15 2026 municipal elections, including discussion of new election rules.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "What will be the abstention rate in the first round of the 2026 French municipal elections?",
+          "tool": "AskNews",
+          "deep_research_query": "Provide the most recent (January-February 2026) French polling data or expert analyses forecasting turnout or abstention in the first round of the March 15 2026 municipal elections, including discussion of new election rules."
+        }
+      ],
+      "tools_used": [
+        "AskNews",
+        "Google News",
+        "Google"
+      ],
+      "llm_cost": 0.1933,
+      "llm_cost_summarization": 0.1842,
+      "llm_cost_agentic": 0.0091,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7495,
+        "token_output": 2004,
+        "cost": 0.052545,
+        "duration_seconds": 52.83476233482361,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15466,
+        "token_output": 2896,
+        "cost": 0.089838,
+        "duration_seconds": 68.3205041885376,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7495,
+        "token_output": 1873,
+        "cost": 0.05058,
+        "duration_seconds": 52.83482313156128,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14739,
+        "token_output": 2627,
+        "cost": 0.083622,
+        "duration_seconds": 68.32047295570374,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6680,
+        "token_output": 2745,
+        "cost": 0.05012,
+        "duration_seconds": 52.8348662853241,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13437,
+        "token_output": 2096,
+        "cost": 0.052858749999999996,
+        "duration_seconds": 68.3204402923584,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6680,
+        "token_output": 1867,
+        "cost": 0.028296,
+        "duration_seconds": 52.834903955459595,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13654,
+        "token_output": 1538,
+        "cost": 0.039612,
+        "duration_seconds": 68.32040739059448,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6680,
+        "token_output": 1782,
+        "cost": 0.027616,
+        "duration_seconds": 52.834935665130615,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12634,
+        "token_output": 1577,
+        "cost": 0.037884,
+        "duration_seconds": 68.32037591934204,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0119,
+    "step2_search": 0.2926,
+    "step3_outside_view": 0.2092,
+    "step5_inside_view": 0.3038,
+    "step6_aggregation": 0.3038,
+    "step7_supervisor": 0.3705
+  },
+  "total_pipeline_cost": 1.188
+}
