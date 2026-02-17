@@ -1,0 +1,20 @@
+{
+  "confidence": "medium",
+  "prediction": [
+    30.0,
+    40.0,
+    30.0
+  ],
+  "search_queries": [
+    "Les Wexner House Oversight deposition February 2026 (Google News)",
+    "House Oversight Committee Wexner testimony transcript release (Google News)",
+    "What is the typical baseline Google Trends interest level for \"les wexner\" during non-news periods, and after the Feb 10 2026 spike, how quickly did interest decay day-by-day? Also, is there any indication that the House Oversight Committee plans to publicly release transcripts or hold press conferences about the Feb 18 Wexner deposition? (Agent)",
+    "les wexner congressional testimony public closed door (Google News)"
+  ],
+  "cost": 0.3389,
+  "divergence": {
+    "metric_name": "max_option_range",
+    "metric_value": 50.0,
+    "threshold": 25.0
+  }
+}

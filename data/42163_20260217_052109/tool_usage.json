@@ -1,0 +1,265 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 1,
+      "queries": [
+        {
+          "query": "https://fred.stlouisfed.org/series/DTB1YR",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "1-year treasury bill rate history",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "short term treasury yield outlook 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Retrieve daily DTB1YR series from FRED for last 6 months and compute 7-day and 30-day moving averages; summarize Fed funds futures implied policy path through March 2026; list upcoming FOMC meetings before 26 Feb 2026",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "DTB1YR",
+              "Fed funds futures path 2026",
+              "CME FedWatch March 2026 probabilities",
+              "FOMC meeting calendar 2025-2026",
+              "Federal Reserve FOMC schedule dates"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "DTB1YR",
+                    "FRED"
+                  ],
+                  [
+                    "Fed funds futures path 2026",
+                    "Google"
+                  ],
+                  [
+                    "CME FedWatch March 2026 probabilities",
+                    "Google"
+                  ],
+                  [
+                    "FOMC meeting calendar 2025-2026",
+                    "Google"
+                  ],
+                  [
+                    "Federal Reserve FOMC schedule dates",
+                    "Google News"
+                  ]
+                ],
+                "search_results_chars": 63888,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "DTB1YR",
+          "tool": "FRED",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "FRED",
+        "Google",
+        "Agent"
+      ],
+      "llm_cost": 0.2196,
+      "llm_cost_summarization": 0.1605,
+      "llm_cost_agentic": 0.0592,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "1-year Treasury yield Feb 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "1-year Treasury bill\" latest",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide latest reporting on U.S. 1-year Treasury bill yield moves and drivers during February 2026, including Fed policy expectations.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "What will be the value of \"1-Year Treasury Bill Secondary Market Rate, Discount Basis\" on 2026-02-26?",
+          "tool": "AskNews",
+          "deep_research_query": "Provide latest reporting on U.S. 1-year Treasury bill yield moves and drivers during February 2026, including Fed policy expectations."
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "AskNews",
+        "Google"
+      ],
+      "llm_cost": 0.1444,
+      "llm_cost_summarization": 0.1383,
+      "llm_cost_agentic": 0.0061,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6960,
+        "token_output": 1859,
+        "cost": 0.048765,
+        "duration_seconds": 48.829445600509644,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16201,
+        "token_output": 3069,
+        "cost": 0.094638,
+        "duration_seconds": 70.0846107006073,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6960,
+        "token_output": 2082,
+        "cost": 0.052110000000000004,
+        "duration_seconds": 48.82950520515442,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15338,
+        "token_output": 1911,
+        "cost": 0.074679,
+        "duration_seconds": 70.08457350730896,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6174,
+        "token_output": 1944,
+        "cost": 0.0380205,
+        "duration_seconds": 48.8295464515686,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14620,
+        "token_output": 2524,
+        "cost": 0.060921,
+        "duration_seconds": 70.08453750610352,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6174,
+        "token_output": 1827,
+        "cost": 0.026964000000000002,
+        "duration_seconds": 48.82958650588989,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14107,
+        "token_output": 1925,
+        "cost": 0.043614,
+        "duration_seconds": 70.08450365066528,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6174,
+        "token_output": 1635,
+        "cost": 0.025428,
+        "duration_seconds": 48.829614877700806,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13762,
+        "token_output": 2204,
+        "cost": 0.045156,
+        "duration_seconds": 70.08446836471558,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0143,
+    "step2_search": 0.2196,
+    "step3_outside_view": 0.1913,
+    "step5_inside_view": 0.319,
+    "step6_aggregation": 0.319,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.7442
+}

@@ -1,0 +1,271 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 2,
+      "queries": [
+        {
+          "query": "https://trends.google.com/trends/explore?geo=US&tz=0&q=les%20wexner&date=2026-01-23%202026-02-22",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://trends.google.com/trends/explore?geo=US&tz=0&q=les%20wexner&date=2026-01-17%202026-02-16",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "Les Wexner lawsuit 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Les Wexner February 2026 news",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Identify any scheduled court dates, documentary premieres, corporate announcements, or foundation events involving Les Wexner set for 17-22 Feb 2026; summarize relevant articles published since 1 Jan 2026.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "Les Wexner Feb 2026 court date",
+              "Les Wexner documentary premiere 2026",
+              "Wexner Foundation event Feb 2026",
+              "Les Wexner corporate announcement Feb 2026",
+              "Bath & Body Works earnings Feb 2026"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "Les Wexner Feb 2026 court date",
+                    "Google"
+                  ],
+                  [
+                    "Les Wexner documentary premiere 2026",
+                    "Google News"
+                  ],
+                  [
+                    "Wexner Foundation event Feb 2026",
+                    "Google"
+                  ],
+                  [
+                    "Les Wexner corporate announcement Feb 2026",
+                    "Google"
+                  ],
+                  [
+                    "Bath & Body Works earnings Feb 2026",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 79268,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "les wexner",
+          "tool": "Google Trends",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google Trends",
+        "Google",
+        "Agent"
+      ],
+      "llm_cost": 0.2462,
+      "llm_cost_summarization": 0.1792,
+      "llm_cost_agentic": 0.0669,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Les Wexner February 2026 news",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Les Wexner lawsuit or documentary",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Are any events, filings, documentaries, or interviews about Les Wexner expected in the United States between Feb 17 and Feb 22 2026?",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "Will the interest in \u201cles wexner\u201d change between 2026-02-17 and 2026-02-22 according to Google Trends?",
+          "tool": "AskNews",
+          "deep_research_query": "Are any events, filings, documentaries, or interviews about Les Wexner expected in the United States between Feb 17 and Feb 22 2026?"
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "AskNews",
+        "Google"
+      ],
+      "llm_cost": 0.1876,
+      "llm_cost_summarization": 0.1792,
+      "llm_cost_agentic": 0.0084,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8508,
+        "token_output": 1969,
+        "cost": 0.055059,
+        "duration_seconds": 46.20147490501404,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16294,
+        "token_output": 2971,
+        "cost": 0.093447,
+        "duration_seconds": 71.7833080291748,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8508,
+        "token_output": 1661,
+        "cost": 0.050439,
+        "duration_seconds": 46.20153594017029,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15555,
+        "token_output": 2274,
+        "cost": 0.080775,
+        "duration_seconds": 71.78327989578247,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7453,
+        "token_output": 1887,
+        "cost": 0.03946075,
+        "duration_seconds": 46.20157814025879,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13806,
+        "token_output": 2790,
+        "cost": 0.0632205,
+        "duration_seconds": 71.78325033187866,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7453,
+        "token_output": 1545,
+        "cost": 0.027266,
+        "duration_seconds": 46.201611042022705,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13521,
+        "token_output": 1623,
+        "cost": 0.040026,
+        "duration_seconds": 71.78322172164917,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7453,
+        "token_output": 2330,
+        "cost": 0.033546,
+        "duration_seconds": 46.20163917541504,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13463,
+        "token_output": 1845,
+        "cost": 0.041686,
+        "duration_seconds": 71.78319334983826,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0146,
+    "step2_search": 0.2462,
+    "step3_outside_view": 0.2058,
+    "step5_inside_view": 0.3192,
+    "step6_aggregation": 0.3192,
+    "step7_supervisor": 0.3389
+  },
+  "total_pipeline_cost": 1.1246
+}

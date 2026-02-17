@@ -1,0 +1,282 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 15,
+      "queries": [
+        {
+          "query": "https://www.guttmacher.org/state-policy/explore/state-policies-abortion-bans",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "https://en.wikipedia.org/wiki/Trump_v._United_States",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://www.law.georgetown.edu/legal-ethics-journal/blog/lifetime-appointments-of-federal-judges-a-double-edged-sword/",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://en.wikipedia.org/wiki/John_Roberts",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://en.wikipedia.org/wiki/Clarence_Thomas",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Supreme Court justice retirement rumors 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Clarence Thomas health February 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Retrieve the Metaculus community-prediction time series for question 41072 during Jan\u2013Feb 2026 and list any associated news events about retirements or court-expansion bills in that interval",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "Metaculus 41072 prediction history",
+              "Metaculus API 41072 time series",
+              "Supreme Court retirement January 2026",
+              "Supreme Court retirement February 2026",
+              "Supreme Court expansion bill 2026"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "Metaculus 41072 prediction history",
+                    "Google"
+                  ],
+                  [
+                    "Metaculus API 41072 time series",
+                    "Google"
+                  ],
+                  [
+                    "Supreme Court retirement January 2026",
+                    "Google News"
+                  ],
+                  [
+                    "Supreme Court retirement February 2026",
+                    "Google News"
+                  ],
+                  [
+                    "Supreme Court expansion bill 2026",
+                    "Google News"
+                  ]
+                ],
+                "search_results_chars": 59796,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "Agent"
+      ],
+      "llm_cost": 0.286,
+      "llm_cost_summarization": 0.2309,
+      "llm_cost_agentic": 0.0551,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Clarence Thomas retirement speculation 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Supreme Court retirement 2026 rumors",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide latest February 2026 reports on potential retirements or health issues among US Supreme Court justices. Include any congressional action on bills to change the Court's size.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "Will the community prediction be higher than 23.00% on 2026-02-28 for the Metaculus question \"Will the composition of the US Supreme Court change in 2026?\"?",
+          "tool": "AskNews",
+          "deep_research_query": "Provide latest February 2026 reports on potential retirements or health issues among US Supreme Court justices. Include any congressional action on bills to change the Court's size."
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "AskNews",
+        "Google"
+      ],
+      "llm_cost": 0.2402,
+      "llm_cost_summarization": 0.2309,
+      "llm_cost_agentic": 0.0093,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8900,
+        "token_output": 1559,
+        "cost": 0.050085000000000005,
+        "duration_seconds": 57.43498778343201,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17007,
+        "token_output": 2708,
+        "cost": 0.091641,
+        "duration_seconds": 63.68695616722107,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8900,
+        "token_output": 2067,
+        "cost": 0.057705,
+        "duration_seconds": 57.43503713607788,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16760,
+        "token_output": 2069,
+        "cost": 0.081315,
+        "duration_seconds": 63.686928272247314,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7892,
+        "token_output": 2783,
+        "cost": 0.052773,
+        "duration_seconds": 57.435078859329224,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15629,
+        "token_output": 3169,
+        "cost": 0.07171675,
+        "duration_seconds": 63.68689942359924,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7892,
+        "token_output": 1958,
+        "cost": 0.031448000000000004,
+        "duration_seconds": 57.43511199951172,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15361,
+        "token_output": 1449,
+        "cost": 0.042314,
+        "duration_seconds": 63.68687200546265,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7892,
+        "token_output": 2253,
+        "cost": 0.033808,
+        "duration_seconds": 57.435144901275635,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14758,
+        "token_output": 1908,
+        "cost": 0.04478,
+        "duration_seconds": 63.68684530258179,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0195,
+    "step2_search": 0.286,
+    "step3_outside_view": 0.2258,
+    "step5_inside_view": 0.3318,
+    "step6_aggregation": 0.3318,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.8631
+}
