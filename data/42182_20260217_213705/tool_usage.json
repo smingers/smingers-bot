@@ -1,0 +1,282 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 6,
+      "queries": [
+        {
+          "query": "https://www.investopedia.com/terms/s/sec-form-s-1.asp",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "https://www.sec.gov/search-filings",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://en.wikipedia.org/wiki/OpenAI",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://en.wikipedia.org/wiki/Initial_public_offering",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://www.reuters.com/business/openai-lays-groundwork-juggernaut-ipo-up-1-trillion-valuation-2025-10-29/",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "OpenAI IPO plans 2026 valuation",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "OpenAI IPO rumors February 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Retrieve Metaculus forecast history and major OpenAI IPO-related developments from 2025 to Feb 16 2026; include any reports of SEC S-1 drafting or advisors hired",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "Metaculus OpenAI IPO prediction history",
+              "Metaculus question 41141 community chart",
+              "OpenAI IPO plans 2025 2026",
+              "OpenAI hires banks for IPO",
+              "OpenAI drafting S-1 SEC filing"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "Metaculus OpenAI IPO prediction history",
+                    "Google"
+                  ],
+                  [
+                    "Metaculus question 41141 community chart",
+                    "Google"
+                  ],
+                  [
+                    "OpenAI IPO plans 2025 2026",
+                    "Google News"
+                  ],
+                  [
+                    "OpenAI hires banks for IPO",
+                    "Google News"
+                  ],
+                  [
+                    "OpenAI drafting S-1 SEC filing",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 44122,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "Agent"
+      ],
+      "llm_cost": 0.2676,
+      "llm_cost_summarization": 0.2207,
+      "llm_cost_agentic": 0.0469,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "OpenAI IPO 2026 filing plans",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "OpenAI S-1 SEC rumors 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Summarize reports from the last six months about OpenAI\u2019s intention to file an S-1 for a 2026 IPO and any related financing or corporate actions in the U.S. tech sector.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 17
+        },
+        {
+          "query": "Will the community prediction be higher than 41.00% on 2026-02-27 for the Metaculus question \"Will OpenAI file for an IPO during 2026?\"?",
+          "tool": "AskNews",
+          "deep_research_query": "Summarize reports from the last six months about OpenAI\u2019s intention to file an S-1 for a 2026 IPO and any related financing or corporate actions in the U.S. tech sector."
+        }
+      ],
+      "tools_used": [
+        "AskNews",
+        "Google News",
+        "Google"
+      ],
+      "llm_cost": 0.1383,
+      "llm_cost_summarization": 0.1313,
+      "llm_cost_agentic": 0.007,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 9310,
+        "token_output": 1939,
+        "cost": 0.057015,
+        "duration_seconds": 50.5585515499115,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17023,
+        "token_output": 2067,
+        "cost": 0.08207400000000001,
+        "duration_seconds": 50.70761299133301,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 9310,
+        "token_output": 1990,
+        "cost": 0.057780000000000005,
+        "duration_seconds": 50.55866479873657,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16288,
+        "token_output": 1702,
+        "cost": 0.074394,
+        "duration_seconds": 50.70758891105652,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8019,
+        "token_output": 2250,
+        "cost": 0.04553325,
+        "duration_seconds": 50.55870580673218,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14850,
+        "token_output": 2557,
+        "cost": 0.06178549999999999,
+        "duration_seconds": 50.70754551887512,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8019,
+        "token_output": 1843,
+        "cost": 0.030782,
+        "duration_seconds": 50.5587432384491,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14931,
+        "token_output": 1449,
+        "cost": 0.041454,
+        "duration_seconds": 50.707518577575684,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8019,
+        "token_output": 1770,
+        "cost": 0.030198000000000003,
+        "duration_seconds": 50.55877685546875,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14202,
+        "token_output": 1841,
+        "cost": 0.043132,
+        "duration_seconds": 50.70749306678772,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.017,
+    "step2_search": 0.2676,
+    "step3_outside_view": 0.2213,
+    "step5_inside_view": 0.3028,
+    "step6_aggregation": 0.3028,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.8088
+}
