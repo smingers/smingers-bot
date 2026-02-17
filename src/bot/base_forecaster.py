@@ -854,6 +854,7 @@ class BaseForecaster(ForecasterMixin, ABC):
             num_options=len(question_params.get("options", []) or []) or None,
             units=question_params.get("unit_of_measure"),
             bounds_info=question_params.get("bounds_info"),
+            is_date_question=question_params.get("is_date_question", False),
         )
 
         try:

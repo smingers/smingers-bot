@@ -1,5 +1,7 @@
 """Tests for supervisor agent logic."""
 
+import pytest
+
 from src.bot.supervisor import SupervisorAgent, SupervisorInput, SupervisorResult
 
 # =============================================================================
@@ -184,15 +186,15 @@ Search queries:
         assert len(queries) == 2
 
     def test_extract_binary_prediction(self):
-        """Should extract binary probability from supervisor output."""
+        """Should extract and convert binary probability from supervisor output."""
         agent = SupervisorAgent(config={})
         si = _make_input()
         text = "Updated Analysis: ...\n\nConfidence: HIGH\n\nProbability: 45%"
         result = agent._extract_prediction(text, si)
-        assert result == 45.0
+        assert result == 0.45
 
     def test_extract_mc_prediction(self):
-        """Should extract MC probabilities from supervisor output."""
+        """Should extract and normalize MC probabilities from supervisor output."""
         agent = SupervisorAgent(config={})
         si = _make_input(
             question_type="multiple_choice",
@@ -202,7 +204,7 @@ Search queries:
         text = "Analysis.\n\nConfidence: HIGH\n\nProbabilities: [60, 30, 10]"
         result = agent._extract_prediction(text, si)
         assert len(result) == 3
-        assert result[0] == 60.0
+        assert result == pytest.approx([0.6, 0.3, 0.1])
 
     def test_extract_numeric_prediction(self):
         """Should extract percentiles from supervisor output."""

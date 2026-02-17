@@ -18,8 +18,10 @@ from typing import Any
 from src.bot.exceptions import ExtractionError
 from src.bot.extractors import (
     extract_binary_probability_percent,
+    extract_date_percentiles_from_response,
     extract_multiple_choice_probabilities,
     extract_percentiles_from_response,
+    normalize_probabilities,
 )
 from src.bot.prompts import (
     BINARY_SUPERVISOR_UPDATE_PROMPT,
@@ -55,6 +57,7 @@ class SupervisorInput:
     # Optional type-specific fields
     options: list[str] | None = None  # Multiple choice options
     units: str | None = None  # Numeric units
+    is_date_question: bool = False  # Whether this is a date question
     bounds_info: str | None = None  # Numeric bounds
     num_options: int | None = None  # Number of MC options
 
@@ -424,12 +427,16 @@ class SupervisorAgent:
         qt = supervisor_input.question_type
 
         if qt == "binary":
-            return extract_binary_probability_percent(text)
+            pct = extract_binary_probability_percent(text)
+            return max(0.001, min(0.999, pct / 100))
         elif qt == "numeric":
+            if supervisor_input.is_date_question:
+                return extract_date_percentiles_from_response(text, verbose=False)
             return extract_percentiles_from_response(text, verbose=False)
         elif qt == "multiple_choice":
             num_options = supervisor_input.num_options or len(supervisor_input.options or [])
-            return extract_multiple_choice_probabilities(text, num_options)
+            probs = extract_multiple_choice_probabilities(text, num_options)
+            return normalize_probabilities(probs)
         else:
             raise ValueError(f"Unknown question type: {qt}")
 
