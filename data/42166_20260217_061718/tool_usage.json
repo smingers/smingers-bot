@@ -1,0 +1,258 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 1,
+      "queries": [
+        {
+          "query": "https://www.theguardian.com/us-news/2026/jan/06/trump-greenland-control-us-military",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Metaculus Greenland sovereignty prediction",
+          "tool": "Google",
+          "success": true,
+          "num_results": 2
+        },
+        {
+          "query": "US Greenland sovereignty 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide daily history of the community prediction for Metaculus question 41502 through 2026-02-17, highlight major jumps, and list contemporaneous news events about U.S. moves toward acquiring Greenland.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "Metaculus 41502 community prediction history",
+              "United States acquire Greenland 2026 news",
+              "US Denmark Greenland sovereignty talks 2025",
+              "Greenland acquisition bill Congress 2025",
+              "US military option seize Greenland"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "Metaculus 41502 community prediction history",
+                    "Google"
+                  ],
+                  [
+                    "United States acquire Greenland 2026 news",
+                    "Google News"
+                  ],
+                  [
+                    "US Denmark Greenland sovereignty talks 2025",
+                    "Google News"
+                  ],
+                  [
+                    "Greenland acquisition bill Congress 2025",
+                    "Google News"
+                  ],
+                  [
+                    "US military option seize Greenland",
+                    "Google News"
+                  ]
+                ],
+                "search_results_chars": 83426,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Agent",
+        "Google"
+      ],
+      "llm_cost": 0.2421,
+      "llm_cost_summarization": 0.1869,
+      "llm_cost_agentic": 0.0551,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "US Greenland sovereignty talks 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Trump military option Greenland Feb 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Show me the most recent 2026 reporting on negotiations, bills, or agreements that could give the United States sovereignty over any part of Greenland",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "Will the community prediction be higher than 6.00% on 2026-02-28 for the Metaculus question \"Will the United States gain formal sovereignty over any part of Greenland during 2026?\"?",
+          "tool": "AskNews",
+          "deep_research_query": "Show me the most recent 2026 reporting on negotiations, bills, or agreements that could give the United States sovereignty over any part of Greenland"
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "AskNews",
+        "Google"
+      ],
+      "llm_cost": 0.1952,
+      "llm_cost_summarization": 0.1869,
+      "llm_cost_agentic": 0.0082,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6646,
+        "token_output": 1833,
+        "cost": 0.047433,
+        "duration_seconds": 58.4875864982605,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15203,
+        "token_output": 2562,
+        "cost": 0.084039,
+        "duration_seconds": 65.11590433120728,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6646,
+        "token_output": 1571,
+        "cost": 0.043503,
+        "duration_seconds": 58.4876594543457,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14523,
+        "token_output": 2021,
+        "cost": 0.07388399999999999,
+        "duration_seconds": 65.11587691307068,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5807,
+        "token_output": 2412,
+        "cost": 0.04393025,
+        "duration_seconds": 58.4877028465271,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13142,
+        "token_output": 2553,
+        "cost": 0.0587405,
+        "duration_seconds": 65.11584997177124,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5807,
+        "token_output": 2072,
+        "cost": 0.02819,
+        "duration_seconds": 58.48774027824402,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13575,
+        "token_output": 1507,
+        "cost": 0.039206000000000005,
+        "duration_seconds": 65.11582446098328,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5807,
+        "token_output": 1829,
+        "cost": 0.026246,
+        "duration_seconds": 58.48777198791504,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12647,
+        "token_output": 1521,
+        "cost": 0.037462,
+        "duration_seconds": 65.11579966545105,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0139,
+    "step2_search": 0.2421,
+    "step3_outside_view": 0.1893,
+    "step5_inside_view": 0.2933,
+    "step6_aggregation": 0.2933,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.7386
+}

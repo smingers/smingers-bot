@@ -1,0 +1,265 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 1,
+      "queries": [
+        {
+          "query": "https://fred.stlouisfed.org/series/DFII30",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "DFII30 FRED 30-year TIPS",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "30-year TIPS yield February 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Pull daily data for FRED series DFII30 from 2023-01-01 to present, and compute latest value, 30-day mean, and standard deviation. Also note any large one-day moves in the last month.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "DFII30 daily series FRED API",
+              "DFII30 large daily change",
+              "30-year TIPS yield history",
+              "DFII30 volatility recent month",
+              "DFII30"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "DFII30 daily series FRED API",
+                    "Google"
+                  ],
+                  [
+                    "DFII30 large daily change",
+                    "Google News"
+                  ],
+                  [
+                    "30-year TIPS yield history",
+                    "Google"
+                  ],
+                  [
+                    "DFII30 volatility recent month",
+                    "Google"
+                  ],
+                  [
+                    "DFII30",
+                    "FRED"
+                  ]
+                ],
+                "search_results_chars": 38543,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "DFII30",
+          "tool": "FRED",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "FRED",
+        "Google News",
+        "Agent",
+        "Google"
+      ],
+      "llm_cost": 0.2423,
+      "llm_cost_summarization": 0.1838,
+      "llm_cost_agentic": 0.0584,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "30 year TIPS yield trend",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "30 year TIPS yield Fed outlook",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide February 2026 analyst commentary on United States 30-year Treasury inflation-indexed yields and expectations through February 25 2026.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "What will be the value of \"Market Yield on U.S. Treasury Securities at 30-Year Constant Maturity, Quoted on an Investment Basis, Inflation-Indexed\" on 2026-02-25?",
+          "tool": "AskNews",
+          "deep_research_query": "Provide February 2026 analyst commentary on United States 30-year Treasury inflation-indexed yields and expectations through February 25 2026."
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "AskNews",
+        "Google"
+      ],
+      "llm_cost": 0.1911,
+      "llm_cost_summarization": 0.1838,
+      "llm_cost_agentic": 0.0072,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6405,
+        "token_output": 1594,
+        "cost": 0.043125,
+        "duration_seconds": 42.06688833236694,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16925,
+        "token_output": 2242,
+        "cost": 0.08440500000000001,
+        "duration_seconds": 62.33068609237671,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6405,
+        "token_output": 1595,
+        "cost": 0.04314,
+        "duration_seconds": 42.06694579124451,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16623,
+        "token_output": 2555,
+        "cost": 0.088194,
+        "duration_seconds": 62.33065438270569,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5664,
+        "token_output": 2107,
+        "cost": 0.03941,
+        "duration_seconds": 42.06698966026306,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15035,
+        "token_output": 2115,
+        "cost": 0.055921250000000006,
+        "duration_seconds": 62.33062386512756,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5664,
+        "token_output": 1763,
+        "cost": 0.025432,
+        "duration_seconds": 42.06702899932861,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15011,
+        "token_output": 1645,
+        "cost": 0.043182,
+        "duration_seconds": 62.330589294433594,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5664,
+        "token_output": 2901,
+        "cost": 0.034536,
+        "duration_seconds": 42.067060232162476,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14979,
+        "token_output": 1681,
+        "cost": 0.043406,
+        "duration_seconds": 62.330559730529785,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0134,
+    "step2_search": 0.2423,
+    "step3_outside_view": 0.1856,
+    "step5_inside_view": 0.3151,
+    "step6_aggregation": 0.3151,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.7564
+}
