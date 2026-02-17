@@ -1,0 +1,260 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 1,
+      "queries": [
+        {
+          "query": "https://finance.yahoo.com/quote/SO",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "SO ex dividend February 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Southern Company earnings February 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Retrieve SO daily closes for last 5 years to 2026-02-16 and calculate distribution of 9-day returns; give probability of positive return.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "SO historical daily close prices",
+              "Southern Company 5 year price data",
+              "9 day stock return definition",
+              "SO"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "SO historical daily close prices",
+                    "Google"
+                  ],
+                  [
+                    "Southern Company 5 year price data",
+                    "Google"
+                  ],
+                  [
+                    "9 day stock return definition",
+                    "Google"
+                  ],
+                  [
+                    "SO",
+                    "yFinance"
+                  ]
+                ],
+                "search_results_chars": 40755,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "10-year treasury constant maturity",
+          "tool": "FRED",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "Agent",
+        "FRED"
+      ],
+      "llm_cost": 0.1926,
+      "llm_cost_summarization": 0.1533,
+      "llm_cost_agentic": 0.0393,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "SO ex-dividend date Feb 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Southern Company analyst upgrades February 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Summarize February 2026 news on The Southern Company\u2014earnings, dividend actions, regulatory rulings, analyst commentary\u2014relevant to near-term share price in the U.S. utilities sector.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "Will SO's market close price on 2026-02-28 be higher than its market close price on 2026-02-17?",
+          "tool": "AskNews",
+          "deep_research_query": "Summarize February 2026 news on The Southern Company\u2014earnings, dividend actions, regulatory rulings, analyst commentary\u2014relevant to near-term share price in the U.S. utilities sector."
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "AskNews",
+        "Google"
+      ],
+      "llm_cost": 0.1596,
+      "llm_cost_summarization": 0.1533,
+      "llm_cost_agentic": 0.0064,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5976,
+        "token_output": 2306,
+        "cost": 0.052517999999999995,
+        "duration_seconds": 54.996121406555176,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16258,
+        "token_output": 2742,
+        "cost": 0.08990400000000001,
+        "duration_seconds": 60.87493920326233,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5976,
+        "token_output": 2050,
+        "cost": 0.048678,
+        "duration_seconds": 54.99624180793762,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15216,
+        "token_output": 1834,
+        "cost": 0.073158,
+        "duration_seconds": 60.87491703033447,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5344,
+        "token_output": 1950,
+        "cost": 0.036652,
+        "duration_seconds": 54.99628520011902,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14093,
+        "token_output": 2089,
+        "cost": 0.053908750000000005,
+        "duration_seconds": 60.8748893737793,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5344,
+        "token_output": 2323,
+        "cost": 0.029272,
+        "duration_seconds": 54.9963161945343,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13818,
+        "token_output": 1831,
+        "cost": 0.042284,
+        "duration_seconds": 60.87486505508423,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5344,
+        "token_output": 2376,
+        "cost": 0.029696,
+        "duration_seconds": 54.99634671211243,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13343,
+        "token_output": 1459,
+        "cost": 0.038358,
+        "duration_seconds": 60.87484169006348,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0142,
+    "step2_search": 0.1926,
+    "step3_outside_view": 0.1968,
+    "step5_inside_view": 0.2976,
+    "step6_aggregation": 0.2976,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.7012
+}
