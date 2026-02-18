@@ -1,0 +1,20 @@
+{
+  "confidence": "medium",
+  "prediction": [
+    0.23,
+    0.38,
+    0.39
+  ],
+  "search_queries": [
+    "SAVE Act Senate vote schedule February 2026 (Google News)",
+    "State of the Union address 2026 date (Google)",
+    "Senate SAVE Act filibuster cloture vote February 2026 (Google News)",
+    "What is the current status of the SAVE Act in the U.S. Senate as of mid-February 2026? Has Senate Majority Leader Thune scheduled a floor vote or cloture vote, and if so, when is it expected to occur? Also, is there a State of the Union address scheduled for late February 2026? (Agent)"
+  ],
+  "cost": 0.2796,
+  "divergence": {
+    "metric_name": "max_option_range",
+    "metric_value": 48.0,
+    "threshold": 25.0
+  }
+}

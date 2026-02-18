@@ -1,0 +1,8 @@
+Analysis:
+To judge whether Google search interest in “save act” is likely to move noticeably ( > 3 points) over the next eight days, we need to know 1) what “SAVE Act” most commonly refers to right now, 2) if any hearings, floor votes, court decisions, rule deadlines, or political campaigns connected to that act are scheduled between 18 Feb – 26 Feb 2026, and 3) whether the phrase is being used for more than one prominent topic (e.g., student-loan “SAVE” plan vs. a border-security “SAVE Act”) that could generate parallel bursts of attention.  Historic spikes in Google Trends almost always coincide with concrete news hooks such as a major legislative milestone, high-visibility press conference, or viral social-media push, so the outside view depends mainly on mapping the upcoming news calendar.  Therefore the most relevant background is: recent coverage of any SAVE Act bills, committee schedules, advocacy-group mobilizations, and prior search-interest spikes (to gauge baseline volatility).
+
+Search queries:
+1. save act bill congress 2026 (Google)  
+2. "SAVE Act" Feb 2026 hearing (Google News)  
+3. Identify what legislation or programs are currently labelled "SAVE Act" in the US, list any scheduled congressional actions, agency rule deadlines, or advocacy campaigns occurring 18–26 Feb 2026, and summarize prior high-interest news moments tied to those events. (Agent)  
+4. save act (Google Trends)

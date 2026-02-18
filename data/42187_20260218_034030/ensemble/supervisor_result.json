@@ -1,0 +1,20 @@
+{
+  "confidence": "medium",
+  "prediction": [
+    0.15,
+    0.6,
+    0.25
+  ],
+  "search_queries": [
+    "Nancy Guthrie case investigation update February 2026 (Google News)",
+    "Nancy Guthrie ransom note DNA IGG results (Google News)",
+    "What is the current Google Trends daily value for \"nancy guthrie breaking news\" for February 18, 2026, using the URL https://trends.google.com/trends/explore?geo=US&tz=0&q=nancy%20guthrie%20breaking%20news&date=2026-01-25%202026-02-24? Please report the specific daily values for the most recent available dates. (Agent)",
+    "Nancy Guthrie arrest suspect identified 2026 (Google News)"
+  ],
+  "cost": 0.3165,
+  "divergence": {
+    "metric_name": "max_option_range",
+    "metric_value": 45.0,
+    "threshold": 25.0
+  }
+}

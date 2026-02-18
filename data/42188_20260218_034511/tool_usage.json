@@ -1,0 +1,271 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 2,
+      "queries": [
+        {
+          "query": "https://trends.google.com/trends/explore?geo=US&tz=0&q=save%20act&date=2026-01-27%202026-02-26",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://trends.google.com/trends/explore?geo=US&tz=0&q=save%20act&date=2026-01-17%202026-02-16",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "save act bill congress 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "SAVE Act\" Feb 2026 hearing",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Identify what legislation or programs are currently labelled \"SAVE Act\" in the US, list any scheduled congressional actions, agency rule deadlines, or advocacy campaigns occurring 18\u201326 Feb 2026, and summarize prior high-interest news moments tied to those events.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "save act congress bills current",
+              "safeguard american voter eligibility act",
+              "save act february 2026 calendar",
+              "advocacy coalition save act campaign",
+              "student loan save plan 2026"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "save act congress bills current",
+                    "Google"
+                  ],
+                  [
+                    "safeguard american voter eligibility act",
+                    "Google"
+                  ],
+                  [
+                    "save act february 2026 calendar",
+                    "Google News"
+                  ],
+                  [
+                    "advocacy coalition save act campaign",
+                    "Google"
+                  ],
+                  [
+                    "student loan save plan 2026",
+                    "Google News"
+                  ]
+                ],
+                "search_results_chars": 73216,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "save act",
+          "tool": "Google Trends",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google News",
+        "Google",
+        "Google Trends"
+      ],
+      "llm_cost": 0.2079,
+      "llm_cost_summarization": 0.1461,
+      "llm_cost_agentic": 0.0618,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "save act legislation 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "SAVE Act\" Feb 2026 vote",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Are any U.S. congressional actions, state bill signings, or high-profile advocacy events expected between Feb 18 and Feb 26 2026 concerning the SAVE Act that could drive public search interest?",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 17
+        },
+        {
+          "query": "Will the interest in \u201csave act\u201d change between 2026-02-18 and 2026-02-26 according to Google Trends?",
+          "tool": "AskNews",
+          "deep_research_query": "Are any U.S. congressional actions, state bill signings, or high-profile advocacy events expected between Feb 18 and Feb 26 2026 concerning the SAVE Act that could drive public search interest?"
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "AskNews"
+      ],
+      "llm_cost": 0.1571,
+      "llm_cost_summarization": 0.1461,
+      "llm_cost_agentic": 0.011,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6515,
+        "token_output": 2085,
+        "cost": 0.05082,
+        "duration_seconds": 48.10577869415283,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14958,
+        "token_output": 2885,
+        "cost": 0.088149,
+        "duration_seconds": 66.2287244796753,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6515,
+        "token_output": 1949,
+        "cost": 0.048780000000000004,
+        "duration_seconds": 48.10583281517029,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13776,
+        "token_output": 2225,
+        "cost": 0.074703,
+        "duration_seconds": 66.22869443893433,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5880,
+        "token_output": 2082,
+        "cost": 0.039438,
+        "duration_seconds": 48.105875968933105,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13237,
+        "token_output": 2589,
+        "cost": 0.05941075,
+        "duration_seconds": 66.22866320610046,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5880,
+        "token_output": 1126,
+        "cost": 0.020768000000000002,
+        "duration_seconds": 48.10591506958008,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13067,
+        "token_output": 2741,
+        "cost": 0.048062,
+        "duration_seconds": 66.22863674163818,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5880,
+        "token_output": 2278,
+        "cost": 0.029984,
+        "duration_seconds": 48.10594820976257,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12631,
+        "token_output": 2411,
+        "cost": 0.04455,
+        "duration_seconds": 66.22855401039124,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0138,
+    "step2_search": 0.2079,
+    "step3_outside_view": 0.1898,
+    "step5_inside_view": 0.3149,
+    "step6_aggregation": 0.3149,
+    "step7_supervisor": 0.2796
+  },
+  "total_pipeline_cost": 1.006
+}

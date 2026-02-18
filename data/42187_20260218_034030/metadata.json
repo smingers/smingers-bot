@@ -1,0 +1,212 @@
+{
+  "question_id": 42187,
+  "timestamp": "20260218_034030",
+  "created_at": "2026-02-18T03:45:11.558559+00:00",
+  "config_hash": "eacf6b6405b2",
+  "config_snapshot": {
+    "mode": "live",
+    "models": {
+      "fast": {
+        "query_generator": "openrouter/anthropic/claude-3.5-haiku",
+        "article_summarizer": "openrouter/anthropic/claude-3.5-haiku",
+        "agentic_search": "openrouter/anthropic/claude-3.5-haiku"
+      },
+      "quality": {
+        "query_generator": "openrouter/openai/o3",
+        "article_summarizer": "openrouter/anthropic/claude-sonnet-4.5",
+        "agentic_search": "openrouter/openai/o3"
+      }
+    },
+    "ensemble": {
+      "fast": [
+        {
+          "name": "forecaster_1",
+          "model": "openrouter/anthropic/claude-3.5-haiku",
+          "weight": 1.0
+        },
+        {
+          "name": "forecaster_2",
+          "model": "openrouter/anthropic/claude-3.5-haiku",
+          "weight": 1.0
+        },
+        {
+          "name": "forecaster_3",
+          "model": "openrouter/anthropic/claude-3.5-haiku",
+          "weight": 1.0
+        },
+        {
+          "name": "forecaster_4",
+          "model": "openrouter/anthropic/claude-3.5-haiku",
+          "weight": 1.0
+        },
+        {
+          "name": "forecaster_5",
+          "model": "openrouter/anthropic/claude-3.5-haiku",
+          "weight": 1.0
+        }
+      ],
+      "quality": [
+        {
+          "name": "forecaster_1",
+          "model": "openrouter/anthropic/claude-sonnet-4.5",
+          "weight": 1.0
+        },
+        {
+          "name": "forecaster_2",
+          "model": "openrouter/anthropic/claude-sonnet-4.5",
+          "weight": 1.0
+        },
+        {
+          "name": "forecaster_3",
+          "model": "openrouter/openai/gpt-5.2",
+          "weight": 1.0
+        },
+        {
+          "name": "forecaster_4",
+          "model": "openrouter/openai/o3",
+          "weight": 1.0
+        },
+        {
+          "name": "forecaster_5",
+          "model": "openrouter/openai/o3",
+          "weight": 1.0
+        }
+      ],
+      "aggregation": "weighted_average"
+    },
+    "research": {
+      "google_enabled": true,
+      "google_max_results": 10,
+      "asknews_enabled": true,
+      "asknews_max_results": 10,
+      "asknews_hours_back": 72,
+      "agentic_search_enabled": true,
+      "agentic_search_max_steps": 7,
+      "google_trends_enabled": true,
+      "fred_enabled": true,
+      "yfinance_enabled": true,
+      "question_url_scraping_enabled": true,
+      "question_url_max_scrape": 5,
+      "scraping_enabled": true,
+      "max_articles_to_scrape": 10,
+      "max_content_length": 15000,
+      "sources": [
+        {
+          "type": "llm_knowledge",
+          "enabled": true
+        },
+        {
+          "type": "asknews",
+          "enabled": true,
+          "cache_mode": "no_cache"
+        },
+        {
+          "type": "asknews_wiki",
+          "enabled": true,
+          "max_results": 5
+        },
+        {
+          "type": "article_scraping",
+          "enabled": true,
+          "max_articles": 5,
+          "max_content_length": 5000
+        }
+      ]
+    },
+    "submission": {
+      "store_reasoning": true,
+      "tournament_id": null
+    },
+    "storage": {
+      "base_dir": "./data",
+      "database_path": "./data/forecasts.db",
+      "snapshot_configs": true
+    },
+    "logging": {
+      "level": "INFO",
+      "log_llm_calls": true,
+      "track_costs": true
+    },
+    "llm": {
+      "timeout_seconds": 240,
+      "max_output_tokens": 5000,
+      "temperature": {
+        "query_generation": 0.3,
+        "article_summarization": 0.1,
+        "agentic_search": 0.3,
+        "forecasting": 0.5
+      }
+    },
+    "supervisor": {
+      "enabled": true,
+      "model": {
+        "fast": "openrouter/anthropic/claude-3.5-haiku",
+        "quality": "openrouter/anthropic/claude-opus-4.6"
+      },
+      "divergence_threshold": {
+        "binary": 15.0,
+        "numeric": 0.045,
+        "multiple_choice": 25.0
+      },
+      "max_search_queries": 4,
+      "temperature": 0.3
+    },
+    "active_models": {
+      "query_generator": "openrouter/openai/o3",
+      "article_summarizer": "openrouter/anthropic/claude-sonnet-4.5",
+      "agentic_search": "openrouter/openai/o3"
+    },
+    "active_agents": [
+      {
+        "name": "forecaster_1",
+        "model": "openrouter/anthropic/claude-sonnet-4.5",
+        "weight": 1.0
+      },
+      {
+        "name": "forecaster_2",
+        "model": "openrouter/anthropic/claude-sonnet-4.5",
+        "weight": 1.0
+      },
+      {
+        "name": "forecaster_3",
+        "model": "openrouter/openai/gpt-5.2",
+        "weight": 1.0
+      },
+      {
+        "name": "forecaster_4",
+        "model": "openrouter/openai/o3",
+        "weight": 1.0
+      },
+      {
+        "name": "forecaster_5",
+        "model": "openrouter/openai/o3",
+        "weight": 1.0
+      }
+    ],
+    "should_submit": true
+  },
+  "costs": {
+    "total_calls": 40,
+    "successful_calls": 40,
+    "failed_calls": 0,
+    "total_input_tokens": 197801,
+    "total_output_tokens": 41262,
+    "total_cost": 1.05774175
+  },
+  "timing": {
+    "start": "2026-02-18T03:40:30.101249+00:00",
+    "end": "2026-02-18T03:45:11.558511+00:00",
+    "duration_seconds": 281.457262
+  },
+  "errors": [],
+  "analysis": {
+    "id": 42187,
+    "title": "Will the interest in \u201cnancy guthrie breaking news\u201d change between 2026-02-18 and 2026-02-24 according to Google Trends?",
+    "type": "multiple_choice",
+    "status": "open",
+    "scheduled_close": "2026-02-18T04:02:12Z",
+    "scheduled_resolve": "2026-02-24T06:19:36Z",
+    "community_prediction": null,
+    "num_forecasters": 91
+  }
+}

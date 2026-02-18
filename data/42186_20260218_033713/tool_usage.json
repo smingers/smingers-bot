@@ -1,0 +1,265 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 1,
+      "queries": [
+        {
+          "query": "https://fred.stlouisfed.org/series/BAMLC4A0C710YEY",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "ICE BofA 7-10 year corporate yield history",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "corporate bond yields Fed February 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide latest daily values and one-month history for FRED series BAMLC4A0C710YEY and summarize any notable movements since 2026-01-15; include any Fed policy or credit-spread news linked to those moves.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "BAMLC4A0C710YEY",
+              "ICE BofA corporate yield February 2026",
+              "Fed FOMC statement January 2026",
+              "Corporate bond spread news February 2026",
+              "Investment grade yield spike January 2026"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "BAMLC4A0C710YEY",
+                    "FRED"
+                  ],
+                  [
+                    "ICE BofA corporate yield February 2026",
+                    "Google"
+                  ],
+                  [
+                    "Fed FOMC statement January 2026",
+                    "Google"
+                  ],
+                  [
+                    "Corporate bond spread news February 2026",
+                    "Google News"
+                  ],
+                  [
+                    "Investment grade yield spike January 2026",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 81683,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "BAMLC4A0C710YEY",
+          "tool": "FRED",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google News",
+        "Google",
+        "FRED"
+      ],
+      "llm_cost": 0.2746,
+      "llm_cost_summarization": 0.2051,
+      "llm_cost_agentic": 0.0695,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "US corporate bond yields February 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "investment grade spreads February 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide latest commentary (past week) on US investment-grade corporate bond yields and spread outlook through late February 2026.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "What will be the value of \"ICE BofA 7-10 Year US Corporate Index Effective Yield\" on 2026-02-26?",
+          "tool": "AskNews",
+          "deep_research_query": "Provide latest commentary (past week) on US investment-grade corporate bond yields and spread outlook through late February 2026."
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "AskNews"
+      ],
+      "llm_cost": 0.1964,
+      "llm_cost_summarization": 0.1867,
+      "llm_cost_agentic": 0.0097,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8194,
+        "token_output": 1861,
+        "cost": 0.052497,
+        "duration_seconds": 46.812214851379395,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17201,
+        "token_output": 2662,
+        "cost": 0.091533,
+        "duration_seconds": 60.74036455154419,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8194,
+        "token_output": 1924,
+        "cost": 0.053442,
+        "duration_seconds": 46.81234097480774,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16664,
+        "token_output": 2671,
+        "cost": 0.09005700000000001,
+        "duration_seconds": 60.740317583084106,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7297,
+        "token_output": 2151,
+        "cost": 0.04288375,
+        "duration_seconds": 46.812384366989136,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15169,
+        "token_output": 2201,
+        "cost": 0.05735975,
+        "duration_seconds": 60.74026560783386,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7297,
+        "token_output": 2079,
+        "cost": 0.031226,
+        "duration_seconds": 46.812415599823,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15033,
+        "token_output": 1478,
+        "cost": 0.04189,
+        "duration_seconds": 60.74022650718689,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7297,
+        "token_output": 2067,
+        "cost": 0.031129999999999998,
+        "duration_seconds": 46.81250977516174,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14593,
+        "token_output": 2243,
+        "cost": 0.047130000000000005,
+        "duration_seconds": 60.74018573760986,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0164,
+    "step2_search": 0.2746,
+    "step3_outside_view": 0.2112,
+    "step5_inside_view": 0.328,
+    "step6_aggregation": 0.328,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.8301
+}
