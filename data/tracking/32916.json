@@ -129,7 +129,13 @@
           "Other": -0.01580981595092025
         },
         "max_difference_option": "Green Party",
-        "max_difference_value": -0.1272617586912066
+        "max_difference_value": -0.1272617586912066,
+        "community_predictions": {
+          "Labour Party": 0.31772392638036806,
+          "Reform UK": 0.3258711656441718,
+          "Green Party": 0.31059509202453994,
+          "Other": 0.04580981595092025
+        }
       }
     },
     {
@@ -274,7 +280,7 @@
     },
     {
       "question_id": 41904,
-      "question_title": "Will the Tisza Party win more parliamentary seats than Fidesz\u2013KDNP in Hungary\u2019s 2026 parliamentary election?",
+      "question_title": "Will the Tisza Party win more parliamentary seats than Fidesz–KDNP in Hungary’s 2026 parliamentary election?",
       "question_type": "binary",
       "question_url": "https://www.metaculus.com/questions/41904/",
       "forecast_timestamp": "2026-02-01T15:16:52.424920+00:00",
@@ -285,7 +291,7 @@
       "comparison": {
         "type": "binary",
         "my_probability": 0.348,
-        "community_probability": 0.46,
+        "community_probability": 0.15,
         "difference": -0.11200000000000004
       }
     },
@@ -302,7 +308,7 @@
       "comparison": {
         "type": "binary",
         "my_probability": 0.126,
-        "community_probability": 0.215,
+        "community_probability": 0.12,
         "difference": -0.089
       }
     },
@@ -319,7 +325,7 @@
       "comparison": {
         "type": "binary",
         "my_probability": 0.20600000000000002,
-        "community_probability": 0.4,
+        "community_probability": 0.08,
         "difference": -0.194
       }
     },
@@ -336,7 +342,7 @@
       "comparison": {
         "type": "binary",
         "my_probability": 0.04,
-        "community_probability": 0.12,
+        "community_probability": 0.35,
         "difference": -0.07999999999999999
       }
     },
@@ -375,10 +381,11 @@
       "resolved": false,
       "resolution": null,
       "comparison": {
-        "type": "binary",
+        "type": "numeric",
         "my_probability": 0.434,
         "community_probability": 0.4,
-        "difference": 0.033999999999999975
+        "difference": 0.033999999999999975,
+        "community_median": 4.365
       }
     },
     {
@@ -394,13 +401,13 @@
       "comparison": {
         "type": "binary",
         "my_probability": 0.526,
-        "community_probability": 0.61,
+        "community_probability": 0.25,
         "difference": -0.08399999999999996
       }
     },
     {
       "question_id": 41896,
-      "question_title": "What is Egypt\u2019s annual inflation rate (year-over-year percent change) for the Urban Consumer Price Index (Urban CPI) for March 2026?",
+      "question_title": "What is Egypt’s annual inflation rate (year-over-year percent change) for the Urban Consumer Price Index (Urban CPI) for March 2026?",
       "question_type": "numeric",
       "question_url": "https://www.metaculus.com/questions/41896/",
       "forecast_timestamp": "2026-01-30T02:07:48.876939+00:00",
@@ -432,7 +439,10 @@
       "num_forecasters": 104,
       "resolved": false,
       "resolution": null,
-      "comparison": null
+      "comparison": {
+        "community_probability": 0.42,
+        "type": "binary"
+      }
     },
     {
       "question_id": 41894,
@@ -444,7 +454,10 @@
       "num_forecasters": 105,
       "resolved": false,
       "resolution": null,
-      "comparison": null
+      "comparison": {
+        "community_probability": 0.18,
+        "type": "binary"
+      }
     },
     {
       "question_id": 41893,
@@ -457,7 +470,7 @@
       "resolved": false,
       "resolution": null,
       "comparison": {
-        "type": "multiple_choice",
+        "type": "numeric",
         "my_probabilities": {
           "Nepali Congress": 0.38346433656198786,
           "Communist Party of Nepal (Unified Marxist-Leninist)": 0.290941359683846,
@@ -489,7 +502,8 @@
           "Other": -0.008001361892797636
         },
         "max_difference_option": "Rastriya Swatantra Party",
-        "max_difference_value": 0.02547570747919982
+        "max_difference_value": 0.02547570747919982,
+        "community_median": 69900.0
       }
     },
     {
@@ -505,7 +519,7 @@
       "comparison": {
         "type": "binary",
         "my_probability": 0.696,
-        "community_probability": 0.7375,
+        "community_probability": 0.58,
         "difference": -0.04150000000000009
       },
       "status": "resolved",
@@ -532,7 +546,7 @@
       "comparison": {
         "type": "binary",
         "my_probability": 0.01,
-        "community_probability": 0.01,
+        "community_probability": 0.18,
         "difference": 0.0
       }
     },
@@ -549,7 +563,7 @@
       "comparison": {
         "type": "binary",
         "my_probability": 0.016,
-        "community_probability": 0.05,
+        "community_probability": 0.5,
         "difference": -0.034
       }
     },
@@ -566,7 +580,7 @@
       "comparison": {
         "type": "binary",
         "my_probability": 0.04,
-        "community_probability": 0.08,
+        "community_probability": 0.12,
         "difference": -0.04
       }
     },
@@ -583,7 +597,7 @@
       "comparison": {
         "type": "binary",
         "my_probability": 0.114,
-        "community_probability": 0.15,
+        "community_probability": 0.45,
         "difference": -0.03599999999999999
       }
     },
@@ -624,7 +638,7 @@
       "comparison": {
         "type": "binary",
         "my_probability": 0.01,
-        "community_probability": 0.01,
+        "community_probability": 0.82,
         "difference": 0.0
       }
     },
@@ -662,7 +676,10 @@
       "num_forecasters": 106,
       "resolved": false,
       "resolution": null,
-      "comparison": null
+      "comparison": {
+        "community_median": 2.0,
+        "type": "numeric"
+      }
     },
     {
       "question_id": 41840,
@@ -701,7 +718,7 @@
       "comparison": {
         "type": "binary",
         "my_probability": 0.012,
-        "community_probability": 0.04,
+        "community_probability": 0.15,
         "difference": -0.028
       },
       "score_data": {
@@ -808,7 +825,7 @@
       "comparison": {
         "type": "binary",
         "my_probability": 0.152,
-        "community_probability": 0.2,
+        "community_probability": 0.75,
         "difference": -0.048000000000000015
       }
     },
@@ -825,7 +842,7 @@
       "comparison": {
         "type": "binary",
         "my_probability": 0.01,
-        "community_probability": 0.02,
+        "community_probability": 0.1,
         "difference": -0.01
       }
     },
@@ -842,7 +859,7 @@
       "comparison": {
         "type": "binary",
         "my_probability": 0.546,
-        "community_probability": 0.15,
+        "community_probability": 0.83,
         "difference": 0.396
       }
     },
@@ -859,7 +876,7 @@
       "comparison": {
         "type": "binary",
         "my_probability": 0.402,
-        "community_probability": 0.6,
+        "community_probability": 0.45,
         "difference": -0.19799999999999995
       }
     },
@@ -876,7 +893,7 @@
       "comparison": {
         "type": "binary",
         "my_probability": 0.025,
-        "community_probability": 0.05,
+        "community_probability": 0.55,
         "difference": -0.025
       }
     },

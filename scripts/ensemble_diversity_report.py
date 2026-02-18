@@ -56,6 +56,10 @@ class ForecasterView:
     received_from: str | None = None  # Which forecaster's OV they received (e.g. "F4")
     outside_view_percentiles: dict | None = None  # Numeric only
     inside_view_percentiles: dict | None = None
+    outside_view_p20: float | None = None  # Numeric: P20 value
+    outside_view_p80: float | None = None  # Numeric: P80 value
+    inside_view_p20: float | None = None
+    inside_view_p80: float | None = None
     outside_view_probs: list[float] | None = None  # MC only
     inside_view_probs: list[float] | None = None
     shift: float | None = None  # inside view - received outside view (the actual anchoring signal)
@@ -75,6 +79,14 @@ class ForecastAnalysis:
     final_prediction: float | None = None
     forecasters: list[ForecasterView] = field(default_factory=list)
     options: list[str] = field(default_factory=list)  # MC option labels
+
+    # From tracking data
+    community_prediction: float | dict | None = None  # Binary: prob, Numeric: median, MC: dict
+    community_p25: float | None = None  # Numeric only
+    community_p75: float | None = None  # Numeric only
+    resolved: bool = False
+    resolution: str | float | None = None  # "Yes"/"No", numeric value, or option name
+    score_data: dict | None = None  # 7-field score dict
 
     # Diversity metrics (computed)
     outside_view_range: float | None = None
@@ -254,6 +266,62 @@ def load_json(path: Path) -> dict | None:
         return None
 
 
+def load_tracking_data(tracking_dir: Path) -> dict[int, dict]:
+    """Load all tracking JSON files and build a question_id -> tracking entry lookup.
+
+    When multiple files contain the same question_id, the entry with the more
+    recent snapshot_timestamp wins.
+    """
+    lookup: dict[int, dict] = {}
+
+    if not tracking_dir.is_dir():
+        return lookup
+
+    for path in tracking_dir.glob("*.json"):
+        data = load_json(path)
+        if not data or "forecasts" not in data:
+            continue
+        for entry in data["forecasts"]:
+            qid = entry.get("question_id")
+            if qid is None:
+                continue
+            # Keep the entry with the newer snapshot
+            existing = lookup.get(qid)
+            if existing is None:
+                lookup[qid] = entry
+            else:
+                new_ts = entry.get("snapshot_timestamp", "")
+                old_ts = existing.get("snapshot_timestamp", "")
+                if new_ts > old_ts:
+                    lookup[qid] = entry
+
+    return lookup
+
+
+def enrich_with_tracking(analyses: list[ForecastAnalysis], tracking: dict[int, dict]):
+    """Populate community prediction and resolution fields from tracking data."""
+    for a in analyses:
+        entry = tracking.get(a.question_id)
+        if entry is None:
+            continue
+
+        comp = entry.get("comparison") or {}
+        ctype = comp.get("type", "")
+
+        if ctype == "binary":
+            a.community_prediction = comp.get("community_probability")
+        elif ctype == "numeric":
+            a.community_prediction = comp.get("community_median")
+            a.community_p25 = comp.get("community_lower_quartile")
+            a.community_p75 = comp.get("community_upper_quartile")
+        elif ctype == "multiple_choice":
+            a.community_prediction = comp.get("community_probabilities")
+
+        a.resolved = bool(entry.get("resolved"))
+        a.resolution = entry.get("resolution")
+        a.score_data = entry.get("score_data")
+
+
 def read_text(path: Path) -> str | None:
     if not path.exists():
         return None
@@ -413,6 +481,8 @@ def analyze_forecast(forecast_dir: Path) -> ForecastAnalysis | None:
                     p60 = p.get(60, p.get("60"))
                     if p40 is not None and p60 is not None:
                         fv.outside_view = (p40 + p60) / 2
+                fv.outside_view_p20 = p.get(20, p.get("20"))
+                fv.outside_view_p80 = p.get(80, p.get("80"))
 
             if fv.inside_view_percentiles:
                 p = fv.inside_view_percentiles
@@ -422,6 +492,8 @@ def analyze_forecast(forecast_dir: Path) -> ForecastAnalysis | None:
                     p60 = p.get(60, p.get("60"))
                     if p40 is not None and p60 is not None:
                         fv.inside_view = (p40 + p60) / 2
+                fv.inside_view_p20 = p.get(20, p.get("20"))
+                fv.inside_view_p80 = p.get(80, p.get("80"))
 
         elif question_type == "multiple_choice":
             fv.outside_view_probs = extract_mc_probabilities_from_text(ov_text or "")
@@ -746,6 +818,190 @@ def _diversity_indicator(std: float | None, qtype: str) -> str:
         return ""
 
 
+def _build_resolved_section(resolved: list[ForecastAnalysis]) -> str:
+    """Build the Resolved Questions section with scores."""
+
+    # Compute summary stats
+    peer_scores = [
+        a.score_data["peer_score"] for a in resolved if a.score_data.get("peer_score") is not None
+    ]
+    baseline_scores = [
+        a.score_data["baseline_score"]
+        for a in resolved
+        if a.score_data.get("baseline_score") is not None
+    ]
+    coverages = [
+        a.score_data["coverage"] for a in resolved if a.score_data.get("coverage") is not None
+    ]
+    beat_community = sum(1 for s in peer_scores if s > 0)
+
+    avg_peer = statistics.mean(peer_scores) if peer_scores else None
+    avg_baseline = statistics.mean(baseline_scores) if baseline_scores else None
+    avg_coverage = statistics.mean(coverages) if coverages else None
+
+    summary = (
+        f"""
+    <div class="type-summary">
+        <div class="stat-card">
+            <div class="stat-value">{len(resolved)}</div>
+            <div class="stat-label">Resolved</div>
+        </div>
+        <div class="stat-card {"score-positive" if avg_peer and avg_peer > 0 else "score-negative" if avg_peer and avg_peer < 0 else ""}">
+            <div class="stat-value">{avg_peer:+.1f}</div>
+            <div class="stat-label">Avg Peer Score<br><span class="stat-sublabel">positive = beat community</span></div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">{avg_baseline:.1f}</div>
+            <div class="stat-label">Avg Baseline Score</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">{avg_coverage:.0%}</div>
+            <div class="stat-label">Avg Coverage</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">{beat_community}/{len(peer_scores)}</div>
+            <div class="stat-label">Beat Community<br><span class="stat-sublabel">peer score &gt; 0</span></div>
+        </div>
+    </div>
+    """
+        if avg_peer is not None
+        else ""
+    )
+
+    # Build per-question cards sorted by peer_score (best first)
+    sorted_resolved = sorted(
+        resolved,
+        key=lambda a: a.score_data.get("peer_score", 0) if a.score_data else 0,
+        reverse=True,
+    )
+
+    cards = []
+    for a in sorted_resolved:
+        sd = a.score_data or {}
+        peer = sd.get("peer_score")
+        score_class = (
+            "score-positive" if peer and peer > 0 else "score-negative" if peer and peer < 0 else ""
+        )
+
+        # Format resolution value
+        if a.resolution is not None:
+            if a.question_type == "binary":
+                res_display = str(a.resolution)
+            elif a.question_type == "numeric":
+                res_display = (
+                    _fmt(a.resolution, "num")
+                    if isinstance(a.resolution, (int, float))
+                    else str(a.resolution)
+                )
+            else:
+                res_display = str(a.resolution)
+        else:
+            res_display = "—"
+
+        # Format prediction comparison
+        if a.question_type == "binary":
+            my_display = _fmt(a.final_prediction, "pct") if a.final_prediction is not None else "—"
+            comm_display = (
+                _fmt(a.community_prediction, "pct") if a.community_prediction is not None else "—"
+            )
+        elif a.question_type in ("numeric", "discrete", "date"):
+            fmt = "date" if a.question_type == "date" else "num"
+            my_display = _fmt(a.final_prediction, fmt) if a.final_prediction is not None else "—"
+            comm_display = (
+                _fmt(a.community_prediction, fmt) if a.community_prediction is not None else "—"
+            )
+        elif (
+            a.question_type == "multiple_choice"
+            and isinstance(a.final_prediction, list)
+            and a.options
+        ):
+            parts = [
+                f"{a.options[i]}: {p:.0%}"
+                for i, p in enumerate(a.final_prediction)
+                if i < len(a.options)
+            ]
+            my_display = " | ".join(parts)
+            if isinstance(a.community_prediction, dict):
+                comm_parts = [
+                    f"{opt}: {a.community_prediction.get(opt, 0):.0%}" for opt in a.options
+                ]
+                comm_display = " | ".join(comm_parts)
+            else:
+                comm_display = "—"
+        else:
+            my_display = str(a.final_prediction) if a.final_prediction is not None else "—"
+            comm_display = "—"
+
+        # Score rows
+        score_rows = ""
+        score_fields = [
+            ("Peer Score", "peer_score", True),
+            ("Baseline Score", "baseline_score", False),
+            ("Spot Peer Score", "spot_peer_score", True),
+            ("Spot Baseline Score", "spot_baseline_score", False),
+            ("Coverage", "coverage", False),
+            ("Weighted Coverage", "weighted_coverage", False),
+            ("Relative Legacy Score", "relative_legacy_score", True),
+        ]
+        for label, key, is_peer in score_fields:
+            val = sd.get(key)
+            if val is None:
+                continue
+            if key in ("coverage", "weighted_coverage"):
+                val_display = f"{val:.1%}"
+            else:
+                val_display = f"{val:+.2f}" if is_peer else f"{val:.2f}"
+            val_class = ""
+            if is_peer:
+                val_class = "score-positive" if val > 0 else "score-negative"
+            score_rows += f"""
+                <tr>
+                    <td class="score-label">{label}</td>
+                    <td class="score-value {val_class}">{val_display}</td>
+                </tr>"""
+
+        cards.append(f"""
+        <div class="resolved-card {score_class}">
+            <div class="resolved-header">
+                <div class="forecast-title">
+                    <a href="https://www.metaculus.com/questions/{a.question_id}" target="_blank">Q{a.question_id}</a>
+                    — {a.question_title}
+                </div>
+                <div class="forecast-meta">
+                    <span class="badge mode-{a.question_type}">{a.question_type.replace("_", " ")}</span>
+                </div>
+            </div>
+            <div class="resolved-comparison">
+                <div class="comparison-item">
+                    <span class="comparison-label">Resolution</span>
+                    <span class="comparison-value resolution-value">{res_display}</span>
+                </div>
+                <div class="comparison-item">
+                    <span class="comparison-label">My Forecast</span>
+                    <span class="comparison-value my-value">{my_display}</span>
+                </div>
+                <div class="comparison-item">
+                    <span class="comparison-label">Community</span>
+                    <span class="comparison-value community-value">{comm_display}</span>
+                </div>
+            </div>
+            <table class="score-table">
+                <tbody>{score_rows}</tbody>
+            </table>
+        </div>
+        """)
+
+    return f"""
+    <section class="type-section" id="resolved">
+        <h2>Resolved Questions</h2>
+        {summary}
+        <div class="forecast-list">
+            {"".join(cards)}
+        </div>
+    </section>
+    """
+
+
 def _build_html(
     analyses: list[ForecastAnalysis],
     by_type: dict[str, list[ForecastAnalysis]],
@@ -834,6 +1090,7 @@ def _build_html(
 
             # Build forecaster cells
             is_mc = qtype == "multiple_choice"
+            is_numeric_type = qtype in ("numeric", "discrete", "date")
             fc_rows = []
             for f in a.forecasters:
                 # For MC, show compact probability distribution; for others, single value
@@ -845,6 +1102,25 @@ def _build_html(
                     iv_display = " / ".join(f"{p:.0%}" for p in f.inside_view_probs)
                 else:
                     iv_display = _fmt(f.inside_view, fmt) if f.inside_view is not None else "—"
+
+                # For numeric types, format P20 and P80
+                ov_p20_display = ""
+                ov_p80_display = ""
+                iv_p20_display = ""
+                iv_p80_display = ""
+                if is_numeric_type:
+                    ov_p20_display = (
+                        _fmt(f.outside_view_p20, fmt) if f.outside_view_p20 is not None else "—"
+                    )
+                    ov_p80_display = (
+                        _fmt(f.outside_view_p80, fmt) if f.outside_view_p80 is not None else "—"
+                    )
+                    iv_p20_display = (
+                        _fmt(f.inside_view_p20, fmt) if f.inside_view_p20 is not None else "—"
+                    )
+                    iv_p80_display = (
+                        _fmt(f.inside_view_p80, fmt) if f.inside_view_p80 is not None else "—"
+                    )
 
                 # For binary, show absolute shift in pp; for others, show relative %
                 if is_pct:
@@ -871,7 +1147,22 @@ def _build_html(
 
                 model_short = f.model.split("/")[-1] if "/" in f.model else f.model
 
-                fc_rows.append(f"""
+                if is_numeric_type:
+                    fc_rows.append(f"""
+                    <tr>
+                        <td class="agent">{f.agent_id.replace("forecaster_", "F")}</td>
+                        <td class="model">{model_short}</td>
+                        <td class="val ov p20">{ov_p20_display}</td>
+                        <td class="val ov">{ov_display}</td>
+                        <td class="val ov p80">{ov_p80_display}</td>
+                        <td class="val iv p20">{iv_p20_display}</td>
+                        <td class="val iv">{iv_display}</td>
+                        <td class="val iv p80">{iv_p80_display}</td>
+                        <td class="val shift" style="{shift_style}">{shift_display}</td>
+                    </tr>
+                    """)
+                else:
+                    fc_rows.append(f"""
                     <tr>
                         <td class="agent">{f.agent_id.replace("forecaster_", "F")}</td>
                         <td class="model">{model_short}</td>
@@ -879,7 +1170,7 @@ def _build_html(
                         <td class="val iv">{iv_display}</td>
                         <td class="val shift" style="{shift_style}">{shift_display}</td>
                     </tr>
-                """)
+                    """)
 
             # Summary row
             ov_vals = [f.outside_view for f in a.forecasters if f.outside_view is not None]
@@ -918,19 +1209,8 @@ def _build_html(
                 convergence_label = "—"
 
             # Format final prediction display
-            if (
-                a.final_prediction is not None
-                and isinstance(a.final_prediction, list)
-                and a.options
-            ):
-                # MC: show option labels with probabilities
-                parts = []
-                for i, prob in enumerate(a.final_prediction):
-                    label = a.options[i] if i < len(a.options) else f"Opt {i + 1}"
-                    parts.append(f"{label}: {prob:.0%}")
-                final_display = " &nbsp;|&nbsp; ".join(parts)
-            elif a.final_prediction is not None and isinstance(a.final_prediction, list):
-                final_display = ", ".join(f"{p:.0%}" for p in a.final_prediction)
+            if a.final_prediction is not None and isinstance(a.final_prediction, list):
+                final_display = " / ".join(f"{p:.0%}" for p in a.final_prediction)
             elif a.final_prediction is not None:
                 final_display = _fmt(a.final_prediction, fmt)
             else:
@@ -950,6 +1230,120 @@ def _build_html(
                 options_subtitle = (
                     f'<div class="mc-options-label">Options: {" / ".join(a.options)}</div>'
                 )
+
+            # Build community prediction row (if tracking data available)
+            community_row = ""
+            if a.community_prediction is not None:
+                if is_mc and isinstance(a.community_prediction, dict):
+                    # MC: show per-option community probabilities
+                    if a.options:
+                        comm_probs = [a.community_prediction.get(opt, 0) for opt in a.options]
+                    else:
+                        comm_probs = list(a.community_prediction.values())
+                    comm_display = " / ".join(f"{p:.0%}" for p in comm_probs)
+                    community_row = f"""
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">{comm_display}</td>
+                            <td></td>
+                        </tr>"""
+                elif is_numeric_type:
+                    comm_median = _fmt(a.community_prediction, fmt)
+                    comm_p25 = _fmt(a.community_p25, fmt) if a.community_p25 is not None else "—"
+                    comm_p75 = _fmt(a.community_p75, fmt) if a.community_p75 is not None else "—"
+                    community_row = f"""
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community p20"></td>
+                            <td class="val community"></td>
+                            <td class="val community p80"></td>
+                            <td class="val community p20">{comm_p25}</td>
+                            <td class="val community">{comm_median}</td>
+                            <td class="val community p80">{comm_p75}</td>
+                            <td></td>
+                        </tr>"""
+                else:
+                    # Binary / default
+                    comm_display = _fmt(a.community_prediction, fmt)
+                    community_row = f"""
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">{comm_display}</td>
+                            <td></td>
+                        </tr>"""
+
+            # Build resolution row (if resolved)
+            resolution_row = ""
+            if a.resolved and a.resolution is not None:
+                if is_mc and a.options:
+                    # MC: show checkmark for winning option, x for others
+                    marks = []
+                    for opt in a.options:
+                        if opt == a.resolution:
+                            marks.append("\u2713")
+                        else:
+                            marks.append("\u2717")
+                    res_display = " / ".join(marks)
+                elif a.question_type == "binary":
+                    res_display = str(a.resolution)
+                elif is_numeric_type:
+                    res_display = (
+                        _fmt(a.resolution, fmt)
+                        if isinstance(a.resolution, (int, float))
+                        else str(a.resolution)
+                    )
+                else:
+                    res_display = str(a.resolution)
+
+                if is_numeric_type:
+                    resolution_row = f"""
+                        <tr class="resolution-row">
+                            <td colspan="2" class="summary-label resolution-label">Resolution</td>
+                            <td class="val resolution p20"></td>
+                            <td class="val resolution"></td>
+                            <td class="val resolution p80"></td>
+                            <td class="val resolution p20"></td>
+                            <td class="val resolution">{res_display}</td>
+                            <td class="val resolution p80"></td>
+                            <td></td>
+                        </tr>"""
+                else:
+                    resolution_row = f"""
+                        <tr class="resolution-row">
+                            <td colspan="2" class="summary-label resolution-label">Resolution</td>
+                            <td class="val resolution"></td>
+                            <td class="val resolution">{res_display}</td>
+                            <td></td>
+                        </tr>"""
+
+            # Build peer score row (if score data available)
+            peer_score_row = ""
+            if a.score_data and a.score_data.get("peer_score") is not None:
+                peer_val = a.score_data["peer_score"]
+                peer_display = f"{peer_val:+.2f}"
+                peer_class = "score-positive" if peer_val > 0 else "score-negative"
+                if is_numeric_type:
+                    peer_score_row = f"""
+                        <tr class="peer-score-row">
+                            <td colspan="2" class="summary-label peer-score-label">Peer Score</td>
+                            <td class="val p20"></td>
+                            <td class="val"></td>
+                            <td class="val p80"></td>
+                            <td class="val p20"></td>
+                            <td class="val {peer_class}">{peer_display}</td>
+                            <td class="val p80"></td>
+                            <td></td>
+                        </tr>"""
+                else:
+                    peer_score_row = f"""
+                        <tr class="peer-score-row">
+                            <td colspan="2" class="summary-label peer-score-label">Peer Score</td>
+                            <td class="val"></td>
+                            <td class="val {peer_class}">{peer_display}</td>
+                            <td></td>
+                        </tr>"""
 
             if is_mc:
                 # Compute per-option averages across forecasters
@@ -984,8 +1378,78 @@ def _build_html(
                         </tr>
                         <tr class="final-row">
                             <td colspan="2" class="summary-label">Final</td>
-                            <td colspan="3" class="val final">{final_display}</td>
+                            <td class="val ov"></td>
+                            <td class="val iv final">{final_display}</td>
+                            <td></td>
                         </tr>
+                        {community_row}
+                        {resolution_row}
+                        {peer_score_row}
+                """
+            elif is_numeric_type:
+                # Numeric/discrete/date: wider table with P20/P80 columns
+                # Compute average P20 and P80 across forecasters
+                ov_p20_vals = [
+                    f.outside_view_p20 for f in a.forecasters if f.outside_view_p20 is not None
+                ]
+                ov_p80_vals = [
+                    f.outside_view_p80 for f in a.forecasters if f.outside_view_p80 is not None
+                ]
+                iv_p20_vals = [
+                    f.inside_view_p20 for f in a.forecasters if f.inside_view_p20 is not None
+                ]
+                iv_p80_vals = [
+                    f.inside_view_p80 for f in a.forecasters if f.inside_view_p80 is not None
+                ]
+                ov_p20_avg = _fmt(statistics.mean(ov_p20_vals), fmt) if ov_p20_vals else "—"
+                ov_p80_avg = _fmt(statistics.mean(ov_p80_vals), fmt) if ov_p80_vals else "—"
+                iv_p20_avg = _fmt(statistics.mean(iv_p20_vals), fmt) if iv_p20_vals else "—"
+                iv_p80_avg = _fmt(statistics.mean(iv_p80_vals), fmt) if iv_p80_vals else "—"
+
+                tfoot_rows = f"""
+                        <tr>
+                            <td colspan="2" class="summary-label">Average</td>
+                            <td class="val ov p20">{ov_p20_avg}</td>
+                            <td class="val ov">{ov_avg_display}</td>
+                            <td class="val ov p80">{ov_p80_avg}</td>
+                            <td class="val iv p20">{iv_p20_avg}</td>
+                            <td class="val iv">{iv_avg_display}</td>
+                            <td class="val iv p80">{iv_p80_avg}</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="summary-label">Range</td>
+                            <td class="val ov p20"></td>
+                            <td class="val ov">{ov_range_display}</td>
+                            <td class="val ov p80"></td>
+                            <td class="val iv p20"></td>
+                            <td class="val iv">{iv_range_display}</td>
+                            <td class="val iv p80"></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="summary-label">Std Dev</td>
+                            <td class="val ov p20"></td>
+                            <td class="val ov">{ov_std_display}</td>
+                            <td class="val ov p80"></td>
+                            <td class="val iv p20"></td>
+                            <td class="val iv">{iv_std_display}</td>
+                            <td class="val iv p80"></td>
+                            <td></td>
+                        </tr>
+                        <tr class="final-row">
+                            <td colspan="2" class="summary-label">Final</td>
+                            <td class="val ov p20"></td>
+                            <td class="val ov"></td>
+                            <td class="val ov p80"></td>
+                            <td class="val iv p20"></td>
+                            <td class="val iv final">{final_display}</td>
+                            <td class="val iv p80"></td>
+                            <td></td>
+                        </tr>
+                        {community_row}
+                        {resolution_row}
+                        {peer_score_row}
                 """
             else:
                 tfoot_rows = f"""
@@ -1009,9 +1473,46 @@ def _build_html(
                         </tr>
                         <tr class="final-row">
                             <td colspan="2" class="summary-label">Final</td>
-                            <td colspan="3" class="val final">{final_display}</td>
+                            <td class="val ov"></td>
+                            <td class="val iv final">{final_display}</td>
+                            <td></td>
                         </tr>
+                        {community_row}
+                        {resolution_row}
+                        {peer_score_row}
                 """
+
+            # Build table header based on question type
+            if is_numeric_type:
+                thead_html = """
+                    <thead>
+                        <tr>
+                            <th rowspan="2">Agent</th>
+                            <th rowspan="2">Model</th>
+                            <th colspan="3" class="ov" style="text-align:center; border-bottom:1px solid var(--border);">Outside View</th>
+                            <th colspan="3" class="iv" style="text-align:center; border-bottom:1px solid var(--border);">Inside View</th>
+                            <th rowspan="2" class="shift">Shift</th>
+                        </tr>
+                        <tr>
+                            <th class="ov" style="font-size:0.65rem;">P20</th>
+                            <th class="ov" style="font-size:0.65rem;">Median</th>
+                            <th class="ov" style="font-size:0.65rem;">P80</th>
+                            <th class="iv" style="font-size:0.65rem;">P20</th>
+                            <th class="iv" style="font-size:0.65rem;">Median</th>
+                            <th class="iv" style="font-size:0.65rem;">P80</th>
+                        </tr>
+                    </thead>"""
+            else:
+                thead_html = """
+                    <thead>
+                        <tr>
+                            <th>Agent</th>
+                            <th>Model</th>
+                            <th class="ov">Outside View</th>
+                            <th class="iv">Inside View</th>
+                            <th class="shift">Shift</th>
+                        </tr>
+                    </thead>"""
 
             rows_html.append(f"""
             <div class="forecast-card">
@@ -1029,15 +1530,7 @@ def _build_html(
                 {options_subtitle}
                 {range_bar}
                 <table class="fc-table">
-                    <thead>
-                        <tr>
-                            <th>Agent</th>
-                            <th>Model</th>
-                            <th class="ov">Outside View</th>
-                            <th class="iv">Inside View</th>
-                            <th class="shift">Shift</th>
-                        </tr>
-                    </thead>
+                    {thead_html}
                     <tbody>
                         {"".join(fc_rows)}
                     </tbody>
@@ -1094,11 +1587,19 @@ def _build_html(
             else:
                 convergence_counts["stable"] += 1
 
+    # Build resolved questions section
+    resolved_analyses = [a for a in analyses if a.resolved and a.score_data]
+    resolved_section = ""
+    if resolved_analyses:
+        resolved_section = _build_resolved_section(resolved_analyses)
+
     nav_links = " | ".join(
         f'<a href="#type-{qt}">{qt.replace("_", " ").title()} ({len(by_type[qt])})</a>'
         for qt in ["binary", "numeric", "multiple_choice", "discrete", "date"]
         if qt in by_type
     )
+    if resolved_analyses:
+        nav_links += f' | <a href="#resolved">Resolved ({len(resolved_analyses)})</a>'
 
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -1306,8 +1807,9 @@ def _build_html(
     .fc-table .val {{ text-align: right; font-family: monospace; }}
     .fc-table .val.ov {{ color: var(--accent); }}
     .fc-table .val.iv {{ color: var(--green); }}
+    .fc-table .val.p20, .fc-table .val.p80 {{ opacity: 0.6; font-size: 0.8rem; }}
     .fc-table .val.shift {{ font-weight: 500; }}
-    .fc-table .val.final {{ color: #fff; font-weight: 700; text-align: center; font-size: 1rem; }}
+    .fc-table .val.final {{ color: #fff; font-weight: 700; text-align: right; font-size: 1rem; }}
     .fc-table tfoot td {{
         border-top: 1px solid var(--border);
         font-size: 0.8rem;
@@ -1377,6 +1879,88 @@ def _build_html(
         padding: 3px 6px;
         border-bottom: 1px solid rgba(48, 54, 61, 0.3);
     }}
+
+    /* Community prediction row */
+    .fc-table .val.community {{ color: var(--purple); }}
+    .fc-table .community-label {{ color: var(--purple); }}
+    .community-row td {{ border-top: 1px solid var(--border); }}
+
+    /* Resolution row */
+    .fc-table .val.resolution {{ color: #fff; font-weight: 600; }}
+    .fc-table .resolution-label {{ color: var(--text-dim); }}
+
+    /* Peer score row */
+    .fc-table .peer-score-label {{ color: var(--text-dim); }}
+    .fc-table .val.score-positive {{ color: var(--green); font-weight: 600; }}
+    .fc-table .val.score-negative {{ color: var(--red); font-weight: 600; }}
+
+    /* Resolved questions section */
+    .resolved-card {{
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 16px;
+        margin-bottom: 12px;
+    }}
+    .resolved-card.score-positive {{ border-left: 3px solid var(--green); }}
+    .resolved-card.score-negative {{ border-left: 3px solid var(--red); }}
+    .resolved-header {{
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 12px;
+        gap: 12px;
+        flex-wrap: wrap;
+    }}
+    .resolved-comparison {{
+        display: flex;
+        gap: 24px;
+        margin-bottom: 12px;
+        flex-wrap: wrap;
+    }}
+    .comparison-item {{
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }}
+    .comparison-label {{
+        font-size: 0.7rem;
+        color: var(--text-dim);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }}
+    .comparison-value {{
+        font-family: monospace;
+        font-size: 0.95rem;
+        font-weight: 600;
+    }}
+    .resolution-value {{ color: #fff; }}
+    .my-value {{ color: var(--accent); }}
+    .community-value {{ color: var(--purple); }}
+    .score-table {{
+        width: auto;
+        border-collapse: collapse;
+        font-size: 0.8rem;
+    }}
+    .score-table td {{
+        padding: 3px 12px 3px 0;
+    }}
+    .score-label {{
+        color: var(--text-dim);
+    }}
+    .score-value {{
+        font-family: monospace;
+        text-align: right;
+    }}
+    .score-value.score-positive {{ color: var(--green); }}
+    .score-value.score-negative {{ color: var(--red); }}
+    .stat-card.score-positive {{ border-color: var(--green); }}
+    .stat-card.score-negative {{ border-color: var(--red); }}
+    .badge.mode-binary {{ background: rgba(88, 166, 255, 0.15); color: var(--accent); }}
+    .badge.mode-numeric {{ background: rgba(63, 185, 80, 0.15); color: var(--green); }}
+    .badge.mode-multiple_choice {{ background: rgba(210, 153, 34, 0.15); color: var(--orange); }}
+    .badge.mode-discrete {{ background: rgba(188, 140, 255, 0.15); color: var(--purple); }}
+    .badge.mode-date {{ background: rgba(139, 148, 158, 0.15); color: var(--text-dim); }}
 </style>
 </head>
 <body>
@@ -1421,6 +2005,8 @@ def _build_html(
 </div>
 
 {"".join(sections)}
+
+{resolved_section}
 
 <script>
 // Collapse/expand forecast cards on click
@@ -1492,6 +2078,11 @@ def main():
         default="data/ensemble_diversity_report.html",
         help="Output HTML file path",
     )
+    parser.add_argument(
+        "--tracking-dir",
+        default="data/tracking",
+        help="Directory containing tracking JSON files (default: data/tracking)",
+    )
     args = parser.parse_args()
 
     logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
@@ -1529,6 +2120,14 @@ def main():
     if not analyses:
         print("No forecasts found with ensemble data.")
         return
+
+    # Enrich with community predictions, resolutions, and scores
+    tracking = load_tracking_data(Path(args.tracking_dir))
+    if tracking:
+        enrich_with_tracking(analyses, tracking)
+        matched = sum(1 for a in analyses if a.community_prediction is not None)
+        resolved = sum(1 for a in analyses if a.resolved)
+        print(f"Tracking data: {matched} matched, {resolved} resolved")
 
     generate_html(analyses, Path(args.output))
 

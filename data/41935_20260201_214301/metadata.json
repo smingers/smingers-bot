@@ -167,10 +167,6 @@
     "total_output_tokens": 35189,
     "total_cost": 0.79057875
   },
-  "timing": {
-    "error": "API returned 400: Client error '400 Bad Request' for url 'https://www.metaculus.com/api/questions/forecast/'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400"
-  },
-  "errors": [
-    "API returned 400: Client error '400 Bad Request' for url 'https://www.metaculus.com/api/questions/forecast/'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400"
-  ]
+  "timing": {},
+  "errors": []
 }
