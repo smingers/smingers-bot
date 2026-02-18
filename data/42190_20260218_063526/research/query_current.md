@@ -1,0 +1,7 @@
+Analysis:
+The probability that Metaculus users assign to Artemis II’s successful completion before 2027 will move mainly in response to fresh information about schedule certainty, technical readiness, and risk. Since the current community prediction sits exactly at 80 %, even moderately positive news (e.g., successful hardware tests, budget support, on-track schedule statements) could nudge it above 80 %, while any sign of new delays or technical trouble could push it lower. The most relevant material, therefore, is very recent coverage (January-February 2026) on Orion crew-module preparations, SLS core-stage or engine issues, life-support and heat-shield tests, NASA press briefings, and congressional or GAO reports. Locating articles or releases from the past few weeks that indicate whether Artemis II is trending on schedule—or conversely facing new hurdles—will provide the inside view needed.
+
+Search queries:
+1. Artemis II mission schedule Feb 2026 (Google)  
+2. Artemis II test results February 2026 (Google News)  
+3. Summarize any developments from January to mid-February 2026 concerning NASA's Artemis II mission readiness, testing milestones, schedule adjustments, or technical problems that could affect launch success before 2027. (AskNews)

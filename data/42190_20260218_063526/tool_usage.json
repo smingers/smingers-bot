@@ -1,0 +1,314 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 12,
+      "queries": [
+        {
+          "query": "https://www.nasa.gov/mission/artemis-ii/",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "https://www.nasa.gov/missions/artemis/nasas-first-flight-with-crew-important-step-on-long-term-return-to-the-moon-missions-to-mars/",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "https://www.rand.org/pubs/commentary/2025/10/nasas-artemis-ii-mission-is-crucial-as-doubts-build.html",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "https://www.nasa.gov/mission/artemis-iii/",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "https://www.nasa.gov/missions/artemis/artemis-iii/",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Artemis II launch February 2026 status",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Artemis II delay or issues February 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Metaculus community prediction history for \u201cWill NASA's Artemis II complete its mission successfully before 2027?\u201d February 2025-2026; include datapoints around 80 % threshold",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 3,
+            "queries_executed": [
+              "Metaculus 40864 prediction history",
+              "Metaculus API timeline endpoint",
+              "Artemis II Metaculus 80% 2026",
+              "Metaculus community prediction data download",
+              "Will NASA Artemis II 40864 chart",
+              "40864 prediction_timeseries Metaculus",
+              "Metaculus Artemis II forecast history",
+              "Artemis II Metaculus 80 percent February 2025",
+              "\u201cWill NASA's Artemis II complete its mission successfully before 2027\u201d forecast chart",
+              "site:metaculus.com 40864 timeseries"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "Metaculus 40864 prediction history",
+                    "Google"
+                  ],
+                  [
+                    "Metaculus API timeline endpoint",
+                    "Google"
+                  ],
+                  [
+                    "Artemis II Metaculus 80% 2026",
+                    "Google News"
+                  ],
+                  [
+                    "Metaculus community prediction data download",
+                    "Google"
+                  ],
+                  [
+                    "Will NASA Artemis II 40864 chart",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 56959,
+                "analysis_chars": 0
+              },
+              {
+                "step_number": 2,
+                "queries_executed": [
+                  [
+                    "40864 prediction_timeseries Metaculus",
+                    "Google"
+                  ],
+                  [
+                    "Metaculus Artemis II forecast history",
+                    "Google"
+                  ],
+                  [
+                    "Artemis II Metaculus 80 percent February 2025",
+                    "Google"
+                  ],
+                  [
+                    "\u201cWill NASA's Artemis II complete its mission successfully before 2027\u201d forecast chart",
+                    "Google"
+                  ],
+                  [
+                    "site:metaculus.com 40864 timeseries",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 20373,
+                "analysis_chars": 2452
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google",
+        "Google News"
+      ],
+      "llm_cost": 0.3221,
+      "llm_cost_summarization": 0.2526,
+      "llm_cost_agentic": 0.0695,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Artemis II mission schedule Feb 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Artemis II test results February 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Summarize any developments from January to mid-February 2026 concerning NASA's Artemis II mission readiness, testing milestones, schedule adjustments, or technical problems that could affect launch success before 2027.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "Will the community prediction be higher than 80.00% on 2026-02-27 for the Metaculus question \"Will NASA's Artemis II complete its mission successfully before 2027?\"?",
+          "tool": "AskNews",
+          "deep_research_query": "Summarize any developments from January to mid-February 2026 concerning NASA's Artemis II mission readiness, testing milestones, schedule adjustments, or technical problems that could affect launch success before 2027."
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Google News",
+        "AskNews"
+      ],
+      "llm_cost": 0.2601,
+      "llm_cost_summarization": 0.2526,
+      "llm_cost_agentic": 0.0075,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 10000,
+        "token_output": 2143,
+        "cost": 0.062145,
+        "duration_seconds": 68.47014665603638,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16229,
+        "token_output": 2788,
+        "cost": 0.090507,
+        "duration_seconds": 67.92541670799255,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 10000,
+        "token_output": 2260,
+        "cost": 0.0639,
+        "duration_seconds": 68.47020483016968,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15264,
+        "token_output": 2453,
+        "cost": 0.082587,
+        "duration_seconds": 67.92539262771606,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8816,
+        "token_output": 2958,
+        "cost": 0.05684,
+        "duration_seconds": 68.47024774551392,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14444,
+        "token_output": 2846,
+        "cost": 0.065121,
+        "duration_seconds": 67.92536568641663,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8816,
+        "token_output": 1533,
+        "cost": 0.029896,
+        "duration_seconds": 68.47028636932373,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14609,
+        "token_output": 1683,
+        "cost": 0.042682,
+        "duration_seconds": 67.92533874511719,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8816,
+        "token_output": 2473,
+        "cost": 0.037416,
+        "duration_seconds": 68.47032046318054,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13730,
+        "token_output": 1767,
+        "cost": 0.041595999999999994,
+        "duration_seconds": 67.92531156539917,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0162,
+    "step2_search": 0.3221,
+    "step3_outside_view": 0.2502,
+    "step5_inside_view": 0.3225,
+    "step6_aggregation": 0.3225,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.911
+}
