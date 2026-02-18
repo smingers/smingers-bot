@@ -1,0 +1,20 @@
+{
+  "confidence": "low",
+  "prediction": [
+    0.06,
+    0.79,
+    0.15
+  ],
+  "search_queries": [
+    "parker kingston\" court hearing February 2026 (Google News)",
+    "parker kingston\" news February 18 2026 (Google News)",
+    "What is the current Google Trends interest value for \"parker kingston\" on February 18, 2026, when viewed in the resolution window of January 24 to February 23, 2026? Also, what were the daily values in the days leading up to February 18 \u2014 specifically from February 14-17 \u2014 in that same window? (Agent)",
+    "parker kingston\" pre-arrest baseline Google Trends (Google)"
+  ],
+  "cost": 0.2862,
+  "divergence": {
+    "metric_name": "max_option_range",
+    "metric_value": 38.0,
+    "threshold": 25.0
+  }
+}

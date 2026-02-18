@@ -1,0 +1,270 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "https://www.billboard.com/charts/hot-100/",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "https://en.wikipedia.org/wiki/Billboard_\\(magazine\\",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://www.billboard.com/lists/ai-artists-on-billboard-charts/childpets-galore/",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "AI-created song Billboard Hot 100",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "AI song top 20 Billboard",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "Provide timeline of AI-created songs charting on Billboard Hot 100, including peak positions, weeks on chart, and any Billboard policy statements on AI music up to 2026-02-18",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "AI-created song Billboard Hot 100",
+              "Billboard policy AI music chart eligibility",
+              "first AI artist Hot 100 entry",
+              "AI song peak position Billboard",
+              "Billboard statement on AI-generated songs"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "AI-created song Billboard Hot 100",
+                    "Google"
+                  ],
+                  [
+                    "Billboard policy AI music chart eligibility",
+                    "Google News"
+                  ],
+                  [
+                    "first AI artist Hot 100 entry",
+                    "Google"
+                  ],
+                  [
+                    "AI song peak position Billboard",
+                    "Google"
+                  ],
+                  [
+                    "Billboard statement on AI-generated songs",
+                    "Google News"
+                  ]
+                ],
+                "search_results_chars": 91327,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Agent",
+        "Google News"
+      ],
+      "llm_cost": 0.2808,
+      "llm_cost_summarization": 0.2062,
+      "llm_cost_agentic": 0.0746,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "AI generated song Billboard Hot 100",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "AI song top 20 Hot 100 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "List recent AI-created songs that entered or approached Billboard Hot 100 and summarize Billboard\u2019s February 2026 policy on AI music.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 16
+        },
+        {
+          "query": "Will the community prediction be higher than 52.00% on 2026-02-27 for the Metaculus question \"Will an AI-created song chart in the top 20 of the Billboard Hot 100 before 2027?\"?",
+          "tool": "AskNews",
+          "deep_research_query": "List recent AI-created songs that entered or approached Billboard Hot 100 and summarize Billboard\u2019s February 2026 policy on AI music."
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "AskNews",
+        "Google News"
+      ],
+      "llm_cost": 0.2142,
+      "llm_cost_summarization": 0.2062,
+      "llm_cost_agentic": 0.008,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7116,
+        "token_output": 1628,
+        "cost": 0.045768,
+        "duration_seconds": 58.26167964935303,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16233,
+        "token_output": 2508,
+        "cost": 0.086319,
+        "duration_seconds": 65.46053409576416,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7116,
+        "token_output": 1885,
+        "cost": 0.049623,
+        "duration_seconds": 58.26177906990051,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15656,
+        "token_output": 2478,
+        "cost": 0.08413799999999999,
+        "duration_seconds": 65.46050381660461,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6338,
+        "token_output": 2994,
+        "cost": 0.0530075,
+        "duration_seconds": 58.26182198524475,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14634,
+        "token_output": 2747,
+        "cost": 0.0640675,
+        "duration_seconds": 65.46047449111938,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6338,
+        "token_output": 1839,
+        "cost": 0.027388,
+        "duration_seconds": 58.261852502822876,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14453,
+        "token_output": 1479,
+        "cost": 0.040738,
+        "duration_seconds": 65.4604480266571,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6338,
+        "token_output": 2440,
+        "cost": 0.032196,
+        "duration_seconds": 58.261884927749634,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13953,
+        "token_output": 1665,
+        "cost": 0.041226,
+        "duration_seconds": 65.46037006378174,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0137,
+    "step2_search": 0.2808,
+    "step3_outside_view": 0.208,
+    "step5_inside_view": 0.3165,
+    "step6_aggregation": 0.3165,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.819
+}

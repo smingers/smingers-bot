@@ -1,0 +1,282 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 6,
+      "queries": [
+        {
+          "query": "https://en.wikipedia.org/wiki/Chinese_Civil_War",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://en.wikipedia.org/wiki/Taiwan",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://en.wikipedia.org/wiki/China",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://en.wikipedia.org/wiki/Taiwan_Strait_Crises",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://www.independent.co.uk/news/world/asia/china-taiwan-military-nato-summit-b2577926.html",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "metaculus china attack taiwan 2026 prediction history",
+          "tool": "Google",
+          "success": true,
+          "num_results": 2
+        },
+        {
+          "query": "China Taiwan tensions February 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Retrieve the historical daily community prediction values for Metaculus question 41139 \"Will China attack or blockade Taiwan during 2026?\" and summarize notable jumps since January 2025.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "metaculus 41139 community prediction history",
+              "metaculus api question timeline endpoint",
+              "\u201cWill China attack or blockade Taiwan during 2026\u201d Metaculus",
+              "metaculus prediction data export python",
+              "taiwan 2026 metaculus probability spike 2025"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "metaculus 41139 community prediction history",
+                    "Google"
+                  ],
+                  [
+                    "metaculus api question timeline endpoint",
+                    "Google"
+                  ],
+                  [
+                    "\u201cWill China attack or blockade Taiwan during 2026\u201d Metaculus",
+                    "Google"
+                  ],
+                  [
+                    "metaculus prediction data export python",
+                    "Google"
+                  ],
+                  [
+                    "taiwan 2026 metaculus probability spike 2025",
+                    "Google News"
+                  ]
+                ],
+                "search_results_chars": 42324,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Agent",
+        "Google News"
+      ],
+      "llm_cost": 0.1961,
+      "llm_cost_summarization": 0.1607,
+      "llm_cost_agentic": 0.0354,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "PLA drills Taiwan Strait February 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "China Taiwan tensions February 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Summarize Chinese military actions and political statements affecting Taiwan from January 2026 to now. Include expert assessments on likelihood of attack or blockade during 2026.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "Will the community prediction be higher than 12.00% on 2026-02-26 for the Metaculus question \"Will China attack or blockade Taiwan during 2026?\"?",
+          "tool": "AskNews",
+          "deep_research_query": "Summarize Chinese military actions and political statements affecting Taiwan from January 2026 to now. Include expert assessments on likelihood of attack or blockade during 2026."
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "AskNews",
+        "Google News"
+      ],
+      "llm_cost": 0.1683,
+      "llm_cost_summarization": 0.1607,
+      "llm_cost_agentic": 0.0076,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5668,
+        "token_output": 1752,
+        "cost": 0.043284,
+        "duration_seconds": 59.44086217880249,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15859,
+        "token_output": 2832,
+        "cost": 0.090057,
+        "duration_seconds": 72.71150541305542,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5668,
+        "token_output": 2228,
+        "cost": 0.050424,
+        "duration_seconds": 59.44093108177185,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15385,
+        "token_output": 2045,
+        "cost": 0.07683000000000001,
+        "duration_seconds": 72.71147918701172,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5113,
+        "token_output": 3252,
+        "cost": 0.05447575,
+        "duration_seconds": 59.44096565246582,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14594,
+        "token_output": 2818,
+        "cost": 0.06499150000000001,
+        "duration_seconds": 72.71145272254944,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5113,
+        "token_output": 1634,
+        "cost": 0.023298,
+        "duration_seconds": 59.441002368927,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14323,
+        "token_output": 1573,
+        "cost": 0.04123,
+        "duration_seconds": 72.71142745018005,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5113,
+        "token_output": 1796,
+        "cost": 0.024594,
+        "duration_seconds": 59.44104075431824,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13367,
+        "token_output": 2042,
+        "cost": 0.04307,
+        "duration_seconds": 72.71140384674072,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0178,
+    "step2_search": 0.1961,
+    "step3_outside_view": 0.1961,
+    "step5_inside_view": 0.3162,
+    "step6_aggregation": 0.3162,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.7261
+}
