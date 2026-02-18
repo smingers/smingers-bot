@@ -65,6 +65,29 @@ poetry run python scripts/track_forecasts.py --tournament 32916 --quiet
 
 Output is saved to `data/tracking/<tournament_id>.json` and progressively updated on each run.
 
+### Score Tracking
+
+Metaculus locked down their API in Feb 2026 — `resolution` and `aggregations` fields now return `null`. These scripts work around the lockdown using a combination of the API (which still returns `score_data`) and browser scraping (for resolution values). They work with any tracking file.
+
+**Data files:** `data/tracking/minibench.json`, `data/tracking/32916.json`
+
+```bash
+# Step 1: Fetch latest score data from the API (scores are still available)
+poetry run python scripts/update_score_tracking.py                              # defaults to minibench
+poetry run python scripts/update_score_tracking.py --tracking-file data/tracking/32916.json
+
+# Step 2: Scrape resolution values for any newly resolved questions
+# (Opens a headed browser — Cloudflare blocks headless requests)
+poetry run python scripts/scrape_resolutions.py                                 # defaults to minibench
+poetry run python scripts/scrape_resolutions.py --tracking-file data/tracking/32916.json
+
+# Step 3: Generate the score scatter plot
+poetry run python scripts/plot_score_scatter.py                                 # defaults to minibench
+poetry run python scripts/plot_score_scatter.py --tracking-file data/tracking/32916.json
+```
+
+**Typical workflow:** Run step 1 first (fast, API-only), then step 2 only if there are new resolutions to scrape (slower, needs browser), then step 3 to visualize.
+
 ## Architecture
 
 ### Forecasting Pipeline

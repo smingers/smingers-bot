@@ -9,6 +9,9 @@ This document lists all the non-core helper scripts, dashboards, and visualizers
 | HTML Dashboard | `python scripts/dashboard_html.py` | Static HTML dashboard to browse forecasts |
 | Streamlit Dashboard | `streamlit run scripts/dashboard_streamlit.py` | Interactive dashboard with filtering |
 | Forecast Tracker | `python scripts/track_forecasts.py --tournament 32916` | Compare forecasts vs community consensus |
+| Score Updater | `python scripts/update_score_tracking.py` | Fetch score data from Metaculus API |
+| Resolution Scraper | `python scripts/scrape_resolutions.py` | Scrape resolution values via browser |
+| Score Scatter Plot | `python scripts/plot_score_scatter.py` | Generate score scatter plot |
 | Ensemble Diversity Report | `python scripts/ensemble_diversity_report.py` | Analyze forecaster agreement & anchoring across ensemble |
 | Tool Usage Analyzer | `python scripts/analyze_tool_usage.py <path>` | Analyze research tool usage per forecast |
 | Artifact Migration | `python scripts/migrate_artifacts.py` | Backfill missing database fields |
@@ -87,6 +90,94 @@ python scripts/track_forecasts.py --tournament 32916 --quiet
 - JSON file saved to `data/tracking/<tournament_id>.json`
 
 **Requires:** `METACULUS_TOKEN` environment variable
+
+### Score Tracking
+
+Three scripts work together to track tournament performance. They exist because the Metaculus API was locked down in Feb 2026 — `resolution` and `aggregations` fields now return `null`, but `score_data` on `my_forecasts` is still available. All scripts accept `--tracking-file` to work with any tournament.
+
+**Data files:** `data/tracking/minibench.json`, `data/tracking/32916.json`
+
+#### Score Updater
+
+**Location:** `scripts/update_score_tracking.py`
+
+Fetches the 7 scoring fields (`baseline_score`, `peer_score`, `coverage`, `relative_legacy_score`, `weighted_coverage`, `spot_peer_score`, `spot_baseline_score`) from the Metaculus API for each question in the tracking file. Also marks newly resolved questions.
+
+```bash
+poetry run python scripts/update_score_tracking.py                              # defaults to minibench
+poetry run python scripts/update_score_tracking.py --tracking-file data/tracking/32916.json
+```
+
+**What it does:**
+- Fetches `/api/posts/{id}/` for each question (authenticated, 1.2s rate limit)
+- Updates `score_data` and `resolved` status
+- Recomputes aggregate statistics (mean/median scores, positive/negative counts)
+- Handles rate limiting with exponential backoff (4s, 8s, 16s, 32s)
+
+**Requires:** `METACULUS_TOKEN` environment variable
+
+#### Resolution Scraper
+
+**Location:** `scripts/scrape_resolutions.py`
+
+Scrapes actual resolution values (Yes/No, option names, numeric values) from the Metaculus UI using Playwright. Needed because the API returns `resolution: null` due to the lockdown.
+
+```bash
+# One-time setup
+poetry add -G dev playwright
+poetry run playwright install chromium
+
+# Run the scraper
+poetry run python scripts/scrape_resolutions.py                                 # defaults to minibench
+poetry run python scripts/scrape_resolutions.py --tracking-file data/tracking/32916.json
+```
+
+**What it does:**
+- Finds questions where `resolution` is null (resolved but missing the actual outcome, or newly resolved)
+- Opens each question page in a headed Chromium browser (headless is blocked by Cloudflare)
+- Extracts the resolution from the "Resolved" badge in the DOM
+- Parses binary (Yes/No), multiple choice (option name), and numeric (float with unit stripping) resolutions
+- Updates the tracking file with the scraped values
+
+**Requires:** `playwright` dev dependency, Chromium browser installed via Playwright
+
+**Note:** Uses a headed (visible) browser because Cloudflare blocks headless requests. You may need to solve a CAPTCHA on the first page load.
+
+#### Score Scatter Plot
+
+**Location:** `scripts/plot_score_scatter.py`
+
+Generates a dark-themed scatter plot of spot peer scores over time, matching the Metaculus tournament dashboard style.
+
+```bash
+poetry run python scripts/plot_score_scatter.py                                 # defaults to minibench
+poetry run python scripts/plot_score_scatter.py --tracking-file data/tracking/32916.json
+poetry run python scripts/plot_score_scatter.py --tracking-file data/tracking/32916.json --output my_plot.png
+```
+
+**Output:** Derived from tracking file name (e.g., `minibench.json` → `minibench_scores.png`), or specify with `--output`.
+
+**What it shows:**
+- Hollow orange circles for each scored question (x = forecast time, y = spot peer score)
+- White running average line (cumulative mean)
+- Total question count and average score in the subtitle
+
+**Requires:** `matplotlib` dev dependency
+
+#### Typical Workflow
+
+```bash
+# 1. Fetch latest scores from API (fast, ~1 min)
+poetry run python scripts/update_score_tracking.py --tracking-file data/tracking/32916.json
+
+# 2. Scrape resolution values for newly resolved questions (slower, needs browser)
+poetry run python scripts/scrape_resolutions.py --tracking-file data/tracking/32916.json
+
+# 3. Generate the plot
+poetry run python scripts/plot_score_scatter.py --tracking-file data/tracking/32916.json
+```
+
+Run step 1 regularly. Run step 2 only when questions have resolved since the last scrape. Run step 3 whenever you want an updated visualization.
 
 ### Tool Usage Analyzer
 

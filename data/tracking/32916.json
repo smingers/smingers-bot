@@ -1,7 +1,7 @@
 {
   "tournament_id": 32916,
   "tournament_name": "Tournament 32916",
-  "last_updated": "2026-02-08T15:21:06.540717+00:00",
+  "last_updated": "2026-02-18T11:15:20.656878+00:00",
   "total_forecasts": 41,
   "binary_count": 20,
   "numeric_count": 16,
@@ -140,8 +140,8 @@
       "forecast_timestamp": "2026-02-01T21:59:46.297643+00:00",
       "snapshot_timestamp": "2026-02-08T15:19:59.329068+00:00",
       "num_forecasters": 109,
-      "resolved": false,
-      "resolution": null,
+      "resolved": true,
+      "resolution": 11.0,
       "comparison": {
         "type": "numeric",
         "my_median": 11.744106063414206,
@@ -154,6 +154,16 @@
         "my_iqr": 5.215523796637916,
         "community_iqr": 7.794741788965208,
         "uncertainty_ratio": 0.6691079625012574
+      },
+      "status": "resolved",
+      "score_data": {
+        "baseline_score": 41.60039656116969,
+        "peer_score": 10.186109328045443,
+        "coverage": 0.358093029084029,
+        "relative_legacy_score": 0.17005145980114683,
+        "weighted_coverage": 0.358093029084029,
+        "spot_peer_score": 28.494379244212205,
+        "spot_baseline_score": 116.17203682400606
       }
     },
     {
@@ -490,13 +500,23 @@
       "forecast_timestamp": "2026-02-01T01:09:16.648369+00:00",
       "snapshot_timestamp": "2026-02-08T15:20:38.147698+00:00",
       "num_forecasters": 102,
-      "resolved": false,
-      "resolution": null,
+      "resolved": true,
+      "resolution": "Yes",
       "comparison": {
         "type": "binary",
         "my_probability": 0.696,
         "community_probability": 0.7375,
         "difference": -0.04150000000000009
+      },
+      "status": "resolved",
+      "score_data": {
+        "baseline_score": 29.95810203440844,
+        "peer_score": 0.0654340052233865,
+        "coverage": 0.6278428946159504,
+        "relative_legacy_score": 0.06350410743410739,
+        "weighted_coverage": 0.6278428946159504,
+        "spot_peer_score": 1.2734055137079139,
+        "spot_baseline_score": 47.71592111866412
       }
     },
     {
@@ -683,6 +703,15 @@
         "my_probability": 0.012,
         "community_probability": 0.04,
         "difference": -0.028
+      },
+      "score_data": {
+        "baseline_score": 90.90713403673446,
+        "peer_score": 5.518002299442864,
+        "coverage": 0.9251853425855989,
+        "relative_legacy_score": 0.021445449707974906,
+        "weighted_coverage": 0.9251853425855989,
+        "spot_peer_score": 6.744869992642052,
+        "spot_baseline_score": 98.25829469225907
       }
     },
     {
@@ -707,6 +736,15 @@
         "my_iqr": 2425627106.283886,
         "community_iqr": 2840732003.3335724,
         "uncertainty_ratio": 0.8538739674976151
+      },
+      "score_data": {
+        "baseline_score": 16.787893650977775,
+        "peer_score": 8.715339389056883,
+        "coverage": 0.6576919035116832,
+        "relative_legacy_score": 0.04772458242718594,
+        "weighted_coverage": 0.6576919035116832,
+        "spot_peer_score": 12.913696590781798,
+        "spot_baseline_score": 25.52546802133403
       }
     },
     {
@@ -866,5 +904,22 @@
         "uncertainty_ratio": 0.8004906985728594
       }
     }
-  ]
+  ],
+  "resolution_stats": {
+    "total_resolved": 4,
+    "total_unresolved": 37,
+    "binary_resolved": 2,
+    "numeric_resolved": 2,
+    "multiple_choice_resolved": 0
+  },
+  "score_stats": {
+    "mean_spot_peer_score": 12.356587835335992,
+    "median_spot_peer_score": 9.829283291711924,
+    "total_scored": 4,
+    "positive_scores": 4,
+    "negative_scores": 0,
+    "best_score": 28.494379244212205,
+    "worst_score": 1.2734055137079139,
+    "total_spot_peer_score": 49.42635134134397
+  }
 }

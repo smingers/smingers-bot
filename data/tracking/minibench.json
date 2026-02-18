@@ -1,7 +1,7 @@
 {
   "tournament_id": "minibench",
   "tournament_name": "Tournament minibench",
-  "last_updated": "2026-02-14T15:45:41.058213+00:00",
+  "last_updated": "2026-02-18T11:07:36.475801+00:00",
   "total_forecasts": 50,
   "binary_count": 28,
   "numeric_count": 9,
@@ -34,13 +34,23 @@
       "forecast_timestamp": "2026-02-07T11:46:13.183196+00:00",
       "snapshot_timestamp": "2026-02-08T15:26:28.189683+00:00",
       "num_forecasters": 98,
-      "resolved": false,
-      "resolution": null,
+      "resolved": true,
+      "resolution": "Yes",
       "comparison": {
         "type": "binary",
         "my_probability": 0.47,
         "community_probability": 0.45,
         "difference": 0.019999999999999962
+      },
+      "status": "resolved",
+      "score_data": {
+        "baseline_score": -3.0397459506522315,
+        "peer_score": 2.2061492327004406,
+        "coverage": 0.3405216303578129,
+        "relative_legacy_score": 0.0758966687159472,
+        "weighted_coverage": 0.3405216303578129,
+        "spot_peer_score": 6.017604311501416,
+        "spot_baseline_score": -8.926733809708741
       }
     },
     {
@@ -51,13 +61,23 @@
       "forecast_timestamp": "2026-02-07T06:38:47.149449+00:00",
       "snapshot_timestamp": "2026-02-08T15:26:29.626557+00:00",
       "num_forecasters": 99,
-      "resolved": false,
-      "resolution": null,
+      "resolved": true,
+      "resolution": "Yes",
       "comparison": {
         "type": "binary",
         "my_probability": 0.534,
         "community_probability": 0.5055000000000001,
         "difference": 0.02849999999999997
+      },
+      "status": "resolved",
+      "score_data": {
+        "baseline_score": 6.930045180745125,
+        "peer_score": 8.324666781035114,
+        "coverage": 0.7301575094240682,
+        "relative_legacy_score": 0.02746902940918583,
+        "weighted_coverage": 0.7301575094240682,
+        "spot_peer_score": 11.065602877093346,
+        "spot_baseline_score": 9.491164702546698
       }
     },
     {
@@ -68,13 +88,23 @@
       "forecast_timestamp": "2026-02-06T17:13:57.202055+00:00",
       "snapshot_timestamp": "2026-02-08T15:26:31.055959+00:00",
       "num_forecasters": 99,
-      "resolved": false,
-      "resolution": null,
+      "resolved": true,
+      "resolution": "No",
       "comparison": {
         "type": "binary",
         "my_probability": 0.308,
         "community_probability": 0.27,
         "difference": 0.03799999999999998
+      },
+      "status": "resolved",
+      "score_data": {
+        "baseline_score": 14.358762026439639,
+        "peer_score": -0.7302617963113913,
+        "coverage": 0.3062588787078857,
+        "relative_legacy_score": -0.03556233929262568,
+        "weighted_coverage": 0.3062588787078857,
+        "spot_peer_score": -2.427954251854502,
+        "spot_baseline_score": 46.88439429746374
       }
     },
     {
@@ -85,13 +115,23 @@
       "forecast_timestamp": "2026-02-06T12:34:23.150948+00:00",
       "snapshot_timestamp": "2026-02-08T15:26:32.433317+00:00",
       "num_forecasters": 89,
-      "resolved": false,
-      "resolution": null,
+      "resolved": true,
+      "resolution": "Yes",
       "comparison": {
         "type": "binary",
         "my_probability": 0.516,
         "community_probability": 0.5,
         "difference": 0.016000000000000014
+      },
+      "status": "resolved",
+      "score_data": {
+        "baseline_score": 4.192407792674431,
+        "peer_score": 5.615480458977307,
+        "coverage": 0.9225646392504374,
+        "relative_legacy_score": 0.043147593005265536,
+        "weighted_coverage": 0.9225646392504374,
+        "spot_peer_score": 7.482392619554489,
+        "spot_baseline_score": 4.544297076116711
       }
     },
     {
@@ -102,13 +142,23 @@
       "forecast_timestamp": "2026-02-06T09:12:36.118542+00:00",
       "snapshot_timestamp": "2026-02-08T15:26:33.924905+00:00",
       "num_forecasters": 100,
-      "resolved": false,
-      "resolution": null,
+      "resolved": true,
+      "resolution": "No",
       "comparison": {
         "type": "binary",
         "my_probability": 0.284,
         "community_probability": 0.25,
         "difference": 0.033999999999999975
+      },
+      "status": "resolved",
+      "score_data": {
+        "baseline_score": 26.898127718335324,
+        "peer_score": 0.30556395328943425,
+        "coverage": 0.5192373070451948,
+        "relative_legacy_score": -0.08317690966896257,
+        "weighted_coverage": 0.5192373070451948,
+        "spot_peer_score": 0.5537422235362679,
+        "spot_baseline_score": 51.80314926021694
       }
     },
     {
@@ -229,8 +279,8 @@
       "forecast_timestamp": "2026-02-05T16:10:49.089289+00:00",
       "snapshot_timestamp": "2026-02-08T15:26:39.760422+00:00",
       "num_forecasters": 97,
-      "resolved": false,
-      "resolution": null,
+      "resolved": true,
+      "resolution": "Doesn't change",
       "comparison": {
         "type": "multiple_choice",
         "my_probabilities": {
@@ -250,6 +300,16 @@
         },
         "max_difference_option": "Doesn't change",
         "max_difference_value": -0.05392967942088933
+      },
+      "status": "resolved",
+      "score_data": {
+        "baseline_score": 16.641062478598585,
+        "peer_score": 2.36928450369732,
+        "coverage": 0.8831316131574137,
+        "relative_legacy_score": -0.2030349790801469,
+        "weighted_coverage": 0.8831316131574137,
+        "spot_peer_score": 0.7152497956186346,
+        "spot_baseline_score": 18.84324174411861
       }
     },
     {
@@ -342,13 +402,23 @@
       "forecast_timestamp": "2026-02-05T01:07:59.483093+00:00",
       "snapshot_timestamp": "2026-02-08T15:26:44.056842+00:00",
       "num_forecasters": 93,
-      "resolved": false,
-      "resolution": null,
+      "resolved": true,
+      "resolution": "No",
       "comparison": {
         "type": "binary",
         "my_probability": 0.47200000000000003,
         "community_probability": 0.4,
         "difference": 0.07200000000000001
+      },
+      "status": "resolved",
+      "score_data": {
+        "baseline_score": 3.819152414454834,
+        "peer_score": -5.508886093875721,
+        "coverage": 0.4858364642549444,
+        "relative_legacy_score": -0.09323291196049499,
+        "weighted_coverage": 0.4858364642549444,
+        "spot_peer_score": -11.84988404792053,
+        "spot_baseline_score": 7.860983469636647
       }
     },
     {
@@ -359,8 +429,8 @@
       "forecast_timestamp": "2026-02-04T23:58:26.757320+00:00",
       "snapshot_timestamp": "2026-02-08T15:26:45.424333+00:00",
       "num_forecasters": 96,
-      "resolved": false,
-      "resolution": null,
+      "resolved": true,
+      "resolution": "Decreases",
       "comparison": {
         "type": "multiple_choice",
         "my_probabilities": {
@@ -380,6 +450,16 @@
         },
         "max_difference_option": "Doesn't change",
         "max_difference_value": -0.18016316975897345
+      },
+      "status": "resolved",
+      "score_data": {
+        "baseline_score": 27.347426935565625,
+        "peer_score": 34.903124275978115,
+        "coverage": 0.8056004963097748,
+        "relative_legacy_score": 0.33308509609914916,
+        "weighted_coverage": 0.8056004963097748,
+        "spot_peer_score": 43.634217841627,
+        "spot_baseline_score": 33.94663615630372
       }
     },
     {
@@ -548,8 +628,8 @@
       "forecast_timestamp": "2026-02-04T07:40:58.087093+00:00",
       "snapshot_timestamp": "2026-02-08T15:26:53.855745+00:00",
       "num_forecasters": 97,
-      "resolved": false,
-      "resolution": null,
+      "resolved": true,
+      "resolution": "Decreases",
       "comparison": {
         "type": "multiple_choice",
         "my_probabilities": {
@@ -569,6 +649,16 @@
         },
         "max_difference_option": "Decreases",
         "max_difference_value": 0.2963811040339703
+      },
+      "status": "resolved",
+      "score_data": {
+        "baseline_score": 27.563019035571774,
+        "peer_score": 62.30706586895404,
+        "coverage": 0.7186875753491013,
+        "relative_legacy_score": 0.7389154587788797,
+        "weighted_coverage": 0.7186875753491013,
+        "spot_peer_score": 87.05270476644584,
+        "spot_baseline_score": 38.35187914885419
       }
     },
     {
@@ -607,13 +697,23 @@
       "forecast_timestamp": "2026-02-04T00:59:32.250534+00:00",
       "snapshot_timestamp": "2026-02-08T15:26:56.665741+00:00",
       "num_forecasters": 90,
-      "resolved": false,
-      "resolution": null,
+      "resolved": true,
+      "resolution": "No",
       "comparison": {
         "type": "binary",
         "my_probability": 0.318,
         "community_probability": 0.33,
         "difference": -0.01200000000000001
+      },
+      "status": "resolved",
+      "score_data": {
+        "baseline_score": 23.891209987440135,
+        "peer_score": 2.310568093360235,
+        "coverage": 0.5334721233226635,
+        "relative_legacy_score": 0.05643506124177545,
+        "weighted_coverage": 0.5334721233226635,
+        "spot_peer_score": 3.1640902712216668,
+        "spot_baseline_score": 44.78436443620852
       }
     },
     {
@@ -624,8 +724,8 @@
       "forecast_timestamp": "2026-02-03T22:24:25.722568+00:00",
       "snapshot_timestamp": "2026-02-08T15:26:58.060039+00:00",
       "num_forecasters": 97,
-      "resolved": false,
-      "resolution": null,
+      "resolved": true,
+      "resolution": "Increases",
       "comparison": {
         "type": "multiple_choice",
         "my_probabilities": {
@@ -645,6 +745,16 @@
         },
         "max_difference_option": "Decreases",
         "max_difference_value": 0.10479515640766907
+      },
+      "status": "resolved",
+      "score_data": {
+        "baseline_score": -19.874217025242135,
+        "peer_score": 4.924856357875778,
+        "coverage": 0.6998661911046063,
+        "relative_legacy_score": 0.03270175846924224,
+        "weighted_coverage": 0.6998661911046063,
+        "spot_peer_score": 6.384129892002315,
+        "spot_baseline_score": -28.397166883964555
       }
     },
     {
@@ -683,8 +793,8 @@
       "forecast_timestamp": "2026-02-03T14:41:11.968092+00:00",
       "snapshot_timestamp": "2026-02-08T15:27:00.844185+00:00",
       "num_forecasters": 95,
-      "resolved": false,
-      "resolution": null,
+      "resolved": true,
+      "resolution": "Decreases",
       "comparison": {
         "type": "multiple_choice",
         "my_probabilities": {
@@ -704,6 +814,16 @@
         },
         "max_difference_option": "Doesn't change",
         "max_difference_value": -0.1266891247833623
+      },
+      "status": "resolved",
+      "score_data": {
+        "baseline_score": -0.26781133886765707,
+        "peer_score": 21.63189243601966,
+        "coverage": 0.7340799829694961,
+        "relative_legacy_score": -0.06089156055781807,
+        "weighted_coverage": 0.7340799829694961,
+        "spot_peer_score": 28.408487707082514,
+        "spot_baseline_score": -0.36482582971995536
       }
     },
     {
@@ -992,8 +1112,8 @@
       "forecast_timestamp": "2026-02-02T18:17:10.056397+00:00",
       "snapshot_timestamp": "2026-02-08T15:27:15.148657+00:00",
       "num_forecasters": 92,
-      "resolved": false,
-      "resolution": null,
+      "resolved": true,
+      "resolution": "Decreases",
       "comparison": {
         "type": "multiple_choice",
         "my_probabilities": {
@@ -1013,6 +1133,16 @@
         },
         "max_difference_option": "Doesn't change",
         "max_difference_value": -0.18785318411937113
+      },
+      "status": "resolved",
+      "score_data": {
+        "baseline_score": 25.08055441982574,
+        "peer_score": 19.727874965553468,
+        "coverage": 0.8223969635257014,
+        "relative_legacy_score": -0.21865412073716367,
+        "weighted_coverage": 0.8223969635257014,
+        "spot_peer_score": 23.4010840258391,
+        "spot_baseline_score": 30.49689569900987
       }
     },
     {
@@ -1023,8 +1153,8 @@
       "forecast_timestamp": "2026-02-02T16:15:23.577616+00:00",
       "snapshot_timestamp": "2026-02-08T15:27:16.539861+00:00",
       "num_forecasters": 96,
-      "resolved": false,
-      "resolution": null,
+      "resolved": true,
+      "resolution": "Decreases",
       "comparison": {
         "type": "multiple_choice",
         "my_probabilities": {
@@ -1044,6 +1174,16 @@
         },
         "max_difference_option": "Doesn't change",
         "max_difference_value": -0.25430901722391075
+      },
+      "status": "resolved",
+      "score_data": {
+        "baseline_score": 25.479378306447078,
+        "peer_score": 51.323714504637614,
+        "coverage": 0.7189671081525307,
+        "relative_legacy_score": 0.5629069074485418,
+        "weighted_coverage": 0.7189671081525307,
+        "spot_peer_score": 70.1491704425556,
+        "spot_baseline_score": 35.438865029471636
       }
     },
     {
@@ -1078,13 +1218,23 @@
       "forecast_timestamp": "2026-02-02T16:06:09.717845+00:00",
       "snapshot_timestamp": "2026-02-08T15:27:19.322712+00:00",
       "num_forecasters": 97,
-      "resolved": false,
-      "resolution": null,
+      "resolved": true,
+      "resolution": "Yes",
       "comparison": {
         "type": "binary",
         "my_probability": 0.5820000000000001,
         "community_probability": 0.53,
         "difference": 0.052000000000000046
+      },
+      "status": "resolved",
+      "score_data": {
+        "baseline_score": 9.665494784964277,
+        "peer_score": 4.599918951761687,
+        "coverage": 0.4411633620438752,
+        "relative_legacy_score": 0.03599343101924164,
+        "weighted_coverage": 0.4411633620438752,
+        "spot_peer_score": 10.435525421473592,
+        "spot_baseline_score": 21.9091058246197
       }
     },
     {
@@ -1095,8 +1245,8 @@
       "forecast_timestamp": "2026-02-02T13:30:26.623161+00:00",
       "snapshot_timestamp": "2026-02-08T15:27:20.719041+00:00",
       "num_forecasters": 94,
-      "resolved": false,
-      "resolution": null,
+      "resolved": true,
+      "resolution": 117.5216,
       "comparison": {
         "type": "numeric",
         "my_median": 119.80454767485953,
@@ -1109,6 +1259,16 @@
         "my_iqr": 1.4374621200937696,
         "community_iqr": 3.5543848210996316,
         "uncertainty_ratio": 0.4044193840691277
+      },
+      "status": "resolved",
+      "score_data": {
+        "baseline_score": -27.5774755628022,
+        "peer_score": -78.19021626113542,
+        "coverage": 0.7322920072078705,
+        "relative_legacy_score": -2.5911594403407396,
+        "weighted_coverage": 0.7322920072078705,
+        "spot_peer_score": -104.9756762951339,
+        "spot_baseline_score": -37.65912408077667
       }
     },
     {
@@ -1119,13 +1279,23 @@
       "forecast_timestamp": "2026-02-02T13:37:40.184264+00:00",
       "snapshot_timestamp": "2026-02-08T15:27:22.139703+00:00",
       "num_forecasters": 97,
-      "resolved": false,
-      "resolution": null,
+      "resolved": true,
+      "resolution": "No",
       "comparison": {
         "type": "binary",
         "my_probability": 0.506,
         "community_probability": 0.55,
         "difference": -0.04400000000000004
+      },
+      "status": "resolved",
+      "score_data": {
+        "baseline_score": -0.5282578445535705,
+        "peer_score": 3.5020442183354845,
+        "coverage": 0.30329921038062485,
+        "relative_legacy_score": 0.021792134712091182,
+        "weighted_coverage": 0.30329921038062485,
+        "spot_peer_score": 11.552944101897403,
+        "spot_baseline_score": -1.7417053077409406
       }
     },
     {
@@ -1218,13 +1388,23 @@
       "forecast_timestamp": "2026-02-02T11:59:59.365612+00:00",
       "snapshot_timestamp": "2026-02-08T15:27:26.381386+00:00",
       "num_forecasters": 100,
-      "resolved": false,
-      "resolution": null,
+      "resolved": true,
+      "resolution": "Yes",
       "comparison": {
         "type": "binary",
         "my_probability": 0.556,
         "community_probability": 0.45,
         "difference": 0.10600000000000004
+      },
+      "status": "resolved",
+      "score_data": {
+        "baseline_score": 13.800091384123638,
+        "peer_score": 18.562295362978254,
+        "coverage": 0.9010434051796243,
+        "relative_legacy_score": 0.134528693918512,
+        "weighted_coverage": 0.9010434051796243,
+        "spot_peer_score": 21.156164776234924,
+        "spot_baseline_score": 15.315678806142053
       }
     },
     {
@@ -1307,13 +1487,23 @@
       "forecast_timestamp": "2026-02-02T11:20:57.749921+00:00",
       "snapshot_timestamp": "2026-02-08T15:27:30.806636+00:00",
       "num_forecasters": 99,
-      "resolved": false,
-      "resolution": null,
+      "resolved": true,
+      "resolution": "No",
       "comparison": {
         "type": "binary",
         "my_probability": 0.4328,
         "community_probability": 0.53,
         "difference": -0.09720000000000001
+      },
+      "status": "resolved",
+      "score_data": {
+        "baseline_score": 9.602673965432514,
+        "peer_score": 9.742175421681079,
+        "coverage": 0.52782408868825,
+        "relative_legacy_score": 0.14160322690218938,
+        "weighted_coverage": 0.52782408868825,
+        "spot_peer_score": 18.258275796490885,
+        "spot_baseline_score": 18.192943769006657
       }
     },
     {
@@ -1324,8 +1514,8 @@
       "forecast_timestamp": "2026-02-02T11:24:25.428054+00:00",
       "snapshot_timestamp": "2026-02-08T15:27:32.206267+00:00",
       "num_forecasters": 95,
-      "resolved": false,
-      "resolution": null,
+      "resolved": true,
+      "resolution": "Decreases",
       "comparison": {
         "type": "multiple_choice",
         "my_probabilities": {
@@ -1345,6 +1535,16 @@
         },
         "max_difference_option": "Decreases",
         "max_difference_value": 0.20255222337125123
+      },
+      "status": "resolved",
+      "score_data": {
+        "baseline_score": 22.275012847469036,
+        "peer_score": 24.32056313526804,
+        "coverage": 0.43640221220475656,
+        "relative_legacy_score": 0.18112852316412126,
+        "weighted_coverage": 0.43640221220475656,
+        "spot_peer_score": 56.47159990278169,
+        "spot_baseline_score": 51.0423921430943
       }
     },
     {
@@ -1383,8 +1583,8 @@
       "forecast_timestamp": "2026-02-02T10:14:18.002632+00:00",
       "snapshot_timestamp": "2026-02-08T15:27:35.337212+00:00",
       "num_forecasters": 93,
-      "resolved": false,
-      "resolution": null,
+      "resolved": true,
+      "resolution": 1880.37,
       "comparison": {
         "type": "numeric",
         "my_median": 1877.8210134727249,
@@ -1397,6 +1597,16 @@
         "my_iqr": 25.998220784741534,
         "community_iqr": 59.44387822068393,
         "uncertainty_ratio": 0.43735741278898027
+      },
+      "status": "resolved",
+      "score_data": {
+        "baseline_score": 119.70151715979695,
+        "peer_score": 30.79152174208139,
+        "coverage": 0.8648143274254271,
+        "relative_legacy_score": 0.44033533080105114,
+        "weighted_coverage": 0.8648143274254271,
+        "spot_peer_score": 40.576432748931126,
+        "spot_baseline_score": 138.41296722748714
       }
     },
     {
@@ -1407,13 +1617,23 @@
       "forecast_timestamp": "2026-02-02T10:20:03.747374+00:00",
       "snapshot_timestamp": "2026-02-08T15:27:36.702703+00:00",
       "num_forecasters": 100,
-      "resolved": false,
-      "resolution": null,
+      "resolved": true,
+      "resolution": "Yes",
       "comparison": {
         "type": "binary",
         "my_probability": 0.506,
         "community_probability": 0.52,
         "difference": -0.014000000000000012
+      },
+      "status": "resolved",
+      "score_data": {
+        "baseline_score": 0.5600198166615832,
+        "peer_score": 0.27292749808452976,
+        "coverage": 0.32541715295226487,
+        "relative_legacy_score": -0.012889252744420116,
+        "weighted_coverage": 0.32541715295226487,
+        "spot_peer_score": 0.7909373826974228,
+        "spot_baseline_score": 1.7209290032223101
       }
     },
     {
@@ -1424,32 +1644,42 @@
       "forecast_timestamp": "2026-02-02T09:13:04.051142+00:00",
       "snapshot_timestamp": "2026-02-08T15:27:38.128698+00:00",
       "num_forecasters": 96,
-      "resolved": false,
-      "resolution": null,
+      "resolved": true,
+      "resolution": "Yes",
       "comparison": {
         "type": "binary",
         "my_probability": 0.588,
         "community_probability": 0.45,
         "difference": 0.13799999999999996
+      },
+      "status": "resolved",
+      "score_data": {
+        "baseline_score": 20.84180340853251,
+        "peer_score": 23.907967527502837,
+        "coverage": 0.8911016403745723,
+        "relative_legacy_score": 0.26296712171159486,
+        "weighted_coverage": 0.8911016403745723,
+        "spot_peer_score": 27.33022917765284,
+        "spot_baseline_score": 23.388806017427726
       }
     }
   ],
   "resolution_stats": {
-    "total_resolved": 26,
-    "total_unresolved": 24,
-    "binary_resolved": 15,
-    "numeric_resolved": 6,
-    "multiple_choice_resolved": 5
+    "total_resolved": 49,
+    "total_unresolved": 1,
+    "binary_resolved": 28,
+    "numeric_resolved": 8,
+    "multiple_choice_resolved": 13
   },
   "score_stats": {
-    "mean_spot_peer_score": 6.603207386026094,
-    "median_spot_peer_score": 6.819696062963448,
-    "total_scored": 26,
-    "positive_scores": 16,
-    "negative_scores": 10,
-    "best_score": 75.02630957395115,
-    "worst_score": -103.19898411659914,
-    "total_spot_peer_score": 171.68339203667844
+    "mean_spot_peer_score": 10.75572374538791,
+    "median_spot_peer_score": 8.519457310671813,
+    "total_scored": 49,
+    "positive_scores": 36,
+    "negative_scores": 13,
+    "best_score": 87.05270476644584,
+    "worst_score": -104.9756762951339,
+    "total_spot_peer_score": 527.0304635240076
   },
   "binary_resolution_stats": {
     "correct_direction": 6,
