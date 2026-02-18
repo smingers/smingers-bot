@@ -1,0 +1,271 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 2,
+      "queries": [
+        {
+          "query": "https://trends.google.com/trends/explore?geo=US&tz=0&q=passport&date=2026-01-27%202026-02-26",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://trends.google.com/trends/explore?geo=US&tz=0&q=passport&date=2026-01-17%202026-02-16",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "passport demand spring break pattern",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "passport delays 2026 state department",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Summarize any U.S. passport fee changes, processing-time alerts, Real ID reminders, or other official announcements from Jan\u2013Feb 2026 that could spur a surge in Google searches over the next week.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "state department passport fee 2026",
+              "passport processing times Feb 2026",
+              "DHS Real ID reminder 2026",
+              "passport backlog update February 2026",
+              "Real ID deadline May 2026"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "state department passport fee 2026",
+                    "Google"
+                  ],
+                  [
+                    "passport processing times Feb 2026",
+                    "Google News"
+                  ],
+                  [
+                    "DHS Real ID reminder 2026",
+                    "Google"
+                  ],
+                  [
+                    "passport backlog update February 2026",
+                    "Google"
+                  ],
+                  [
+                    "Real ID deadline May 2026",
+                    "Google News"
+                  ]
+                ],
+                "search_results_chars": 86566,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "passport",
+          "tool": "Google Trends",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google News",
+        "Google Trends",
+        "Google"
+      ],
+      "llm_cost": 0.2214,
+      "llm_cost_summarization": 0.1586,
+      "llm_cost_agentic": 0.0628,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "passport renewals surge 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "passport backlog February 2026 US",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Summarize any recent U.S. passport policy changes, processing delays, or fee announcements reported in February 2026.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "Will the interest in \u201cpassport\u201d change between 2026-02-18 and 2026-02-26 according to Google Trends?",
+          "tool": "AskNews",
+          "deep_research_query": "Summarize any recent U.S. passport policy changes, processing delays, or fee announcements reported in February 2026."
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "AskNews",
+        "Google"
+      ],
+      "llm_cost": 0.1702,
+      "llm_cost_summarization": 0.1586,
+      "llm_cost_agentic": 0.0116,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6944,
+        "token_output": 1939,
+        "cost": 0.049917,
+        "duration_seconds": 50.71543860435486,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14231,
+        "token_output": 2337,
+        "cost": 0.07774800000000001,
+        "duration_seconds": 63.0619797706604,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6944,
+        "token_output": 1702,
+        "cost": 0.046362,
+        "duration_seconds": 50.715553522109985,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13314,
+        "token_output": 2479,
+        "cost": 0.077127,
+        "duration_seconds": 63.0619478225708,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6180,
+        "token_output": 2102,
+        "cost": 0.040243,
+        "duration_seconds": 50.71559548377991,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12487,
+        "token_output": 2468,
+        "cost": 0.05640425,
+        "duration_seconds": 63.061893939971924,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6180,
+        "token_output": 1305,
+        "cost": 0.0228,
+        "duration_seconds": 50.71563124656677,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12466,
+        "token_output": 1957,
+        "cost": 0.040588,
+        "duration_seconds": 63.06186103820801,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6180,
+        "token_output": 1590,
+        "cost": 0.025079999999999998,
+        "duration_seconds": 50.71566605567932,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11829,
+        "token_output": 2390,
+        "cost": 0.042778,
+        "duration_seconds": 63.061830282211304,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.014,
+    "step2_search": 0.2214,
+    "step3_outside_view": 0.1844,
+    "step5_inside_view": 0.2946,
+    "step6_aggregation": 0.2946,
+    "step7_supervisor": 0.2694
+  },
+  "total_pipeline_cost": 0.9839
+}

@@ -1,0 +1,20 @@
+{
+  "confidence": "medium",
+  "prediction": [
+    0.42,
+    0.28,
+    0.3
+  ],
+  "search_queries": [
+    "passport google trends February 2026 (Google)",
+    "UK passport rule February 25 2026 Americans (Google News)",
+    "What is the current Google Trends interest value for the search term \"passport\" in the US as of February 18, 2026? Check the URL https://trends.google.com/trends/explore?geo=US&tz=0&q=passport&date=2026-01-27%202026-02-26 and report the specific daily values for February 16, 17, and 18 if available. (Agent)",
+    "passport news February 2026 United States (Google News)"
+  ],
+  "cost": 0.2694,
+  "divergence": {
+    "metric_name": "max_option_range",
+    "metric_value": 35.0,
+    "threshold": 25.0
+  }
+}
