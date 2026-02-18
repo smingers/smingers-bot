@@ -1,0 +1,20 @@
+{
+  "confidence": "high",
+  "prediction": [
+    0.05,
+    0.25,
+    0.7
+  ],
+  "search_queries": [
+    "Google Trends \"president day\" interest late February historical (Google)",
+    "Google Trends president day search volume week after holiday (Agent)",
+    "For the query \"president day\" on Google Trends US, what are the typical daily interest values during the period Feb 18-26 in past years (2020-2025)? Specifically, does the value on ~Feb 26 typically drop more than 3 points below the value on ~Feb 18? Also, is there any noticeable bump around Feb 22 (Washington's Birthday)? (Agent)",
+    "Washington birthday February 22 Google search spike (Google)"
+  ],
+  "cost": 0.3693,
+  "divergence": {
+    "metric_name": "max_option_range",
+    "metric_value": 45.0,
+    "threshold": 25.0
+  }
+}

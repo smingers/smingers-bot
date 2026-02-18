@@ -1,0 +1,271 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 2,
+      "queries": [
+        {
+          "query": "https://trends.google.com/trends/explore?geo=US&tz=0&q=president%20day&date=2026-01-27%202026-02-26",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://trends.google.com/trends/explore?geo=US&tz=0&q=president%20day&date=2026-01-17%202026-02-16",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "presidents day google trends history",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "presidents day search volume week after",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide examples from 2016-2025 of Google search interest for \u201cpresident day\u201d during the 7 days after Presidents Day and note any news events or marketing campaigns that caused secondary spikes; also list any planned 2026 events or promotions between Feb 18-26 that could renew interest.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "president day google trends 2018 post presidents day",
+              "president day google trends 2022 february spike",
+              "presidents day sale 2026 announcement february 18-26",
+              "presidents day extended sale marketing 2019 february 22",
+              "google trends \u201cpresident day\u201d february 25 2020"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "president day google trends 2018 post presidents day",
+                    "Google"
+                  ],
+                  [
+                    "president day google trends 2022 february spike",
+                    "Google"
+                  ],
+                  [
+                    "presidents day sale 2026 announcement february 18-26",
+                    "Google News"
+                  ],
+                  [
+                    "presidents day extended sale marketing 2019 february 22",
+                    "Google"
+                  ],
+                  [
+                    "google trends \u201cpresident day\u201d february 25 2020",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 33381,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "president day",
+          "tool": "Google Trends",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google",
+        "Google News",
+        "Google Trends"
+      ],
+      "llm_cost": 0.1682,
+      "llm_cost_summarization": 0.1313,
+      "llm_cost_agentic": 0.0369,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "presidents day 2026 google trends",
+          "tool": "Google",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "presidents day search interest 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "What will happen to US Google search volume for \"president day\" between Feb 18 and Feb 26 2026 after the holiday peak?",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "Will the interest in \u201cpresident day\u201d change between 2026-02-18 and 2026-02-26 according to Google Trends?",
+          "tool": "AskNews",
+          "deep_research_query": "What will happen to US Google search volume for \"president day\" between Feb 18 and Feb 26 2026 after the holiday peak?"
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Google News",
+        "AskNews"
+      ],
+      "llm_cost": 0.0888,
+      "llm_cost_summarization": 0.0816,
+      "llm_cost_agentic": 0.0072,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6688,
+        "token_output": 1471,
+        "cost": 0.042129,
+        "duration_seconds": 56.20045757293701,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11453,
+        "token_output": 2701,
+        "cost": 0.074874,
+        "duration_seconds": 63.155192375183105,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6688,
+        "token_output": 1578,
+        "cost": 0.043734,
+        "duration_seconds": 56.20051431655884,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11149,
+        "token_output": 2006,
+        "cost": 0.063537,
+        "duration_seconds": 63.15515947341919,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6023,
+        "token_output": 2577,
+        "cost": 0.04661825,
+        "duration_seconds": 56.20055651664734,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 10393,
+        "token_output": 2897,
+        "cost": 0.05874575,
+        "duration_seconds": 63.15513014793396,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6023,
+        "token_output": 1740,
+        "cost": 0.025966,
+        "duration_seconds": 56.20059561729431,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 10601,
+        "token_output": 1549,
+        "cost": 0.033594,
+        "duration_seconds": 63.15510272979736,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6023,
+        "token_output": 1652,
+        "cost": 0.025262,
+        "duration_seconds": 56.20062589645386,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 9905,
+        "token_output": 2461,
+        "cost": 0.039498000000000005,
+        "duration_seconds": 63.155075788497925,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0159,
+    "step2_search": 0.1682,
+    "step3_outside_view": 0.1837,
+    "step5_inside_view": 0.2702,
+    "step6_aggregation": 0.2702,
+    "step7_supervisor": 0.3693
+  },
+  "total_pipeline_cost": 1.0073
+}
