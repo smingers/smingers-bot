@@ -133,7 +133,9 @@ class ArtifactStore:
 
         Args:
             artifacts: ForecastArtifactPaths container
-            search_phase: "historical" or "current"
+            search_phase: Phase name — "historical", "current", "question_urls",
+                "community_prediction", or any other phase. Writes to
+                research/search_{search_phase}.json.
             results: Search results data
         """
         self._write_json(artifacts.research_dir / f"search_{search_phase}.json", results)

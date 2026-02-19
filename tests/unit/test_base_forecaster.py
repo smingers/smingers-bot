@@ -975,3 +975,110 @@ class TestForecastPipeline:
             assert any(SUPERFORECASTER_CONTEXT in str(sp) for sp in system_prompts), (
                 "SUPERFORECASTER_CONTEXT not used"
             )
+
+    @pytest.mark.asyncio
+    async def test_community_prediction_context_prepended_to_both_contexts(
+        self, config, mock_llm_response, mock_search_pipeline, mock_artifact_store
+    ):
+        """When community_prediction_context is passed, it appears in both
+        historical and current contexts fed to the forecasters."""
+        cp_context = "<CommunityPrediction>Test CP data: P(Yes)=54%</CommunityPrediction>"
+
+        captured_messages = []
+
+        async def capture_complete(*args, **kwargs):
+            msgs = kwargs.get("messages", args[1] if len(args) > 1 else [])
+            user_content = msgs[0]["content"] if msgs else ""
+            captured_messages.append(user_content)
+            return mock_llm_response
+
+        mock_llm = MagicMock(spec=LLMClient)
+        mock_llm.complete = capture_complete
+
+        mock_tracker = MagicMock()
+        mock_tracker.total_cost = 0.5
+
+        with (
+            patch("src.bot.base_forecaster.SearchPipeline") as MockSearchPipeline,
+            patch("src.bot.base_forecaster.get_cost_tracker", return_value=mock_tracker),
+        ):
+            MockSearchPipeline.return_value.__aenter__ = AsyncMock(
+                return_value=mock_search_pipeline
+            )
+            MockSearchPipeline.return_value.__aexit__ = AsyncMock(return_value=None)
+
+            forecaster = ConcreteForecaster(
+                config, llm_client=mock_llm, artifact_store=mock_artifact_store
+            )
+            await forecaster.forecast(
+                log=MagicMock(),
+                question_title="Test?",
+                question_text="Background",
+                resolution_criteria="Criteria",
+                fine_print="",
+                scheduled_close_time="2026-12-31",
+                scheduled_resolve_time="2027-01-15",
+                community_prediction_context=cp_context,
+            )
+
+            # First 2 calls are query generation, next 5 are outside view, last 5 are inside view
+            # The outside view prompts use historical_context, inside view uses current_context
+            # Both should contain the CP context
+            outside_view_prompts = captured_messages[2:7]
+            inside_view_prompts = captured_messages[7:12]
+
+            for i, prompt in enumerate(outside_view_prompts):
+                assert "<CommunityPrediction>" in prompt, (
+                    f"Outside view prompt for forecaster {i + 1} missing CP context"
+                )
+
+            for i, prompt in enumerate(inside_view_prompts):
+                assert "<CommunityPrediction>" in prompt, (
+                    f"Inside view prompt for forecaster {i + 1} missing CP context"
+                )
+
+    @pytest.mark.asyncio
+    async def test_community_prediction_context_absent_when_not_provided(
+        self, config, mock_llm_response, mock_search_pipeline, mock_artifact_store
+    ):
+        """When no community_prediction_context is passed, it does not appear in prompts."""
+        captured_messages = []
+
+        async def capture_complete(*args, **kwargs):
+            msgs = kwargs.get("messages", args[1] if len(args) > 1 else [])
+            user_content = msgs[0]["content"] if msgs else ""
+            captured_messages.append(user_content)
+            return mock_llm_response
+
+        mock_llm = MagicMock(spec=LLMClient)
+        mock_llm.complete = capture_complete
+
+        mock_tracker = MagicMock()
+        mock_tracker.total_cost = 0.5
+
+        with (
+            patch("src.bot.base_forecaster.SearchPipeline") as MockSearchPipeline,
+            patch("src.bot.base_forecaster.get_cost_tracker", return_value=mock_tracker),
+        ):
+            MockSearchPipeline.return_value.__aenter__ = AsyncMock(
+                return_value=mock_search_pipeline
+            )
+            MockSearchPipeline.return_value.__aexit__ = AsyncMock(return_value=None)
+
+            forecaster = ConcreteForecaster(
+                config, llm_client=mock_llm, artifact_store=mock_artifact_store
+            )
+            await forecaster.forecast(
+                log=MagicMock(),
+                question_title="Test?",
+                question_text="Background",
+                resolution_criteria="Criteria",
+                fine_print="",
+                scheduled_close_time="2026-12-31",
+                scheduled_resolve_time="2027-01-15",
+                # No community_prediction_context
+            )
+
+            # No prompt should contain the CP tag
+            for prompt in captured_messages:
+                assert "<CommunityPrediction>" not in prompt

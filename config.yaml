@@ -130,6 +130,12 @@ research:
   question_url_scraping_enabled: true
   question_url_max_scrape: 5
 
+  # Community prediction scraping (Playwright + Xvfb)
+  # Scrapes current community prediction for meta-questions
+  # ("Will the community prediction be higher/lower than X%...")
+  community_prediction_scraping_enabled: true
+  community_prediction_wait_seconds: 5.0
+
   # Article scraping
   scraping_enabled: true
   max_articles_to_scrape: 10
