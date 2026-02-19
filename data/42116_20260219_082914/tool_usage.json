@@ -1,0 +1,270 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "https://en.wikipedia.org/wiki/2026_Baden-W%C3%BCrttemberg_state_election",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://www.statistik-bw.de/staat-und-gesellschaft/wahlen/landtagswahl/",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "https://im.baden-wuerttemberg.de/de/land-kommunen/lebendige-demokratie/wahlen/landtagswahl-2026",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Baden-W\u00fcrttemberg 2021 election results CDU",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Baden-W\u00fcrttemberg election polls 2026 CDU",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Latest opinion polls for the 2026 Baden-W\u00fcrttemberg Landtag election including seat projections and party vote shares. Comparative polling trends since 2021 for CDU and Greens with method details. Summaries of new electoral rules affecting 2026 seat allocation.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "Baden-W\u00fcrttemberg Landtagswahl 2026 Umfrage Projektionssitze",
+              "CDU Gr\u00fcne Umfragen Baden-W\u00fcrttemberg Trend",
+              "Wahlrecht.de Baden-W\u00fcrttemberg Umfragen Zeitreihe",
+              "neues Landtagswahlgesetz Baden-W\u00fcrttemberg 2026 \u00c4nderungen",
+              "Baden-W\u00fcrttemberg Ausgleichsmandate Zweitstimme 2026 Wahlrecht"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "Baden-W\u00fcrttemberg Landtagswahl 2026 Umfrage Projektionssitze",
+                    "Google"
+                  ],
+                  [
+                    "CDU Gr\u00fcne Umfragen Baden-W\u00fcrttemberg Trend",
+                    "Google News"
+                  ],
+                  [
+                    "Wahlrecht.de Baden-W\u00fcrttemberg Umfragen Zeitreihe",
+                    "Google"
+                  ],
+                  [
+                    "neues Landtagswahlgesetz Baden-W\u00fcrttemberg 2026 \u00c4nderungen",
+                    "Google"
+                  ],
+                  [
+                    "Baden-W\u00fcrttemberg Ausgleichsmandate Zweitstimme 2026 Wahlrecht",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 83886,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Google News",
+        "Agent"
+      ],
+      "llm_cost": 0.2776,
+      "llm_cost_summarization": 0.2001,
+      "llm_cost_agentic": 0.0775,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Landtagswahl 2026 Baden-W\u00fcrttemberg Umfrage CDU",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Baden-W\u00fcrttemberg election poll February 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide opinion polls since January 2026 on the Baden-W\u00fcrttemberg Landtag election, highlighting projected seat counts and CDU standing.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "Will CDU win the most seats in the Baden-W\u00fcrttemberg Landtag election?",
+          "tool": "AskNews",
+          "deep_research_query": "Provide opinion polls since January 2026 on the Baden-W\u00fcrttemberg Landtag election, highlighting projected seat counts and CDU standing."
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Google News",
+        "AskNews"
+      ],
+      "llm_cost": 0.1929,
+      "llm_cost_summarization": 0.1859,
+      "llm_cost_agentic": 0.007,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7841,
+        "token_output": 1817,
+        "cost": 0.050778000000000004,
+        "duration_seconds": 58.47307634353638,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16235,
+        "token_output": 2701,
+        "cost": 0.08922,
+        "duration_seconds": 64.10059070587158,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7841,
+        "token_output": 2379,
+        "cost": 0.059208000000000004,
+        "duration_seconds": 58.473146200180054,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15608,
+        "token_output": 2548,
+        "cost": 0.08504400000000001,
+        "duration_seconds": 64.10056805610657,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6452,
+        "token_output": 3288,
+        "cost": 0.057323000000000006,
+        "duration_seconds": 58.47319173812866,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14393,
+        "token_output": 2550,
+        "cost": 0.060887750000000004,
+        "duration_seconds": 64.10053968429565,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6452,
+        "token_output": 2130,
+        "cost": 0.029944,
+        "duration_seconds": 58.47322940826416,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14259,
+        "token_output": 1714,
+        "cost": 0.042230000000000004,
+        "duration_seconds": 64.100510597229,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6452,
+        "token_output": 2288,
+        "cost": 0.031208,
+        "duration_seconds": 58.47325897216797,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13399,
+        "token_output": 1862,
+        "cost": 0.041693999999999995,
+        "duration_seconds": 64.10048484802246,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0103,
+    "step2_search": 0.2776,
+    "step3_outside_view": 0.2285,
+    "step5_inside_view": 0.3191,
+    "step6_aggregation": 0.3191,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.8354
+}
