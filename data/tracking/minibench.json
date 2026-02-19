@@ -1,11 +1,11 @@
 {
   "tournament_id": "minibench",
   "tournament_name": "Tournament minibench",
-  "last_updated": "2026-02-18T11:07:36.475801+00:00",
-  "total_forecasts": 50,
-  "binary_count": 28,
-  "numeric_count": 9,
-  "multiple_choice_count": 13,
+  "last_updated": "2026-02-18T22:54:46.704677+00:00",
+  "total_forecasts": 95,
+  "binary_count": 49,
+  "numeric_count": 20,
+  "multiple_choice_count": 26,
   "binary_stats": {
     "count": 28,
     "mean_difference": 0.022801590078908782,
@@ -163,7 +163,7 @@
     },
     {
       "question_id": 42009,
-      "question_title": "Will the interest in “steve tisch” change between 2026-02-05 and 2026-02-13 according to Google Trends?",
+      "question_title": "Will the interest in \u201csteve tisch\u201d change between 2026-02-05 and 2026-02-13 according to Google Trends?",
       "question_type": "multiple_choice",
       "question_url": "https://www.metaculus.com/questions/42009/",
       "forecast_timestamp": "2026-02-05T19:20:21.539987+00:00",
@@ -278,7 +278,7 @@
     },
     {
       "question_id": 42006,
-      "question_title": "Will the interest in “ilhan omar” change between 2026-02-05 and 2026-02-14 according to Google Trends?",
+      "question_title": "Will the interest in \u201cilhan omar\u201d change between 2026-02-05 and 2026-02-14 according to Google Trends?",
       "question_type": "multiple_choice",
       "question_url": "https://www.metaculus.com/questions/42006/",
       "forecast_timestamp": "2026-02-05T16:10:49.089289+00:00",
@@ -324,7 +324,7 @@
     },
     {
       "question_id": 42005,
-      "question_title": "Will the interest in “charles victor thompson” change between 2026-02-05 and 2026-02-12 according to Google Trends?",
+      "question_title": "Will the interest in \u201ccharles victor thompson\u201d change between 2026-02-05 and 2026-02-12 according to Google Trends?",
       "question_type": "multiple_choice",
       "question_url": "https://www.metaculus.com/questions/42005/",
       "forecast_timestamp": "2026-02-05T10:09:03.410686+00:00",
@@ -438,7 +438,7 @@
     },
     {
       "question_id": 42001,
-      "question_title": "Will the interest in “ilhan omar net worth” change between 2026-02-05 and 2026-02-14 according to Google Trends?",
+      "question_title": "Will the interest in \u201cilhan omar net worth\u201d change between 2026-02-05 and 2026-02-14 according to Google Trends?",
       "question_type": "multiple_choice",
       "question_url": "https://www.metaculus.com/questions/42001/",
       "forecast_timestamp": "2026-02-04T23:58:26.757320+00:00",
@@ -484,7 +484,7 @@
     },
     {
       "question_id": 42000,
-      "question_title": "Will the interest in “amy klobuchar” change between 2026-02-05 and 2026-02-12 according to Google Trends?",
+      "question_title": "Will the interest in \u201camy klobuchar\u201d change between 2026-02-05 and 2026-02-12 according to Google Trends?",
       "question_type": "multiple_choice",
       "question_url": "https://www.metaculus.com/questions/42000/",
       "forecast_timestamp": "2026-02-04T23:51:41.556549+00:00",
@@ -647,7 +647,7 @@
     },
     {
       "question_id": 41995,
-      "question_title": "Will the interest in “opm” change between 2026-02-04 and 2026-02-15 according to Google Trends?",
+      "question_title": "Will the interest in \u201copm\u201d change between 2026-02-04 and 2026-02-15 according to Google Trends?",
       "question_type": "multiple_choice",
       "question_url": "https://www.metaculus.com/questions/41995/",
       "forecast_timestamp": "2026-02-04T07:40:58.087093+00:00",
@@ -748,7 +748,7 @@
     },
     {
       "question_id": 41992,
-      "question_title": "Will the interest in “helicopter” change between 2026-02-03 and 2026-02-14 according to Google Trends?",
+      "question_title": "Will the interest in \u201chelicopter\u201d change between 2026-02-03 and 2026-02-14 according to Google Trends?",
       "question_type": "multiple_choice",
       "question_url": "https://www.metaculus.com/questions/41992/",
       "forecast_timestamp": "2026-02-03T22:24:25.722568+00:00",
@@ -822,7 +822,7 @@
     },
     {
       "question_id": 41990,
-      "question_title": "Will the interest in “hospital” change between 2026-02-03 and 2026-02-15 according to Google Trends?",
+      "question_title": "Will the interest in \u201chospital\u201d change between 2026-02-03 and 2026-02-15 according to Google Trends?",
       "question_type": "multiple_choice",
       "question_url": "https://www.metaculus.com/questions/41990/",
       "forecast_timestamp": "2026-02-03T14:41:11.968092+00:00",
@@ -868,7 +868,7 @@
     },
     {
       "question_id": 41989,
-      "question_title": "Will the interest in “thom tillis” change between 2026-02-03 and 2026-02-10 according to Google Trends?",
+      "question_title": "Will the interest in \u201cthom tillis\u201d change between 2026-02-03 and 2026-02-10 according to Google Trends?",
       "question_type": "multiple_choice",
       "question_url": "https://www.metaculus.com/questions/41989/",
       "forecast_timestamp": "2026-02-03T13:48:21.809241+00:00",
@@ -1151,7 +1151,7 @@
     },
     {
       "question_id": 41972,
-      "question_title": "Will the interest in “luigi mangione” change between 2026-02-02 and 2026-02-15 according to Google Trends?",
+      "question_title": "Will the interest in \u201cluigi mangione\u201d change between 2026-02-02 and 2026-02-15 according to Google Trends?",
       "question_type": "multiple_choice",
       "question_url": "https://www.metaculus.com/questions/41972/",
       "forecast_timestamp": "2026-02-02T18:17:10.056397+00:00",
@@ -1197,7 +1197,7 @@
     },
     {
       "question_id": 41971,
-      "question_title": "Will the interest in “fafo” change between 2026-02-02 and 2026-02-15 according to Google Trends?",
+      "question_title": "Will the interest in \u201cfafo\u201d change between 2026-02-02 and 2026-02-15 according to Google Trends?",
       "question_type": "multiple_choice",
       "question_url": "https://www.metaculus.com/questions/41971/",
       "forecast_timestamp": "2026-02-02T16:15:23.577616+00:00",
@@ -1355,7 +1355,7 @@
     },
     {
       "question_id": 41965,
-      "question_title": "Will the interest in “government shutdown 2026” change between 2026-02-02 and 2026-02-12 according to Google Trends?",
+      "question_title": "Will the interest in \u201cgovernment shutdown 2026\u201d change between 2026-02-02 and 2026-02-12 according to Google Trends?",
       "question_type": "multiple_choice",
       "question_url": "https://www.metaculus.com/questions/41965/",
       "forecast_timestamp": "2026-02-02T13:45:54.580128+00:00",
@@ -1568,7 +1568,7 @@
     },
     {
       "question_id": 41959,
-      "question_title": "Will the interest in “laken riley” change between 2026-02-02 and 2026-02-15 according to Google Trends?",
+      "question_title": "Will the interest in \u201claken riley\u201d change between 2026-02-02 and 2026-02-15 according to Google Trends?",
       "question_type": "multiple_choice",
       "question_url": "https://www.metaculus.com/questions/41959/",
       "forecast_timestamp": "2026-02-02T11:24:25.428054+00:00",
@@ -1727,6 +1727,1179 @@
         "spot_peer_score": 27.33022917765284,
         "spot_baseline_score": 23.388806017427726
       }
+    },
+    {
+      "question_id": 42153,
+      "question_title": "What will be the value of \"90-Day AA Financial Commercial Paper Interest Rate\" on 2026-02-26?",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/42153/",
+      "forecast_timestamp": "2026-02-17T01:04:11.192348+00:00",
+      "snapshot_timestamp": "2026-02-18T22:40:00.516828+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 4.044,
+        "community_median": 3.62,
+        "my_lower_quartile": 3.96,
+        "my_upper_quartile": 4.127,
+        "community_lower_quartile": 3.475,
+        "community_upper_quartile": 3.779,
+        "median_difference": 0.424,
+        "my_iqr": 0.167,
+        "community_iqr": 0.304,
+        "uncertainty_ratio": 0.549342
+      },
+      "score_data": {
+        "baseline_score": 76.577,
+        "peer_score": 27.184,
+        "coverage": 0.997,
+        "relative_legacy_score": 0,
+        "weighted_coverage": 0.997,
+        "spot_peer_score": 0,
+        "spot_baseline_score": 0
+      }
+    },
+    {
+      "question_id": 42154,
+      "question_title": "Will the interest in \u201cel paso\u201d change between 2026-02-17 and 2026-02-28 according to Google Trends?",
+      "question_type": "multiple_choice",
+      "question_url": "https://www.metaculus.com/questions/42154/",
+      "forecast_timestamp": "2026-02-17T01:07:20.259084+00:00",
+      "snapshot_timestamp": "2026-02-18T22:40:00.516828+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "multiple_choice",
+        "my_probabilities": {
+          "Increases": 0.132,
+          "Doesn't change": 0.79,
+          "Decreases": 0.078
+        },
+        "community_probabilities": {
+          "Increases": 0.133,
+          "Doesn't change": 0.433,
+          "Decreases": 0.433
+        },
+        "differences": {
+          "Increases": -0.001,
+          "Doesn't change": 0.357,
+          "Decreases": -0.355
+        },
+        "max_difference_option": "Doesn't change",
+        "max_difference_value": 0.357
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42155,
+      "question_title": "Will MCO's market close price on 2026-02-28 be higher than its market close price on 2026-02-17?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/42155/",
+      "forecast_timestamp": "2026-02-17T01:11:00.877205+00:00",
+      "snapshot_timestamp": "2026-02-18T22:40:00.516828+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.562,
+        "community_probability": 0.55,
+        "difference": 0.012
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42156,
+      "question_title": "Will the interest in \u201cjesse van rootselaar\u201d change between 2026-02-17 and 2026-02-28 according to Google Trends?",
+      "question_type": "multiple_choice",
+      "question_url": "https://www.metaculus.com/questions/42156/",
+      "forecast_timestamp": "2026-02-17T01:14:13.634428+00:00",
+      "snapshot_timestamp": "2026-02-18T22:40:00.516828+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "multiple_choice",
+        "my_probabilities": {
+          "Increases": 0.094,
+          "Doesn't change": 0.866,
+          "Decreases": 0.04
+        },
+        "community_probabilities": {
+          "Increases": 0.033,
+          "Doesn't change": 0.433,
+          "Decreases": 0.533
+        },
+        "differences": {
+          "Increases": 0.061,
+          "Doesn't change": 0.433,
+          "Decreases": -0.493
+        },
+        "max_difference_option": "Decreases",
+        "max_difference_value": -0.493
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42157,
+      "question_title": "Will HOOD's market close price on 2026-02-27 be higher than its market close price on 2026-02-17?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/42157/",
+      "forecast_timestamp": "2026-02-17T01:17:43.862244+00:00",
+      "snapshot_timestamp": "2026-02-18T22:40:00.516828+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.542,
+        "community_probability": 0.5,
+        "difference": 0.042
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42159,
+      "question_title": "Will the interest in \u201cgisele pelicot\u201d change between 2026-02-17 and 2026-02-26 according to Google Trends?",
+      "question_type": "multiple_choice",
+      "question_url": "https://www.metaculus.com/questions/42159/",
+      "forecast_timestamp": "2026-02-17T03:38:09.642064+00:00",
+      "snapshot_timestamp": "2026-02-18T22:40:00.516828+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "multiple_choice",
+        "my_probabilities": {
+          "Increases": 0.13,
+          "Doesn't change": 0.304,
+          "Decreases": 0.566
+        },
+        "community_probabilities": {
+          "Increases": 0.175,
+          "Doesn't change": 0.205,
+          "Decreases": 0.62
+        },
+        "differences": {
+          "Increases": -0.045,
+          "Doesn't change": 0.099,
+          "Decreases": -0.054
+        },
+        "max_difference_option": "Doesn't change",
+        "max_difference_value": 0.099
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42160,
+      "question_title": "Will CI's market close price on 2026-02-28 be higher than its market close price on 2026-02-17?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/42160/",
+      "forecast_timestamp": "2026-02-17T03:41:18.215292+00:00",
+      "snapshot_timestamp": "2026-02-18T22:40:00.516828+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.564,
+        "community_probability": 0.53,
+        "difference": 0.034
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42161,
+      "question_title": "Will COIN's market close price on 2026-02-27 be higher than its market close price on 2026-02-17?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/42161/",
+      "forecast_timestamp": "2026-02-17T03:44:21.883928+00:00",
+      "snapshot_timestamp": "2026-02-18T22:40:00.516828+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.528,
+        "community_probability": 0.51,
+        "difference": 0.018
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42162,
+      "question_title": "Will the interest in \u201cles wexner\u201d change between 2026-02-17 and 2026-02-22 according to Google Trends?",
+      "question_type": "multiple_choice",
+      "question_url": "https://www.metaculus.com/questions/42162/",
+      "forecast_timestamp": "2026-02-17T05:21:09.025152+00:00",
+      "snapshot_timestamp": "2026-02-18T22:40:00.516828+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "multiple_choice",
+        "my_probabilities": {
+          "Increases": 0.34,
+          "Doesn't change": 0.43,
+          "Decreases": 0.23
+        },
+        "community_probabilities": {
+          "Increases": 0.467,
+          "Doesn't change": 0.267,
+          "Decreases": 0.267
+        },
+        "differences": {
+          "Increases": -0.127,
+          "Doesn't change": 0.163,
+          "Decreases": -0.037
+        },
+        "max_difference_option": "Doesn't change",
+        "max_difference_value": 0.163
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42163,
+      "question_title": "What will be the value of \"1-Year Treasury Bill Secondary Market Rate, Discount Basis\" on 2026-02-26?",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/42163/",
+      "forecast_timestamp": "2026-02-17T05:24:10.942805+00:00",
+      "snapshot_timestamp": "2026-02-18T22:42:43.751187+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 3.712,
+        "community_median": 3.327,
+        "my_lower_quartile": 3.638,
+        "my_upper_quartile": 3.787,
+        "community_lower_quartile": 3.196,
+        "community_upper_quartile": 3.479,
+        "median_difference": 0.385,
+        "my_iqr": 0.149,
+        "community_iqr": 0.283,
+        "uncertainty_ratio": 0.526502
+      },
+      "score_data": {
+        "baseline_score": 76.577,
+        "peer_score": 27.184,
+        "coverage": 0.997,
+        "relative_legacy_score": 0,
+        "weighted_coverage": 0.997,
+        "spot_peer_score": 0,
+        "spot_baseline_score": 0
+      }
+    },
+    {
+      "question_id": 42164,
+      "question_title": "Will the community prediction be higher than 23.00% on 2026-02-28 for the Metaculus question \"Will the composition of the US Supreme Court change in 2026?\"?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/42164/",
+      "forecast_timestamp": "2026-02-17T05:26:53.137150+00:00",
+      "snapshot_timestamp": "2026-02-18T22:42:43.751187+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.41600000000000004,
+        "community_probability": 0.35,
+        "difference": 0.066
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42165,
+      "question_title": "What will be the value of \"Market Yield on U.S. Treasury Securities at 30-Year Constant Maturity, Quoted on an Investment Basis, Inflation-Indexed\" on 2026-02-25?",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/42165/",
+      "forecast_timestamp": "2026-02-17T06:17:18.987848+00:00",
+      "snapshot_timestamp": "2026-02-18T22:42:43.751187+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 2.517,
+        "community_median": 2.469,
+        "my_lower_quartile": 2.467,
+        "my_upper_quartile": 2.566,
+        "community_lower_quartile": 2.324,
+        "community_upper_quartile": 2.608,
+        "median_difference": 0.048,
+        "my_iqr": 0.099,
+        "community_iqr": 0.284,
+        "uncertainty_ratio": 0.348592
+      },
+      "score_data": {
+        "baseline_score": 76.577,
+        "peer_score": 27.184,
+        "coverage": 0.997,
+        "relative_legacy_score": 0,
+        "weighted_coverage": 0.997,
+        "spot_peer_score": 0,
+        "spot_baseline_score": 0
+      }
+    },
+    {
+      "question_id": 42166,
+      "question_title": "Will the community prediction be higher than 6.00% on 2026-02-28 for the Metaculus question \"Will the United States gain formal sovereignty over any part of Greenland during 2026?\"?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/42166/",
+      "forecast_timestamp": "2026-02-17T06:20:11.886212+00:00",
+      "snapshot_timestamp": "2026-02-18T22:42:43.751187+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.312,
+        "community_probability": 0.275,
+        "difference": 0.037
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42167,
+      "question_title": "What will be the value of \"10-Year Breakeven Inflation Rate\" on 2026-02-23?",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/42167/",
+      "forecast_timestamp": "2026-02-17T06:22:29.832861+00:00",
+      "snapshot_timestamp": "2026-02-18T22:42:43.751187+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 2.34,
+        "community_median": 2.26,
+        "my_lower_quartile": 2.3,
+        "my_upper_quartile": 2.379,
+        "community_lower_quartile": 2.161,
+        "community_upper_quartile": 2.356,
+        "median_difference": 0.08,
+        "my_iqr": 0.079,
+        "community_iqr": 0.195,
+        "uncertainty_ratio": 0.405128
+      },
+      "score_data": {
+        "baseline_score": 76.577,
+        "peer_score": 27.184,
+        "coverage": 0.997,
+        "relative_legacy_score": 0,
+        "weighted_coverage": 0.997,
+        "spot_peer_score": 0,
+        "spot_baseline_score": 0
+      }
+    },
+    {
+      "question_id": 42168,
+      "question_title": "Will SO's market close price on 2026-02-28 be higher than its market close price on 2026-02-17?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/42168/",
+      "forecast_timestamp": "2026-02-17T08:08:18.218876+00:00",
+      "snapshot_timestamp": "2026-02-18T22:42:43.751187+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.54,
+        "community_probability": 0.52,
+        "difference": 0.02
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42169,
+      "question_title": "Will the interest in \u201cconsigliere\u201d change between 2026-02-17 and 2026-02-27 according to Google Trends?",
+      "question_type": "multiple_choice",
+      "question_url": "https://www.metaculus.com/questions/42169/",
+      "forecast_timestamp": "2026-02-17T11:17:47.613400+00:00",
+      "snapshot_timestamp": "2026-02-18T22:44:56.724362+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "multiple_choice",
+        "my_probabilities": {
+          "Increases": 0.074,
+          "Doesn't change": 0.154,
+          "Decreases": 0.772
+        },
+        "community_probabilities": {
+          "Increases": 0.067,
+          "Doesn't change": 0.467,
+          "Decreases": 0.467
+        },
+        "differences": {
+          "Increases": 0.007,
+          "Doesn't change": -0.313,
+          "Decreases": 0.305
+        },
+        "max_difference_option": "Doesn't change",
+        "max_difference_value": -0.313
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42170,
+      "question_title": "Will the community prediction be higher than 13.00% on 2026-02-25 for the Metaculus question \"Will the winner of the 2026 FIFA World Cup be a country that has never won before?\"?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/42170/",
+      "forecast_timestamp": "2026-02-17T11:21:48.358873+00:00",
+      "snapshot_timestamp": "2026-02-18T22:44:56.724362+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.518,
+        "community_probability": 0.35,
+        "difference": 0.168
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42171,
+      "question_title": "What will be the value of \"30-Year Fixed Rate Veterans Affairs Mortgage Index\" on 2026-02-26?",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/42171/",
+      "forecast_timestamp": "2026-02-17T12:53:37.321265+00:00",
+      "snapshot_timestamp": "2026-02-18T22:44:56.724362+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 6.152,
+        "community_median": 5.629,
+        "my_lower_quartile": 6.039,
+        "my_upper_quartile": 6.266,
+        "community_lower_quartile": 5.467,
+        "community_upper_quartile": 5.837,
+        "median_difference": 0.523,
+        "my_iqr": 0.227,
+        "community_iqr": 0.37,
+        "uncertainty_ratio": 0.613514
+      },
+      "score_data": {
+        "baseline_score": 76.577,
+        "peer_score": 27.184,
+        "coverage": 0.997,
+        "relative_legacy_score": 0,
+        "weighted_coverage": 0.997,
+        "spot_peer_score": 0,
+        "spot_baseline_score": 0
+      }
+    },
+    {
+      "question_id": 42172,
+      "question_title": "Will the community prediction be higher than 50.00% on 2026-02-28 for the Metaculus question \"Will the United States attack Iran before April 2026?\"?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/42172/",
+      "forecast_timestamp": "2026-02-17T14:01:36.997610+00:00",
+      "snapshot_timestamp": "2026-02-18T22:44:56.724362+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.45799999999999996,
+        "community_probability": 0.45,
+        "difference": 0.008
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42173,
+      "question_title": "Will the community prediction be higher than 12.00% on 2026-02-26 for the Metaculus question \"Will Nvidia's stock price close below $100 on any day in 2026?\"?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/42173/",
+      "forecast_timestamp": "2026-02-17T14:05:37.345530+00:00",
+      "snapshot_timestamp": "2026-02-18T22:44:56.724362+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.534,
+        "community_probability": 0.35,
+        "difference": 0.184
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42174,
+      "question_title": "What will be the value of \"Secured Overnight Financing Rate\" on 2026-02-26?",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/42174/",
+      "forecast_timestamp": "2026-02-17T14:45:19.514139+00:00",
+      "snapshot_timestamp": "2026-02-18T22:47:58.445284+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 4.095,
+        "community_median": 3.655,
+        "my_lower_quartile": 4.011,
+        "my_upper_quartile": 4.178,
+        "community_lower_quartile": 3.555,
+        "community_upper_quartile": 3.786,
+        "median_difference": 0.44,
+        "my_iqr": 0.167,
+        "community_iqr": 0.231,
+        "uncertainty_ratio": 0.722944
+      },
+      "score_data": {
+        "baseline_score": 76.577,
+        "peer_score": 27.184,
+        "coverage": 0.997,
+        "relative_legacy_score": 0,
+        "weighted_coverage": 0.997,
+        "spot_peer_score": 0,
+        "spot_baseline_score": 0
+      }
+    },
+    {
+      "question_id": 42175,
+      "question_title": "Will the community prediction be higher than 40.00% on 2026-02-26 for the Metaculus question \"Will SpaceX successfully refuel a Starship in orbit during 2026?\"?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/42175/",
+      "forecast_timestamp": "2026-02-17T14:48:06.039331+00:00",
+      "snapshot_timestamp": "2026-02-18T22:47:58.445284+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.36,
+        "community_probability": 0.445,
+        "difference": -0.085
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42176,
+      "question_title": "Will the community prediction be higher than 25.00% on 2026-02-28 for the Metaculus question \"Will any coding tool introduce an integration with brain-computer interface technology before November 2026?\"?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/42176/",
+      "forecast_timestamp": "2026-02-17T14:50:43.389901+00:00",
+      "snapshot_timestamp": "2026-02-18T22:47:58.445284+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.294,
+        "community_probability": 0.255,
+        "difference": 0.039
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42177,
+      "question_title": "Will the interest in \u201carmenia\u201d change between 2026-02-17 and 2026-02-28 according to Google Trends?",
+      "question_type": "multiple_choice",
+      "question_url": "https://www.metaculus.com/questions/42177/",
+      "forecast_timestamp": "2026-02-17T15:49:42.150929+00:00",
+      "snapshot_timestamp": "2026-02-18T22:47:58.445284+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "multiple_choice",
+        "my_probabilities": {
+          "Increases": 0.162,
+          "Doesn't change": 0.24,
+          "Decreases": 0.598
+        },
+        "community_probabilities": {
+          "Increases": 0.25,
+          "Doesn't change": 0.296,
+          "Decreases": 0.454
+        },
+        "differences": {
+          "Increases": -0.088,
+          "Doesn't change": -0.056,
+          "Decreases": 0.144
+        },
+        "max_difference_option": "Decreases",
+        "max_difference_value": 0.144
+      },
+      "score_data": {
+        "baseline_score": 87.364,
+        "peer_score": 9.0,
+        "coverage": 1.0,
+        "relative_legacy_score": 0,
+        "weighted_coverage": 1.0,
+        "spot_peer_score": -6.814,
+        "spot_baseline_score": 37.851
+      }
+    },
+    {
+      "question_id": 42178,
+      "question_title": "What will be the value of \"ICE BofA Single-B US High Yield Index Option-Adjusted Spread\" on 2026-02-25?",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/42178/",
+      "forecast_timestamp": "2026-02-17T15:52:36.492073+00:00",
+      "snapshot_timestamp": "2026-02-18T22:47:58.445284+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 3.812,
+        "community_median": 3.209,
+        "my_lower_quartile": 3.683,
+        "my_upper_quartile": 3.941,
+        "community_lower_quartile": 2.998,
+        "community_upper_quartile": 3.511,
+        "median_difference": 0.603,
+        "my_iqr": 0.258,
+        "community_iqr": 0.513,
+        "uncertainty_ratio": 0.502924
+      },
+      "score_data": {
+        "baseline_score": 113.518,
+        "peer_score": 4.786,
+        "coverage": 1.0,
+        "relative_legacy_score": 0,
+        "weighted_coverage": 1.0,
+        "spot_peer_score": 0.112,
+        "spot_baseline_score": 105.608
+      }
+    },
+    {
+      "question_id": 42179,
+      "question_title": "Will the community prediction be higher than 65.00% on 2026-02-28 for the Metaculus question \"Will GTA VI be released during 2026?\"?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/42179/",
+      "forecast_timestamp": "2026-02-17T15:55:41.281305+00:00",
+      "snapshot_timestamp": "2026-02-18T22:47:58.445284+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.594,
+        "community_probability": 0.46,
+        "difference": 0.134
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42180,
+      "question_title": "Will the interest in \u201cvenezuela\u201d change between 2026-02-17 and 2026-02-27 according to Google Trends?",
+      "question_type": "multiple_choice",
+      "question_url": "https://www.metaculus.com/questions/42180/",
+      "forecast_timestamp": "2026-02-17T16:46:40.678937+00:00",
+      "snapshot_timestamp": "2026-02-18T22:47:58.445284+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "multiple_choice",
+        "my_probabilities": {
+          "Increases": 0.152,
+          "Doesn't change": 0.7,
+          "Decreases": 0.148
+        },
+        "community_probabilities": {
+          "Increases": 0.55,
+          "Doesn't change": 0.3,
+          "Decreases": 0.15
+        },
+        "differences": {
+          "Increases": -0.398,
+          "Doesn't change": 0.4,
+          "Decreases": -0.002
+        },
+        "max_difference_option": "Doesn't change",
+        "max_difference_value": 0.4
+      },
+      "score_data": {
+        "baseline_score": 87.084,
+        "peer_score": 17.017,
+        "coverage": 1.0,
+        "relative_legacy_score": 0,
+        "weighted_coverage": 1.0,
+        "spot_peer_score": 7.076,
+        "spot_baseline_score": 89.53
+      }
+    },
+    {
+      "question_id": 42181,
+      "question_title": "Will the interest in \u201cpam bondi\u201d change between 2026-02-17 and 2026-02-28 according to Google Trends?",
+      "question_type": "multiple_choice",
+      "question_url": "https://www.metaculus.com/questions/42181/",
+      "forecast_timestamp": "2026-02-17T18:43:42.061452+00:00",
+      "snapshot_timestamp": "2026-02-18T22:50:46.405831+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "multiple_choice",
+        "my_probabilities": {
+          "Increases": 0.086,
+          "Doesn't change": 0.394,
+          "Decreases": 0.52
+        },
+        "community_probabilities": {
+          "Increases": 0.19,
+          "Doesn't change": 0.56,
+          "Decreases": 0.25
+        },
+        "differences": {
+          "Increases": -0.104,
+          "Doesn't change": -0.166,
+          "Decreases": 0.27
+        },
+        "max_difference_option": "Decreases",
+        "max_difference_value": 0.27
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42182,
+      "question_title": "Will the community prediction be higher than 41.00% on 2026-02-27 for the Metaculus question \"Will OpenAI file for an IPO during 2026?\"?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/42182/",
+      "forecast_timestamp": "2026-02-17T21:39:48.510257+00:00",
+      "snapshot_timestamp": "2026-02-18T22:50:46.405831+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.37,
+        "community_probability": 0.43,
+        "difference": -0.06
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42183,
+      "question_title": "Will ROP's market close price on 2026-02-24 be higher than its market close price on 2026-02-18?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/42183/",
+      "forecast_timestamp": "2026-02-17T23:54:08.038595+00:00",
+      "snapshot_timestamp": "2026-02-18T22:50:46.405831+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.45,
+        "community_probability": 0.46,
+        "difference": -0.01
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42184,
+      "question_title": "What will be the value of \"CBOE S&P 500 3-Month Volatility Index\" on 2026-02-26?",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/42184/",
+      "forecast_timestamp": "2026-02-18T01:03:31.203004+00:00",
+      "snapshot_timestamp": "2026-02-18T22:50:46.405831+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 28.38,
+        "community_median": 22.5,
+        "my_lower_quartile": 27.28,
+        "my_upper_quartile": 29.49,
+        "community_lower_quartile": 19.81,
+        "community_upper_quartile": 26.1,
+        "median_difference": 5.88,
+        "my_iqr": 2.21,
+        "community_iqr": 6.29,
+        "uncertainty_ratio": 0.351351
+      },
+      "score_data": {
+        "baseline_score": 77.423,
+        "peer_score": 12.298,
+        "coverage": 0.998,
+        "relative_legacy_score": 0,
+        "weighted_coverage": 0.998,
+        "spot_peer_score": 12.399,
+        "spot_baseline_score": 78.4
+      }
+    },
+    {
+      "question_id": 42186,
+      "question_title": "What will be the value of \"ICE BofA 7-10 Year US Corporate Index Effective Yield\" on 2026-02-26?",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/42186/",
+      "forecast_timestamp": "2026-02-18T03:40:30.087841+00:00",
+      "snapshot_timestamp": "2026-02-18T22:50:46.405831+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 5.271,
+        "community_median": 4.875,
+        "my_lower_quartile": 5.171,
+        "my_upper_quartile": 5.372,
+        "community_lower_quartile": 4.705,
+        "community_upper_quartile": 5.07,
+        "median_difference": 0.396,
+        "my_iqr": 0.201,
+        "community_iqr": 0.365,
+        "uncertainty_ratio": 0.550685
+      },
+      "score_data": {
+        "baseline_score": 76.577,
+        "peer_score": 27.184,
+        "coverage": 0.997,
+        "relative_legacy_score": 0,
+        "weighted_coverage": 0.997,
+        "spot_peer_score": 0,
+        "spot_baseline_score": 0
+      }
+    },
+    {
+      "question_id": 42187,
+      "question_title": "Will the interest in \u201cnancy guthrie breaking news\u201d change between 2026-02-18 and 2026-02-24 according to Google Trends?",
+      "question_type": "multiple_choice",
+      "question_url": "https://www.metaculus.com/questions/42187/",
+      "forecast_timestamp": "2026-02-18T03:45:11.558559+00:00",
+      "snapshot_timestamp": "2026-02-18T22:50:46.405831+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "multiple_choice",
+        "my_probabilities": {
+          "Increases": 0.182,
+          "Doesn't change": 0.57,
+          "Decreases": 0.248
+        },
+        "community_probabilities": {
+          "Increases": 0.18,
+          "Doesn't change": 0.25,
+          "Decreases": 0.57
+        },
+        "differences": {
+          "Increases": 0.002,
+          "Doesn't change": 0.32,
+          "Decreases": -0.322
+        },
+        "max_difference_option": "Decreases",
+        "max_difference_value": -0.322
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42188,
+      "question_title": "Will the interest in \u201csave act\u201d change between 2026-02-18 and 2026-02-26 according to Google Trends?",
+      "question_type": "multiple_choice",
+      "question_url": "https://www.metaculus.com/questions/42188/",
+      "forecast_timestamp": "2026-02-18T03:49:27.317722+00:00",
+      "snapshot_timestamp": "2026-02-18T22:50:46.405831+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "multiple_choice",
+        "my_probabilities": {
+          "Increases": 0.272,
+          "Doesn't change": 0.404,
+          "Decreases": 0.324
+        },
+        "community_probabilities": {
+          "Increases": 0.275,
+          "Doesn't change": 0.345,
+          "Decreases": 0.38
+        },
+        "differences": {
+          "Increases": -0.003,
+          "Doesn't change": 0.059,
+          "Decreases": -0.056
+        },
+        "max_difference_option": "Doesn't change",
+        "max_difference_value": 0.059
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42189,
+      "question_title": "What will be the value of \"NASDAQ 100 Index\" on 2026-02-26?",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/42189/",
+      "forecast_timestamp": "2026-02-18T05:21:47.785684+00:00",
+      "snapshot_timestamp": "2026-02-18T22:54:46.704677+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 22430,
+        "community_median": 24690,
+        "my_lower_quartile": 21810,
+        "my_upper_quartile": 23050,
+        "community_lower_quartile": 23850,
+        "community_upper_quartile": 25540,
+        "median_difference": -2260,
+        "my_iqr": 1240,
+        "community_iqr": 1690,
+        "uncertainty_ratio": 0.733728
+      },
+      "score_data": {
+        "baseline_score": 69.992,
+        "peer_score": 4.359,
+        "coverage": 1.0,
+        "relative_legacy_score": 0,
+        "weighted_coverage": 1.0,
+        "spot_peer_score": 0.791,
+        "spot_baseline_score": 61.96
+      }
+    },
+    {
+      "question_id": 42190,
+      "question_title": "Will the community prediction be higher than 80.00% on 2026-02-27 for the Metaculus question \"Will NASA's Artemis II complete its mission successfully before 2027?\"?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/42190/",
+      "forecast_timestamp": "2026-02-18T06:38:59.926161+00:00",
+      "snapshot_timestamp": "2026-02-18T22:54:46.704677+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.5720000000000001,
+        "community_probability": 0.45,
+        "difference": 0.122
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42191,
+      "question_title": "What will be the value of \"ICE BofA Euro High Yield Index Option-Adjusted Spread\" on 2026-02-26?",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/42191/",
+      "forecast_timestamp": "2026-02-18T08:34:06.275981+00:00",
+      "snapshot_timestamp": "2026-02-18T22:54:46.704677+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 3.434,
+        "community_median": 2.679,
+        "my_lower_quartile": 3.33,
+        "my_upper_quartile": 3.538,
+        "community_lower_quartile": 2.511,
+        "community_upper_quartile": 2.946,
+        "median_difference": 0.755,
+        "my_iqr": 0.208,
+        "community_iqr": 0.435,
+        "uncertainty_ratio": 0.478161
+      },
+      "score_data": {
+        "baseline_score": 113.518,
+        "peer_score": 4.786,
+        "coverage": 1.0,
+        "relative_legacy_score": 0,
+        "weighted_coverage": 1.0,
+        "spot_peer_score": 0.112,
+        "spot_baseline_score": 105.608
+      }
+    },
+    {
+      "question_id": 42192,
+      "question_title": "Will the interest in \u201cpresident day\u201d change between 2026-02-18 and 2026-02-26 according to Google Trends?",
+      "question_type": "multiple_choice",
+      "question_url": "https://www.metaculus.com/questions/42192/",
+      "forecast_timestamp": "2026-02-18T08:40:03.872235+00:00",
+      "snapshot_timestamp": "2026-02-18T22:54:46.704677+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "multiple_choice",
+        "my_probabilities": {
+          "Increases": 0.206,
+          "Doesn't change": 0.542,
+          "Decreases": 0.252
+        },
+        "community_probabilities": {
+          "Increases": 0.14,
+          "Doesn't change": 0.2,
+          "Decreases": 0.66
+        },
+        "differences": {
+          "Increases": 0.066,
+          "Doesn't change": 0.342,
+          "Decreases": -0.408
+        },
+        "max_difference_option": "Decreases",
+        "max_difference_value": -0.408
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42193,
+      "question_title": "Will the community prediction be higher than 60.00% on 2026-02-25 for the Metaculus question \"Will Keir Starmer cease to be Prime Minister of the UK during 2026?\"?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/42193/",
+      "forecast_timestamp": "2026-02-18T14:02:39.955078+00:00",
+      "snapshot_timestamp": "2026-02-18T22:54:46.704677+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.41600000000000004,
+        "community_probability": 0.475,
+        "difference": -0.059
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42194,
+      "question_title": "Will the community prediction be higher than 20.00% on 2026-02-28 for the Metaculus question \"Will the North Atlantic sea surface temperature reach a daily record high before May 2026?\"?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/42194/",
+      "forecast_timestamp": "2026-02-18T15:43:02.296689+00:00",
+      "snapshot_timestamp": "2026-02-18T22:54:46.704677+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.266,
+        "community_probability": 0.3935,
+        "difference": -0.1275
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42195,
+      "question_title": "Will CCL's market close price on 2026-02-25 be higher than its market close price on 2026-02-18?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/42195/",
+      "forecast_timestamp": "2026-02-18T17:50:29.016880+00:00",
+      "snapshot_timestamp": "2026-02-18T22:54:46.704677+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.534,
+        "community_probability": 0.53,
+        "difference": 0.004
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42196,
+      "question_title": "Will the interest in \u201cpassport\u201d change between 2026-02-18 and 2026-02-26 according to Google Trends?",
+      "question_type": "multiple_choice",
+      "question_url": "https://www.metaculus.com/questions/42196/",
+      "forecast_timestamp": "2026-02-18T18:40:02.970613+00:00",
+      "snapshot_timestamp": "2026-02-18T22:54:46.704677+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "multiple_choice",
+        "my_probabilities": {
+          "Increases": 0.4,
+          "Doesn't change": 0.284,
+          "Decreases": 0.316
+        },
+        "community_probabilities": {
+          "Increases": 0.367,
+          "Doesn't change": 0.367,
+          "Decreases": 0.267
+        },
+        "differences": {
+          "Increases": 0.033,
+          "Doesn't change": -0.083,
+          "Decreases": 0.049
+        },
+        "max_difference_option": "Doesn't change",
+        "max_difference_value": -0.083
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42197,
+      "question_title": "Will the interest in \u201cparker kingston\u201d change between 2026-02-18 and 2026-02-23 according to Google Trends?",
+      "question_type": "multiple_choice",
+      "question_url": "https://www.metaculus.com/questions/42197/",
+      "forecast_timestamp": "2026-02-18T21:06:42.745452+00:00",
+      "snapshot_timestamp": "2026-02-18T22:54:46.704677+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "multiple_choice",
+        "my_probabilities": {
+          "Increases": 0.072,
+          "Doesn't change": 0.758,
+          "Decreases": 0.17
+        },
+        "community_probabilities": {
+          "Increases": 0.17,
+          "Doesn't change": 0.65,
+          "Decreases": 0.18
+        },
+        "differences": {
+          "Increases": -0.098,
+          "Doesn't change": 0.108,
+          "Decreases": -0.01
+        },
+        "max_difference_option": "Doesn't change",
+        "max_difference_value": 0.108
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42198,
+      "question_title": "Will the community prediction be higher than 12.00% on 2026-02-26 for the Metaculus question \"Will China attack or blockade Taiwan during 2026?\"?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/42198/",
+      "forecast_timestamp": "2026-02-18T21:09:45.394596+00:00",
+      "snapshot_timestamp": "2026-02-18T22:54:46.704677+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.374,
+        "community_probability": 0.4,
+        "difference": -0.026
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42199,
+      "question_title": "Will the community prediction be higher than 52.00% on 2026-02-27 for the Metaculus question \"Will an AI-created song chart in the top 20 of the Billboard Hot 100 before 2027?\"?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/42199/",
+      "forecast_timestamp": "2026-02-18T21:13:23.746621+00:00",
+      "snapshot_timestamp": "2026-02-18T22:54:46.704677+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.408,
+        "community_probability": 0.45,
+        "difference": -0.042
+      },
+      "score_data": null
     }
   ],
   "resolution_stats": {

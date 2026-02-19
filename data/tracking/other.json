@@ -1,0 +1,67 @@
+{
+  "tournament_id": "other",
+  "tournament_name": "Other tournaments and standalone questions",
+  "last_updated": "2026-02-18T22:05:16.885966+00:00",
+  "total_forecasts": 3,
+  "forecasts": [
+    {
+      "question_id": 41594,
+      "question_title": "Will the United States attack Iran before April 2026?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/41594/",
+      "forecast_timestamp": "2026-02-06T01:29:07.036917+00:00",
+      "snapshot_timestamp": "2026-02-18T22:30:00+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.306,
+        "community_probability": 0.55,
+        "difference": -0.244
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 41597,
+      "question_title": "How many US banks will fail from January through April 2026?",
+      "question_type": "multiple_choice",
+      "question_url": "https://www.metaculus.com/questions/41597/",
+      "forecast_timestamp": "2026-02-06T02:01:16.552859+00:00",
+      "snapshot_timestamp": "2026-02-18T22:30:00+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "multiple_choice",
+        "my_probabilities": {"0": 0.010, "1": 0.645, "2": 0.250, "3+": 0.094},
+        "community_probabilities": {"0": 0.001, "1": 0.630, "2": 0.299, "3+": 0.070},
+        "differences": {"0": 0.009, "1": 0.015, "2": -0.049, "3+": 0.024},
+        "max_difference_option": "2",
+        "max_difference_value": -0.049
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 41699,
+      "question_title": "Will U.S. consumer sentiment in March 2026 be higher than in February 2026?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/41699/",
+      "forecast_timestamp": "2026-02-05T20:34:08.536579+00:00",
+      "snapshot_timestamp": "2026-02-18T22:30:00+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.444,
+        "community_probability": 0.466,
+        "difference": -0.022
+      },
+      "score_data": null
+    }
+  ],
+  "binary_count": 2,
+  "numeric_count": 0,
+  "multiple_choice_count": 1
+}

@@ -364,39 +364,39 @@
 
 <h1>Ensemble Diversity Analysis</h1>
 <p class="subtitle">
-    181 forecasts analyzed (181 with full outside+inside view data)
+    188 forecasts analyzed (188 with full outside+inside view data)
     &bull; Generated from artifact data
 </p>
 
-<nav><a href="#type-binary">Binary (85)</a> | <a href="#type-numeric">Numeric (59)</a> | <a href="#type-multiple_choice">Multiple Choice (30)</a> | <a href="#type-discrete">Discrete (6)</a> | <a href="#type-date">Date (1)</a> | <a href="#resolved">Resolved (53)</a></nav>
+<nav><a href="#type-binary">Binary (90)</a> | <a href="#type-numeric">Numeric (59)</a> | <a href="#type-multiple_choice">Multiple Choice (32)</a> | <a href="#type-discrete">Discrete (6)</a> | <a href="#type-date">Date (1)</a> | <a href="#resolved">Resolved (53)</a></nav>
 
 <div class="global-stats">
     <div class="stat-card">
-        <div class="stat-value">181</div>
+        <div class="stat-value">188</div>
         <div class="stat-label">Total Forecasts</div>
     </div>
     <div class="stat-card">
-        <div class="stat-value">834</div>
+        <div class="stat-value">868</div>
         <div class="stat-label">Forecaster-Level Shifts<br><span class="stat-sublabel">outside view → inside view pairs</span></div>
     </div>
     <div class="stat-card">
-        <div class="stat-value">8.8%</div>
+        <div class="stat-value">8.6%</div>
         <div class="stat-label">Avg Prediction Move<br><span class="stat-sublabel">binary only, per forecaster</span></div>
     </div>
     <div class="stat-card">
-        <div class="stat-value">-3.4%</div>
+        <div class="stat-value">-3.3%</div>
         <div class="stat-label">Avg Shift Direction<br><span class="stat-sublabel">binary, + = inside view higher than outside view</span></div>
     </div>
     <div class="stat-card convergence">
-        <div class="stat-value">54</div>
+        <div class="stat-value">56</div>
         <div class="stat-label">Converged<br><span class="stat-sublabel">inside view spread &lt; 80% of outside view spread</span></div>
     </div>
     <div class="stat-card">
-        <div class="stat-value">57</div>
+        <div class="stat-value">59</div>
         <div class="stat-label">Stable<br><span class="stat-sublabel">inside view spread ≈ outside view spread</span></div>
     </div>
     <div class="stat-card divergence">
-        <div class="stat-value">66</div>
+        <div class="stat-value">69</div>
         <div class="stat-label">Diverged<br><span class="stat-sublabel">inside view spread &gt; 120% of outside view spread</span></div>
     </div>
 </div>
@@ -407,30 +407,660 @@
             
         <div class="type-summary">
             <div class="stat-card">
-                <div class="stat-value">85</div>
+                <div class="stat-value">90</div>
                 <div class="stat-label">Forecasts</div>
             </div>
             <div class="stat-card">
-                <div class="stat-value">10.1%</div>
+                <div class="stat-value">9.9%</div>
                 <div class="stat-label">Avg Outside View StdDev<br><span class="stat-sublabel">std dev of forecaster predictions</span></div>
             </div>
             <div class="stat-card">
-                <div class="stat-value">8.6%</div>
+                <div class="stat-value">8.4%</div>
                 <div class="stat-label">Avg Inside View StdDev<br><span class="stat-sublabel">std dev of forecaster predictions</span></div>
             </div>
             <div class="stat-card">
-                <div class="stat-value">9.1%</div>
+                <div class="stat-value">8.8%</div>
                 <div class="stat-label">Avg Prediction Move<br><span class="stat-sublabel">per forecaster, outside view → inside view</span></div>
             </div>
             <div class="stat-card convergence">
-                <div class="stat-value">-11%</div>
+                <div class="stat-value">-10%</div>
                 <div class="stat-label">Ensemble Spread Change<br><span class="stat-sublabel">−= forecasters converge after inside view</span></div>
             </div>
         </div>
         
-            <div class="range-dist-row"><div class="range-dist-table"><div class="range-dist-title">Outside View Spread (percentage points)</div><table><thead><tr><th style="text-align:left;">Range</th><th style="text-align:right;">Count</th><th style="text-align:right;">%</th><th></th></tr></thead><tbody><tr><td>0–9pp</td><td style="text-align:right; font-family:monospace;">20</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">24%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:23.52941176470588%; opacity:0.6;"></div></td></tr><tr><td>10–19pp</td><td style="text-align:right; font-family:monospace;">22</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">26%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:25.882352941176475%; opacity:0.6;"></div></td></tr><tr><td>20–29pp</td><td style="text-align:right; font-family:monospace;">17</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">20%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:20.0%; opacity:0.6;"></div></td></tr><tr><td>30–39pp</td><td style="text-align:right; font-family:monospace;">3</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">4%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:3.5294117647058822%; opacity:0.6;"></div></td></tr><tr><td>40–49pp</td><td style="text-align:right; font-family:monospace;">6</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">7%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:7.0588235294117645%; opacity:0.6;"></div></td></tr><tr><td>50+pp</td><td style="text-align:right; font-family:monospace;">8</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">9%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:9.411764705882353%; opacity:0.6;"></div></td></tr></tbody></table></div><div class="range-dist-table"><div class="range-dist-title">Inside View Spread (percentage points)</div><table><thead><tr><th style="text-align:left;">Range</th><th style="text-align:right;">Count</th><th style="text-align:right;">%</th><th></th></tr></thead><tbody><tr><td>0–9pp</td><td style="text-align:right; font-family:monospace;">20</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">24%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:23.52941176470588%; opacity:0.6;"></div></td></tr><tr><td>10–19pp</td><td style="text-align:right; font-family:monospace;">24</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">28%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:28.235294117647058%; opacity:0.6;"></div></td></tr><tr><td>20–29pp</td><td style="text-align:right; font-family:monospace;">17</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">20%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:20.0%; opacity:0.6;"></div></td></tr><tr><td>30–39pp</td><td style="text-align:right; font-family:monospace;">9</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">11%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:10.588235294117647%; opacity:0.6;"></div></td></tr><tr><td>40–49pp</td><td style="text-align:right; font-family:monospace;">8</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">9%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:9.411764705882353%; opacity:0.6;"></div></td></tr><tr><td>50+pp</td><td style="text-align:right; font-family:monospace;">4</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">5%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:4.705882352941177%; opacity:0.6;"></div></td></tr></tbody></table></div></div>
+            <div class="range-dist-row"><div class="range-dist-table"><div class="range-dist-title">Outside View Spread (percentage points)</div><table><thead><tr><th style="text-align:left;">Range</th><th style="text-align:right;">Count</th><th style="text-align:right;">%</th><th></th></tr></thead><tbody><tr><td>0–9pp</td><td style="text-align:right; font-family:monospace;">21</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">23%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:23.333333333333332%; opacity:0.6;"></div></td></tr><tr><td>10–19pp</td><td style="text-align:right; font-family:monospace;">22</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">24%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:24.444444444444443%; opacity:0.6;"></div></td></tr><tr><td>20–29pp</td><td style="text-align:right; font-family:monospace;">18</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">20%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:20.0%; opacity:0.6;"></div></td></tr><tr><td>30–39pp</td><td style="text-align:right; font-family:monospace;">3</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">3%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:3.3333333333333335%; opacity:0.6;"></div></td></tr><tr><td>40–49pp</td><td style="text-align:right; font-family:monospace;">6</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">7%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:6.666666666666667%; opacity:0.6;"></div></td></tr><tr><td>50+pp</td><td style="text-align:right; font-family:monospace;">8</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">9%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:8.88888888888889%; opacity:0.6;"></div></td></tr></tbody></table></div><div class="range-dist-table"><div class="range-dist-title">Inside View Spread (percentage points)</div><table><thead><tr><th style="text-align:left;">Range</th><th style="text-align:right;">Count</th><th style="text-align:right;">%</th><th></th></tr></thead><tbody><tr><td>0–9pp</td><td style="text-align:right; font-family:monospace;">21</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">23%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:23.333333333333332%; opacity:0.6;"></div></td></tr><tr><td>10–19pp</td><td style="text-align:right; font-family:monospace;">28</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">31%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:31.11111111111111%; opacity:0.6;"></div></td></tr><tr><td>20–29pp</td><td style="text-align:right; font-family:monospace;">17</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">19%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:18.88888888888889%; opacity:0.6;"></div></td></tr><tr><td>30–39pp</td><td style="text-align:right; font-family:monospace;">9</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">10%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:10.0%; opacity:0.6;"></div></td></tr><tr><td>40–49pp</td><td style="text-align:right; font-family:monospace;">8</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">9%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:8.88888888888889%; opacity:0.6;"></div></td></tr><tr><td>50+pp</td><td style="text-align:right; font-family:monospace;">4</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">4%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:4.444444444444445%; opacity:0.6;"></div></td></tr></tbody></table></div></div>
             <div class="forecast-list">
                 
+            <div class="forecast-card">
+                <div class="forecast-header">
+                    <div class="forecast-title">
+                        <a href="https://www.metaculus.com/questions/42199" target="_blank">Q42199</a>
+                        — Will the community prediction be higher than 52.00% on 2026-02-27 for the Metaculus question "Will a
+                    </div>
+                    <div class="forecast-meta">
+                        <span class="badge mode-live">live</span>
+                        <span class="badge stable">Stable</span>
+                        <span class="timestamp">20260218_210945</span>
+                    </div>
+                </div>
+                
+                
+    <div class="range-bar-legend">
+        <span class="ov-legend">Outside View</span>
+        <span class="iv-legend">Inside View</span>
+        <span class="final-legend">Aggregated</span>
+    </div>
+    <div class="range-bar">
+        <div class="ov-range" style="left: 37.0%; width: 19.000000000000007%"></div>
+        <div class="iv-range" style="left: 28.999999999999996%; width: 16.000000000000004%"></div>
+        <div class="dot ov" style="left: 47.0%"></div><div class="dot ov" style="left: 37.0%"></div><div class="dot ov" style="left: 43.7%"></div><div class="dot ov" style="left: 56.00000000000001%"></div><div class="dot ov" style="left: 46.0%"></div><div class="dot iv" style="left: 45.0%"></div><div class="dot iv" style="left: 45.0%"></div><div class="dot iv" style="left: 42.0%"></div><div class="dot iv" style="left: 28.999999999999996%"></div><div class="dot iv" style="left: 43.0%"></div><div class="dot final" style="left: 40.8%"></div>
+    </div>
+    <div class="range-bar-labels">
+        <span>0%</span>
+        <span>25%</span>
+        <span>50%</span>
+        <span>75%</span>
+        <span>100%</span>
+    </div>
+    
+                <table class="fc-table">
+                    
+                    <thead>
+                        <tr>
+                            <th>Agent</th>
+                            <th>Model</th>
+                            <th class="ov">Outside View</th>
+                            <th class="iv">Inside View</th>
+                            <th class="shift">Shift</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                    <tr>
+                        <td class="agent">F1</td>
+                        <td class="model">claude-sonnet-4.5</td>
+                        <td class="val ov">47.0%</td>
+                        <td class="val iv">45.0%</td>
+                        <td class="val shift" style="color: #666">-2.0%</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="agent">F2</td>
+                        <td class="model">claude-sonnet-4.5</td>
+                        <td class="val ov">37.0%</td>
+                        <td class="val iv">45.0%</td>
+                        <td class="val shift" style="color: #d63031">-11.0%</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="agent">F3</td>
+                        <td class="model">gpt-5.2</td>
+                        <td class="val ov">43.7%</td>
+                        <td class="val iv">42.0%</td>
+                        <td class="val shift" style="color: #b8860b">+5.0%</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="agent">F4</td>
+                        <td class="model">o3</td>
+                        <td class="val ov">56.0%</td>
+                        <td class="val iv">29.0%</td>
+                        <td class="val shift" style="color: #d63031">-14.7%</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="agent">F5</td>
+                        <td class="model">o3</td>
+                        <td class="val ov">46.0%</td>
+                        <td class="val iv">43.0%</td>
+                        <td class="val shift" style="color: #b8860b">-3.0%</td>
+                    </tr>
+                    
+                    </tbody>
+                    <tfoot>
+                        
+                        <tr>
+                            <td colspan="2" class="summary-label">Average</td>
+                            <td class="val ov">45.9%</td>
+                            <td class="val iv">40.8%</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="summary-label">Range</td>
+                            <td class="val ov">19.0%</td>
+                            <td class="val iv">16.0%</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="summary-label">Std Dev</td>
+                            <td class="val ov">6.8%</td>
+                            <td class="val iv">6.7%</td>
+                            <td></td>
+                        </tr>
+                        <tr class="final-row">
+                            <td colspan="2" class="summary-label">Final</td>
+                            <td class="val ov"></td>
+                            <td class="val iv final">40.8%</td>
+                            <td></td>
+                        </tr>
+                        
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">45.0%</td>
+                            <td></td>
+                        </tr>
+                        
+                        
+                
+                    </tfoot>
+                </table>
+            </div>
+            
+            <div class="forecast-card">
+                <div class="forecast-header">
+                    <div class="forecast-title">
+                        <a href="https://www.metaculus.com/questions/42198" target="_blank">Q42198</a>
+                        — Will the community prediction be higher than 12.00% on 2026-02-26 for the Metaculus question "Will C
+                    </div>
+                    <div class="forecast-meta">
+                        <span class="badge mode-live">live</span>
+                        <span class="badge diverged">Diverged</span>
+                        <span class="timestamp">20260218_210642</span>
+                    </div>
+                </div>
+                
+                
+    <div class="range-bar-legend">
+        <span class="ov-legend">Outside View</span>
+        <span class="iv-legend">Inside View</span>
+        <span class="final-legend">Aggregated</span>
+    </div>
+    <div class="range-bar">
+        <div class="ov-range" style="left: 35.0%; width: 9.299999999999997%"></div>
+        <div class="iv-range" style="left: 32.0%; width: 13.0%"></div>
+        <div class="dot ov" style="left: 42.0%"></div><div class="dot ov" style="left: 37.0%"></div><div class="dot ov" style="left: 44.3%"></div><div class="dot ov" style="left: 35.0%"></div><div class="dot ov" style="left: 36.0%"></div><div class="dot iv" style="left: 45.0%"></div><div class="dot iv" style="left: 33.0%"></div><div class="dot iv" style="left: 40.0%"></div><div class="dot iv" style="left: 37.0%"></div><div class="dot iv" style="left: 32.0%"></div><div class="dot final" style="left: 37.4%"></div>
+    </div>
+    <div class="range-bar-labels">
+        <span>0%</span>
+        <span>25%</span>
+        <span>50%</span>
+        <span>75%</span>
+        <span>100%</span>
+    </div>
+    
+                <table class="fc-table">
+                    
+                    <thead>
+                        <tr>
+                            <th>Agent</th>
+                            <th>Model</th>
+                            <th class="ov">Outside View</th>
+                            <th class="iv">Inside View</th>
+                            <th class="shift">Shift</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                    <tr>
+                        <td class="agent">F1</td>
+                        <td class="model">claude-sonnet-4.5</td>
+                        <td class="val ov">42.0%</td>
+                        <td class="val iv">45.0%</td>
+                        <td class="val shift" style="color: #b8860b">+3.0%</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="agent">F2</td>
+                        <td class="model">claude-sonnet-4.5</td>
+                        <td class="val ov">37.0%</td>
+                        <td class="val iv">33.0%</td>
+                        <td class="val shift" style="color: #666">-2.0%</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="agent">F3</td>
+                        <td class="model">gpt-5.2</td>
+                        <td class="val ov">44.3%</td>
+                        <td class="val iv">40.0%</td>
+                        <td class="val shift" style="color: #b8860b">+3.0%</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="agent">F4</td>
+                        <td class="model">o3</td>
+                        <td class="val ov">35.0%</td>
+                        <td class="val iv">37.0%</td>
+                        <td class="val shift" style="color: #e67700">-7.3%</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="agent">F5</td>
+                        <td class="model">o3</td>
+                        <td class="val ov">36.0%</td>
+                        <td class="val iv">32.0%</td>
+                        <td class="val shift" style="color: #b8860b">-4.0%</td>
+                    </tr>
+                    
+                    </tbody>
+                    <tfoot>
+                        
+                        <tr>
+                            <td colspan="2" class="summary-label">Average</td>
+                            <td class="val ov">38.9%</td>
+                            <td class="val iv">37.4%</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="summary-label">Range</td>
+                            <td class="val ov">9.3%</td>
+                            <td class="val iv">13.0%</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="summary-label">Std Dev</td>
+                            <td class="val ov">4.1%</td>
+                            <td class="val iv">5.3%</td>
+                            <td></td>
+                        </tr>
+                        <tr class="final-row">
+                            <td colspan="2" class="summary-label">Final</td>
+                            <td class="val ov"></td>
+                            <td class="val iv final">37.4%</td>
+                            <td></td>
+                        </tr>
+                        
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">40.0%</td>
+                            <td></td>
+                        </tr>
+                        
+                        
+                
+                    </tfoot>
+                </table>
+            </div>
+            
+            <div class="forecast-card">
+                <div class="forecast-header">
+                    <div class="forecast-title">
+                        <a href="https://www.metaculus.com/questions/42195" target="_blank">Q42195</a>
+                        — Will CCL's market close price on 2026-02-25 be higher than its market close price on 2026-02-18?
+                    </div>
+                    <div class="forecast-meta">
+                        <span class="badge mode-live">live</span>
+                        <span class="badge diverged">Diverged</span>
+                        <span class="timestamp">20260218_174523</span>
+                    </div>
+                </div>
+                
+                
+    <div class="range-bar-legend">
+        <span class="ov-legend">Outside View</span>
+        <span class="iv-legend">Inside View</span>
+        <span class="final-legend">Aggregated</span>
+    </div>
+    <div class="range-bar">
+        <div class="ov-range" style="left: 47.0%; width: 9.999999999999993%"></div>
+        <div class="iv-range" style="left: 44.0%; width: 13.999999999999993%"></div>
+        <div class="dot ov" style="left: 47.0%"></div><div class="dot ov" style="left: 56.00000000000001%"></div><div class="dot ov" style="left: 53.2%"></div><div class="dot ov" style="left: 55.00000000000001%"></div><div class="dot ov" style="left: 56.99999999999999%"></div><div class="dot iv" style="left: 44.0%"></div><div class="dot iv" style="left: 56.00000000000001%"></div><div class="dot iv" style="left: 54.0%"></div><div class="dot iv" style="left: 57.99999999999999%"></div><div class="dot iv" style="left: 55.00000000000001%"></div><div class="dot final" style="left: 53.400000000000006%"></div>
+    </div>
+    <div class="range-bar-labels">
+        <span>0%</span>
+        <span>25%</span>
+        <span>50%</span>
+        <span>75%</span>
+        <span>100%</span>
+    </div>
+    
+                <table class="fc-table">
+                    
+                    <thead>
+                        <tr>
+                            <th>Agent</th>
+                            <th>Model</th>
+                            <th class="ov">Outside View</th>
+                            <th class="iv">Inside View</th>
+                            <th class="shift">Shift</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                    <tr>
+                        <td class="agent">F1</td>
+                        <td class="model">claude-sonnet-4.5</td>
+                        <td class="val ov">47.0%</td>
+                        <td class="val iv">44.0%</td>
+                        <td class="val shift" style="color: #b8860b">-3.0%</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="agent">F2</td>
+                        <td class="model">claude-sonnet-4.5</td>
+                        <td class="val ov">56.0%</td>
+                        <td class="val iv">56.0%</td>
+                        <td class="val shift" style="color: #666">+1.0%</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="agent">F3</td>
+                        <td class="model">gpt-5.2</td>
+                        <td class="val ov">53.2%</td>
+                        <td class="val iv">54.0%</td>
+                        <td class="val shift" style="color: #b8860b">-2.0%</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="agent">F4</td>
+                        <td class="model">o3</td>
+                        <td class="val ov">55.0%</td>
+                        <td class="val iv">58.0%</td>
+                        <td class="val shift" style="color: #b8860b">+4.8%</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="agent">F5</td>
+                        <td class="model">o3</td>
+                        <td class="val ov">57.0%</td>
+                        <td class="val iv">55.0%</td>
+                        <td class="val shift" style="color: #666">-2.0%</td>
+                    </tr>
+                    
+                    </tbody>
+                    <tfoot>
+                        
+                        <tr>
+                            <td colspan="2" class="summary-label">Average</td>
+                            <td class="val ov">53.6%</td>
+                            <td class="val iv">53.4%</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="summary-label">Range</td>
+                            <td class="val ov">10.0%</td>
+                            <td class="val iv">14.0%</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="summary-label">Std Dev</td>
+                            <td class="val ov">4.0%</td>
+                            <td class="val iv">5.5%</td>
+                            <td></td>
+                        </tr>
+                        <tr class="final-row">
+                            <td colspan="2" class="summary-label">Final</td>
+                            <td class="val ov"></td>
+                            <td class="val iv final">53.4%</td>
+                            <td></td>
+                        </tr>
+                        
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">53.0%</td>
+                            <td></td>
+                        </tr>
+                        
+                        
+                
+                    </tfoot>
+                </table>
+            </div>
+            
+            <div class="forecast-card">
+                <div class="forecast-header">
+                    <div class="forecast-title">
+                        <a href="https://www.metaculus.com/questions/42194" target="_blank">Q42194</a>
+                        — Will the community prediction be higher than 20.00% on 2026-02-28 for the Metaculus question "Will t
+                    </div>
+                    <div class="forecast-meta">
+                        <span class="badge mode-live">live</span>
+                        <span class="badge diverged">Diverged</span>
+                        <span class="timestamp">20260218_153919</span>
+                    </div>
+                </div>
+                
+                
+    <div class="range-bar-legend">
+        <span class="ov-legend">Outside View</span>
+        <span class="iv-legend">Inside View</span>
+        <span class="final-legend">Aggregated</span>
+    </div>
+    <div class="range-bar">
+        <div class="ov-range" style="left: 28.000000000000004%; width: 5.399999999999995%"></div>
+        <div class="iv-range" style="left: 21.0%; width: 9.0%"></div>
+        <div class="dot ov" style="left: 30.0%"></div><div class="dot ov" style="left: 33.0%"></div><div class="dot ov" style="left: 33.4%"></div><div class="dot ov" style="left: 28.000000000000004%"></div><div class="dot ov" style="left: 30.5%"></div><div class="dot iv" style="left: 26.0%"></div><div class="dot iv" style="left: 21.0%"></div><div class="dot iv" style="left: 30.0%"></div><div class="dot iv" style="left: 28.000000000000004%"></div><div class="dot iv" style="left: 28.000000000000004%"></div><div class="dot final" style="left: 26.6%"></div>
+    </div>
+    <div class="range-bar-labels">
+        <span>0%</span>
+        <span>25%</span>
+        <span>50%</span>
+        <span>75%</span>
+        <span>100%</span>
+    </div>
+    
+                <table class="fc-table">
+                    
+                    <thead>
+                        <tr>
+                            <th>Agent</th>
+                            <th>Model</th>
+                            <th class="ov">Outside View</th>
+                            <th class="iv">Inside View</th>
+                            <th class="shift">Shift</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                    <tr>
+                        <td class="agent">F1</td>
+                        <td class="model">claude-sonnet-4.5</td>
+                        <td class="val ov">30.0%</td>
+                        <td class="val iv">26.0%</td>
+                        <td class="val shift" style="color: #b8860b">-4.0%</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="agent">F2</td>
+                        <td class="model">claude-sonnet-4.5</td>
+                        <td class="val ov">33.0%</td>
+                        <td class="val iv">21.0%</td>
+                        <td class="val shift" style="color: #e67700">-7.0%</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="agent">F3</td>
+                        <td class="model">gpt-5.2</td>
+                        <td class="val ov">33.4%</td>
+                        <td class="val iv">30.0%</td>
+                        <td class="val shift" style="color: #b8860b">-3.0%</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="agent">F4</td>
+                        <td class="model">o3</td>
+                        <td class="val ov">28.0%</td>
+                        <td class="val iv">28.0%</td>
+                        <td class="val shift" style="color: #e67700">-5.4%</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="agent">F5</td>
+                        <td class="model">o3</td>
+                        <td class="val ov">30.5%</td>
+                        <td class="val iv">28.0%</td>
+                        <td class="val shift" style="color: #b8860b">-2.5%</td>
+                    </tr>
+                    
+                    </tbody>
+                    <tfoot>
+                        
+                        <tr>
+                            <td colspan="2" class="summary-label">Average</td>
+                            <td class="val ov">31.0%</td>
+                            <td class="val iv">26.6%</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="summary-label">Range</td>
+                            <td class="val ov">5.4%</td>
+                            <td class="val iv">9.0%</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="summary-label">Std Dev</td>
+                            <td class="val ov">2.2%</td>
+                            <td class="val iv">3.4%</td>
+                            <td></td>
+                        </tr>
+                        <tr class="final-row">
+                            <td colspan="2" class="summary-label">Final</td>
+                            <td class="val ov"></td>
+                            <td class="val iv final">26.6%</td>
+                            <td></td>
+                        </tr>
+                        
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">39.4%</td>
+                            <td></td>
+                        </tr>
+                        
+                        
+                
+                    </tfoot>
+                </table>
+            </div>
+            
+            <div class="forecast-card">
+                <div class="forecast-header">
+                    <div class="forecast-title">
+                        <a href="https://www.metaculus.com/questions/42193" target="_blank">Q42193</a>
+                        — Will the community prediction be higher than 60.00% on 2026-02-25 for the Metaculus question "Will K
+                    </div>
+                    <div class="forecast-meta">
+                        <span class="badge mode-live">live</span>
+                        <span class="badge converged">Converged</span>
+                        <span class="timestamp">20260218_135933</span>
+                    </div>
+                </div>
+                
+                
+    <div class="range-bar-legend">
+        <span class="ov-legend">Outside View</span>
+        <span class="iv-legend">Inside View</span>
+        <span class="final-legend">Aggregated</span>
+    </div>
+    <div class="range-bar">
+        <div class="ov-range" style="left: 27.0%; width: 21.0%"></div>
+        <div class="iv-range" style="left: 32.0%; width: 14.0%"></div>
+        <div class="dot ov" style="left: 27.0%"></div><div class="dot ov" style="left: 48.0%"></div><div class="dot ov" style="left: 44.3%"></div><div class="dot ov" style="left: 45.0%"></div><div class="dot ov" style="left: 45.5%"></div><div class="dot iv" style="left: 32.0%"></div><div class="dot iv" style="left: 44.0%"></div><div class="dot iv" style="left: 46.0%"></div><div class="dot iv" style="left: 45.0%"></div><div class="dot iv" style="left: 41.0%"></div><div class="dot final" style="left: 41.6%"></div>
+    </div>
+    <div class="range-bar-labels">
+        <span>0%</span>
+        <span>25%</span>
+        <span>50%</span>
+        <span>75%</span>
+        <span>100%</span>
+    </div>
+    
+                <table class="fc-table">
+                    
+                    <thead>
+                        <tr>
+                            <th>Agent</th>
+                            <th>Model</th>
+                            <th class="ov">Outside View</th>
+                            <th class="iv">Inside View</th>
+                            <th class="shift">Shift</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                    <tr>
+                        <td class="agent">F1</td>
+                        <td class="model">claude-sonnet-4.5</td>
+                        <td class="val ov">27.0%</td>
+                        <td class="val iv">32.0%</td>
+                        <td class="val shift" style="color: #b8860b">+5.0%</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="agent">F2</td>
+                        <td class="model">claude-sonnet-4.5</td>
+                        <td class="val ov">48.0%</td>
+                        <td class="val iv">44.0%</td>
+                        <td class="val shift" style="color: #666">-1.0%</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="agent">F3</td>
+                        <td class="model">gpt-5.2</td>
+                        <td class="val ov">44.3%</td>
+                        <td class="val iv">46.0%</td>
+                        <td class="val shift" style="color: #666">-2.0%</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="agent">F4</td>
+                        <td class="model">o3</td>
+                        <td class="val ov">45.0%</td>
+                        <td class="val iv">45.0%</td>
+                        <td class="val shift" style="color: #666">+0.7%</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="agent">F5</td>
+                        <td class="model">o3</td>
+                        <td class="val ov">45.5%</td>
+                        <td class="val iv">41.0%</td>
+                        <td class="val shift" style="color: #b8860b">-4.5%</td>
+                    </tr>
+                    
+                    </tbody>
+                    <tfoot>
+                        
+                        <tr>
+                            <td colspan="2" class="summary-label">Average</td>
+                            <td class="val ov">42.0%</td>
+                            <td class="val iv">41.6%</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="summary-label">Range</td>
+                            <td class="val ov">21.0%</td>
+                            <td class="val iv">14.0%</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="summary-label">Std Dev</td>
+                            <td class="val ov">8.5%</td>
+                            <td class="val iv">5.7%</td>
+                            <td></td>
+                        </tr>
+                        <tr class="final-row">
+                            <td colspan="2" class="summary-label">Final</td>
+                            <td class="val ov"></td>
+                            <td class="val iv final">41.6%</td>
+                            <td></td>
+                        </tr>
+                        
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">47.5%</td>
+                            <td></td>
+                        </tr>
+                        
+                        
+                
+                    </tfoot>
+                </table>
+            </div>
+            
             <div class="forecast-card">
                 <div class="forecast-header">
                     <div class="forecast-title">
@@ -544,6 +1174,12 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">45.0%</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -664,6 +1300,12 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">46.0%</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -784,6 +1426,12 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">43.0%</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -904,6 +1552,12 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">46.0%</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -1024,6 +1678,12 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">25.5%</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -1144,6 +1804,12 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">44.5%</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -1264,6 +1930,12 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">35.0%</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -1384,6 +2056,12 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">45.0%</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -1504,6 +2182,12 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">15.0%</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -1624,6 +2308,12 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">35.0%</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -1744,6 +2434,12 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">3.0%</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -1864,6 +2560,12 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">52.0%</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -1984,6 +2686,12 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">27.5%</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -2104,6 +2812,12 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">35.0%</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -2224,6 +2938,12 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">51.0%</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -2344,6 +3064,12 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">53.0%</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -2464,6 +3190,12 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">50.0%</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -2584,6 +3316,12 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">55.0%</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -2704,6 +3442,12 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">70.0%</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -2824,6 +3568,12 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">20.0%</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -2944,6 +3694,12 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">21.0%</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -3064,6 +3820,12 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">35.0%</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -3184,6 +3946,12 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">72.0%</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -3304,8 +4072,20 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">21.7%</td>
+                            <td></td>
+                        </tr>
                         
                         
+                        <tr class="peer-score-row">
+                            <td colspan="2" class="summary-label peer-score-label">Peer Score</td>
+                            <td class="val"></td>
+                            <td class="val score-positive">+11.65</td>
+                            <td></td>
+                        </tr>
                 
                     </tfoot>
                 </table>
@@ -3424,6 +4204,12 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">7.0%</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -3544,6 +4330,12 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">25.0%</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -3664,8 +4456,20 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">35.0%</td>
+                            <td></td>
+                        </tr>
                         
                         
+                        <tr class="peer-score-row">
+                            <td colspan="2" class="summary-label peer-score-label">Peer Score</td>
+                            <td class="val"></td>
+                            <td class="val score-positive">+22.37</td>
+                            <td></td>
+                        </tr>
                 
                     </tfoot>
                 </table>
@@ -3784,6 +4588,12 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">35.0%</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -3904,6 +4714,12 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">49.0%</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -4024,6 +4840,12 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">10.0%</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -4144,6 +4966,12 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">15.0%</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -4264,8 +5092,20 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">25.0%</td>
+                            <td></td>
+                        </tr>
                         
                         
+                        <tr class="peer-score-row">
+                            <td colspan="2" class="summary-label peer-score-label">Peer Score</td>
+                            <td class="val"></td>
+                            <td class="val score-positive">+20.29</td>
+                            <td></td>
+                        </tr>
                 
                     </tfoot>
                 </table>
@@ -4384,6 +5224,12 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">85.0%</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -4504,6 +5350,12 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">15.0%</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -4624,8 +5476,20 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">6.0%</td>
+                            <td></td>
+                        </tr>
                         
                         
+                        <tr class="peer-score-row">
+                            <td colspan="2" class="summary-label peer-score-label">Peer Score</td>
+                            <td class="val"></td>
+                            <td class="val score-negative">+0.00</td>
+                            <td></td>
+                        </tr>
                 
                     </tfoot>
                 </table>
@@ -5938,6 +6802,12 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">55.0%</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -6058,6 +6928,12 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">46.6%</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -11450,6 +12326,16 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community p20"></td>
+                            <td class="val community"></td>
+                            <td class="val community p80"></td>
+                            <td class="val community p20">51.20</td>
+                            <td class="val community">63.31</td>
+                            <td class="val community p80">75.71</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -11596,8 +12482,28 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community p20"></td>
+                            <td class="val community"></td>
+                            <td class="val community p80"></td>
+                            <td class="val community p20">2.51</td>
+                            <td class="val community">2.68</td>
+                            <td class="val community p80">2.95</td>
+                            <td></td>
+                        </tr>
                         
                         
+                        <tr class="peer-score-row">
+                            <td colspan="2" class="summary-label peer-score-label">Peer Score</td>
+                            <td class="val p20"></td>
+                            <td class="val"></td>
+                            <td class="val p80"></td>
+                            <td class="val p20"></td>
+                            <td class="val score-positive">+4.79</td>
+                            <td class="val p80"></td>
+                            <td></td>
+                        </tr>
                 
                     </tfoot>
                 </table>
@@ -11742,8 +12648,28 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community p20"></td>
+                            <td class="val community"></td>
+                            <td class="val community p80"></td>
+                            <td class="val community p20">23,850</td>
+                            <td class="val community">24,690</td>
+                            <td class="val community p80">25,540</td>
+                            <td></td>
+                        </tr>
                         
                         
+                        <tr class="peer-score-row">
+                            <td colspan="2" class="summary-label peer-score-label">Peer Score</td>
+                            <td class="val p20"></td>
+                            <td class="val"></td>
+                            <td class="val p80"></td>
+                            <td class="val p20"></td>
+                            <td class="val score-positive">+4.36</td>
+                            <td class="val p80"></td>
+                            <td></td>
+                        </tr>
                 
                     </tfoot>
                 </table>
@@ -11888,8 +12814,28 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community p20"></td>
+                            <td class="val community"></td>
+                            <td class="val community p80"></td>
+                            <td class="val community p20">4.71</td>
+                            <td class="val community">4.88</td>
+                            <td class="val community p80">5.07</td>
+                            <td></td>
+                        </tr>
                         
                         
+                        <tr class="peer-score-row">
+                            <td colspan="2" class="summary-label peer-score-label">Peer Score</td>
+                            <td class="val p20"></td>
+                            <td class="val"></td>
+                            <td class="val p80"></td>
+                            <td class="val p20"></td>
+                            <td class="val score-positive">+27.18</td>
+                            <td class="val p80"></td>
+                            <td></td>
+                        </tr>
                 
                     </tfoot>
                 </table>
@@ -12034,8 +12980,28 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community p20"></td>
+                            <td class="val community"></td>
+                            <td class="val community p80"></td>
+                            <td class="val community p20">19.81</td>
+                            <td class="val community">22.50</td>
+                            <td class="val community p80">26.10</td>
+                            <td></td>
+                        </tr>
                         
                         
+                        <tr class="peer-score-row">
+                            <td colspan="2" class="summary-label peer-score-label">Peer Score</td>
+                            <td class="val p20"></td>
+                            <td class="val"></td>
+                            <td class="val p80"></td>
+                            <td class="val p20"></td>
+                            <td class="val score-positive">+12.30</td>
+                            <td class="val p80"></td>
+                            <td></td>
+                        </tr>
                 
                     </tfoot>
                 </table>
@@ -12180,8 +13146,28 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community p20"></td>
+                            <td class="val community"></td>
+                            <td class="val community p80"></td>
+                            <td class="val community p20">3.00</td>
+                            <td class="val community">3.21</td>
+                            <td class="val community p80">3.51</td>
+                            <td></td>
+                        </tr>
                         
                         
+                        <tr class="peer-score-row">
+                            <td colspan="2" class="summary-label peer-score-label">Peer Score</td>
+                            <td class="val p20"></td>
+                            <td class="val"></td>
+                            <td class="val p80"></td>
+                            <td class="val p20"></td>
+                            <td class="val score-positive">+4.79</td>
+                            <td class="val p80"></td>
+                            <td></td>
+                        </tr>
                 
                     </tfoot>
                 </table>
@@ -12326,6 +13312,16 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community p20"></td>
+                            <td class="val community"></td>
+                            <td class="val community p80"></td>
+                            <td class="val community p20">38.92</td>
+                            <td class="val community">43.28</td>
+                            <td class="val community p80">47.85</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -12472,8 +13468,28 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community p20"></td>
+                            <td class="val community"></td>
+                            <td class="val community p80"></td>
+                            <td class="val community p20">3.56</td>
+                            <td class="val community">3.65</td>
+                            <td class="val community p80">3.79</td>
+                            <td></td>
+                        </tr>
                         
                         
+                        <tr class="peer-score-row">
+                            <td colspan="2" class="summary-label peer-score-label">Peer Score</td>
+                            <td class="val p20"></td>
+                            <td class="val"></td>
+                            <td class="val p80"></td>
+                            <td class="val p20"></td>
+                            <td class="val score-positive">+27.18</td>
+                            <td class="val p80"></td>
+                            <td></td>
+                        </tr>
                 
                     </tfoot>
                 </table>
@@ -12618,8 +13634,28 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community p20"></td>
+                            <td class="val community"></td>
+                            <td class="val community p80"></td>
+                            <td class="val community p20">5.47</td>
+                            <td class="val community">5.63</td>
+                            <td class="val community p80">5.84</td>
+                            <td></td>
+                        </tr>
                         
                         
+                        <tr class="peer-score-row">
+                            <td colspan="2" class="summary-label peer-score-label">Peer Score</td>
+                            <td class="val p20"></td>
+                            <td class="val"></td>
+                            <td class="val p80"></td>
+                            <td class="val p20"></td>
+                            <td class="val score-positive">+27.18</td>
+                            <td class="val p80"></td>
+                            <td></td>
+                        </tr>
                 
                     </tfoot>
                 </table>
@@ -12764,8 +13800,28 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community p20"></td>
+                            <td class="val community"></td>
+                            <td class="val community p80"></td>
+                            <td class="val community p20">2.16</td>
+                            <td class="val community">2.26</td>
+                            <td class="val community p80">2.36</td>
+                            <td></td>
+                        </tr>
                         
                         
+                        <tr class="peer-score-row">
+                            <td colspan="2" class="summary-label peer-score-label">Peer Score</td>
+                            <td class="val p20"></td>
+                            <td class="val"></td>
+                            <td class="val p80"></td>
+                            <td class="val p20"></td>
+                            <td class="val score-positive">+27.18</td>
+                            <td class="val p80"></td>
+                            <td></td>
+                        </tr>
                 
                     </tfoot>
                 </table>
@@ -12910,8 +13966,28 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community p20"></td>
+                            <td class="val community"></td>
+                            <td class="val community p80"></td>
+                            <td class="val community p20">2.32</td>
+                            <td class="val community">2.47</td>
+                            <td class="val community p80">2.61</td>
+                            <td></td>
+                        </tr>
                         
                         
+                        <tr class="peer-score-row">
+                            <td colspan="2" class="summary-label peer-score-label">Peer Score</td>
+                            <td class="val p20"></td>
+                            <td class="val"></td>
+                            <td class="val p80"></td>
+                            <td class="val p20"></td>
+                            <td class="val score-positive">+27.18</td>
+                            <td class="val p80"></td>
+                            <td></td>
+                        </tr>
                 
                     </tfoot>
                 </table>
@@ -13056,8 +14132,28 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community p20"></td>
+                            <td class="val community"></td>
+                            <td class="val community p80"></td>
+                            <td class="val community p20">3.20</td>
+                            <td class="val community">3.33</td>
+                            <td class="val community p80">3.48</td>
+                            <td></td>
+                        </tr>
                         
                         
+                        <tr class="peer-score-row">
+                            <td colspan="2" class="summary-label peer-score-label">Peer Score</td>
+                            <td class="val p20"></td>
+                            <td class="val"></td>
+                            <td class="val p80"></td>
+                            <td class="val p20"></td>
+                            <td class="val score-positive">+27.18</td>
+                            <td class="val p80"></td>
+                            <td></td>
+                        </tr>
                 
                     </tfoot>
                 </table>
@@ -13202,8 +14298,28 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community p20"></td>
+                            <td class="val community"></td>
+                            <td class="val community p80"></td>
+                            <td class="val community p20">3.48</td>
+                            <td class="val community">3.62</td>
+                            <td class="val community p80">3.78</td>
+                            <td></td>
+                        </tr>
                         
                         
+                        <tr class="peer-score-row">
+                            <td colspan="2" class="summary-label peer-score-label">Peer Score</td>
+                            <td class="val p20"></td>
+                            <td class="val"></td>
+                            <td class="val p80"></td>
+                            <td class="val p20"></td>
+                            <td class="val score-positive">+27.18</td>
+                            <td class="val p80"></td>
+                            <td></td>
+                        </tr>
                 
                     </tfoot>
                 </table>
@@ -13348,6 +14464,16 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community p20"></td>
+                            <td class="val community"></td>
+                            <td class="val community p80"></td>
+                            <td class="val community p20">22.03</td>
+                            <td class="val community">29.49</td>
+                            <td class="val community p80">37.35</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -13494,6 +14620,16 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community p20"></td>
+                            <td class="val community"></td>
+                            <td class="val community p80"></td>
+                            <td class="val community p20">56.23</td>
+                            <td class="val community">67.90</td>
+                            <td class="val community p80">78.95</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -13640,8 +14776,28 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community p20"></td>
+                            <td class="val community"></td>
+                            <td class="val community p80"></td>
+                            <td class="val community p20">14,310,000</td>
+                            <td class="val community">15,670,000</td>
+                            <td class="val community p80">16,490,000</td>
+                            <td></td>
+                        </tr>
                         
                         
+                        <tr class="peer-score-row">
+                            <td colspan="2" class="summary-label peer-score-label">Peer Score</td>
+                            <td class="val p20"></td>
+                            <td class="val"></td>
+                            <td class="val p80"></td>
+                            <td class="val p20"></td>
+                            <td class="val score-positive">+19.26</td>
+                            <td class="val p80"></td>
+                            <td></td>
+                        </tr>
                 
                     </tfoot>
                 </table>
@@ -13786,6 +14942,16 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community p20"></td>
+                            <td class="val community"></td>
+                            <td class="val community p80"></td>
+                            <td class="val community p20">55.41</td>
+                            <td class="val community">58.91</td>
+                            <td class="val community p80">62.30</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -13932,6 +15098,16 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community p20"></td>
+                            <td class="val community"></td>
+                            <td class="val community p80"></td>
+                            <td class="val community p20">25.11</td>
+                            <td class="val community">37.62</td>
+                            <td class="val community p80">52.33</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -14078,8 +15254,28 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community p20"></td>
+                            <td class="val community"></td>
+                            <td class="val community p80"></td>
+                            <td class="val community p20">2.44</td>
+                            <td class="val community">3.57</td>
+                            <td class="val community p80">4.49</td>
+                            <td></td>
+                        </tr>
                         
                         
+                        <tr class="peer-score-row">
+                            <td colspan="2" class="summary-label peer-score-label">Peer Score</td>
+                            <td class="val p20"></td>
+                            <td class="val"></td>
+                            <td class="val p80"></td>
+                            <td class="val p20"></td>
+                            <td class="val score-positive">+27.48</td>
+                            <td class="val p80"></td>
+                            <td></td>
+                        </tr>
                 
                     </tfoot>
                 </table>
@@ -14224,8 +15420,28 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community p20"></td>
+                            <td class="val community"></td>
+                            <td class="val community p80"></td>
+                            <td class="val community p20">1,509</td>
+                            <td class="val community">2,274</td>
+                            <td class="val community p80">3,625</td>
+                            <td></td>
+                        </tr>
                         
                         
+                        <tr class="peer-score-row">
+                            <td colspan="2" class="summary-label peer-score-label">Peer Score</td>
+                            <td class="val p20"></td>
+                            <td class="val"></td>
+                            <td class="val p80"></td>
+                            <td class="val p20"></td>
+                            <td class="val score-positive">+20.29</td>
+                            <td class="val p80"></td>
+                            <td></td>
+                        </tr>
                 
                     </tfoot>
                 </table>
@@ -14370,8 +15586,28 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community p20"></td>
+                            <td class="val community"></td>
+                            <td class="val community p80"></td>
+                            <td class="val community p20">2.83</td>
+                            <td class="val community">3.06</td>
+                            <td class="val community p80">3.37</td>
+                            <td></td>
+                        </tr>
                         
                         
+                        <tr class="peer-score-row">
+                            <td colspan="2" class="summary-label peer-score-label">Peer Score</td>
+                            <td class="val p20"></td>
+                            <td class="val"></td>
+                            <td class="val p80"></td>
+                            <td class="val p20"></td>
+                            <td class="val score-positive">+11.68</td>
+                            <td class="val p80"></td>
+                            <td></td>
+                        </tr>
                 
                     </tfoot>
                 </table>
@@ -14516,8 +15752,28 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community p20"></td>
+                            <td class="val community"></td>
+                            <td class="val community p80"></td>
+                            <td class="val community p20">316.00</td>
+                            <td class="val community">330.30</td>
+                            <td class="val community p80">333.60</td>
+                            <td></td>
+                        </tr>
                         
                         
+                        <tr class="peer-score-row">
+                            <td colspan="2" class="summary-label peer-score-label">Peer Score</td>
+                            <td class="val p20"></td>
+                            <td class="val"></td>
+                            <td class="val p80"></td>
+                            <td class="val p20"></td>
+                            <td class="val score-positive">+93.26</td>
+                            <td class="val p80"></td>
+                            <td></td>
+                        </tr>
                 
                     </tfoot>
                 </table>
@@ -14662,6 +15918,16 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community p20"></td>
+                            <td class="val community"></td>
+                            <td class="val community p80"></td>
+                            <td class="val community p20">2.80</td>
+                            <td class="val community">2.99</td>
+                            <td class="val community p80">3.24</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -14808,6 +16074,16 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community p20"></td>
+                            <td class="val community"></td>
+                            <td class="val community p80"></td>
+                            <td class="val community p20">4.22</td>
+                            <td class="val community">4.45</td>
+                            <td class="val community p80">4.70</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -14954,6 +16230,16 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community p20"></td>
+                            <td class="val community"></td>
+                            <td class="val community p80"></td>
+                            <td class="val community p20">85.43</td>
+                            <td class="val community">87.76</td>
+                            <td class="val community p80">90.02</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -15100,6 +16386,16 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community p20"></td>
+                            <td class="val community"></td>
+                            <td class="val community p80"></td>
+                            <td class="val community p20">3.46</td>
+                            <td class="val community">3.72</td>
+                            <td class="val community p80">4.08</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -15246,6 +16542,16 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community p20"></td>
+                            <td class="val community"></td>
+                            <td class="val community p80"></td>
+                            <td class="val community p20">1,545,000</td>
+                            <td class="val community">1,687,000</td>
+                            <td class="val community p80">4,001,000</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -15392,6 +16698,16 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community p20"></td>
+                            <td class="val community"></td>
+                            <td class="val community p80"></td>
+                            <td class="val community p20">86.10</td>
+                            <td class="val community">87.63</td>
+                            <td class="val community p80">89.16</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -20413,30 +21729,222 @@
             
         <div class="type-summary">
             <div class="stat-card">
-                <div class="stat-value">30</div>
+                <div class="stat-value">32</div>
                 <div class="stat-label">Forecasts</div>
             </div>
             <div class="stat-card">
-                <div class="stat-value">16.0%</div>
+                <div class="stat-value">16.1%</div>
                 <div class="stat-label">Avg Outside View CV<br><span class="stat-sublabel">coefficient of variation, normalized across scales</span></div>
             </div>
             <div class="stat-card">
-                <div class="stat-value">14.8%</div>
+                <div class="stat-value">14.7%</div>
                 <div class="stat-label">Avg Inside View CV<br><span class="stat-sublabel">coefficient of variation, normalized across scales</span></div>
             </div>
             <div class="stat-card">
-                <div class="stat-value">12.0%</div>
+                <div class="stat-value">11.9%</div>
                 <div class="stat-label">Avg Prediction Move<br><span class="stat-sublabel">per forecaster, outside view → inside view</span></div>
             </div>
             <div class="stat-card convergence">
-                <div class="stat-value">-8%</div>
+                <div class="stat-value">-9%</div>
                 <div class="stat-label">Ensemble Spread Change<br><span class="stat-sublabel">−= forecasters converge after inside view</span></div>
             </div>
         </div>
         
-            <div class="range-dist-row"><div class="range-dist-table"><div class="range-dist-title">Outside View Spread (percentage points)</div><table><thead><tr><th style="text-align:left;">Range</th><th style="text-align:right;">Count</th><th style="text-align:right;">%</th><th></th></tr></thead><tbody><tr><td>0–9pp</td><td style="text-align:right; font-family:monospace;">4</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">13%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:13.333333333333334%; opacity:0.6;"></div></td></tr><tr><td>10–19pp</td><td style="text-align:right; font-family:monospace;">10</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">33%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:33.33333333333333%; opacity:0.6;"></div></td></tr><tr><td>20–29pp</td><td style="text-align:right; font-family:monospace;">7</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">23%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:23.333333333333332%; opacity:0.6;"></div></td></tr><tr><td>30–39pp</td><td style="text-align:right; font-family:monospace;">7</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">23%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:23.333333333333332%; opacity:0.6;"></div></td></tr><tr><td>40–49pp</td><td style="text-align:right; font-family:monospace;">0</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">0%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:0.0%; opacity:0.6;"></div></td></tr><tr><td>50+pp</td><td style="text-align:right; font-family:monospace;">0</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">0%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:0.0%; opacity:0.6;"></div></td></tr></tbody></table></div><div class="range-dist-table"><div class="range-dist-title">Inside View Spread (percentage points)</div><table><thead><tr><th style="text-align:left;">Range</th><th style="text-align:right;">Count</th><th style="text-align:right;">%</th><th></th></tr></thead><tbody><tr><td>0–9pp</td><td style="text-align:right; font-family:monospace;">2</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">7%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:6.666666666666667%; opacity:0.6;"></div></td></tr><tr><td>10–19pp</td><td style="text-align:right; font-family:monospace;">15</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">50%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:50.0%; opacity:0.6;"></div></td></tr><tr><td>20–29pp</td><td style="text-align:right; font-family:monospace;">9</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">30%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:30.0%; opacity:0.6;"></div></td></tr><tr><td>30–39pp</td><td style="text-align:right; font-family:monospace;">2</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">7%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:6.666666666666667%; opacity:0.6;"></div></td></tr><tr><td>40–49pp</td><td style="text-align:right; font-family:monospace;">1</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">3%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:3.3333333333333335%; opacity:0.6;"></div></td></tr><tr><td>50+pp</td><td style="text-align:right; font-family:monospace;">0</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">0%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:0.0%; opacity:0.6;"></div></td></tr></tbody></table></div></div>
+            <div class="range-dist-row"><div class="range-dist-table"><div class="range-dist-title">Outside View Spread (percentage points)</div><table><thead><tr><th style="text-align:left;">Range</th><th style="text-align:right;">Count</th><th style="text-align:right;">%</th><th></th></tr></thead><tbody><tr><td>0–9pp</td><td style="text-align:right; font-family:monospace;">4</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">12%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:12.5%; opacity:0.6;"></div></td></tr><tr><td>10–19pp</td><td style="text-align:right; font-family:monospace;">10</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">31%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:31.25%; opacity:0.6;"></div></td></tr><tr><td>20–29pp</td><td style="text-align:right; font-family:monospace;">7</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">22%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:21.875%; opacity:0.6;"></div></td></tr><tr><td>30–39pp</td><td style="text-align:right; font-family:monospace;">8</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">25%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:25.0%; opacity:0.6;"></div></td></tr><tr><td>40–49pp</td><td style="text-align:right; font-family:monospace;">0</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">0%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:0.0%; opacity:0.6;"></div></td></tr><tr><td>50+pp</td><td style="text-align:right; font-family:monospace;">0</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">0%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:0.0%; opacity:0.6;"></div></td></tr></tbody></table></div><div class="range-dist-table"><div class="range-dist-title">Inside View Spread (percentage points)</div><table><thead><tr><th style="text-align:left;">Range</th><th style="text-align:right;">Count</th><th style="text-align:right;">%</th><th></th></tr></thead><tbody><tr><td>0–9pp</td><td style="text-align:right; font-family:monospace;">3</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">9%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:9.375%; opacity:0.6;"></div></td></tr><tr><td>10–19pp</td><td style="text-align:right; font-family:monospace;">15</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">47%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:46.875%; opacity:0.6;"></div></td></tr><tr><td>20–29pp</td><td style="text-align:right; font-family:monospace;">9</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">28%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:28.125%; opacity:0.6;"></div></td></tr><tr><td>30–39pp</td><td style="text-align:right; font-family:monospace;">3</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">9%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:9.375%; opacity:0.6;"></div></td></tr><tr><td>40–49pp</td><td style="text-align:right; font-family:monospace;">1</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">3%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:3.125%; opacity:0.6;"></div></td></tr><tr><td>50+pp</td><td style="text-align:right; font-family:monospace;">0</td><td style="text-align:right; font-family:monospace; color:var(--text-dim);">0%</td><td style="width:40%;"><div style="background:var(--accent); height:12px; border-radius:2px; width:0.0%; opacity:0.6;"></div></td></tr></tbody></table></div></div>
             <div class="forecast-list">
                 
+            <div class="forecast-card">
+                <div class="forecast-header">
+                    <div class="forecast-title">
+                        <a href="https://www.metaculus.com/questions/42197" target="_blank">Q42197</a>
+                        — Will the interest in “parker kingston” change between 2026-02-18 and 2026-02-23 according to Google 
+                    </div>
+                    <div class="forecast-meta">
+                        <span class="badge mode-live">live</span>
+                        <span class="badge stable">Stable</span>
+                        <span class="timestamp">20260218_210206</span>
+                    </div>
+                </div>
+                <div class="mc-options-label">Options: Increases / Doesn't change / Decreases</div>
+                
+                <table class="fc-table">
+                    
+                    <thead>
+                        <tr>
+                            <th>Agent</th>
+                            <th>Model</th>
+                            <th class="ov">Outside View</th>
+                            <th class="iv">Inside View</th>
+                            <th class="shift">Shift</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                    <tr>
+                        <td class="agent">F1</td>
+                        <td class="model">claude-sonnet-4.5</td>
+                        <td class="val ov">2% / 93% / 5%</td>
+                        <td class="val iv">2% / 95% / 3%</td>
+                        <td class="val shift" style="color: #666">+2.2%</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="agent">F2</td>
+                        <td class="model">claude-sonnet-4.5</td>
+                        <td class="val ov">5% / 88% / 7%</td>
+                        <td class="val iv">4% / 84% / 12%</td>
+                        <td class="val shift" style="color: #b8860b">+12.0%</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="agent">F3</td>
+                        <td class="model">gpt-5.2</td>
+                        <td class="val ov">12% / 60% / 28%</td>
+                        <td class="val iv">7% / 78% / 15%</td>
+                        <td class="val shift" style="color: #b8860b">-11.4%</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="agent">F4</td>
+                        <td class="model">o3</td>
+                        <td class="val ov">7% / 75% / 18%</td>
+                        <td class="val iv">13% / 57% / 30%</td>
+                        <td class="val shift" style="color: #b8860b">-5.0%</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="agent">F5</td>
+                        <td class="model">o3</td>
+                        <td class="val ov">7% / 78% / 15%</td>
+                        <td class="val iv">10% / 65% / 25%</td>
+                        <td class="val shift" style="color: #e67700">-16.7%</td>
+                    </tr>
+                    
+                    </tbody>
+                    <tfoot>
+                        
+                        <tr>
+                            <td colspan="2" class="summary-label">Average</td>
+                            <td class="val ov">7% / 79% / 15%</td>
+                            <td class="val iv">7% / 76% / 17%</td>
+                            <td></td>
+                        </tr>
+                        <tr class="final-row">
+                            <td colspan="2" class="summary-label">Final</td>
+                            <td class="val ov"></td>
+                            <td class="val iv final">7% / 76% / 17%</td>
+                            <td></td>
+                        </tr>
+                        
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">17% / 65% / 18%</td>
+                            <td></td>
+                        </tr>
+                        
+                        
+                
+                    </tfoot>
+                </table>
+            </div>
+            
+            <div class="forecast-card">
+                <div class="forecast-header">
+                    <div class="forecast-title">
+                        <a href="https://www.metaculus.com/questions/42196" target="_blank">Q42196</a>
+                        — Will the interest in “passport” change between 2026-02-18 and 2026-02-26 according to Google Trends?
+                    </div>
+                    <div class="forecast-meta">
+                        <span class="badge mode-live">live</span>
+                        <span class="badge converged">Converged</span>
+                        <span class="timestamp">20260218_183505</span>
+                    </div>
+                </div>
+                <div class="mc-options-label">Options: Increases / Doesn't change / Decreases</div>
+                
+                <table class="fc-table">
+                    
+                    <thead>
+                        <tr>
+                            <th>Agent</th>
+                            <th>Model</th>
+                            <th class="ov">Outside View</th>
+                            <th class="iv">Inside View</th>
+                            <th class="shift">Shift</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                    <tr>
+                        <td class="agent">F1</td>
+                        <td class="model">claude-sonnet-4.5</td>
+                        <td class="val ov">58% / 22% / 20%</td>
+                        <td class="val iv">15% / 35% / 50%</td>
+                        <td class="val shift" style="color: #b8860b">-13.8%</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="agent">F2</td>
+                        <td class="model">claude-sonnet-4.5</td>
+                        <td class="val ov">—</td>
+                        <td class="val iv">50% / 26% / 24%</td>
+                        <td class="val shift" style="color: #e67700">+19.0%</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="agent">F3</td>
+                        <td class="model">gpt-5.2</td>
+                        <td class="val ov">38% / 29% / 33%</td>
+                        <td class="val iv">46% / 25% / 29%</td>
+                        <td class="val shift" style="color: #888">—</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="agent">F4</td>
+                        <td class="model">o3</td>
+                        <td class="val ov">42% / 28% / 30%</td>
+                        <td class="val iv">42% / 28% / 30%</td>
+                        <td class="val shift" style="color: #b8860b">+10.5%</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="agent">F5</td>
+                        <td class="model">o3</td>
+                        <td class="val ov">41% / 29% / 30%</td>
+                        <td class="val iv">47% / 28% / 25%</td>
+                        <td class="val shift" style="color: #b8860b">+14.6%</td>
+                    </tr>
+                    
+                    </tbody>
+                    <tfoot>
+                        
+                        <tr>
+                            <td colspan="2" class="summary-label">Average</td>
+                            <td class="val ov">45% / 27% / 28%</td>
+                            <td class="val iv">40% / 28% / 32%</td>
+                            <td></td>
+                        </tr>
+                        <tr class="final-row">
+                            <td colspan="2" class="summary-label">Final</td>
+                            <td class="val ov"></td>
+                            <td class="val iv final">40% / 28% / 32%</td>
+                            <td></td>
+                        </tr>
+                        
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">37% / 37% / 27%</td>
+                            <td></td>
+                        </tr>
+                        
+                        
+                
+                    </tfoot>
+                </table>
+            </div>
+            
             <div class="forecast-card">
                 <div class="forecast-header">
                     <div class="forecast-title">
@@ -20520,6 +22028,12 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">14% / 20% / 66%</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -20610,6 +22124,12 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">28% / 34% / 38%</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -20700,6 +22220,12 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">18% / 25% / 57%</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -20790,6 +22316,12 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">19% / 56% / 25%</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -20880,8 +22412,20 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">55% / 30% / 15%</td>
+                            <td></td>
+                        </tr>
                         
                         
+                        <tr class="peer-score-row">
+                            <td colspan="2" class="summary-label peer-score-label">Peer Score</td>
+                            <td class="val"></td>
+                            <td class="val score-positive">+17.02</td>
+                            <td></td>
+                        </tr>
                 
                     </tfoot>
                 </table>
@@ -20970,8 +22514,20 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">25% / 30% / 45%</td>
+                            <td></td>
+                        </tr>
                         
                         
+                        <tr class="peer-score-row">
+                            <td colspan="2" class="summary-label peer-score-label">Peer Score</td>
+                            <td class="val"></td>
+                            <td class="val score-positive">+9.00</td>
+                            <td></td>
+                        </tr>
                 
                     </tfoot>
                 </table>
@@ -21060,6 +22616,12 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">7% / 47% / 47%</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -21150,6 +22712,12 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">47% / 27% / 27%</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -21240,6 +22808,12 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">18% / 20% / 62%</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -21330,6 +22904,12 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">3% / 43% / 53%</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -21420,6 +23000,12 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">13% / 43% / 43%</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -21510,6 +23096,12 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">31% / 66% / 3%</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -21600,6 +23192,12 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">3% / 87% / 2% / 1% / 7% / 0%</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -21786,6 +23384,12 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">0% / 63% / 30% / 7%</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -23376,6 +24980,12 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community"></td>
+                            <td class="val community">0% / 63% / 30% / 7%</td>
+                            <td></td>
+                        </tr>
                         
                         
                 
@@ -23554,8 +25164,28 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community p20"></td>
+                            <td class="val community"></td>
+                            <td class="val community p80"></td>
+                            <td class="val community p20">0.0000</td>
+                            <td class="val community">0.0000</td>
+                            <td class="val community p80">2.00</td>
+                            <td></td>
+                        </tr>
                         
                         
+                        <tr class="peer-score-row">
+                            <td colspan="2" class="summary-label peer-score-label">Peer Score</td>
+                            <td class="val p20"></td>
+                            <td class="val"></td>
+                            <td class="val p80"></td>
+                            <td class="val p20"></td>
+                            <td class="val score-negative">+0.00</td>
+                            <td class="val p80"></td>
+                            <td></td>
+                        </tr>
                 
                     </tfoot>
                 </table>
@@ -23700,8 +25330,28 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community p20"></td>
+                            <td class="val community"></td>
+                            <td class="val community p80"></td>
+                            <td class="val community p20">28.00</td>
+                            <td class="val community">37.00</td>
+                            <td class="val community p80">45.00</td>
+                            <td></td>
+                        </tr>
                         
                         
+                        <tr class="peer-score-row">
+                            <td colspan="2" class="summary-label peer-score-label">Peer Score</td>
+                            <td class="val p20"></td>
+                            <td class="val"></td>
+                            <td class="val p80"></td>
+                            <td class="val p20"></td>
+                            <td class="val score-positive">+12.62</td>
+                            <td class="val p80"></td>
+                            <td></td>
+                        </tr>
                 
                     </tfoot>
                 </table>
@@ -23846,6 +25496,16 @@
                             <td></td>
                         </tr>
                         
+                        <tr class="community-row">
+                            <td colspan="2" class="summary-label community-label">Community</td>
+                            <td class="val community p20"></td>
+                            <td class="val community"></td>
+                            <td class="val community p80"></td>
+                            <td class="val community p20">8.00</td>
+                            <td class="val community">10.00</td>
+                            <td class="val community p80">13.00</td>
+                            <td></td>
+                        </tr>
                         
                         
                 

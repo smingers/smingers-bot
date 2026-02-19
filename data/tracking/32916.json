@@ -1,11 +1,11 @@
 {
   "tournament_id": 32916,
   "tournament_name": "Tournament 32916",
-  "last_updated": "2026-02-18T11:15:20.656878+00:00",
-  "total_forecasts": 41,
-  "binary_count": 20,
-  "numeric_count": 16,
-  "multiple_choice_count": 2,
+  "last_updated": "2026-02-18T22:33:43.065970+00:00",
+  "total_forecasts": 82,
+  "binary_count": 39,
+  "numeric_count": 33,
+  "multiple_choice_count": 4,
   "binary_stats": {
     "count": 20,
     "mean_difference": -0.03412500000000001,
@@ -280,7 +280,7 @@
     },
     {
       "question_id": 41904,
-      "question_title": "Will the Tisza Party win more parliamentary seats than Fidesz–KDNP in Hungary’s 2026 parliamentary election?",
+      "question_title": "Will the Tisza Party win more parliamentary seats than Fidesz\u2013KDNP in Hungary\u2019s 2026 parliamentary election?",
       "question_type": "binary",
       "question_url": "https://www.metaculus.com/questions/41904/",
       "forecast_timestamp": "2026-02-01T15:16:52.424920+00:00",
@@ -407,7 +407,7 @@
     },
     {
       "question_id": 41896,
-      "question_title": "What is Egypt’s annual inflation rate (year-over-year percent change) for the Urban Consumer Price Index (Urban CPI) for March 2026?",
+      "question_title": "What is Egypt\u2019s annual inflation rate (year-over-year percent change) for the Urban Consumer Price Index (Urban CPI) for March 2026?",
       "question_type": "numeric",
       "question_url": "https://www.metaculus.com/questions/41896/",
       "forecast_timestamp": "2026-01-30T02:07:48.876939+00:00",
@@ -920,6 +920,1009 @@
         "community_iqr": 621.4844445157696,
         "uncertainty_ratio": 0.8004906985728594
       }
+    },
+    {
+      "question_id": 41852,
+      "question_title": "How many vehicles will Tesla report producing in 2025?",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/41852/",
+      "forecast_timestamp": "2026-02-09T06:42:19.582624+00:00",
+      "snapshot_timestamp": "2026-02-18T22:17:31.643746+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 5500000,
+        "community_median": 1687000,
+        "my_lower_quartile": 5125000,
+        "my_upper_quartile": 5875000,
+        "community_lower_quartile": 1545000,
+        "community_upper_quartile": 4001000,
+        "median_difference": 3813000,
+        "my_iqr": 750000,
+        "community_iqr": 2456000,
+        "uncertainty_ratio": 0.305375
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 41853,
+      "question_title": "Will Arizona Senator Mark Kelly, who urged troops to defy \"illegal\" orders, be recalled to active duty in the US military before April 1, 2026?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/41853/",
+      "forecast_timestamp": "2026-02-09T06:51:20.045530+00:00",
+      "snapshot_timestamp": "2026-02-18T22:12:02.242045+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.021,
+        "community_probability": 0.06,
+        "difference": -0.039
+      },
+      "score_data": {
+        "baseline_score": 0,
+        "peer_score": 0,
+        "coverage": 0,
+        "relative_legacy_score": 0,
+        "weighted_coverage": 0,
+        "spot_peer_score": 0,
+        "spot_baseline_score": 0
+      }
+    },
+    {
+      "question_id": 41854,
+      "question_title": "What will be the seasonally adjusted S&P/Case-Shiller US National Home Price Index in the following months? (Jan-26)",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/41854/",
+      "forecast_timestamp": "2026-02-10T12:45:31.057274+00:00",
+      "snapshot_timestamp": "2026-02-18T22:17:31.643746+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 325,
+        "community_median": 330.3,
+        "my_lower_quartile": 320.8,
+        "my_upper_quartile": 329.2,
+        "community_lower_quartile": 316,
+        "community_upper_quartile": 333.6,
+        "median_difference": -5.3,
+        "my_iqr": 8.4,
+        "community_iqr": 17.6,
+        "uncertainty_ratio": 0.477273
+      },
+      "score_data": {
+        "baseline_score": 14.83,
+        "peer_score": 93.26,
+        "coverage": 0.9997,
+        "relative_legacy_score": 0,
+        "weighted_coverage": 0.9997,
+        "spot_peer_score": 0,
+        "spot_baseline_score": -224.99
+      }
+    },
+    {
+      "question_id": 41855,
+      "question_title": "Will Tesla discontinue the Cybertruck before April 1, 2026?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/41855/",
+      "forecast_timestamp": "2026-02-10T15:42:14.711004+00:00",
+      "snapshot_timestamp": "2026-02-18T22:12:02.242045+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.043,
+        "community_probability": 0.1,
+        "difference": -0.057
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 41856,
+      "question_title": "Will the US House of Representatives censure, expel or reprimand any of its members before April 1, 2026?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/41856/",
+      "forecast_timestamp": "2026-02-11T06:50:05.348709+00:00",
+      "snapshot_timestamp": "2026-02-18T22:12:02.242045+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.622,
+        "community_probability": 0.49,
+        "difference": 0.132
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 41857,
+      "question_title": "Will Israel pass the Penal Bill (Death Penalty for Terrorists amendment) into law before April 2026?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/41857/",
+      "forecast_timestamp": "2026-02-11T12:40:18.488553+00:00",
+      "snapshot_timestamp": "2026-02-18T22:17:31.643746+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.212,
+        "community_probability": 0.35,
+        "difference": -0.138
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 41858,
+      "question_title": "Will the United States, Russia or China detonate a nuclear device before April 1, 2026?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/41858/",
+      "forecast_timestamp": "2026-02-12T03:45:36.856504+00:00",
+      "snapshot_timestamp": "2026-02-18T22:17:31.643746+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.019,
+        "community_probability": 0.07,
+        "difference": -0.051
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 41859,
+      "question_title": "What will inflation in the UK be, given Liz Truss wins the Conservative Party leadership candidate contest? (2025)",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/41859/",
+      "forecast_timestamp": "2026-02-13T09:12:24.996225+00:00",
+      "snapshot_timestamp": "2026-02-18T22:17:31.643746+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 7.5,
+        "community_median": 3.566,
+        "my_lower_quartile": 6.458,
+        "my_upper_quartile": 8.542,
+        "community_lower_quartile": 2.445,
+        "community_upper_quartile": 4.488,
+        "median_difference": 3.934,
+        "my_iqr": 2.084,
+        "community_iqr": 2.043,
+        "uncertainty_ratio": 1.020069
+      },
+      "score_data": {
+        "baseline_score": 61.93,
+        "peer_score": 27.48,
+        "coverage": 0.993,
+        "relative_legacy_score": 0,
+        "weighted_coverage": 0.993,
+        "spot_peer_score": 0,
+        "spot_baseline_score": 0
+      }
+    },
+    {
+      "question_id": 42030,
+      "question_title": "Will the North Atlantic sea surface temperature reach a daily record high before May 2026?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/42030/",
+      "forecast_timestamp": "2026-02-11T15:34:51.097853+00:00",
+      "snapshot_timestamp": "2026-02-18T22:17:31.643746+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.354,
+        "community_probability": 0.35,
+        "difference": 0.004
+      },
+      "score_data": {
+        "baseline_score": 46.62,
+        "peer_score": 22.37,
+        "coverage": 0.9997,
+        "relative_legacy_score": 0,
+        "weighted_coverage": 0.9997,
+        "spot_peer_score": 85.45,
+        "spot_baseline_score": -15.2
+      }
+    },
+    {
+      "question_id": 42038,
+      "question_title": "What will the Ifo Business Climate Index level (points) for Germany be for February 2026?",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/42038/",
+      "forecast_timestamp": "2026-02-08T21:19:29.071197+00:00",
+      "snapshot_timestamp": "2026-02-18T22:17:31.643746+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 85,
+        "community_median": 87.63,
+        "my_lower_quartile": 83.75,
+        "my_upper_quartile": 86.25,
+        "community_lower_quartile": 86.1,
+        "community_upper_quartile": 89.16,
+        "median_difference": -2.63,
+        "my_iqr": 2.5,
+        "community_iqr": 3.06,
+        "uncertainty_ratio": 0.816993
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42039,
+      "question_title": "What will be the upper bound of the Federal Funds Target Range on March 31, 2026?",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/42039/",
+      "forecast_timestamp": "2026-02-09T06:47:15.519970+00:00",
+      "snapshot_timestamp": "2026-02-18T22:17:31.643746+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 3.5,
+        "community_median": 3.722,
+        "my_lower_quartile": 3.208,
+        "my_upper_quartile": 3.792,
+        "community_lower_quartile": 3.465,
+        "community_upper_quartile": 4.078,
+        "median_difference": -0.222,
+        "my_iqr": 0.584,
+        "community_iqr": 0.613,
+        "uncertainty_ratio": 0.952692
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42040,
+      "question_title": "What will the Ifo Business Climate Index level (points) for Germany be for March 2026?",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/42040/",
+      "forecast_timestamp": "2026-02-09T14:08:58.042461+00:00",
+      "snapshot_timestamp": "2026-02-18T22:17:31.643746+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 82.5,
+        "community_median": 87.76,
+        "my_lower_quartile": 81.04,
+        "my_upper_quartile": 83.95,
+        "community_lower_quartile": 85.43,
+        "community_upper_quartile": 90.02,
+        "median_difference": -5.26,
+        "my_iqr": 2.91,
+        "community_iqr": 4.59,
+        "uncertainty_ratio": 0.633987
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42042,
+      "question_title": "What will the seasonally adjusted U-3 unemployment rate (percent) be in the United States for March 2026?",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/42042/",
+      "forecast_timestamp": "2026-02-10T05:58:10.030542+00:00",
+      "snapshot_timestamp": "2026-02-18T22:24:49.928567+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 5.001,
+        "community_median": 4.447,
+        "my_lower_quartile": 4.585,
+        "my_upper_quartile": 5.417,
+        "community_lower_quartile": 4.224,
+        "community_upper_quartile": 4.701,
+        "median_difference": 0.554,
+        "my_iqr": 0.832,
+        "community_iqr": 0.477,
+        "uncertainty_ratio": 1.744235
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42043,
+      "question_title": "What will be the US national average price for regular gasoline (dollars per gallon) for the month of March 2026?",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/42043/",
+      "forecast_timestamp": "2026-02-10T06:54:43.604809+00:00",
+      "snapshot_timestamp": "2026-02-18T22:24:49.928567+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 4.5,
+        "community_median": 2.992,
+        "my_lower_quartile": 4.25,
+        "my_upper_quartile": 4.75,
+        "community_lower_quartile": 2.804,
+        "community_upper_quartile": 3.238,
+        "median_difference": 1.508,
+        "my_iqr": 0.5,
+        "community_iqr": 0.434,
+        "uncertainty_ratio": 1.152074
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42044,
+      "question_title": "Will Ofcom publish at least one enforcement decision under the UK Online Safety Act that includes a monetary penalty amount?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/42044/",
+      "forecast_timestamp": "2026-02-10T07:53:00.869016+00:00",
+      "snapshot_timestamp": "2026-02-18T22:24:49.928567+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.762,
+        "community_probability": 0.85,
+        "difference": -0.088
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42045,
+      "question_title": "Will WHO publish an update indicating at least one additional country or territory has been certified malaria-free, before May 1, 2026?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/42045/",
+      "forecast_timestamp": "2026-02-10T09:50:17.829808+00:00",
+      "snapshot_timestamp": "2026-02-18T22:24:49.928567+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.282,
+        "community_probability": 0.25,
+        "difference": 0.032
+      },
+      "score_data": {
+        "baseline_score": 81.63,
+        "peer_score": 20.29,
+        "coverage": 0.836,
+        "relative_legacy_score": 0,
+        "weighted_coverage": 0.9998,
+        "spot_peer_score": 34.89,
+        "spot_baseline_score": 10.21
+      }
+    },
+    {
+      "question_id": 42046,
+      "question_title": "Will the European Commission\u2019s AI Office publish a revised draft (a new version) of the general-purpose AI (GPAI) code of practice?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/42046/",
+      "forecast_timestamp": "2026-02-10T14:16:57.469676+00:00",
+      "snapshot_timestamp": "2026-02-18T22:24:49.928567+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.04,
+        "community_probability": 0.15,
+        "difference": -0.11
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42047,
+      "question_title": "What will be the US national average price for regular gasoline (dollars per gallon) for the month of April 2026?",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/42047/",
+      "forecast_timestamp": "2026-02-11T12:45:05.655649+00:00",
+      "snapshot_timestamp": "2026-02-18T22:24:49.928567+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 4.5,
+        "community_median": 3.061,
+        "my_lower_quartile": 4.25,
+        "my_upper_quartile": 4.75,
+        "community_lower_quartile": 2.83,
+        "community_upper_quartile": 3.37,
+        "median_difference": 1.439,
+        "my_iqr": 0.5,
+        "community_iqr": 0.54,
+        "uncertainty_ratio": 0.925926
+      },
+      "score_data": {
+        "baseline_score": 53.6,
+        "peer_score": 11.68,
+        "coverage": 0.998,
+        "relative_legacy_score": 0,
+        "weighted_coverage": 0.998,
+        "spot_peer_score": 14.14,
+        "spot_baseline_score": 32.58
+      }
+    },
+    {
+      "question_id": 42048,
+      "question_title": "Will the ECDC weekly SARS-CoV-2 test positivity series show four consecutive week-over-week increases for the EU/EEA, before May 1, 2026?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/42048/",
+      "forecast_timestamp": "2026-02-11T19:50:34.051834+00:00",
+      "snapshot_timestamp": "2026-02-18T22:24:49.928567+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.22,
+        "community_probability": 0.25,
+        "difference": -0.03
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42049,
+      "question_title": "What will be the CDC-reported cumulative number of confirmed U.S. measles cases in 2026, as of April 24, 2026?",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/42049/",
+      "forecast_timestamp": "2026-02-12T09:39:02.539220+00:00",
+      "snapshot_timestamp": "2026-02-18T22:24:49.928567+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 5294,
+        "community_median": 2274,
+        "my_lower_quartile": 4902,
+        "my_upper_quartile": 5686,
+        "community_lower_quartile": 1509,
+        "community_upper_quartile": 3625,
+        "median_difference": 3020,
+        "my_iqr": 784,
+        "community_iqr": 2116,
+        "uncertainty_ratio": 0.37051
+      },
+      "score_data": {
+        "baseline_score": 81.63,
+        "peer_score": 20.29,
+        "coverage": 0.836,
+        "relative_legacy_score": 0,
+        "weighted_coverage": 0.9998,
+        "spot_peer_score": 34.89,
+        "spot_baseline_score": 10.21
+      }
+    },
+    {
+      "question_id": 42050,
+      "question_title": "How many new civil antitrust merger challenges will the DOJ file against 'Big Tech' firms before May 1, 2026?",
+      "question_type": "discrete",
+      "question_url": "https://www.metaculus.com/questions/42050/",
+      "forecast_timestamp": "2026-02-15T01:07:01.258837+00:00",
+      "snapshot_timestamp": "2026-02-18T22:24:49.928567+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 5,
+        "community_median": 0,
+        "my_lower_quartile": 5,
+        "my_upper_quartile": 5,
+        "community_lower_quartile": 0,
+        "community_upper_quartile": 2,
+        "median_difference": 5,
+        "my_iqr": 0,
+        "community_iqr": 2,
+        "uncertainty_ratio": 0.0
+      },
+      "score_data": {
+        "baseline_score": 0,
+        "peer_score": 0,
+        "coverage": 0,
+        "relative_legacy_score": 0,
+        "weighted_coverage": 0,
+        "spot_peer_score": 0,
+        "spot_baseline_score": 0
+      }
+    },
+    {
+      "question_id": 42052,
+      "question_title": "Will the average daily price of kerosene jet fuel in the US Gulf Coast be greater than $2.50 per gallon in March 2026?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/42052/",
+      "forecast_timestamp": "2026-02-13T18:05:27.874910+00:00",
+      "snapshot_timestamp": "2026-02-18T22:24:49.928567+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.074,
+        "community_probability": 0.217,
+        "difference": -0.143
+      },
+      "score_data": {
+        "baseline_score": 40.53,
+        "peer_score": 11.65,
+        "coverage": 0.999,
+        "relative_legacy_score": 0,
+        "weighted_coverage": 0.999,
+        "spot_peer_score": 19.11,
+        "spot_baseline_score": 22.56
+      }
+    },
+    {
+      "question_id": 42053,
+      "question_title": "Will the CDC-reported cumulative number of confirmed U.S. measles cases in 2026, as of April 24, 2026, be at least 2,000?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/42053/",
+      "forecast_timestamp": "2026-02-13T21:04:54.856584+00:00",
+      "snapshot_timestamp": "2026-02-18T22:24:49.928567+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.728,
+        "community_probability": 0.72,
+        "difference": 0.008
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42077,
+      "question_title": "How many MPs will Reform UK have on May 7, 2026?",
+      "question_type": "discrete",
+      "question_url": "https://www.metaculus.com/questions/42077/",
+      "forecast_timestamp": "2026-02-09T03:45:27.649400+00:00",
+      "snapshot_timestamp": "2026-02-18T22:24:49.928567+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 15,
+        "community_median": 10,
+        "my_lower_quartile": 14,
+        "my_upper_quartile": 16,
+        "community_lower_quartile": 8,
+        "community_upper_quartile": 13,
+        "median_difference": 5,
+        "my_iqr": 2,
+        "community_iqr": 5,
+        "uncertainty_ratio": 0.4
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42078,
+      "question_title": "Will Iran's Internet not be \"heavily filtered/whitelisted\" for most users before May 2026?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/42078/",
+      "forecast_timestamp": "2026-02-09T23:31:45.503413+00:00",
+      "snapshot_timestamp": "2026-02-18T22:29:00.418374+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.158,
+        "community_probability": 0.15,
+        "difference": 0.008
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42095,
+      "question_title": "Will any Individual Neutral Athlete (Russian and Belarusian athletes) win any medals at the 2026 Winter Olympics?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/42095/",
+      "forecast_timestamp": "2026-02-14T14:24:53.937616+00:00",
+      "snapshot_timestamp": "2026-02-18T22:29:00.418374+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.49,
+        "community_probability": 0.35,
+        "difference": 0.14
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42096,
+      "question_title": "How many maritime piracy & armed robbery incidents will the International Maritime Bureau report for Q1 2026?",
+      "question_type": "discrete",
+      "question_url": "https://www.metaculus.com/questions/42096/",
+      "forecast_timestamp": "2026-02-14T16:19:00.723939+00:00",
+      "snapshot_timestamp": "2026-02-18T22:29:00.418374+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 30,
+        "community_median": 37,
+        "my_lower_quartile": 29,
+        "my_upper_quartile": 31,
+        "community_lower_quartile": 28,
+        "community_upper_quartile": 45,
+        "median_difference": -7,
+        "my_iqr": 2,
+        "community_iqr": 17,
+        "uncertainty_ratio": 0.117647
+      },
+      "score_data": {
+        "baseline_score": 131.76,
+        "peer_score": 12.62,
+        "coverage": 0.939,
+        "relative_legacy_score": 0,
+        "weighted_coverage": 0,
+        "spot_peer_score": 0,
+        "spot_baseline_score": 0
+      }
+    },
+    {
+      "question_id": 42098,
+      "question_title": "What will US airline passenger volume be for these weeks in February 2026, according to the TSA? (February 9, 2026-February 15, 2026)",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/42098/",
+      "forecast_timestamp": "2026-02-15T14:03:58.945635+00:00",
+      "snapshot_timestamp": "2026-02-18T22:29:00.418374+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 14500000,
+        "community_median": 15670000,
+        "my_lower_quartile": 14290000,
+        "my_upper_quartile": 14710000,
+        "community_lower_quartile": 14310000,
+        "community_upper_quartile": 16490000,
+        "median_difference": -1170000,
+        "my_iqr": 420000,
+        "community_iqr": 2180000,
+        "uncertainty_ratio": 0.192661
+      },
+      "score_data": {
+        "baseline_score": 31.91,
+        "peer_score": 19.26,
+        "coverage": 0.856,
+        "relative_legacy_score": -0.17,
+        "weighted_coverage": 0,
+        "spot_peer_score": 25.83,
+        "spot_baseline_score": 37.29
+      }
+    },
+    {
+      "question_id": 42100,
+      "question_title": "What will be the Chinese model share on Openrouter for the week of April 19, 2026?",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/42100/",
+      "forecast_timestamp": "2026-02-16T15:34:13.100466+00:00",
+      "snapshot_timestamp": "2026-02-18T22:29:00.418374+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 30,
+        "community_median": 29.49,
+        "my_lower_quartile": 28.75,
+        "my_upper_quartile": 31.25,
+        "community_lower_quartile": 22.03,
+        "community_upper_quartile": 37.35,
+        "median_difference": 0.51,
+        "my_iqr": 2.5,
+        "community_iqr": 15.32,
+        "uncertainty_ratio": 0.163185
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42101,
+      "question_title": "What will be the abstention rate in the first round of the 2026 French municipal elections?",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/42101/",
+      "forecast_timestamp": "2026-02-17T15:46:16.106639+00:00",
+      "snapshot_timestamp": "2026-02-18T22:29:00.418374+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 40,
+        "community_median": 43.28,
+        "my_lower_quartile": 38.75,
+        "my_upper_quartile": 41.25,
+        "community_lower_quartile": 38.92,
+        "community_upper_quartile": 47.85,
+        "median_difference": -3.28,
+        "my_iqr": 2.5,
+        "community_iqr": 8.93,
+        "uncertainty_ratio": 0.279955
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42104,
+      "question_title": "Which party will win the Quebec provincial by-election in Chicoutimi scheduled for February 23, 2026?",
+      "question_type": "multiple_choice",
+      "question_url": "https://www.metaculus.com/questions/42104/",
+      "forecast_timestamp": "2026-02-14T04:58:22.623882+00:00",
+      "snapshot_timestamp": "2026-02-18T22:33:43.065970+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "multiple_choice",
+        "my_probabilities": {
+          "CAQ": 0.104,
+          "Parti Qu\u00e9b\u00e9cois (PQ)": 0.664,
+          "Quebec Liberal Party (PLQ)": 0.03,
+          "Qu\u00e9bec solidaire (QS)": 0.016,
+          "Conservative Party of Quebec": 0.176,
+          "Other": 0.01
+        },
+        "community_probabilities": {
+          "CAQ": 0.03,
+          "Parti Qu\u00e9b\u00e9cois (PQ)": 0.87,
+          "Quebec Liberal Party (PLQ)": 0.015,
+          "Qu\u00e9bec solidaire (QS)": 0.01,
+          "Conservative Party of Quebec": 0.07,
+          "Other": 0.005
+        },
+        "differences": {
+          "CAQ": 0.074,
+          "Parti Qu\u00e9b\u00e9cois (PQ)": -0.206,
+          "Quebec Liberal Party (PLQ)": 0.015,
+          "Qu\u00e9bec solidaire (QS)": 0.006,
+          "Conservative Party of Quebec": 0.106,
+          "Other": 0.005
+        },
+        "max_difference_option": "Parti Qu\u00e9b\u00e9cois (PQ)",
+        "max_difference_value": -0.206
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42105,
+      "question_title": "How many commercial aircraft deliveries will Airbus report for February 2026 ?",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/42105/",
+      "forecast_timestamp": "2026-02-14T10:53:02.436638+00:00",
+      "snapshot_timestamp": "2026-02-18T22:33:43.065970+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 75.01,
+        "community_median": 37.62,
+        "my_lower_quartile": 68.77,
+        "my_upper_quartile": 81.26,
+        "community_lower_quartile": 25.11,
+        "community_upper_quartile": 52.33,
+        "median_difference": 37.39,
+        "my_iqr": 12.49,
+        "community_iqr": 27.22,
+        "uncertainty_ratio": 0.458854
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42106,
+      "question_title": "Will Alliance 90/The Greens (B\u00fcndnis 90/Die Gr\u00fcnen) win the most seats in the Baden-W\u00fcrttemberg Landtag election?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/42106/",
+      "forecast_timestamp": "2026-02-14T15:18:01.791266+00:00",
+      "snapshot_timestamp": "2026-02-18T22:33:43.065970+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.172,
+        "community_probability": 0.21,
+        "difference": -0.038
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42107,
+      "question_title": "What will be the statewide voter turnout percentage in Bavaria\u2019s local elections (Kommunalwahlen)?",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/42107/",
+      "forecast_timestamp": "2026-02-14T21:16:21.655835+00:00",
+      "snapshot_timestamp": "2026-02-18T22:33:43.065970+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 52.5,
+        "community_median": 58.91,
+        "my_lower_quartile": 50.21,
+        "my_upper_quartile": 54.79,
+        "community_lower_quartile": 55.41,
+        "community_upper_quartile": 62.3,
+        "median_difference": -6.41,
+        "my_iqr": 4.58,
+        "community_iqr": 6.89,
+        "uncertainty_ratio": 0.664731
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42108,
+      "question_title": "Will a National Rally\u2013labeled list win the mayoralty of at least one of Marseille, Lyon, or Toulouse in France\u2019s 2026 municipal elections ?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/42108/",
+      "forecast_timestamp": "2026-02-16T03:42:31.544204+00:00",
+      "snapshot_timestamp": "2026-02-18T22:33:43.065970+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.212,
+        "community_probability": 0.2,
+        "difference": 0.012
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42109,
+      "question_title": "How many commercial aircraft deliveries will Airbus report for March 2026 ?",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/42109/",
+      "forecast_timestamp": "2026-02-16T14:00:52.219261+00:00",
+      "snapshot_timestamp": "2026-02-18T22:33:43.065970+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 75.01,
+        "community_median": 67.9,
+        "my_lower_quartile": 68.77,
+        "my_upper_quartile": 81.26,
+        "community_lower_quartile": 56.23,
+        "community_upper_quartile": 78.95,
+        "median_difference": 7.11,
+        "my_iqr": 12.49,
+        "community_iqr": 22.72,
+        "uncertainty_ratio": 0.549736
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42110,
+      "question_title": "Who will win the Wisconsin Supreme Court election scheduled for April 7, 2026?",
+      "question_type": "multiple_choice",
+      "question_url": "https://www.metaculus.com/questions/42110/",
+      "forecast_timestamp": "2026-02-16T19:51:12.889918+00:00",
+      "snapshot_timestamp": "2026-02-18T22:33:43.065970+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "multiple_choice",
+        "my_probabilities": {
+          "Maria Lazar": 0.248,
+          "Chris Taylor": 0.739,
+          "Someone else": 0.013
+        },
+        "community_probabilities": {
+          "Maria Lazar": 0.31,
+          "Chris Taylor": 0.66,
+          "Someone else": 0.03
+        },
+        "differences": {
+          "Maria Lazar": -0.062,
+          "Chris Taylor": 0.079,
+          "Someone else": -0.017
+        },
+        "max_difference_option": "Chris Taylor",
+        "max_difference_value": 0.079
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42111,
+      "question_title": "Will Palestinian local elections be held on April 25, 2026?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/42111/",
+      "forecast_timestamp": "2026-02-17T01:01:29.800299+00:00",
+      "snapshot_timestamp": "2026-02-18T22:33:43.065970+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.712,
+        "community_probability": 0.7,
+        "difference": 0.012
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42112,
+      "question_title": "Will the official result of the Tobago House of Assembly election held on January 12, 2026 be overturned before May 1, 2026?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/42112/",
+      "forecast_timestamp": "2026-02-17T11:14:07.178604+00:00",
+      "snapshot_timestamp": "2026-02-18T22:33:43.065970+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.01,
+        "community_probability": 0.03,
+        "difference": -0.02
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42113,
+      "question_title": "Will Ethiopia have acceded to the World Trade Organization (WTO) (i.e., become a WTO member) by May 1, 2026?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/42113/",
+      "forecast_timestamp": "2026-02-17T12:50:21.581533+00:00",
+      "snapshot_timestamp": "2026-02-18T22:33:43.065970+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.064,
+        "community_probability": 0.15,
+        "difference": -0.086
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42114,
+      "question_title": "How many commercial aircraft deliveries will Airbus report for April 2026 ?",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/42114/",
+      "forecast_timestamp": "2026-02-18T12:51:36.405894+00:00",
+      "snapshot_timestamp": "2026-02-18T22:33:43.065970+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 75.01,
+        "community_median": 63.31,
+        "my_lower_quartile": 68.77,
+        "my_upper_quartile": 81.26,
+        "community_lower_quartile": 51.2,
+        "community_upper_quartile": 75.71,
+        "median_difference": 11.7,
+        "my_iqr": 12.49,
+        "community_iqr": 24.51,
+        "uncertainty_ratio": 0.509588
+      },
+      "score_data": null
     }
   ],
   "resolution_stats": {
@@ -938,5 +1941,6 @@
     "best_score": 28.494379244212205,
     "worst_score": 1.2734055137079139,
     "total_spot_peer_score": 49.42635134134397
-  }
+  },
+  "discrete_count": 6
 }
