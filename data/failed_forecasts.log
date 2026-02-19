@@ -82,3 +82,12 @@ Success: 0 | Failed: 1
 
 🟡 OTHER Q42099: What will US airline passenger volume be for these weeks in 
   IntegrityError: NOT NULL constraint failed: forecasts.final_prediction
+
+======================================================================
+RUN: 2026-02-19T07:40:59.687523+00:00
+Tournament: 32916 | Selection: new-only | Via: run_bot.py
+Success: 0 | Failed: 1
+======================================================================
+
+🟡 OTHER Q42116: Will CDU win the most seats in the Baden-Württemberg Landtag
+  LLMError: LLM call failed after 3 attempts: litellm.APIError: APIError: OpenrouterException - {"error":{"message":"Internal Server Error","code":500}}
