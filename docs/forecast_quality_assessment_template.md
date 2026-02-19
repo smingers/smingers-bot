@@ -197,7 +197,7 @@ The outside view prompt asks each instance to:
 
 ---
 
-#### Step 1 Output 3 (o3-mini)
+#### Step 1 Output 3 (GPT-5.2)
 
 - **Source Analysis:**
 - **Reference Class Selection:**
@@ -242,7 +242,7 @@ The outside view prompt asks each instance to:
 |--------|-------|------------|-------|--------------|--------------|
 | S1-1 | Sonnet 4.5 | | /16 | | |
 | S1-2 | Sonnet 4.5 | | /16 | | |
-| S1-3 | o3-mini | | /16 | | |
+| S1-3 | GPT-5.2 | | /16 | | |
 | S1-4 | o3 | | /16 | | |
 | S1-5 | o3 | | /16 | | |
 
@@ -273,8 +273,8 @@ Plus complete the calibration checklist: paraphrase, base rate stated, consisten
 |-----------------|-------|---------------------|--------------|
 | S2-1 | Sonnet 4.5 | S1-1 (self-model) | |
 | S2-2 | Sonnet 4.5 | S1-4 (o3) | |
-| S2-3 | o3-mini | S1-2 (Sonnet 4.5) | |
-| S2-4 | o3 | S1-3 (o3-mini) | |
+| S2-3 | GPT-5.2 | S1-2 (Sonnet 4.5) | |
+| S2-4 | o3 | S1-3 (GPT-5.2) | |
 | S2-5 | o3 | S1-5 (self-model) | |
 
 ### Step 2 Output Assessments
@@ -319,7 +319,7 @@ Plus complete the calibration checklist: paraphrase, base rate stated, consisten
 
 ---
 
-#### Step 2 Output 3 (o3-mini): receives S1-2
+#### Step 2 Output 3 (GPT-5.2): receives S1-2
 
 - **Evidence Weighting:**
 - **Update from Base Rate:** (Input: → Output: , Δ = )
@@ -364,7 +364,7 @@ Plus complete the calibration checklist: paraphrase, base rate stated, consisten
 |--------|-------|----------|-------|-------|-------|-------------------|
 | S2-1 | Sonnet 4.5 | | | | /16 | Yes/No/Partial |
 | S2-2 | Sonnet 4.5 | | | | /16 | Yes/No/Partial |
-| S2-3 | o3-mini | | | | /16 | Yes/No/Partial |
+| S2-3 | GPT-5.2 | | | | /16 | Yes/No/Partial |
 | S2-4 | o3 | | | | /16 | Yes/No/Partial |
 | S2-5 | o3 | | | | /16 | Yes/No/Partial |
 
@@ -468,14 +468,14 @@ Facts all/most outputs correctly identified:
 Step 1 Outputs (Outside View):
   S1-1 (Sonnet 4.5): %
   S1-2 (Sonnet 4.5): %
-  S1-3 (o3-mini):    %
+  S1-3 (GPT-5.2):    %
   S1-4 (o3):         %
   S1-5 (o3):         %
 
 Step 2 Outputs (Inside View):
   S2-1 (Sonnet 4.5): % (received S1-1)
   S2-2 (Sonnet 4.5): % (received S1-4)
-  S2-3 (o3-mini):    % (received S1-2)
+  S2-3 (GPT-5.2):    % (received S1-2)
   S2-4 (o3):         % (received S1-3)
   S2-5 (o3):         % (received S1-5)
 
@@ -487,14 +487,14 @@ Final Aggregated: %
 Step 1 Outputs (Outside View) - Median [10th, 90th]:
   S1-1 (Sonnet 4.5): X [Y, Z]
   S1-2 (Sonnet 4.5): X [Y, Z]
-  S1-3 (o3-mini):    X [Y, Z]
+  S1-3 (GPT-5.2):    X [Y, Z]
   S1-4 (o3):         X [Y, Z]
   S1-5 (o3):         X [Y, Z]
 
 Step 2 Outputs (Inside View) - Median [10th, 90th]:
   S2-1 (Sonnet 4.5): X [Y, Z] (received S1-1)
   S2-2 (Sonnet 4.5): X [Y, Z] (received S1-4)
-  S2-3 (o3-mini):    X [Y, Z] (received S1-2)
+  S2-3 (GPT-5.2):    X [Y, Z] (received S1-2)
   S2-4 (o3):         X [Y, Z] (received S1-3)
   S2-5 (o3):         X [Y, Z] (received S1-5)
 
@@ -506,14 +506,14 @@ Final Aggregated: Median X [10th: Y, 90th: Z]
 Step 1 Outputs (Outside View) - Option A / Option B / Option C / ...:
   S1-1 (Sonnet 4.5): % / % / % / ...
   S1-2 (Sonnet 4.5): % / % / % / ...
-  S1-3 (o3-mini):    % / % / % / ...
+  S1-3 (GPT-5.2):    % / % / % / ...
   S1-4 (o3):         % / % / % / ...
   S1-5 (o3):         % / % / % / ...
 
 Step 2 Outputs (Inside View):
   S2-1 (Sonnet 4.5): % / % / % / ... (received S1-1)
   S2-2 (Sonnet 4.5): % / % / % / ... (received S1-4)
-  S2-3 (o3-mini):    % / % / % / ... (received S1-2)
+  S2-3 (GPT-5.2):    % / % / % / ... (received S1-2)
   S2-4 (o3):         % / % / % / ... (received S1-3)
   S2-5 (o3):         % / % / % / ... (received S1-5)
 
