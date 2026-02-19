@@ -29,11 +29,23 @@ from __future__ import annotations
 import argparse
 import json
 import os
-import subprocess
 import sys
 import time
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
+
+# Import shared scraping utilities from the production module
+from src.scraping.community_prediction import (
+    BASE_URL,
+    BROWSER_ARGS,
+    JS_EXTRACTOR,  # noqa: F401 — imported for reference, used via extract_community_data
+    USER_AGENT,
+    check_cloudflare_block,
+    extract_community_data,
+    parse_p_yes,
+    start_xvfb,
+    stop_xvfb,
+)
 
 # ---------------------------------------------------------------------------
 # Test questions: actual underlying questions referenced by MiniBench
@@ -61,103 +73,6 @@ TEST_QUESTIONS: list[TestQuestion] = [
         41138, "Will there be a bilateral ceasefire in the Russo-Ukrainian conflict before 2027?"
     ),
 ]
-
-BASE_URL = "https://www.metaculus.com/questions"
-
-
-# ---------------------------------------------------------------------------
-# JS extractor (verbatim from CLAUDE.md)
-# ---------------------------------------------------------------------------
-
-# Production extractor: finds the community prediction history and takes the last entry.
-# The Next.js payload contains a long history array of {centers, forecaster_count} objects
-# (one per daily snapshot). The last entry is the current community prediction.
-# After the history block ends (~pos 254K), personal forecasts follow.
-JS_EXTRACTOR = r"""
-() => {
-    const scripts=[...document.querySelectorAll('script')];
-    let d='';
-    for(const s of scripts) if(s.textContent.includes('self.__next_f')) d+=s.textContent;
-    const r={};
-    const pt=document.body.innerText;
-
-    // Resolution from visible page text
-    const rm=pt.match(/RESOLVED\s*\n\s*(.+)/);
-    r.res=rm?rm[1].trim():null;
-
-    // Question type
-    const tm=d.match(/\\?"type\\?":\\?"(binary|numeric|multiple_choice|date|discrete)\\?"/);
-    r.type=tm?tm[1]:null;
-
-    // Collect ALL centers values with their positions.
-    // The community prediction history is a long run of single-value centers
-    // (e.g. 0.25, 0.30, etc.) in the first ~250K of the payload.
-    // We want the LAST one in this history block.
-    const centersAll = [];
-    const cRe = /centers\\?"\s*:\s*\[([^\]]*)\]/g;
-    let m;
-    while ((m = cRe.exec(d)) !== null) {
-        const v = m[1].trim();
-        // History entries are single float values (e.g. "0.25")
-        // Skip multi-value entries (those are from related questions)
-        if (v && !v.includes(',')) {
-            centersAll.push({value: parseFloat(v), position: m.index});
-        }
-    }
-
-    // The history block is a contiguous run of single-value centers.
-    // Find the last entry in the first contiguous block (before a gap).
-    // A "gap" means the position jumps by more than 50K (related questions start later).
-    if (centersAll.length > 0) {
-        // Find end of the first contiguous block
-        let lastHistoryIdx = 0;
-        for (let i = 1; i < centersAll.length; i++) {
-            if (centersAll[i].position - centersAll[i-1].position > 50000) break;
-            lastHistoryIdx = i;
-        }
-        const histLen = lastHistoryIdx + 1;
-        r.centers = String(centersAll[lastHistoryIdx].value);
-        r.history_length = histLen;
-
-        // Extract trend data: last 7, 14, 30 data points
-        const histValues = centersAll.slice(0, histLen).map(c => c.value);
-        r.current = histValues[histValues.length - 1];
-        if (histValues.length >= 7) {
-            r.week_ago = histValues[histValues.length - 7];
-            r.week_delta = +(r.current - r.week_ago).toFixed(4);
-        }
-        if (histValues.length >= 14) {
-            r.two_weeks_ago = histValues[histValues.length - 14];
-            r.two_week_delta = +(r.current - r.two_weeks_ago).toFixed(4);
-        }
-        if (histValues.length >= 30) {
-            r.month_ago = histValues[histValues.length - 30];
-            r.month_delta = +(r.current - r.month_ago).toFixed(4);
-        }
-
-        // Min/max/range over full history
-        r.history_min = Math.min(...histValues);
-        r.history_max = Math.max(...histValues);
-    }
-
-    // Similarly, find the last forecaster_count in the history block.
-    const fcAll = [];
-    const fcRe = /forecaster_count\\?"\s*:\s*(\d+)/g;
-    while ((m = fcRe.exec(d)) !== null) {
-        fcAll.push({value: +m[1], position: m.index});
-    }
-    if (fcAll.length > 0) {
-        let lastFcIdx = 0;
-        for (let i = 1; i < fcAll.length; i++) {
-            if (fcAll[i].position - fcAll[i-1].position > 50000) break;
-            lastFcIdx = i;
-        }
-        r.fc = fcAll[lastFcIdx].value;
-    }
-
-    return JSON.stringify(r);
-}
-"""
 
 
 # ---------------------------------------------------------------------------
@@ -199,38 +114,8 @@ class ScrapeResult:
 
 
 # ---------------------------------------------------------------------------
-# Xvfb management
+# Display mode detection
 # ---------------------------------------------------------------------------
-
-
-def start_xvfb() -> subprocess.Popen:
-    """Launch Xvfb on a free display number. Returns the process handle."""
-    for display_num in range(99, 110):
-        display = f":{display_num}"
-        lock_file = f"/tmp/.X{display_num}-lock"
-        if os.path.exists(lock_file):
-            continue
-        proc = subprocess.Popen(
-            ["Xvfb", display, "-screen", "0", "1280x720x24", "-nolisten", "tcp"],
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
-        )
-        time.sleep(1.0)
-        if proc.poll() is None:  # Still running
-            os.environ["DISPLAY"] = display
-            print(f"  Xvfb started on display {display} (pid {proc.pid})")
-            return proc
-        # Failed to start on this display, try next
-    raise RuntimeError("Could not find a free display for Xvfb (tried :99 through :109)")
-
-
-def stop_xvfb(proc: subprocess.Popen) -> None:
-    """Terminate the Xvfb process."""
-    proc.terminate()
-    try:
-        proc.wait(timeout=5)
-    except subprocess.TimeoutExpired:
-        proc.kill()
 
 
 def detect_display_mode(force_xvfb: bool, force_no_xvfb: bool) -> str:
@@ -247,77 +132,6 @@ def detect_display_mode(force_xvfb: bool, force_no_xvfb: bool) -> str:
     if display:
         return "headed"  # or xvfb_external if someone ran xvfb-run
     return "xvfb_internal"
-
-
-# ---------------------------------------------------------------------------
-# Cloudflare detection
-# ---------------------------------------------------------------------------
-
-
-def check_cloudflare_block(page) -> bool:
-    """Check if the current page is a Cloudflare challenge."""
-    title = page.title().lower()
-    cloudflare_titles = ["just a moment", "attention required", "access denied"]
-    if any(t in title for t in cloudflare_titles):
-        return True
-
-    try:
-        body_text = page.evaluate("() => document.body?.innerText?.substring(0, 1000) || ''")
-        indicators = [
-            "checking your browser",
-            "cf-browser-verification",
-            "enable javascript and cookies",
-            "ray id:",
-        ]
-        body_lower = body_text.lower()
-        if any(ind in body_lower for ind in indicators):
-            return True
-    except Exception:
-        pass
-
-    return False
-
-
-# ---------------------------------------------------------------------------
-# Extraction and parsing
-# ---------------------------------------------------------------------------
-
-
-def extract_community_data(page) -> dict:
-    """Run the JS extractor and return parsed JSON."""
-    raw = page.evaluate(JS_EXTRACTOR)
-    if not raw:
-        return {}
-    try:
-        return json.loads(raw)
-    except (json.JSONDecodeError, TypeError):
-        return {"_raw_string": raw}
-
-
-def parse_p_yes(data: dict) -> float | None:
-    """Extract community P(Yes) for a binary question.
-
-    The extractor now returns `centers` as a single float string (the last
-    entry in the community prediction history) and `current` as a float.
-    For binary questions, this IS P(Yes) directly (the community median).
-    """
-    # Direct current value from history
-    current = data.get("current")
-    if current is not None:
-        try:
-            return float(current)
-        except (ValueError, TypeError):
-            pass
-
-    # Fallback to centers string
-    centers_str = data.get("centers")
-    if centers_str:
-        try:
-            return float(centers_str.strip())
-        except (ValueError, TypeError):
-            pass
-
-    return None
 
 
 # ---------------------------------------------------------------------------
@@ -423,19 +237,11 @@ def run_all_tests(
             print("  Launching Chromium (headless=False)...")
             browser = p.chromium.launch(
                 headless=False,
-                args=[
-                    "--disable-blink-features=AutomationControlled",
-                    "--no-sandbox",
-                    "--disable-dev-shm-usage",
-                    "--disable-setuid-sandbox",
-                ],
+                args=BROWSER_ARGS,
             )
             context = browser.new_context(
                 viewport={"width": 1280, "height": 720},
-                user_agent=(
-                    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
-                    "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-                ),
+                user_agent=USER_AGENT,
             )
             page = context.new_page()
 

@@ -274,7 +274,7 @@ class Forecaster:
                 )
                 # Run Playwright scrape in executor to avoid blocking the event loop
                 # (Playwright sync API is not async-compatible)
-                loop = asyncio.get_event_loop()
+                loop = asyncio.get_running_loop()
                 scraped = await loop.run_in_executor(
                     None,
                     lambda: scrape_community_prediction(

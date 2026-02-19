@@ -382,7 +382,7 @@ BROWSER_ARGS = [
 
 USER_AGENT = (
     "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
-    "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+    "(KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
 )
 
 
@@ -613,10 +613,7 @@ def format_community_prediction_context(
 
         diff = scraped.p_yes - details.threshold
         diff_pp = abs(diff) * 100
-        if diff > 0:
-            position = "ABOVE" if details.direction == "higher" else "ABOVE"
-        else:
-            position = "BELOW" if details.direction == "higher" else "BELOW"
+        position = "ABOVE" if diff > 0 else "BELOW"
 
         lines.append(
             f"The current community prediction is {p_pct:.1f}%, "
