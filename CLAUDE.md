@@ -182,14 +182,14 @@ Each question type handler does its own integrated pipeline:
 ### 5-Forecaster Ensemble
 
 All forecasters have equal weight (1.0). Quality tier models:
-- **Forecaster 1-2**: Claude Sonnet 4.5
+- **Forecaster 1-2**: Claude Sonnet 4.6
 - **Forecaster 3**: GPT-5.2
 - **Forecaster 4-5**: o3
 
 Cross-pollination structure (creates cross-model diversity):
-- Forecaster 1 receives Forecaster 1's outside view output (Sonnet 4.5 ← self)
-- Forecaster 2 receives Forecaster 4's outside view output (Sonnet 4.5 ← o3)
-- Forecaster 3 receives Forecaster 2's outside view output (GPT-5.2 ← Sonnet 4.5)
+- Forecaster 1 receives Forecaster 1's outside view output (Sonnet 4.6 ← self)
+- Forecaster 2 receives Forecaster 4's outside view output (Sonnet 4.6 ← o3)
+- Forecaster 3 receives Forecaster 2's outside view output (GPT-5.2 ← Sonnet 4.6)
 - Forecaster 4 receives Forecaster 3's outside view output (o3 ← GPT-5.2)
 - Forecaster 5 receives Forecaster 5's outside view output (o3 ← self)
 
