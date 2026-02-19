@@ -91,3 +91,12 @@ Success: 0 | Failed: 1
 
 🟡 OTHER Q42116: Will CDU win the most seats in the Baden-Württemberg Landtag
   LLMError: LLM call failed after 3 attempts: litellm.APIError: APIError: OpenrouterException - {"error":{"message":"Internal Server Error","code":500}}
+
+======================================================================
+RUN: 2026-02-19T08:05:32.022135+00:00
+Tournament: 32916 | Selection: new-only | Via: run_bot.py
+Success: 0 | Failed: 1
+======================================================================
+
+🟡 OTHER Q42116: Will CDU win the most seats in the Baden-Württemberg Landtag
+  LLMError: LLM call failed after 3 attempts: litellm.AuthenticationError: AuthenticationError: OpenrouterException - {"error":{"message":"User not found.","code":401}}
