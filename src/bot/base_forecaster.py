@@ -174,6 +174,11 @@ class BaseForecaster(ForecasterMixin, ABC):
         # Build question details for search
         question_details = self._get_question_details(**question_params)
 
+        # Thread community prediction context into QuestionDetails for agentic search
+        community_prediction_context = question_params.get("community_prediction_context", "")
+        if community_prediction_context:
+            question_details.community_prediction_context = community_prediction_context
+
         # Get prompt templates
         prompt_historical, prompt_current, prompt_outside_view, prompt_inside_view = (
             self._get_prompt_templates()
@@ -242,6 +247,20 @@ class BaseForecaster(ForecasterMixin, ABC):
                 f"\nQuestion URL context ({len(question_url_context)} chars, "
                 f"{question_url_metadata.get('urls_summarized', 0)} URLs summarized)"
             )
+
+        # Prepend community prediction data to both contexts for meta-questions
+        # This gives all 5 forecasters the scraped CP in both outside and inside views
+        if community_prediction_context:
+            historical_context = community_prediction_context + "\n" + historical_context
+            current_context = community_prediction_context + "\n" + current_context
+            log(
+                f"\nCommunity prediction context injected "
+                f"({len(community_prediction_context)} chars)"
+            )
+            if self.artifact_store:
+                self.artifact_store.save_search_results(
+                    "community_prediction", {"context": community_prediction_context}
+                )
 
         log(f"\nHistorical context ({len(historical_context)} chars)")
         log(f"Current context ({len(current_context)} chars)")

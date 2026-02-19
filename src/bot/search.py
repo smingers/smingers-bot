@@ -39,6 +39,7 @@ class QuestionDetails:
     fine_print: str
     description: str
     resolution_date: str | None = None
+    community_prediction_context: str | None = None  # Scraped CP data for meta-questions
 
 
 @dataclass
@@ -314,6 +315,11 @@ class SearchPipeline:
                         f"Description:\n{question_details.description}\n\n"
                         f"Resolution criteria:\n{question_details.resolution_criteria}"
                     )
+                    # For meta-questions, include scraped community prediction data
+                    # so the agentic agent focuses on supplemental research rather
+                    # than wasting steps trying to find the CP value
+                    if question_details.community_prediction_context:
+                        agentic_context += f"\n\n{question_details.community_prediction_context}"
                     tasks.append(self._agentic_search(query, context=agentic_context))
                 elif source == "AskNews":
                     # Store the LLM-generated query for Deep Research

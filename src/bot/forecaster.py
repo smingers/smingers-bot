@@ -15,6 +15,12 @@ import logging
 from datetime import UTC, datetime
 
 from ..config import ResolvedConfig
+from ..scraping.community_prediction import (
+    format_community_prediction_context,
+    is_community_prediction_question,
+    parse_meta_question_details,
+    scrape_community_prediction,
+)
 from ..storage.artifact_store import ArtifactStore, ForecastArtifactPaths
 from ..storage.database import AgentPredictionRecord, ForecastDatabase, ForecastRecord
 from ..utils.llm import LLMClient, get_cost_tracker, reset_cost_tracker
@@ -252,6 +258,50 @@ class Forecaster:
             artifact_store=scoped_store,
         )
 
+        # Check if this is a community prediction meta-question
+        community_prediction_context = ""
+        cp_scraping_enabled = self.config.get("research", {}).get(
+            "community_prediction_scraping_enabled", True
+        )
+        if cp_scraping_enabled and is_community_prediction_question(question):
+            logger.info(
+                f"Q{question.id}: Meta-question detected — scraping underlying community prediction"
+            )
+            meta_details = parse_meta_question_details(question)
+            if meta_details:
+                wait_seconds = self.config.get("research", {}).get(
+                    "community_prediction_wait_seconds", 5.0
+                )
+                # Run Playwright scrape in executor to avoid blocking the event loop
+                # (Playwright sync API is not async-compatible)
+                loop = asyncio.get_event_loop()
+                scraped = await loop.run_in_executor(
+                    None,
+                    lambda: scrape_community_prediction(
+                        meta_details.underlying_post_id,
+                        wait_seconds=wait_seconds,
+                    ),
+                )
+                if scraped:
+                    community_prediction_context = format_community_prediction_context(
+                        scraped, meta_details
+                    )
+                    logger.info(
+                        f"Q{question.id}: Community prediction scraped — "
+                        f"P(Yes)={scraped.p_yes:.4f}, "
+                        f"forecasters={scraped.forecaster_count}"
+                    )
+                else:
+                    logger.warning(
+                        f"Q{question.id}: Failed to scrape community prediction — "
+                        f"continuing without it"
+                    )
+            else:
+                logger.warning(
+                    f"Q{question.id}: Could not parse meta-question details — "
+                    f"continuing without community prediction"
+                )
+
         result = await forecaster.forecast(
             question_title=question.title,
             question_text=question.description,
@@ -260,6 +310,7 @@ class Forecaster:
             fine_print=question.fine_print or "",
             open_time=question.open_time or "",
             scheduled_resolve_time=question.scheduled_resolve_time or "",
+            community_prediction_context=community_prediction_context,
             log=lambda msg: logger.info(msg),
         )
 

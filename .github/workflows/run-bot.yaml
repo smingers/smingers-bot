@@ -75,6 +75,16 @@ jobs:
           poetry install --no-interaction --no-root
 
       # ============================================================
+      # BROWSER SCRAPING SUPPORT (Xvfb + Playwright)
+      # Required for scraping community predictions on meta-questions
+      # ============================================================
+      - name: Install Xvfb
+        run: sudo apt-get update && sudo apt-get install -y xvfb
+
+      - name: Install Playwright Chromium
+        run: poetry run playwright install --with-deps chromium
+
+      # ============================================================
       # TEST MODE: Single question forecast
       # ============================================================
       - name: Forecast single test question
