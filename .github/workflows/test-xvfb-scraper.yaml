@@ -1,0 +1,32 @@
+name: Test Xvfb Scraper Prototype
+
+on:
+  workflow_dispatch:  # Manual trigger only
+
+jobs:
+  test-scraper:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Poetry
+        run: pip install poetry
+
+      - name: Install dependencies (including dev)
+        run: poetry install --no-interaction --with dev
+
+      - name: Install Xvfb
+        run: sudo apt-get update && sudo apt-get install -y xvfb
+
+      - name: Install Playwright Chromium
+        run: poetry run playwright install --with-deps chromium
+
+      - name: Run Xvfb scraper prototype
+        run: poetry run python scripts/test_xvfb_scraper.py --xvfb
