@@ -1,0 +1,264 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 2,
+      "queries": [
+        {
+          "query": "https://en.wikipedia.org/wiki/2026_Dutch_municipal_elections",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://www.verkiezingsuitslagen.nl/",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "2022 Netherlands municipal nationwide results",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "gemeenteraadsverkiezingen 2018 landelijke uitslag partij",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide nationwide results tables for Dutch municipal elections 2010-2022 from Verkiezingsuitslagen.nl, listing the #1 party and its vote share each year; indicate if any exceeded 15 %.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "Gemeenteraadsverkiezingen 2010 landelijke uitslag",
+              "Gemeenteraadsverkiezingen 2014 landelijke uitslag",
+              "Gemeenteraadsverkiezingen 2018 landelijke uitslag",
+              "Gemeenteraadsverkiezingen 2022 landelijke uitslag",
+              "Verkiezingsuitslagen.nl gemeenteraad landelijk resultaten"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "Gemeenteraadsverkiezingen 2010 landelijke uitslag",
+                    "Google"
+                  ],
+                  [
+                    "Gemeenteraadsverkiezingen 2014 landelijke uitslag",
+                    "Google"
+                  ],
+                  [
+                    "Gemeenteraadsverkiezingen 2018 landelijke uitslag",
+                    "Google"
+                  ],
+                  [
+                    "Gemeenteraadsverkiezingen 2022 landelijke uitslag",
+                    "Google"
+                  ],
+                  [
+                    "Verkiezingsuitslagen.nl gemeenteraad landelijk resultaten",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 77056,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Agent",
+        "Google News"
+      ],
+      "llm_cost": 0.2336,
+      "llm_cost_summarization": 0.1734,
+      "llm_cost_agentic": 0.0602,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "2026 Netherlands municipal elections polls",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "landelijke peilingen gemeenteraadsverkiezingen 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "What do the latest January-February 2026 Dutch opinion polls predict for the leading party\u2019s nationwide vote share in the upcoming municipal elections, and how fragmented is the field?",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "Will the nationwide #1 party\u2019s vote share in the Netherlands municipal elections be at least 15.0% ?",
+          "tool": "AskNews",
+          "deep_research_query": "What do the latest January-February 2026 Dutch opinion polls predict for the leading party\u2019s nationwide vote share in the upcoming municipal elections, and how fragmented is the field?"
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "AskNews",
+        "Google News"
+      ],
+      "llm_cost": 0.1788,
+      "llm_cost_summarization": 0.1734,
+      "llm_cost_agentic": 0.0055,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5627,
+        "token_output": 1923,
+        "cost": 0.045726,
+        "duration_seconds": 58.10049653053284,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14313,
+        "token_output": 2500,
+        "cost": 0.080439,
+        "duration_seconds": 63.711456060409546,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5627,
+        "token_output": 1811,
+        "cost": 0.044046,
+        "duration_seconds": 58.10058832168579,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13890,
+        "token_output": 2086,
+        "cost": 0.07296,
+        "duration_seconds": 63.711432456970215,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4984,
+        "token_output": 2487,
+        "cost": 0.04354,
+        "duration_seconds": 58.10067009925842,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12613,
+        "token_output": 2400,
+        "cost": 0.05567274999999999,
+        "duration_seconds": 63.711405754089355,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4984,
+        "token_output": 2522,
+        "cost": 0.030143999999999997,
+        "duration_seconds": 58.100712060928345,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13151,
+        "token_output": 1223,
+        "cost": 0.036086,
+        "duration_seconds": 63.711379528045654,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4984,
+        "token_output": 2134,
+        "cost": 0.02704,
+        "duration_seconds": 58.100752115249634,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12048,
+        "token_output": 1222,
+        "cost": 0.033872,
+        "duration_seconds": 63.71135425567627,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0129,
+    "step2_search": 0.2336,
+    "step3_outside_view": 0.1905,
+    "step5_inside_view": 0.279,
+    "step6_aggregation": 0.279,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.716
+}
