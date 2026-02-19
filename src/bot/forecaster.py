@@ -280,13 +280,12 @@ class Forecaster:
 
         Also handles date questions (which use the same CDF submission format).
         """
-        # Extract bounds - can be at top level or in question.scaling
-        scaling = question.raw.get("scaling") or question.raw.get("question", {}).get("scaling", {})
-        lower_bound = scaling.get("range_min", 0)
-        upper_bound = scaling.get("range_max", 100)
-        open_lower_bound = scaling.get("open_lower_bound", False)
-        open_upper_bound = scaling.get("open_upper_bound", False)
-        zero_point = scaling.get("zero_point")
+        # Use parsed attributes (from_api_response handles API nesting)
+        lower_bound = question.lower_bound if question.lower_bound is not None else 0
+        upper_bound = question.upper_bound if question.upper_bound is not None else 100
+        open_lower_bound = question.open_lower_bound or False
+        open_upper_bound = question.open_upper_bound or False
+        zero_point = question.zero_point
 
         # For date questions, set units to indicate YYYY-MM-DD format
         # and include date bounds in the unit string for LLM context
@@ -351,8 +350,8 @@ class Forecaster:
         scoped_store: "ScopedArtifactStore",
     ) -> dict:
         """Run multiple choice forecasting pipeline with 5-agent ensemble."""
-        # Extract options
-        raw_options = question.options or question.raw.get("question", {}).get("options", [])
+        # Use parsed attributes (from_api_response handles API nesting)
+        raw_options = question.options or []
 
         options = []
         for i, opt in enumerate(raw_options):

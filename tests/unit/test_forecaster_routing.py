@@ -31,7 +31,8 @@ def mock_question_binary():
     q.description = "Background"
     q.background_info = "More background"
     q.resolution_criteria = "Criteria"
-    q.raw = {"fine_print": "Fine print"}
+    q.fine_print = "Fine print"
+    q.raw = {"question": {"fine_print": "Fine print"}}
     q.open_time = "2025-01-01"
     q.scheduled_close_time = "2026-12-31"
     q.scheduled_resolve_time = "2027-01-15"
@@ -52,7 +53,10 @@ def mock_question_numeric():
     q.description = "Background"
     q.background_info = "More background"
     q.resolution_criteria = "Criteria"
-    q.raw = {"fine_print": "Fine print", "scaling": {"range_min": 0, "range_max": 100}}
+    q.fine_print = "Fine print"
+    q.raw = {
+        "question": {"fine_print": "Fine print", "scaling": {"range_min": 0, "range_max": 100}}
+    }
     q.open_time = "2025-01-01"
     q.scheduled_close_time = "2026-12-31"
     q.scheduled_resolve_time = "2027-01-15"
@@ -80,7 +84,8 @@ def mock_question_discrete():
     q.description = "Background"
     q.background_info = "More background"
     q.resolution_criteria = "Criteria"
-    q.raw = {"fine_print": "Fine print", "scaling": {"range_min": 0, "range_max": 10}}
+    q.fine_print = "Fine print"
+    q.raw = {"question": {"fine_print": "Fine print", "scaling": {"range_min": 0, "range_max": 10}}}
     q.open_time = "2025-01-01"
     q.scheduled_close_time = "2026-12-31"
     q.scheduled_resolve_time = "2027-01-15"
@@ -108,9 +113,12 @@ def mock_question_date():
     q.description = "Background"
     q.background_info = "More background"
     q.resolution_criteria = "Criteria"
+    q.fine_print = "Fine print"
     q.raw = {
-        "fine_print": "Fine print",
-        "scaling": {"range_min": 1767225600, "range_max": 1798761600},
+        "question": {
+            "fine_print": "Fine print",
+            "scaling": {"range_min": 1767225600, "range_max": 1798761600},
+        }
     }
     q.open_time = "2025-01-01"
     q.scheduled_close_time = "2026-12-31"
@@ -141,7 +149,13 @@ def mock_question_multiple_choice():
     q.description = "Background"
     q.background_info = "More background"
     q.resolution_criteria = "Criteria"
-    q.raw = {"fine_print": "Fine print", "question": {"options": []}}
+    q.fine_print = "Fine print"
+    q.raw = {
+        "question": {
+            "fine_print": "Fine print",
+            "options": [{"label": "A"}, {"label": "B"}, {"label": "C"}],
+        }
+    }
     q.open_time = "2025-01-01"
     q.scheduled_close_time = "2026-12-31"
     q.scheduled_resolve_time = "2027-01-15"
@@ -161,7 +175,8 @@ def mock_question_unknown():
     q.description = "Background"
     q.background_info = "More background"
     q.resolution_criteria = "Criteria"
-    q.raw = {"fine_print": "Fine print"}
+    q.fine_print = "Fine print"
+    q.raw = {"question": {"fine_print": "Fine print"}}
     q.open_time = "2025-01-01"
     q.scheduled_close_time = "2026-12-31"
     q.scheduled_resolve_time = "2027-01-15"

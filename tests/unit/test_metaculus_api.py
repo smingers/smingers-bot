@@ -32,8 +32,10 @@ class TestMetaculusQuestionFromApiResponse:
         assert question.title == "Will X happen by 2026?"
         assert question.question_type == "binary"
         assert question.status == "open"
-        assert question.description == "This question asks whether X will happen."
+        # description, resolution_criteria, fine_print come from nested question object
+        assert question.description == "Background info about the question."
         assert question.resolution_criteria == "Resolves YES if X occurs before Dec 31, 2026."
+        assert question.fine_print == "Edge cases handled as follows..."
 
     def test_parses_numeric_question_with_bounds(self, numeric_api_response):
         """Numeric questions extract range_min, range_max, unit, and bounds info."""

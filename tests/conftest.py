@@ -358,13 +358,14 @@ def sample_config_with_active():
 
 @pytest.fixture
 def binary_api_response():
-    """Sample binary question API response."""
+    """Sample binary question API response.
+
+    Structure matches real Metaculus API: description, resolution_criteria,
+    and fine_print are nested inside the 'question' object, NOT at the top level.
+    """
     return {
         "id": 12345,
         "title": "Will X happen by 2026?",
-        "description": "This question asks whether X will happen.",
-        "resolution_criteria": "Resolves YES if X occurs before Dec 31, 2026.",
-        "fine_print": "Edge cases handled as follows...",
         "created_at": "2025-01-01T00:00:00Z",
         "open_time": "2025-01-01T00:00:00Z",
         "scheduled_close_time": "2026-12-31T00:00:00Z",
@@ -375,6 +376,8 @@ def binary_api_response():
             "id": 67890,
             "type": "binary",
             "description": "Background info about the question.",
+            "resolution_criteria": "Resolves YES if X occurs before Dec 31, 2026.",
+            "fine_print": "Edge cases handled as follows...",
             "aggregations": {"recency_weighted": {"history": [{"centers": [0.65]}]}},
         },
     }
@@ -382,17 +385,21 @@ def binary_api_response():
 
 @pytest.fixture
 def numeric_api_response():
-    """Sample numeric question with bounds."""
+    """Sample numeric question with bounds.
+
+    Structure matches real Metaculus API: description, resolution_criteria,
+    and fine_print are nested inside the 'question' object.
+    """
     return {
         "id": 12346,
         "title": "How many X will there be?",
-        "description": "This question asks for a numeric estimate.",
-        "resolution_criteria": "Resolves to the official count.",
         "status": "open",
         "question": {
             "id": 67891,
             "type": "numeric",
             "description": "Background info.",
+            "resolution_criteria": "Resolves to the official count.",
+            "fine_print": "Use the final revised figure.",
             "unit": "units",
             "scaling": {
                 "range_min": 0,
@@ -410,16 +417,20 @@ def numeric_api_response():
 
 @pytest.fixture
 def discrete_api_response():
-    """Sample discrete question (CDF size 102)."""
+    """Sample discrete question (CDF size 102).
+
+    Structure matches real Metaculus API.
+    """
     return {
         "id": 12347,
         "title": "How many discrete events?",
-        "description": "Count of discrete events.",
         "status": "open",
         "question": {
             "id": 67892,
             "type": "discrete",
             "description": "Background info.",
+            "resolution_criteria": "Resolves to the count.",
+            "fine_print": "Only confirmed events count.",
             "scaling": {
                 "range_min": 0,
                 "range_max": 100,
@@ -433,16 +444,20 @@ def discrete_api_response():
 
 @pytest.fixture
 def date_api_response():
-    """Sample date question with timestamp bounds."""
+    """Sample date question with timestamp bounds.
+
+    Structure matches real Metaculus API.
+    """
     return {
         "id": 12348,
         "title": "When will X happen?",
-        "description": "This question asks for a date.",
         "status": "open",
         "question": {
             "id": 67893,
             "type": "date",
             "description": "Background info.",
+            "resolution_criteria": "Resolves to the date of occurrence.",
+            "fine_print": "If it doesn't happen, resolves ambiguously.",
             "scaling": {
                 "range_min": 1767225600,  # 2026-01-01 UTC
                 "range_max": 1798761600,  # 2027-01-01 UTC
@@ -456,16 +471,20 @@ def date_api_response():
 
 @pytest.fixture
 def multiple_choice_api_response():
-    """Sample multiple choice with options."""
+    """Sample multiple choice with options.
+
+    Structure matches real Metaculus API.
+    """
     return {
         "id": 12349,
         "title": "Which option will occur?",
-        "description": "Choose the most likely option.",
         "status": "open",
         "question": {
             "id": 67894,
             "type": "multiple_choice",
             "description": "Background info.",
+            "resolution_criteria": "Resolves to the option that occurs.",
+            "fine_print": "If multiple options occur, resolves to the first.",
             "options": [
                 {"label": "Option A"},
                 {"label": "Option B"},
