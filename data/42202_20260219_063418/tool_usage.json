@@ -1,0 +1,271 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 2,
+      "queries": [
+        {
+          "query": "https://trends.google.com/trends/explore?geo=US&tz=0&q=leslie%20wexner&date=2026-01-26%202026-02-25",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://trends.google.com/trends/explore?geo=US&tz=0&q=leslie%20wexner&date=2026-01-17%202026-02-16",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "Leslie Wexner 2026 news",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Leslie Wexner February 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Identify any scheduled media releases, court hearings, or major announcements involving Leslie Wexner in the United States between February 19 and 25 2026; include documentary premieres, legal filings, earnings calls, or philanthropic events likely to attract national coverage.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "Leslie Wexner February 2026 court hearing",
+              "Leslie Wexner Feb 2026 documentary premiere",
+              "Leslie Wexner Feb 2026 philanthropic event",
+              "Leslie Wexner February 2026 legal filing",
+              "Wexner Medical Center February 2026 announcement"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "Leslie Wexner February 2026 court hearing",
+                    "Google"
+                  ],
+                  [
+                    "Leslie Wexner Feb 2026 documentary premiere",
+                    "Google"
+                  ],
+                  [
+                    "Leslie Wexner Feb 2026 philanthropic event",
+                    "Google News"
+                  ],
+                  [
+                    "Leslie Wexner February 2026 legal filing",
+                    "Google"
+                  ],
+                  [
+                    "Wexner Medical Center February 2026 announcement",
+                    "Google News"
+                  ]
+                ],
+                "search_results_chars": 88685,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "leslie wexner",
+          "tool": "Google Trends",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google",
+        "Google Trends",
+        "Google News"
+      ],
+      "llm_cost": 0.2688,
+      "llm_cost_summarization": 0.2087,
+      "llm_cost_agentic": 0.0601,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Leslie Wexner February 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Leslie Wexner lawsuit 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Are there any upcoming documentaries, court hearings, or major news events involving Leslie Wexner scheduled for late February 2026 in the United States?",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "Will the interest in \u201cleslie wexner\u201d change between 2026-02-19 and 2026-02-25 according to Google Trends?",
+          "tool": "AskNews",
+          "deep_research_query": "Are there any upcoming documentaries, court hearings, or major news events involving Leslie Wexner scheduled for late February 2026 in the United States?"
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "AskNews",
+        "Google News"
+      ],
+      "llm_cost": 0.1951,
+      "llm_cost_summarization": 0.1875,
+      "llm_cost_agentic": 0.0076,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8044,
+        "token_output": 1779,
+        "cost": 0.050817,
+        "duration_seconds": 49.81589698791504,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17186,
+        "token_output": 2764,
+        "cost": 0.09301799999999999,
+        "duration_seconds": 61.83241152763367,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8044,
+        "token_output": 1879,
+        "cost": 0.052317,
+        "duration_seconds": 49.816020250320435,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16768,
+        "token_output": 2092,
+        "cost": 0.081684,
+        "duration_seconds": 61.83238172531128,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7063,
+        "token_output": 2392,
+        "cost": 0.04584825000000001,
+        "duration_seconds": 49.81606888771057,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14938,
+        "token_output": 2510,
+        "cost": 0.0612815,
+        "duration_seconds": 61.832351207733154,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7063,
+        "token_output": 1750,
+        "cost": 0.028125999999999998,
+        "duration_seconds": 49.81610608100891,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14411,
+        "token_output": 1916,
+        "cost": 0.04415,
+        "duration_seconds": 61.83232116699219,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7063,
+        "token_output": 1749,
+        "cost": 0.028117999999999997,
+        "duration_seconds": 49.81614136695862,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14230,
+        "token_output": 1488,
+        "cost": 0.040364,
+        "duration_seconds": 61.8322913646698,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0152,
+    "step2_search": 0.2688,
+    "step3_outside_view": 0.2052,
+    "step5_inside_view": 0.3205,
+    "step6_aggregation": 0.3205,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.8097
+}
