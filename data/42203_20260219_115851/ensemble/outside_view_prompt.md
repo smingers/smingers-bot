@@ -1,0 +1,377 @@
+
+You are currently analyzing a forecasting question to generate an outside view prediction.
+
+The forecasting question is:
+What will be the value of "4-Week Treasury Bill Secondary Market Rate, Discount Basis" on 2026-02-25?
+
+Question background:
+The Federal Reserve Economic Data database (FRED) provides economic data from national, international, public, and private sources. The series DTB4WK is a dataset that is tracked by the FRED API. It represents the Federal Reserve's 4-week secondary market treasury bill rate. The title of the series is "4-Week Treasury Bill Secondary Market Rate, Discount Basis". The last data point on the graph (as of creation of this question) is from 2026-02-12 and has a value of 3.64. The units of the series are "Percent". The update frequency of the series is "Daily". The seasonal adjustment of the series is "Not Seasonally Adjusted". An interactive graph for the series can be found [here](https://fred.stlouisfed.org/series/DTB4WK). Below are the notes attached to the series:
+
+> data source (https://www.federalreserve.gov/apps/ContactUs/feedback.aspx?refurl=/releases/h15/%). For questions on FRED functionality, please contact us here (https://fred.stlouisfed.org/contactus/).</p>
+
+`{"format":"fred_value_at_time","info":{"series_id":"DTB4WK"}}`
+
+This question's outcome will be determined by the specific criteria below. These criteria have not yet been satisfied:
+Resolves to the value found on the FRED API for the series DTB4WK once the data is published.
+
+Additional fine-print:
+A script will be used to determine the resolution of this question. It will paginate through the data found at the API endpoint `https://api.stlouisfed.org/fred/series/observations?series_id=DTB4WK`. This endpoint includes the latest data for the series. The latest revised data will be used when the resolution is assessed. The datapoint matching 2026-02-25 will be used to determine the resolution of this question.
+
+A datapoint matches if:
+1. The series is updated daily and the date of the datapoint is within 1 day previous to the resolution date.
+2. The series is updated weekly and the date of the datapoint is within 7 days previous to the resolution date.
+3. The series is updated monthly and the date of the datapoint is within 31 days previous to the resolution date.
+
+If the datapoint is clearly skipped, or no datapoint is found after 2 weeks of checking then the question will be annulled.
+
+Units for answer: Percent
+
+Question metadata:
+- Opened for forecasting: 2026-02-19T11:57:40Z
+- Resolves: 2026-02-25T00:11:23Z
+- Note: Unless the question title specifies otherwise, the Forecast Opening Date of 2026-02-19T11:57:40Z should be considered the start of the question's resolution window. Events before this date do not count toward resolution.
+
+IMPORTANT: Today's date is 2026-02-19. All dates before today's date are in the PAST. All dates after today's date are in the FUTURE. Use today's date to correctly evaluate whether sources describe past events or future predictions. Any information source which refers to events before today's date of 2026-02-19 should not be considered as speculative but rather an historical document.
+
+The lower bound is 3.0175 and the upper bound is 4.93971.
+Both bounds are OPEN: outcomes can fall below the lower bound or above the upper bound. Your percentile estimates may extend beyond this range if well-supported by evidence.
+
+Historical context:
+
+<QuestionSource url="https://fred.stlouisfed.org/series/DTB4WK">
+## Summary of Article
+
+**Disclaimer**: The extracted content appears to be repetitive metadata from the FRED database page rather than a substantive article with analysis or forecasts.
+
+### Key Information:
+
+**Series Details:**
+- **Series ID**: DTB4WK
+- **Title**: 4-Week Treasury Bill Secondary Market Rate, Discount Basis
+- **Source**: Board of Governors of the Federal Reserve System (US)
+- **Release**: H.15 Selected Interest Rates
+- **Units**: Percent
+- **Frequency**: Daily
+- **Seasonal Adjustment**: Not Seasonally Adjusted
+- **Basis**: Discount basis
+
+**Data Characteristics:**
+- The data is published daily
+- All data are subject to revision
+- Users can select automatic updates or static time frames when accessing the data
+
+**Contact Information:**
+- Questions about the data should be directed to the data source (Federal Reserve)
+- Questions about FRED functionality should be directed to FRED support
+
+**Note**: This content does not contain any actual data values, forecasts, expert opinions, statistics, or analytical commentary about the 4-week Treasury bill rate. It is purely descriptive metadata about the data series itself.
+</QuestionSource>
+
+
+<Summary source="https://tradingeconomics.com/united-states/4-week-bill-yield">
+# Summary of Trading Economics Article on US 4-Week Bill Yield
+
+## Key Facts and Statistics:
+
+1. **Current Rate (as of February 19, 2026)**: The yield on US 4-Week Bill eased to 3.69%, representing a 0.01 percentage point decrease from the previous session.
+
+2. **Recent Trends**:
+   - Over the past month: yield increased by 0.02 percentage points
+   - Year-over-year change: yield is 0.64 percentage points lower than a year ago
+
+3. **Historical Context**: The United States 4-Week Bill Yield reached an all-time high of 6.13% in January 2024.
+
+## Forecasts from Trading Economics:
+
+1. **End of Q1 2026 forecast**: Expected to trade at 3.68%
+2. **12-month forward forecast**: Expected to trade at 3.59%
+
+(Note: These forecasts are attributed to "Trading Economics global macro models and analysts expectations")
+
+## Data Source Information:
+- Data is based on over-the-counter interbank yield quotes for this government bond maturity
+- Last updated: February 19, 2026
+
+---
+
+**Note**: The article provides a forecast for the question's resolution date (February 25, 2026), though the specific forecast methodology and reliability of Trading Economics' models are not detailed in the article.
+</Summary>
+
+<Summary source="https://fred.stlouisfed.org/graph/?g=n7qy">
+## Summary of Article
+
+**Disclaimer**: The extracted content appears to be fragmentary metadata from a FRED (Federal Reserve Economic Data) graph page rather than a complete article with analysis or commentary.
+
+## Key Information Extracted:
+
+### Series Details:
+- **Series ID**: DTB4WK
+- **Title**: 4-Week Treasury Bill Secondary Market Rate, Discount Basis
+- **Units**: Percent
+- **Seasonal Adjustment**: Not Seasonally Adjusted
+- **Frequency**: Daily, 7-Day
+- **Basis**: Discount basis
+- **Data Source**: Board of Governors of the Federal Reserve System (US)
+
+### Additional Notes:
+- The content mentions that all data are subject to revision
+- Users can select automatic updates to the data or a static time frame
+- For questions on the data, users should contact the data source directly
+- For questions on FRED functionality, users should contact FRED support
+
+### Related Series Mentioned:
+- Federal Funds Target Range - Upper Limit [DFEDTARU] is referenced alongside the DTB4WK series
+
+**Note**: This content does not contain any forecasts, analysis, expert opinions, or statistical projections about future values of the 4-Week Treasury Bill rate. It is purely technical documentation about the data series itself.
+</Summary>
+
+<Summary source="https://www.nasdaq.com/market-activity/fixed-income/tb4w/historical">
+**DISCLAIMER**: The extracted content from this Nasdaq page appears to be incomplete or corrupted. The page shows only generic website navigation instructions and error messages rather than actual historical data for the 4-Week Treasury Bill.
+
+**Summary**:
+
+This article does not contain any substantive information relevant to forecasting the 4-Week Treasury Bill Secondary Market Rate. The page appears to be either:
+- An error page from Nasdaq's website
+- A page with failed content loading
+- Generic navigation instructions for adding symbols/instruments to watchlists
+
+**Key Information Extracted**: None
+
+The page contains no:
+- Historical data for TB4W/DTB4WK
+- Statistics or facts about Treasury Bill rates
+- Expert opinions or forecasts
+- Analysis of trends
+- Any content that would be useful for forecasting the value on 2026-02-25
+
+**Recommendation**: This source should be disregarded for forecasting purposes as it contains no relevant information.
+</Summary>
+
+<Summary source="https://finance.yahoo.com/personal-finance/mortgages/article/mortgage-rate-predictions-for-the-next-5-years-195826401.html">
+# Summary of Article: "Mortgage rate predictions for the next 5 years"
+
+**Source:** Yahoo Finance  
+**Date:** February 06, 2026  
+**Author:** Hal Bundrick, CFP®
+
+## Key Facts and Statistics:
+
+### Current Rates (as of February 5, 2026):
+- 10-year Treasury yield: 4.25%
+- 30-year fixed mortgage rate: 6.11%
+- Spread between them: 1.86 percentage points
+
+### Treasury Rate Forecasts:
+
+**Deloitte (Michael Wolf, September forecast):**
+- Expects 10-year Treasury yield to remain above 4.1% through 2030
+- Short-term interest rates expected to decline in next couple of years
+- Long-term interest rates expected to remain elevated
+
+**Goldman Sachs:**
+- Expects 10-year Treasury to rise to 4.5% by 2035
+
+**Congressional Budget Office (CBO):**
+- Forecasts Treasury yield at 3.9% by end of 2026
+- Drop to 3.8% by 2030
+
+### Historical Spread Data:
+- Recent years (2022-2025): Spread around 2.6 percentage points between 10-year Treasury and 30-year mortgage rates
+- 2010-2020: Spread was under 2 percentage points, often near 1.5
+- Recent years: Spread has been on either side of 2.5 percentage points
+
+### AI Analysis (GPT-5):
+- Suggested spread of 2.1 to 2.3 percentage points for 5-year forecast
+- Rationale based on:
+  - Historical standard (2010s): ~1.7 pp
+  - Recent years (2022-2025): ~2.6 pp
+  - Estimated 5-year average spread: ~2.1 to 2.3 pp
+
+### Mortgage Rate Forecast:
+- 2027: Predicted to be around 6.28% to 6.48%
+- General outlook: Mortgage rates not expected to drop significantly in next five years
+
+**Note:** The article uses Deloitte's forecast as baseline since it falls between Goldman Sachs and CBO predictions. The forecast methodology combines the Treasury yield predictions with estimated spreads to derive mortgage rate projections.
+</Summary>
+
+<Summary source="https://www.deloitte.com/us/en/insights/topics/economy/global-economic-outlook/weekly-update.html">
+# Summary of Article: "What's happening this week in economics?"
+
+**Source:** Deloitte Insights
+
+## Key Facts and Statistics:
+
+### United States:
+- **Current 4-week Treasury rate context:** As of the article's writing, the Fed's benchmark interest rate discussions are ongoing
+- **Historical comparison (1990s):** During the mid-1990s, the Fed's benchmark interest rate was steady at about 5% for many years, significantly higher than inflation (which was mostly between 2-3%). Starting in 1999, the Fed increased rates, peaking at 6.5% in 2000, followed by a recession in early 2001
+- **Current Fed stance:** The Fed recently indicated an intention to keep the short-term interest rate steady, given persistent above-target inflation and strong economic growth
+- **Futures markets:** Implied probabilities of Fed policy moves didn't change much following the jobs report mentioned
+
+### Japan:
+- **Government debt:** Japan's government debt as a share of GDP is higher than any other major developed economy
+- **Consumption tax:** Prime Minister Takaichi proposed temporarily eliminating the 8% consumption tax on food
+- **Market reaction:** Since the election, the yen rose in value significantly, bond yields have fallen, and equity prices have risen sharply
+
+### Europe:
+- **Germany Q4 GDP:** Real GDP up only 0.4% year-over-year, but up 0.3% quarter-over-quarter
+- **Other eurozone countries Q4 year-over-year growth:** France 1.1%, Italy 0.8%, Spain 2.6%, Netherlands 1.8%, Belgium 1.1%, Portugal 1.9%
+- **Non-eurozone EU countries:** Poland 3.6%, Czechia 2.4%, Bulgaria 2.9%, Hungary 0.5%
+- **December eurozone exports:** Up 3.4% to non-eurozone countries, up 6.7% within eurozone
+- **December eurozone imports:** Up 4.2% from outside the eurozone
+- **EU exports by destination (December):** Down 12.6% to US, up 11.5% to China, up 8.4% to UK, up 14.5% to India, up 20.3% to Switzerland, down 2% to Japan
+- **EU imports:** Up 1.6% from US, up 10.2% from China
+
+## Named Source Opinions:
+
+**Kevin Warsh (Fed Chair nominee):** Wants to cut the benchmark rate because AI is likely to fuel strong productivity growth, which would be disinflationary
+
+**US Treasury Secretary Bessent:** Supports the Warsh argument that the current moment resembles the 1990s
+
+**Jason Furman (Harvard economist, former Obama-era economic adviser, writing in Financial Times):** Acknowledges that labor productivity growth can reduce inflation by enabling businesses to boost wages without increasing prices. However, notes that productivity growth also leads to faster economic growth, potentially driving increased consumer spending and business investment, creating capacity constraints and causing prices to rise. Suggests faster productivity growth could imply a higher neutral real interest rate
+
+**Prime Minister Takaichi (Japan):** Stated "we must pull Japan out of excessively tight fiscal policy and a lack of investment" and that "responsible, proactive fiscal policy is at the core of the... policy transition"
+
+## Analysis Points (from article):
+
+- The article argues that even if Warsh's productivity argument is correct, it might be too early to discuss cutting interest rates due to productivity gains, as productivity gains in recent quarters occurred only in the technology sector, with most other sectors yet to see productivity gains or widespread AI adoption
+- An early reduction in the Fed's benchmark interest rate could lead to higher inflation, according to the article's analysis
+- The article notes that the jobs report "probably won't change these viewpoints" regarding Fed deliberations
+</Summary>
+
+<Summary source="https://journal.firsttuesday.us/current-market-rates/3832/">
+# Summary of Article: "Trending mortgage rates"
+
+**Source:** Journal.firsttuesday.us  
+**Date:** August 27, 2021 (though article contains data from February 2026)  
+**Author:** ft Editorial Staff
+
+## Key Facts and Statistics:
+
+1. **4-Week Treasury Bill Rate (DTB4WK):** The article does not directly mention the 4-week Treasury bill rate.
+
+2. **Mortgage Rates (as of week ending February 12, 2026):**
+   - 30-year fixed rate mortgage (FRM): 6.09%
+   - 15-year FRM: 5.44%
+   - Adjustable rate mortgages (ARMs): 5.48% (as of February 13, 2026)
+
+3. **10-Year Treasury Note Rate:** 4.06% (as of February 13, 2026)
+
+4. **Spread between 10-year T-Note and 30-year FRM:** 2.03% (currently), with historical normal spread at 1.5%
+
+5. **ARM-to-FRM spread:** 61 basis points (0.61 percentage points) lower than 30-year FRM
+
+## Opinions and Projections:
+
+**From the article (source not specifically attributed):**
+- FRM rates expected to "gradually work their way lower in 2026" when the Fed completes stabilizing job growth and consumer inflation
+- Long-term upward trend in mortgage rates expected to continue, having commenced in 2013, likely running for "around two more decades"
+- Real estate pricing conditions producing "continuing industry-wide reduction of fee-earning transactions likely into 2028"
+- Property pricing bottom expected to be established over "around 30 months"
+- Improved market pricing conditions for property acquisition expected "likely by 2028"
+
+**Note:** The article publication date appears inconsistent (listed as August 27, 2021, but contains February 2026 data), suggesting possible data extraction issues or the article being updated with future projections.
+</Summary>
+
+<Agent_report>
+Query: Provide daily DTB4WK values from 2025-11-01 through 2026-02-18 and compute 7-day and 30-day moving averages; list any dates with moves ≥25 bp; include any Fed announcements or Treasury bill auctions scheduled between 2026-02-19 and 2026-02-25 that could affect the rate
+1. Daily DTB4WK observations now available  
+The FRED site shows only twelve daily prints for the window 2026-01-30 through 2026-02-17 (all either 3.63 % or 3.64 %) (FRED – DTB4WK).  No data for the earlier span 2025-11-01 to 2026-01-29 are displayed in the material retrieved.  Consequently  
+• a complete table of daily values,  
+• 7-day and 30-day simple moving averages, and  
+• a definitive screen for any ≥ 25-bp one-day moves  
+cannot yet be produced.  With the partial run in hand every day-to-day change is ±0.01 pp (1 bp), far below the 25-bp threshold, so nothing qualifies among the dates visible so far.
+
+2. Evidence of large single-day moves (≥ 25 bp)  
+Because the only quoted levels are 3.63 % and 3.64 %, no outsized jumps appear in the subset examined.  A final conclusion requires the still-missing observations for November 2025 through January 2026.
+
+3. Fed policy events that could influence the 4-week bill rate, 19 Feb–25 Feb 2026  
+• 18 Feb 2026 – Release of the minutes from the 27-28 Jan FOMC meeting.  These minutes (Federalreserve.gov, reported by CNBC, 18 Feb 2026) are the most recent insight into Committee thinking and will remain the key monetary-policy reference over the following week.  
+• No scheduled FOMC meeting, Summary-of-Economic-Projections update, or Chair press conference falls between 19 Feb and 25 Feb, and the next FOMC meeting is not until 17-18 Mar 2026; the Fed is therefore outside a blackout period, but no new policy announcement is slated for the week in question.
+
+4. Treasury bill auctions scheduled 19 Feb – 25 Feb 2026  
+Treasury’s standard bill cycle is: announcement Thursday → auction Tuesday → settlement Thursday.  The official “Announcements, Data & Results” feed on TreasuryDirect shows precisely that pattern for the third and fourth weeks of February 2026.  Extracts from the XML feed list (TreasuryDirect – Auctions):  
+• Thursday 19 Feb 2026 – Announcement of the 4-week bill and other bills to be auctioned the following Tuesday (CUSIP for the 4-week bill will be released in that announcement).  
+• Tuesday 24 Feb 2026 – Auction of the 4-week bill (along with the regular 8-week bill).  
+• Thursday 26 Feb 2026 – Issue/settlement date for those bills (settlements customarily occur two business days after the auction).  
+Because DTB4WK measures the secondary-market discount rate, the size of the non-competitive bid, bid-to-cover ratio, and high discount rate at the 24 Feb auction are the most direct scheduled influences on the series observation for 25 Feb 2026.
+
+5. Information still missing to fulfil the original request  
+• Full daily DTB4WK history from 1 Nov 2025 through 29 Jan 2026 (plus 18 Feb 2026).  
+• Once that file is obtained, calculation of 7-day and 30-day averages and confirmation that no ≥ 25 bp moves occurred.  
+• The Treasury’s PDF announcement dated 19 Feb 2026 that will assign a CUSIP and offering size to the 4-week bill auctioned on 24 Feb; publication of that PDF will allow the auction schedule stated above to be formally cited.
+
+With those items retrieved the numerical table and the event list required by the original query can be completed.</Agent_report>
+
+<FREDData series="DTB4WK" query="DTB4WK">
+FRED Economic Data: 4-Week Treasury Bill Secondary Market Rate, Discount Basis
+Series ID: DTB4WK
+Units: Percent
+Frequency: Daily
+Latest observation: 3.63 (2026-02-17)
+
+HISTORICAL STATISTICS:
+- 1-year: mean=4.04, min=3.50, max=4.30
+- 5-year: mean=3.24, min=0.00, max=5.78
+- 10-year: mean=2.15, min=-0.04, max=5.78
+- All-time: mean=1.63, min=-0.04, max=5.78 (since 2001-07-31)
+
+RECENT CHANGES:
+- 1-month change: +0.03 (+0.8%)
+- 3-month change: -0.24 (-6.2%)
+- 6-month change: -0.67 (-15.6%)
+- Year-over-year: 3.63 vs 4.26 (-14.8%)
+
+RECENT VALUES (Daily):
+Date,Value
+2026-01-30,3.63
+2026-02-02,3.63
+2026-02-03,3.63
+2026-02-04,3.63
+2026-02-05,3.64
+2026-02-06,3.63
+2026-02-09,3.63
+2026-02-10,3.63
+2026-02-11,3.63
+2026-02-12,3.64
+2026-02-13,3.63
+2026-02-17,3.63
+
+Source: Federal Reserve Economic Data (FRED), St. Louis Fed
+</FREDData>
+
+
+The information has been sourced from the internet and language models (for agent reports). Exercise healthy skepticism toward unverified claims.
+
+Your analysis should have the following components, referring to the above historical context:
+(a) Source analysis: Briefly summarize each information source (either web article or Agent report), evaluate source quality and date.
+**Opinions are commonplace in writing. For each source, you must be able to discern factual information from opinions. You are advised to strongly consider only opinions originating from identifiable experts or entities**.
+(b) Reference class analysis: Identify a few possible reference classes and evaluate respective suitabilities to the forecasting question. If applicable, choose the most suitable one.
+(c) Timeframe analysis: State the prediction timeframe (e.g., how many days/months from now?) and examine historical patterns over similar periods
+(d) Justification: Integrate the above factors with other points you found relevant to write a justification for your outside view prediction.
+
+Subsequently, calibrate your outside view prediction, considering:
+(a) You aim to predict a true probability distribution, not a hedged smooth distribution or an overconfident extremely narrow distribution. In your thinking, always consider ranges over singular values.
+(b) Are there previously established distributions that you can tether your prediction to?
+(c) Small changes in percentile values can significantly reshape the distribution, especially near the tails. Choose tail values carefully.
+(d) Historically, what is the rate of upsets/unexpected outcomes in the domain of this forecasting question? How should this affect your CDF distribution?
+
+Set wide 10th/90th percentile intervals to account for unknown unknowns.
+
+**CRITICAL: Percentile values MUST be strictly increasing** (10th = lowest, 90th = highest).
+Use the units requested by the question. Never use scientific notation.
+
+Format your answer as below:
+
+Analysis:
+{Insert your analysis here, following the above components.}
+
+Outside view calibration:
+{Insert your calibration of your outside view prediction here.}
+
+Outside View Prediction:
+Percentile 10: XX
+Percentile 20: XX
+Percentile 40: XX
+Percentile 60: XX
+Percentile 80: XX
+Percentile 90: XX
