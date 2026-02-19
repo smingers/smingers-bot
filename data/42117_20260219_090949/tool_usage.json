@@ -1,0 +1,270 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "https://en.wikipedia.org/wiki/2026_Baden-W%C3%BCrttemberg_state_election",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://www.statistik-bw.de/staat-und-gesellschaft/wahlen/landtagswahl/",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "https://im.baden-wuerttemberg.de/de/land-kommunen/lebendige-demokratie/wahlen/landtagswahl-2026",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "AfD Baden-W\u00fcrttemberg election results",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "AfD Baden-W\u00fcrttemberg surge polls",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide latest state-level opinion polls for the 2026 Baden-W\u00fcrttemberg Landtag election, including party vote shares since January 2025, and summarize the main provisions of the new electoral law passed after the 2021 election that changes seat allocation.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "Landtag Umfrage Baden-W\u00fcrttemberg 2025 2026",
+              "Sonntagsfrage Baden-W\u00fcrttemberg AfD 2026",
+              "Wahlrecht.de Baden-W\u00fcrttemberg Umfragen",
+              "neues Landtagswahlrecht Baden-W\u00fcrttemberg 2022",
+              "Baden-W\u00fcrttemberg Sitzverteilung Reform Landtag"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "Landtag Umfrage Baden-W\u00fcrttemberg 2025 2026",
+                    "Google"
+                  ],
+                  [
+                    "Sonntagsfrage Baden-W\u00fcrttemberg AfD 2026",
+                    "Google News"
+                  ],
+                  [
+                    "Wahlrecht.de Baden-W\u00fcrttemberg Umfragen",
+                    "Google"
+                  ],
+                  [
+                    "neues Landtagswahlrecht Baden-W\u00fcrttemberg 2022",
+                    "Google"
+                  ],
+                  [
+                    "Baden-W\u00fcrttemberg Sitzverteilung Reform Landtag",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 102126,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "Agent"
+      ],
+      "llm_cost": 0.2872,
+      "llm_cost_summarization": 0.1976,
+      "llm_cost_agentic": 0.0896,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Baden W\u00fcrttemberg Umfrage AfD 2026 Landtag",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "AfD Baden-W\u00fcrttemberg election poll 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide latest polls and seat projections for the 2026 Baden-W\u00fcrttemberg state election, focusing on AfD strength, published in Germany in the past two weeks.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "Will AfD win the most seats in the Baden-W\u00fcrttemberg Landtag election?",
+          "tool": "AskNews",
+          "deep_research_query": "Provide latest polls and seat projections for the 2026 Baden-W\u00fcrttemberg state election, focusing on AfD strength, published in Germany in the past two weeks."
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "AskNews"
+      ],
+      "llm_cost": 0.2037,
+      "llm_cost_summarization": 0.1976,
+      "llm_cost_agentic": 0.0061,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7669,
+        "token_output": 2254,
+        "cost": 0.056817,
+        "duration_seconds": 61.60549998283386,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15683,
+        "token_output": 2800,
+        "cost": 0.08904899999999999,
+        "duration_seconds": 72.19798111915588,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.5",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7669,
+        "token_output": 2311,
+        "cost": 0.057672,
+        "duration_seconds": 61.605560302734375,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14736,
+        "token_output": 2247,
+        "cost": 0.07791300000000001,
+        "duration_seconds": 72.1979570388794,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6542,
+        "token_output": 3171,
+        "cost": 0.0558425,
+        "duration_seconds": 61.60560464859009,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13562,
+        "token_output": 2182,
+        "cost": 0.054281499999999996,
+        "duration_seconds": 72.1979308128357,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6542,
+        "token_output": 1661,
+        "cost": 0.026372,
+        "duration_seconds": 61.60563826560974,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13467,
+        "token_output": 1723,
+        "cost": 0.040718,
+        "duration_seconds": 72.19790530204773,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6542,
+        "token_output": 2242,
+        "cost": 0.03102,
+        "duration_seconds": 61.605671644210815,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12623,
+        "token_output": 1568,
+        "cost": 0.037790000000000004,
+        "duration_seconds": 72.19788002967834,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0118,
+    "step2_search": 0.2872,
+    "step3_outside_view": 0.2277,
+    "step5_inside_view": 0.2998,
+    "step6_aggregation": 0.2998,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.8265
+}
