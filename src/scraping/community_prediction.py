@@ -16,6 +16,13 @@ The JS extractor parses the Next.js hydration payload to extract:
 - Current community P(Yes)
 - Forecaster count
 - Full prediction history with trend data (7/14/30-day deltas)
+
+NOTE: The JS extractor depends on Metaculus's Next.js frontend layout (specifically
+the ``self.__next_f`` hydration scripts and the structure of ``centers`` /
+``forecaster_count`` entries). If Metaculus changes their frontend framework or
+payload format, the extractor will need to be updated. The "50K gap" heuristic
+that separates community history from personal forecasts is also empirical and
+may need adjustment.
 """
 
 from __future__ import annotations
@@ -392,7 +399,7 @@ USER_AGENT = (
 
 
 def scrape_community_prediction(
-    question_id: int,
+    post_id: int,
     wait_seconds: float = 5.0,
 ) -> ScrapedCommunityPrediction | None:
     """Scrape the current community prediction for a Metaculus question.
@@ -402,7 +409,7 @@ def scrape_community_prediction(
     the question page, and extracts community prediction data.
 
     Args:
-        question_id: The Metaculus post ID of the question to scrape
+        post_id: The Metaculus post ID (used in the URL path /questions/{post_id}/)
         wait_seconds: Seconds to wait for JS hydration after page load
 
     Returns:
@@ -430,7 +437,7 @@ def scrape_community_prediction(
                 logger.warning(f"Could not start Xvfb: {e}")
                 return None
 
-        url = f"{BASE_URL}/{question_id}/"
+        url = f"{BASE_URL}/{post_id}/"
         logger.info(f"Scraping community prediction from {url}")
 
         t_start = time.monotonic()
@@ -460,13 +467,13 @@ def scrape_community_prediction(
                 # Check for Cloudflare
                 if check_cloudflare_block(page):
                     # Retry once after waiting
-                    logger.warning(f"Cloudflare challenge on Q{question_id} — retrying after 10s")
+                    logger.warning(f"Cloudflare challenge on Q{post_id} — retrying after 10s")
                     page.wait_for_timeout(10_000)
                     page.goto(url, wait_until="domcontentloaded", timeout=30_000)
                     page.wait_for_timeout(int(wait_seconds * 1000))
 
                     if check_cloudflare_block(page):
-                        logger.warning(f"Cloudflare blocked Q{question_id} after retry — giving up")
+                        logger.warning(f"Cloudflare blocked Q{post_id} after retry — giving up")
                         return None
 
                 # Extract data
@@ -477,16 +484,16 @@ def scrape_community_prediction(
                 browser.close()
 
         elapsed = time.monotonic() - t_start
-        logger.info(f"Scrape completed in {elapsed:.1f}s for Q{question_id}")
+        logger.info(f"Scrape completed in {elapsed:.1f}s for Q{post_id}")
 
         if not data:
-            logger.warning(f"No data extracted from Q{question_id}")
+            logger.warning(f"No data extracted from Q{post_id}")
             return None
 
         # Parse P(Yes)
         p_yes = parse_p_yes(data)
         if p_yes is None:
-            logger.warning(f"Could not extract P(Yes) from Q{question_id} data: {data}")
+            logger.warning(f"Could not extract P(Yes) from Q{post_id} data: {data}")
             return None
 
         # Build result
@@ -514,7 +521,7 @@ def scrape_community_prediction(
 
     except Exception as e:
         logger.warning(
-            f"Failed to scrape community prediction for Q{question_id}: {e}",
+            f"Failed to scrape community prediction for Q{post_id}: {e}",
             exc_info=True,
         )
         return None
