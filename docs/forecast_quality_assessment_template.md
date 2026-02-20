@@ -10,6 +10,11 @@ When asked to analyze a forecast run using this template:
    - `research/search_historical.json`, `search_current.json`
    - Forecaster reasoning files (see naming conventions below)
    - `ensemble/aggregation.json`
+   - Supervisor artifacts (if present — only exist when supervisor was triggered):
+     - `ensemble/supervisor_analysis.md` — Stage 1: disagreement analysis and search queries
+     - `ensemble/supervisor_research.md` — Targeted research results from supervisor queries
+     - `ensemble/supervisor_reasoning.md` — Stage 2: updated forecast reasoning
+     - `ensemble/supervisor_result.json` — Structured result (confidence, prediction, divergence metrics, cost)
 
    **Artifact naming conventions** (check which files exist - tools handle both):
 
@@ -52,9 +57,9 @@ When asked to analyze a forecast run using this template:
 
 | Issue | Severity | Location | Description |
 |-------|----------|----------|-------------|
-| | Critical/High/Med/Low | Research / S1-X / S2-X / Aggregation | |
-| | Critical/High/Med/Low | Research / S1-X / S2-X / Aggregation | |
-| | Critical/High/Med/Low | Research / S1-X / S2-X / Aggregation | |
+| | Critical/High/Med/Low | Research / S1-X / S2-X / Aggregation / Supervisor | |
+| | Critical/High/Med/Low | Research / S1-X / S2-X / Aggregation / Supervisor | |
+| | Critical/High/Med/Low | Research / S1-X / S2-X / Aggregation / Supervisor | |
 
 **Severity definitions:**
 - **Critical**: Fundamentally compromises the forecast (e.g., misunderstood resolution criteria, hallucinated key facts, calculation errors that propagate)
@@ -408,7 +413,118 @@ Facts all/most outputs correctly identified:
 
 ---
 
-## 6. Overall Assessment
+## 6. Supervisor Agent Review (Optional)
+
+*Complete this section only if supervisor artifacts exist. If the supervisor was not triggered (divergence below threshold), fill in the Divergence & Trigger subsection and note "Supervisor not triggered."*
+
+### Divergence & Trigger
+
+| Field | Value |
+|-------|-------|
+| Divergence metric | *(e.g., std_dev / rn_spread / max_option_range)* |
+| Divergence value | |
+| Trigger threshold | |
+| Supervisor triggered? | Yes / No |
+| Supervisor model | |
+| Supervisor confidence | HIGH / MEDIUM / LOW |
+| Supervisor cost | $ |
+
+*If the supervisor was not triggered, note the margin (how far below the threshold the divergence was) and skip to section 7.*
+
+### Stage 1: Disagreement Analysis
+
+*(From `supervisor_analysis.md`)*
+
+**Quality of disagreement identification:**
+- Did the supervisor correctly identify the most significant points of disagreement among the 5 forecasters?
+- Were the disagreements characterized accurately (which forecasters, which direction)?
+- Did it correctly distinguish factual disagreements (resolvable via research) from judgment-based disagreements (weighting/interpretation differences)?
+
+**Root cause classification:**
+- Were root causes correctly categorized (different factual beliefs, different resolution criteria interpretations, different evidence weighting, different base rates)?
+- Did the supervisor identify the disagreements most responsible for the ensemble spread?
+
+### Stage 1: Search Query Quality
+
+*(From search queries in `supervisor_analysis.md`)*
+
+| # | Query | Source | Targets Which Disagreement? | Redundant with Round 1 Research? |
+|---|-------|--------|----------------------------|----------------------------------|
+| 1 | | Google / Google News / Agent | | Yes / No / Partial |
+| 2 | | Google / Google News / Agent | | Yes / No / Partial |
+| 3 | | Google / Google News / Agent | | Yes / No / Partial |
+| 4 | | Google / Google News / Agent | | Yes / No / Partial |
+
+**Assessment:**
+- Are queries tightly targeted at resolving the identified factual disagreements?
+- Could the queries plausibly surface decision-relevant information that the first research round missed?
+- Were appropriate source types chosen (Google for general facts, Google News for recent events, Agent for complex multi-part questions)?
+- Did the supervisor appropriately generate NO queries when disagreements were judgment-based rather than factual?
+
+### Stage 2: Supervisor Research Quality
+
+*(From `supervisor_research.md`)*
+
+**Novelty vs. redundancy:**
+- Did the supervisor's targeted research unearth new, relevant information not present in the first round (historical + current search)?
+- Or was it largely redundant with what the forecasters already had access to?
+- What specific new facts or data points (if any) were surfaced?
+
+**Relevance:**
+- Was the new research directly relevant to resolving the identified disagreements?
+- Were there any irrelevant tangents or low-quality sources?
+
+### Stage 2: Supervisor Reasoning & Reconciliation
+
+*(From `supervisor_reasoning.md`)*
+
+**Reasoning quality:**
+- Did the supervisor explicitly address each identified disagreement and explain how the new research resolved (or failed to resolve) it?
+- Was the reasoning logically sound, or did it introduce new errors?
+- Did it appropriately weigh the new evidence against the forecasters' existing analysis?
+
+**Reconciliation approach:**
+- Did the supervisor side with the better-supported forecaster position, or did it inappropriately split the difference?
+- Was the final prediction a meaningful improvement over the ensemble weighted average, or did it just converge toward the mean?
+- Did the confidence level (HIGH/MEDIUM/LOW) accurately reflect the quality of the resolution?
+
+**Question-type-specific assessment:**
+
+*For binary questions:*
+- How did the supervisor's probability compare to the ensemble weighted average?
+- Was the direction and magnitude of the adjustment justified by the new research?
+
+*For numeric questions:*
+- Did the supervisor adjust the central estimate, the uncertainty range, or both?
+- Was the adjustment proportional to the evidence?
+
+*For multiple choice questions:*
+- Which option probabilities were adjusted and why?
+- Did the adjustments make the distribution more or less concentrated?
+
+### Supervisor Scoring Rubric
+
+| Dimension | 4 pts | 3 pts | 2 pts | 1 pt |
+|-----------|-------|-------|-------|------|
+| **Disagreement Identification** | Correctly identifies all major disagreements, accurately characterizes sides and impact | Identifies most disagreements, minor characterization issues | Misses a key disagreement or mischaracterizes sides | Fails to identify core disagreements |
+| **Query Generation** | Tightly targeted at resolvable factual disputes, appropriate source selection | Mostly targeted, minor issues with query design or source choice | Partially targeted, some queries redundant or off-topic | Queries don't address disagreements, or generates queries for judgment-based disputes |
+| **Research Novelty** | Surfaces new, decision-relevant information not in round 1 | Some new information, partially redundant | Mostly redundant with round 1 research | Entirely redundant or irrelevant |
+| **Reasoning & Reconciliation** | Explicitly resolves disagreements with evidence, sound logic, justified adjustment | Good reasoning, minor gaps in reconciliation | Partial reconciliation, some logical gaps | Splits difference without justification, or introduces new errors |
+
+**Supervisor Score:** __ /16
+
+### Supervisor Impact Summary
+
+| Metric | Value |
+|--------|-------|
+| Ensemble weighted average (pre-supervisor) | |
+| Supervisor prediction (post-supervisor) | |
+| Adjustment magnitude | |
+| Was the adjustment an improvement? | *(Assess based on reasoning quality; fill in post-resolution if outcome is known)* |
+
+---
+
+## 7. Overall Assessment
 
 ### Strengths
 1.
@@ -434,7 +550,7 @@ Facts all/most outputs correctly identified:
 
 ---
 
-## 7. Recommendations
+## 8. Recommendations
 
 ### Research Improvements
 
@@ -444,7 +560,7 @@ Facts all/most outputs correctly identified:
 
 ---
 
-## 8. Comparison Flags
+## 9. Comparison Flags
 
 | Flag | Value | Notes |
 |------|-------|-------|
@@ -456,6 +572,7 @@ Facts all/most outputs correctly identified:
 | Critical info missed in research | Yes/No | What? |
 | Base rate calculation errors | Yes/No | |
 | Outlier output (>1.5 SD) | Yes/No | Which? |
+| Supervisor triggered | Yes/No | Confidence level? Improved forecast? |
 
 ---
 
@@ -479,7 +596,9 @@ Step 2 Outputs (Inside View):
   S2-4 (o3):         % (received S1-3)
   S2-5 (o3):         % (received S1-5)
 
-Final Aggregated: %
+Final Aggregated (weighted average): %
+Supervisor Override (if triggered):    % (confidence: )
+Final Submitted:                       %
 ```
 
 *For numeric questions:*
@@ -498,7 +617,9 @@ Step 2 Outputs (Inside View) - Median [10th, 90th]:
   S2-4 (o3):         X [Y, Z] (received S1-3)
   S2-5 (o3):         X [Y, Z] (received S1-5)
 
-Final Aggregated: Median X [10th: Y, 90th: Z]
+Final Aggregated (weighted average): Median X [10th: Y, 90th: Z]
+Supervisor Override (if triggered):  Median X [10th: Y, 90th: Z] (confidence: )
+Final Submitted:                     Median X [10th: Y, 90th: Z]
 ```
 
 *For multiple choice questions:*
@@ -517,7 +638,9 @@ Step 2 Outputs (Inside View):
   S2-4 (o3):         % / % / % / ... (received S1-3)
   S2-5 (o3):         % / % / % / ... (received S1-5)
 
-Final Aggregated: % / % / % / ...
+Final Aggregated (weighted average): % / % / % / ...
+Supervisor Override (if triggered):  % / % / % / ... (confidence: )
+Final Submitted:                     % / % / % / ...
 ```
 
 ### Key Dates
