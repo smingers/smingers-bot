@@ -62,6 +62,8 @@ class ForecasterView:
     inside_view_p80: float | None = None
     outside_view_probs: list[float] | None = None  # MC only
     inside_view_probs: list[float] | None = None
+    outside_view_text: str | None = None  # Raw markdown report text
+    inside_view_text: str | None = None
     shift: float | None = None  # inside view - received outside view (the actual anchoring signal)
     shift_pct: float | None = None  # shift as % of received outside view
 
@@ -451,6 +453,10 @@ def analyze_forecast(forecast_dir: Path) -> ForecastAnalysis | None:
         iv_json = load_json(edir / f"forecaster_{i}.json")
         if iv_json is None:
             iv_json = load_json(edir / f"agent_{i}.json")  # older naming
+
+        # Store raw report text for modal display
+        fv.outside_view_text = ov_text
+        fv.inside_view_text = iv_text
 
         if question_type == "binary":
             # Extract outside view probability from text
@@ -1008,6 +1014,8 @@ def _build_html(
     type_stats: dict,
 ) -> str:
     sections = []
+    # Collect report texts for modal display — each entry is {title, text}
+    report_entries: list[dict[str, str]] = []
 
     for qtype in ["binary", "numeric", "multiple_choice", "discrete", "date"]:
         if qtype not in by_type:
@@ -1146,17 +1154,40 @@ def _build_html(
                         shift_style = "color: #888"
 
                 model_short = f.model.split("/")[-1] if "/" in f.model else f.model
+                f_label = f.agent_id.replace("forecaster_", "F")
+
+                # Build clickable OV/IV cells linking to report modals
+                ov_onclick = ""
+                if f.outside_view_text:
+                    ov_idx = len(report_entries)
+                    report_entries.append({
+                        "title": f"{f_label} ({model_short}) — Outside View",
+                        "text": f.outside_view_text,
+                    })
+                    ov_onclick = f' onclick="openReport({ov_idx})"'
+
+                iv_onclick = ""
+                if f.inside_view_text:
+                    iv_idx = len(report_entries)
+                    report_entries.append({
+                        "title": f"{f_label} ({model_short}) — Inside View",
+                        "text": f.inside_view_text,
+                    })
+                    iv_onclick = f' onclick="openReport({iv_idx})"'
+
+                ov_cls = "val ov" + (" report-link" if ov_onclick else "")
+                iv_cls = "val iv" + (" report-link" if iv_onclick else "")
 
                 if is_numeric_type:
                     fc_rows.append(f"""
                     <tr>
-                        <td class="agent">{f.agent_id.replace("forecaster_", "F")}</td>
+                        <td class="agent">{f_label}</td>
                         <td class="model">{model_short}</td>
                         <td class="val ov p20">{ov_p20_display}</td>
-                        <td class="val ov">{ov_display}</td>
+                        <td class="{ov_cls}"{ov_onclick}>{ov_display}</td>
                         <td class="val ov p80">{ov_p80_display}</td>
                         <td class="val iv p20">{iv_p20_display}</td>
-                        <td class="val iv">{iv_display}</td>
+                        <td class="{iv_cls}"{iv_onclick}>{iv_display}</td>
                         <td class="val iv p80">{iv_p80_display}</td>
                         <td class="val shift" style="{shift_style}">{shift_display}</td>
                     </tr>
@@ -1164,10 +1195,10 @@ def _build_html(
                 else:
                     fc_rows.append(f"""
                     <tr>
-                        <td class="agent">{f.agent_id.replace("forecaster_", "F")}</td>
+                        <td class="agent">{f_label}</td>
                         <td class="model">{model_short}</td>
-                        <td class="val ov">{ov_display}</td>
-                        <td class="val iv">{iv_display}</td>
+                        <td class="{ov_cls}"{ov_onclick}>{ov_display}</td>
+                        <td class="{iv_cls}"{iv_onclick}>{iv_display}</td>
                         <td class="val shift" style="{shift_style}">{shift_display}</td>
                     </tr>
                     """)
@@ -1961,6 +1992,117 @@ def _build_html(
     .badge.mode-multiple_choice {{ background: rgba(210, 153, 34, 0.15); color: var(--orange); }}
     .badge.mode-discrete {{ background: rgba(188, 140, 255, 0.15); color: var(--purple); }}
     .badge.mode-date {{ background: rgba(139, 148, 158, 0.15); color: var(--text-dim); }}
+
+    /* Clickable report links */
+    .report-link {{
+        cursor: pointer;
+        text-decoration: underline;
+        text-decoration-style: dotted;
+        text-underline-offset: 3px;
+    }}
+    .report-link:hover {{
+        text-decoration-style: solid;
+        filter: brightness(1.3);
+    }}
+
+    /* Report modal */
+    .report-modal-backdrop {{
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.7);
+        z-index: 1000;
+        backdrop-filter: blur(4px);
+    }}
+    .report-modal-backdrop.open {{ display: flex; align-items: center; justify-content: center; }}
+    .report-modal {{
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        width: min(90vw, 800px);
+        max-height: 85vh;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    }}
+    .report-modal-header {{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 20px;
+        border-bottom: 1px solid var(--border);
+        flex-shrink: 0;
+    }}
+    .report-modal-header h3 {{
+        font-size: 1rem;
+        color: #fff;
+        margin: 0;
+    }}
+    .report-modal-close {{
+        background: none;
+        border: none;
+        color: var(--text-dim);
+        font-size: 1.5rem;
+        cursor: pointer;
+        padding: 0 4px;
+        line-height: 1;
+    }}
+    .report-modal-close:hover {{ color: #fff; }}
+    .report-modal-body {{
+        overflow-y: auto;
+        padding: 20px;
+        font-size: 0.9rem;
+        line-height: 1.7;
+    }}
+    .report-modal-body h1, .report-modal-body h2, .report-modal-body h3,
+    .report-modal-body h4, .report-modal-body h5 {{
+        color: #fff;
+        margin-top: 1.2em;
+        margin-bottom: 0.4em;
+    }}
+    .report-modal-body h1 {{ font-size: 1.3rem; }}
+    .report-modal-body h2 {{ font-size: 1.15rem; border-bottom: none; padding-bottom: 0; }}
+    .report-modal-body h3 {{ font-size: 1.05rem; }}
+    .report-modal-body p {{ margin-bottom: 0.8em; }}
+    .report-modal-body ul, .report-modal-body ol {{ margin-bottom: 0.8em; padding-left: 1.5em; }}
+    .report-modal-body li {{ margin-bottom: 0.3em; }}
+    .report-modal-body code {{
+        background: var(--surface2);
+        padding: 1px 5px;
+        border-radius: 3px;
+        font-size: 0.85em;
+    }}
+    .report-modal-body pre {{
+        background: var(--surface2);
+        padding: 12px;
+        border-radius: 6px;
+        overflow-x: auto;
+        margin-bottom: 0.8em;
+    }}
+    .report-modal-body pre code {{ background: none; padding: 0; }}
+    .report-modal-body blockquote {{
+        border-left: 3px solid var(--border);
+        margin-left: 0;
+        padding-left: 12px;
+        color: var(--text-dim);
+    }}
+    .report-modal-body strong {{ color: #fff; }}
+    .report-modal-body hr {{
+        border: none;
+        border-top: 1px solid var(--border);
+        margin: 1em 0;
+    }}
+    .report-modal-body table {{
+        border-collapse: collapse;
+        width: 100%;
+        margin-bottom: 1em;
+    }}
+    .report-modal-body th, .report-modal-body td {{
+        border: 1px solid var(--border);
+        padding: 6px 10px;
+        text-align: left;
+    }}
+    .report-modal-body th {{ background: var(--surface2); color: #fff; }}
 </style>
 </head>
 <body>
@@ -2008,7 +2150,59 @@ def _build_html(
 
 {resolved_section}
 
+<!-- Report modal -->
+<div class="report-modal-backdrop" id="reportBackdrop">
+    <div class="report-modal">
+        <div class="report-modal-header">
+            <h3 id="reportTitle"></h3>
+            <button class="report-modal-close" onclick="closeReport()">&times;</button>
+        </div>
+        <div class="report-modal-body" id="reportBody"></div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script>
+// Report data for modal display
+const REPORTS = {json.dumps(report_entries)};
+
+// Markdown rendering (with fallback to plain text if marked.js fails to load)
+function renderMarkdown(text) {{
+    if (typeof marked !== 'undefined') {{
+        return marked.parse(text);
+    }}
+    // Fallback: basic escaping and newline handling
+    return '<pre style="white-space: pre-wrap;">' +
+        text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') +
+        '</pre>';
+}}
+
+function openReport(idx) {{
+    const entry = REPORTS[idx];
+    if (!entry) return;
+    document.getElementById('reportTitle').textContent = entry.title;
+    document.getElementById('reportBody').innerHTML = renderMarkdown(entry.text);
+    document.getElementById('reportBackdrop').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    // Prevent click from propagating to forecast-header collapse toggle
+    event.stopPropagation();
+}}
+
+function closeReport() {{
+    document.getElementById('reportBackdrop').classList.remove('open');
+    document.body.style.overflow = '';
+}}
+
+// Close on backdrop click
+document.getElementById('reportBackdrop').addEventListener('click', function(e) {{
+    if (e.target === this) closeReport();
+}});
+
+// Close on Escape key
+document.addEventListener('keydown', function(e) {{
+    if (e.key === 'Escape') closeReport();
+}});
+
 // Collapse/expand forecast cards on click
 document.querySelectorAll('.forecast-header').forEach(header => {{
     header.style.cursor = 'pointer';
