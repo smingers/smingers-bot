@@ -1,0 +1,277 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "https://trends.google.com/trends/explore?geo=US&tz=0&q=george%20washington&date=2026-01-26%202026-02-25",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://serpapi.com/",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "https://trends.google.com/trends/explore?geo=US&tz=0&q=george%20washington&date=2026-01-17%202026-02-16",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "george washington presidents day trend",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "George Washington Birthday 2026 events",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Examine past five years of Google Trends data for \u201cgeorge washington\u201d around Feb 15\u201325; identify the day of peak interest, the magnitude of decline by Feb 25, and note any years where interest stayed elevated due to news events.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "george washington google trends feb 2025",
+              "george washington presidents day spike 2024",
+              "george washington google trends feb 2023",
+              "george washington statue controversy feb 2022",
+              "george washington google trends feb 2024"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "george washington google trends feb 2025",
+                    "Google"
+                  ],
+                  [
+                    "george washington presidents day spike 2024",
+                    "Google News"
+                  ],
+                  [
+                    "george washington google trends feb 2023",
+                    "Google"
+                  ],
+                  [
+                    "george washington statue controversy feb 2022",
+                    "Google News"
+                  ],
+                  [
+                    "george washington google trends feb 2024",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 61419,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "george washington",
+          "tool": "Google Trends",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Google Trends",
+        "Agent",
+        "Google News"
+      ],
+      "llm_cost": 0.2622,
+      "llm_cost_summarization": 0.2143,
+      "llm_cost_agentic": 0.048,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "George Washington birthday 2026 events",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "George Washington Feb 22 2026 celebration",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "List United States commemorations, exhibitions, broadcasts or releases about George Washington scheduled between Feb 20-25 2026.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 17
+        },
+        {
+          "query": "Will the interest in \u201cgeorge washington\u201d change between 2026-02-20 and 2026-02-25 according to Google Trends?",
+          "tool": "AskNews",
+          "deep_research_query": "List United States commemorations, exhibitions, broadcasts or releases about George Washington scheduled between Feb 20-25 2026."
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "AskNews",
+        "Google News"
+      ],
+      "llm_cost": 0.1639,
+      "llm_cost_summarization": 0.1551,
+      "llm_cost_agentic": 0.0089,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6500,
+        "token_output": 1537,
+        "cost": 0.055555,
+        "duration_seconds": 55.45062017440796,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14551,
+        "token_output": 2184,
+        "cost": 0.105515,
+        "duration_seconds": 51.155999183654785,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6500,
+        "token_output": 1721,
+        "cost": 0.058315000000000006,
+        "duration_seconds": 55.450677156448364,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14207,
+        "token_output": 1758,
+        "cost": 0.097405,
+        "duration_seconds": 51.15597057342529,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5863,
+        "token_output": 2762,
+        "cost": 0.04892825,
+        "duration_seconds": 55.45071744918823,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13064,
+        "token_output": 2092,
+        "cost": 0.05215,
+        "duration_seconds": 51.15593981742859,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5863,
+        "token_output": 2023,
+        "cost": 0.02791,
+        "duration_seconds": 55.450751304626465,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13493,
+        "token_output": 1783,
+        "cost": 0.04125,
+        "duration_seconds": 51.1559100151062,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5863,
+        "token_output": 1808,
+        "cost": 0.026189999999999998,
+        "duration_seconds": 55.450777530670166,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12466,
+        "token_output": 1420,
+        "cost": 0.036292,
+        "duration_seconds": 51.15588140487671,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0176,
+    "step2_search": 0.2622,
+    "step3_outside_view": 0.2169,
+    "step5_inside_view": 0.3326,
+    "step6_aggregation": 0.3326,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.8293
+}
