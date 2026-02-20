@@ -188,21 +188,12 @@ Systematic cleanup of all prompt templates in a single day.
   3. Scrapes current community P(Yes), forecaster count, and trend data using Playwright + Xvfb (bypasses Cloudflare)
   4. Injects scraped data into agentic search context, outside view context, and inside view context — all 5 forecasters see the data in both views
 
-### Feb 20 — Reasoning token visibility
-- `c0ba745` **Add reasoning/extended-thinking visibility to forecasting pipeline** — models like o3 use internal reasoning tokens that were completely invisible. Now:
-  - `LLMResponse` tracks `reasoning_tokens` count and `reasoning_content` text
-  - `StepMetrics` records `token_reasoning` and `used_reasoning` per step
-  - Reasoning content saved as `forecaster_{N}_{step}_reasoning.md` artifacts
-  - Pipeline logs show `[reasoning: N tokens]` per forecaster step
-  - Cost breakdown shows reasoning token counts per agent
-
 > **Config Fingerprint — End of Phase 8 (current):**
 > - Pipeline: 5-agent ensemble + optional supervisor + community prediction scraping for meta-questions
 > - Models: Sonnet 4.6 (1,2), GPT-5.2 (3), o3 (4,5)
 > - Supervisor: Fixed normalization (binary /100, MC normalize, date extractor)
 > - Research: Google + AskNews + Google Trends + FRED + yFinance + question URL scraping + agentic search + community prediction scraping
 > - Fine print: Now correctly fed to all forecasters (was silently empty before)
-> - Reasoning: o3 reasoning tokens and content captured in metrics and artifacts
 > - Temperatures: query 0.3, summarization 0.1, agentic 0.3, forecasting 0.5
 > - max_output_tokens: 5000
 
