@@ -1,10 +1,10 @@
 {
   "tournament_id": 32916,
   "tournament_name": "Tournament 32916",
-  "last_updated": "2026-02-18T22:33:43.065970+00:00",
-  "total_forecasts": 82,
-  "binary_count": 39,
-  "numeric_count": 33,
+  "last_updated": "2026-02-20T21:58:58.154414+00:00",
+  "total_forecasts": 95,
+  "binary_count": 44,
+  "numeric_count": 39,
   "multiple_choice_count": 4,
   "binary_stats": {
     "count": 20,
@@ -1921,6 +1921,352 @@
         "my_iqr": 12.49,
         "community_iqr": 24.51,
         "uncertainty_ratio": 0.509588
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 41750,
+      "question_title": "What will be the target Selic rate (in percent) established by Copom at its March 2026 meeting?",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/41750/",
+      "forecast_timestamp": "2026-01-28T23:02:22+00:00",
+      "snapshot_timestamp": "2026-02-20T21:58:58.149856+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "community_lower_quartile": 13.98,
+        "community_median": 14.55,
+        "community_upper_quartile": 14.91,
+        "community_iqr": 0.9299999999999997,
+        "my_median": null,
+        "my_lower_quartile": null,
+        "my_upper_quartile": null,
+        "median_difference": null,
+        "my_iqr": null,
+        "uncertainty_ratio": null
+      },
+      "score_data": {
+        "baseline_score": 49.13317699160376,
+        "peer_score": 12.682606868048762,
+        "coverage": 0.8546224836294739,
+        "relative_legacy_score": 0,
+        "weighted_coverage": 0.8546224836294739,
+        "spot_peer_score": 0,
+        "spot_baseline_score": 0
+      }
+    },
+    {
+      "question_id": 41753,
+      "question_title": "How much will Netflix's revenue grow year-over-year in its Q1 2026 earnings report?",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/41753/",
+      "forecast_timestamp": "2026-01-29T00:59:15+00:00",
+      "snapshot_timestamp": "2026-02-20T21:58:58.150487+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "community_lower_quartile": 12.64,
+        "community_median": 15.25,
+        "community_upper_quartile": 17.35,
+        "community_iqr": 4.710000000000001,
+        "my_median": null,
+        "my_lower_quartile": null,
+        "my_upper_quartile": null,
+        "median_difference": null,
+        "my_iqr": null,
+        "uncertainty_ratio": null
+      },
+      "score_data": {
+        "baseline_score": -22.417117519987592,
+        "peer_score": 58.63231914223441,
+        "coverage": 0.9999929181832685,
+        "relative_legacy_score": 0,
+        "weighted_coverage": 0.9999929181832685,
+        "spot_peer_score": 72.7164261637727,
+        "spot_baseline_score": -122.52882764775899
+      }
+    },
+    {
+      "question_id": 41875,
+      "question_title": "What will be Donald Trump's approval rating on February 14, 2026?",
+      "question_type": "discrete",
+      "question_url": "https://www.metaculus.com/questions/41875/",
+      "forecast_timestamp": "2026-01-30T03:26:10+00:00",
+      "snapshot_timestamp": "2026-02-20T21:58:58.150813+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "community_lower_quartile": 38.3,
+        "community_median": 40.4,
+        "community_upper_quartile": 42.5,
+        "community_iqr": 4.200000000000003,
+        "my_median": null,
+        "my_lower_quartile": null,
+        "my_upper_quartile": null,
+        "median_difference": null,
+        "my_iqr": null,
+        "uncertainty_ratio": null
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 41902,
+      "question_title": "What will be the UK Consumer Prices Index (CPI) 12-month rate (year-over-year percent change) for March 2026, as reported by the UK Office for National Statistics (ONS)?",
+      "question_type": "discrete",
+      "question_url": "https://www.metaculus.com/questions/41902/",
+      "forecast_timestamp": "2026-02-01T05:41:48+00:00",
+      "snapshot_timestamp": "2026-02-20T21:58:58.151110+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "community_lower_quartile": 2.3,
+        "community_median": 2.9,
+        "community_upper_quartile": 3.6,
+        "community_iqr": 1.3000000000000003,
+        "my_median": null,
+        "my_lower_quartile": null,
+        "my_upper_quartile": null,
+        "median_difference": null,
+        "my_iqr": null,
+        "uncertainty_ratio": null
+      },
+      "score_data": {
+        "baseline_score": 79.14496365960771,
+        "peer_score": 13.687553249957844,
+        "coverage": 0.9999361420802556,
+        "relative_legacy_score": 0,
+        "weighted_coverage": 0.9999361420802556,
+        "spot_peer_score": 0,
+        "spot_baseline_score": 88.22894045869825
+      }
+    },
+    {
+      "question_id": 41910,
+      "question_title": "What will be Namibia's annual inflation rate for March 2026?",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/41910/",
+      "forecast_timestamp": "2026-02-03T00:58:47+00:00",
+      "snapshot_timestamp": "2026-02-20T21:58:58.151630+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "community_lower_quartile": 2.962,
+        "community_median": 3.725,
+        "community_upper_quartile": 4.667,
+        "community_iqr": 1.7049999999999996,
+        "my_median": null,
+        "my_lower_quartile": null,
+        "my_upper_quartile": null,
+        "median_difference": null,
+        "my_iqr": null,
+        "uncertainty_ratio": null
+      },
+      "score_data": {
+        "baseline_score": 79.14496365960771,
+        "peer_score": 13.687553249957844,
+        "coverage": 0.9999361420802556,
+        "relative_legacy_score": 0,
+        "weighted_coverage": 0.9999361420802556,
+        "spot_peer_score": 0,
+        "spot_baseline_score": 88.22894045869825
+      }
+    },
+    {
+      "question_id": 42051,
+      "question_title": "What will be the upper bound of the Federal Funds Target Range on April 30, 2026?",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/42051/",
+      "forecast_timestamp": "2026-02-13T06:16:43+00:00",
+      "snapshot_timestamp": "2026-02-20T21:58:58.151959+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 3.5,
+        "community_median": 3.627,
+        "my_lower_quartile": 3.208,
+        "my_upper_quartile": 3.792,
+        "community_lower_quartile": 3.318,
+        "community_upper_quartile": 3.878,
+        "median_difference": -0.127,
+        "my_iqr": 0.584,
+        "community_iqr": 0.56,
+        "uncertainty_ratio": 1.0429
+      },
+      "score_data": {
+        "baseline_score": 49.13317699160376,
+        "peer_score": 12.682606868048762,
+        "coverage": 0.8546224836294739,
+        "relative_legacy_score": 0,
+        "weighted_coverage": 0.8546224836294739,
+        "spot_peer_score": 0,
+        "spot_baseline_score": 0
+      }
+    },
+    {
+      "question_id": 42097,
+      "question_title": "What will US airline passenger volume be for these weeks in February 2026, according to the TSA? (Feb 23, 2026-Mar 1, 2026)",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/42097/",
+      "forecast_timestamp": "2026-02-15T21:29:27+00:00",
+      "snapshot_timestamp": "2026-02-20T21:58:58.152287+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 14500000,
+        "community_median": 15340000,
+        "my_lower_quartile": 14290000,
+        "my_upper_quartile": 14710000,
+        "community_lower_quartile": 13900000,
+        "community_upper_quartile": 16520000,
+        "median_difference": -840000,
+        "my_iqr": 420000,
+        "community_iqr": 2620000,
+        "uncertainty_ratio": 0.1603
+      },
+      "score_data": {
+        "baseline_score": -26.844059922719428,
+        "peer_score": 14.24507137894518,
+        "coverage": 0.9524388195525586,
+        "relative_legacy_score": 0,
+        "weighted_coverage": 0.9524388195525586,
+        "spot_peer_score": 33.14098456547032,
+        "spot_baseline_score": 4.243053011665076
+      }
+    },
+    {
+      "question_id": 42099,
+      "question_title": "What will US airline passenger volume be for these weeks in February 2026, according to the TSA? (Feb 16, 2026-Feb 22, 2026)",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/42099/",
+      "forecast_timestamp": "2026-02-15T15:45:28+00:00",
+      "snapshot_timestamp": "2026-02-20T21:58:58.152592+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 14500000,
+        "community_median": 15590000,
+        "my_lower_quartile": 14290000,
+        "my_upper_quartile": 14710000,
+        "community_lower_quartile": 14090000,
+        "community_upper_quartile": 16739999.999999998,
+        "median_difference": -1090000,
+        "my_iqr": 420000,
+        "community_iqr": 2650000.0,
+        "uncertainty_ratio": 0.1585
+      },
+      "score_data": {
+        "baseline_score": -26.844059922719428,
+        "peer_score": 14.24507137894518,
+        "coverage": 0.9524388195525586,
+        "relative_legacy_score": 0,
+        "weighted_coverage": 0.9524388195525586,
+        "spot_peer_score": 33.14098456547032,
+        "spot_baseline_score": 4.243053011665076
+      }
+    },
+    {
+      "question_id": 42115,
+      "question_title": "Will the nationwide #1 party\u2019s vote share in the Netherlands municipal elections be at least 15.0% ?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/42115/",
+      "forecast_timestamp": "2026-02-19T00:59:51+00:00",
+      "snapshot_timestamp": "2026-02-20T21:58:58.152905+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.946,
+        "community_probability": 0.3,
+        "difference": 0.646
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42116,
+      "question_title": "Will CDU win the most seats in the Baden-W\u00fcrttemberg Landtag election?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/42116/",
+      "forecast_timestamp": "2026-02-19T08:29:14+00:00",
+      "snapshot_timestamp": "2026-02-20T21:58:58.153240+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.786,
+        "community_probability": 0.75,
+        "difference": 0.036
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42117,
+      "question_title": "Will AfD win the most seats in the Baden-W\u00fcrttemberg Landtag election?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/42117/",
+      "forecast_timestamp": "2026-02-19T09:09:49+00:00",
+      "snapshot_timestamp": "2026-02-20T21:58:58.153755+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.027,
+        "community_probability": 0.0582,
+        "difference": -0.0312
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42230,
+      "question_title": "Will the UK increase the qualifying period for settlement to 10 years before May 2026?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/42230/",
+      "forecast_timestamp": "2026-02-20T15:58:38+00:00",
+      "snapshot_timestamp": "2026-02-20T21:58:58.154065+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.578,
+        "community_probability": 0.62,
+        "difference": -0.042
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42231,
+      "question_title": "Will any political party or coalition acquire a supermajority in the 2026 Hungarian parliamentary elections?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/42231/",
+      "forecast_timestamp": "2026-02-20T17:59:47+00:00",
+      "snapshot_timestamp": "2026-02-20T21:58:58.154412+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.352,
+        "community_probability": 0.3283,
+        "difference": 0.0237
       },
       "score_data": null
     }

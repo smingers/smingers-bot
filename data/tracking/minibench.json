@@ -1,11 +1,11 @@
 {
   "tournament_id": "minibench",
   "tournament_name": "Tournament minibench",
-  "last_updated": "2026-02-18T22:54:46.704677+00:00",
-  "total_forecasts": 95,
-  "binary_count": 49,
-  "numeric_count": 20,
-  "multiple_choice_count": 26,
+  "last_updated": "2026-02-20T21:58:58.160080+00:00",
+  "total_forecasts": 106,
+  "binary_count": 54,
+  "numeric_count": 24,
+  "multiple_choice_count": 28,
   "binary_stats": {
     "count": 28,
     "mean_difference": 0.022801590078908782,
@@ -2898,6 +2898,282 @@
         "my_probability": 0.408,
         "community_probability": 0.45,
         "difference": -0.042
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 41968,
+      "question_title": "What will be the value of \"Overnight Repurchase Agreements: Treasury Securities Purchased by the Federal Reserve in the Temporary Open Market Operations\" on 2026-02-10?",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/41968/",
+      "forecast_timestamp": "2026-02-02T14:39:58+00:00",
+      "snapshot_timestamp": "2026-02-20T21:58:58.157367+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "community_lower_quartile": 0.2916,
+        "community_median": 1.709,
+        "community_upper_quartile": 8.19,
+        "community_iqr": 7.8984,
+        "my_median": null,
+        "my_lower_quartile": null,
+        "my_upper_quartile": null,
+        "median_difference": null,
+        "my_iqr": null,
+        "uncertainty_ratio": null
+      },
+      "score_data": {
+        "baseline_score": 76.5769345422429,
+        "peer_score": 27.18386333644195,
+        "coverage": 0.9966642887593993,
+        "relative_legacy_score": 0,
+        "weighted_coverage": 0.9966642887593993,
+        "spot_peer_score": 0,
+        "spot_baseline_score": 0
+      }
+    },
+    {
+      "question_id": 42200,
+      "question_title": "What will be the value of \"Crude Oil Prices: West Texas Intermediate (WTI) - Cushing, Oklahoma\" on 2026-02-26?",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/42200/",
+      "forecast_timestamp": "2026-02-18T21:53:25+00:00",
+      "snapshot_timestamp": "2026-02-20T21:58:58.157685+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 66.9,
+        "community_median": 64.24,
+        "my_lower_quartile": 65.3,
+        "my_upper_quartile": 68.5,
+        "community_lower_quartile": 60.12,
+        "community_upper_quartile": 68.98,
+        "median_difference": 2.66,
+        "my_iqr": 3.2,
+        "community_iqr": 8.86,
+        "uncertainty_ratio": 0.3612
+      },
+      "score_data": {
+        "baseline_score": 41.75602962556957,
+        "peer_score": 1.5857171749625913,
+        "coverage": 0.46231741784988034,
+        "relative_legacy_score": 0,
+        "weighted_coverage": 0.46231741784988034,
+        "spot_peer_score": 0,
+        "spot_baseline_score": 0
+      }
+    },
+    {
+      "question_id": 42201,
+      "question_title": "Will MCHP's market close price on 2026-02-25 be higher than its market close price on 2026-02-19?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/42201/",
+      "forecast_timestamp": "2026-02-19T03:35:34+00:00",
+      "snapshot_timestamp": "2026-02-20T21:58:58.158020+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.454,
+        "community_probability": 0.48,
+        "difference": -0.026
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42202,
+      "question_title": "Will the interest in \u201cleslie wexner\u201d change between 2026-02-19 and 2026-02-25 according to Google Trends?",
+      "question_type": "multiple_choice",
+      "question_url": "https://www.metaculus.com/questions/42202/",
+      "forecast_timestamp": "2026-02-19T06:34:18+00:00",
+      "snapshot_timestamp": "2026-02-20T21:58:58.158587+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "multiple_choice",
+        "my_probabilities": {
+          "Increases": 0.166,
+          "Doesn't change": 0.454,
+          "Decreases": 0.38
+        },
+        "community_probabilities": {
+          "Increases": 0.25,
+          "Doesn't change": 0.65,
+          "Decreases": 0.1
+        },
+        "differences": {
+          "Increases": -0.084,
+          "Doesn't change": -0.196,
+          "Decreases": 0.28
+        },
+        "max_difference_option": "Decreases",
+        "max_difference_value": 0.28
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42203,
+      "question_title": "What will be the value of \"4-Week Treasury Bill Secondary Market Rate, Discount Basis\" on 2026-02-25?",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/42203/",
+      "forecast_timestamp": "2026-02-19T11:58:51+00:00",
+      "snapshot_timestamp": "2026-02-20T21:58:58.158795+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 3.979,
+        "community_median": 3.64,
+        "my_lower_quartile": 3.899,
+        "my_upper_quartile": 4.059,
+        "community_lower_quartile": 3.537,
+        "community_upper_quartile": 3.782,
+        "median_difference": 0.339,
+        "my_iqr": 0.16,
+        "community_iqr": 0.245,
+        "uncertainty_ratio": 0.6531
+      },
+      "score_data": {
+        "baseline_score": 76.5769345422429,
+        "peer_score": 27.18386333644195,
+        "coverage": 0.9966642887593993,
+        "relative_legacy_score": 0,
+        "weighted_coverage": 0.9966642887593993,
+        "spot_peer_score": 0,
+        "spot_baseline_score": 0
+      }
+    },
+    {
+      "question_id": 42204,
+      "question_title": "Will PCAR's market close price on 2026-02-27 be higher than its market close price on 2026-02-19?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/42204/",
+      "forecast_timestamp": "2026-02-19T22:19:08+00:00",
+      "snapshot_timestamp": "2026-02-20T21:58:58.159000+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.498,
+        "community_probability": 0.52,
+        "difference": -0.022
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42205,
+      "question_title": "Will DELL's market close price on 2026-02-27 be higher than its market close price on 2026-02-20?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/42205/",
+      "forecast_timestamp": "2026-02-20T03:27:29+00:00",
+      "snapshot_timestamp": null,
+      "num_forecasters": null,
+      "resolved": false,
+      "resolution": null,
+      "comparison": null,
+      "score_data": null
+    },
+    {
+      "question_id": 42206,
+      "question_title": "Will LMT's market close price on 2026-02-26 be higher than its market close price on 2026-02-20?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/42206/",
+      "forecast_timestamp": "2026-02-20T03:27:29+00:00",
+      "snapshot_timestamp": null,
+      "num_forecasters": null,
+      "resolved": false,
+      "resolution": null,
+      "comparison": null,
+      "score_data": null
+    },
+    {
+      "question_id": 42207,
+      "question_title": "What will be the value of \"Moody's Seasoned Aaa Corporate Bond Yield\" on 2026-02-25?",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/42207/",
+      "forecast_timestamp": "2026-02-20T06:11:56+00:00",
+      "snapshot_timestamp": "2026-02-20T21:58:58.159541+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 5.408,
+        "community_median": 5.253,
+        "my_lower_quartile": 5.316,
+        "my_upper_quartile": 5.5,
+        "community_lower_quartile": 5.118,
+        "community_upper_quartile": 5.388,
+        "median_difference": 0.155,
+        "my_iqr": 0.184,
+        "community_iqr": 0.27,
+        "uncertainty_ratio": 0.6815
+      },
+      "score_data": {
+        "baseline_score": 76.5769345422429,
+        "peer_score": 27.18386333644195,
+        "coverage": 0.9966642887593993,
+        "relative_legacy_score": 0,
+        "weighted_coverage": 0.9966642887593993,
+        "spot_peer_score": 0,
+        "spot_baseline_score": 0
+      }
+    },
+    {
+      "question_id": 42208,
+      "question_title": "Will the interest in \u201cgeorge washington\u201d change between 2026-02-20 and 2026-02-25 according to Google Trends?",
+      "question_type": "multiple_choice",
+      "question_url": "https://www.metaculus.com/questions/42208/",
+      "forecast_timestamp": "2026-02-20T09:03:24+00:00",
+      "snapshot_timestamp": "2026-02-20T21:58:58.159763+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "multiple_choice",
+        "my_probabilities": {
+          "Increases": 0.068,
+          "Doesn't change": 0.112,
+          "Decreases": 0.82
+        },
+        "community_probabilities": {
+          "Increases": 0.116,
+          "Doesn't change": 0.27,
+          "Decreases": 0.614
+        },
+        "differences": {
+          "Increases": -0.048,
+          "Doesn't change": -0.158,
+          "Decreases": 0.206
+        },
+        "max_difference_option": "Decreases",
+        "max_difference_value": 0.206
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42209,
+      "question_title": "Will Q's market close price on 2026-02-26 be higher than its market close price on 2026-02-20?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/42209/",
+      "forecast_timestamp": "2026-02-20T11:02:24+00:00",
+      "snapshot_timestamp": "2026-02-20T21:58:58.160078+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.5,
+        "community_probability": 0.5125,
+        "difference": -0.0125
       },
       "score_data": null
     }

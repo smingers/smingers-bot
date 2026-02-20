@@ -1,8 +1,8 @@
 {
   "tournament_id": "other",
   "tournament_name": "Other tournaments and standalone questions",
-  "last_updated": "2026-02-18T22:05:16.885966+00:00",
-  "total_forecasts": 3,
+  "last_updated": "2026-02-20T22:11:32.602925+00:00",
+  "total_forecasts": 12,
   "forecasts": [
     {
       "question_id": 41594,
@@ -34,9 +34,24 @@
       "resolution": null,
       "comparison": {
         "type": "multiple_choice",
-        "my_probabilities": {"0": 0.010, "1": 0.645, "2": 0.250, "3+": 0.094},
-        "community_probabilities": {"0": 0.001, "1": 0.630, "2": 0.299, "3+": 0.070},
-        "differences": {"0": 0.009, "1": 0.015, "2": -0.049, "3+": 0.024},
+        "my_probabilities": {
+          "0": 0.01,
+          "1": 0.645,
+          "2": 0.25,
+          "3+": 0.094
+        },
+        "community_probabilities": {
+          "0": 0.001,
+          "1": 0.63,
+          "2": 0.299,
+          "3+": 0.07
+        },
+        "differences": {
+          "0": 0.009,
+          "1": 0.015,
+          "2": -0.049,
+          "3+": 0.024
+        },
         "max_difference_option": "2",
         "max_difference_value": -0.049
       },
@@ -59,9 +74,236 @@
         "difference": -0.022
       },
       "score_data": null
+    },
+    {
+      "question_id": 16402,
+      "question_title": "What will be the level of anthropogenic methane emissions in 2050?",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/16402/",
+      "forecast_timestamp": "2026-01-27T00:08:06+00:00",
+      "snapshot_timestamp": "2026-02-20T21:58:58.163014+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 0.6101199204839464,
+        "community_median": 10.14,
+        "my_lower_quartile": 0.11609630307799805,
+        "my_upper_quartile": 0.9291852238099336,
+        "community_lower_quartile": 9.127,
+        "community_upper_quartile": 12.1,
+        "median_difference": -9.5299,
+        "my_iqr": 0.8131,
+        "community_iqr": 2.973,
+        "uncertainty_ratio": 0.2735
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 22150,
+      "question_title": "Will the population of the United States be higher than the People's Republic of China at any point before 2200?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/22150/",
+      "forecast_timestamp": "2026-01-27T00:30:45+00:00",
+      "snapshot_timestamp": "2026-02-20T21:58:58.163379+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.263,
+        "community_probability": 0.0699,
+        "difference": 0.1931
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 40281,
+      "question_title": "Will any coding tool introduce an integration with brain-computer interface technology before November 2026?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/40281/",
+      "forecast_timestamp": "2026-02-14T02:27:53+00:00",
+      "snapshot_timestamp": "2026-02-20T21:58:58.164672+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.0694,
+        "community_probability": 0.05,
+        "difference": 0.0194
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 40413,
+      "question_title": "What will be the Republican advantage (or disadvantage) vs Democrats in the House of Representatives after the 2026 elections?",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/40413/",
+      "forecast_timestamp": "2026-02-01T22:42:14+00:00",
+      "snapshot_timestamp": "2026-02-20T22:07:04.526973+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": -5.2,
+        "community_median": -5.877,
+        "my_lower_quartile": -12.8,
+        "my_upper_quartile": 2.8,
+        "community_lower_quartile": -14.08,
+        "community_upper_quartile": 1.517,
+        "median_difference": 0.677,
+        "my_iqr": 15.6,
+        "community_iqr": 15.597,
+        "uncertainty_ratio": 1.0002
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 41514,
+      "question_title": "Before May 1, 2026, will the United States offer to purchase Greenland from Denmark?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/41514/",
+      "forecast_timestamp": "2026-01-27T11:14:55+00:00",
+      "snapshot_timestamp": "2026-02-20T21:58:58.165323+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "binary",
+        "my_probability": 0.148,
+        "community_probability": 0.18,
+        "difference": -0.032
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 41548,
+      "question_title": "How many days will Takaichi Sanae serve as Prime Minister of Japan before 2032?",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/41548/",
+      "forecast_timestamp": "2026-01-26T21:49:23+00:00",
+      "snapshot_timestamp": "2026-02-20T21:58:58.165628+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 0.6820166965968416,
+        "community_median": 1359,
+        "my_lower_quartile": 0.2758520334453519,
+        "my_upper_quartile": 0.8995689341681757,
+        "community_lower_quartile": 1138,
+        "community_upper_quartile": 1732,
+        "median_difference": -1358.318,
+        "my_iqr": 0.6237,
+        "community_iqr": 594,
+        "uncertainty_ratio": 0.0011
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 41593,
+      "question_title": "When will Claude Plays Pokemon beat the first Pok\u00e9mon game? (2026)",
+      "question_type": "date",
+      "question_url": "https://www.metaculus.com/questions/41593/",
+      "forecast_timestamp": "2026-02-01T15:09:27+00:00",
+      "snapshot_timestamp": "2026-02-20T22:07:04.526973+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 1779408000.0,
+        "community_median": 1776556800.0,
+        "my_lower_quartile": 1775260800.0,
+        "my_upper_quartile": 1784764800.0,
+        "community_lower_quartile": 1773187200.0,
+        "community_upper_quartile": 1781827200.0,
+        "median_difference": 2851200,
+        "my_iqr": 9504000,
+        "community_iqr": 8640000,
+        "uncertainty_ratio": 1.1
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 41882,
+      "question_title": "Which party will win the most seats in the 2026 Nepali House of Representatives election?",
+      "question_type": "multiple_choice",
+      "question_url": "https://www.metaculus.com/questions/41882/",
+      "forecast_timestamp": "2026-01-26T21:53:39+00:00",
+      "snapshot_timestamp": "2026-02-20T21:58:58.166269+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "multiple_choice",
+        "my_probabilities": {
+          "Nepali Congress": 0.2571,
+          "Communist Party of Nepal (Unified Marxist-Leninist)": 0.2286,
+          "Nepali Communist Party": 0.15,
+          "Rastriya Swatantra Party": 0.15,
+          "Rastriya Prajatantra Party": 0.0771,
+          "Ujyaalo Nepal Party": 0.0514,
+          "Pragatisheel Loktantrik Party": 0.0343,
+          "Other": 0.0514
+        },
+        "community_probabilities": {
+          "Nepali Congress": 0.222,
+          "Communist Party of Nepal (Unified Marxist-Leninist)": 0.051,
+          "Nepali Communist Party": 0.034,
+          "Rastriya Swatantra Party": 0.664,
+          "Rastriya Prajatantra Party": 0.005,
+          "Ujyaalo Nepal Party": 0.002,
+          "Pragatisheel Loktantrik Party": 0.003,
+          "Other": 0.019
+        },
+        "differences": {
+          "Nepali Congress": 0.0351,
+          "Communist Party of Nepal (Unified Marxist-Leninist)": 0.1776,
+          "Nepali Communist Party": 0.116,
+          "Rastriya Swatantra Party": -0.514,
+          "Rastriya Prajatantra Party": 0.0721,
+          "Ujyaalo Nepal Party": 0.0494,
+          "Pragatisheel Loktantrik Party": 0.0313,
+          "Other": 0.0324
+        },
+        "max_difference_option": "Rastriya Swatantra Party",
+        "max_difference_value": -0.514
+      },
+      "score_data": null
+    },
+    {
+      "question_id": 42035,
+      "question_title": "What will be the abstention rate in the first round of the 2026 French municipal elections?",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/42035/",
+      "forecast_timestamp": "2026-02-14T02:02:30+00:00",
+      "snapshot_timestamp": "2026-02-20T21:58:58.166679+00:00",
+      "num_forecasters": 1,
+      "resolved": false,
+      "resolution": null,
+      "comparison": {
+        "type": "numeric",
+        "my_median": 40,
+        "community_median": 39.58,
+        "my_lower_quartile": 38.75,
+        "my_upper_quartile": 41.25,
+        "community_lower_quartile": 35.67,
+        "community_upper_quartile": 43.02,
+        "median_difference": 0.42,
+        "my_iqr": 2.5,
+        "community_iqr": 7.35,
+        "uncertainty_ratio": 0.3401
+      },
+      "score_data": null
     }
   ],
-  "binary_count": 2,
-  "numeric_count": 0,
-  "multiple_choice_count": 1
+  "binary_count": 5,
+  "numeric_count": 6,
+  "multiple_choice_count": 2,
+  "date_count": 1
 }
