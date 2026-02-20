@@ -302,7 +302,8 @@ class Forecaster:
                     f"continuing without community prediction"
                 )
 
-        result = await forecaster.forecast(
+        # Only pass community_prediction_context for meta-questions that had data scraped
+        forecast_kwargs = dict(
             question_title=question.title,
             question_text=question.description,
             background_info=question.background_info or "",
@@ -310,9 +311,12 @@ class Forecaster:
             fine_print=question.fine_print or "",
             open_time=question.open_time or "",
             scheduled_resolve_time=question.scheduled_resolve_time or "",
-            community_prediction_context=community_prediction_context,
             log=lambda msg: logger.info(msg),
         )
+        if community_prediction_context:
+            forecast_kwargs["community_prediction_context"] = community_prediction_context
+
+        result = await forecaster.forecast(**forecast_kwargs)
 
         return {
             "final_prediction": result.final_probability,

@@ -199,6 +199,7 @@ class BinaryForecaster(BaseForecaster):
         fine_print: str = "",
         open_time: str = "",
         scheduled_resolve_time: str = "",
+        community_prediction_context: str = "",
         log: Callable[[str], Any] = print,
     ) -> BinaryForecastResult:
         """
@@ -212,6 +213,7 @@ class BinaryForecaster(BaseForecaster):
             fine_print: Additional resolution details
             open_time: When the question opened for forecasting
             scheduled_resolve_time: When the question resolves
+            community_prediction_context: Scraped community prediction data for meta-questions
             log: Logging function (default: print)
 
         Returns:
@@ -226,6 +228,7 @@ class BinaryForecaster(BaseForecaster):
             fine_print=fine_print,
             open_time=open_time,
             scheduled_resolve_time=scheduled_resolve_time,
+            community_prediction_context=community_prediction_context,
         )
 
 
