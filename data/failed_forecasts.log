@@ -100,3 +100,15 @@ Success: 0 | Failed: 1
 
 🟡 OTHER Q42116: Will CDU win the most seats in the Baden-Württemberg Landtag
   LLMError: LLM call failed after 3 attempts: litellm.AuthenticationError: AuthenticationError: OpenrouterException - {"error":{"message":"User not found.","code":401}}
+
+======================================================================
+RUN: 2026-02-20T03:27:29.821013+00:00
+Tournament: minibench | Selection: new-only | Via: run_bot.py
+Success: 0 | Failed: 2
+======================================================================
+
+🟡 OTHER Q42205: Will DELL's market close price on 2026-02-27 be higher than 
+  TypeError: BinaryForecaster.forecast() got an unexpected keyword argument 'community_prediction_context'
+
+🟡 OTHER Q42206: Will LMT's market close price on 2026-02-26 be higher than i
+  TypeError: BinaryForecaster.forecast() got an unexpected keyword argument 'community_prediction_context'
