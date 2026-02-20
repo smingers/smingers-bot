@@ -38,11 +38,9 @@ ENV/
 *~
 
 # Data outputs (keep structure, ignore contents)
-data/forecasts/*
-!data/forecasts/.gitkeep
-data/configs/*
-!data/configs/.gitkeep
 data/*.db
+data/ecclesia/
+data/local/
 
 # Jupyter
 .ipynb_checkpoints/
