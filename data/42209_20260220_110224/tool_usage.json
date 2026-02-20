@@ -1,0 +1,265 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 1,
+      "queries": [
+        {
+          "query": "https://finance.yahoo.com/quote/Q",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "Qnity Electronics stock price history",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Qnity Electronics earnings February 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide recent news, earnings, analyst actions, and price movement for Qnity Electronics (ticker Q) from Jan 1 2026 to Feb 20 2026. Highlight any upcoming catalysts before Feb 26 2026.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "Qnity Electronics January 2026 news",
+              "Qnity Electronics February 2026 earnings",
+              "Qnity Electronics 2026 analyst upgrades",
+              "Qnity Electronics upcoming catalysts 2026",
+              "Q"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "Qnity Electronics January 2026 news",
+                    "Google News"
+                  ],
+                  [
+                    "Qnity Electronics February 2026 earnings",
+                    "Google News"
+                  ],
+                  [
+                    "Qnity Electronics 2026 analyst upgrades",
+                    "Google"
+                  ],
+                  [
+                    "Qnity Electronics upcoming catalysts 2026",
+                    "Google"
+                  ],
+                  [
+                    "Q",
+                    "yFinance"
+                  ]
+                ],
+                "search_results_chars": 44320,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "Industrial production semiconductors",
+          "tool": "FRED",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "FRED",
+        "Agent",
+        "Google News",
+        "Google"
+      ],
+      "llm_cost": 0.2354,
+      "llm_cost_summarization": 0.1844,
+      "llm_cost_agentic": 0.051,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Qnity Electronics earnings date Feb 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Qnity Electronics ticker Q analyst upgrade",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Summarize the most recent (past week) news and analyst commentary affecting Qnity Electronics Inc. (ticker Q) and the semiconductor materials sector in the United States ahead of its next earnings report.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "Will Q's market close price on 2026-02-26 be higher than its market close price on 2026-02-20?",
+          "tool": "AskNews",
+          "deep_research_query": "Summarize the most recent (past week) news and analyst commentary affecting Qnity Electronics Inc. (ticker Q) and the semiconductor materials sector in the United States ahead of its next earnings report."
+        }
+      ],
+      "tools_used": [
+        "AskNews",
+        "Google News",
+        "Google"
+      ],
+      "llm_cost": 0.1912,
+      "llm_cost_summarization": 0.1844,
+      "llm_cost_agentic": 0.0068,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7661,
+        "token_output": 1851,
+        "cost": 0.06607,
+        "duration_seconds": 48.945459842681885,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15728,
+        "token_output": 2590,
+        "cost": 0.11748999999999998,
+        "duration_seconds": 64.87490057945251,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7661,
+        "token_output": 1676,
+        "cost": 0.063445,
+        "duration_seconds": 48.94551944732666,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14976,
+        "token_output": 2175,
+        "cost": 0.107505,
+        "duration_seconds": 64.87487888336182,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6699,
+        "token_output": 2114,
+        "cost": 0.04131925,
+        "duration_seconds": 48.94556212425232,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13820,
+        "token_output": 1857,
+        "cost": 0.050183000000000005,
+        "duration_seconds": 64.87485408782959,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6699,
+        "token_output": 1564,
+        "cost": 0.025910000000000002,
+        "duration_seconds": 48.94559597969055,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13819,
+        "token_output": 1325,
+        "cost": 0.038238,
+        "duration_seconds": 64.87482976913452,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6699,
+        "token_output": 1244,
+        "cost": 0.023350000000000003,
+        "duration_seconds": 48.94562339782715,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13282,
+        "token_output": 1487,
+        "cost": 0.03846,
+        "duration_seconds": 64.87480473518372,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0158,
+    "step2_search": 0.2354,
+    "step3_outside_view": 0.2201,
+    "step5_inside_view": 0.3519,
+    "step6_aggregation": 0.3519,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.8232
+}
