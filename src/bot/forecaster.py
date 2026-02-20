@@ -719,6 +719,14 @@ class ScopedArtifactStore:
         """Save a forecaster's inside view response."""
         self.store.save_forecaster_inside_view(self.artifacts, forecaster_num, response)
 
+    def save_forecaster_reasoning(
+        self, forecaster_num: int, step: str, reasoning_content: str
+    ) -> None:
+        """Save a forecaster's reasoning/thinking trace."""
+        self.store.save_forecaster_reasoning(
+            self.artifacts, forecaster_num, step, reasoning_content
+        )
+
     def save_forecaster_prediction(self, forecaster_num: int, extracted: dict) -> None:
         """Save extracted prediction from forecaster."""
         self.store.save_forecaster_prediction(self.artifacts, forecaster_num, extracted)

@@ -155,6 +155,30 @@ class TestArtifactStore:
             saved = json.load(f)
         assert saved == extracted
 
+    def test_save_forecaster_reasoning(self, tmp_path):
+        """Saves forecaster reasoning trace to correct path."""
+        store = ArtifactStore(base_dir=tmp_path)
+        artifacts = store.create_forecast_artifacts(12345)
+        reasoning = "Step 1: Consider the base rate of 15%..."
+
+        store.save_forecaster_reasoning(artifacts, 4, "outside_view", reasoning)
+
+        path = artifacts.ensemble_dir / "forecaster_4_outside_view_reasoning.md"
+        assert path.exists()
+        assert path.read_text() == reasoning
+
+    def test_save_forecaster_reasoning_inside_view(self, tmp_path):
+        """Saves inside view reasoning to correct path."""
+        store = ArtifactStore(base_dir=tmp_path)
+        artifacts = store.create_forecast_artifacts(12345)
+        reasoning = "Given the new evidence..."
+
+        store.save_forecaster_reasoning(artifacts, 2, "inside_view", reasoning)
+
+        path = artifacts.ensemble_dir / "forecaster_2_inside_view_reasoning.md"
+        assert path.exists()
+        assert path.read_text() == reasoning
+
     def test_save_aggregation(self, tmp_path):
         """Saves aggregation result JSON."""
         store = ArtifactStore(base_dir=tmp_path)

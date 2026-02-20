@@ -73,6 +73,8 @@ class LLMResponse:
         model: Model identifier used (e.g., "openrouter/anthropic/claude-sonnet-4")
         input_tokens: Number of tokens in the input prompt
         output_tokens: Number of tokens in the model's response
+        reasoning_tokens: Number of reasoning/thinking tokens (for reasoning models like o3)
+        reasoning_content: The reasoning/thinking text (if available from the provider)
         cost: Estimated cost in USD (based on MODEL_COSTS)
         latency_ms: Round-trip time for the API call in milliseconds
         timestamp: ISO 8601 timestamp when the response was received
@@ -86,6 +88,8 @@ class LLMResponse:
     cost: float
     latency_ms: int
     timestamp: str
+    reasoning_tokens: int = 0
+    reasoning_content: str | None = None
     finish_reason: str | None = None  # "stop", "length", "content_filter", etc.
     raw_response: dict | None = None
 
@@ -93,6 +97,11 @@ class LLMResponse:
     def was_truncated(self) -> bool:
         """Returns True if the response was truncated due to hitting max_tokens."""
         return self.finish_reason == "length"
+
+    @property
+    def used_reasoning(self) -> bool:
+        """Returns True if the model used reasoning/extended thinking."""
+        return self.reasoning_tokens > 0
 
 
 @dataclass
@@ -124,6 +133,7 @@ class CostTracker:
     def __init__(self):
         self.total_input_tokens = 0
         self.total_output_tokens = 0
+        self.total_reasoning_tokens = 0
         self.total_cost = 0.0
         self.calls: list[LLMCall] = []
 
@@ -133,6 +143,7 @@ class CostTracker:
         if call.response:
             self.total_input_tokens += call.response.input_tokens
             self.total_output_tokens += call.response.output_tokens
+            self.total_reasoning_tokens += call.response.reasoning_tokens
             self.total_cost += call.response.cost
 
     def get_summary(self) -> dict:
@@ -143,6 +154,7 @@ class CostTracker:
             "failed_calls": len([c for c in self.calls if c.error]),
             "total_input_tokens": self.total_input_tokens,
             "total_output_tokens": self.total_output_tokens,
+            "total_reasoning_tokens": self.total_reasoning_tokens,
             "total_cost": self.total_cost,
         }
 
@@ -150,6 +162,7 @@ class CostTracker:
         """Reset the tracker."""
         self.total_input_tokens = 0
         self.total_output_tokens = 0
+        self.total_reasoning_tokens = 0
         self.total_cost = 0.0
         self.calls = []
 
@@ -169,7 +182,12 @@ def reset_cost_tracker() -> None:
 
 
 def calculate_cost(model: str, input_tokens: int, output_tokens: int) -> float:
-    """Calculate cost for a given model and token counts using the MODEL_COSTS table."""
+    """Calculate cost for a given model and token counts using the MODEL_COSTS table.
+
+    Note: For reasoning models (o3, etc.), reasoning tokens are billed at the output
+    token rate. The API's output_tokens (completion_tokens) already INCLUDES reasoning
+    tokens, so no special handling is needed here.
+    """
     costs = MODEL_COSTS.get(model, {"input": 5.0, "output": 15.0})  # Default to expensive fallback
     input_cost = (input_tokens / 1_000_000) * costs["input"]
     output_cost = (output_tokens / 1_000_000) * costs["output"]
@@ -256,12 +274,35 @@ class LLMClient:
                 latency_ms = int((time.time() - start_time) * 1000)
 
                 # Extract response data
-                content = response.choices[0].message.content
+                message = response.choices[0].message
+                content = message.content
                 finish_reason = response.choices[0].finish_reason
                 usage = response.usage
 
                 input_tokens = usage.prompt_tokens if usage else 0
                 output_tokens = usage.completion_tokens if usage else 0
+
+                # Extract reasoning tokens from completion_tokens_details
+                reasoning_tokens = 0
+                try:
+                    if usage:
+                        details = getattr(usage, "completion_tokens_details", None)
+                        if details is not None:
+                            raw_reasoning = getattr(details, "reasoning_tokens", None)
+                            if isinstance(raw_reasoning, int) and raw_reasoning > 0:
+                                reasoning_tokens = raw_reasoning
+                except (TypeError, AttributeError):
+                    pass
+
+                # Extract reasoning content (available from some providers)
+                reasoning_content = None
+                try:
+                    raw_reasoning_content = getattr(message, "reasoning_content", None)
+                    if isinstance(raw_reasoning_content, str) and raw_reasoning_content:
+                        reasoning_content = raw_reasoning_content
+                except (TypeError, AttributeError):
+                    pass
+
                 cost = calculate_cost(model, input_tokens, output_tokens)
 
                 llm_response = LLMResponse(
@@ -272,6 +313,8 @@ class LLMClient:
                     cost=cost,
                     latency_ms=latency_ms,
                     timestamp=datetime.now(UTC).isoformat(),
+                    reasoning_tokens=reasoning_tokens,
+                    reasoning_content=reasoning_content,
                     finish_reason=finish_reason,
                     raw_response=response.model_dump() if hasattr(response, "model_dump") else None,
                 )
@@ -326,13 +369,16 @@ class LLMClient:
 
         if self.log_calls:
             if call.response:
-                logger.info(
-                    f"LLM call: model={call.model}, "
-                    f"input_tokens={call.response.input_tokens}, "
-                    f"output_tokens={call.response.output_tokens}, "
-                    f"cost=${call.response.cost:.4f}, "
-                    f"latency={call.response.latency_ms}ms"
-                )
+                parts = [
+                    f"LLM call: model={call.model}",
+                    f"input_tokens={call.response.input_tokens}",
+                    f"output_tokens={call.response.output_tokens}",
+                ]
+                if call.response.reasoning_tokens > 0:
+                    parts.append(f"reasoning_tokens={call.response.reasoning_tokens}")
+                parts.append(f"cost=${call.response.cost:.4f}")
+                parts.append(f"latency={call.response.latency_ms}ms")
+                logger.info(", ".join(parts))
             else:
                 logger.error(f"LLM call failed: model={call.model}, error={call.error}")
 

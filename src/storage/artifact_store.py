@@ -170,6 +170,26 @@ class ArtifactStore:
             artifacts.ensemble_dir / f"forecaster_{forecaster_num}_inside_view.md", response
         )
 
+    def save_forecaster_reasoning(
+        self,
+        artifacts: ForecastArtifactPaths,
+        forecaster_num: int,
+        step: str,
+        reasoning_content: str,
+    ) -> None:
+        """Save a forecaster's reasoning/thinking trace.
+
+        Args:
+            artifacts: ForecastArtifactPaths container
+            forecaster_num: Forecaster number (1-5)
+            step: "outside_view" or "inside_view"
+            reasoning_content: The reasoning/thinking content from the model
+        """
+        self._write_text(
+            artifacts.ensemble_dir / f"forecaster_{forecaster_num}_{step}_reasoning.md",
+            reasoning_content,
+        )
+
     def save_forecaster_prediction(
         self,
         artifacts: ForecastArtifactPaths,
