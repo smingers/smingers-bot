@@ -1,0 +1,16 @@
+{
+  "confidence": "medium",
+  "prediction": 0.65,
+  "search_queries": [
+    "UK ILR grants EUSS proportion 2025 statistics (Google)",
+    "UK settlement qualifying period 10 years statement of changes 2026 (Google News)",
+    "According to the UK government's \"Immigration system statistics, year ending September 2025,\" what was the breakdown of indefinite leave to remain (ILR) grants between EU Settlement Scheme (EUSS) settled status grants and non-EUSS settlement grants? Specifically, did EUSS grants constitute a majority of all ILR/settlement grants in that period? (Agent)",
+    "UK earned settlement immigration rules April 2026 implementation timeline (Google News)"
+  ],
+  "cost": 0.3962,
+  "divergence": {
+    "metric_name": "std_dev",
+    "metric_value": 25.95,
+    "threshold": 15.0
+  }
+}

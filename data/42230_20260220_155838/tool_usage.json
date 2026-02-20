@@ -1,0 +1,282 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 6,
+      "queries": [
+        {
+          "query": "https://www.gov.uk/government/statistics/immigration-system-statistics-year-ending-september-2025/how-many-indefinite-leave-settlement-and-euss-settled-status-and-citizenship-grants-have-been-issued-in-the-uk#s-2",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "https://www.gov.uk/indefinite-leave-to-remain#:~:text=You%20must%20usually%20have%20lived%20and%20worked%20in%20the%20UK%20for%205%20years",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "https://www.gov.uk/government/consultations/earned-settlement/a-fairer-pathway-to-settlement-statement-and-accompanying-consultation-on-earned-settlement-accessible#:~:text=a\\",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "https://www.gov.uk/government/consultations/earned-settlement/a-fairer-pathway-to-settlement-statement-and-accompanying-consultation-on-earned-settlement-accessible#future-settlement-forecast",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "https://news.gallup.com/poll/701990/leads-world-concern-migration.aspx",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "earned settlement consultation 10 year ILR",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "indefinite leave 10-year baseline April 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Trace legislative progress and current status of the UK Home Office \u201cEarned Settlement\u201d proposal that would increase the baseline qualifying period for Indefinite Leave to Remain to ten years, including any published draft Immigration Rules, statutory instruments, or commencement orders scheduled before May 2026, plus analysis by immigration law firms and Hansard records up to February 2026.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "earned settlement immigration rules draft",
+              "earned settlement statutory instrument 2025",
+              "earned settlement hansard debate",
+              "earned settlement law firm analysis",
+              "earned settlement commencement order"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "earned settlement immigration rules draft",
+                    "Google"
+                  ],
+                  [
+                    "earned settlement statutory instrument 2025",
+                    "Google"
+                  ],
+                  [
+                    "earned settlement hansard debate",
+                    "Google"
+                  ],
+                  [
+                    "earned settlement law firm analysis",
+                    "Google News"
+                  ],
+                  [
+                    "earned settlement commencement order",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 97471,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google News",
+        "Google"
+      ],
+      "llm_cost": 0.4519,
+      "llm_cost_summarization": 0.3872,
+      "llm_cost_agentic": 0.0647,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "settlement qualifying period 10 years UK",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Home Office earned settlement 10 years",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide the latest developments on the UK government\u2019s plan to raise the baseline qualifying period for indefinite leave to remain from five to ten years, including legislative progress and scheduled commencement dates up to February 2026. Focus on whether the change will take effect before 1 May 2026.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 17
+        },
+        {
+          "query": "Will the UK increase the qualifying period for settlement to 10 years before May 2026?",
+          "tool": "AskNews",
+          "deep_research_query": "Provide the latest developments on the UK government\u2019s plan to raise the baseline qualifying period for indefinite leave to remain from five to ten years, including legislative progress and scheduled commencement dates up to February 2026. Focus on whether the change will take effect before 1 May 2026."
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "AskNews"
+      ],
+      "llm_cost": 0.3948,
+      "llm_cost_summarization": 0.3872,
+      "llm_cost_agentic": 0.0077,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11598,
+        "token_output": 1870,
+        "cost": 0.08604,
+        "duration_seconds": 87.79176139831543,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14906,
+        "token_output": 3033,
+        "cost": 0.12002499999999999,
+        "duration_seconds": 71.24942469596863,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11598,
+        "token_output": 2097,
+        "cost": 0.089445,
+        "duration_seconds": 87.79182052612305,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14326,
+        "token_output": 2818,
+        "cost": 0.1139,
+        "duration_seconds": 71.24938130378723,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 10306,
+        "token_output": 4151,
+        "cost": 0.0761495,
+        "duration_seconds": 87.79187989234924,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13574,
+        "token_output": 3663,
+        "cost": 0.0750365,
+        "duration_seconds": 71.24935340881348,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 10306,
+        "token_output": 1855,
+        "cost": 0.035452,
+        "duration_seconds": 87.79191613197327,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13715,
+        "token_output": 1869,
+        "cost": 0.042382,
+        "duration_seconds": 71.24932670593262,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 10306,
+        "token_output": 1812,
+        "cost": 0.035108,
+        "duration_seconds": 87.79194211959839,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12500,
+        "token_output": 2163,
+        "cost": 0.042304,
+        "duration_seconds": 71.24929308891296,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.015,
+    "step2_search": 0.4519,
+    "step3_outside_view": 0.3222,
+    "step5_inside_view": 0.3936,
+    "step6_aggregation": 0.3936,
+    "step7_supervisor": 0.3962
+  },
+  "total_pipeline_cost": 1.5789
+}

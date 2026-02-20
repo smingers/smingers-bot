@@ -1,0 +1,7 @@
+Analysis:
+To judge the likelihood that the baseline qualifying period will actually rise to 10 years before 1 May 2026, it is useful to know 1) the legislative or regulatory vehicle being used (primary legislation, Immigration Rules change, or a Statutory Instrument), 2) the current stage of that vehicle and its scheduled commencement date, 3) any precedent for similar last-minute reversals or delays in UK immigration rule changes, and 4) the positions of key stakeholders (Home Office, opposition, Lords, courts, business groups). Historical material on the “Earned Settlement” consultation launched in 2025, subsequent White Paper, drafts of new Immigration Rules, Hansard debates (Nov 2025 statement), and commentary by UK immigration lawyers will provide that context.  
+
+Search queries:  
+1. earned settlement consultation 10 year ILR (Google)  
+2. indefinite leave 10-year baseline April 2026 (Google News)  
+3. Trace legislative progress and current status of the UK Home Office “Earned Settlement” proposal that would increase the baseline qualifying period for Indefinite Leave to Remain to ten years, including any published draft Immigration Rules, statutory instruments, or commencement orders scheduled before May 2026, plus analysis by immigration law firms and Hansard records up to February 2026. (Agent)
