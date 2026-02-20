@@ -183,6 +183,9 @@ class ForecasterMixin:
             metadata = {
                 "input_tokens": response.input_tokens,
                 "output_tokens": response.output_tokens,
+                "reasoning_tokens": response.reasoning_tokens,
+                "used_reasoning": response.used_reasoning,
+                "reasoning_content": response.reasoning_content,
                 "cost": response.cost,
             }
             return response.content, metadata

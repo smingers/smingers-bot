@@ -21,6 +21,8 @@ class StepMetrics:
     Attributes:
         token_input: Number of input tokens used
         token_output: Number of output tokens generated
+        token_reasoning: Number of reasoning/thinking tokens (for reasoning models like o3)
+        used_reasoning: Whether the model used reasoning/extended thinking
         cost: LLM cost in dollars
         duration_seconds: Wall-clock time for the step
         error: Error message if the step failed, None otherwise
@@ -35,6 +37,8 @@ class StepMetrics:
     queries: list[str] = field(default_factory=list)
     token_input: int = 0
     token_output: int = 0
+    token_reasoning: int = 0
+    used_reasoning: bool = False
     cost: float = 0.0
     duration_seconds: float = 0.0
     error: str | None = None

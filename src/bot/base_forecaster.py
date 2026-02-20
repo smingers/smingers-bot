@@ -339,6 +339,7 @@ class BaseForecaster(ForecasterMixin, ABC):
 
         outside_view_results = await asyncio.gather(*outside_view_tasks, return_exceptions=True)
         outside_view_outputs = []
+        outside_view_reasoning = {}  # Store reasoning content by forecaster index
 
         for i, result in enumerate(outside_view_results):
             agent_id = f"forecaster_{i + 1}"
@@ -355,20 +356,34 @@ class BaseForecaster(ForecasterMixin, ABC):
                 )
             else:
                 output, response_metadata = result
-                log(f"\nForecaster_{i + 1} outside view output:\n{output[:300]}...")
+                reasoning_tokens = response_metadata.get("reasoning_tokens", 0)
+                reasoning_label = f" [reasoning: {reasoning_tokens} tokens]" if reasoning_tokens else ""
+                log(f"\nForecaster_{i + 1} outside view output{reasoning_label}:\n{output[:300]}...")
                 outside_view_outputs.append(output)
 
-                # Track LLM metrics
+                # Track LLM metrics including reasoning
                 outside_view_metrics.token_input = response_metadata.get("input_tokens", 0)
                 outside_view_metrics.token_output = response_metadata.get("output_tokens", 0)
+                outside_view_metrics.token_reasoning = reasoning_tokens
+                outside_view_metrics.used_reasoning = response_metadata.get("used_reasoning", False)
                 outside_view_metrics.cost = response_metadata.get("cost", 0.0)
                 outside_view_metrics.duration_seconds = duration
+
+                # Store reasoning content if available
+                reasoning_content = response_metadata.get("reasoning_content")
+                if reasoning_content:
+                    outside_view_reasoning[i] = reasoning_content
 
         if self.artifact_store:
             self.artifact_store.save_outside_view_prompt(outside_view_prompt)
             for i, output in enumerate(outside_view_outputs):
                 if not _is_failed_output(output):
                     self.artifact_store.save_forecaster_outside_view(i + 1, output)
+                    # Save reasoning content if available
+                    if i in outside_view_reasoning:
+                        self.artifact_store.save_forecaster_reasoning(
+                            i + 1, "outside_view", outside_view_reasoning[i]
+                        )
 
         step3_end_cost = snapshot_cost("step3_outside_view", step2_end_cost)
 
@@ -439,6 +454,7 @@ class BaseForecaster(ForecasterMixin, ABC):
 
         inside_view_results = await asyncio.gather(*inside_view_tasks, return_exceptions=True)
         inside_view_outputs = []
+        inside_view_reasoning = {}  # Store reasoning content by forecaster index
 
         for i, result in enumerate(inside_view_results):
             agent_id = f"forecaster_{i + 1}"
@@ -456,11 +472,19 @@ class BaseForecaster(ForecasterMixin, ABC):
                 output, response_metadata = result
                 inside_view_outputs.append(output)
 
-                # Track LLM metrics
+                # Track LLM metrics including reasoning
+                reasoning_tokens = response_metadata.get("reasoning_tokens", 0)
                 inside_view_metrics.token_input = response_metadata.get("input_tokens", 0)
                 inside_view_metrics.token_output = response_metadata.get("output_tokens", 0)
+                inside_view_metrics.token_reasoning = reasoning_tokens
+                inside_view_metrics.used_reasoning = response_metadata.get("used_reasoning", False)
                 inside_view_metrics.cost = response_metadata.get("cost", 0.0)
                 inside_view_metrics.duration_seconds = duration
+
+                # Store reasoning content if available
+                reasoning_content = response_metadata.get("reasoning_content")
+                if reasoning_content:
+                    inside_view_reasoning[i] = reasoning_content
 
         snapshot_cost("step5_inside_view", step3_end_cost)
 
@@ -510,6 +534,11 @@ class BaseForecaster(ForecasterMixin, ABC):
                     self.artifact_store.save_forecaster_inside_view(
                         i + 1, result.inside_view_output
                     )
+                    # Save reasoning content if available
+                    if i in inside_view_reasoning:
+                        self.artifact_store.save_forecaster_reasoning(
+                            i + 1, "inside_view", inside_view_reasoning[i]
+                        )
                 self.artifact_store.save_forecaster_prediction(
                     i + 1, self._get_extracted_data(result)
                 )
@@ -564,12 +593,18 @@ class BaseForecaster(ForecasterMixin, ABC):
             if search_curr.llm_cost_agentic:
                 log(f"      current agentic: ${search_curr.llm_cost_agentic:.4f}")
 
-        # Show agent costs
+        # Show agent costs and reasoning usage
         log("  Agent costs:")
         for agent_id, agent_metrics in metrics.agents.items():
-            s1_cost = agent_metrics.step1.cost
-            s2_cost = agent_metrics.step2.cost
-            log(f"    {agent_id}: S1=${s1_cost:.4f} S2=${s2_cost:.4f}")
+            s1 = agent_metrics.step1
+            s2 = agent_metrics.step2
+            reasoning_parts = []
+            if s1.used_reasoning:
+                reasoning_parts.append(f"S1={s1.token_reasoning}tok")
+            if s2.used_reasoning:
+                reasoning_parts.append(f"S2={s2.token_reasoning}tok")
+            reasoning_info = f" reasoning[{', '.join(reasoning_parts)}]" if reasoning_parts else ""
+            log(f"    {agent_id} ({agent_metrics.model}): S1=${s1.cost:.4f} S2=${s2.cost:.4f}{reasoning_info}")
 
         log(f"  TOTAL: ${metrics.total_pipeline_cost:.4f}")
 
