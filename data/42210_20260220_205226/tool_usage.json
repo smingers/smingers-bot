@@ -1,0 +1,302 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 1,
+      "queries": [
+        {
+          "query": "https://finance.yahoo.com/quote/F",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "Ford stock price history 2025",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Ford earnings outlook 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide key catalysts for Ford (F) over next week; include scheduled events, analyst rating changes since 2026-02-01, and historical 5-day return distribution for late-February weeks past 10 yrs.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 3,
+            "queries_executed": [
+              "Ford investor events February 2026",
+              "Ford analyst upgrades February 2026",
+              "Ford ex-dividend date 2026",
+              "F",
+              "Ford analyst rating February 2026",
+              "F historical price February 2016 site:yahoo.com",
+              "Ford late February weekly returns yfinance python"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "Ford investor events February 2026",
+                    "Google"
+                  ],
+                  [
+                    "Ford analyst upgrades February 2026",
+                    "Google News"
+                  ],
+                  [
+                    "Ford ex-dividend date 2026",
+                    "Google"
+                  ],
+                  [
+                    "F",
+                    "yFinance"
+                  ]
+                ],
+                "search_results_chars": 37833,
+                "analysis_chars": 0
+              },
+              {
+                "step_number": 2,
+                "queries_executed": [
+                  [
+                    "Ford analyst rating February 2026",
+                    "Google News"
+                  ],
+                  [
+                    "F historical price February 2016 site:yahoo.com",
+                    "Google"
+                  ],
+                  [
+                    "Ford late February weekly returns yfinance python",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 34727,
+                "analysis_chars": 5696
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "SP500",
+          "tool": "FRED",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google",
+        "FRED",
+        "Google News"
+      ],
+      "llm_cost": 0.3015,
+      "llm_cost_summarization": 0.222,
+      "llm_cost_agentic": 0.0795,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Ford earnings February 2026 date",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Ford stock news Feb 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "List any scheduled events or news expected to impact Ford Motor Company share price between Feb 20 and Feb 26 2026, such as earnings reports, EV launches, or labor negotiations.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "Will F's market close price on 2026-02-26 be higher than its market close price on 2026-02-20?",
+          "tool": "AskNews",
+          "deep_research_query": "List any scheduled events or news expected to impact Ford Motor Company share price between Feb 20 and Feb 26 2026, such as earnings reports, EV launches, or labor negotiations."
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "AskNews",
+        "Google News"
+      ],
+      "llm_cost": 0.2292,
+      "llm_cost_summarization": 0.222,
+      "llm_cost_agentic": 0.0072,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7033,
+        "token_output": 1686,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.060455,
+        "duration_seconds": 43.44056987762451,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16591,
+        "token_output": 2049,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.11369,
+        "duration_seconds": 49.14644002914429,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7033,
+        "token_output": 1531,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.05813,
+        "duration_seconds": 43.44063448905945,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16151,
+        "token_output": 1917,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.10951,
+        "duration_seconds": 49.14641523361206,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6201,
+        "token_output": 2344,
+        "token_reasoning": 410,
+        "used_reasoning": true,
+        "cost": 0.043667750000000005,
+        "duration_seconds": 43.440680742263794,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14616,
+        "token_output": 1782,
+        "token_reasoning": 302,
+        "used_reasoning": true,
+        "cost": 0.050526,
+        "duration_seconds": 49.14639115333557,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6201,
+        "token_output": 1464,
+        "token_reasoning": 320,
+        "used_reasoning": true,
+        "cost": 0.024114,
+        "duration_seconds": 43.44071626663208,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15191,
+        "token_output": 1049,
+        "token_reasoning": 384,
+        "used_reasoning": true,
+        "cost": 0.038774,
+        "duration_seconds": 49.14636564254761,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6201,
+        "token_output": 2142,
+        "token_reasoning": 512,
+        "used_reasoning": true,
+        "cost": 0.029538,
+        "duration_seconds": 43.44074487686157,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14739,
+        "token_output": 1680,
+        "token_reasoning": 768,
+        "used_reasoning": true,
+        "cost": 0.042918,
+        "duration_seconds": 49.14634084701538,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0129,
+    "step2_search": 0.3015,
+    "step3_outside_view": 0.2159,
+    "step5_inside_view": 0.3554,
+    "step6_aggregation": 0.3554,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.8858
+}
