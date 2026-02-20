@@ -133,6 +133,7 @@ class CostTracker:
     def __init__(self):
         self.total_input_tokens = 0
         self.total_output_tokens = 0
+        self.total_reasoning_tokens = 0
         self.total_cost = 0.0
         self.calls: list[LLMCall] = []
 
@@ -142,6 +143,7 @@ class CostTracker:
         if call.response:
             self.total_input_tokens += call.response.input_tokens
             self.total_output_tokens += call.response.output_tokens
+            self.total_reasoning_tokens += call.response.reasoning_tokens
             self.total_cost += call.response.cost
 
     def get_summary(self) -> dict:
@@ -152,6 +154,7 @@ class CostTracker:
             "failed_calls": len([c for c in self.calls if c.error]),
             "total_input_tokens": self.total_input_tokens,
             "total_output_tokens": self.total_output_tokens,
+            "total_reasoning_tokens": self.total_reasoning_tokens,
             "total_cost": self.total_cost,
         }
 
@@ -159,6 +162,7 @@ class CostTracker:
         """Reset the tracker."""
         self.total_input_tokens = 0
         self.total_output_tokens = 0
+        self.total_reasoning_tokens = 0
         self.total_cost = 0.0
         self.calls = []
 
@@ -177,14 +181,12 @@ def reset_cost_tracker() -> None:
     _cost_tracker.reset()
 
 
-def calculate_cost(
-    model: str, input_tokens: int, output_tokens: int, reasoning_tokens: int = 0
-) -> float:
+def calculate_cost(model: str, input_tokens: int, output_tokens: int) -> float:
     """Calculate cost for a given model and token counts using the MODEL_COSTS table.
 
-    For reasoning models (o3, etc.), reasoning tokens are billed at the output rate.
-    The output_tokens from the API typically INCLUDES reasoning_tokens, so we don't
-    double-count — we just use the total output_tokens for cost calculation.
+    Note: For reasoning models (o3, etc.), reasoning tokens are billed at the output
+    token rate. The API's output_tokens (completion_tokens) already INCLUDES reasoning
+    tokens, so no special handling is needed here.
     """
     costs = MODEL_COSTS.get(model, {"input": 5.0, "output": 15.0})  # Default to expensive fallback
     input_cost = (input_tokens / 1_000_000) * costs["input"]
@@ -301,7 +303,7 @@ class LLMClient:
                 except (TypeError, AttributeError):
                     pass
 
-                cost = calculate_cost(model, input_tokens, output_tokens, reasoning_tokens)
+                cost = calculate_cost(model, input_tokens, output_tokens)
 
                 llm_response = LLMResponse(
                     content=content,
@@ -367,17 +369,16 @@ class LLMClient:
 
         if self.log_calls:
             if call.response:
-                reasoning_info = ""
+                parts = [
+                    f"LLM call: model={call.model}",
+                    f"input_tokens={call.response.input_tokens}",
+                    f"output_tokens={call.response.output_tokens}",
+                ]
                 if call.response.reasoning_tokens > 0:
-                    reasoning_info = f", reasoning_tokens={call.response.reasoning_tokens}"
-                logger.info(
-                    f"LLM call: model={call.model}, "
-                    f"input_tokens={call.response.input_tokens}, "
-                    f"output_tokens={call.response.output_tokens}"
-                    f"{reasoning_info}, "
-                    f"cost=${call.response.cost:.4f}, "
-                    f"latency={call.response.latency_ms}ms"
-                )
+                    parts.append(f"reasoning_tokens={call.response.reasoning_tokens}")
+                parts.append(f"cost=${call.response.cost:.4f}")
+                parts.append(f"latency={call.response.latency_ms}ms")
+                logger.info(", ".join(parts))
             else:
                 logger.error(f"LLM call failed: model={call.model}, error={call.error}")
 

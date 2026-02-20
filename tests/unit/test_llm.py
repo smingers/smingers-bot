@@ -684,6 +684,322 @@ class TestLLMClientAdditional:
                 assert call.error is None
 
 
+# ============================================================================
+# Reasoning Token Tests
+# ============================================================================
+
+
+def _make_mock_response(
+    content="Success",
+    prompt_tokens=10,
+    completion_tokens=20,
+    reasoning_tokens=None,
+    reasoning_content=None,
+    finish_reason="stop",
+):
+    """Create a mock litellm response with optional reasoning fields.
+
+    Uses SimpleNamespace for usage/details to avoid MagicMock auto-attribute issues
+    (MagicMock creates truthy objects for any attribute access, which breaks
+    isinstance checks and comparisons).
+    """
+    from types import SimpleNamespace
+
+    # Build completion_tokens_details
+    details = None
+    if reasoning_tokens is not None:
+        details = SimpleNamespace(reasoning_tokens=reasoning_tokens)
+
+    usage = SimpleNamespace(
+        prompt_tokens=prompt_tokens,
+        completion_tokens=completion_tokens,
+        completion_tokens_details=details,
+    )
+
+    message = SimpleNamespace(
+        content=content,
+        reasoning_content=reasoning_content,
+    )
+
+    choice = SimpleNamespace(
+        message=message,
+        finish_reason=finish_reason,
+    )
+
+    response = MagicMock()
+    response.choices = [choice]
+    response.usage = usage
+    response.model_dump = MagicMock(return_value={})
+
+    return response
+
+
+class TestLLMResponseReasoning:
+    """Tests for reasoning-related fields on LLMResponse."""
+
+    def test_used_reasoning_true_when_tokens_present(self):
+        """used_reasoning returns True when reasoning_tokens > 0."""
+        response = LLMResponse(
+            content="test",
+            model="test",
+            input_tokens=100,
+            output_tokens=200,
+            cost=0.01,
+            latency_ms=100,
+            timestamp="2026-01-01T00:00:00Z",
+            reasoning_tokens=500,
+        )
+        assert response.used_reasoning is True
+
+    def test_used_reasoning_false_when_zero(self):
+        """used_reasoning returns False when reasoning_tokens is 0."""
+        response = LLMResponse(
+            content="test",
+            model="test",
+            input_tokens=100,
+            output_tokens=200,
+            cost=0.01,
+            latency_ms=100,
+            timestamp="2026-01-01T00:00:00Z",
+            reasoning_tokens=0,
+        )
+        assert response.used_reasoning is False
+
+    def test_used_reasoning_false_by_default(self):
+        """used_reasoning defaults to False when reasoning_tokens not provided."""
+        response = LLMResponse(
+            content="test",
+            model="test",
+            input_tokens=100,
+            output_tokens=200,
+            cost=0.01,
+            latency_ms=100,
+            timestamp="2026-01-01T00:00:00Z",
+        )
+        assert response.used_reasoning is False
+        assert response.reasoning_tokens == 0
+        assert response.reasoning_content is None
+
+    def test_reasoning_content_stored(self):
+        """reasoning_content is stored when provided."""
+        response = LLMResponse(
+            content="output",
+            model="test",
+            input_tokens=100,
+            output_tokens=200,
+            cost=0.01,
+            latency_ms=100,
+            timestamp="2026-01-01T00:00:00Z",
+            reasoning_tokens=1000,
+            reasoning_content="Let me think step by step...",
+        )
+        assert response.reasoning_content == "Let me think step by step..."
+        assert response.used_reasoning is True
+
+
+class TestReasoningExtraction:
+    """Tests for reasoning token/content extraction in LLMClient.complete()."""
+
+    @pytest.mark.asyncio
+    async def test_extracts_reasoning_tokens(self):
+        """Extracts reasoning_tokens from completion_tokens_details."""
+        mock_response = _make_mock_response(
+            completion_tokens=1500,
+            reasoning_tokens=1000,
+        )
+
+        with patch("src.utils.llm.acompletion", AsyncMock(return_value=mock_response)):
+            client = LLMClient(max_retries=1)
+            response = await client.complete(
+                model="test-model", messages=[{"role": "user", "content": "Think hard"}]
+            )
+
+            assert response.reasoning_tokens == 1000
+            assert response.used_reasoning is True
+
+    @pytest.mark.asyncio
+    async def test_extracts_reasoning_content(self):
+        """Extracts reasoning_content from message."""
+        mock_response = _make_mock_response(
+            reasoning_tokens=500,
+            reasoning_content="Step 1: Consider the base rate...",
+        )
+
+        with patch("src.utils.llm.acompletion", AsyncMock(return_value=mock_response)):
+            client = LLMClient(max_retries=1)
+            response = await client.complete(
+                model="test-model", messages=[{"role": "user", "content": "Think"}]
+            )
+
+            assert response.reasoning_content == "Step 1: Consider the base rate..."
+            assert response.reasoning_tokens == 500
+
+    @pytest.mark.asyncio
+    async def test_no_reasoning_when_details_absent(self):
+        """Returns 0 reasoning tokens when completion_tokens_details is None."""
+        mock_response = _make_mock_response()  # No reasoning fields
+
+        with patch("src.utils.llm.acompletion", AsyncMock(return_value=mock_response)):
+            client = LLMClient(max_retries=1)
+            response = await client.complete(
+                model="test-model", messages=[{"role": "user", "content": "Hi"}]
+            )
+
+            assert response.reasoning_tokens == 0
+            assert response.used_reasoning is False
+            assert response.reasoning_content is None
+
+    @pytest.mark.asyncio
+    async def test_handles_none_reasoning_tokens_in_details(self):
+        """Handles None reasoning_tokens inside completion_tokens_details."""
+        from types import SimpleNamespace
+
+        mock_response = _make_mock_response()
+        # Set details to exist but with None reasoning_tokens
+        mock_response.choices[0]  # SimpleNamespace, no auto-creation issue
+        usage = mock_response.usage
+        usage.completion_tokens_details = SimpleNamespace(reasoning_tokens=None)
+
+        with patch("src.utils.llm.acompletion", AsyncMock(return_value=mock_response)):
+            client = LLMClient(max_retries=1)
+            response = await client.complete(
+                model="test-model", messages=[{"role": "user", "content": "Hi"}]
+            )
+
+            assert response.reasoning_tokens == 0
+
+    @pytest.mark.asyncio
+    async def test_handles_non_int_reasoning_tokens(self):
+        """Handles non-integer reasoning_tokens gracefully (e.g., string from bad API)."""
+        from types import SimpleNamespace
+
+        mock_response = _make_mock_response()
+        mock_response.usage.completion_tokens_details = SimpleNamespace(
+            reasoning_tokens="not_a_number"
+        )
+
+        with patch("src.utils.llm.acompletion", AsyncMock(return_value=mock_response)):
+            client = LLMClient(max_retries=1)
+            response = await client.complete(
+                model="test-model", messages=[{"role": "user", "content": "Hi"}]
+            )
+
+            assert response.reasoning_tokens == 0
+
+    @pytest.mark.asyncio
+    async def test_ignores_empty_reasoning_content(self):
+        """Empty string reasoning_content is treated as None."""
+        mock_response = _make_mock_response(reasoning_content="")
+
+        with patch("src.utils.llm.acompletion", AsyncMock(return_value=mock_response)):
+            client = LLMClient(max_retries=1)
+            response = await client.complete(
+                model="test-model", messages=[{"role": "user", "content": "Hi"}]
+            )
+
+            assert response.reasoning_content is None
+
+
+class TestCostTrackerReasoning:
+    """Tests for CostTracker reasoning token accumulation."""
+
+    def test_accumulates_reasoning_tokens(self):
+        """CostTracker accumulates reasoning_tokens from calls."""
+        tracker = CostTracker()
+
+        response1 = LLMResponse(
+            content="test",
+            model="test",
+            input_tokens=100,
+            output_tokens=200,
+            cost=0.01,
+            latency_ms=100,
+            timestamp="2026-01-01T00:00:00Z",
+            reasoning_tokens=500,
+        )
+        response2 = LLMResponse(
+            content="test",
+            model="test",
+            input_tokens=100,
+            output_tokens=300,
+            cost=0.02,
+            latency_ms=100,
+            timestamp="2026-01-01T00:00:00Z",
+            reasoning_tokens=1000,
+        )
+
+        tracker.add_call(LLMCall(model="test", messages=[], response=response1))
+        tracker.add_call(LLMCall(model="test", messages=[], response=response2))
+
+        assert tracker.total_reasoning_tokens == 1500
+
+    def test_zero_reasoning_when_no_reasoning_used(self):
+        """CostTracker has 0 reasoning tokens when no models use reasoning."""
+        tracker = CostTracker()
+
+        response = LLMResponse(
+            content="test",
+            model="test",
+            input_tokens=100,
+            output_tokens=200,
+            cost=0.01,
+            latency_ms=100,
+            timestamp="2026-01-01T00:00:00Z",
+        )
+        tracker.add_call(LLMCall(model="test", messages=[], response=response))
+
+        assert tracker.total_reasoning_tokens == 0
+
+    def test_summary_includes_reasoning_tokens(self):
+        """get_summary() includes total_reasoning_tokens."""
+        tracker = CostTracker()
+
+        response = LLMResponse(
+            content="test",
+            model="test",
+            input_tokens=100,
+            output_tokens=200,
+            cost=0.01,
+            latency_ms=100,
+            timestamp="2026-01-01T00:00:00Z",
+            reasoning_tokens=750,
+        )
+        tracker.add_call(LLMCall(model="test", messages=[], response=response))
+
+        summary = tracker.get_summary()
+        assert summary["total_reasoning_tokens"] == 750
+
+    def test_reset_clears_reasoning_tokens(self):
+        """reset() clears reasoning token accumulator."""
+        tracker = CostTracker()
+
+        response = LLMResponse(
+            content="test",
+            model="test",
+            input_tokens=100,
+            output_tokens=200,
+            cost=0.01,
+            latency_ms=100,
+            timestamp="2026-01-01T00:00:00Z",
+            reasoning_tokens=500,
+        )
+        tracker.add_call(LLMCall(model="test", messages=[], response=response))
+        assert tracker.total_reasoning_tokens == 500
+
+        tracker.reset()
+        assert tracker.total_reasoning_tokens == 0
+
+    def test_failed_call_does_not_accumulate_reasoning(self):
+        """Failed calls (no response) don't affect reasoning token total."""
+        tracker = CostTracker()
+
+        tracker.add_call(
+            LLMCall(model="test", messages=[], response=None, error="API Error")
+        )
+
+        assert tracker.total_reasoning_tokens == 0
+
+
 class TestLLMClientTimeout:
     """Tests for LLMClient timeout behavior."""
 

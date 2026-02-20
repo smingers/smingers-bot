@@ -24,6 +24,8 @@ class TestStepMetrics:
         assert metrics.queries == []
         assert metrics.token_input == 0
         assert metrics.token_output == 0
+        assert metrics.token_reasoning == 0
+        assert metrics.used_reasoning is False
         assert metrics.cost == 0.0
         assert metrics.duration_seconds == 0.0
         assert metrics.error is None
@@ -40,12 +42,27 @@ class TestStepMetrics:
 
         assert result["token_input"] == 100
         assert result["token_output"] == 50
+        assert result["token_reasoning"] == 0
+        assert result["used_reasoning"] is False
         assert result["cost"] == 0.01
         assert result["duration_seconds"] == 1.5
         assert result["error"] is None
         # Legacy fields present
         assert result["searched"] is False
         assert result["queries"] == []
+
+    def test_to_dict_with_reasoning(self):
+        """to_dict includes reasoning fields when populated."""
+        metrics = StepMetrics(
+            token_input=100,
+            token_output=1500,
+            token_reasoning=1000,
+            used_reasoning=True,
+            cost=0.05,
+        )
+        result = metrics.to_dict()
+        assert result["token_reasoning"] == 1000
+        assert result["used_reasoning"] is True
 
     def test_to_dict_with_error(self):
         """to_dict includes error when present."""
