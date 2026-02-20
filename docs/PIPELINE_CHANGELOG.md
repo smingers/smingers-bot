@@ -157,12 +157,52 @@ Systematic cleanup of all prompt templates in a single day.
 - `e78466b` **Integrate supervisor into the forecasting pipeline**
 - `3420c69` Tune divergence thresholds
 
-> **Config Fingerprint — End of Phase 7 (current):**
+> **Config Fingerprint — End of Phase 7:**
 > - Pipeline: 5-agent ensemble + optional supervisor for high-disagreement cases
 > - Supervisor model: Claude Opus 4.6 (quality) / Haiku (test)
 > - Supervisor triggers: binary stddev > 15pp, numeric CoV > 0.25, MC max range > 25pp
 > - Models: Sonnet 4.5 (1,2), GPT-5.2 (3), o3 (4,5)
 > - Research: Google + AskNews + Google Trends + FRED + yFinance + question URL scraping + agentic search
+> - Temperatures: query 0.3, summarization 0.1, agentic 0.3, forecasting 0.5
+> - max_output_tokens: 5000
+
+---
+
+## Phase 8: Community Predictions, Model Upgrade & Bug Fixes (Feb 16 - Feb 20, 2026)
+
+### Feb 16 — Agentic search prompt tightening
+- `eda97c0` **Tighten agentic search continuation prompt** — instruct the agent to write a finished report, not a research plan. Added "NO PROCESS NARRATION" directive so agentic search output is directly usable as forecaster context rather than containing meta-commentary about next steps and remaining gaps.
+
+### Feb 17 — Supervisor prediction fix
+- `1b480a9` **Fix supervisor prediction formatting** — supervisor was returning raw extractor output without the same normalization as the ensemble pipeline:
+  - Binary: raw percentage (e.g. 45.0) clamped to 0.999 instead of dividing by 100 first — every supervisor override submitted as 99.9%
+  - Multiple choice: raw percentages all clamped to 0.999 then normalized to uniform ~33% each
+  - Date questions: used numeric extractor instead of date extractor
+
+### Feb 19 — Fine print fix, model upgrade, community prediction scraping
+- `1c8f7bd` **Fix critical bug: fine_print silently dropped from all forecasts** — `forecaster.py` used `question.raw.get("fine_print", "")` but fine_print is nested in the API response at `question.raw["question"]["fine_print"]`, so it always resolved to empty string. Every forecast since project inception was made without fine print context. Root cause of the 94.6% vs 30% community divergence on Q42115 (Dutch municipal elections), where fine print contained a definitional exclusion that completely changed the question.
+- `6973c36` **Upgrade ensemble forecasters 1-2 from Sonnet 4.5 to Sonnet 4.6** — also upgrades quality article summarizer to Sonnet 4.6
+- `10d5de4` **Integrate community prediction scraping into forecasting pipeline** — for meta-questions ("Will the community prediction be above/below X%?"), the pipeline now:
+  1. Auto-detects meta-questions via JSON payload in description or title regex
+  2. Parses the underlying question ID, threshold, direction, and target date
+  3. Scrapes current community P(Yes), forecaster count, and trend data using Playwright + Xvfb (bypasses Cloudflare)
+  4. Injects scraped data into agentic search context, outside view context, and inside view context — all 5 forecasters see the data in both views
+
+### Feb 20 — Reasoning token visibility
+- `c0ba745` **Add reasoning/extended-thinking visibility to forecasting pipeline** — models like o3 use internal reasoning tokens that were completely invisible. Now:
+  - `LLMResponse` tracks `reasoning_tokens` count and `reasoning_content` text
+  - `StepMetrics` records `token_reasoning` and `used_reasoning` per step
+  - Reasoning content saved as `forecaster_{N}_{step}_reasoning.md` artifacts
+  - Pipeline logs show `[reasoning: N tokens]` per forecaster step
+  - Cost breakdown shows reasoning token counts per agent
+
+> **Config Fingerprint — End of Phase 8 (current):**
+> - Pipeline: 5-agent ensemble + optional supervisor + community prediction scraping for meta-questions
+> - Models: Sonnet 4.6 (1,2), GPT-5.2 (3), o3 (4,5)
+> - Supervisor: Fixed normalization (binary /100, MC normalize, date extractor)
+> - Research: Google + AskNews + Google Trends + FRED + yFinance + question URL scraping + agentic search + community prediction scraping
+> - Fine print: Now correctly fed to all forecasters (was silently empty before)
+> - Reasoning: o3 reasoning tokens and content captured in metrics and artifacts
 > - Temperatures: query 0.3, summarization 0.1, agentic 0.3, forecasting 0.5
 > - max_output_tokens: 5000
 
@@ -177,6 +217,7 @@ Systematic cleanup of all prompt templates in a single day.
 | Feb 1 | GPT-5.2 for forecaster 3 | `4c038e2` |
 | Feb 8 | Temperature settings added to config | `d2a5ccd` |
 | Feb 13 | Supervisor agent uses Opus 4.6 | `b14f1eb` |
+| Feb 19 | Sonnet 4.5 → 4.6 for forecasters 1-2 + article summarizer | `6973c36` |
 
 ## Quick Reference: Research Source History
 
@@ -190,6 +231,7 @@ Systematic cleanup of all prompt templates in a single day.
 | Feb 5 | FRED (Federal Reserve Economic Data) | `18c8c8b` |
 | Feb 5 | yFinance (stocks, ETFs, options) | `84667d1` |
 | Feb 7 | Auto-scrape question URLs | `bb9e261` |
+| Feb 19 | Community prediction scraping (Playwright + Xvfb) | `10d5de4` |
 
 ## Quick Reference: Key Bug Fixes
 
@@ -204,6 +246,8 @@ Systematic cleanup of all prompt templates in a single day.
 | Feb 7 | Inside view copy-paste error | Wrong prompt text in some question types | `2786744` |
 | Feb 12 | Space-separated thousands extraction | "10 000" not parsed as 10000 | `79f1519` |
 | Feb 12 | Raise max_output_tokens to 5000 | Agents truncated mid-response | `79d87c7` |
+| Feb 17 | Supervisor prediction normalization | Binary always 99.9%, MC always uniform, date wrong extractor | `1b480a9` |
+| Feb 19 | fine_print silently dropped | All forecasts made without fine print since inception | `1c8f7bd` |
 
 ---
 
@@ -220,5 +264,6 @@ To determine what pipeline produced a given forecast:
    - **Feb 7 - Feb 8**: Phase 4 — all prompts harmonized, question URL scraping
    - **Feb 8 - Feb 10**: Phase 5 — temperature config, numeric units fix
    - **Feb 10 - Feb 13**: Phase 6 — max tokens 5000, extractor fixes
-   - **Feb 13+**: Phase 7 — supervisor agent available
+   - **Feb 13 - Feb 16**: Phase 7 — supervisor agent available
+   - **Feb 16+**: Phase 8 — fine print fix, Sonnet 4.6, community prediction scraping, reasoning visibility
 3. Check `metadata.json` for `config_hash` to confirm exact config
