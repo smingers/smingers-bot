@@ -1,0 +1,282 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 6,
+      "queries": [
+        {
+          "query": "https://en.wikipedia.org/wiki/Fidesz%E2%80%93KDNP",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://en.wikipedia.org/wiki/2010_Hungarian_parliamentary_election",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://en.wikipedia.org/wiki/Constitution_of_Hungary#2011_Constitution",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://en.wikipedia.org/wiki/Electoral_system_of_Hungary#National_Assembly_elections",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://archive.nytimes.com/krugman.blogs.nytimes.com/2014/02/28/hungary-an-election-in-question-part-3/",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "2022 Hungarian election seat share",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "2026 Hungarian election polls February 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide historical seat counts for Fidesz-KDNP in 2014, 2018, 2022 Hungarian elections and latest national polls Feb 2026 including party vote shares and seat projection estimates; assess likelihood of any coalition reaching 133 seats",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "Fidesz KDNP seat count 2014",
+              "Fidesz KDNP seat count 2018",
+              "Fidesz KDNP seat count 2022",
+              "Hungary election polls February 2026",
+              "Hungary seat projection February 2026"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "Fidesz KDNP seat count 2014",
+                    "Google"
+                  ],
+                  [
+                    "Fidesz KDNP seat count 2018",
+                    "Google"
+                  ],
+                  [
+                    "Fidesz KDNP seat count 2022",
+                    "Google"
+                  ],
+                  [
+                    "Hungary election polls February 2026",
+                    "Google News"
+                  ],
+                  [
+                    "Hungary seat projection February 2026",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 71876,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Agent",
+        "Google News"
+      ],
+      "llm_cost": 0.34,
+      "llm_cost_summarization": 0.2749,
+      "llm_cost_agentic": 0.0651,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "2026 Hungarian election polls seats",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Fidesz KDNP supermajority 2026 election",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "What do February 2026 opinion polls suggest about seat projections and the chance of any party winning a two-thirds majority in the upcoming Hungarian parliamentary election?",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "Will any political party or coalition acquire a supermajority in the 2026 Hungarian parliamentary elections?",
+          "tool": "AskNews",
+          "deep_research_query": "What do February 2026 opinion polls suggest about seat projections and the chance of any party winning a two-thirds majority in the upcoming Hungarian parliamentary election?"
+        }
+      ],
+      "tools_used": [
+        "AskNews",
+        "Google",
+        "Google News"
+      ],
+      "llm_cost": 0.2563,
+      "llm_cost_summarization": 0.2463,
+      "llm_cost_agentic": 0.01,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8373,
+        "token_output": 2023,
+        "cost": 0.07221,
+        "duration_seconds": 60.53441524505615,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16727,
+        "token_output": 3161,
+        "cost": 0.13105,
+        "duration_seconds": 94.57460927963257,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8373,
+        "token_output": 1808,
+        "cost": 0.06898499999999999,
+        "duration_seconds": 60.534486293792725,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16387,
+        "token_output": 4323,
+        "cost": 0.14678,
+        "duration_seconds": 94.57458257675171,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7431,
+        "token_output": 3057,
+        "cost": 0.05580225,
+        "duration_seconds": 60.5345299243927,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14739,
+        "token_output": 2480,
+        "cost": 0.060513250000000005,
+        "duration_seconds": 94.57455396652222,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7431,
+        "token_output": 2424,
+        "cost": 0.034254,
+        "duration_seconds": 60.53456449508667,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15217,
+        "token_output": 2407,
+        "cost": 0.04969,
+        "duration_seconds": 94.57452726364136,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7431,
+        "token_output": 1907,
+        "cost": 0.030118,
+        "duration_seconds": 60.53459072113037,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14320,
+        "token_output": 2829,
+        "cost": 0.051272,
+        "duration_seconds": 94.57450103759766,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0132,
+    "step2_search": 0.34,
+    "step3_outside_view": 0.2614,
+    "step5_inside_view": 0.4393,
+    "step6_aggregation": 0.4393,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 1.0539
+}

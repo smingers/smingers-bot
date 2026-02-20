@@ -1,0 +1,7 @@
+Analysis:
+To judge whether any party or coalition is on track to win at least 133 of the 199 seats, I mainly need up-to-date polling and modelling that translate vote shares into seats under Hungary’s mixed system. Useful articles will discuss: 1) current national vote-intention polls for Fidesz-KDNP, the previously united but now splintered opposition, and emerging parties (e.g., Tisza, Mi Hazánk); 2) whether the opposition will run a single joint list in 2026, which drastically changes seat projections in single-member districts; 3) any electoral-law tweaks since 2022 that might further favour or hinder a supermajority; and 4) expert commentary on the probability of Fidesz-KDNP regaining two-thirds versus merely a simple majority. Therefore, the searches should target February 2026 polling reports, coalition talks, and analyses from Hungarian think-tanks and international outlets.  
+
+Search queries:
+1. 2026 Hungarian election polls seats (Google)  
+2. Fidesz KDNP supermajority 2026 election (Google News)  
+3. What do February 2026 opinion polls suggest about seat projections and the chance of any party winning a two-thirds majority in the upcoming Hungarian parliamentary election? (AskNews)
