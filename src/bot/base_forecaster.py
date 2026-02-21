@@ -179,6 +179,11 @@ class BaseForecaster(ForecasterMixin, ABC):
         if community_prediction_context:
             question_details.community_prediction_context = community_prediction_context
 
+        # Thread stock return context into QuestionDetails for agentic search
+        stock_return_context_for_search = question_params.get("stock_return_context", "")
+        if stock_return_context_for_search:
+            question_details.stock_return_context = stock_return_context_for_search
+
         # Get prompt templates
         prompt_historical, prompt_current, prompt_outside_view, prompt_inside_view = (
             self._get_prompt_templates()
@@ -261,6 +266,14 @@ class BaseForecaster(ForecasterMixin, ABC):
                 self.artifact_store.save_search_results(
                     "community_prediction", {"context": community_prediction_context}
                 )
+
+        # Prepend stock return distribution to both contexts for close price questions
+        # This gives all 5 forecasters the programmatic base rate
+        stock_return_context = question_params.get("stock_return_context", "")
+        if stock_return_context:
+            historical_context = stock_return_context + "\n" + historical_context
+            current_context = stock_return_context + "\n" + current_context
+            log(f"\nStock return distribution context injected ({len(stock_return_context)} chars)")
 
         log(f"\nHistorical context ({len(historical_context)} chars)")
         log(f"Current context ({len(current_context)} chars)")
@@ -357,8 +370,12 @@ class BaseForecaster(ForecasterMixin, ABC):
             else:
                 output, response_metadata = result
                 reasoning_tokens = response_metadata.get("reasoning_tokens", 0)
-                reasoning_label = f" [reasoning: {reasoning_tokens} tokens]" if reasoning_tokens else ""
-                log(f"\nForecaster_{i + 1} outside view output{reasoning_label}:\n{output[:300]}...")
+                reasoning_label = (
+                    f" [reasoning: {reasoning_tokens} tokens]" if reasoning_tokens else ""
+                )
+                log(
+                    f"\nForecaster_{i + 1} outside view output{reasoning_label}:\n{output[:300]}..."
+                )
                 outside_view_outputs.append(output)
 
                 # Track LLM metrics including reasoning
@@ -604,7 +621,9 @@ class BaseForecaster(ForecasterMixin, ABC):
             if s2.used_reasoning:
                 reasoning_parts.append(f"S2={s2.token_reasoning}tok")
             reasoning_info = f" reasoning[{', '.join(reasoning_parts)}]" if reasoning_parts else ""
-            log(f"    {agent_id} ({agent_metrics.model}): S1=${s1.cost:.4f} S2=${s2.cost:.4f}{reasoning_info}")
+            log(
+                f"    {agent_id} ({agent_metrics.model}): S1=${s1.cost:.4f} S2=${s2.cost:.4f}{reasoning_info}"
+            )
 
         log(f"  TOTAL: ${metrics.total_pipeline_cost:.4f}")
 
