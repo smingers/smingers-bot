@@ -390,6 +390,19 @@ class HTMLContentExtractor:
                             and not self._is_boilerplate(text)
                         ):
                             paragraphs.append(text)
+                        elif tag_name == "table":
+                            rows = child.find_all("tr")
+                            table_lines = []
+                            for row in rows:
+                                cells = row.find_all(["th", "td"])
+                                cell_texts = [c.get_text(strip=True) for c in cells]
+                                table_lines.append("| " + " | ".join(cell_texts) + " |")
+                                if row.find("th"):
+                                    table_lines.append(
+                                        "| " + " | ".join("---" for _ in cells) + " |"
+                                    )
+                            if table_lines:
+                                paragraphs.append("\n".join(table_lines))
                         i += 1
 
                     if paragraphs:
