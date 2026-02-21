@@ -32,7 +32,7 @@ models:
   quality:
     query_generator: "openrouter/openai/o3"
     article_summarizer: "openrouter/anthropic/claude-sonnet-4.6"
-    agentic_search: "openrouter/openai/o3"
+    agentic_search: "openrouter/anthropic/claude-sonnet-4.6"
 
 # =============================================================================
 # 5-AGENT ENSEMBLE CONFIGURATION
