@@ -30,6 +30,11 @@ from .cdf import percentiles_from_cdf
 from .exceptions import QuestionTypeError, SubmissionError
 from .multiple_choice import MultipleChoiceForecaster
 from .numeric import NumericForecaster
+from .stock_return import (
+    compute_stock_return_distribution,
+    format_stock_return_context,
+    stock_return_data_to_dict,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -302,6 +307,27 @@ class Forecaster:
                     f"continuing without community prediction"
                 )
 
+        # Check if this is a stock close price question
+        stock_return_context = ""
+        stock_return_enabled = self.config.get("research", {}).get("stock_return_enabled", True)
+        if stock_return_enabled:
+            stock_data = await compute_stock_return_distribution(
+                description=question.description or "",
+                title=question.title,
+                config=self.config,
+            )
+            if stock_data:
+                stock_return_context = format_stock_return_context(stock_data)
+                logger.info(
+                    f"Q{question.id}: Stock return distribution computed — "
+                    f"{stock_data.ticker} P(+)={stock_data.positive_return_rate:.1%}"
+                )
+                # Save as artifact
+                scoped_store.save_search_results(
+                    "stock_return_distribution",
+                    stock_return_data_to_dict(stock_data),
+                )
+
         # Only pass community_prediction_context for meta-questions that had data scraped
         forecast_kwargs = dict(
             question_title=question.title,
@@ -315,6 +341,8 @@ class Forecaster:
         )
         if community_prediction_context:
             forecast_kwargs["community_prediction_context"] = community_prediction_context
+        if stock_return_context:
+            forecast_kwargs["stock_return_context"] = stock_return_context
 
         result = await forecaster.forecast(**forecast_kwargs)
 

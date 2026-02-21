@@ -41,6 +41,7 @@ class QuestionDetails:
     description: str
     resolution_date: str | None = None
     community_prediction_context: str | None = None  # Scraped CP data for meta-questions
+    stock_return_context: str | None = None  # Programmatic stock return distribution
 
 
 @dataclass
@@ -380,18 +381,6 @@ class SearchPipeline:
                         continue
                     query_sources.append((query, source))
                     tasks.append(self._fred_search(query))
-                # NOTE: Direct yFinance queries from the query builder are disabled.
-                # The LLM often guesses wrong ticker symbols (e.g., "TWEX" instead of
-                # "^TWII" for TAIEX) and the direct path has no way to self-correct.
-                # yFinance is now available through agentic search instead, where the
-                # LLM can observe failures and retry with corrected tickers.
-                # Remove this block once the agentic approach is confirmed working well.
-                # elif source == "yFinance":
-                #     if not self.config.get("research", {}).get("yfinance_enabled", True):
-                #         logger.info(f"Search[{search_id}]: yFinance disabled, skipping query")
-                #         continue
-                #     query_sources.append((query, source))
-                #     tasks.append(self._yfinance_search(query))
                 elif source == "Agent":
                     query_sources.append((query, source))
                     # Build context string from question details for agentic search
@@ -405,6 +394,11 @@ class SearchPipeline:
                     # than wasting steps trying to find the CP value
                     if question_details.community_prediction_context:
                         agentic_context += f"\n\n{question_details.community_prediction_context}"
+                    # For stock close price questions, include computed return
+                    # distribution so the agentic agent can focus on catalysts/news
+                    # rather than trying to compute statistics it can't
+                    if question_details.stock_return_context:
+                        agentic_context += f"\n\n{question_details.stock_return_context}"
                     tasks.append(self._agentic_search(query, context=agentic_context))
                 elif source == "AskNews":
                     # Store the LLM-generated query for Deep Research

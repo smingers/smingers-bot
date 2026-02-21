@@ -126,6 +126,12 @@ research:
   # yFinance (stock/ETF prices, fundamentals, options)
   yfinance_enabled: true
 
+  # Stock return distribution (programmatic base rate for close_price_rises questions)
+  # Automatically detects stock close price questions and computes P(positive N-day return)
+  # from historical yFinance data. Injected into forecaster prompts as a base rate anchor.
+  stock_return_enabled: true
+  stock_return_history_years: 10
+
   # Scrape URLs found in question text (resolution_criteria, fine_print, description)
   question_url_scraping_enabled: true
   question_url_max_scrape: 5
