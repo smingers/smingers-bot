@@ -16,7 +16,7 @@ import logging
 import re
 from dataclasses import dataclass
 from typing import Any
-from urllib.parse import urlparse
+from urllib.parse import unquote, urlparse
 
 import httpx
 from bs4 import BeautifulSoup, Tag
@@ -697,6 +697,7 @@ class ConcurrentContentExtractor:
         "instagram.com",
         "linkedin.com",
         "tiktok.com",
+        "trends.google.com",  # JS-rendered app; bot has dedicated Google Trends integration
     ]
 
     # Maximum content length to return (chars)
@@ -741,6 +742,158 @@ class ConcurrentContentExtractor:
                 return True
         return False
 
+    @staticmethod
+    def _is_wikipedia_url(url: str) -> bool:
+        """Check if URL is a Wikipedia page."""
+        return "wikipedia.org/wiki/" in url.lower()
+
+    _WIKIPEDIA_USER_AGENT = "MetaculusBot/1.0 (https://github.com/metaculus; forecasting bot)"
+
+    async def _fetch_wikipedia(self, url: str) -> dict[str, Any]:
+        """Fetch Wikipedia content via the MediaWiki API.
+
+        Uses action=query&prop=extracts for article pages (returns clean
+        plain text) and action=query&meta=siteinfo for Special:Statistics.
+        """
+        parsed = urlparse(url)
+        domain = parsed.netloc
+        path = unquote(parsed.path)
+
+        if "/wiki/" not in path:
+            return await self._fetch_url(url)
+
+        page_title = path.split("/wiki/", 1)[1]
+
+        # Strip fragment (e.g. #Launch_date)
+        if "#" in page_title:
+            page_title = page_title.split("#", 1)[0]
+
+        if not page_title:
+            return {
+                "url": url,
+                "domain": domain,
+                "content": None,
+                "error": "Empty Wikipedia page title",
+                "success": False,
+            }
+
+        try:
+            api_base = f"https://{domain}/w/api.php"
+            headers = {"User-Agent": self._WIKIPEDIA_USER_AGENT}
+
+            # Special:Statistics -> use siteinfo API
+            if page_title == "Special:Statistics":
+                response = await self._client.get(
+                    api_base,
+                    params={
+                        "action": "query",
+                        "meta": "siteinfo",
+                        "siprop": "statistics",
+                        "format": "json",
+                    },
+                    headers=headers,
+                )
+                response.raise_for_status()
+                data = response.json()
+
+                stats = data.get("query", {}).get("statistics", {})
+                if not stats:
+                    return {
+                        "url": url,
+                        "domain": domain,
+                        "content": None,
+                        "error": "No statistics data returned",
+                        "success": False,
+                    }
+
+                def _fmt(val: int | str) -> str:
+                    return f"{val:,}" if isinstance(val, int) else str(val)
+
+                content = "# Wikipedia Statistics\n\n"
+                content += f"Content pages (articles): {_fmt(stats.get('articles', 'N/A'))}\n"
+                content += f"Total pages: {_fmt(stats.get('pages', 'N/A'))}\n"
+                content += f"Total edits: {_fmt(stats.get('edits', 'N/A'))}\n"
+                content += f"Uploaded files: {_fmt(stats.get('images', 'N/A'))}\n"
+                content += f"Registered users: {_fmt(stats.get('users', 'N/A'))}\n"
+                content += f"Active users: {_fmt(stats.get('activeusers', 'N/A'))}\n"
+                content += f"Administrators: {_fmt(stats.get('admins', 'N/A'))}\n"
+
+                return {
+                    "url": url,
+                    "domain": domain,
+                    "content": content,
+                    "success": True,
+                }
+
+            # Regular article -> use extracts API
+            response = await self._client.get(
+                api_base,
+                params={
+                    "action": "query",
+                    "titles": page_title,
+                    "prop": "extracts",
+                    "explaintext": 1,
+                    "format": "json",
+                },
+                headers=headers,
+            )
+            response.raise_for_status()
+            data = response.json()
+
+            pages = data.get("query", {}).get("pages", {})
+            if not pages:
+                return {
+                    "url": url,
+                    "domain": domain,
+                    "content": None,
+                    "error": "No pages in API response",
+                    "success": False,
+                }
+
+            page_data = next(iter(pages.values()))
+
+            if "missing" in page_data:
+                return {
+                    "url": url,
+                    "domain": domain,
+                    "content": None,
+                    "error": f"Wikipedia page not found: {page_data.get('title', page_title)}",
+                    "success": False,
+                }
+
+            extract = page_data.get("extract", "")
+            if not extract or len(extract.strip()) < 50:
+                return {
+                    "url": url,
+                    "domain": domain,
+                    "content": None,
+                    "error": "Wikipedia extract too short",
+                    "success": False,
+                }
+
+            title = page_data.get("title", page_title.replace("_", " "))
+            content = f"# {title}\n\n{extract}"
+
+            if len(content) > self.MAX_CONTENT_LENGTH:
+                content = content[: self.MAX_CONTENT_LENGTH] + "...[truncated]"
+
+            return {
+                "url": url,
+                "domain": domain,
+                "content": content,
+                "success": True,
+            }
+
+        except Exception as e:
+            logger.debug(f"Wikipedia API failed for {url}: {e}")
+            return {
+                "url": url,
+                "domain": domain,
+                "content": None,
+                "error": f"Wikipedia API error: {e}",
+                "success": False,
+            }
+
     async def _fetch_url(self, url: str) -> dict[str, Any]:
         """Fetch a single URL and extract content."""
         if self._is_blocked_domain(url):
@@ -751,6 +904,9 @@ class ConcurrentContentExtractor:
                 "error": "Blocked domain",
                 "success": False,
             }
+
+        if self._is_wikipedia_url(url):
+            return await self._fetch_wikipedia(url)
 
         try:
             # Try Bright Data API if available
