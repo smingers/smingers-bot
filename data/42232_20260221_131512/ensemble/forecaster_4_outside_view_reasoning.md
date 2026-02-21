@@ -1,0 +1,5 @@
+**Considering prediction methods**
+
+My task involves creating an outside view prediction, which should start with typical baseline data before I adjust for the latest news. Outside view predictions rely on reference classes without diving too deep into specific inside factors. I need to include source analysis, reference class analysis, timeframe evaluation, and justification. For sources, I’ll look at articles from various credible outlets. Additionally, I'll focus on instances of elderly autocrats and their longevity to create relevant reference classes. The timeframe for these predictions stretches from now until April 1, 2026, which is quite short!**Estimating risk probabilities**
+
+I need to assess the probability of death or ousting within the next 39 days. For this outside view, I should consider the mortality rates for an 86-year-old male, which might equate to about a 9% chance of dying in a year — that’s roughly 1% for 40 days. However, factors like health issues and the war context could elevate this risk. For autocrats, the chance of being removed within 40 days could be around 1-2%. I’ll compile this analysis accordingly.

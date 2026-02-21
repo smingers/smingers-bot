@@ -1,0 +1,9 @@
+**Evaluating likelihood of leadership change**
+
+I need to establish an outside view baseline for the forecast while being cautious not to include inside sources beyond the timeframe. I should rely on historical rates for similar situations, leveraging data about elderly leaders, particularly in Iran. I'm considering the implications of Khamenei's age and health, as well as broader unrest influencing outcomes. I want specific probabilities—not just multiples of five—regarding the likelihood of leadership change within 39 days.**Calculating leadership risk probabilities**
+
+I’m figuring that a 10% annual mortality rate translates to about 0.8% per month, which means for 39 days, that’s roughly 1.0-1.3%. Considering the risks of assassination or coup during instability, I might add an extra 0.5-2%. So I’m estimating a total outside view probability around 2-4%. 
+
+I’ll reference leaders aged 85 and older, especially superiors or autocrats in the Middle East. Historically, the Iranian supreme leader transitions have been rare, but given the current unrest, I might need to adjust these probabilities higher for accuracy.**Analyzing autocrat removal probabilities**
+
+I'll gather outside data to look at the probability of autocrat removal, which is typically about 0.3% in one month. In higher-risk states, it could rise to around 1%. So if I add my previous figures of 1.1% and 0.6%, that brings me to 1.7%. For credibility, I think a figure of 2.6% might be a good estimate, considering the rare but possible geopolitical upsets. Now, I'll summarize my sources and organize my analysis into clear sections.

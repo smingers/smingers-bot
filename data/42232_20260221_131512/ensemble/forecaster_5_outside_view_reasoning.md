@@ -1,0 +1,5 @@
+**Assessing Khamenei's leadership probability**
+
+I’m crafting an analysis focused on the likelihood of Ali Khamenei ceasing to be Supreme Leader of Iran before April 1, 2026. Given today's date, I have a narrow window of about 40 days. I’m considering an outside view prediction, referencing elderly authoritarian leaders over 85. Statistically, an 86-year-old might have about a 1.1% chance of not surviving that timeframe, taking into account historical context. Within the last 50 years, there have been only two Supreme Leaders in Iran, which adds some complexity to my analysis.**Analyzing mortality probability**
+
+So, I’m figuring out the mortality probability for a leader around 86 years old, recalling that he passed away at that age in 1989. The yearly mortality rate at 86 might be around 10-20%. Ignoring specific details, I’ll focus on the outside view while adjusting slightly for old age and health rumors. For an 86-year-old male in Iran, the one-year mortality is about 10-15%, translating to around 2% over 40 days. Adding a small margin for any sudden departures, I’m estimating about 3-4%. I need to analyze sources to finalize this.

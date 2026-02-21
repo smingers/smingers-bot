@@ -1,0 +1,290 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "https://www.history.com/this-day-in-history/january-16/shah-flees-iran",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "https://www.msn.com/en-us/news/world/mystery-as-iran-s-ayatollah-goes-missing-from-key-military-meeting-with-no-reason-why/ar-AA1W1uFT",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://www.bbc.com/news/articles/cx2ygl4lpl1o",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Ali Khamenei succession speculation timeline",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Khamenei health 2025 rumors",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide a detailed chronology of credible reports from 2020-Feb 21 2026 on Ali Khamenei\u2019s health issues, public absences, or succession preparations, including dates, missed events, official statements, and potential successors.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "Khamenei health illness reports 2020 2021 2022",
+              "Khamenei absent public appearance succession 2024 2025",
+              "Iran supreme leader succession candidates Mojtaba Khamenei",
+              "Khamenei missing military meeting February 2026",
+              "Khamenei prostate cancer surgery hospitalized reports"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "Khamenei health illness reports 2020 2021 2022",
+                    "Google"
+                  ],
+                  [
+                    "Khamenei absent public appearance succession 2024 2025",
+                    "Google News"
+                  ],
+                  [
+                    "Iran supreme leader succession candidates Mojtaba Khamenei",
+                    "Google"
+                  ],
+                  [
+                    "Khamenei missing military meeting February 2026",
+                    "Google News"
+                  ],
+                  [
+                    "Khamenei prostate cancer surgery hospitalized reports",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 62352,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "Agent"
+      ],
+      "llm_cost": 0.4099,
+      "llm_cost_summarization": 0.2866,
+      "llm_cost_agentic": 0.1233,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Khamenei missing February 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Khamenei absence key military meeting",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Latest February 2026 reporting on Ali Khamenei's health status, whereabouts, or potential succession as Iran's Supreme Leader.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 17
+        },
+        {
+          "query": "Will Ali Khamenei cease to be supreme leader of Iran before April 1, 2026?",
+          "tool": "AskNews",
+          "deep_research_query": "Latest February 2026 reporting on Ali Khamenei's health status, whereabouts, or potential succession as Iran's Supreme Leader."
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "AskNews"
+      ],
+      "llm_cost": 0.2954,
+      "llm_cost_summarization": 0.2866,
+      "llm_cost_agentic": 0.0088,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 9586,
+        "token_output": 1950,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.07718,
+        "duration_seconds": 48.789480209350586,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13632,
+        "token_output": 2475,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.105285,
+        "duration_seconds": 65.51786279678345,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 9586,
+        "token_output": 1897,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.07638500000000001,
+        "duration_seconds": 48.789546489715576,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13071,
+        "token_output": 2761,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.10677,
+        "duration_seconds": 65.51784229278564,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8596,
+        "token_output": 2380,
+        "token_reasoning": 539,
+        "used_reasoning": true,
+        "cost": 0.048363,
+        "duration_seconds": 48.789592266082764,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12176,
+        "token_output": 2318,
+        "token_reasoning": 293,
+        "used_reasoning": true,
+        "cost": 0.05376,
+        "duration_seconds": 65.51781845092773,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8596,
+        "token_output": 1594,
+        "token_reasoning": 320,
+        "used_reasoning": true,
+        "cost": 0.029944,
+        "duration_seconds": 48.78962731361389,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12305,
+        "token_output": 1621,
+        "token_reasoning": 384,
+        "used_reasoning": true,
+        "cost": 0.037578,
+        "duration_seconds": 65.51779460906982,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8596,
+        "token_output": 1469,
+        "token_reasoning": 384,
+        "used_reasoning": true,
+        "cost": 0.028943999999999998,
+        "duration_seconds": 48.789655685424805,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11440,
+        "token_output": 1732,
+        "token_reasoning": 512,
+        "used_reasoning": true,
+        "cost": 0.036736000000000005,
+        "duration_seconds": 65.51777005195618,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0138,
+    "step2_search": 0.4099,
+    "step3_outside_view": 0.2608,
+    "step5_inside_view": 0.3401,
+    "step6_aggregation": 0.3401,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 1.0247
+}

@@ -1,0 +1,3 @@
+**Evaluating assassination claims**
+
+I see there are moderate to weak claims about the US considering assassination, as noted by Axios, while Benzinga mentions prediction markets. The weaker sources seem to include tabloid claims about family members running a regime. I should think about timeframe analysis, possibly halving or doubling probabilities. It’s crucial to provide a calibration of the probabilities with reasoning and a range of plus or minus 10%. Let’s create a checklist around these items for clarity.

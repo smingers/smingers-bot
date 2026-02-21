@@ -1,0 +1,7 @@
+Analysis:
+Ali Khamenei is 86 years old and has ruled since 1989. Rumors about his declining health and possible succession have surfaced repeatedly (e.g., 2014 prostate surgery, 2020 heart rumors, 2022 protests, 2023–25 intermittent absences). Understanding the historical frequency, credibility, and outcomes of such rumors—as well as the formal procedures Iran used when Ayatollah Khomeini died in 1989—will give an “outside view” on whether he is likely to leave office before April 1 2026. Key context includes: 1) past health reports and how they resolved; 2) Iran’s constitutional succession mechanism (Assembly of Experts, acting leadership council); 3) names and positioning of likely successors (e.g., Mojtaba Khamenei, Ebrahim Raisi, Hassan Khomeini); 4) any recent purges or power-consolidation moves by Khamenei; and 5) precedent frequency of abrupt leadership exits in comparable authoritarian regimes at advanced ages. Relevant historical sources will be news coverage, think-tank analyses, and official Iranian statements.  
+
+Search queries:  
+1. Ali Khamenei succession speculation timeline (Google)  
+2. Khamenei health 2025 rumors (Google News)  
+3. Provide a detailed chronology of credible reports from 2020-Feb 21 2026 on Ali Khamenei’s health issues, public absences, or succession preparations, including dates, missed events, official statements, and potential successors. (Agent)
