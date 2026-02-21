@@ -291,7 +291,7 @@
       "comparison": {
         "type": "binary",
         "my_probability": 0.348,
-        "community_probability": 0.15,
+        "community_probability": 0.46,
         "difference": -0.11200000000000004
       }
     },
@@ -308,8 +308,8 @@
       "comparison": {
         "type": "binary",
         "my_probability": 0.126,
-        "community_probability": 0.12,
-        "difference": -0.089
+        "community_probability": 0.22,
+        "difference": -0.094
       }
     },
     {
@@ -325,7 +325,7 @@
       "comparison": {
         "type": "binary",
         "my_probability": 0.20600000000000002,
-        "community_probability": 0.08,
+        "community_probability": 0.4,
         "difference": -0.194
       }
     },
@@ -342,7 +342,7 @@
       "comparison": {
         "type": "binary",
         "my_probability": 0.04,
-        "community_probability": 0.35,
+        "community_probability": 0.12,
         "difference": -0.07999999999999999
       }
     },
@@ -401,7 +401,7 @@
       "comparison": {
         "type": "binary",
         "my_probability": 0.526,
-        "community_probability": 0.25,
+        "community_probability": 0.61,
         "difference": -0.08399999999999996
       }
     },
@@ -440,8 +440,7 @@
       "resolved": false,
       "resolution": null,
       "comparison": {
-        "community_probability": 0.42,
-        "type": "binary"
+        "type": "numeric"
       }
     },
     {
@@ -455,8 +454,7 @@
       "resolved": false,
       "resolution": null,
       "comparison": {
-        "community_probability": 0.18,
-        "type": "binary"
+        "type": "numeric"
       }
     },
     {
@@ -470,7 +468,7 @@
       "resolved": false,
       "resolution": null,
       "comparison": {
-        "type": "numeric",
+        "type": "multiple_choice",
         "my_probabilities": {
           "Nepali Congress": 0.38346433656198786,
           "Communist Party of Nepal (Unified Marxist-Leninist)": 0.290941359683846,
@@ -502,8 +500,7 @@
           "Other": -0.008001361892797636
         },
         "max_difference_option": "Rastriya Swatantra Party",
-        "max_difference_value": 0.02547570747919982,
-        "community_median": 69900.0
+        "max_difference_value": 0.02547570747919982
       }
     },
     {
@@ -519,8 +516,8 @@
       "comparison": {
         "type": "binary",
         "my_probability": 0.696,
-        "community_probability": 0.58,
-        "difference": -0.04150000000000009
+        "community_probability": 0.74,
+        "difference": -0.04400000000000004
       },
       "status": "resolved",
       "score_data": {
@@ -546,7 +543,7 @@
       "comparison": {
         "type": "binary",
         "my_probability": 0.01,
-        "community_probability": 0.18,
+        "community_probability": 0.01,
         "difference": 0.0
       }
     },
@@ -563,7 +560,7 @@
       "comparison": {
         "type": "binary",
         "my_probability": 0.016,
-        "community_probability": 0.5,
+        "community_probability": 0.05,
         "difference": -0.034
       }
     },
@@ -580,7 +577,7 @@
       "comparison": {
         "type": "binary",
         "my_probability": 0.04,
-        "community_probability": 0.12,
+        "community_probability": 0.08,
         "difference": -0.04
       }
     },
@@ -597,7 +594,7 @@
       "comparison": {
         "type": "binary",
         "my_probability": 0.114,
-        "community_probability": 0.45,
+        "community_probability": 0.15,
         "difference": -0.03599999999999999
       }
     },
@@ -638,7 +635,7 @@
       "comparison": {
         "type": "binary",
         "my_probability": 0.01,
-        "community_probability": 0.82,
+        "community_probability": 0.01,
         "difference": 0.0
       }
     },
@@ -718,7 +715,7 @@
       "comparison": {
         "type": "binary",
         "my_probability": 0.012,
-        "community_probability": 0.15,
+        "community_probability": 0.04,
         "difference": -0.028
       },
       "score_data": {
@@ -825,7 +822,7 @@
       "comparison": {
         "type": "binary",
         "my_probability": 0.152,
-        "community_probability": 0.75,
+        "community_probability": 0.2,
         "difference": -0.048000000000000015
       }
     },
@@ -842,7 +839,7 @@
       "comparison": {
         "type": "binary",
         "my_probability": 0.01,
-        "community_probability": 0.1,
+        "community_probability": 0.02,
         "difference": -0.01
       }
     },
@@ -859,7 +856,7 @@
       "comparison": {
         "type": "binary",
         "my_probability": 0.546,
-        "community_probability": 0.83,
+        "community_probability": 0.15,
         "difference": 0.396
       }
     },
@@ -876,7 +873,7 @@
       "comparison": {
         "type": "binary",
         "my_probability": 0.402,
-        "community_probability": 0.45,
+        "community_probability": 0.6,
         "difference": -0.19799999999999995
       }
     },
@@ -893,7 +890,7 @@
       "comparison": {
         "type": "binary",
         "my_probability": 0.025,
-        "community_probability": 0.55,
+        "community_probability": 0.05,
         "difference": -0.025
       }
     },

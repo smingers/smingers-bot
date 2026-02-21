@@ -66,8 +66,8 @@
       "comparison": {
         "type": "binary",
         "my_probability": 0.534,
-        "community_probability": 0.19,
-        "difference": 0.02849999999999997
+        "community_probability": 0.51,
+        "difference": 0.024
       },
       "status": "resolved",
       "score_data": {

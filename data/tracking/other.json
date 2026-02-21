@@ -17,8 +17,8 @@
       "comparison": {
         "type": "binary",
         "my_probability": 0.306,
-        "community_probability": 0.55,
-        "difference": -0.244
+        "community_probability": 0.75,
+        "difference": -0.444
       },
       "score_data": null
     },
@@ -70,8 +70,8 @@
       "comparison": {
         "type": "binary",
         "my_probability": 0.444,
-        "community_probability": 0.466,
-        "difference": -0.022
+        "community_probability": 0.28,
+        "difference": 0.164
       },
       "score_data": null
     },
@@ -131,8 +131,8 @@
       "comparison": {
         "type": "binary",
         "my_probability": 0.0694,
-        "community_probability": 0.05,
-        "difference": 0.0194
+        "community_probability": 0.04,
+        "difference": 0.0294
       },
       "score_data": null
     },
