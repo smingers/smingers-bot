@@ -13,7 +13,7 @@ import asyncio
 import logging
 import re
 from dataclasses import asdict, dataclass
-from datetime import datetime
+from datetime import datetime, timezone
 
 import numpy as np
 
@@ -163,9 +163,13 @@ def _compute_return_distribution(
         reference_price = None
         return_so_far = None
         start_dt = datetime.strptime(start_date, "%Y-%m-%d")
-        today = datetime.now()
+        today = datetime.now(tz=timezone.utc)
         if start_dt.date() <= today.date():
             # Question has started — find close price nearest to start_date
+            # Strip timezone from yFinance index (which may be tz-aware) so
+            # get_indexer can match against a naive date string.
+            if hist.index.tz is not None:
+                hist.index = hist.index.tz_localize(None)
             start_idx = hist.index.get_indexer([start_dt.strftime("%Y-%m-%d")], method="ffill")
             if start_idx[0] >= 0:
                 reference_price = float(hist["Close"].iloc[start_idx[0]])
