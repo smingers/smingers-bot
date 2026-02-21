@@ -135,8 +135,13 @@ def _bm25_filter_content(content: str, query: str, max_chars: int = 8000) -> str
             sub_parts = chunk.split("\n")
             for sub in sub_parts:
                 sub = sub.strip()
-                if sub:
-                    chunks.append((len(chunks), sub))
+                if not sub:
+                    continue
+                # If a sub-chunk is still huge (no newlines to split on),
+                # hard-truncate it so it doesn't blow the budget
+                if len(sub) > max_chars:
+                    sub = sub[:max_chars]
+                chunks.append((len(chunks), sub))
         else:
             chunks.append((len(chunks), chunk))
 
