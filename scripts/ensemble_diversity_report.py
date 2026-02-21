@@ -90,6 +90,17 @@ class ForecastAnalysis:
     resolution: str | float | None = None  # "Yes"/"No", numeric value, or option name
     score_data: dict | None = None  # 7-field score dict
 
+    # Supervisor data (only present when supervisor triggered)
+    supervisor_ran: bool = False
+    supervisor_confidence: str | None = None  # "high"/"medium"/"low"
+    supervisor_prediction: float | list | None = None  # Same shape as final_prediction
+    supervisor_cost: float | None = None
+    supervisor_divergence_metric: str | None = None  # e.g. "std_dev"
+    supervisor_divergence_value: float | None = None
+    supervisor_divergence_threshold: float | None = None
+    supervisor_analysis_text: str | None = None  # Stage 1 markdown
+    supervisor_reasoning_text: str | None = None  # Stage 2 markdown
+
     # Diversity metrics (computed)
     outside_view_range: float | None = None
     outside_view_std: float | None = None
@@ -105,6 +116,21 @@ def _strip_markdown(text: str) -> str:
     return re.sub(r"\*{1,3}", "", text)
 
 
+def _normalize_probability(val: float, has_percent: bool) -> float:
+    """Convert extracted value to probability in [0, 1].
+
+    When has_percent is True (the source text had a '%' sign), the value is
+    always a percentage and we divide by 100.  When False, we fall back to a
+    heuristic: values > 1 are assumed to be percentages.
+
+    This fixes the edge case where "1%" was misinterpreted as 1.0 (100%)
+    because the old ``val > 1`` check treated 1 as a decimal probability.
+    """
+    if has_percent:
+        return val / 100
+    return val / 100 if val > 1 else val
+
+
 def extract_binary_probability_from_text(text: str) -> float | None:
     """Extract a probability from the end of an outside/inside view markdown."""
     if not text:
@@ -117,52 +143,52 @@ def extract_binary_probability_from_text(text: str) -> float | None:
 
     # Pass 1: Look for "Outside View Prediction:" or "Inside View Prediction:" label
     # then grab the number on the same line or next line
+    # (regex requires %, so has_percent=True)
     m = re.search(
         r"(?:Outside|Inside)\s+View\s+Prediction[:\s]*\n?\s*"
         r"(?:(?:Yes|No)\s*[=:]\s*)?(\d+(?:\.\d+)?)\s*%",
         full_text,
     )
     if m:
-        val = float(m.group(1))
-        return val / 100 if val > 1 else val
+        return _normalize_probability(float(m.group(1)), has_percent=True)
 
     # Pass 2: Look for "Probability: N%" at end of text (the canonical ending format)
-    m = re.search(r"[Pp]robability:\s*(\d+(?:\.\d+)?)\s*%?\s*$", full_text)
+    # (% is optional here, so capture it)
+    m = re.search(r"[Pp]robability:\s*(\d+(?:\.\d+)?)\s*(%?)\s*$", full_text)
     if m:
-        val = float(m.group(1))
-        return val / 100 if val > 1 else val
+        return _normalize_probability(float(m.group(1)), has_percent=bool(m.group(2)))
 
     # Pass 3: Search last 10 lines for tight patterns only
     for line in reversed(lines[-10:]):
         line = _strip_markdown(line.strip())
 
         # "Probability: 18%" or "Probability: 18" (colon required to avoid matching prose)
-        m = re.search(r"[Pp]robability:\s*(\d+(?:\.\d+)?)\s*%?", line)
+        # (% is optional, so capture it)
+        m = re.search(r"[Pp]robability:\s*(\d+(?:\.\d+)?)\s*(%?)", line)
         if m:
-            val = float(m.group(1))
-            return val / 100 if val > 1 else val
+            return _normalize_probability(float(m.group(1)), has_percent=bool(m.group(2)))
 
         # "Yes = 53%" or "Yes: 53%" (GPT-5.2 sometimes prefixes with Yes/No)
+        # (regex requires %)
         m = re.search(r"(?:Yes|No)\s*[=:]\s*(\d+(?:\.\d+)?)\s*%", line)
         if m:
-            val = float(m.group(1))
-            return val / 100 if val > 1 else val
+            return _normalize_probability(float(m.group(1)), has_percent=True)
 
         # Bare number as a prediction on its own line (e.g. "27%")
+        # (regex requires %)
         m = re.match(r"^(\d+(?:\.\d+)?)\s*%$", line)
         if m:
-            val = float(m.group(1))
-            return val / 100 if val > 1 else val
+            return _normalize_probability(float(m.group(1)), has_percent=True)
 
     # Pass 4: Loose pattern — "a 1.3% probability" but only on a short standalone line
     # (avoids matching prose like "96% probability of NO settlement")
+    # (regex requires %)
     for line in reversed(lines[-10:]):
         line = _strip_markdown(line.strip())
         if len(line) < 60:  # short lines are more likely to be predictions
             m = re.match(r"^.*?(\d+(?:\.\d+)?)\s*%\s*probability\s*[.!]?\s*$", line)
             if m:
-                val = float(m.group(1))
-                return val / 100 if val > 1 else val
+                return _normalize_probability(float(m.group(1)), has_percent=True)
 
     return None
 
@@ -391,16 +417,10 @@ def analyze_forecast(forecast_dir: Path) -> ForecastAnalysis | None:
     if aggregation:
         if question_type == "binary":
             final_prediction = aggregation.get("final_probability")
-        elif question_type in ("numeric", "discrete"):
-            # aggregation has final_cdf but not easily summarizable as single number
-            pred = load_json(forecast_dir / "prediction.json")
-            if pred:
-                pcts = pred.get("percentiles", {})
-                final_prediction = pcts.get("50", pcts.get(50))
-        elif question_type == "date":
-            # For date questions, prediction.json percentiles are CDF probabilities (0-1),
-            # not timestamps. Use the average of agent median timestamps instead;
-            # this gets computed later after forecaster extraction, so set to None here.
+        elif question_type in ("numeric", "discrete", "date"):
+            # prediction.json percentiles are CDF probabilities (0-1), not actual values.
+            # Use the average of agent medians instead; computed later after forecaster
+            # extraction, so set to None here.
             final_prediction = None
         elif question_type == "multiple_choice":
             raw_final = aggregation.get("final_probabilities")
@@ -553,8 +573,58 @@ def analyze_forecast(forecast_dir: Path) -> ForecastAnalysis | None:
 
     # For date questions, compute final prediction as average of agent median timestamps
     # (prediction.json percentiles are CDF probabilities, not timestamps)
-    if question_type == "date" and analysis.final_prediction is None and iv_vals:
+    if (
+        question_type in ("numeric", "discrete", "date")
+        and analysis.final_prediction is None
+        and iv_vals
+    ):
         analysis.final_prediction = statistics.mean(iv_vals)
+
+    # Load supervisor data (if supervisor ran)
+    supervisor_result = load_json(edir / "supervisor_result.json")
+    if supervisor_result:
+        analysis.supervisor_ran = True
+
+        # Handle two schema versions:
+        # Old format (Q41856): supervisor_confidence, supervisor_prediction, supervisor_cost
+        # New format (all others): confidence, prediction, cost
+        analysis.supervisor_confidence = supervisor_result.get(
+            "confidence", supervisor_result.get("supervisor_confidence")
+        )
+
+        raw_pred = supervisor_result.get(
+            "prediction", supervisor_result.get("supervisor_prediction")
+        )
+
+        # Normalize prediction to match final_prediction format
+        if question_type == "binary" and isinstance(raw_pred, (int, float)):
+            analysis.supervisor_prediction = raw_pred / 100 if raw_pred > 1 else raw_pred
+        elif question_type in ("numeric", "discrete", "date") and isinstance(raw_pred, dict):
+            # Extract median from percentile dict for display
+            p50 = raw_pred.get(50, raw_pred.get("50"))
+            if p50 is None:
+                p40 = raw_pred.get(40, raw_pred.get("40"))
+                p60 = raw_pred.get(60, raw_pred.get("60"))
+                if p40 is not None and p60 is not None:
+                    p50 = (p40 + p60) / 2
+            analysis.supervisor_prediction = p50
+        elif question_type == "multiple_choice" and isinstance(raw_pred, list):
+            if any(p > 1 for p in raw_pred):
+                analysis.supervisor_prediction = [p / 100 for p in raw_pred]
+            else:
+                analysis.supervisor_prediction = raw_pred
+
+        analysis.supervisor_cost = supervisor_result.get(
+            "cost", supervisor_result.get("supervisor_cost")
+        )
+
+        div_info = supervisor_result.get("divergence", {})
+        analysis.supervisor_divergence_metric = div_info.get("metric_name")
+        analysis.supervisor_divergence_value = div_info.get("metric_value")
+        analysis.supervisor_divergence_threshold = div_info.get("threshold")
+
+        analysis.supervisor_analysis_text = read_text(edir / "supervisor_analysis.md")
+        analysis.supervisor_reasoning_text = read_text(edir / "supervisor_reasoning.md")
 
     return analysis
 
@@ -1160,19 +1230,23 @@ def _build_html(
                 ov_onclick = ""
                 if f.outside_view_text:
                     ov_idx = len(report_entries)
-                    report_entries.append({
-                        "title": f"{f_label} ({model_short}) — Outside View",
-                        "text": f.outside_view_text,
-                    })
+                    report_entries.append(
+                        {
+                            "title": f"{f_label} ({model_short}) — Outside View",
+                            "text": f.outside_view_text,
+                        }
+                    )
                     ov_onclick = f' onclick="openReport({ov_idx})"'
 
                 iv_onclick = ""
                 if f.inside_view_text:
                     iv_idx = len(report_entries)
-                    report_entries.append({
-                        "title": f"{f_label} ({model_short}) — Inside View",
-                        "text": f.inside_view_text,
-                    })
+                    report_entries.append(
+                        {
+                            "title": f"{f_label} ({model_short}) — Inside View",
+                            "text": f.inside_view_text,
+                        }
+                    )
                     iv_onclick = f' onclick="openReport({iv_idx})"'
 
                 ov_cls = "val ov" + (" report-link" if ov_onclick else "")
@@ -1239,6 +1313,9 @@ def _build_html(
                 convergence_class = ""
                 convergence_label = "—"
 
+            # Final label: "Ensemble" when supervisor ran, "Final" otherwise
+            final_label = "Ensemble" if a.supervisor_ran else "Final"
+
             # Format final prediction display
             if a.final_prediction is not None and isinstance(a.final_prediction, list):
                 final_display = " / ".join(f"{p:.0%}" for p in a.final_prediction)
@@ -1247,13 +1324,33 @@ def _build_html(
             else:
                 final_display = "—"
 
-            # Build visual range bar for binary
+            # Build visual range bar
             range_bar = ""
             if qtype == "binary":
                 ov_vals = [f.outside_view for f in a.forecasters if f.outside_view is not None]
                 iv_vals = [f.inside_view for f in a.forecasters if f.inside_view is not None]
                 if ov_vals and iv_vals:
-                    range_bar = _build_range_bar(ov_vals, iv_vals, a.final_prediction)
+                    sup_val = a.supervisor_prediction if a.supervisor_ran else None
+                    range_bar = _build_range_bar(ov_vals, iv_vals, a.final_prediction, sup_val)
+            elif is_numeric_type:
+                ov_vals = [f.outside_view for f in a.forecasters if f.outside_view is not None]
+                iv_vals = [f.inside_view for f in a.forecasters if f.inside_view is not None]
+                if ov_vals and iv_vals:
+                    sup_val = a.supervisor_prediction if a.supervisor_ran else None
+                    res_val = None
+                    if a.resolution is not None:
+                        try:
+                            res_val = float(a.resolution)
+                        except (ValueError, TypeError):
+                            pass
+                    range_bar = _build_numeric_range_bar(
+                        ov_vals,
+                        iv_vals,
+                        a.final_prediction,
+                        fmt,
+                        resolution=res_val,
+                        supervisor=sup_val,
+                    )
 
             # For MC, add option labels subtitle and skip misleading avg/range/std
             options_subtitle = ""
@@ -1320,9 +1417,16 @@ def _build_html(
                 elif a.question_type == "binary":
                     res_display = str(a.resolution)
                 elif is_numeric_type:
+                    res_val = a.resolution
+                    # Resolution may be stored as a numeric string
+                    if isinstance(res_val, str):
+                        try:
+                            res_val = float(res_val)
+                        except ValueError:
+                            pass
                     res_display = (
-                        _fmt(a.resolution, fmt)
-                        if isinstance(a.resolution, (int, float))
+                        _fmt(res_val, fmt)
+                        if isinstance(res_val, (int, float))
                         else str(a.resolution)
                     )
                 else:
@@ -1376,6 +1480,92 @@ def _build_html(
                             <td></td>
                         </tr>"""
 
+            # Build supervisor row (if supervisor ran)
+            supervisor_row = ""
+            if a.supervisor_ran and a.supervisor_prediction is not None:
+                # Format supervisor prediction display
+                if isinstance(a.supervisor_prediction, list):
+                    sup_display = " / ".join(f"{p:.0%}" for p in a.supervisor_prediction)
+                else:
+                    sup_display = _fmt(a.supervisor_prediction, fmt)
+
+                # Confidence badge
+                conf_lower = (a.supervisor_confidence or "medium").lower()
+                conf_badge = (
+                    f'<span class="sup-conf-badge sup-conf-{conf_lower}">'
+                    f"{(a.supervisor_confidence or '?').upper()}</span>"
+                )
+
+                # Divergence trigger subtitle
+                div_trigger = ""
+                if a.supervisor_divergence_metric:
+                    metric_label = {
+                        "std_dev": "StdDev",
+                        "cv": "CV",
+                        "rn_spread": "RN Spread",
+                        "max_option_range": "Max Option Range",
+                    }.get(a.supervisor_divergence_metric, a.supervisor_divergence_metric)
+                    # Use .3f for small values (rn_spread, cv), .1f for large (std_dev, max_option_range)
+                    val_fmt = (
+                        f"{a.supervisor_divergence_value:.3f}"
+                        if a.supervisor_divergence_value < 1
+                        else f"{a.supervisor_divergence_value:.1f}"
+                    )
+                    thr_fmt = (
+                        f"{a.supervisor_divergence_threshold:.3f}"
+                        if a.supervisor_divergence_threshold < 1
+                        else f"{a.supervisor_divergence_threshold:.1f}"
+                    )
+                    div_trigger = (
+                        f'<div class="supervisor-trigger">'
+                        f"{metric_label}: {val_fmt} "
+                        f"(threshold: {thr_fmt})"
+                        f"</div>"
+                    )
+
+                # Build clickable cell linking to supervisor modal
+                sup_onclick = ""
+                combined_text = ""
+                if a.supervisor_analysis_text:
+                    combined_text += "# Disagreement Analysis\n\n" + a.supervisor_analysis_text
+                if a.supervisor_reasoning_text:
+                    combined_text += (
+                        "\n\n---\n\n# Updated Forecast\n\n" + a.supervisor_reasoning_text
+                    )
+
+                if combined_text:
+                    sup_idx = len(report_entries)
+                    report_entries.append(
+                        {
+                            "title": f"Supervisor — Q{a.question_id}",
+                            "text": combined_text,
+                        }
+                    )
+                    sup_onclick = f' onclick="openReport({sup_idx})"'
+
+                sup_cls = "val iv supervisor-val" + (" report-link" if sup_onclick else "")
+
+                if is_numeric_type:
+                    supervisor_row = f"""
+                        <tr class="supervisor-row">
+                            <td colspan="2" class="summary-label supervisor-label">Supervisor {conf_badge}{div_trigger}</td>
+                            <td class="val ov p20"></td>
+                            <td class="val ov"></td>
+                            <td class="val ov p80"></td>
+                            <td class="val iv p20"></td>
+                            <td class="{sup_cls}"{sup_onclick}>{sup_display}</td>
+                            <td class="val iv p80"></td>
+                            <td></td>
+                        </tr>"""
+                else:
+                    supervisor_row = f"""
+                        <tr class="supervisor-row">
+                            <td colspan="2" class="summary-label supervisor-label">Supervisor {conf_badge}{div_trigger}</td>
+                            <td class="val ov"></td>
+                            <td class="{sup_cls}"{sup_onclick}>{sup_display}</td>
+                            <td></td>
+                        </tr>"""
+
             if is_mc:
                 # Compute per-option averages across forecasters
                 ov_probs_lists = [
@@ -1408,11 +1598,12 @@ def _build_html(
                             <td></td>
                         </tr>
                         <tr class="final-row">
-                            <td colspan="2" class="summary-label">Final</td>
+                            <td colspan="2" class="summary-label">{final_label}</td>
                             <td class="val ov"></td>
                             <td class="val iv final">{final_display}</td>
                             <td></td>
                         </tr>
+                        {supervisor_row}
                         {community_row}
                         {resolution_row}
                         {peer_score_row}
@@ -1469,7 +1660,7 @@ def _build_html(
                             <td></td>
                         </tr>
                         <tr class="final-row">
-                            <td colspan="2" class="summary-label">Final</td>
+                            <td colspan="2" class="summary-label">{final_label}</td>
                             <td class="val ov p20"></td>
                             <td class="val ov"></td>
                             <td class="val ov p80"></td>
@@ -1478,6 +1669,7 @@ def _build_html(
                             <td class="val iv p80"></td>
                             <td></td>
                         </tr>
+                        {supervisor_row}
                         {community_row}
                         {resolution_row}
                         {peer_score_row}
@@ -1503,11 +1695,12 @@ def _build_html(
                             <td></td>
                         </tr>
                         <tr class="final-row">
-                            <td colspan="2" class="summary-label">Final</td>
+                            <td colspan="2" class="summary-label">{final_label}</td>
                             <td class="val ov"></td>
                             <td class="val iv final">{final_display}</td>
                             <td></td>
                         </tr>
+                        {supervisor_row}
                         {community_row}
                         {resolution_row}
                         {peer_score_row}
@@ -1617,6 +1810,9 @@ def _build_html(
                 convergence_counts["diverged"] += 1
             else:
                 convergence_counts["stable"] += 1
+
+    # Count supervisor triggers
+    supervisor_count = sum(1 for a in analyses if a.supervisor_ran)
 
     # Build resolved questions section
     resolved_analyses = [a for a in analyses if a.resolved and a.score_data]
@@ -1925,6 +2121,92 @@ def _build_html(
     .fc-table .val.score-positive {{ color: var(--green); font-weight: 600; }}
     .fc-table .val.score-negative {{ color: var(--red); font-weight: 600; }}
 
+    /* Supervisor row in forecast table */
+    .supervisor-row td {{
+        border-top: 2px solid var(--orange);
+    }}
+    .fc-table .supervisor-label {{
+        color: var(--orange);
+        font-weight: 600;
+        font-style: normal;
+    }}
+    .fc-table .val.supervisor-val {{
+        color: var(--orange);
+        font-weight: 700;
+        font-size: 1rem;
+    }}
+    .sup-conf-badge {{
+        display: inline-block;
+        padding: 1px 6px;
+        border-radius: 8px;
+        font-size: 0.6rem;
+        font-weight: 700;
+        margin-left: 6px;
+        vertical-align: middle;
+        letter-spacing: 0.5px;
+    }}
+    .sup-conf-high {{
+        background: rgba(63, 185, 80, 0.2);
+        color: var(--green);
+    }}
+    .sup-conf-medium {{
+        background: rgba(210, 153, 34, 0.2);
+        color: var(--orange);
+    }}
+    .sup-conf-low {{
+        background: rgba(248, 81, 73, 0.2);
+        color: var(--red);
+    }}
+    .supervisor-trigger {{
+        font-size: 0.7rem;
+        color: var(--text-dim);
+        font-family: monospace;
+        margin-top: 2px;
+    }}
+
+    /* Supervisor dot on range bar */
+    .range-bar .dot.supervisor {{
+        background: var(--orange);
+        width: 3px;
+        height: 100%;
+        border-radius: 1px;
+        top: 0;
+        transform: translateX(-50%);
+    }}
+    .range-bar-legend .sup-legend::before {{
+        content: '';
+        display: inline-block;
+        width: 3px;
+        height: 10px;
+        background: var(--orange);
+        border-radius: 1px;
+        margin-right: 4px;
+        vertical-align: middle;
+    }}
+
+    /* Supervisor stat card */
+    .stat-card.supervisor-stat {{ border-color: var(--orange); }}
+
+    /* Resolution dot on range bar */
+    .range-bar .dot.resolution {{
+        background: var(--red);
+        width: 3px;
+        height: 100%;
+        border-radius: 1px;
+        top: 0;
+        transform: translateX(-50%);
+    }}
+    .range-bar-legend .res-legend::before {{
+        content: '';
+        display: inline-block;
+        width: 3px;
+        height: 10px;
+        background: var(--red);
+        border-radius: 1px;
+        margin-right: 4px;
+        vertical-align: middle;
+    }}
+
     /* Resolved questions section */
     .resolved-card {{
         background: var(--surface);
@@ -2144,6 +2426,10 @@ def _build_html(
         <div class="stat-value">{convergence_counts["diverged"]}</div>
         <div class="stat-label">Diverged<br><span class="stat-sublabel">inside view spread &gt; 120% of outside view spread</span></div>
     </div>
+    <div class="stat-card supervisor-stat">
+        <div class="stat-value">{supervisor_count}</div>
+        <div class="stat-label">Supervisor<br><span class="stat-sublabel">high divergence triggered supervisor review</span></div>
+    </div>
 </div>
 
 {"".join(sections)}
@@ -2184,8 +2470,6 @@ function openReport(idx) {{
     document.getElementById('reportBody').innerHTML = renderMarkdown(entry.text);
     document.getElementById('reportBackdrop').classList.add('open');
     document.body.style.overflow = 'hidden';
-    // Prevent click from propagating to forecast-header collapse toggle
-    event.stopPropagation();
 }}
 
 function closeReport() {{
@@ -2203,28 +2487,18 @@ document.addEventListener('keydown', function(e) {{
     if (e.key === 'Escape') closeReport();
 }});
 
-// Collapse/expand forecast cards on click
-document.querySelectorAll('.forecast-header').forEach(header => {{
-    header.style.cursor = 'pointer';
-    header.addEventListener('click', () => {{
-        const card = header.parentElement;
-        const table = card.querySelector('.fc-table');
-        const bar = card.querySelector('.range-bar');
-        const barLabels = card.querySelector('.range-bar-labels');
-        const barLegend = card.querySelector('.range-bar-legend');
-        if (table) table.style.display = table.style.display === 'none' ? '' : 'none';
-        if (bar) bar.style.display = bar.style.display === 'none' ? '' : 'none';
-        if (barLabels) barLabels.style.display = barLabels.style.display === 'none' ? '' : 'none';
-        if (barLegend) barLegend.style.display = barLegend.style.display === 'none' ? '' : 'none';
-    }});
-}});
 </script>
 
 </body>
 </html>"""
 
 
-def _build_range_bar(ov_vals: list[float], iv_vals: list[float], final: float | None) -> str:
+def _build_range_bar(
+    ov_vals: list[float],
+    iv_vals: list[float],
+    final: float | None,
+    supervisor: float | None = None,
+) -> str:
     """Build a visual range bar for binary forecasts (0-1 scale)."""
 
     def pct(v):
@@ -2242,12 +2516,19 @@ def _build_range_bar(ov_vals: list[float], iv_vals: list[float], final: float | 
         dots += f'<div class="dot iv" style="left: {pct(v)}%"></div>'
     if final is not None:
         dots += f'<div class="dot final" style="left: {pct(final)}%"></div>'
+    if supervisor is not None:
+        dots += f'<div class="dot supervisor" style="left: {pct(supervisor)}%"></div>'
+
+    sup_legend = ""
+    if supervisor is not None:
+        sup_legend = '<span class="sup-legend">Supervisor</span>'
 
     return f"""
     <div class="range-bar-legend">
         <span class="ov-legend">Outside View</span>
         <span class="iv-legend">Inside View</span>
         <span class="final-legend">Aggregated</span>
+        {sup_legend}
     </div>
     <div class="range-bar">
         <div class="ov-range" style="left: {ov_min_pct}%; width: {ov_max_pct - ov_min_pct}%"></div>
@@ -2260,6 +2541,92 @@ def _build_range_bar(ov_vals: list[float], iv_vals: list[float], final: float | 
         <span>50%</span>
         <span>75%</span>
         <span>100%</span>
+    </div>
+    """
+
+
+def _build_numeric_range_bar(
+    ov_vals: list[float],
+    iv_vals: list[float],
+    final: float | None,
+    fmt_type: str = "num",
+    resolution: float | None = None,
+    supervisor: float | None = None,
+) -> str:
+    """Build a visual range bar for numeric forecasts (auto-scaled)."""
+    # Collect all values to determine scale
+    all_vals = list(ov_vals) + list(iv_vals)
+    if final is not None:
+        all_vals.append(final)
+    if resolution is not None:
+        all_vals.append(resolution)
+    if supervisor is not None:
+        all_vals.append(supervisor)
+
+    if len(all_vals) < 2:
+        return ""
+
+    data_min = min(all_vals)
+    data_max = max(all_vals)
+    data_range = data_max - data_min
+
+    if data_range == 0:
+        return ""
+
+    # Add 10% padding on each side
+    padding = data_range * 0.10
+    scale_min = data_min - padding
+    scale_max = data_max + padding
+    scale_range = scale_max - scale_min
+
+    def pct(v):
+        return max(0, min(100, (v - scale_min) / scale_range * 100))
+
+    ov_min_pct = pct(min(ov_vals))
+    ov_max_pct = pct(max(ov_vals))
+    iv_min_pct = pct(min(iv_vals))
+    iv_max_pct = pct(max(iv_vals))
+
+    dots = ""
+    for v in ov_vals:
+        dots += f'<div class="dot ov" style="left: {pct(v)}%"></div>'
+    for v in iv_vals:
+        dots += f'<div class="dot iv" style="left: {pct(v)}%"></div>'
+    if final is not None:
+        dots += f'<div class="dot final" style="left: {pct(final)}%"></div>'
+    if supervisor is not None:
+        dots += f'<div class="dot supervisor" style="left: {pct(supervisor)}%"></div>'
+    if resolution is not None:
+        dots += f'<div class="dot resolution" style="left: {pct(resolution)}%"></div>'
+
+    sup_legend = ""
+    if supervisor is not None:
+        sup_legend = '<span class="sup-legend">Supervisor</span>'
+    res_legend = ""
+    if resolution is not None:
+        res_legend = '<span class="res-legend">Resolution</span>'
+
+    # Generate 5 evenly-spaced axis labels
+    labels = ""
+    for i in range(5):
+        tick_val = scale_min + (scale_range * i / 4)
+        labels += f"<span>{_fmt(tick_val, fmt_type)}</span>"
+
+    return f"""
+    <div class="range-bar-legend">
+        <span class="ov-legend">Outside View</span>
+        <span class="iv-legend">Inside View</span>
+        <span class="final-legend">Aggregated</span>
+        {sup_legend}
+        {res_legend}
+    </div>
+    <div class="range-bar">
+        <div class="ov-range" style="left: {ov_min_pct}%; width: {ov_max_pct - ov_min_pct}%"></div>
+        <div class="iv-range" style="left: {iv_min_pct}%; width: {iv_max_pct - iv_min_pct}%"></div>
+        {dots}
+    </div>
+    <div class="range-bar-labels">
+        {labels}
     </div>
     """
 
