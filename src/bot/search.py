@@ -22,6 +22,7 @@ from urllib.parse import urlparse
 
 import dateparser
 import httpx
+from rank_bm25 import BM25Plus
 
 from ..utils.llm import LLMClient, get_cost_tracker
 from .content_extractor import ConcurrentContentExtractor
@@ -107,6 +108,85 @@ Note: If the web content extraction is incomplete or you believe the quality of 
 
 Please summarize only the article given, not injecting your own knowledge or providing a forecast. Aim to achieve a balance between a superficial summary and an overly verbose account.
 """
+
+
+def _bm25_filter_content(content: str, query: str, max_chars: int = 8000) -> str:
+    """Select the most relevant chunks of content using BM25 scoring.
+
+    Splits content into paragraph-level chunks, scores each against the query,
+    and greedily selects top-scoring chunks (in original document order) until
+    the character budget is filled.
+
+    Falls back to simple truncation when BM25 can't produce useful scores
+    (e.g., no token overlap between query and content).
+    """
+    if not content or len(content) <= max_chars:
+        return content
+
+    # Split into chunks on paragraph boundaries
+    raw_chunks = content.split("\n\n")
+    chunks: list[tuple[int, str]] = []  # (original_index, text)
+    for chunk in raw_chunks:
+        chunk = chunk.strip()
+        if not chunk:
+            continue
+        # Sub-split large chunks on single newlines
+        if len(chunk) > 1000:
+            sub_parts = chunk.split("\n")
+            for sub in sub_parts:
+                sub = sub.strip()
+                if sub:
+                    chunks.append((len(chunks), sub))
+        else:
+            chunks.append((len(chunks), chunk))
+
+    if not chunks:
+        return content[:max_chars]
+
+    # Tokenize
+    tokenized_chunks = [c.lower().split() for _, c in chunks]
+    tokenized_query = query.lower().split()
+
+    if not tokenized_query:
+        return content[:max_chars]
+
+    # Score with BM25
+    try:
+        bm25 = BM25Plus(tokenized_chunks)
+        scores = bm25.get_scores(tokenized_query)
+    except (ValueError, ZeroDivisionError):
+        return content[:max_chars]
+
+    # Check if any scores are meaningful (non-zero)
+    if max(scores) == 0:
+        return content[:max_chars]
+
+    # Rank chunks by score, select top ones within budget
+    scored = sorted(
+        zip(range(len(chunks)), scores, strict=True),
+        key=lambda x: x[1],
+        reverse=True,
+    )
+
+    selected_indices: list[int] = []
+    total_chars = 0
+    separator_len = 2  # "\n\n" between chunks
+    for idx, _score in scored:
+        chunk_len = len(chunks[idx][1])
+        join_cost = separator_len if selected_indices else 0
+        if total_chars + join_cost + chunk_len > max_chars:
+            if not selected_indices:
+                # Must select at least one chunk
+                selected_indices.append(idx)
+                total_chars += chunk_len
+            continue  # Try smaller chunks that might fit
+        selected_indices.append(idx)
+        total_chars += join_cost + chunk_len
+
+    # Re-sort by original document order
+    selected_indices.sort()
+
+    return "\n\n".join(chunks[i][1] for i in selected_indices)
 
 
 class SearchPipeline:
@@ -607,7 +687,9 @@ class SearchPipeline:
                 and len(content.split()) >= self._MIN_QUESTION_URL_CONTENT_WORDS
             ):
                 max_content = self.config.get("research", {}).get("max_content_length", 15000)
-                truncated = content[:max_content]
+                truncated = _bm25_filter_content(
+                    content, question_details.title, max_chars=max_content
+                )
                 summarize_tasks.append(self._summarize_article(truncated, question_details))
                 valid_urls.append(url)
                 url_meta["content_words"] = len(content.split())
@@ -759,7 +841,7 @@ class SearchPipeline:
                     continue
 
                 if content:
-                    truncated = content[:8000]
+                    truncated = _bm25_filter_content(content, question_details.title)
                     logger.debug(
                         f"[google_search_and_scrape] Summarizing {len(truncated)} chars from {url}"
                     )
@@ -1341,7 +1423,7 @@ class SearchPipeline:
                     continue
 
                 if content:
-                    truncated = content[:8000]
+                    truncated = _bm25_filter_content(content, query)
                     output += f'\n<RawContent source="{url}">\n{truncated}\n</RawContent>\n'
                     results_count += 1
 
