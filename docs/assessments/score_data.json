@@ -1,0 +1,6278 @@
+[
+  {
+    "file": "41593_20260201_150927_assessment.md",
+    "question_id": 41593,
+    "question_type": "date",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 12
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 11
+      }
+    ]
+  },
+  {
+    "file": "41594_20260206_012327_assessment.md",
+    "question_id": 41594,
+    "question_type": "binary",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 10
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 16
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 11
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 8
+      }
+    ]
+  },
+  {
+    "file": "41597_20260206_015718_assessment.md",
+    "question_id": 41597,
+    "question_type": "multiple_choice",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 0
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 16
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 16
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 13
+      }
+    ]
+  },
+  {
+    "file": "41699_20260205_202748_assessment.md",
+    "question_id": 41699,
+    "question_type": "binary",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 12
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 11
+      }
+    ]
+  },
+  {
+    "file": "41759_20260130_003711_assessment.md",
+    "question_id": 41759,
+    "question_type": "numeric",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 16
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "o3-mini",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 16
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 16
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 16
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 16
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "o3-mini",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 16
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 16
+      }
+    ]
+  },
+  {
+    "file": "41759_20260130_005409_assessment.md",
+    "question_id": 41759,
+    "question_type": "numeric",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "o3-mini",
+        "score": 12
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 16
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 16
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "o3-mini",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 16
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 15
+      }
+    ]
+  },
+  {
+    "file": "41759_20260130_005450_assessment.md",
+    "question_id": 41759,
+    "question_type": "numeric",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 11
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "o3-mini",
+        "score": 9
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "o3-mini",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 15
+      }
+    ]
+  },
+  {
+    "file": "41759_20260130_203530_assessment.md",
+    "question_id": 41759,
+    "question_type": "numeric",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Haiku",
+        "score": 11
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Haiku",
+        "score": 11
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "Haiku",
+        "score": 11
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "Haiku",
+        "score": 10
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "Haiku",
+        "score": 10
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Haiku",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Haiku",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "Haiku",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "Haiku",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "Haiku",
+        "score": 12
+      }
+    ]
+  },
+  {
+    "file": "41760_20260130_014738_assessment.md",
+    "question_id": 41760,
+    "question_type": "numeric",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "o3-mini",
+        "score": 11
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 16
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "o3-mini",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 15
+      }
+    ]
+  },
+  {
+    "file": "41838_20260131_165055_assessment.md",
+    "question_id": 41838,
+    "question_type": "numeric",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 16
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 15
+      }
+    ]
+  },
+  {
+    "file": "41839_20260201_162706_assessment.md",
+    "question_id": 41839,
+    "question_type": "binary",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 16
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 16
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 16
+      }
+    ]
+  },
+  {
+    "file": "41848_20260207_101231_assessment.md",
+    "question_id": 41848,
+    "question_type": "binary",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 16
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 16
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 13
+      }
+    ]
+  },
+  {
+    "file": "41856_20260211_064653_assessment.md",
+    "question_id": 41856,
+    "question_type": "binary",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 10
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 12
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 12
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 11
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 13
+      }
+    ]
+  },
+  {
+    "file": "41857_20260211_123627_assessment.md",
+    "question_id": 41857,
+    "question_type": "binary",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 12
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 11
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 11
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 9
+      }
+    ]
+  },
+  {
+    "file": "41892_20260201_010427_assessment.md",
+    "question_id": 41892,
+    "question_type": "binary",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 16
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 16
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 15
+      }
+    ]
+  },
+  {
+    "file": "41893_20260201_154509_assessment.md",
+    "question_id": 41893,
+    "question_type": "multiple_choice",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 15
+      }
+    ]
+  },
+  {
+    "file": "41896_20260130_013834_assessment.md",
+    "question_id": 41896,
+    "question_type": "numeric",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "o3-mini",
+        "score": 12
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 16
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "o3-mini",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 14
+      }
+    ]
+  },
+  {
+    "file": "41897_20260130_063220_assessment.md",
+    "question_id": 41897,
+    "question_type": "binary",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 10
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "o3-mini",
+        "score": 11
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "o3-mini",
+        "score": 9
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 14
+      }
+    ]
+  },
+  {
+    "file": "41899_20260130_224326_assessment.md",
+    "question_id": 41899,
+    "question_type": "numeric",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 16
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "o3-mini",
+        "score": 11
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 16
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 16
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 16
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 16
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "o3-mini",
+        "score": 11
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 15
+      }
+    ]
+  },
+  {
+    "file": "41899_20260130_224951_assessment.md",
+    "question_id": 41899,
+    "question_type": "numeric",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "o3-mini",
+        "score": 11
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 16
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 16
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "o3-mini",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 16
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 14
+      }
+    ]
+  },
+  {
+    "file": "41900_20260131_121849_assessment.md",
+    "question_id": 41900,
+    "question_type": "binary",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 10
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 11
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 16
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 15
+      }
+    ]
+  },
+  {
+    "file": "41901_20260131_211005_assessment.md",
+    "question_id": 41901,
+    "question_type": "binary",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 12
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 9
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 14
+      }
+    ]
+  },
+  {
+    "file": "41902_20260201_054148_assessment.md",
+    "question_id": 41902,
+    "question_type": "numeric",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 11
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 11
+      }
+    ]
+  },
+  {
+    "file": "41903_20260201_142153_assessment.md",
+    "question_id": 41903,
+    "question_type": "binary",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 16
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 16
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 16
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 16
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 16
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 16
+      }
+    ]
+  },
+  {
+    "file": "41904_20260201_151255_assessment.md",
+    "question_id": 41904,
+    "question_type": "binary",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 11
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 14
+      }
+    ]
+  },
+  {
+    "file": "41935_20260201_211202_assessment.md",
+    "question_id": 41935,
+    "question_type": "numeric",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 16
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 16
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 16
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 15
+      }
+    ]
+  },
+  {
+    "file": "41935_20260201_214301_assessment.md",
+    "question_id": 41935,
+    "question_type": "numeric",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 16
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 16
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 16
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 16
+      }
+    ]
+  },
+  {
+    "file": "41955_20260202_090824_assessment.md",
+    "question_id": 41955,
+    "question_type": "binary",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 12
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 13
+      }
+    ]
+  },
+  {
+    "file": "41956_20260202_101418_assessment.md",
+    "question_id": 41956,
+    "question_type": "binary",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 13
+      }
+    ]
+  },
+  {
+    "file": "41957_20260202_101104_assessment.md",
+    "question_id": 41957,
+    "question_type": "numeric",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 12
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 13
+      }
+    ]
+  },
+  {
+    "file": "41959_20260202_112057_assessment.md",
+    "question_id": 41959,
+    "question_type": "multiple_choice",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 3
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 12
+      }
+    ]
+  },
+  {
+    "file": "41960_20260202_111607_assessment.md",
+    "question_id": 41960,
+    "question_type": "binary",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 14
+      }
+    ]
+  },
+  {
+    "file": "41961_20260202_111019_assessment.md",
+    "question_id": 41961,
+    "question_type": "numeric",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 12
+      }
+    ]
+  },
+  {
+    "file": "41962_20260202_115959_assessment.md",
+    "question_id": 41962,
+    "question_type": "numeric",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 13
+      }
+    ]
+  },
+  {
+    "file": "41963_20260202_115423_assessment.md",
+    "question_id": 41963,
+    "question_type": "binary",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 11
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 12
+      }
+    ]
+  },
+  {
+    "file": "41964_20260202_134554_assessment.md",
+    "question_id": 41964,
+    "question_type": "numeric",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 13
+      }
+    ]
+  },
+  {
+    "file": "41965_20260202_133740_assessment.md",
+    "question_id": 41965,
+    "question_type": "multiple_choice",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 13
+      }
+    ]
+  },
+  {
+    "file": "41966_20260202_133026_assessment.md",
+    "question_id": 41966,
+    "question_type": "binary",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 14
+      }
+    ]
+  },
+  {
+    "file": "41967_20260202_132659_assessment.md",
+    "question_id": 41967,
+    "question_type": "numeric",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 12
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 14
+      }
+    ]
+  },
+  {
+    "file": "41968_20260202_143958_assessment.md",
+    "question_id": 41968,
+    "question_type": "numeric",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 12
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 11
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 14
+      }
+    ]
+  },
+  {
+    "file": "41969_20260202_160223_assessment.md",
+    "question_id": 41969,
+    "question_type": "binary",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 12
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 14
+      }
+    ]
+  },
+  {
+    "file": "41970_20260202_160609_assessment.md",
+    "question_id": 41970,
+    "question_type": "numeric",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 13
+      }
+    ]
+  },
+  {
+    "file": "41971_20260202_160957_assessment.md",
+    "question_id": 41971,
+    "question_type": "multiple_choice",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 15
+      }
+    ]
+  },
+  {
+    "file": "41972_20260202_181110_assessment.md",
+    "question_id": 41972,
+    "question_type": "multiple_choice",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 11
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 16
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 16
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 16
+      }
+    ]
+  },
+  {
+    "file": "41980_20260202_232137_assessment.md",
+    "question_id": 41980,
+    "question_type": "binary",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 12
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 16
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 16
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 16
+      }
+    ]
+  },
+  {
+    "file": "41981_20260203_010505_assessment.md",
+    "question_id": 41981,
+    "question_type": "numeric",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 16
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 16
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 16
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 16
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 14
+      }
+    ]
+  },
+  {
+    "file": "41983_20260203_032928_assessment.md",
+    "question_id": 41983,
+    "question_type": "binary",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 16
+      }
+    ]
+  },
+  {
+    "file": "41984_20260203_033720_assessment.md",
+    "question_id": 41984,
+    "question_type": "binary",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 11
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 12
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 12
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 10
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 12
+      }
+    ]
+  },
+  {
+    "file": "41985_20260203_034242_assessment.md",
+    "question_id": 41985,
+    "question_type": "binary",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 14
+      }
+    ]
+  },
+  {
+    "file": "41986_20260203_083204_assessment.md",
+    "question_id": 41986,
+    "question_type": "binary",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 12
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 16
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 15
+      }
+    ]
+  },
+  {
+    "file": "41987_20260203_083616_assessment.md",
+    "question_id": 41987,
+    "question_type": "binary",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 12
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 16
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 16
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 15
+      }
+    ]
+  },
+  {
+    "file": "41988_20260203_110508_assessment.md",
+    "question_id": 41988,
+    "question_type": "binary",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 12
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 12
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 12
+      }
+    ]
+  },
+  {
+    "file": "41989_20260203_134100_assessment.md",
+    "question_id": 41989,
+    "question_type": "multiple_choice",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 11
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 11
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 13
+      }
+    ]
+  },
+  {
+    "file": "41990_20260203_143624_assessment.md",
+    "question_id": 41990,
+    "question_type": "multiple_choice",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 16
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 16
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 14
+      }
+    ]
+  },
+  {
+    "file": "41991_20260203_163839_assessment.md",
+    "question_id": 41991,
+    "question_type": "binary",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 11
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 11
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 12
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 6
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 8
+      }
+    ]
+  },
+  {
+    "file": "41992_20260203_222055_assessment.md",
+    "question_id": 41992,
+    "question_type": "multiple_choice",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 12
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 12
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 9
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 12
+      }
+    ]
+  },
+  {
+    "file": "41993_20260204_005420_assessment.md",
+    "question_id": 41993,
+    "question_type": "binary",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 12
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 11
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 16
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 13
+      }
+    ]
+  },
+  {
+    "file": "41994_20260204_005932_assessment.md",
+    "question_id": 41994,
+    "question_type": "binary",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 11
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 11
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 0
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 11
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 14
+      }
+    ]
+  },
+  {
+    "file": "41995_20260204_073646_assessment.md",
+    "question_id": 41995,
+    "question_type": "multiple_choice",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 11
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 12
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 11
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 11
+      }
+    ]
+  },
+  {
+    "file": "41996_20260204_115149_assessment.md",
+    "question_id": 41996,
+    "question_type": "binary",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 12
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 13
+      }
+    ]
+  },
+  {
+    "file": "41997_20260204_173612_assessment.md",
+    "question_id": 41997,
+    "question_type": "binary",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 12
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 12
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 10
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 15
+      }
+    ]
+  },
+  {
+    "file": "41998_20260204_183145_assessment.md",
+    "question_id": 41998,
+    "question_type": "binary",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 12
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 16
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 16
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 16
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 14
+      }
+    ]
+  },
+  {
+    "file": "41999_20260204_231528_assessment.md",
+    "question_id": 41999,
+    "question_type": "binary",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 12
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 12
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 10
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 12
+      }
+    ]
+  },
+  {
+    "file": "42000_20260204_234754_assessment.md",
+    "question_id": 42000,
+    "question_type": "multiple_choice",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 10
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 10
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 11
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 11
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 11
+      }
+    ]
+  },
+  {
+    "file": "42001_20260204_235141_assessment.md",
+    "question_id": 42001,
+    "question_type": "multiple_choice",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 15
+      }
+    ]
+  },
+  {
+    "file": "42002_20260205_005744_assessment.md",
+    "question_id": 42002,
+    "question_type": "binary",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 11
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 12
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 10
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 10
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 11
+      }
+    ]
+  },
+  {
+    "file": "42003_20260205_010759_assessment.md",
+    "question_id": 42003,
+    "question_type": "numeric",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 12
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 16
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 11
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 11
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 12
+      }
+    ]
+  },
+  {
+    "file": "42005_20260205_100639_assessment.md",
+    "question_id": 42005,
+    "question_type": "multiple_choice",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 16
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 13
+      }
+    ]
+  },
+  {
+    "file": "42006_20260205_160701_assessment.md",
+    "question_id": 42006,
+    "question_type": "multiple_choice",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 11
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 12
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 11
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 12
+      }
+    ]
+  },
+  {
+    "file": "42007_20260205_171342_assessment.md",
+    "question_id": 42007,
+    "question_type": "numeric",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 16
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 13
+      }
+    ]
+  },
+  {
+    "file": "42008_20260205_180745_assessment.md",
+    "question_id": 42008,
+    "question_type": "binary",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 12
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 12
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 11
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 13
+      }
+    ]
+  },
+  {
+    "file": "42009_20260205_191655_assessment.md",
+    "question_id": 42009,
+    "question_type": "multiple_choice",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 11
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 8
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 12
+      }
+    ]
+  },
+  {
+    "file": "42010_20260206_090648_assessment.md",
+    "question_id": 42010,
+    "question_type": "binary",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 12
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 12
+      }
+    ]
+  },
+  {
+    "file": "42011_20260206_122803_assessment.md",
+    "question_id": 42011,
+    "question_type": "binary",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 12
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 11
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 12
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 11
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 12
+      }
+    ]
+  },
+  {
+    "file": "42028_20260206_160305_assessment.md",
+    "question_id": 42028,
+    "question_type": "multiple_choice",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 12
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 10
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 10
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 12
+      }
+    ]
+  },
+  {
+    "file": "42035_20260214_020230_assessment.md",
+    "question_id": 42035,
+    "question_type": "numeric",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 12
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 11
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 12
+      }
+    ]
+  },
+  {
+    "file": "42037_20260207_151341_assessment.md",
+    "question_id": 42037,
+    "question_type": "numeric",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 11
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 11
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 13
+      }
+    ]
+  },
+  {
+    "file": "42038_20260208_211508_assessment.md",
+    "question_id": 42038,
+    "question_type": "numeric",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 8
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 16
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 11
+      }
+    ]
+  },
+  {
+    "file": "42039_20260209_064219_assessment.md",
+    "question_id": 42039,
+    "question_type": "numeric",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 0
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 12
+      }
+    ]
+  },
+  {
+    "file": "42040_20260209_140558_assessment.md",
+    "question_id": 42040,
+    "question_type": "numeric",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 8
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 9
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 10
+      }
+    ]
+  },
+  {
+    "file": "42042_20260210_055448_assessment.md",
+    "question_id": 42042,
+    "question_type": "numeric",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 16
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 11
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 11
+      }
+    ]
+  },
+  {
+    "file": "42043_20260210_065129_assessment.md",
+    "question_id": 42043,
+    "question_type": "numeric",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 9
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 16
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 11
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 10
+      }
+    ]
+  },
+  {
+    "file": "42044_20260210_074952_assessment.md",
+    "question_id": 42044,
+    "question_type": "binary",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 16
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 14
+      }
+    ]
+  },
+  {
+    "file": "42045_20260210_094624_assessment.md",
+    "question_id": 42045,
+    "question_type": "binary",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 12
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 16
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 11
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 13
+      }
+    ]
+  },
+  {
+    "file": "42046_20260210_141406_assessment.md",
+    "question_id": 42046,
+    "question_type": "binary",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 16
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 16
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 11
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 14
+      }
+    ]
+  },
+  {
+    "file": "42049_20260212_093541_assessment.md",
+    "question_id": 42049,
+    "question_type": "numeric",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 12
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 10
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 13
+      }
+    ]
+  },
+  {
+    "file": "42077_20260209_034221_assessment.md",
+    "question_id": 42077,
+    "question_type": "numeric",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 11
+      }
+    ]
+  },
+  {
+    "file": "42078_20260209_232639_assessment.md",
+    "question_id": 42078,
+    "question_type": "binary",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 16
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 10
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 16
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 12
+      }
+    ]
+  },
+  {
+    "file": "42097_20260215_135759_assessment.md",
+    "question_id": 42097,
+    "question_type": "numeric",
+    "scores": [
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 10
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 8
+      }
+    ]
+  },
+  {
+    "file": "42098_20260215_140108_assessment.md",
+    "question_id": 42098,
+    "question_type": "numeric",
+    "scores": [
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 11
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 12
+      }
+    ]
+  },
+  {
+    "file": "42099_20260215_154528_assessment.md",
+    "question_id": 42099,
+    "question_type": "numeric",
+    "scores": [
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 8
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 9
+      }
+    ]
+  },
+  {
+    "file": "42100_20260216_153028_assessment.md",
+    "question_id": 42100,
+    "question_type": "numeric",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 12
+      }
+    ]
+  },
+  {
+    "file": "42109_20260216_135753_assessment.md",
+    "question_id": 42109,
+    "question_type": "numeric",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 12
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 12
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 12
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 12
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 10
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 11
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 11
+      }
+    ]
+  },
+  {
+    "file": "42113_20260217_124553_assessment.md",
+    "question_id": 42113,
+    "question_type": "binary",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 15
+      }
+    ]
+  },
+  {
+    "file": "42114_20260218_124518_assessment.md",
+    "question_id": 42114,
+    "question_type": "numeric",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 11
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 14
+      }
+    ]
+  },
+  {
+    "file": "42115_20260219_005951_assessment.md",
+    "question_id": 42115,
+    "question_type": "binary",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 12
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 11
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 12
+      }
+    ]
+  },
+  {
+    "file": "42171_20260217_125025_assessment.md",
+    "question_id": 42171,
+    "question_type": "numeric",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 12
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 12
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 11
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 10
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 12
+      }
+    ]
+  },
+  {
+    "file": "42173_20260217_140137_assessment.md",
+    "question_id": 42173,
+    "question_type": "binary",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 9
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 14
+      }
+    ]
+  },
+  {
+    "file": "42182_20260217_213705_assessment.md",
+    "question_id": 42182,
+    "question_type": "binary",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 12
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 16
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.5",
+        "score": 7
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.5",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 13
+      }
+    ]
+  },
+  {
+    "file": "42230_20260220_155838_assessment.md",
+    "question_id": 42230,
+    "question_type": "binary",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.6",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.6",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.6",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.6",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 16
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 7
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 12
+      }
+    ]
+  },
+  {
+    "file": "42231_20260220_175947_assessment.md",
+    "question_id": 42231,
+    "question_type": "binary",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.6",
+        "score": 12
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.6",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 16
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.6",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.6",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 12
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 11
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 9
+      }
+    ]
+  },
+  {
+    "file": "42235_20260221_031501_assessment.md",
+    "question_id": 42235,
+    "question_type": "binary",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.6",
+        "score": 6
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.6",
+        "score": 7
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 7
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 5
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 5
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.6",
+        "score": 6
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.6",
+        "score": 6
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 6
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 6
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 5
+      }
+    ]
+  }
+]
