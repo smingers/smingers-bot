@@ -1,0 +1,3 @@
+**Evaluating probabilities about petitions**
+
+Petitions must be filed by mid-February or early March, but for an overturn by May 1, a hearing and decision within two months would be required, which seems unlikely. Currently, there are no reports of irregularities, just one pre-poll complaint. Looking at historic annulment rates since 2010, it seems no by-elections were annulled, giving a 0% rate, so maybe 0.15% for general elections. Considering the timeframe, I think a conservative estimate of around 0.3% is reasonable. Let’s finalize our explanation.

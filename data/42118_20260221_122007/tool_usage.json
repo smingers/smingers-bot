@@ -1,0 +1,305 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 1,
+      "queries": [
+        {
+          "query": "https://en.wikipedia.org/wiki/2026_Lamag_by-election",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Malaysia by-election result annulled",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Lamag by-election legal challenge",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 2
+        },
+        {
+          "query": "Provide a list of Malaysian state or parliamentary elections since 2010 that were annulled by courts or the Election Commission, indicating date of poll, date of annulment, reason, and whether the seat was in Sabah. Include sources.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 3,
+            "queries_executed": [
+              "Malaysia election result annulled court petition 2010 2024",
+              "Malaysia election petition overturned by-election re-run",
+              "Sabah election annulled court order re-election",
+              "Malaysia Election Commission annul result electoral fraud",
+              "Malaysian election petition successful cases list",
+              "Kemaman election petition annulled 2023 details",
+              "Malaysia election petition annulled 2015 2016 2017 2018",
+              "Sabah by-election election petition annulled history",
+              "Lamag by-election 2026 election petition filed"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "Malaysia election result annulled court petition 2010 2024",
+                    "Google"
+                  ],
+                  [
+                    "Malaysia election petition overturned by-election re-run",
+                    "Google"
+                  ],
+                  [
+                    "Sabah election annulled court order re-election",
+                    "Google"
+                  ],
+                  [
+                    "Malaysia Election Commission annul result electoral fraud",
+                    "Google News"
+                  ],
+                  [
+                    "Malaysian election petition successful cases list",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 95084,
+                "analysis_chars": 0
+              },
+              {
+                "step_number": 2,
+                "queries_executed": [
+                  [
+                    "Kemaman election petition annulled 2023 details",
+                    "Google"
+                  ],
+                  [
+                    "Malaysia election petition annulled 2015 2016 2017 2018",
+                    "Google"
+                  ],
+                  [
+                    "Sabah by-election election petition annulled history",
+                    "Google"
+                  ],
+                  [
+                    "Lamag by-election 2026 election petition filed",
+                    "Google News"
+                  ]
+                ],
+                "search_results_chars": 38558,
+                "analysis_chars": 6901
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "Agent"
+      ],
+      "llm_cost": 0.4103,
+      "llm_cost_summarization": 0.1257,
+      "llm_cost_agentic": 0.2846,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Lamag by-election court challenge",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Lamag by-election annulled Sabah",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "Has any Malaysian election court or the Election Commission moved to annul or order a rerun of the 24 January 2026 Lamag by-election in Sabah? Provide details on any filed petitions or scheduled hearings up to 21 February 2026.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 17
+        },
+        {
+          "query": "Will the official result of the Lamag by-election (Sabah), scheduled for January 24, 2026, be overturned before May 1, 2026?",
+          "tool": "AskNews",
+          "deep_research_query": "Has any Malaysian election court or the Election Commission moved to annul or order a rerun of the 24 January 2026 Lamag by-election in Sabah? Provide details on any filed petitions or scheduled hearings up to 21 February 2026."
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "AskNews"
+      ],
+      "llm_cost": 0.1333,
+      "llm_cost_summarization": 0.1257,
+      "llm_cost_agentic": 0.0076,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6454,
+        "token_output": 1161,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.049685,
+        "duration_seconds": 51.042351961135864,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11819,
+        "token_output": 1826,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.08648499999999999,
+        "duration_seconds": 46.6450400352478,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6454,
+        "token_output": 1138,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.049339999999999995,
+        "duration_seconds": 51.042415618896484,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12328,
+        "token_output": 1722,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.08746999999999999,
+        "duration_seconds": 46.645018339157104,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5550,
+        "token_output": 2581,
+        "token_reasoning": 868,
+        "used_reasoning": true,
+        "cost": 0.0458465,
+        "duration_seconds": 51.04246163368225,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 10171,
+        "token_output": 1804,
+        "token_reasoning": 437,
+        "used_reasoning": true,
+        "cost": 0.04305525,
+        "duration_seconds": 46.644994020462036,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5550,
+        "token_output": 1885,
+        "token_reasoning": 384,
+        "used_reasoning": true,
+        "cost": 0.026180000000000002,
+        "duration_seconds": 51.04249358177185,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 10864,
+        "token_output": 1146,
+        "token_reasoning": 384,
+        "used_reasoning": true,
+        "cost": 0.030896,
+        "duration_seconds": 46.64497089385986,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5550,
+        "token_output": 1671,
+        "token_reasoning": 448,
+        "used_reasoning": true,
+        "cost": 0.024468,
+        "duration_seconds": 51.04252290725708,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 10310,
+        "token_output": 1317,
+        "token_reasoning": 384,
+        "used_reasoning": true,
+        "cost": 0.031156,
+        "duration_seconds": 46.64494824409485,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0117,
+    "step2_search": 0.4103,
+    "step3_outside_view": 0.1955,
+    "step5_inside_view": 0.2791,
+    "step6_aggregation": 0.2791,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.8965
+}

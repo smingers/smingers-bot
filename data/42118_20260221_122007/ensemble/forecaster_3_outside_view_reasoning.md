@@ -1,0 +1,5 @@
+**Analyzing probabilities and timelines**
+
+It sounds like a rerun in the election changed the winner, rather than just ordering a result. When I think about annulments, it doesn't seem likely a rerun would happen before May 1. I'm estimating a very low probability of 0.4%. I’ll break it down: maybe a 5% chance a petition gets filed for by-elections, with another 5% for it being successful, and another 5% to be decided by May 1. Multiplying those gives me a low figure, around 0.0125%, but maybe slightly higher due to administrative issues. I'm calibrating the estimate around 0.7%.**Estimating annulment rates**
+
+I'm analyzing annulment rates in Malaysia's parliamentary and state elections—there's been about one known annulment out of hundreds since 2010, which gives a base rate of around 0.1% to 0.2%. Within three months, it might drop even lower to 0%. However, there could be more annulments that aren't documented, so it's tricky. With thousands of elections since 2010, including general and state elections, the annulment rate is likely under 0.05%. For by-elections specifically, it’s even rarer—so I’d set it at about 0.3%, maybe precise at 0.32%.
