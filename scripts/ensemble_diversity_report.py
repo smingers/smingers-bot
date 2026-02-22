@@ -100,6 +100,7 @@ class ForecastAnalysis:
     supervisor_divergence_threshold: float | None = None
     supervisor_analysis_text: str | None = None  # Stage 1 markdown
     supervisor_reasoning_text: str | None = None  # Stage 2 markdown
+    supervisor_research_text: str | None = None  # Supervisor's research context
 
     # Research context (formatted markdown from search artifacts)
     historical_research_text: str | None = None  # OV research: question URLs + historical search
@@ -663,6 +664,9 @@ def analyze_forecast(forecast_dir: Path) -> ForecastAnalysis | None:
 
         analysis.supervisor_analysis_text = read_text(edir / "supervisor_analysis.md")
         analysis.supervisor_reasoning_text = read_text(edir / "supervisor_reasoning.md")
+        raw_research = read_text(edir / "supervisor_research.md")
+        if raw_research:
+            analysis.supervisor_research_text = _format_research_context(raw_research)
 
     # Load research context (new format only: research/ directory)
     research_dir = forecast_dir / "research"
@@ -1603,10 +1607,25 @@ def _build_html(
 
                 sup_cls = "val iv supervisor-val" + (" report-link" if sup_onclick else "")
 
+                # Build clickable label linking to supervisor research
+                sup_label_onclick = ""
+                if a.supervisor_research_text:
+                    sup_research_idx = len(report_entries)
+                    report_entries.append(
+                        {
+                            "title": f"Supervisor Research — Q{a.question_id}",
+                            "text": a.supervisor_research_text,
+                        }
+                    )
+                    sup_label_onclick = f' onclick="openReport({sup_research_idx})"'
+                sup_label_cls = "summary-label supervisor-label" + (
+                    " report-link" if sup_label_onclick else ""
+                )
+
                 if is_numeric_type:
                     supervisor_row = f"""
                         <tr class="supervisor-row">
-                            <td colspan="2" class="summary-label supervisor-label">Supervisor {conf_badge}{div_trigger}</td>
+                            <td colspan="2" class="{sup_label_cls}"{sup_label_onclick}>Supervisor {conf_badge}{div_trigger}</td>
                             <td class="val ov p20"></td>
                             <td class="val ov"></td>
                             <td class="val ov p80"></td>
@@ -1618,7 +1637,7 @@ def _build_html(
                 else:
                     supervisor_row = f"""
                         <tr class="supervisor-row">
-                            <td colspan="2" class="summary-label supervisor-label">Supervisor {conf_badge}{div_trigger}</td>
+                            <td colspan="2" class="{sup_label_cls}"{sup_label_onclick}>Supervisor {conf_badge}{div_trigger}</td>
                             <td class="val ov"></td>
                             <td class="{sup_cls}"{sup_onclick}>{sup_display}</td>
                             <td></td>
