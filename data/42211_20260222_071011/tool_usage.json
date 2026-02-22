@@ -1,0 +1,285 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 1,
+      "queries": [
+        {
+          "query": "https://finance.yahoo.com/quote/HAL",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "HAL historical daily prices csv",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Halliburton outlook oil services 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Retrieve HAL daily closes 2010-2026 and compute share of 4-day positive moves; summarise recent price/volume trend and any known catalysts through 28 Feb 2026.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "Halliburton HAL stock price forecast February 2026",
+              "Halliburton HAL earnings analyst outlook 2026",
+              "oilfield services sector outlook crude oil demand 2026",
+              "HAL",
+              "crude oil price WTI trend 2026"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "Halliburton HAL stock price forecast February 2026",
+                    "Google"
+                  ],
+                  [
+                    "Halliburton HAL earnings analyst outlook 2026",
+                    "Google News"
+                  ],
+                  [
+                    "oilfield services sector outlook crude oil demand 2026",
+                    "Google News"
+                  ],
+                  [
+                    "HAL",
+                    "yFinance"
+                  ],
+                  [
+                    "crude oil price WTI trend 2026",
+                    "FRED"
+                  ]
+                ],
+                "search_results_chars": 44305,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "DCOILWTICO",
+          "tool": "FRED",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google News",
+        "Google",
+        "FRED"
+      ],
+      "llm_cost": 0.3551,
+      "llm_cost_summarization": 0.2459,
+      "llm_cost_agentic": 0.1092,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Halliburton outlook 2026 oil demand",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Halliburton February 2026 analyst rating",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Summarize key news from 16\u201322 Feb 2026 on Halliburton, oilfield-services sector, and crude-oil prices likely to influence HAL shares next week.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "Will HAL's market close price on 2026-02-28 be higher than its market close price on 2026-02-22?",
+          "tool": "AskNews",
+          "deep_research_query": "Summarize key news from 16\u201322 Feb 2026 on Halliburton, oilfield-services sector, and crude-oil prices likely to influence HAL shares next week."
+        }
+      ],
+      "tools_used": [
+        "AskNews",
+        "Google News",
+        "Google"
+      ],
+      "llm_cost": 0.2572,
+      "llm_cost_summarization": 0.2459,
+      "llm_cost_agentic": 0.0113,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8104,
+        "token_output": 1591,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.064385,
+        "duration_seconds": 40.29081869125366,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16480,
+        "token_output": 2530,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.12035000000000001,
+        "duration_seconds": 60.74484324455261,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8104,
+        "token_output": 1479,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.062705,
+        "duration_seconds": 40.290892601013184,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16145,
+        "token_output": 2365,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.1162,
+        "duration_seconds": 60.74482035636902,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7090,
+        "token_output": 1987,
+        "token_reasoning": 575,
+        "used_reasoning": true,
+        "cost": 0.040225500000000004,
+        "duration_seconds": 40.290934801101685,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14299,
+        "token_output": 1644,
+        "token_reasoning": 187,
+        "used_reasoning": true,
+        "cost": 0.04803925,
+        "duration_seconds": 60.74479365348816,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7090,
+        "token_output": 1888,
+        "token_reasoning": 768,
+        "used_reasoning": true,
+        "cost": 0.029283999999999998,
+        "duration_seconds": 40.29097080230713,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14412,
+        "token_output": 1466,
+        "token_reasoning": 512,
+        "used_reasoning": true,
+        "cost": 0.040552,
+        "duration_seconds": 60.74476981163025,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7090,
+        "token_output": 1448,
+        "token_reasoning": 320,
+        "used_reasoning": true,
+        "cost": 0.025764000000000002,
+        "duration_seconds": 40.291001081466675,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14023,
+        "token_output": 1468,
+        "token_reasoning": 256,
+        "used_reasoning": true,
+        "cost": 0.03979,
+        "duration_seconds": 60.74474620819092,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0134,
+    "step2_search": 0.3551,
+    "step3_outside_view": 0.2224,
+    "step5_inside_view": 0.3649,
+    "step6_aggregation": 0.3649,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.9558
+}

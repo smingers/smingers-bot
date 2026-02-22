@@ -1,0 +1,21 @@
+{
+  "ticker": "HAL",
+  "start_date": "2026-02-22",
+  "end_date": "2026-02-28",
+  "trading_days": 5,
+  "current_price": 35.11,
+  "reference_price": 35.11,
+  "return_so_far": 0.0,
+  "sample_size": 2510,
+  "positive_return_rate": 0.5183,
+  "mean_return": 0.29,
+  "median_return": 0.23,
+  "std_return": 6.68,
+  "percentile_5": -9.06,
+  "percentile_25": -3.19,
+  "percentile_75": 3.74,
+  "percentile_95": 9.97,
+  "recent_return_1m": 5.25,
+  "recent_return_3m": 31.89,
+  "volatility_30d": 33.6
+}
