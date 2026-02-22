@@ -101,6 +101,10 @@ class ForecastAnalysis:
     supervisor_analysis_text: str | None = None  # Stage 1 markdown
     supervisor_reasoning_text: str | None = None  # Stage 2 markdown
 
+    # Research context (formatted markdown from search artifacts)
+    historical_research_text: str | None = None  # OV research: question URLs + historical search
+    current_research_text: str | None = None  # IV research: current search
+
     # Diversity metrics (computed)
     outside_view_range: float | None = None
     outside_view_std: float | None = None
@@ -114,6 +118,40 @@ def _strip_markdown(text: str) -> str:
     """Strip markdown bold/italic markers from text."""
     # Remove **bold** and *italic* markers
     return re.sub(r"\*{1,3}", "", text)
+
+
+def _format_research_context(raw: str) -> str:
+    """Convert XML-tagged research context into human-readable markdown."""
+    if not raw or not raw.strip():
+        return ""
+
+    sections: list[str] = []
+
+    # Extract <QuestionSource url="...">...</QuestionSource>
+    for m in re.finditer(r'<QuestionSource\s+url="([^"]*)">(.*?)</QuestionSource>', raw, re.DOTALL):
+        url, body = m.group(1), m.group(2).strip()
+        sections.append(f"---\n### Question Source\n**URL:** [{url}]({url})\n\n{body}")
+
+    # Extract <Summary source="...">...</Summary>
+    for m in re.finditer(r'<Summary\s+source="([^"]*)">(.*?)</Summary>', raw, re.DOTALL):
+        url, body = m.group(1), m.group(2).strip()
+        sections.append(f"---\n### Search Result\n**Source:** [{url}]({url})\n\n{body}")
+
+    # Extract <Asknews_articles>...</Asknews_articles>
+    for m in re.finditer(r"<Asknews_articles>(.*?)</Asknews_articles>", raw, re.DOTALL):
+        body = m.group(1).strip()
+        sections.append(f"---\n### AskNews Articles\n\n{body}")
+
+    # Extract <Agent_report>...</Agent_report>
+    for m in re.finditer(r"<Agent_report>(.*?)</Agent_report>", raw, re.DOTALL):
+        body = m.group(1).strip()
+        sections.append(f"---\n### Agentic Research Report\n\n{body}")
+
+    if not sections:
+        # No recognized tags — return raw text as-is
+        return raw.strip()
+
+    return "\n\n".join(sections)
 
 
 def _normalize_probability(val: float, has_percent: bool) -> float:
@@ -625,6 +663,26 @@ def analyze_forecast(forecast_dir: Path) -> ForecastAnalysis | None:
 
         analysis.supervisor_analysis_text = read_text(edir / "supervisor_analysis.md")
         analysis.supervisor_reasoning_text = read_text(edir / "supervisor_reasoning.md")
+
+    # Load research context (new format only: research/ directory)
+    research_dir = forecast_dir / "research"
+    if research_dir.is_dir():
+        # Historical research (outside view context)
+        hist_data = load_json(research_dir / "search_historical.json")
+        hist_context = hist_data.get("context", "") if hist_data else ""
+
+        # Question URL scraping results (also fed into outside view)
+        url_data = load_json(research_dir / "search_question_urls.json")
+        url_context = url_data.get("context", "") if url_data else ""
+
+        combined = (url_context + "\n" + hist_context).strip() if url_context else hist_context
+        if combined:
+            analysis.historical_research_text = _format_research_context(combined)
+
+        # Current research (inside view context)
+        curr_data = load_json(research_dir / "search_current.json")
+        if curr_data and curr_data.get("context"):
+            analysis.current_research_text = _format_research_context(curr_data["context"])
 
     return analysis
 
@@ -1706,15 +1764,41 @@ def _build_html(
                         {peer_score_row}
                 """
 
+            # Build clickable research headers (OV → historical, IV → current)
+            ov_header_onclick = ""
+            if a.historical_research_text:
+                ov_research_idx = len(report_entries)
+                report_entries.append(
+                    {
+                        "title": f"Q{a.question_id} — Historical Research (Outside View)",
+                        "text": a.historical_research_text,
+                    }
+                )
+                ov_header_onclick = f' onclick="openReport({ov_research_idx})"'
+
+            iv_header_onclick = ""
+            if a.current_research_text:
+                iv_research_idx = len(report_entries)
+                report_entries.append(
+                    {
+                        "title": f"Q{a.question_id} — Current Research (Inside View)",
+                        "text": a.current_research_text,
+                    }
+                )
+                iv_header_onclick = f' onclick="openReport({iv_research_idx})"'
+
+            ov_header_cls = ' class="ov report-link"' if ov_header_onclick else ' class="ov"'
+            iv_header_cls = ' class="iv report-link"' if iv_header_onclick else ' class="iv"'
+
             # Build table header based on question type
             if is_numeric_type:
-                thead_html = """
+                thead_html = f"""
                     <thead>
                         <tr>
                             <th rowspan="2">Agent</th>
                             <th rowspan="2">Model</th>
-                            <th colspan="3" class="ov" style="text-align:center; border-bottom:1px solid var(--border);">Outside View</th>
-                            <th colspan="3" class="iv" style="text-align:center; border-bottom:1px solid var(--border);">Inside View</th>
+                            <th colspan="3"{ov_header_cls} style="text-align:center; border-bottom:1px solid var(--border);"{ov_header_onclick}>Outside View</th>
+                            <th colspan="3"{iv_header_cls} style="text-align:center; border-bottom:1px solid var(--border);"{iv_header_onclick}>Inside View</th>
                             <th rowspan="2" class="shift">Shift</th>
                         </tr>
                         <tr>
@@ -1727,13 +1811,13 @@ def _build_html(
                         </tr>
                     </thead>"""
             else:
-                thead_html = """
+                thead_html = f"""
                     <thead>
                         <tr>
                             <th>Agent</th>
                             <th>Model</th>
-                            <th class="ov">Outside View</th>
-                            <th class="iv">Inside View</th>
+                            <th{ov_header_cls}{ov_header_onclick}>Outside View</th>
+                            <th{iv_header_cls}{iv_header_onclick}>Inside View</th>
                             <th class="shift">Shift</th>
                         </tr>
                     </thead>"""
@@ -2369,6 +2453,9 @@ def _build_html(
         color: var(--text-dim);
     }}
     .report-modal-body strong {{ color: #fff; }}
+    .report-modal-body a {{ color: #5bb8f5; text-decoration: underline; }}
+    .report-modal-body a:visited {{ color: #a78bfa; }}
+    .report-modal-body a:hover {{ color: #93d5ff; }}
     .report-modal-body hr {{
         border: none;
         border-top: 1px solid var(--border);
