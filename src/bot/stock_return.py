@@ -144,7 +144,7 @@ def _compute_conditional_rates(
     recent_return_5d: float | None,
     recent_return_3m: float | None,
     volatility_30d: float | None,
-) -> list[dict]:
+) -> list[dict] | None:
     """Compute conditional base rates from the same historical windows.
 
     Each conditional filters the N-day return windows by a condition computed
@@ -160,7 +160,8 @@ def _compute_conditional_rates(
         volatility_30d: Current 30-day realized vol (annualized %) or None.
 
     Returns:
-        List of ConditionalRate dicts (serialized via asdict).
+        List of ConditionalRate dicts (serialized via asdict), or None if
+        no conditionals meet the minimum sample size threshold.
     """
     n_windows = len(returns)
     # Window starting indices: window i starts at index i, ends at i + trading_days
@@ -303,14 +304,25 @@ def _compute_conditional_rates(
 
         # Compute 30-day realized vol for each valid window start
         window_vols = np.full(n_windows, np.nan)
-        vi = start_indices[valid]
-        # Vectorized: build daily returns for 30-day windows ending at each vi
-        # daily_ret[j] = (closes[j+1] - closes[j]) / closes[j] for j in [vi-30, vi-1]
-        # Then std * sqrt(252) * 100
-        for idx in vi:
-            window_closes = closes[idx - 30 : idx + 1]
-            dr = np.diff(window_closes) / window_closes[:-1]
-            window_vols[idx] = float(np.std(dr) * np.sqrt(252) * 100)
+        # Vectorized via stride tricks: build all 31-element windows at once
+        # daily_returns[j] covers closes[j:j+31] -> 30 daily returns
+        # For window starting at index i, we need vol ending at i,
+        # so the 31-element window starts at i-30: closes[i-30:i+1]
+        vol_window_size = 31
+        if len(closes) >= vol_window_size:
+            shape = (len(closes) - vol_window_size + 1, vol_window_size)
+            strides = (closes.strides[0], closes.strides[0])
+            vol_windowed = np.lib.stride_tricks.as_strided(closes, shape=shape, strides=strides)
+            # Daily returns for each window: (p[1:] - p[:-1]) / p[:-1]
+            daily_rets = (vol_windowed[:, 1:] - vol_windowed[:, :-1]) / vol_windowed[:, :-1]
+            # Std of each row * sqrt(252) * 100
+            rolling_vol = np.std(daily_rets, axis=1) * np.sqrt(252) * 100
+            # rolling_vol[j] is the vol for closes[j:j+31], ending at index j+30
+            # For window starting at index i, we want j+30 = i, so j = i-30
+            vi = start_indices[valid]
+            vol_j = vi - 30
+            in_range = (vol_j >= 0) & (vol_j < len(rolling_vol))
+            window_vols[vi[in_range]] = rolling_vol[vol_j[in_range]]
 
         valid_vols = window_vols[valid]
         median_vol = float(np.nanmedian(valid_vols))
@@ -630,7 +642,8 @@ def format_stock_return_context(data: StockReturnData) -> str:
     if data.conditional_rates:
         lines.append("")
         lines.append(
-            "CONDITIONAL BASE RATES (same historical data, filtered by current conditions):"
+            "CONDITIONAL BASE RATES "
+            "(same historical data, overlapping windows, filtered by current conditions):"
         )
         lines.append(
             f"  {'Unconditional:':<40s} "
