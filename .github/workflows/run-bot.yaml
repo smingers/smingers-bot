@@ -40,6 +40,7 @@ jobs:
           python-version: "3.11"
 
       - name: Install poetry
+        id: install_poetry
         uses: snok/install-poetry@v1
         with:
           virtualenvs-create: true
@@ -48,7 +49,7 @@ jobs:
         continue-on-error: true
 
       - name: Retry poetry install on failure
-        if: failure()
+        if: steps.install_poetry.outcome == 'failure'
         run: |
           sleep 30
           pip install poetry
@@ -59,7 +60,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: .venv
-          key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
+          key: venv-${{ runner.os }}-${{ hashFiles('**/pyproject.toml') }}
 
       - name: Install dependencies
         id: install_deps
@@ -77,11 +78,19 @@ jobs:
       # ============================================================
       # BROWSER SCRAPING SUPPORT (Xvfb + Playwright)
       # Required for scraping community predictions on meta-questions
+      # Non-critical: forecasting works without these, just skips
+      # community prediction scraping for meta-questions
       # ============================================================
       - name: Install Xvfb
-        run: sudo apt-get update && sudo apt-get install -y xvfb
+        continue-on-error: true
+        run: |
+          # Xvfb is pre-installed on GitHub-hosted runners, but ensure it's available
+          # Use || true on apt-get update since third-party repos can cause failures
+          sudo apt-get update || true
+          sudo apt-get install -y xvfb
 
       - name: Install Playwright Chromium
+        continue-on-error: true
         run: poetry run playwright install --with-deps chromium
 
       # ============================================================
@@ -175,6 +184,7 @@ jobs:
       # Commits any new forecast artifacts back to the repo
       # ============================================================
       - name: Commit forecast data
+        if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -196,7 +206,7 @@ jobs:
       # but still get a red X on the workflow
       # ============================================================
       - name: Check for forecast failures
-        if: ${{ steps.forecast_spring_aib.outcome == 'failure' || steps.forecast_minibench.outcome == 'failure' }}
+        if: always() && (steps.forecast_spring_aib.outcome == 'failure' || steps.forecast_minibench.outcome == 'failure')
         run: |
           echo "::error::One or more forecast steps failed!"
           echo ""
