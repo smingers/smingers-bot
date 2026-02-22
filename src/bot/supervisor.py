@@ -60,6 +60,7 @@ class SupervisorInput:
     is_date_question: bool = False  # Whether this is a date question
     bounds_info: str | None = None  # Numeric bounds
     num_options: int | None = None  # Number of MC options
+    stock_return_context: str | None = None  # Programmatic stock return distribution
 
 
 @dataclass
@@ -320,10 +321,6 @@ class SupervisorAgent:
             prediction = fp.get("prediction")
             reasoning = fp.get("reasoning", "")
 
-            # Truncate reasoning to last ~2000 chars (the most relevant part)
-            if len(reasoning) > 2000:
-                reasoning = "...\n" + reasoning[-2000:]
-
             pred_display = self._format_single_prediction(
                 prediction, supervisor_input.question_type
             )
@@ -331,7 +328,7 @@ class SupervisorAgent:
             parts.append(
                 f"--- {agent_id} ({model}) ---\n"
                 f"Prediction: {pred_display}\n\n"
-                f"Reasoning (excerpt):\n{reasoning}\n"
+                f"Reasoning:\n{reasoning}\n"
             )
 
         return "\n".join(parts)
@@ -374,17 +371,22 @@ class SupervisorAgent:
 
     def _format_type_specific_section(self, supervisor_input: SupervisorInput) -> str:
         """Format type-specific context for prompts."""
+        parts = []
+
         if supervisor_input.question_type == "numeric":
-            parts = []
             if supervisor_input.units:
                 parts.append(f"Units: {supervisor_input.units}")
             if supervisor_input.bounds_info:
                 parts.append(f"Bounds: {supervisor_input.bounds_info}")
-            return "\n".join(parts) if parts else ""
         elif supervisor_input.question_type == "multiple_choice":
             if supervisor_input.options:
-                return f"Options: {', '.join(supervisor_input.options)}"
-        return ""
+                parts.append(f"Options: {', '.join(supervisor_input.options)}")
+
+        # Stock return context applies to any type (typically binary)
+        if supervisor_input.stock_return_context:
+            parts.append(supervisor_input.stock_return_context)
+
+        return "\n".join(parts)
 
     # -------------------------------------------------------------------------
     # Extraction helpers

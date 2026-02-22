@@ -52,8 +52,8 @@ class TestFormatting:
         assert "20.0%" in result
         assert "60.0%" in result
 
-    def test_format_forecaster_summaries_truncates_reasoning(self):
-        """Long reasoning should be truncated."""
+    def test_format_forecaster_summaries_preserves_full_reasoning(self):
+        """Full reasoning should be passed to supervisor without truncation."""
         agent = SupervisorAgent(config={})
         si = _make_input(
             forecaster_predictions=[
@@ -66,8 +66,8 @@ class TestFormatting:
             ]
         )
         result = agent._format_forecaster_summaries(si)
-        # Truncated to ~2000 chars + prefix
-        assert len(result) < 3000
+        # Full 5000-char reasoning should be preserved
+        assert "x" * 5000 in result
 
     def test_format_weighted_average_binary(self):
         """Binary weighted average should display as percentage."""

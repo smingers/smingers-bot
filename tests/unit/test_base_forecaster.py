@@ -977,11 +977,10 @@ class TestForecastPipeline:
             )
 
     @pytest.mark.asyncio
-    async def test_community_prediction_context_prepended_to_both_contexts(
+    async def test_community_prediction_context_not_injected_into_prompts(
         self, config, mock_llm_response, mock_search_pipeline, mock_artifact_store
     ):
-        """When community_prediction_context is passed, it appears in both
-        historical and current contexts fed to the forecasters."""
+        """community_prediction_context must NOT be injected into forecaster prompts."""
         cp_context = "<CommunityPrediction>Test CP data: P(Yes)=54%</CommunityPrediction>"
 
         captured_messages = []
@@ -1021,21 +1020,9 @@ class TestForecastPipeline:
                 community_prediction_context=cp_context,
             )
 
-            # First 2 calls are query generation, next 5 are outside view, last 5 are inside view
-            # The outside view prompts use historical_context, inside view uses current_context
-            # Both should contain the CP context
-            outside_view_prompts = captured_messages[2:7]
-            inside_view_prompts = captured_messages[7:12]
-
-            for i, prompt in enumerate(outside_view_prompts):
-                assert "<CommunityPrediction>" in prompt, (
-                    f"Outside view prompt for forecaster {i + 1} missing CP context"
-                )
-
-            for i, prompt in enumerate(inside_view_prompts):
-                assert "<CommunityPrediction>" in prompt, (
-                    f"Inside view prompt for forecaster {i + 1} missing CP context"
-                )
+            # CP context must not appear in any prompt
+            for prompt in captured_messages:
+                assert "<CommunityPrediction>" not in prompt
 
     @pytest.mark.asyncio
     async def test_community_prediction_context_absent_when_not_provided(
