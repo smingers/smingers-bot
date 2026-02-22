@@ -1536,9 +1536,9 @@ def _build_html(
                             <td></td>
                         </tr>"""
 
-            # Build peer score row (if score data available)
+            # Build peer score row (only for resolved questions with score data)
             peer_score_row = ""
-            if a.score_data and a.score_data.get("peer_score") is not None:
+            if a.resolved and a.score_data and a.score_data.get("peer_score") is not None:
                 peer_val = a.score_data["peer_score"]
                 peer_display = f"{peer_val:+.2f}"
                 peer_class = "score-positive" if peer_val > 0 else "score-negative"
