@@ -1,0 +1,3 @@
+**Evaluating airline filings and support**
+
+I'm compiling a report on recent filings, noting the quality as medium. Claims from PR Newswire and StockTitan need verification first. FRED jet fuel prices suggest lower costs for the industry, which is positive. The timeframe for analyzing bankruptcies is 68 days, with liquidity crises often causing sudden filings, sometimes preceded by warnings. Justifying my analysis, I’ll reference publicly traded US ultra-low-cost carriers. I aim for a precise percentage and settle on 2.4%.

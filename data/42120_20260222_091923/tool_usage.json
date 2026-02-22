@@ -1,0 +1,298 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": false,
+      "num_queries": 0,
+      "queries": [],
+      "tools_used": [],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "Frontier Group Holdings debt 2025",
+          "tool": "Google",
+          "success": true,
+          "num_results": 2
+        },
+        {
+          "query": "Frontier Airlines bankruptcy risk",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Retrieve latest SEC filings for Frontier Group Holdings (ULCC); summarize cash, total debt, liquidity facilities, covenant status, forthcoming maturities, and any going-concern wording compared with peers.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 3,
+            "queries_executed": [
+              "Frontier Group Holdings ULCC 10-Q 2025 cash debt liquidity SEC filing",
+              "Frontier Airlines ULCC financial results 2025 debt covenant liquidity",
+              "Frontier Group Holdings going concern debt maturity covenant SEC 10-K",
+              "ULCC",
+              "US airline industry financial conditions 2025",
+              "Frontier Airlines Q3 2025 financial results liquidity debt",
+              "ULCC 10-K 2025 annual report covenant going concern",
+              "Frontier Airlines revolving credit facility terms maturity 2025"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "Frontier Group Holdings ULCC 10-Q 2025 cash debt liquidity SEC filing",
+                    "Google"
+                  ],
+                  [
+                    "Frontier Airlines ULCC financial results 2025 debt covenant liquidity",
+                    "Google News"
+                  ],
+                  [
+                    "Frontier Group Holdings going concern debt maturity covenant SEC 10-K",
+                    "Google"
+                  ],
+                  [
+                    "ULCC",
+                    "yFinance"
+                  ],
+                  [
+                    "US airline industry financial conditions 2025",
+                    "FRED"
+                  ]
+                ],
+                "search_results_chars": 21654,
+                "analysis_chars": 0
+              },
+              {
+                "step_number": 2,
+                "queries_executed": [
+                  [
+                    "Frontier Airlines Q3 2025 financial results liquidity debt",
+                    "Google News"
+                  ],
+                  [
+                    "ULCC 10-K 2025 annual report covenant going concern",
+                    "Google"
+                  ],
+                  [
+                    "Frontier Airlines revolving credit facility terms maturity 2025",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 43181,
+                "analysis_chars": 8039
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "US Gulf Coast jet fuel price",
+          "tool": "FRED",
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "FRED",
+        "Google",
+        "Google News"
+      ],
+      "llm_cost": 0.3392,
+      "llm_cost_summarization": 0.1494,
+      "llm_cost_agentic": 0.1898,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Frontier Group Holdings liquidity 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Frontier Airlines bankruptcy risk 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Summarize the most recent (past six months) U.S. media and analyst reports on Frontier Group Holdings Inc. financial health, liquidity, debt maturities, and any indications it may pursue Chapter 11 before May 2026",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 17
+        },
+        {
+          "query": "Will Frontier Group Holdings, Inc. file for bankruptcy protection before May 1, 2026?",
+          "tool": "AskNews",
+          "deep_research_query": "Summarize the most recent (past six months) U.S. media and analyst reports on Frontier Group Holdings Inc. financial health, liquidity, debt maturities, and any indications it may pursue Chapter 11 before May 2026"
+        }
+      ],
+      "tools_used": [
+        "AskNews",
+        "Google",
+        "Google News"
+      ],
+      "llm_cost": 0.1579,
+      "llm_cost_summarization": 0.1494,
+      "llm_cost_agentic": 0.0085,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6668,
+        "token_output": 1613,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.057535,
+        "duration_seconds": 44.79916572570801,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13521,
+        "token_output": 2836,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.11014499999999999,
+        "duration_seconds": 69.89812111854553,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6668,
+        "token_output": 1555,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.056665,
+        "duration_seconds": 44.799230337142944,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13477,
+        "token_output": 2531,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.10535,
+        "duration_seconds": 69.8980963230133,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5861,
+        "token_output": 2416,
+        "token_reasoning": 801,
+        "used_reasoning": true,
+        "cost": 0.04408075,
+        "duration_seconds": 44.79927468299866,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11909,
+        "token_output": 1924,
+        "token_reasoning": 208,
+        "used_reasoning": true,
+        "cost": 0.04777674999999999,
+        "duration_seconds": 69.89805126190186,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5861,
+        "token_output": 1645,
+        "token_reasoning": 192,
+        "used_reasoning": true,
+        "cost": 0.024882,
+        "duration_seconds": 44.79930853843689,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12145,
+        "token_output": 1470,
+        "token_reasoning": 384,
+        "used_reasoning": true,
+        "cost": 0.03605,
+        "duration_seconds": 69.89802312850952,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5861,
+        "token_output": 1687,
+        "token_reasoning": 512,
+        "used_reasoning": true,
+        "cost": 0.025217999999999997,
+        "duration_seconds": 44.79933834075928,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11614,
+        "token_output": 1242,
+        "token_reasoning": 128,
+        "used_reasoning": true,
+        "cost": 0.033164,
+        "duration_seconds": 69.8979971408844,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0111,
+    "step2_search": 0.3392,
+    "step3_outside_view": 0.2084,
+    "step5_inside_view": 0.3325,
+    "step6_aggregation": 0.3325,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.8912
+}

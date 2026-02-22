@@ -1,0 +1,3 @@
+**Evaluating probability forecast**
+
+I need to create a detailed forecast that includes a probability analysis. The previous outside view was at 0.7%, but I might adjust this with new data, considering we're looking at a timeframe of 69 days until May 1, 2026. Evaluating recent evidence like Frontier’s liquidity and EPS could show a probability closer to 1-2%. Still, since we started with 0.7%, I’ll refine that inside view, possibly landing on 1%. So, I’ll format it as “Probability: 1%.”

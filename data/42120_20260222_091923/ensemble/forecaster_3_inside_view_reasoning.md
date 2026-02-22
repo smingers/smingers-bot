@@ -1,0 +1,3 @@
+**Evaluating forecast probabilities**
+
+I need to build a superforecast-style response with the necessary format. I'm starting with an inside view probability of 2.5%. New information from a Reuters/Investing.com piece on February 19, 2026, denies bankruptcy rumors but mentions negative margins and operational challenges. SimplyWallSt points out liquidity concerns. Interestingly, Intellectia shows growth and states there’s no liquidity penalty in returns. JP Morgan is skeptical about margins, so I might raise the probability to 3%. I’ll ensure to include all sources while noting irrelevant ones and provide evidence accordingly.
