@@ -23,8 +23,81 @@ concurrency:
   group: ${{ github.workflow }}
   cancel-in-progress: false  # Don't cancel in-progress forecasts
 
+# =============================================================================
+# JOB 1: Quick API check for new questions (runs in ~10s)
+# Skips the full forecast job if there's nothing to do.
+# =============================================================================
 jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    outputs:
+      has_work: ${{ steps.check_new.outputs.has_work }}
+    steps:
+      - name: Check for new questions
+        id: check_new
+        env:
+          METACULUS_TOKEN: ${{ secrets.METACULUS_TOKEN }}
+        run: |
+          # Manual dispatch with test question always has work
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ -n "${{ github.event.inputs.test_question_id }}" ]; then
+            echo "has_work=true" >> $GITHUB_OUTPUT
+            echo "Manual dispatch with test question — skipping API check"
+            exit 0
+          fi
+
+          # Get user ID for forecast lookup
+          USER_ID=$(curl -sf -H "Authorization: Token $METACULUS_TOKEN" \
+            "https://www.metaculus.com/api/users/me/" | jq -r '.id')
+          echo "User ID: $USER_ID"
+
+          HAS_WORK=false
+
+          for TOURNAMENT in 32916 minibench; do
+            sleep 1.5  # Rate limiting
+
+            # Get open question IDs (filtered by default_project)
+            if [ "$TOURNAMENT" = "minibench" ]; then
+              JQ_FILTER='.results[] | select(.projects.default_project.slug == "minibench") | .id'
+            else
+              JQ_FILTER=".results[] | select(.projects.default_project.id == $TOURNAMENT) | .id"
+            fi
+
+            OPEN_IDS=$(curl -sf -H "Authorization: Token $METACULUS_TOKEN" \
+              "https://www.metaculus.com/api/posts/?tournaments=$TOURNAMENT&statuses=open&limit=100&order_by=scheduled_close_time" \
+              | jq -r "$JQ_FILTER" | sort -n)
+            OPEN_COUNT=$(echo "$OPEN_IDS" | grep -c '[0-9]' || true)
+
+            sleep 1.5
+
+            # Get my forecasted question IDs for this tournament
+            MY_IDS=$(curl -sf -H "Authorization: Token $METACULUS_TOKEN" \
+              "https://www.metaculus.com/api/posts/?forecaster_id=$USER_ID&tournaments=$TOURNAMENT&limit=500" \
+              | jq -r '.results[].id' | sort -n)
+            MY_COUNT=$(echo "$MY_IDS" | grep -c '[0-9]' || true)
+
+            # Find IDs in OPEN but not in MY
+            NEW_COUNT=$(comm -23 <(echo "$OPEN_IDS") <(echo "$MY_IDS") | grep -c '[0-9]' || true)
+
+            echo "$TOURNAMENT: $OPEN_COUNT open, $MY_COUNT forecasted, $NEW_COUNT new"
+
+            if [ "$NEW_COUNT" -gt 0 ]; then
+              HAS_WORK=true
+            fi
+          done
+
+          echo "has_work=$HAS_WORK" >> $GITHUB_OUTPUT
+
+          if [ "$HAS_WORK" = "false" ]; then
+            echo "No new questions in any tournament — skipping forecast job"
+          fi
+
+  # =============================================================================
+  # JOB 2: Full forecast pipeline (only runs if check found new questions)
+  # =============================================================================
   forecast:
+    needs: check
+    if: needs.check.outputs.has_work == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 60
 
