@@ -174,11 +174,6 @@ class BaseForecaster(ForecasterMixin, ABC):
         # Build question details for search
         question_details = self._get_question_details(**question_params)
 
-        # Thread community prediction context into QuestionDetails for agentic search
-        community_prediction_context = question_params.get("community_prediction_context", "")
-        if community_prediction_context:
-            question_details.community_prediction_context = community_prediction_context
-
         # Thread stock return context into QuestionDetails for agentic search
         stock_return_context_for_search = question_params.get("stock_return_context", "")
         if stock_return_context_for_search:
@@ -252,20 +247,6 @@ class BaseForecaster(ForecasterMixin, ABC):
                 f"\nQuestion URL context ({len(question_url_context)} chars, "
                 f"{question_url_metadata.get('urls_summarized', 0)} URLs summarized)"
             )
-
-        # Prepend community prediction data to both contexts for meta-questions
-        # This gives all 5 forecasters the scraped CP in both outside and inside views
-        if community_prediction_context:
-            historical_context = community_prediction_context + "\n" + historical_context
-            current_context = community_prediction_context + "\n" + current_context
-            log(
-                f"\nCommunity prediction context injected "
-                f"({len(community_prediction_context)} chars)"
-            )
-            if self.artifact_store:
-                self.artifact_store.save_search_results(
-                    "community_prediction", {"context": community_prediction_context}
-                )
 
         # Prepend stock return distribution to both contexts for close price questions
         # This gives all 5 forecasters the programmatic base rate
@@ -845,6 +826,20 @@ class BaseForecaster(ForecasterMixin, ABC):
     # Supervisor integration
     # -------------------------------------------------------------------------
 
+    def _get_bounds_info(self, question_params: dict) -> str | None:
+        """Compute bounds_info string for numeric questions.
+
+        Returns None for non-numeric types. For numeric, uses the same
+        static method as NumericForecaster so the supervisor sees identical
+        bounds context.
+        """
+        if self.question_type != "numeric":
+            return None
+
+        from .numeric import NumericForecaster
+
+        return NumericForecaster._get_bounds_explanation(**question_params)["bounds_info"]
+
     def _get_forecaster_prediction_value(self, result: AgentResult) -> Any:
         """Get the prediction value from an AgentResult for supervisor input.
 
@@ -931,8 +926,9 @@ class BaseForecaster(ForecasterMixin, ABC):
             options=question_params.get("options"),
             num_options=len(question_params.get("options", []) or []) or None,
             units=question_params.get("unit_of_measure"),
-            bounds_info=question_params.get("bounds_info"),
+            bounds_info=self._get_bounds_info(question_params),
             is_date_question=question_params.get("is_date_question", False),
+            stock_return_context=question_params.get("stock_return_context"),
         )
 
         try:
