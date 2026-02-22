@@ -81,6 +81,14 @@ class AgenticSearchResult:
     error: str | None = None
 
 
+@dataclass
+class GoogleScrapeResult:
+    """Result from Google search + scrape with per-URL tracking."""
+
+    formatted_output: str
+    url_results: list[dict[str, Any]]  # Per-URL: url, domain, success, error, method, etc.
+
+
 # Article summarization prompt template
 ARTICLE_SUMMARY_PROMPT = """
 You are an assistant to a superforecaster and your task involves high-quality information retrieval to help the forecaster make the most informed forecasts. Forecasting involves parsing through an immense trove of internet articles and web content. To make this easier for the forecaster, you read entire articles and extract the key pieces of the articles relevant to the question. The key pieces generally include:
@@ -514,6 +522,17 @@ class SearchPipeline:
                     elif source == "yFinance":
                         num_results = 1 if "Error" not in result[:100] else 0
                         formatted_results += f"\n{result}\n"
+                    elif isinstance(result, GoogleScrapeResult):
+                        num_results = result.formatted_output.count("<Summary")
+                        formatted_results += result.formatted_output
+                        # Attach per-URL scrape details to metadata
+                        metadata["queries"][i]["url_results"] = result.url_results
+                        metadata["queries"][i]["scrape_stats"] = {
+                            "urls_returned": len(result.url_results),
+                            "urls_extracted": sum(1 for u in result.url_results if u["success"]),
+                            "urls_failed": sum(1 for u in result.url_results if not u["success"]),
+                            "urls_summarized": num_results,
+                        }
                     else:
                         num_results = result.count("<Summary")
                         formatted_results += result
@@ -678,7 +697,10 @@ class SearchPipeline:
 
             url_meta: dict[str, Any] = {
                 "url": url,
+                "domain": extraction.get("domain", urlparse(url).netloc),
                 "scraped": extraction.get("success", False),
+                "method": extraction.get("method"),
+                "status_code": extraction.get("status_code"),
             }
 
             if (
@@ -798,7 +820,7 @@ class SearchPipeline:
         is_news: bool,
         question_details: QuestionDetails,
         date_before: str | None = None,
-    ) -> str:
+    ) -> GoogleScrapeResult:
         """
         Search Google and scrape/summarize results.
 
@@ -809,7 +831,7 @@ class SearchPipeline:
             date_before: Date filter
 
         Returns:
-            Formatted summary string
+            GoogleScrapeResult with formatted output and per-URL scrape details
         """
         logger.debug(f"[google_search_and_scrape] query='{query}' is_news={is_news}")
 
@@ -818,12 +840,32 @@ class SearchPipeline:
 
             if not urls:
                 logger.warning(f"[google_search_and_scrape] No URLs returned for: '{query}'")
-                return f'<Summary query="{query}">No URLs returned from Google.</Summary>\n'
+                return GoogleScrapeResult(
+                    formatted_output=f'<Summary query="{query}">No URLs returned from Google.</Summary>\n',
+                    url_results=[],
+                )
 
             # Extract content from URLs
             async with ConcurrentContentExtractor() as extractor:
                 logger.info(f"[google_search_and_scrape] Extracting content from {len(urls)} URLs")
                 results = await extractor.extract_content(urls)
+
+            # Build per-URL tracking data
+            url_results = []
+            for url in urls:
+                extraction = results.get(url, {})
+                url_results.append(
+                    {
+                        "url": url,
+                        "domain": extraction.get("domain", urlparse(url).netloc),
+                        "success": extraction.get("success", False),
+                        "error": extraction.get("error"),
+                        "method": extraction.get("method"),
+                        "status_code": extraction.get("status_code"),
+                        "content_chars": extraction.get("content_chars", 0),
+                        "truncated": extraction.get("truncated", False),
+                    }
+                )
 
             # Summarize top results
             summarize_tasks = []
@@ -849,7 +891,10 @@ class SearchPipeline:
 
             if not summarize_tasks:
                 logger.warning("[google_search_and_scrape] No content to summarize")
-                return f'<Summary query="{query}">No usable content extracted from any URL.</Summary>\n'
+                return GoogleScrapeResult(
+                    formatted_output=f'<Summary query="{query}">No usable content extracted from any URL.</Summary>\n',
+                    url_results=url_results,
+                )
 
             summaries = await asyncio.gather(*summarize_tasks, return_exceptions=True)
 
@@ -862,12 +907,18 @@ class SearchPipeline:
                 else:
                     output += f'\n<Summary source="{url}">\n{summary}\n</Summary>\n'
 
-            return output
+            return GoogleScrapeResult(
+                formatted_output=output,
+                url_results=url_results,
+            )
 
         except Exception as e:
             logger.error(f"[google_search_and_scrape] Error: {e}")
             traceback.print_exc()
-            return f'<Summary query="{query}">Error during search and scrape: {e}</Summary>\n'
+            return GoogleScrapeResult(
+                formatted_output=f'<Summary query="{query}">Error during search and scrape: {e}</Summary>\n',
+                url_results=[],
+            )
 
     async def _summarize_article(
         self,

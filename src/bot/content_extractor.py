@@ -232,14 +232,16 @@ class HTMLContentExtractor:
         except Exception:
             return html_content
 
-    def extract(self, url: str, html_content: str) -> str | None:
+    def extract(self, url: str, html_content: str) -> tuple[str | None, str | None]:
         """
         Extract article content from HTML using multiple backends.
 
-        Returns the best extraction result based on quality scoring.
+        Returns a tuple of (content, method) where method is one of:
+        "site-specific", "trafilatura", "readability", "boilerpy",
+        "density", "fallback", or None if extraction failed.
         """
         if not html_content or len(html_content.strip()) < 100:
-            return None
+            return None, None
 
         html_content = self._preprocess_html(html_content)
         metadata = self._get_article_metadata(html_content, url)
@@ -289,21 +291,21 @@ class HTMLContentExtractor:
 
             best_result, _, label = max(scored_results, key=lambda scored: scored[1])
             logger.debug(f"Selected content from {label} with length {len(best_result)}")
-            return self._format_with_metadata(self._clean_content(best_result), metadata)
+            return self._format_with_metadata(self._clean_content(best_result), metadata), label
 
         # Fallback: auto-detect main content div
         guessed_div = self._find_content_by_density(soup)
         if guessed_div:
             text = guessed_div.get_text(separator=" ", strip=True)
             if text:
-                return self._format_with_metadata(self._clean_content(text), metadata)
+                return self._format_with_metadata(self._clean_content(text), metadata), "density"
 
         # Last resort: collect all <p> and <li> elements
         fallback = self._fallback_extract_paragraphs(soup)
         if fallback:
-            return self._format_with_metadata(self._clean_content(fallback), metadata)
+            return self._format_with_metadata(self._clean_content(fallback), metadata), "fallback"
 
-        return None
+        return None, None
 
     def _extract_with_selectors(self, html_content: str, url: str) -> str | None:
         """Extract content using site-specific CSS selectors."""
@@ -788,6 +790,10 @@ class ConcurrentContentExtractor:
                 "content": None,
                 "error": "Empty Wikipedia page title",
                 "success": False,
+                "status_code": None,
+                "method": "wikipedia_api",
+                "content_chars": 0,
+                "truncated": False,
             }
 
         try:
@@ -817,6 +823,10 @@ class ConcurrentContentExtractor:
                         "content": None,
                         "error": "No statistics data returned",
                         "success": False,
+                        "status_code": response.status_code,
+                        "method": "wikipedia_api",
+                        "content_chars": 0,
+                        "truncated": False,
                     }
 
                 def _fmt(val: int | str) -> str:
@@ -836,6 +846,10 @@ class ConcurrentContentExtractor:
                     "domain": domain,
                     "content": content,
                     "success": True,
+                    "status_code": response.status_code,
+                    "method": "wikipedia_api",
+                    "content_chars": len(content),
+                    "truncated": False,
                 }
 
             # Regular article -> use extracts API
@@ -861,6 +875,10 @@ class ConcurrentContentExtractor:
                     "content": None,
                     "error": "No pages in API response",
                     "success": False,
+                    "status_code": response.status_code,
+                    "method": "wikipedia_api",
+                    "content_chars": 0,
+                    "truncated": False,
                 }
 
             page_data = next(iter(pages.values()))
@@ -872,6 +890,10 @@ class ConcurrentContentExtractor:
                     "content": None,
                     "error": f"Wikipedia page not found: {page_data.get('title', page_title)}",
                     "success": False,
+                    "status_code": response.status_code,
+                    "method": "wikipedia_api",
+                    "content_chars": 0,
+                    "truncated": False,
                 }
 
             extract = page_data.get("extract", "")
@@ -882,12 +904,18 @@ class ConcurrentContentExtractor:
                     "content": None,
                     "error": "Wikipedia extract too short",
                     "success": False,
+                    "status_code": response.status_code,
+                    "method": "wikipedia_api",
+                    "content_chars": 0,
+                    "truncated": False,
                 }
 
             title = page_data.get("title", page_title.replace("_", " "))
             content = f"# {title}\n\n{extract}"
 
-            if len(content) > self.MAX_CONTENT_LENGTH:
+            truncated = len(content) > self.MAX_CONTENT_LENGTH
+            content_chars = len(content)
+            if truncated:
                 content = content[: self.MAX_CONTENT_LENGTH] + "...[truncated]"
 
             return {
@@ -895,6 +923,10 @@ class ConcurrentContentExtractor:
                 "domain": domain,
                 "content": content,
                 "success": True,
+                "status_code": response.status_code,
+                "method": "wikipedia_api",
+                "content_chars": content_chars,
+                "truncated": truncated,
             }
 
         except Exception as e:
@@ -905,6 +937,10 @@ class ConcurrentContentExtractor:
                 "content": None,
                 "error": f"Wikipedia API error: {e}",
                 "success": False,
+                "status_code": None,
+                "method": "wikipedia_api",
+                "content_chars": 0,
+                "truncated": False,
             }
 
     async def _fetch_url(self, url: str) -> dict[str, Any]:
@@ -916,6 +952,10 @@ class ConcurrentContentExtractor:
                 "content": None,
                 "error": "Blocked domain",
                 "success": False,
+                "status_code": None,
+                "method": None,
+                "content_chars": 0,
+                "truncated": False,
             }
 
         if self._is_wikipedia_url(url):
@@ -928,6 +968,7 @@ class ConcurrentContentExtractor:
 
             # Direct HTTP request
             response = await self._client.get(url)
+            status_code = response.status_code
             response.raise_for_status()
             raw_html = response.text
 
@@ -938,10 +979,14 @@ class ConcurrentContentExtractor:
                     "content": None,
                     "error": "Empty or very short HTML received",
                     "success": False,
+                    "status_code": status_code,
+                    "method": None,
+                    "content_chars": 0,
+                    "truncated": False,
                 }
 
             # Extract content
-            processed_content = self.html_extractor.extract(url, raw_html)
+            processed_content, method = self.html_extractor.extract(url, raw_html)
 
             if not processed_content:
                 return {
@@ -950,10 +995,16 @@ class ConcurrentContentExtractor:
                     "content": None,
                     "error": "Content extraction failed",
                     "success": False,
+                    "status_code": status_code,
+                    "method": None,
+                    "content_chars": 0,
+                    "truncated": False,
                 }
 
             # Truncate if too long
-            if len(processed_content) > self.MAX_CONTENT_LENGTH:
+            truncated = len(processed_content) > self.MAX_CONTENT_LENGTH
+            content_chars = len(processed_content)
+            if truncated:
                 processed_content = processed_content[: self.MAX_CONTENT_LENGTH] + "...[truncated]"
 
             return {
@@ -961,6 +1012,10 @@ class ConcurrentContentExtractor:
                 "domain": urlparse(url).netloc,
                 "content": processed_content,
                 "success": True,
+                "status_code": status_code,
+                "method": method,
+                "content_chars": content_chars,
+                "truncated": truncated,
             }
 
         except TimeoutError:
@@ -970,6 +1025,23 @@ class ConcurrentContentExtractor:
                 "content": None,
                 "error": "Request timed out",
                 "success": False,
+                "status_code": None,
+                "method": None,
+                "content_chars": 0,
+                "truncated": False,
+            }
+        except httpx.HTTPStatusError as e:
+            logger.debug(f"HTTP error for {url}: {e}")
+            return {
+                "url": url,
+                "domain": urlparse(url).netloc,
+                "content": None,
+                "error": f"HTTP {e.response.status_code}",
+                "success": False,
+                "status_code": e.response.status_code,
+                "method": None,
+                "content_chars": 0,
+                "truncated": False,
             }
         except Exception as e:
             logger.debug(f"Error processing {url}: {e}")
@@ -979,6 +1051,10 @@ class ConcurrentContentExtractor:
                 "content": None,
                 "error": str(e),
                 "success": False,
+                "status_code": None,
+                "method": None,
+                "content_chars": 0,
+                "truncated": False,
             }
 
     async def _fetch_with_bright_data(self, url: str) -> dict[str, Any]:
@@ -1005,6 +1081,10 @@ class ConcurrentContentExtractor:
                     "content": None,
                     "error": f"Bright Data API error: {response.status_code}",
                     "success": False,
+                    "status_code": response.status_code,
+                    "method": None,
+                    "content_chars": 0,
+                    "truncated": False,
                 }
 
             raw_html = response.text
@@ -1016,9 +1096,13 @@ class ConcurrentContentExtractor:
                     "content": None,
                     "error": "Empty HTML from Bright Data",
                     "success": False,
+                    "status_code": 200,
+                    "method": None,
+                    "content_chars": 0,
+                    "truncated": False,
                 }
 
-            processed_content = self.html_extractor.extract(url, raw_html)
+            processed_content, method = self.html_extractor.extract(url, raw_html)
 
             if not processed_content:
                 return {
@@ -1027,9 +1111,15 @@ class ConcurrentContentExtractor:
                     "content": None,
                     "error": "Content extraction failed",
                     "success": False,
+                    "status_code": 200,
+                    "method": None,
+                    "content_chars": 0,
+                    "truncated": False,
                 }
 
-            if len(processed_content) > self.MAX_CONTENT_LENGTH:
+            truncated = len(processed_content) > self.MAX_CONTENT_LENGTH
+            content_chars = len(processed_content)
+            if truncated:
                 processed_content = processed_content[: self.MAX_CONTENT_LENGTH] + "...[truncated]"
 
             return {
@@ -1037,6 +1127,10 @@ class ConcurrentContentExtractor:
                 "domain": urlparse(url).netloc,
                 "content": processed_content,
                 "success": True,
+                "status_code": 200,
+                "method": method,
+                "content_chars": content_chars,
+                "truncated": truncated,
             }
 
         except Exception as e:
@@ -1047,6 +1141,10 @@ class ConcurrentContentExtractor:
                 "content": None,
                 "error": str(e),
                 "success": False,
+                "status_code": None,
+                "method": None,
+                "content_chars": 0,
+                "truncated": False,
             }
 
     async def extract_content(self, urls: list[str]) -> dict[str, dict[str, Any]]:
