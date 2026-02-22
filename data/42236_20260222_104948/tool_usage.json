@@ -1,0 +1,295 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 1,
+      "queries": [
+        {
+          "query": "https://missingmigrants.iom.int/region/mediterranean",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "IOM Mediterranean deaths February 2025",
+          "tool": "Google",
+          "success": true,
+          "num_results": 2
+        },
+        {
+          "query": "Mediterranean migrant deaths 2026 IOM",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Retrieve IOM Missing Migrants Project dataset and list total dead + missing in the Mediterranean region from 1 January through 29 February for each year 2015-2026. Summarize counts and give the current 2026 YTD figure.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 3,
+            "queries_executed": [
+              "IOM Missing Migrants Project Mediterranean 2026 dead missing January February",
+              "Mediterranean migrant deaths January February 2026 IOM statistics",
+              "IOM Missing Migrants Project dataset Mediterranean annual totals 2015 2025",
+              "Mediterranean migrant deaths missing 2026 year to date statistics",
+              "site:missingmigrants.iom.int Mediterranean region data 2026",
+              "IOM Missing Migrants Mediterranean February 2026 total end month",
+              "Mediterranean migrant deaths February 28 2026 IOM"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "IOM Missing Migrants Project Mediterranean 2026 dead missing January February",
+                    "Google"
+                  ],
+                  [
+                    "Mediterranean migrant deaths January February 2026 IOM statistics",
+                    "Google News"
+                  ],
+                  [
+                    "IOM Missing Migrants Project dataset Mediterranean annual totals 2015 2025",
+                    "Google"
+                  ],
+                  [
+                    "Mediterranean migrant deaths missing 2026 year to date statistics",
+                    "Google News"
+                  ],
+                  [
+                    "site:missingmigrants.iom.int Mediterranean region data 2026",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 27988,
+                "analysis_chars": 0
+              },
+              {
+                "step_number": 2,
+                "queries_executed": [
+                  [
+                    "IOM Missing Migrants Mediterranean February 2026 total end month",
+                    "Google News"
+                  ],
+                  [
+                    "Mediterranean migrant deaths February 28 2026 IOM",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 21858,
+                "analysis_chars": 6788
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Agent",
+        "Google"
+      ],
+      "llm_cost": 0.2595,
+      "llm_cost_summarization": 0.1118,
+      "llm_cost_agentic": 0.1477,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "IOM Missing Migrants Mediterranean 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 2
+        },
+        {
+          "query": "Mediterranean migrant deaths February 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Please provide the 2026 year-to-date total of dead and missing migrants in the Mediterranean from the IOM Missing Migrants Project and list major fatal incidents reported in January and February 2026.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "Will the IOM Missing Migrants Project record at least 800 Mediterranean migrant deaths in 2026 before March 2026?",
+          "tool": "AskNews",
+          "deep_research_query": "Please provide the 2026 year-to-date total of dead and missing migrants in the Mediterranean from the IOM Missing Migrants Project and list major fatal incidents reported in January and February 2026."
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "AskNews",
+        "Google"
+      ],
+      "llm_cost": 0.1199,
+      "llm_cost_summarization": 0.1118,
+      "llm_cost_agentic": 0.0081,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5594,
+        "token_output": 1608,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.052090000000000004,
+        "duration_seconds": 56.79491710662842,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12950,
+        "token_output": 2493,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.102145,
+        "duration_seconds": 69.95706796646118,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5594,
+        "token_output": 1690,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.053320000000000006,
+        "duration_seconds": 56.79498362541199,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12511,
+        "token_output": 2859,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.10544,
+        "duration_seconds": 69.95704364776611,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5050,
+        "token_output": 3014,
+        "token_reasoning": 1492,
+        "used_reasoning": true,
+        "cost": 0.0510335,
+        "duration_seconds": 56.795029401779175,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11685,
+        "token_output": 3576,
+        "token_reasoning": 1629,
+        "used_reasoning": true,
+        "cost": 0.07051275,
+        "duration_seconds": 69.9570164680481,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5050,
+        "token_output": 1824,
+        "token_reasoning": 768,
+        "used_reasoning": true,
+        "cost": 0.024692,
+        "duration_seconds": 56.795064210891724,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11689,
+        "token_output": 2647,
+        "token_reasoning": 1472,
+        "used_reasoning": true,
+        "cost": 0.044553999999999996,
+        "duration_seconds": 69.95699262619019,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5050,
+        "token_output": 1749,
+        "token_reasoning": 832,
+        "used_reasoning": true,
+        "cost": 0.024092,
+        "duration_seconds": 56.79509234428406,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 10989,
+        "token_output": 2090,
+        "token_reasoning": 960,
+        "used_reasoning": true,
+        "cost": 0.038697999999999996,
+        "duration_seconds": 69.95697021484375,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0131,
+    "step2_search": 0.2595,
+    "step3_outside_view": 0.2052,
+    "step5_inside_view": 0.3613,
+    "step6_aggregation": 0.3613,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.8391
+}

@@ -1,0 +1,5 @@
+**Estimating probabilities**
+
+I'm analyzing the historical data and noticing that between 2015 and 2025, only a few events exceeded 500. Remarkably, there have been no occurrences of 800 or more by the end of February in previous years, leading to a base rate of 0%. Given the situation, I think a 5-10% smoothing might apply, treating it as a rare event. Including the record high from early 2026 gives more context, but the gap to 800 remains significant. I’ll estimate around a 20-25% probability for the timeframe left.**Analyzing data resolution**
+
+I realize that the dataset includes information up to the end of February but can update after this date. The final question will resolve by March 1, meaning there may be revisions included then. Given this, I should acknowledge some undercounting within the next week, which could be small to moderate. I’m thinking an outside view baseline of around 30% seems reasonable considering the historical context and record numbers, while also observing that the base rate is near 0%. I'll work step by step on this analysis.
