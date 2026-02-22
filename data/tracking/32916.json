@@ -280,7 +280,7 @@
     },
     {
       "question_id": 41904,
-      "question_title": "Will the Tisza Party win more parliamentary seats than Fidesz\u2013KDNP in Hungary\u2019s 2026 parliamentary election?",
+      "question_title": "Will the Tisza Party win more parliamentary seats than Fidesz–KDNP in Hungary’s 2026 parliamentary election?",
       "question_type": "binary",
       "question_url": "https://www.metaculus.com/questions/41904/",
       "forecast_timestamp": "2026-02-01T15:16:52.424920+00:00",
@@ -407,7 +407,7 @@
     },
     {
       "question_id": 41896,
-      "question_title": "What is Egypt\u2019s annual inflation rate (year-over-year percent change) for the Urban Consumer Price Index (Urban CPI) for March 2026?",
+      "question_title": "What is Egypt’s annual inflation rate (year-over-year percent change) for the Urban Consumer Price Index (Urban CPI) for March 2026?",
       "question_type": "numeric",
       "question_url": "https://www.metaculus.com/questions/41896/",
       "forecast_timestamp": "2026-01-30T02:07:48.876939+00:00",
@@ -1304,7 +1304,7 @@
     },
     {
       "question_id": 42046,
-      "question_title": "Will the European Commission\u2019s AI Office publish a revised draft (a new version) of the general-purpose AI (GPAI) code of practice?",
+      "question_title": "Will the European Commission’s AI Office publish a revised draft (a new version) of the general-purpose AI (GPAI) code of practice?",
       "question_type": "binary",
       "question_url": "https://www.metaculus.com/questions/42046/",
       "forecast_timestamp": "2026-02-10T14:16:57.469676+00:00",
@@ -1672,30 +1672,30 @@
         "type": "multiple_choice",
         "my_probabilities": {
           "CAQ": 0.104,
-          "Parti Qu\u00e9b\u00e9cois (PQ)": 0.664,
+          "Parti Québécois (PQ)": 0.664,
           "Quebec Liberal Party (PLQ)": 0.03,
-          "Qu\u00e9bec solidaire (QS)": 0.016,
+          "Québec solidaire (QS)": 0.016,
           "Conservative Party of Quebec": 0.176,
           "Other": 0.01
         },
         "community_probabilities": {
-          "CAQ": 0.03,
-          "Parti Qu\u00e9b\u00e9cois (PQ)": 0.87,
-          "Quebec Liberal Party (PLQ)": 0.015,
-          "Qu\u00e9bec solidaire (QS)": 0.01,
-          "Conservative Party of Quebec": 0.07,
-          "Other": 0.005
+          "CAQ": 0.2331364969341508,
+          "Parti Québécois (PQ)": 0.5892911223673688,
+          "Quebec Liberal Party (PLQ)": 0.044989336177019466,
+          "Québec solidaire (QS)": 0.04260437216742203,
+          "Conservative Party of Quebec": 0.07413889629432152,
+          "Other": 0.01583977605971741
         },
         "differences": {
-          "CAQ": 0.074,
-          "Parti Qu\u00e9b\u00e9cois (PQ)": -0.206,
-          "Quebec Liberal Party (PLQ)": 0.015,
-          "Qu\u00e9bec solidaire (QS)": 0.006,
-          "Conservative Party of Quebec": 0.106,
-          "Other": 0.005
+          "CAQ": -0.1291364969341508,
+          "Parti Québécois (PQ)": 0.07470887763263123,
+          "Quebec Liberal Party (PLQ)": -0.014989336177019467,
+          "Québec solidaire (QS)": -0.02660437216742203,
+          "Conservative Party of Quebec": 0.10186110370567847,
+          "Other": -0.005839776059717411
         },
-        "max_difference_option": "Parti Qu\u00e9b\u00e9cois (PQ)",
-        "max_difference_value": -0.206
+        "max_difference_option": "CAQ",
+        "max_difference_value": -0.1291364969341508
       },
       "score_data": null
     },
@@ -1726,7 +1726,7 @@
     },
     {
       "question_id": 42106,
-      "question_title": "Will Alliance 90/The Greens (B\u00fcndnis 90/Die Gr\u00fcnen) win the most seats in the Baden-W\u00fcrttemberg Landtag election?",
+      "question_title": "Will Alliance 90/The Greens (Bündnis 90/Die Grünen) win the most seats in the Baden-Württemberg Landtag election?",
       "question_type": "binary",
       "question_url": "https://www.metaculus.com/questions/42106/",
       "forecast_timestamp": "2026-02-14T15:18:01.791266+00:00",
@@ -1744,7 +1744,7 @@
     },
     {
       "question_id": 42107,
-      "question_title": "What will be the statewide voter turnout percentage in Bavaria\u2019s local elections (Kommunalwahlen)?",
+      "question_title": "What will be the statewide voter turnout percentage in Bavaria’s local elections (Kommunalwahlen)?",
       "question_type": "numeric",
       "question_url": "https://www.metaculus.com/questions/42107/",
       "forecast_timestamp": "2026-02-14T21:16:21.655835+00:00",
@@ -1769,7 +1769,7 @@
     },
     {
       "question_id": 42108,
-      "question_title": "Will a National Rally\u2013labeled list win the mayoralty of at least one of Marseille, Lyon, or Toulouse in France\u2019s 2026 municipal elections ?",
+      "question_title": "Will a National Rally–labeled list win the mayoralty of at least one of Marseille, Lyon, or Toulouse in France’s 2026 municipal elections ?",
       "question_type": "binary",
       "question_url": "https://www.metaculus.com/questions/42108/",
       "forecast_timestamp": "2026-02-16T03:42:31.544204+00:00",
@@ -1828,17 +1828,17 @@
           "Someone else": 0.013
         },
         "community_probabilities": {
-          "Maria Lazar": 0.31,
-          "Chris Taylor": 0.66,
-          "Someone else": 0.03
+          "Maria Lazar": 0.28614604462474647,
+          "Chris Taylor": 0.6875750507099392,
+          "Someone else": 0.026278904665314403
         },
         "differences": {
-          "Maria Lazar": -0.062,
-          "Chris Taylor": 0.079,
-          "Someone else": -0.017
+          "Maria Lazar": -0.03814604462474647,
+          "Chris Taylor": 0.051424949290060806,
+          "Someone else": -0.013278904665314404
         },
         "max_difference_option": "Chris Taylor",
-        "max_difference_value": 0.079
+        "max_difference_value": 0.051424949290060806
       },
       "score_data": null
     },
@@ -2179,7 +2179,7 @@
     },
     {
       "question_id": 42115,
-      "question_title": "Will the nationwide #1 party\u2019s vote share in the Netherlands municipal elections be at least 15.0% ?",
+      "question_title": "Will the nationwide #1 party’s vote share in the Netherlands municipal elections be at least 15.0% ?",
       "question_type": "binary",
       "question_url": "https://www.metaculus.com/questions/42115/",
       "forecast_timestamp": "2026-02-19T00:59:51+00:00",
@@ -2197,7 +2197,7 @@
     },
     {
       "question_id": 42116,
-      "question_title": "Will CDU win the most seats in the Baden-W\u00fcrttemberg Landtag election?",
+      "question_title": "Will CDU win the most seats in the Baden-Württemberg Landtag election?",
       "question_type": "binary",
       "question_url": "https://www.metaculus.com/questions/42116/",
       "forecast_timestamp": "2026-02-19T08:29:14+00:00",
@@ -2215,7 +2215,7 @@
     },
     {
       "question_id": 42117,
-      "question_title": "Will AfD win the most seats in the Baden-W\u00fcrttemberg Landtag election?",
+      "question_title": "Will AfD win the most seats in the Baden-Württemberg Landtag election?",
       "question_type": "binary",
       "question_url": "https://www.metaculus.com/questions/42117/",
       "forecast_timestamp": "2026-02-19T09:09:49+00:00",

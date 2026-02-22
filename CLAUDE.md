@@ -152,7 +152,7 @@ Numeric/Discrete: `{"type": "numeric", "my_median": X, "community_median": Y, "m
 - Quartiles come from `cq`/`mq` (visible Community/My Prediction rows on the page)
 
 Multiple Choice: `{"type": "multiple_choice", "my_probabilities": {...}, "community_probabilities": {...}, "differences": {...}, "max_difference_option": "...", "max_difference_value": ...}`
-- Community probs come from `centers` array, matched to `opts` labels
+- Community probs come from `fv` (forecast_values) array, matched to `opts` labels. Do NOT use `centers` — that is an internal aggregation field and does not match the displayed community prediction.
 
 **Step 3: Regenerate the diversity report**
 
