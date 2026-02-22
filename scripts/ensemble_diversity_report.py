@@ -148,6 +148,27 @@ def _format_research_context(raw: str) -> str:
         body = m.group(1).strip()
         sections.append(f"---\n### Agentic Research Report\n\n{body}")
 
+    # Extract <FREDData series="..." query="...">...</FREDData>
+    for m in re.finditer(r'<FREDData\s+series="([^"]*)"[^>]*>(.*?)</FREDData>', raw, re.DOTALL):
+        series, body = m.group(1), m.group(2).strip()
+        sections.append(f"---\n### FRED Data ({series})\n\n{body}")
+
+    # Extract <GoogleTrendsData term="...">...</GoogleTrendsData>
+    for m in re.finditer(
+        r'<GoogleTrendsData\s+term="([^"]*)"[^>]*>(.*?)</GoogleTrendsData>', raw, re.DOTALL
+    ):
+        term, body = m.group(1), m.group(2).strip()
+        sections.append(f"---\n### Google Trends ({term})\n\n{body}")
+
+    # Extract === STOCK RETURN DISTRIBUTION ... === END STOCK RETURN DISTRIBUTION ===
+    for m in re.finditer(
+        r"=== STOCK RETURN DISTRIBUTION.*?\n(.*?)=== END STOCK RETURN DISTRIBUTION ===",
+        raw,
+        re.DOTALL,
+    ):
+        body = m.group(1).strip()
+        sections.append(f"---\n### Stock Return Distribution\n\n{body}")
+
     if not sections:
         # No recognized tags — return raw text as-is
         return raw.strip()
