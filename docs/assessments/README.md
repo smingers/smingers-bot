@@ -197,6 +197,7 @@ Each row shows the average Inside View (S2) score for a specific Outside View â†
 | [42182](./42182_20260217_213705_assessment.md) | Will community prediction rise for "Will OpenAI file for an IPO in 2026?"? | binary | 37% | **B-** | 2026-02-17 | |
 | [42230](./42230_20260220_155838_assessment.md) | Will the UK increase the qualifying period for settlement to 10 years before May 2026? | binary | 65% | **B** | 2026-02-20 | |
 | [42231](./42231_20260220_175947_assessment.md) | Will any political party or coalition acquire a supermajority in the 2026 Hungarian parliamentary elections? | binary | 35.2% | **B** | 2026-02-20 | |
+| [42211](./42211_20260222_071011_assessment.md) | Will HAL's market close price on 2026-02-28 be higher than on 2026-02-22? | binary | 50.6% | **B+** | 2026-02-22 | |
 | [42235](./42235_20260221_031501_assessment.md) | Will the English Wikipedia have at least 7,145,000 articles before March 1, 2026? | binary | 1.2% | **D** | 2026-02-21 | |
 
 ## Multiple Runs (Same Question)
@@ -229,7 +230,7 @@ Some questions have multiple assessment runs for comparison:
 |-------|-------|
 | A | 2 |
 | A- | 11 |
-| B+ | 25 |
+| B+ | 26 |
 | B | 30 |
 | B- | 15 |
 | C+ | 8 |
@@ -242,7 +243,7 @@ Some questions have multiple assessment runs for comparison:
 
 | Type | Count |
 |------|-------|
-| binary | 48 |
+| binary | 49 |
 | numeric | 38 |
 | multiple_choice | 16 |
 | date | 1 |
