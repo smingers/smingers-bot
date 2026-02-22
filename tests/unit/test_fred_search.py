@@ -15,7 +15,7 @@ from unittest.mock import AsyncMock, MagicMock, patch
 import pandas as pd
 import pytest
 
-from src.bot.search import QuestionDetails, SearchPipeline
+from src.bot.search import GoogleScrapeResult, QuestionDetails, SearchPipeline
 
 # ============================================================================
 # Helper to mock asyncio.to_thread so it runs the function synchronously
@@ -345,7 +345,11 @@ Search queries:
 1. "test query" (Google)
 2. US unemployment rate (FRED)
 """
-        with patch.object(SearchPipeline, "_google_search_and_scrape", AsyncMock(return_value="")):
+        with patch.object(
+            SearchPipeline,
+            "_google_search_and_scrape",
+            AsyncMock(return_value=GoogleScrapeResult(formatted_output="", url_results=[])),
+        ):
             with patch.object(
                 SearchPipeline, "_fred_search", AsyncMock(return_value="should not be called")
             ) as mock_fred:
@@ -395,7 +399,11 @@ Search queries:
 2. UNRATE (FRED)
 """
         fred_result = '<FREDData series="UNRATE">Test data</FREDData>'
-        with patch.object(SearchPipeline, "_google_search_and_scrape", AsyncMock(return_value="")):
+        with patch.object(
+            SearchPipeline,
+            "_google_search_and_scrape",
+            AsyncMock(return_value=GoogleScrapeResult(formatted_output="", url_results=[])),
+        ):
             with patch.object(
                 SearchPipeline, "_fred_search", AsyncMock(return_value=fred_result)
             ) as mock_fred:

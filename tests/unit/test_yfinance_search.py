@@ -18,7 +18,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from src.bot.search import QuestionDetails, SearchPipeline
+from src.bot.search import GoogleScrapeResult, QuestionDetails, SearchPipeline
 
 # ============================================================================
 # Helper to mock asyncio.to_thread so it runs the function synchronously
@@ -499,7 +499,11 @@ Search queries:
 1. "test query" (Google)
 2. AAPL (yFinance)
 """
-        with patch.object(SearchPipeline, "_google_search_and_scrape", AsyncMock(return_value="")):
+        with patch.object(
+            SearchPipeline,
+            "_google_search_and_scrape",
+            AsyncMock(return_value=GoogleScrapeResult(formatted_output="", url_results=[])),
+        ):
             with patch.object(
                 SearchPipeline,
                 "_yfinance_search",
@@ -554,7 +558,11 @@ Search queries:
 2. SPY (yFinance)
 """
         yf_result = '<YFinanceData ticker="SPY">Test data</YFinanceData>'
-        with patch.object(SearchPipeline, "_google_search_and_scrape", AsyncMock(return_value="")):
+        with patch.object(
+            SearchPipeline,
+            "_google_search_and_scrape",
+            AsyncMock(return_value=GoogleScrapeResult(formatted_output="", url_results=[])),
+        ):
             with patch.object(
                 SearchPipeline, "_yfinance_search", AsyncMock(return_value=yf_result)
             ) as mock_yf:

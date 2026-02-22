@@ -20,6 +20,7 @@ import json
 import sys
 from collections import Counter, defaultdict
 from pathlib import Path
+from urllib.parse import urlparse
 
 DATA_DIR = Path("./data")
 
@@ -182,8 +183,6 @@ def analyze_question_url_scraping(all_data: list[dict]) -> dict:
             url = query_info.get("query", "")
             domain = query_info.get("domain")
             if not domain:
-                from urllib.parse import urlparse
-
                 domain = urlparse(url).netloc
             if domain.startswith("www."):
                 domain = domain[4:]

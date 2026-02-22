@@ -522,15 +522,20 @@ class SearchPipeline:
                     elif source == "yFinance":
                         num_results = 1 if "Error" not in result[:100] else 0
                         formatted_results += f"\n{result}\n"
-                    elif isinstance(result, GoogleScrapeResult):
-                        num_results = result.formatted_output.count("<Summary")
-                        formatted_results += result.formatted_output
+                    elif source in ("Google", "Google News"):
+                        scrape_result: GoogleScrapeResult = result
+                        num_results = scrape_result.formatted_output.count("<Summary")
+                        formatted_results += scrape_result.formatted_output
                         # Attach per-URL scrape details to metadata
-                        metadata["queries"][i]["url_results"] = result.url_results
+                        metadata["queries"][i]["url_results"] = scrape_result.url_results
                         metadata["queries"][i]["scrape_stats"] = {
-                            "urls_returned": len(result.url_results),
-                            "urls_extracted": sum(1 for u in result.url_results if u["success"]),
-                            "urls_failed": sum(1 for u in result.url_results if not u["success"]),
+                            "urls_returned": len(scrape_result.url_results),
+                            "urls_extracted": sum(
+                                1 for u in scrape_result.url_results if u["success"]
+                            ),
+                            "urls_failed": sum(
+                                1 for u in scrape_result.url_results if not u["success"]
+                            ),
                             "urls_summarized": num_results,
                         }
                     else:
