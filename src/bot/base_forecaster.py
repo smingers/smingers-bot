@@ -291,6 +291,11 @@ class BaseForecaster(ForecasterMixin, ABC):
                     "tool": "QuestionURLScrape",
                     "success": u.get("scraped", False),
                     "num_results": 1 if u.get("scraped") else 0,
+                    "domain": u.get("domain"),
+                    "method": u.get("method"),
+                    "status_code": u.get("status_code"),
+                    "content_words": u.get("content_words"),
+                    "error": u.get("error"),
                 }
                 for u in question_url_metadata.get("urls", [])
             ],

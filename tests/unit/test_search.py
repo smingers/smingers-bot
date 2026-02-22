@@ -12,7 +12,7 @@ from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
 
-from src.bot.search import AgenticSearchResult, QuestionDetails, SearchPipeline
+from src.bot.search import AgenticSearchResult, GoogleScrapeResult, QuestionDetails, SearchPipeline
 
 # ============================================================================
 # Query Parsing Tests
@@ -151,7 +151,11 @@ class TestSearchPipelineProcessQueries:
             step_data=[],
             error=None,
         )
-        with patch.object(SearchPipeline, "_google_search_and_scrape", AsyncMock(return_value="")):
+        with patch.object(
+            SearchPipeline,
+            "_google_search_and_scrape",
+            AsyncMock(return_value=GoogleScrapeResult(formatted_output="", url_results=[])),
+        ):
             with patch.object(
                 SearchPipeline, "_agentic_search", AsyncMock(return_value=mock_agentic_result)
             ):
@@ -203,7 +207,11 @@ class TestSearchPipelineProcessQueries:
             step_data=[],
             error=None,
         )
-        with patch.object(SearchPipeline, "_google_search_and_scrape", AsyncMock(return_value="")):
+        with patch.object(
+            SearchPipeline,
+            "_google_search_and_scrape",
+            AsyncMock(return_value=GoogleScrapeResult(formatted_output="", url_results=[])),
+        ):
             with patch.object(
                 SearchPipeline, "_agentic_search", AsyncMock(return_value=mock_agentic_result)
             ):
@@ -229,7 +237,11 @@ class TestSearchPipelineProcessQueries:
 Search queries:
 1. "test query" (Google)
 """
-        with patch.object(SearchPipeline, "_google_search_and_scrape", AsyncMock(return_value="")):
+        with patch.object(
+            SearchPipeline,
+            "_google_search_and_scrape",
+            AsyncMock(return_value=GoogleScrapeResult(formatted_output="", url_results=[])),
+        ):
             with patch.object(
                 SearchPipeline, "_call_asknews", AsyncMock(return_value="AskNews results")
             ) as mock_asknews:

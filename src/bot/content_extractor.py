@@ -232,14 +232,16 @@ class HTMLContentExtractor:
         except Exception:
             return html_content
 
-    def extract(self, url: str, html_content: str) -> str | None:
+    def extract(self, url: str, html_content: str) -> tuple[str | None, str | None]:
         """
         Extract article content from HTML using multiple backends.
 
-        Returns the best extraction result based on quality scoring.
+        Returns a tuple of (content, method) where method is one of:
+        "site-specific", "trafilatura", "readability", "boilerpy",
+        "density", "fallback", or None if extraction failed.
         """
         if not html_content or len(html_content.strip()) < 100:
-            return None
+            return None, None
 
         html_content = self._preprocess_html(html_content)
         metadata = self._get_article_metadata(html_content, url)
@@ -289,21 +291,21 @@ class HTMLContentExtractor:
 
             best_result, _, label = max(scored_results, key=lambda scored: scored[1])
             logger.debug(f"Selected content from {label} with length {len(best_result)}")
-            return self._format_with_metadata(self._clean_content(best_result), metadata)
+            return self._format_with_metadata(self._clean_content(best_result), metadata), label
 
         # Fallback: auto-detect main content div
         guessed_div = self._find_content_by_density(soup)
         if guessed_div:
             text = guessed_div.get_text(separator=" ", strip=True)
             if text:
-                return self._format_with_metadata(self._clean_content(text), metadata)
+                return self._format_with_metadata(self._clean_content(text), metadata), "density"
 
         # Last resort: collect all <p> and <li> elements
         fallback = self._fallback_extract_paragraphs(soup)
         if fallback:
-            return self._format_with_metadata(self._clean_content(fallback), metadata)
+            return self._format_with_metadata(self._clean_content(fallback), metadata), "fallback"
 
-        return None
+        return None, None
 
     def _extract_with_selectors(self, html_content: str, url: str) -> str | None:
         """Extract content using site-specific CSS selectors."""
@@ -762,6 +764,32 @@ class ConcurrentContentExtractor:
 
     _WIKIPEDIA_USER_AGENT = "MetaculusBot/1.0 (https://github.com/metaculus; forecasting bot)"
 
+    @staticmethod
+    def _make_result(
+        url: str,
+        domain: str,
+        *,
+        content: str | None = None,
+        success: bool = False,
+        error: str | None = None,
+        status_code: int | None = None,
+        method: str | None = None,
+        content_chars: int = 0,
+        truncated: bool = False,
+    ) -> dict[str, Any]:
+        """Build a standardized extraction result dict."""
+        return {
+            "url": url,
+            "domain": domain,
+            "content": content,
+            "success": success,
+            "error": error,
+            "status_code": status_code,
+            "method": method,
+            "content_chars": content_chars,
+            "truncated": truncated,
+        }
+
     async def _fetch_wikipedia(self, url: str) -> dict[str, Any]:
         """Fetch Wikipedia content via the MediaWiki API.
 
@@ -782,13 +810,9 @@ class ConcurrentContentExtractor:
             page_title = page_title.split("#", 1)[0]
 
         if not page_title:
-            return {
-                "url": url,
-                "domain": domain,
-                "content": None,
-                "error": "Empty Wikipedia page title",
-                "success": False,
-            }
+            return self._make_result(
+                url, domain, error="Empty Wikipedia page title", method="wikipedia_api"
+            )
 
         try:
             api_base = f"https://{domain}/w/api.php"
@@ -811,13 +835,13 @@ class ConcurrentContentExtractor:
 
                 stats = data.get("query", {}).get("statistics", {})
                 if not stats:
-                    return {
-                        "url": url,
-                        "domain": domain,
-                        "content": None,
-                        "error": "No statistics data returned",
-                        "success": False,
-                    }
+                    return self._make_result(
+                        url,
+                        domain,
+                        error="No statistics data returned",
+                        status_code=response.status_code,
+                        method="wikipedia_api",
+                    )
 
                 def _fmt(val: int | str) -> str:
                     return f"{val:,}" if isinstance(val, int) else str(val)
@@ -831,12 +855,15 @@ class ConcurrentContentExtractor:
                 content += f"Active users: {_fmt(stats.get('activeusers', 'N/A'))}\n"
                 content += f"Administrators: {_fmt(stats.get('admins', 'N/A'))}\n"
 
-                return {
-                    "url": url,
-                    "domain": domain,
-                    "content": content,
-                    "success": True,
-                }
+                return self._make_result(
+                    url,
+                    domain,
+                    content=content,
+                    success=True,
+                    status_code=response.status_code,
+                    method="wikipedia_api",
+                    content_chars=len(content),
+                )
 
             # Regular article -> use extracts API
             response = await self._client.get(
@@ -855,68 +882,65 @@ class ConcurrentContentExtractor:
 
             pages = data.get("query", {}).get("pages", {})
             if not pages:
-                return {
-                    "url": url,
-                    "domain": domain,
-                    "content": None,
-                    "error": "No pages in API response",
-                    "success": False,
-                }
+                return self._make_result(
+                    url,
+                    domain,
+                    error="No pages in API response",
+                    status_code=response.status_code,
+                    method="wikipedia_api",
+                )
 
             page_data = next(iter(pages.values()))
 
             if "missing" in page_data:
-                return {
-                    "url": url,
-                    "domain": domain,
-                    "content": None,
-                    "error": f"Wikipedia page not found: {page_data.get('title', page_title)}",
-                    "success": False,
-                }
+                return self._make_result(
+                    url,
+                    domain,
+                    error=f"Wikipedia page not found: {page_data.get('title', page_title)}",
+                    status_code=response.status_code,
+                    method="wikipedia_api",
+                )
 
             extract = page_data.get("extract", "")
             if not extract or len(extract.strip()) < 50:
-                return {
-                    "url": url,
-                    "domain": domain,
-                    "content": None,
-                    "error": "Wikipedia extract too short",
-                    "success": False,
-                }
+                return self._make_result(
+                    url,
+                    domain,
+                    error="Wikipedia extract too short",
+                    status_code=response.status_code,
+                    method="wikipedia_api",
+                )
 
             title = page_data.get("title", page_title.replace("_", " "))
             content = f"# {title}\n\n{extract}"
 
-            if len(content) > self.MAX_CONTENT_LENGTH:
+            truncated = len(content) > self.MAX_CONTENT_LENGTH
+            content_chars = len(content)
+            if truncated:
                 content = content[: self.MAX_CONTENT_LENGTH] + "...[truncated]"
 
-            return {
-                "url": url,
-                "domain": domain,
-                "content": content,
-                "success": True,
-            }
+            return self._make_result(
+                url,
+                domain,
+                content=content,
+                success=True,
+                status_code=response.status_code,
+                method="wikipedia_api",
+                content_chars=content_chars,
+                truncated=truncated,
+            )
 
         except Exception as e:
             logger.debug(f"Wikipedia API failed for {url}: {e}")
-            return {
-                "url": url,
-                "domain": domain,
-                "content": None,
-                "error": f"Wikipedia API error: {e}",
-                "success": False,
-            }
+            return self._make_result(
+                url, domain, error=f"Wikipedia API error: {e}", method="wikipedia_api"
+            )
 
     async def _fetch_url(self, url: str) -> dict[str, Any]:
         """Fetch a single URL and extract content."""
+        domain = urlparse(url).netloc
         if self._is_blocked_domain(url):
-            return {
-                "url": url,
-                "domain": urlparse(url).netloc,
-                "content": None,
-                "error": "Blocked domain",
-                "success": False,
-            }
+            return self._make_result(url, domain, error="Blocked domain")
 
         if self._is_wikipedia_url(url):
             return await self._fetch_wikipedia(url)
@@ -928,58 +952,59 @@ class ConcurrentContentExtractor:
 
             # Direct HTTP request
             response = await self._client.get(url)
+            status_code = response.status_code
             response.raise_for_status()
             raw_html = response.text
 
             if not raw_html or len(raw_html.strip()) < 100:
-                return {
-                    "url": url,
-                    "domain": urlparse(url).netloc,
-                    "content": None,
-                    "error": "Empty or very short HTML received",
-                    "success": False,
-                }
+                return self._make_result(
+                    url,
+                    domain,
+                    error="Empty or very short HTML received",
+                    status_code=status_code,
+                )
 
             # Extract content
-            processed_content = self.html_extractor.extract(url, raw_html)
+            processed_content, method = self.html_extractor.extract(url, raw_html)
 
             if not processed_content:
-                return {
-                    "url": url,
-                    "domain": urlparse(url).netloc,
-                    "content": None,
-                    "error": "Content extraction failed",
-                    "success": False,
-                }
+                return self._make_result(
+                    url,
+                    domain,
+                    error="Content extraction failed",
+                    status_code=status_code,
+                )
 
             # Truncate if too long
-            if len(processed_content) > self.MAX_CONTENT_LENGTH:
+            truncated = len(processed_content) > self.MAX_CONTENT_LENGTH
+            content_chars = len(processed_content)
+            if truncated:
                 processed_content = processed_content[: self.MAX_CONTENT_LENGTH] + "...[truncated]"
 
-            return {
-                "url": url,
-                "domain": urlparse(url).netloc,
-                "content": processed_content,
-                "success": True,
-            }
+            return self._make_result(
+                url,
+                domain,
+                content=processed_content,
+                success=True,
+                status_code=status_code,
+                method=method,
+                content_chars=content_chars,
+                truncated=truncated,
+            )
 
         except TimeoutError:
-            return {
-                "url": url,
-                "domain": urlparse(url).netloc,
-                "content": None,
-                "error": "Request timed out",
-                "success": False,
-            }
+            return self._make_result(url, domain, error="Request timed out")
+        except httpx.HTTPStatusError as e:
+            logger.debug(f"HTTP error for {url}: {e}")
+            return self._make_result(
+                url,
+                domain,
+                error=f"HTTP {e.response.status_code}",
+                status_code=e.response.status_code,
+            )
         except Exception as e:
             logger.debug(f"Error processing {url}: {e}")
-            return {
-                "url": url,
-                "domain": urlparse(url).netloc,
-                "content": None,
-                "error": str(e),
-                "success": False,
-            }
+            return self._make_result(url, domain, error=str(e))
 
     async def _fetch_with_bright_data(self, url: str) -> dict[str, Any]:
         """Fetch URL using Bright Data API."""
@@ -998,56 +1023,49 @@ class ConcurrentContentExtractor:
                 "https://api.brightdata.com/request", headers=headers, json=payload
             )
 
+            domain = urlparse(url).netloc
+
             if response.status_code != 200:
-                return {
-                    "url": url,
-                    "domain": urlparse(url).netloc,
-                    "content": None,
-                    "error": f"Bright Data API error: {response.status_code}",
-                    "success": False,
-                }
+                return self._make_result(
+                    url,
+                    domain,
+                    error=f"Bright Data API error: {response.status_code}",
+                    status_code=response.status_code,
+                )
 
             raw_html = response.text
 
             if not raw_html or len(raw_html.strip()) < 100:
-                return {
-                    "url": url,
-                    "domain": urlparse(url).netloc,
-                    "content": None,
-                    "error": "Empty HTML from Bright Data",
-                    "success": False,
-                }
+                return self._make_result(
+                    url, domain, error="Empty HTML from Bright Data", status_code=200
+                )
 
-            processed_content = self.html_extractor.extract(url, raw_html)
+            processed_content, method = self.html_extractor.extract(url, raw_html)
 
             if not processed_content:
-                return {
-                    "url": url,
-                    "domain": urlparse(url).netloc,
-                    "content": None,
-                    "error": "Content extraction failed",
-                    "success": False,
-                }
+                return self._make_result(
+                    url, domain, error="Content extraction failed", status_code=200
+                )
 
-            if len(processed_content) > self.MAX_CONTENT_LENGTH:
+            truncated = len(processed_content) > self.MAX_CONTENT_LENGTH
+            content_chars = len(processed_content)
+            if truncated:
                 processed_content = processed_content[: self.MAX_CONTENT_LENGTH] + "...[truncated]"
 
-            return {
-                "url": url,
-                "domain": urlparse(url).netloc,
-                "content": processed_content,
-                "success": True,
-            }
+            return self._make_result(
+                url,
+                domain,
+                content=processed_content,
+                success=True,
+                status_code=200,
+                method=method,
+                content_chars=content_chars,
+                truncated=truncated,
+            )
 
         except Exception as e:
             logger.debug(f"Bright Data error for {url}: {e}")
-            return {
-                "url": url,
-                "domain": urlparse(url).netloc,
-                "content": None,
-                "error": str(e),
-                "success": False,
-            }
+            return self._make_result(url, urlparse(url).netloc, error=str(e))
 
     async def extract_content(self, urls: list[str]) -> dict[str, dict[str, Any]]:
         """
