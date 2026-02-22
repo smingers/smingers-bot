@@ -1,0 +1,3 @@
+**Analyzing probability trends**
+
+I'm thinking about the unique incidents over the past 14 years, which give about a 40% chance each year. When I look specifically at Ukraine, there haven't been any incidents in the last two years, making the base rate 0%. Extrapolating from this, I figure a probability baseline might be about 5%, with an outside view prediction closer to 1%. But considering the possibility of false positives with credible accusations, I decide on a final prediction of 2%.

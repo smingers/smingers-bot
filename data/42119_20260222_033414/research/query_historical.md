@@ -1,0 +1,7 @@
+Analysis:
+To estimate the probability of future state-actor chemical-weapon use in Ukraine, the most useful historical context is: (1) every previous alleged or confirmed incident in Ukraine since the full-scale invasion; (2) which of those incidents were formally attributed or at least publicly accused by credible bodies such as the OPCW or NATO member governments; and (3) what kinds of agents were involved (Schedule 1 vs. riot-control agents used as weapons). Locating OPCW Technical Assistance Visit (TAV) reports, NATO statements, US/UK intelligence briefings, and Ukrainian/Russian government communiqués will give a timeline of precedent, showing both frequency and escalation patterns. Recent-year coverage (2024-2026) is especially important because it reflects current capabilities, intent, and international red-line signaling. Older Russian/Syrian precedents can supplement but Ukrainian-theatre data are the primary baseline. No economic data are required.
+
+Search queries:
+1. OPCW Ukraine chemical weapons statement (Google)
+2. Russia chloropicrin Ukraine accusation 2025 (Google News)
+3. List all official accusations or findings since Feb 2022 that a state actor used any Schedule 1 chemical weapon in Ukraine, citing NATO members, OPCW, or Ukrainian government. Include date, accusing body, alleged agent, and OPCW investigation results; summarize patterns. (Agent)

@@ -1,0 +1,302 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 6,
+      "queries": [
+        {
+          "query": "https://www.opcw.org/",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://www.law.cornell.edu/wex/sovereignty",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "https://www.opcw.org/chemical-weapons-convention/annexes/annex-chemicals/schedule-1",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://www.opcw.org/chemical-weapons-convention",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        },
+        {
+          "query": "https://www.opcw.org/media-centre/news",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "OPCW Ukraine chemical weapons statement",
+          "tool": "Google",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "Russia chloropicrin Ukraine accusation 2025",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "List all official accusations or findings since Feb 2022 that a state actor used any Schedule 1 chemical weapon in Ukraine, citing NATO members, OPCW, or Ukrainian government. Include date, accusing body, alleged agent, and OPCW investigation results; summarize patterns.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "Russia chemical weapons Ukraine accusations OPCW findings 2022 2024",
+              "OPCW Ukraine technical assistance visit chemical weapons results",
+              "NATO Russia chloropicrin riot control agent Ukraine warfare",
+              "Ukraine Russia chemical weapons use allegations chlorine CS gas",
+              "OPCW Ukraine chemical weapons investigation report 2024 2025"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "Russia chemical weapons Ukraine accusations OPCW findings 2022 2024",
+                    "Google"
+                  ],
+                  [
+                    "OPCW Ukraine technical assistance visit chemical weapons results",
+                    "Google"
+                  ],
+                  [
+                    "NATO Russia chloropicrin riot control agent Ukraine warfare",
+                    "Google News"
+                  ],
+                  [
+                    "Ukraine Russia chemical weapons use allegations chlorine CS gas",
+                    "Google News"
+                  ],
+                  [
+                    "OPCW Ukraine chemical weapons investigation report 2024 2025",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 60298,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "Agent"
+      ],
+      "llm_cost": 0.2591,
+      "llm_cost_summarization": 0.1331,
+      "llm_cost_agentic": 0.126,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "OPCW Ukraine chemical weapons 2026",
+          "tool": "Google",
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "NATO Russia chemical weapons Ukraine Feb 2026",
+          "tool": "Google News",
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "List NATO or OPCW statements from 2025-2026 alleging that any state used chemical weapons, including riot control agents, in Ukraine, with dates and details.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "Will any state actor use chemical weapons in Ukraine before May 1, 2026?",
+          "tool": "AskNews",
+          "deep_research_query": "List NATO or OPCW statements from 2025-2026 alleging that any state used chemical weapons, including riot control agents, in Ukraine, with dates and details."
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "AskNews"
+      ],
+      "llm_cost": 0.1437,
+      "llm_cost_summarization": 0.1331,
+      "llm_cost_agentic": 0.0106,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6919,
+        "token_output": 1879,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.06278,
+        "duration_seconds": 48.70114326477051,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13432,
+        "token_output": 2822,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.10949,
+        "duration_seconds": 68.10490107536316,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6919,
+        "token_output": 1580,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.058295,
+        "duration_seconds": 48.70126914978027,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12843,
+        "token_output": 2558,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.102585,
+        "duration_seconds": 68.10486626625061,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6279,
+        "token_output": 2773,
+        "token_reasoning": 992,
+        "used_reasoning": true,
+        "cost": 0.04981024999999999,
+        "duration_seconds": 48.70132040977478,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11769,
+        "token_output": 2610,
+        "token_reasoning": 600,
+        "used_reasoning": true,
+        "cost": 0.05713575,
+        "duration_seconds": 68.10482907295227,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6279,
+        "token_output": 1914,
+        "token_reasoning": 704,
+        "used_reasoning": true,
+        "cost": 0.02787,
+        "duration_seconds": 48.70137143135071,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12147,
+        "token_output": 1340,
+        "token_reasoning": 384,
+        "used_reasoning": true,
+        "cost": 0.035014,
+        "duration_seconds": 68.10479378700256,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6279,
+        "token_output": 2264,
+        "token_reasoning": 832,
+        "used_reasoning": true,
+        "cost": 0.03067,
+        "duration_seconds": 48.70142078399658,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11709,
+        "token_output": 2029,
+        "token_reasoning": 960,
+        "used_reasoning": true,
+        "cost": 0.039650000000000005,
+        "duration_seconds": 68.10475850105286,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0162,
+    "step2_search": 0.2591,
+    "step3_outside_view": 0.2294,
+    "step5_inside_view": 0.3439,
+    "step6_aggregation": 0.3439,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.8486
+}
