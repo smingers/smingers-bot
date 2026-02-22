@@ -1,10 +1,10 @@
-# Metaculus AI Forecasting Bot
+# AI Forecasting Bot
 
-AI-powered forecasting bot for the Metaculus AI Forecasting Benchmark competition.
+AI-powered forecasting bot.
 
 ## Acknowledgements
 
-The forecasting pipeline and prompts in this bot are based on [Panshul42's Metaculus-AI-Benchmark-2025-Q2](https://github.com/Panshul42/Metaculus-AI-Benchmark-2025-Q2), which placed 1st in the Q2 2025 tournament. It adapts their 5-agent ensemble approach with cross-pollination for this implementation.
+The forecasting pipeline and prompts in this bot were originally based on [Panshul42's Metaculus-AI-Benchmark-2025-Q2](https://github.com/Panshul42/Metaculus-AI-Benchmark-2025-Q2), which placed 1st in the Q2 2025 tournament.
 
 ## Setup
 
