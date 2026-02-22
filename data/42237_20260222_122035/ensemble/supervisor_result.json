@@ -1,0 +1,16 @@
+{
+  "confidence": "high",
+  "prediction": 0.82,
+  "search_queries": [
+    "IOM Missing Migrants Mediterranean 2026 deaths February (Google News)",
+    "IOM Missing Migrants Project data update frequency verification lag (Google)",
+    "What is the current IOM Missing Migrants Project year-to-date total for Mediterranean dead and missing as of late February 2026, and does the dataset allow filtering by incident date to show only incidents from February 22 onward? Also, have the missing persons from recent large incidents (e.g., boats lost during storms in early-mid February) been added to the dataset yet? (Agent)",
+    "IOM Mediterranean missing boats Cyclone Harry 2026 (Google News)"
+  ],
+  "cost": 0.2682,
+  "divergence": {
+    "metric_name": "std_dev",
+    "metric_value": 33.61,
+    "threshold": 15.0
+  }
+}
