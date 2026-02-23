@@ -1,0 +1,749 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 1,
+      "queries": [
+        {
+          "query": "https://www.cdc.gov/flu-burden/php/php/data-vis/2025-2026.html",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1,
+          "domain": "www.cdc.gov",
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_words": 1104,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "CDC preliminary flu burden hospitalizations 2024-25",
+          "tool": "Google",
+          "url_results": [
+            {
+              "url": "https://www.cdc.gov/flu-burden/php/data-vis/2024-2025.html",
+              "domain": "www.cdc.gov",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 6249,
+              "truncated": false
+            },
+            {
+              "url": "https://www.cdc.gov/flu/whats-new/2025-2026-influenza-activity.html",
+              "domain": "www.cdc.gov",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 51632,
+              "truncated": true
+            },
+            {
+              "url": "https://www.cdc.gov/mmwr/volumes/74/wr/mm7434a1.htm",
+              "domain": "www.cdc.gov",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 31153,
+              "truncated": true
+            },
+            {
+              "url": "https://www.cdc.gov/flu-burden/php/data-vis/index.html",
+              "domain": "www.cdc.gov",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 624,
+              "truncated": false
+            },
+            {
+              "url": "https://www.sanofi.us/assets/dot-us/pages/images/Your-Health/Vaccines/Sanofi-Flunomics-Country-Scorecard-U.S.-Final-Nov2025.pdf",
+              "domain": "www.sanofi.us",
+              "success": false,
+              "error": "Content extraction failed",
+              "method": null,
+              "status_code": 200,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.cdc.gov/flu-burden/php/data-vis/2023-2024.html",
+              "domain": "www.cdc.gov",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 1696,
+              "truncated": false
+            },
+            {
+              "url": "https://www.youtube.com/watch?v=jd5hh9YL_dw",
+              "domain": "www.youtube.com",
+              "success": false,
+              "error": "Content extraction failed",
+              "method": null,
+              "status_code": 200,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12631739/",
+              "domain": "pmc.ncbi.nlm.nih.gov",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.contagionlive.com/view/2024-to-2025-us-influenza-season-sets-record-hospitalization-rate",
+              "domain": "www.contagionlive.com",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.aha.org/news/headline/2025-09-12-flu-hospitalization-rate-2024-25-highest-more-decade",
+              "domain": "www.aha.org",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 10,
+            "urls_extracted": 5,
+            "urls_failed": 5,
+            "urls_summarized": 3
+          },
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "severe flu season hospitalization estimates CDC",
+          "tool": "Google News",
+          "url_results": [
+            {
+              "url": "https://www.cidrap.umn.edu/influenza-general/flu-claims-5-more-us-children-s-lives-virus-continues-circulating-moderate-very",
+              "domain": "www.cidrap.umn.edu",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.cdc.gov/fluview/overview/influenza-hospitalization-surveillance.html",
+              "domain": "www.cdc.gov",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 6406,
+              "truncated": false
+            },
+            {
+              "url": "https://www.idse.net/Influenza/Article/02-26/12k-estimated-US-flu-deaths-this-season/79651",
+              "domain": "www.idse.net",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 5160,
+              "truncated": false
+            },
+            {
+              "url": "https://respiratory-therapy.com/disorders-diseases/infectious-diseases/influenza/cdc-influenza-update-2025-week-52/",
+              "domain": "respiratory-therapy.com",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.cnn.com/2026/01/09/health/flu-illness-2026-peak",
+              "domain": "www.cnn.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 3674,
+              "truncated": false
+            },
+            {
+              "url": "https://www.cdc.gov/flu-burden/php/data-vis/index.html",
+              "domain": "www.cdc.gov",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 624,
+              "truncated": false
+            },
+            {
+              "url": "https://www.cidrap.umn.edu/influenza-general/cdc-s-fluview-shows-8-more-pediatric-deaths-flu-activity-drops",
+              "domain": "www.cidrap.umn.edu",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.idse.net/Influenza/Article/12-25/Influenza-CDC-Estimates-7-Million-Cases-This-Season/79289",
+              "domain": "www.idse.net",
+              "success": true,
+              "error": null,
+              "method": "density",
+              "status_code": 200,
+              "content_chars": 1224,
+              "truncated": false
+            },
+            {
+              "url": "https://www.cdc.gov/mmwr/volumes/74/wr/mm7434a1.htm",
+              "domain": "www.cdc.gov",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 31153,
+              "truncated": true
+            },
+            {
+              "url": "https://www.cidrap.umn.edu/influenza-general/us-flu-activity-declines-3rd-straight-week-remains-elevated",
+              "domain": "www.cidrap.umn.edu",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 10,
+            "urls_extracted": 6,
+            "urls_failed": 4,
+            "urls_summarized": 3
+          },
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Retrieve upper-bound hospitalization ranges from CDC \u201cPreliminary Estimated Flu Disease Burden\u201d pages for seasons 2017-18 through 2024-25; list any season where the upper bound exceeded 800,000 and note the date that threshold was first reached.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 4,
+            "queries_executed": [
+              "CDC preliminary estimated flu disease burden hospitalization upper bound 2017-2024",
+              "CDC flu burden hospitalization estimates 800000 season severity",
+              "site:cdc.gov \"estimated flu disease burden\" hospitalizations 2017 2018 2019 2020 2021 2022 2023 2024",
+              "CDC flu hospitalization burden 2024-25 preliminary estimate range",
+              "CDC flu disease burden historical hospitalization estimates seasons comparison",
+              "CDC flu burden 2017-18 hospitalization estimate 960000 uncertainty interval",
+              "CDC flu burden 2024-25 final hospitalization estimate range",
+              "site:cdc.gov flu burden 2025-2026 hospitalization weekly estimate",
+              "CDC flu burden 2024-25 preliminary hospitalization estimate final",
+              "CDC FluView 2025-2026 week 10 hospitalization burden estimate",
+              "site:cdc.gov flu-burden 2024-2025 hospitalization range"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "CDC preliminary estimated flu disease burden hospitalization upper bound 2017-2024",
+                    "Google"
+                  ],
+                  [
+                    "CDC flu burden hospitalization estimates 800000 season severity",
+                    "Google"
+                  ],
+                  [
+                    "site:cdc.gov \"estimated flu disease burden\" hospitalizations 2017 2018 2019 2020 2021 2022 2023 2024",
+                    "Google"
+                  ],
+                  [
+                    "CDC flu hospitalization burden 2024-25 preliminary estimate range",
+                    "Google News"
+                  ],
+                  [
+                    "CDC flu disease burden historical hospitalization estimates seasons comparison",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 72177,
+                "analysis_chars": 0
+              },
+              {
+                "step_number": 2,
+                "queries_executed": [
+                  [
+                    "CDC flu burden 2017-18 hospitalization estimate 960000 uncertainty interval",
+                    "Google"
+                  ],
+                  [
+                    "CDC flu burden 2024-25 final hospitalization estimate range",
+                    "Google"
+                  ],
+                  [
+                    "site:cdc.gov flu burden 2025-2026 hospitalization weekly estimate",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 49077,
+                "analysis_chars": 7051
+              },
+              {
+                "step_number": 3,
+                "queries_executed": [
+                  [
+                    "CDC flu burden 2024-25 preliminary hospitalization estimate final",
+                    "Google"
+                  ],
+                  [
+                    "CDC FluView 2025-2026 week 10 hospitalization burden estimate",
+                    "Google"
+                  ],
+                  [
+                    "site:cdc.gov flu-burden 2024-2025 hospitalization range",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 53879,
+                "analysis_chars": 7288
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Google News",
+        "Agent"
+      ],
+      "llm_cost": 0.5591,
+      "llm_cost_summarization": 0.207,
+      "llm_cost_agentic": 0.352,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "2025-26 flu burden CDC",
+          "tool": "Google",
+          "url_results": [
+            {
+              "url": "https://www.cdc.gov/flu-burden/php/php/data-vis/2025-2026.html",
+              "domain": "www.cdc.gov",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 7199,
+              "truncated": false
+            },
+            {
+              "url": "https://www.cdc.gov/fluview/surveillance/2025-week-51.html",
+              "domain": "www.cdc.gov",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 17738,
+              "truncated": true
+            },
+            {
+              "url": "https://www.reuters.com/business/healthcare-pharmaceuticals/us-cdc-says-2025-26-flu-season-moderately-severe-cases-hit-11-million-2026-01-05/",
+              "domain": "www.reuters.com",
+              "success": false,
+              "error": "HTTP 401",
+              "method": null,
+              "status_code": 401,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.cdc.gov/flu/season/2025-2026.html",
+              "domain": "www.cdc.gov",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 7161,
+              "truncated": false
+            },
+            {
+              "url": "https://vaccinateyourfamily.org/current-flu-season/",
+              "domain": "vaccinateyourfamily.org",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.cdc.gov/flu-burden/php/data-vis/index.html",
+              "domain": "www.cdc.gov",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 624,
+              "truncated": false
+            },
+            {
+              "url": "https://www.nbcnews.com/health/health-news/flu-2026-states-deaths-cdc-symptoms-superflu-rcna251910",
+              "domain": "www.nbcnews.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 4390,
+              "truncated": false
+            },
+            {
+              "url": "https://www.facebook.com/wrdwtv/posts/cdc-says-flu-activity-has-not-peaked-yet-amid-record-breaking-season-/1301885428651998/",
+              "domain": "www.facebook.com",
+              "success": false,
+              "error": "Blocked domain",
+              "method": null,
+              "status_code": null,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://thehill.com/policy/healthcare/5674732-severe-flu-season-2025/",
+              "domain": "thehill.com",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 9,
+            "urls_extracted": 5,
+            "urls_failed": 4,
+            "urls_summarized": 3
+          },
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "flu hospitalizations 2025-26 season CDC",
+          "tool": "Google News",
+          "url_results": [
+            {
+              "url": "https://www.cdc.gov/fluview/surveillance/2026-week-06.html",
+              "domain": "www.cdc.gov",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 20978,
+              "truncated": true
+            },
+            {
+              "url": "https://www.cdc.gov/fluvaxview/dashboard/index.html",
+              "domain": "www.cdc.gov",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 5191,
+              "truncated": false
+            },
+            {
+              "url": "https://respiratory-therapy.com/disorders-diseases/infectious-diseases/influenza/cdc-influenza-update-2025-week-52/",
+              "domain": "respiratory-therapy.com",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://publichealth.jhu.edu/2025/virus-transmission-trends-winter-2025-26",
+              "domain": "publichealth.jhu.edu",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.reuters.com/business/healthcare-pharmaceuticals/us-cdc-says-2025-26-flu-season-moderately-severe-cases-hit-11-million-2026-01-05/",
+              "domain": "www.reuters.com",
+              "success": false,
+              "error": "HTTP 401",
+              "method": null,
+              "status_code": 401,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.cidrap.umn.edu/influenza-general/cdc-s-fluview-shows-8-more-pediatric-deaths-flu-activity-drops",
+              "domain": "www.cidrap.umn.edu",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.nbcnews.com/health/health-news/flu-season-virus-symptoms-surge-nationwide-variants-vaccines-children-rcna251534",
+              "domain": "www.nbcnews.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 6699,
+              "truncated": false
+            },
+            {
+              "url": "https://www.aha.org/news/headline/2025-09-03-cdc-releases-2025-26-respiratory-disease-season-outlook",
+              "domain": "www.aha.org",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.cpr.org/2025/12/31/colorado-hospitalizations-flu/",
+              "domain": "www.cpr.org",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.cdc.gov/bird-flu/situation-summary/index.html",
+              "domain": "www.cdc.gov",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 1629,
+              "truncated": false
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 10,
+            "urls_extracted": 4,
+            "urls_failed": 6,
+            "urls_summarized": 3
+          },
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Give the latest CDC preliminary estimate of cumulative flu-related hospitalizations for the 2025-26 U.S. season up to February 23 2026 and discuss whether analysts expect it to exceed 850,000 before April 5 2026.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "Will CDC\u2019s preliminary estimate of cumulative flu-related hospitalizations for the 2025\u201326 season reach 850,000 before April 5, 2026?",
+          "tool": "AskNews",
+          "deep_research_query": "Give the latest CDC preliminary estimate of cumulative flu-related hospitalizations for the 2025-26 U.S. season up to February 23 2026 and discuss whether analysts expect it to exceed 850,000 before April 5 2026."
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "AskNews",
+        "Google News"
+      ],
+      "llm_cost": 0.2159,
+      "llm_cost_summarization": 0.207,
+      "llm_cost_agentic": 0.0089,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6884,
+        "token_output": 1857,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.062275,
+        "duration_seconds": 49.80021524429321,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14611,
+        "token_output": 3029,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.11849000000000001,
+        "duration_seconds": 65.69938135147095,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6884,
+        "token_output": 1494,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.056830000000000006,
+        "duration_seconds": 49.80026841163635,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13935,
+        "token_output": 2258,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.103545,
+        "duration_seconds": 65.69935774803162,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6125,
+        "token_output": 2548,
+        "token_reasoning": 860,
+        "used_reasoning": true,
+        "cost": 0.046390749999999994,
+        "duration_seconds": 49.800305128097534,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12558,
+        "token_output": 2392,
+        "token_reasoning": 735,
+        "used_reasoning": true,
+        "cost": 0.0554645,
+        "duration_seconds": 65.69933152198792,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6125,
+        "token_output": 1764,
+        "token_reasoning": 640,
+        "used_reasoning": true,
+        "cost": 0.026362,
+        "duration_seconds": 49.8003408908844,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12880,
+        "token_output": 1716,
+        "token_reasoning": 512,
+        "used_reasoning": true,
+        "cost": 0.039488,
+        "duration_seconds": 65.69930577278137,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6125,
+        "token_output": 2319,
+        "token_reasoning": 1024,
+        "used_reasoning": true,
+        "cost": 0.030802,
+        "duration_seconds": 49.80036783218384,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12371,
+        "token_output": 1191,
+        "token_reasoning": 256,
+        "used_reasoning": true,
+        "cost": 0.03427,
+        "duration_seconds": 65.69928002357483,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0109,
+    "step2_search": 0.5591,
+    "step3_outside_view": 0.2227,
+    "step5_inside_view": 0.3513,
+    "step6_aggregation": 0.3513,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 1.1439
+}
