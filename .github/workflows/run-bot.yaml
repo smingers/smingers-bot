@@ -56,16 +56,10 @@ jobs:
           for TOURNAMENT in 32916 minibench; do
             sleep 1.5  # Rate limiting
 
-            # Get open question IDs (filtered by default_project)
-            if [ "$TOURNAMENT" = "minibench" ]; then
-              JQ_FILTER='.results[] | select(.projects.default_project.slug == "minibench") | .id'
-            else
-              JQ_FILTER=".results[] | select(.projects.default_project.id == $TOURNAMENT) | .id"
-            fi
-
+            # Get open question IDs (filter out non-question posts like announcements)
             OPEN_IDS=$(curl -sf -H "Authorization: Token $METACULUS_TOKEN" \
               "https://www.metaculus.com/api/posts/?tournaments=$TOURNAMENT&statuses=open&limit=100&order_by=scheduled_close_time" \
-              | jq -r "$JQ_FILTER" | sort -n)
+              | jq -r '[.results[] | select(.question)] | map(.id) | .[]' | sort -n)
             OPEN_COUNT=$(echo "$OPEN_IDS" | grep -c '[0-9]' || true)
 
             sleep 1.5
