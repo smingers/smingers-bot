@@ -59,7 +59,7 @@ jobs:
             # Get open question IDs (filter out non-question posts like announcements)
             OPEN_IDS=$(curl -sf -H "Authorization: Token $METACULUS_TOKEN" \
               "https://www.metaculus.com/api/posts/?tournaments=$TOURNAMENT&statuses=open&limit=100&order_by=scheduled_close_time" \
-              | jq -r '[.results[] | select(.question)] | map(.id) | .[]' | sort -n)
+              | jq -r '[.results[] | select(.question or .group_of_questions)] | map(.id) | .[]' | sort -n)
             OPEN_COUNT=$(echo "$OPEN_IDS" | grep -c '[0-9]' || true)
 
             sleep 1.5
