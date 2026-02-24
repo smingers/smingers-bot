@@ -6075,6 +6075,73 @@
     ]
   },
   {
+    "file": "42211_20260222_071011_assessment.md",
+    "question_id": 42211,
+    "question_type": "binary",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.6",
+        "score": 16
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.6",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 16
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.6",
+        "score": 16
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.6",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 15
+      }
+    ]
+  },
+  {
     "file": "42230_20260220_155838_assessment.md",
     "question_id": 42230,
     "question_type": "binary",
@@ -6272,6 +6339,73 @@
         "output_num": 5,
         "model": "o3",
         "score": 5
+      }
+    ]
+  },
+  {
+    "file": "42240_20260224_103525_assessment.md",
+    "question_id": 42240,
+    "question_type": "binary",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.6",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.6",
+        "score": 13
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 9
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 16
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.6",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.6",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 13
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 13
       }
     ]
   }
