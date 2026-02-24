@@ -1,0 +1,759 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 5,
+      "queries": [
+        {
+          "query": "https://data.worldhappiness.report/country/FIN",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0,
+          "domain": "data.worldhappiness.report",
+          "method": null,
+          "status_code": 403,
+          "content_words": null,
+          "error": "HTTP 403"
+        },
+        {
+          "query": "https://en.wikipedia.org/wiki/International_Day_of_Happiness",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1,
+          "domain": "en.wikipedia.org",
+          "method": "wikipedia_api",
+          "status_code": 200,
+          "content_words": 924,
+          "error": null
+        },
+        {
+          "query": "https://www.worldhappiness.report/about/",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0,
+          "domain": "www.worldhappiness.report",
+          "method": null,
+          "status_code": 403,
+          "content_words": null,
+          "error": "HTTP 403"
+        },
+        {
+          "query": "https://www.worldhappiness.report/faq/",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0,
+          "domain": "www.worldhappiness.report",
+          "method": null,
+          "status_code": 403,
+          "content_words": null,
+          "error": "HTTP 403"
+        },
+        {
+          "query": "https://data.worldhappiness.report/table",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0,
+          "domain": "data.worldhappiness.report",
+          "method": null,
+          "status_code": 403,
+          "content_words": null,
+          "error": "HTTP 403"
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Finland annual happiness scores 2005-2024",
+          "tool": "Google",
+          "url_results": [
+            {
+              "url": "https://www.statista.com/statistics/1225047/ranking-of-happiest-countries-worldwide-by-score/?srsltid=AfmBOooneM9numtr10-2E7twWZeuoN4xJNVhydyPO-LnnVwkV02GFfow",
+              "domain": "www.statista.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 3288,
+              "truncated": false
+            },
+            {
+              "url": "https://www.theglobaleconomy.com/Finland/happiness/",
+              "domain": "www.theglobaleconomy.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 1629,
+              "truncated": false
+            },
+            {
+              "url": "https://thedailyaus.com.au/culture/finland-tops-the-world-happiness-report-for-the-8th-year",
+              "domain": "thedailyaus.com.au",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://en.wikipedia.org/wiki/World_Happiness_Report",
+              "domain": "en.wikipedia.org",
+              "success": true,
+              "error": null,
+              "method": "wikipedia_api",
+              "status_code": 200,
+              "content_chars": 11669,
+              "truncated": false
+            },
+            {
+              "url": "https://www.cnbc.com/2024/03/20/happiest-countries-world-happiness-report-2024.html",
+              "domain": "www.cnbc.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 3556,
+              "truncated": false
+            },
+            {
+              "url": "https://tunisia.opendataforafrica.org/atlas/Finland/Happiness",
+              "domain": "tunisia.opendataforafrica.org",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.bbc.com/news/articles/cr72xep44kdo",
+              "domain": "www.bbc.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 3173,
+              "truncated": false
+            },
+            {
+              "url": "https://www.facebook.com/groups/664157424630796/posts/1371096520603546/",
+              "domain": "www.facebook.com",
+              "success": false,
+              "error": "Blocked domain",
+              "method": null,
+              "status_code": null,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.swissinfo.ch/eng/various/finland-remains-the-happiest-country-in-the-world/89037735",
+              "domain": "www.swissinfo.ch",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 3260,
+              "truncated": false
+            },
+            {
+              "url": "https://files.worldhappiness.report/WHR24.pdf",
+              "domain": "files.worldhappiness.report",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 8293934,
+              "truncated": true
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 10,
+            "urls_extracted": 7,
+            "urls_failed": 3,
+            "urls_summarized": 3
+          },
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Gallup World Poll Finland wellbeing 2025",
+          "tool": "Google News",
+          "url_results": [
+            {
+              "url": "https://www.gallup.com/analytics/349280/state-of-worlds-emotional-health.aspx",
+              "domain": "www.gallup.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 18357,
+              "truncated": true
+            },
+            {
+              "url": "https://www.washingtonpost.com/world/interactive/2025/world-happiness-report/",
+              "domain": "www.washingtonpost.com",
+              "success": false,
+              "error": "",
+              "method": null,
+              "status_code": null,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://gfmag.com/data/happiest-countries/",
+              "domain": "gfmag.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 12172,
+              "truncated": false
+            },
+            {
+              "url": "https://www.mentalfloss.com/geography/wanderlust/happiest-countries-gallup-world-happiness-report",
+              "domain": "www.mentalfloss.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 2127,
+              "truncated": false
+            },
+            {
+              "url": "https://www.cbsnews.com/news/2025-world-happiness-report-us-lowest-ranking/",
+              "domain": "www.cbsnews.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 4908,
+              "truncated": false
+            },
+            {
+              "url": "https://www.usatoday.com/story/graphics/2025/07/02/united-states-world-happiness-rankings-2025/84385092007/",
+              "domain": "www.usatoday.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 2871,
+              "truncated": false
+            },
+            {
+              "url": "https://www.wionews.com/photos/top-10-countries-with-the-happiest-citizens-in-2025-1761072702011",
+              "domain": "www.wionews.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 3269,
+              "truncated": false
+            },
+            {
+              "url": "https://www.goodnet.org/articles/finland-remains-on-top-as-worlds-happiness-country",
+              "domain": "www.goodnet.org",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 3071,
+              "truncated": false
+            },
+            {
+              "url": "https://www.usnews.com/news/best-countries/articles/2025-03-20/finland-is-no-1-u-s-falls-in-world-happiness-report-rankings",
+              "domain": "www.usnews.com",
+              "success": false,
+              "error": "",
+              "method": null,
+              "status_code": null,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.cnbc.com/2025/03/19/world-happiness-report-2025-finland-is-the-happiest-country.html",
+              "domain": "www.cnbc.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 4603,
+              "truncated": false
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 10,
+            "urls_extracted": 8,
+            "urls_failed": 2,
+            "urls_summarized": 3
+          },
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Give full table of Finland\u2019s World Happiness Report annual ladder scores from 2005-2024 and list any recent commentary on trends driving the 2024 result.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "Finland World Happiness Report ladder score 2005 2024 historical data",
+              "Finland World Happiness Report 2024 results trends commentary",
+              "World Happiness Report 2024 Finland top ranking factors analysis",
+              "Finland happiness score drivers 2024 Nordic wellbeing trends",
+              "World Happiness Report 2024 methodology Gallup ladder score trends"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "Finland World Happiness Report ladder score 2005 2024 historical data",
+                    "Google"
+                  ],
+                  [
+                    "Finland World Happiness Report 2024 results trends commentary",
+                    "Google News"
+                  ],
+                  [
+                    "World Happiness Report 2024 Finland top ranking factors analysis",
+                    "Google"
+                  ],
+                  [
+                    "Finland happiness score drivers 2024 Nordic wellbeing trends",
+                    "Google News"
+                  ],
+                  [
+                    "World Happiness Report 2024 methodology Gallup ladder score trends",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 91590,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Google News",
+        "Agent"
+      ],
+      "llm_cost": 0.3721,
+      "llm_cost_summarization": 0.1989,
+      "llm_cost_agentic": 0.1732,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Finland 2025 ladder score Gallup",
+          "tool": "Google",
+          "url_results": [
+            {
+              "url": "https://www.gallup.com/analytics/349487/world-happiness-report.aspx",
+              "domain": "www.gallup.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 10112,
+              "truncated": false
+            },
+            {
+              "url": "https://www.cnbc.com/2025/03/19/world-happiness-report-2025-finland-is-the-happiest-country.html",
+              "domain": "www.cnbc.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 4603,
+              "truncated": false
+            },
+            {
+              "url": "https://www.usnews.com/news/best-countries/articles/2025-03-20/finland-is-no-1-u-s-falls-in-world-happiness-report-rankings",
+              "domain": "www.usnews.com",
+              "success": false,
+              "error": "",
+              "method": null,
+              "status_code": null,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.travelandleisure.com/finland-named-happiest-country-in-the-world-gallup-11698828",
+              "domain": "www.travelandleisure.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 3405,
+              "truncated": false
+            },
+            {
+              "url": "https://www.worldhappiness.report/",
+              "domain": "www.worldhappiness.report",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.wbaltv.com/article/finland-world-happiness-rankings-us-2025/64238607",
+              "domain": "www.wbaltv.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 5801,
+              "truncated": false
+            },
+            {
+              "url": "https://news.gallup.com/opinion/gallup/657998/kinder-world-happier-one.aspx",
+              "domain": "news.gallup.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 4518,
+              "truncated": false
+            },
+            {
+              "url": "https://apnews.com/article/world-happiness-report-ranking-finland-afghanistan-us-b41c1712448762d98fe9e4f80233c15f",
+              "domain": "apnews.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 4962,
+              "truncated": false
+            },
+            {
+              "url": "https://fortune.com/well/2025/03/19/finland-worlds-happiest-country/",
+              "domain": "fortune.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 4924,
+              "truncated": false
+            },
+            {
+              "url": "https://slate.com/life/2025/08/travel-finland-happiest-country-united-states.html",
+              "domain": "slate.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 25636,
+              "truncated": true
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 10,
+            "urls_extracted": 8,
+            "urls_failed": 2,
+            "urls_summarized": 3
+          },
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Finland happiness score 2025 poll",
+          "tool": "Google News",
+          "url_results": [
+            {
+              "url": "https://gfmag.com/data/happiest-countries/",
+              "domain": "gfmag.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 12172,
+              "truncated": false
+            },
+            {
+              "url": "https://www.usatoday.com/story/graphics/2025/07/02/united-states-world-happiness-rankings-2025/84385092007/",
+              "domain": "www.usatoday.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 2871,
+              "truncated": false
+            },
+            {
+              "url": "https://www.cnn.com/travel/worlds-happiest-countries-2025-wellness",
+              "domain": "www.cnn.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 5822,
+              "truncated": false
+            },
+            {
+              "url": "https://www.aljazeera.com/news/2025/3/20/finland-takes-top-spot-us-gets-lowest-ever-rank-in-world-happiness-report",
+              "domain": "www.aljazeera.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 3479,
+              "truncated": false
+            },
+            {
+              "url": "https://www.bbc.com/news/articles/cr72xep44kdo",
+              "domain": "www.bbc.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 3173,
+              "truncated": false
+            },
+            {
+              "url": "https://www.cbsnews.com/news/2025-world-happiness-report-us-lowest-ranking/",
+              "domain": "www.cbsnews.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 4908,
+              "truncated": false
+            },
+            {
+              "url": "https://www.upi.com/Top_News/US/2025/03/20/World-Happiness-Report-Finland/8651742474419/",
+              "domain": "www.upi.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 1555,
+              "truncated": false
+            },
+            {
+              "url": "https://www.usnews.com/news/best-countries/articles/2025-03-20/finland-is-no-1-u-s-falls-in-world-happiness-report-rankings",
+              "domain": "www.usnews.com",
+              "success": false,
+              "error": "",
+              "method": null,
+              "status_code": null,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.afar.com/magazine/the-worlds-happiest-country-is-all-about-reading-coffee-and-saunas",
+              "domain": "www.afar.com",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.visualcapitalist.com/mapped-countries-happiest-least-happy/",
+              "domain": "www.visualcapitalist.com",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 10,
+            "urls_extracted": 7,
+            "urls_failed": 3,
+            "urls_summarized": 3
+          },
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Has Finland\u2019s 2025 Gallup World Poll life-evaluation score been released or leaked? Provide any February 2026 Nordic or international coverage.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "What will Finland score on the 2026 World Happiness Report?",
+          "tool": "AskNews",
+          "deep_research_query": "Has Finland\u2019s 2025 Gallup World Poll life-evaluation score been released or leaked? Provide any February 2026 Nordic or international coverage."
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "AskNews",
+        "Google News"
+      ],
+      "llm_cost": 0.167,
+      "llm_cost_summarization": 0.1581,
+      "llm_cost_agentic": 0.009,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7228,
+        "token_output": 1946,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.06533,
+        "duration_seconds": 46.7389440536499,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13687,
+        "token_output": 3237,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.11699,
+        "duration_seconds": 64.88896989822388,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7228,
+        "token_output": 2134,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.06815,
+        "duration_seconds": 46.73901677131653,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13156,
+        "token_output": 3265,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.114755,
+        "duration_seconds": 64.88893699645996,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6476,
+        "token_output": 2600,
+        "token_reasoning": 946,
+        "used_reasoning": true,
+        "cost": 0.047733,
+        "duration_seconds": 46.73905324935913,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12336,
+        "token_output": 2475,
+        "token_reasoning": 968,
+        "used_reasoning": true,
+        "cost": 0.056237999999999996,
+        "duration_seconds": 64.88890147209167,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6476,
+        "token_output": 1884,
+        "token_reasoning": 576,
+        "used_reasoning": true,
+        "cost": 0.028024,
+        "duration_seconds": 46.739096879959106,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12093,
+        "token_output": 1384,
+        "token_reasoning": 384,
+        "used_reasoning": true,
+        "cost": 0.035258,
+        "duration_seconds": 64.88886737823486,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6476,
+        "token_output": 2102,
+        "token_reasoning": 832,
+        "used_reasoning": true,
+        "cost": 0.029768000000000003,
+        "duration_seconds": 46.7391471862793,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11646,
+        "token_output": 3468,
+        "token_reasoning": 2304,
+        "used_reasoning": true,
+        "cost": 0.051036,
+        "duration_seconds": 64.88883399963379,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0124,
+    "step2_search": 0.3721,
+    "step3_outside_view": 0.239,
+    "step5_inside_view": 0.3743,
+    "step6_aggregation": 0.3743,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.9978
+}

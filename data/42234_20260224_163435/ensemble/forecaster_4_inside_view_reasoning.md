@@ -1,0 +1,5 @@
+**Forecasting Finland's Happiness Score**
+
+I’m working on crafting a professional forecast structure for Finland's average annual happiness score for 2025. Based on previous analyses, there's a range between 7.5-8. For the percentiles, I’ve noted figures: 10th at 7.56, 20th at 7.65, and continuing up to 90th at 7.90. Considering new information, it seems the score may hover around 7.73, factoring in insights from recent articles referencing averages and specific values for 2025.**Adjusting Happiness Score Forecast**
+
+I’m noting a small decrease of about 0.05 in the forecast. Historically, changes like this are around 0.05-0.1 year to year, which means the inside view shifts slightly downward, estimating a median of around 7.74 instead of 7.76. I’ll keep the distribution similar but narrow it a bit due to the near-term resolution. I’ll lay out the final percentiles as: 10th at 7.54, 20th at 7.63, 40th at 7.70, 60th at 7.76, 80th at 7.83, and 90th at 7.88. Now, let's finalize the answer!

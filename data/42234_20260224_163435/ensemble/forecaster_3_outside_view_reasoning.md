@@ -1,0 +1,7 @@
+**Considering economic predictions**
+
+I’m treating the prediction as uncertain since it's from a potentially leaked source, but it provides a relevant baseline. The user is looking for an outside view prediction tied to historical context. I'll consider data from 2013-2024, even if we don't have exact yearly scores. It seems like a reasonable range for 2025 could be 7.72-7.78, with a median around 7.74-7.76. I should also think through the timeframe involved in this prediction.**Adjusting prediction bounds**
+
+I'm considering a prediction range of 7.58-7.92, with specific values set at different percentiles: 10th at 7.60, 90th at 7.90, and so on. I should check for monotonicity, which seems fine. However, annual scores seem to have more noise compared to three-year averages, so I might widen the range a bit. I'll also set the lower bound to be more flexible, possibly going as low as 7.5. It's time to write a concise analysis with solid rationale!**Clarifying data sources for 2025**
+
+I'm trying to clarify some confusion about the annual data for 2025. The data portal provides annual figures, but many media outlets report using three-year averages. Historically, annual values have been stable, falling between 7.66 and 7.889. I want to reference Finland's ladder scores over the last ten years and perhaps look to Nordic countries as peers. The expected release timeframe is about a month, with the outcome seeming fairly fixed based on stable institutions and minor regression trends.
