@@ -36,7 +36,7 @@ When asked to analyze a forecast run using this template:
 
 3. Identify the question type (binary, numeric, or multiple choice) and use the appropriate prompts for that type throughout.
 
-4. Complete all sections below with specific evidence and quotes from the artifacts. Be analytical and critical.
+4. Complete all sections below with specific evidence and quotes from the artifacts. Be analytical and critical. **You must fill out the "Authored by" field** (immediately under the report title) with the model or agent name that is writing this assessment.
 
 5. Save the completed assessment to: `docs/assessments/{QUESTION_ID}_{TIMESTAMP}_assessment.md`
 
@@ -48,6 +48,14 @@ When asked to analyze a forecast run using this template:
 ---
 
 # FORECAST QUALITY ASSESSMENT REPORT
+
+## Authored by
+
+**Required.** Every assessment must include this. State the model or agent that wrote this assessment so it can be attributed and compared across runs (e.g. Claude Opus 4, GPT-4o, Cursor Agent, Auto).
+
+**Model/Agent:**
+
+---
 
 ## Critical Issues Summary
 

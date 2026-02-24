@@ -6408,5 +6408,72 @@
         "score": 13
       }
     ]
+  },
+  {
+    "file": "42241_20260224_152606_assessment.md",
+    "question_id": 42241,
+    "question_type": "binary",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 1,
+        "model": "Sonnet 4.6",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.6",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 16
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 1,
+        "model": "Sonnet 4.6",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.6",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.2",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 15
+      }
+    ]
   }
 ]
