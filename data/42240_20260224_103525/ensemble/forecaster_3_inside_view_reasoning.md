@@ -1,0 +1,3 @@
+**Evaluating percentage options**
+
+I'm considering the percentage, sticking with 3.5% initially since the opening date is February 24, but there’s no new evidence. I think I should stay at 3%, while remaining aware of the outside possibility of 3.5%. I feel it’s wise to choose 4% to avoid overconfidence but still aim for something accurate. I’ll go with 4% and need to follow the format exactly. That seems like the best approach!

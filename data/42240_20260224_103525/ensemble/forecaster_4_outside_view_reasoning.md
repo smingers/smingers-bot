@@ -1,0 +1,7 @@
+**Assessing Cannes predictions**
+
+I need to make an outside view prediction about Cannes' official selection announcement happening before April 10, 2026. I'd analyze historical data from 2014-2025, noting announcements typically fall between April 11-18, with no prior dates. Based on this data, the base rate for announcements before April 10 is 0%. However, there's always some uncertainty, so I’d assign a small probability of around 7-10%. Now, I’m ready to compute the final prediction.**Analyzing historical trends**
+
+I'm looking at the reference class for Cannes announcements between 2014-2025, which gives me nine normal years to analyze. It's crucial to note that no announcements happened before April 10, leading to a base rate of 0%. However, I can’t assign zero probability altogether. Considering the trend towards earlier announcements, I estimate a 30% chance of continuing this shift. After evaluating all these factors, I think an 8% probability for announcements before April 10 makes sense. Now I need to gather and evaluate my sources.**Calculating the timeframe**
+
+I’m confirming that the period from February 24, 2026, to April 10, 2026, is 45 days inclusive. Since 2026 isn't a leap year, February accounts for four days, March has 31 days, and then I count nine days in April. Even though the base rate is 0/10, I can’t ignore that there’s still a slight chance, maybe around 5-10%. Now I’m ready to craft a thorough response based on this information.

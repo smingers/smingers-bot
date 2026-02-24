@@ -1,0 +1,11 @@
+**Forecasting Cannes announcement**
+
+I need to summarize the likelihood of Cannes announcing its official selection before April 10, 2026. Historically, these announcements have been made after that date, with the earliest being April 10, 2025. I see there's currently no official word as of February 24, 2026, just speculation. The festival begins on May 12, which suggests a typical announcement window of 25-35 days prior. So, April 10 would be close to the earliest threshold for 2026.**Analyzing Cannes scheduling**
+
+I'm looking at the timeline for Cannes announcements. The earliest was April 12, 2018, which was 26 days before the festival, while 32 days before aligns with the historical trend of making announcements, particularly in 2025. I realized that since April 10, 2026, falls on a Friday, it may shift due to the weekend or Easter. After reviewing the calendar, I confirmed that April 10, 2026, will indeed be a Friday. Historically, the announcements often occur on a Thursday.**Assessing press conference likelihood**
+
+The historical pattern shows press conferences typically happen on Thursdays in April. In 2026, April 9 is indeed a Thursday, right before the threshold date of April 10, suggesting a high probability that the conference will be scheduled that day. Analyzing past years, the second Thursday of April seems significant, and April 9 fits that pattern. While there's no official info yet, it seems likely that they will adhere to tradition, giving a probability around 60%. However, there’s still a chance for delays due to logistics.**Calculating probabilities for scheduling**
+
+To analyze the potential dates for the press conference, I noted that the second Thursday falls on April 9, 2026, which is after Easter this year. So, it’s plausible they might schedule it then. Historically, they have tended to choose Thursdays, giving a probability of about 40% for April 9 and similarly for April 16. However, since April 9 is before the threshold date of April 10, I'd say there's a slightly higher chance for it, around 45%. 
+
+I will consider evidence from historical data and current news to finalize this analysis.

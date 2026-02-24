@@ -1,0 +1,722 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 1,
+      "queries": [
+        {
+          "query": "https://www.festival-cannes.com/en/press/press-releases/",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0,
+          "domain": "www.festival-cannes.com",
+          "method": null,
+          "status_code": 403,
+          "content_words": null,
+          "error": "HTTP 403"
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Cannes 2025 official selection press release date",
+          "tool": "Google",
+          "url_results": [
+            {
+              "url": "https://www.festival-cannes.com/en/2025/live-announcement-of-the-official-selection-2025/",
+              "domain": "www.festival-cannes.com",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.screendaily.com/news/cannes-confirms-2025-official-selection-announcement-date/5203153.article",
+              "domain": "www.screendaily.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 1481,
+              "truncated": false
+            },
+            {
+              "url": "https://www.festival-cannes.com/en/medialibrary/annonce-de-la-selection-officielle-2025/",
+              "domain": "www.festival-cannes.com",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://deadline.com/2025/03/cannes-sets-date-2025-official-selection-announcement-1236330543/",
+              "domain": "deadline.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 1574,
+              "truncated": false
+            },
+            {
+              "url": "https://www.youtube.com/watch?v=EX13hWIVnn0",
+              "domain": "www.youtube.com",
+              "success": false,
+              "error": "Content extraction failed",
+              "method": null,
+              "status_code": 200,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.cinematography.world/cannes-sets-date-for-2025-official-selection-announcement/",
+              "domain": "www.cinematography.world",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.sortiraparis.com/en/what-to-do-in-paris/cinema-series/guides/219525-cannes-film-festival-official-selection",
+              "domain": "www.sortiraparis.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 19739,
+              "truncated": true
+            },
+            {
+              "url": "https://www.festival-cannes.com/en/press/press-releases/the-films-of-the-official-selection-2025/",
+              "domain": "www.festival-cannes.com",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.indiewire.com/news/festivals/cannes-film-festival-2025-lineup-1235114303/",
+              "domain": "www.indiewire.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 6605,
+              "truncated": false
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 9,
+            "urls_extracted": 4,
+            "urls_failed": 5,
+            "urls_summarized": 3
+          },
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Cannes official selection announced April 2024",
+          "tool": "Google News",
+          "url_results": [
+            {
+              "url": "https://deadline.com/2025/03/cannes-sets-date-2025-official-selection-announcement-1236330543/",
+              "domain": "deadline.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 1574,
+              "truncated": false
+            },
+            {
+              "url": "https://www.lemonde.fr/en/culture/article/2025/04/10/cannes-film-festival-wes-anderson-jafar-panahi-and-dardenne-brothers-announced_6740059_30.html",
+              "domain": "www.lemonde.fr",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 2621,
+              "truncated": false
+            },
+            {
+              "url": "https://www.festival-cannes.com/en/press/press-releases/additions-to-the-selection-of-the-77th-festival-de-cannes/",
+              "domain": "www.festival-cannes.com",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.sortiraparis.com/en/what-to-do-in-paris/cinema-series/guides/274346-cannes-film-festival-directors-fortnight",
+              "domain": "www.sortiraparis.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 8157,
+              "truncated": false
+            },
+            {
+              "url": "https://www.screendaily.com/news/cannes-unveils-2024-official-selection/5192335.article",
+              "domain": "www.screendaily.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 1717,
+              "truncated": false
+            },
+            {
+              "url": "https://magazine.luxus-plus.com/en/the-cannes-festival-unveils-its-official-selection-for-2024/",
+              "domain": "magazine.luxus-plus.com",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.hollywoodreporter.com/lists/cannes-2025-movie-lineup-predictions/",
+              "domain": "www.hollywoodreporter.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 45528,
+              "truncated": true
+            },
+            {
+              "url": "https://numero.com/en/culture-en/movies/cannes-2025-which-stars-will-be-at-the-festival/",
+              "domain": "numero.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 4193,
+              "truncated": false
+            },
+            {
+              "url": "https://www.indiewire.com/gallery/cannes-film-festival-predictions-2025/",
+              "domain": "www.indiewire.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 27985,
+              "truncated": true
+            },
+            {
+              "url": "https://www.festival-cannes.com/en/2025/the-2024-official-selection-around-the-world/",
+              "domain": "www.festival-cannes.com",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 10,
+            "urls_extracted": 7,
+            "urls_failed": 3,
+            "urls_summarized": 3
+          },
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Give publication dates of Cannes Film Festival \u201cOfficial Selection\u201d press releases from 2014-2025 and note whether each was before 10 April. Also mention any years with delayed announcements and reasons.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 3,
+            "queries_executed": [
+              "Cannes Film Festival official selection announcement date April",
+              "Cannes 2020 2021 delayed official selection announcement reason",
+              "Cannes Film Festival selection revealed press release history",
+              "Cannes official selection 2024 2025 announcement date April",
+              "Cannes Film Festival lineup reveal date each year 2014 2025",
+              "Cannes official selection announcement date April 2014 2015 2016 2017",
+              "Cannes 2024 official selection press conference date April"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "Cannes Film Festival official selection announcement date April",
+                    "Google"
+                  ],
+                  [
+                    "Cannes 2020 2021 delayed official selection announcement reason",
+                    "Google"
+                  ],
+                  [
+                    "Cannes Film Festival selection revealed press release history",
+                    "Google"
+                  ],
+                  [
+                    "Cannes official selection 2024 2025 announcement date April",
+                    "Google News"
+                  ],
+                  [
+                    "Cannes Film Festival lineup reveal date each year 2014 2025",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 71492,
+                "analysis_chars": 0
+              },
+              {
+                "step_number": 2,
+                "queries_executed": [
+                  [
+                    "Cannes official selection announcement date April 2014 2015 2016 2017",
+                    "Google"
+                  ],
+                  [
+                    "Cannes 2024 official selection press conference date April",
+                    "Google News"
+                  ]
+                ],
+                "search_results_chars": 33549,
+                "analysis_chars": 6756
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Google News",
+        "Agent"
+      ],
+      "llm_cost": 0.4213,
+      "llm_cost_summarization": 0.1709,
+      "llm_cost_agentic": 0.2504,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Cannes 2026 official selection announcement",
+          "tool": "Google",
+          "url_results": [
+            {
+              "url": "https://www.festival-cannes.com/en/press/press-releases/cesar-202618-films-61-nominations-congratulations-to-the-2025-official-selection/",
+              "domain": "www.festival-cannes.com",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://m.imdb.com/news/ni2097031/?ref_=ttnw_art_perm",
+              "domain": "m.imdb.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 2686,
+              "truncated": false
+            },
+            {
+              "url": "https://www.festival-cannes.com/en/",
+              "domain": "www.festival-cannes.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 690,
+              "truncated": false
+            },
+            {
+              "url": "https://numero.com/en/culture-en/movies/cannes-film-festival-2026-which-films-will-be-in-competition/",
+              "domain": "numero.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 4733,
+              "truncated": false
+            },
+            {
+              "url": "https://www.canneslions.com/",
+              "domain": "www.canneslions.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 3280,
+              "truncated": false
+            },
+            {
+              "url": "https://www.imdb.com/list/ls4155281324/",
+              "domain": "www.imdb.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 3517,
+              "truncated": false
+            },
+            {
+              "url": "https://variety.com/lists/cannes-venice-film-festivals-2026-movies-to-expect/",
+              "domain": "variety.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 12406,
+              "truncated": false
+            },
+            {
+              "url": "https://www.marchedufilm.com/",
+              "domain": "www.marchedufilm.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 11186,
+              "truncated": false
+            },
+            {
+              "url": "https://www.festival-cannes.com/en/the-selection/",
+              "domain": "www.festival-cannes.com",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://en.wikipedia.org/wiki/Cannes_Film_Festival",
+              "domain": "en.wikipedia.org",
+              "success": true,
+              "error": null,
+              "method": "wikipedia_api",
+              "status_code": 200,
+              "content_chars": 26158,
+              "truncated": true
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 10,
+            "urls_extracted": 8,
+            "urls_failed": 2,
+            "urls_summarized": 3
+          },
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Cannes 2026 lineup unveiling date",
+          "tool": "Google News",
+          "url_results": [
+            {
+              "url": "https://variety.com/lists/cannes-venice-film-festivals-2026-movies-to-expect/",
+              "domain": "variety.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 12406,
+              "truncated": false
+            },
+            {
+              "url": "https://deadline.com/2026/01/film-festivals-movies-cannes-venice-2026-list-deadline-1236659167/",
+              "domain": "deadline.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 41612,
+              "truncated": true
+            },
+            {
+              "url": "https://sundayguardianlive.com/entertainment-news/anurag-kashyaps-kennedy-ott-release-date-sunny-leones-film-premiered-at-the-cannes-film-festival-2023-171387/",
+              "domain": "sundayguardianlive.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 2182,
+              "truncated": false
+            },
+            {
+              "url": "https://www.screendaily.com/news/cannes-critics-week-next-step-programme-unveils-lineup-of-international-feature-filmmakers/5211688.article",
+              "domain": "www.screendaily.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 4673,
+              "truncated": false
+            },
+            {
+              "url": "https://www.thewrap.com/creative-content/movies/2026-movie-release-dates-calendar/",
+              "domain": "www.thewrap.com",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.hollywoodreporter.com/movies/movie-news/cannes-2025-film-festival-selection-lineup-1236183130/",
+              "domain": "www.hollywoodreporter.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 6843,
+              "truncated": false
+            },
+            {
+              "url": "https://latteluxurynews.com/2025/12/08/iltm-cannes-2026-lures-%E2%89%8810000-delegates/",
+              "domain": "latteluxurynews.com",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://people.com/tom-cruise-mission-impossible-the-final-reckoning-premiere-2025-cannes-film-festival-11711081",
+              "domain": "people.com",
+              "success": false,
+              "error": "HTTP 402",
+              "method": null,
+              "status_code": 402,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.worldofreel.com/blog/2025/10/16/julia-ducournaus-alpha-to-release-in-just-one-theater-this-weekend",
+              "domain": "www.worldofreel.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 2080,
+              "truncated": false
+            },
+            {
+              "url": "https://screenrant.com/sense-and-sensibility-movie-daisy-edgar-jones-september-2026-release/",
+              "domain": "screenrant.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 2864,
+              "truncated": false
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 10,
+            "urls_extracted": 7,
+            "urls_failed": 3,
+            "urls_summarized": 3
+          },
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide recent February 2026 film-industry reports indicating when the Cannes Film Festival will announce the 2026 Official Selection list, citing any statements from festival officials or press releases.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "Will the Cannes Film Festival publish its 2026 official selection before April 10, 2026?",
+          "tool": "AskNews",
+          "deep_research_query": "Provide recent February 2026 film-industry reports indicating when the Cannes Film Festival will announce the 2026 Official Selection list, citing any statements from festival officials or press releases."
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Google News",
+        "AskNews"
+      ],
+      "llm_cost": 0.1788,
+      "llm_cost_summarization": 0.1709,
+      "llm_cost_agentic": 0.0079,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6400,
+        "token_output": 1374,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.052610000000000004,
+        "duration_seconds": 62.24984550476074,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14795,
+        "token_output": 1769,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.10051,
+        "duration_seconds": 43.99062657356262,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6400,
+        "token_output": 1292,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.051379999999999995,
+        "duration_seconds": 62.24989867210388,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14758,
+        "token_output": 1750,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.10003999999999999,
+        "duration_seconds": 43.99061369895935,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5549,
+        "token_output": 3825,
+        "token_reasoning": 2269,
+        "used_reasoning": true,
+        "cost": 0.06326075,
+        "duration_seconds": 62.249929666519165,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12609,
+        "token_output": 2366,
+        "token_reasoning": 300,
+        "used_reasoning": true,
+        "cost": 0.05518975,
+        "duration_seconds": 43.99059534072876,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5549,
+        "token_output": 2044,
+        "token_reasoning": 768,
+        "used_reasoning": true,
+        "cost": 0.02745,
+        "duration_seconds": 62.24996876716614,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13009,
+        "token_output": 2059,
+        "token_reasoning": 832,
+        "used_reasoning": true,
+        "cost": 0.04249,
+        "duration_seconds": 43.990580797195435,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5549,
+        "token_output": 1493,
+        "token_reasoning": 320,
+        "used_reasoning": true,
+        "cost": 0.023042,
+        "duration_seconds": 62.25000739097595,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12531,
+        "token_output": 3312,
+        "token_reasoning": 2240,
+        "used_reasoning": true,
+        "cost": 0.051558,
+        "duration_seconds": 43.99056577682495,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0106,
+    "step2_search": 0.4213,
+    "step3_outside_view": 0.2177,
+    "step5_inside_view": 0.3498,
+    "step6_aggregation": 0.3498,
+    "step7_supervisor": 0.5963
+  },
+  "total_pipeline_cost": 1.5958
+}

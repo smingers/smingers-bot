@@ -1,0 +1,16 @@
+{
+  "confidence": "medium",
+  "prediction": 0.5,
+  "search_queries": [
+    "Cannes 2024 2025 official selection announcement exact date (Google)",
+    "Cannes film festival 2026 press conference date (Google News)",
+    "What exact dates did Cannes announce its Official Selection for each year from 2017 to 2025? For each year, please provide the day of the week, the exact date, and the number of days before the festival opening. I need to verify whether the announcement consistently falls on the second Thursday of April and whether there is a consistent ~33-day lead time before the festival opening. (Agent)",
+    "Cannes 2026 festival dates May official selection April (Google News)"
+  ],
+  "cost": 0.5963,
+  "divergence": {
+    "metric_name": "std_dev",
+    "metric_value": 28.36,
+    "threshold": 15.0
+  }
+}
