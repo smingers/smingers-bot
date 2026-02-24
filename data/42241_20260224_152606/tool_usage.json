@@ -1,0 +1,737 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "https://www.boxofficemojo.com/year/world/2026/",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1,
+          "domain": "www.boxofficemojo.com",
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_words": 4170,
+          "error": null
+        },
+        {
+          "query": "https://www.the-numbers.com/box-office-records/worldwide/all-movies/cumulative/all-time",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0,
+          "domain": "www.the-numbers.com",
+          "method": null,
+          "status_code": 200,
+          "content_words": null,
+          "error": "Content extraction failed"
+        },
+        {
+          "query": "https://screenrant.com/super-mario-galaxy-movie-box-office-billion-original-prediction/",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1,
+          "domain": "screenrant.com",
+          "method": "site-specific",
+          "status_code": 200,
+          "content_words": 609,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "2026 film release schedule",
+          "tool": "Google",
+          "url_results": [
+            {
+              "url": "https://www.firstshowing.net/schedule2026/",
+              "domain": "www.firstshowing.net",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 7560,
+              "truncated": false
+            },
+            {
+              "url": "https://editorial.rottentomatoes.com/article/the-most-anticipated-movies-of-2026/",
+              "domain": "editorial.rottentomatoes.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 25842,
+              "truncated": true
+            },
+            {
+              "url": "https://en.wikipedia.org/wiki/List_of_American_films_of_2026",
+              "domain": "en.wikipedia.org",
+              "success": true,
+              "error": null,
+              "method": "wikipedia_api",
+              "status_code": 200,
+              "content_chars": 546,
+              "truncated": false
+            },
+            {
+              "url": "https://www.boxofficemojo.com/calendar/2026-04-01/",
+              "domain": "www.boxofficemojo.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 4236,
+              "truncated": false
+            },
+            {
+              "url": "https://www.imdb.com/year/2026/",
+              "domain": "www.imdb.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 4902,
+              "truncated": false
+            },
+            {
+              "url": "https://www.movieinsider.com/movies/2026",
+              "domain": "www.movieinsider.com",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.reddit.com/r/movies/comments/1q1c9pe/the_us_widerelease_schedule_for_2026_as_of/",
+              "domain": "www.reddit.com",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.imdb.com/calendar/",
+              "domain": "www.imdb.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 4560,
+              "truncated": false
+            },
+            {
+              "url": "https://www.dcm.co.uk/uploads/documents/film_schedule_web.pdf",
+              "domain": "www.dcm.co.uk",
+              "success": false,
+              "error": "Content extraction failed",
+              "method": null,
+              "status_code": 200,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.hollywoodreporter.com/lists/2026-new-movie-releases/",
+              "domain": "www.hollywoodreporter.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 16123,
+              "truncated": true
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 10,
+            "urls_extracted": 7,
+            "urls_failed": 3,
+            "urls_summarized": 3
+          },
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "2026 blockbuster billion box office",
+          "tool": "Google News",
+          "url_results": [
+            {
+              "url": "https://www.globaltimes.cn/page/202602/1355498.shtml",
+              "domain": "www.globaltimes.cn",
+              "success": false,
+              "error": "Content extraction failed",
+              "method": null,
+              "status_code": 200,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://collider.com/most-anticipated-blockbuster-movies-2026-ranked/",
+              "domain": "collider.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 10883,
+              "truncated": false
+            },
+            {
+              "url": "https://variety.com/2026/film/news/box-office-2026-predictions-avengers-doomsday-spiderman-brand-new-day-odyssey-1236615235/",
+              "domain": "variety.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 11163,
+              "truncated": false
+            },
+            {
+              "url": "https://www.thewrap.com/creative-content/movies/avatar-fire-and-ash-reaches-1-billion/",
+              "domain": "www.thewrap.com",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://deadline.com/2025/12/global-box-office-2026-projection-1236652287/",
+              "domain": "deadline.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 3621,
+              "truncated": false
+            },
+            {
+              "url": "https://www.nbcnews.com/news/us-news/avatar-box-office-rcna252214",
+              "domain": "www.nbcnews.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 4375,
+              "truncated": false
+            },
+            {
+              "url": "https://www.forbes.com/sites/markhughes/2026/01/04/avatar-fire-and-ash-tops-1-billion-in-worldwide-box-office/",
+              "domain": "www.forbes.com",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://screenrant.com/2026-global-box-office-projections-record/",
+              "domain": "screenrant.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 3755,
+              "truncated": false
+            },
+            {
+              "url": "https://www.cnbc.com/2025/10/06/2025-box-office-headed-for-best-post-covid-haul.html",
+              "domain": "www.cnbc.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 2842,
+              "truncated": false
+            },
+            {
+              "url": "https://www.military.com/feature/2026/01/29/why-40-million-melania-trump-documentary-raising-eyebrows.html",
+              "domain": "www.military.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 9325,
+              "truncated": false
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 10,
+            "urls_extracted": 7,
+            "urls_failed": 3,
+            "urls_summarized": 3
+          },
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide list of major movies releasing worldwide Jan to Apr 2026 and any industry forecasts or analyst commentary on their expected global box office, especially likelihood of surpassing $1 billion.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "major movies releasing January April 2026 worldwide",
+              "2026 box office billion dollar films forecast analyst",
+              "Super Mario movie 2026 box office prediction billion",
+              "blockbuster films Q1 2026 release schedule studios",
+              "2026 movie release calendar tentpole films preview"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "major movies releasing January April 2026 worldwide",
+                    "Google"
+                  ],
+                  [
+                    "2026 box office billion dollar films forecast analyst",
+                    "Google News"
+                  ],
+                  [
+                    "Super Mario movie 2026 box office prediction billion",
+                    "Google"
+                  ],
+                  [
+                    "blockbuster films Q1 2026 release schedule studios",
+                    "Google"
+                  ],
+                  [
+                    "2026 movie release calendar tentpole films preview",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 103479,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google News",
+        "Google"
+      ],
+      "llm_cost": 0.4718,
+      "llm_cost_summarization": 0.292,
+      "llm_cost_agentic": 0.1798,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "2026 blockbuster movie release schedule",
+          "tool": "Google",
+          "url_results": [
+            {
+              "url": "https://www.firstshowing.net/schedule2026/",
+              "domain": "www.firstshowing.net",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 7560,
+              "truncated": false
+            },
+            {
+              "url": "https://www.imdb.com/year/2026/",
+              "domain": "www.imdb.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 4902,
+              "truncated": false
+            },
+            {
+              "url": "https://editorial.rottentomatoes.com/article/the-most-anticipated-movies-of-2026/",
+              "domain": "editorial.rottentomatoes.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 25842,
+              "truncated": true
+            },
+            {
+              "url": "https://en.wikipedia.org/wiki/List_of_American_films_of_2026",
+              "domain": "en.wikipedia.org",
+              "success": true,
+              "error": null,
+              "method": "wikipedia_api",
+              "status_code": 200,
+              "content_chars": 546,
+              "truncated": false
+            },
+            {
+              "url": "https://www.boxofficemojo.com/calendar/",
+              "domain": "www.boxofficemojo.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 6631,
+              "truncated": false
+            },
+            {
+              "url": "https://www.hollywoodreporter.com/lists/2026-new-movie-releases/",
+              "domain": "www.hollywoodreporter.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 16123,
+              "truncated": true
+            },
+            {
+              "url": "https://www.rollingstone.com/tv-movies/tv-movie-lists/most-anticipated-new-movies-2026-1235473601/",
+              "domain": "www.rollingstone.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 37295,
+              "truncated": true
+            },
+            {
+              "url": "https://www.movieinsider.com/movies/2026",
+              "domain": "www.movieinsider.com",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://ew.com/2026-movie-release-premiere-dates-11877222?srsltid=AfmBOooOiqLoJdvtlNTVJxVqNkZ_0W9m5IRJY-G8Vn1cq2EaFFOSNc1M",
+              "domain": "ew.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 6416,
+              "truncated": false
+            },
+            {
+              "url": "https://www.thewrap.com/creative-content/movies/2026-movie-release-dates-calendar/",
+              "domain": "www.thewrap.com",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 10,
+            "urls_extracted": 8,
+            "urls_failed": 2,
+            "urls_summarized": 3
+          },
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "early 2026 film billion box office",
+          "tool": "Google News",
+          "url_results": [
+            {
+              "url": "https://deadline.com/2026/02/box-office-global-disney-goat-crime-101-wuthering-heights-1236725345/",
+              "domain": "deadline.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 6757,
+              "truncated": false
+            },
+            {
+              "url": "https://www.koimoi.com/hollywood-news/3-reasons-why-michael-could-become-2026s-first-billion-dollar-film/",
+              "domain": "www.koimoi.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 2559,
+              "truncated": false
+            },
+            {
+              "url": "https://wdwnt.com/2026/02/disney-is-the-first-studio-to-surpass-1-billion-world-wide-in-weekend-box-office-numbers/",
+              "domain": "wdwnt.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 2229,
+              "truncated": false
+            },
+            {
+              "url": "https://www.cnbc.com/2026/01/30/hollywood-ip-franchise-hits-keep-falling-flat-weighing-on-box-office.html",
+              "domain": "www.cnbc.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 10014,
+              "truncated": false
+            },
+            {
+              "url": "https://www.gamesradar.com/entertainment/romance-movies/wuthering-heights-is-the-first-movie-of-2026-to-pass-the-usd100-million-mark-at-the-box-office/",
+              "domain": "www.gamesradar.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 710,
+              "truncated": false
+            },
+            {
+              "url": "https://www.laughingplace.com/disney-entertainment/disney-billion-box-office-2026/",
+              "domain": "www.laughingplace.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 3019,
+              "truncated": false
+            },
+            {
+              "url": "https://www.nytimes.com/2026/02/15/business/wuthering-heights-box-office.html",
+              "domain": "www.nytimes.com",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://variety.com/2026/film/box-office/melania-documentary-box-office-strong-opening-weekend-send-help-1236645970/",
+              "domain": "variety.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 8591,
+              "truncated": false
+            },
+            {
+              "url": "https://www.hollywoodreporter.com/movies/movie-news/box-office-melania-opening-weekend-1236490092/",
+              "domain": "www.hollywoodreporter.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 6471,
+              "truncated": false
+            },
+            {
+              "url": "https://www.thewrap.com/creative-content/movies/avatar-fire-and-ash-reaches-1-billion/",
+              "domain": "www.thewrap.com",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 10,
+            "urls_extracted": 8,
+            "urls_failed": 2,
+            "urls_summarized": 3
+          },
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Which films launching Jan-Apr 2026 are projected by analysts to top one billion dollars worldwide?",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 18
+        },
+        {
+          "query": "Will at least one film surpass US$1 billion in worldwide box office before May 1, 2026?",
+          "tool": "AskNews",
+          "deep_research_query": "Which films launching Jan-Apr 2026 are projected by analysts to top one billion dollars worldwide?"
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "AskNews"
+      ],
+      "llm_cost": 0.3002,
+      "llm_cost_summarization": 0.292,
+      "llm_cost_agentic": 0.0083,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7648,
+        "token_output": 1733,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.064235,
+        "duration_seconds": 90.525475025177,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14028,
+        "token_output": 3360,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.12054000000000001,
+        "duration_seconds": 119.94990515708923,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7648,
+        "token_output": 1664,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0632,
+        "duration_seconds": 90.52552652359009,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13640,
+        "token_output": 2869,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.111235,
+        "duration_seconds": 119.94988989830017,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6669,
+        "token_output": 4544,
+        "token_reasoning": 2609,
+        "used_reasoning": true,
+        "cost": 0.07528675,
+        "duration_seconds": 90.52555346488953,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12119,
+        "token_output": 2686,
+        "token_reasoning": 450,
+        "used_reasoning": true,
+        "cost": 0.058812249999999996,
+        "duration_seconds": 119.94987344741821,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6669,
+        "token_output": 2864,
+        "token_reasoning": 1600,
+        "used_reasoning": true,
+        "cost": 0.03625,
+        "duration_seconds": 90.52559208869934,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12555,
+        "token_output": 2039,
+        "token_reasoning": 960,
+        "used_reasoning": true,
+        "cost": 0.041422,
+        "duration_seconds": 119.94985747337341,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6669,
+        "token_output": 3410,
+        "token_reasoning": 2112,
+        "used_reasoning": true,
+        "cost": 0.040618,
+        "duration_seconds": 90.52562952041626,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11829,
+        "token_output": 3187,
+        "token_reasoning": 1728,
+        "used_reasoning": true,
+        "cost": 0.049154,
+        "duration_seconds": 119.94984173774719,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0132,
+    "step2_search": 0.4718,
+    "step3_outside_view": 0.2796,
+    "step5_inside_view": 0.3812,
+    "step6_aggregation": 0.3812,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 1.1457
+}
