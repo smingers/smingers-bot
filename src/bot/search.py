@@ -432,8 +432,6 @@ class SearchPipeline:
                 query_sources.append((news_query, "AskNews"))
                 # Track in metadata
                 asknews_metadata = {"query": news_query, "tool": "AskNews"}
-                if asknews_query and asknews_query != news_query:
-                    asknews_metadata["deep_research_query"] = asknews_query
                 metadata["queries"].append(asknews_metadata)
                 metadata["tools_used"].add("AskNews")
 
@@ -1035,7 +1033,7 @@ class SearchPipeline:
                     query=news_query,
                     n_articles=n_articles,
                     return_type="both",
-                    strategy="news knowledge",
+                    strategy="news knowledge",  # knowledge-base strategy, not time-scoped — hours_back not applicable
                     method="both",
                     similarity_score_threshold=similarity_threshold,
                 )
