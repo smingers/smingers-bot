@@ -111,8 +111,6 @@ research:
   # AskNews integration
   asknews_enabled: true
   asknews_max_results: 10
-  asknews_hours_back: 72
-  asknews_similarity_score_threshold: 0.5  # 0–1; higher = stricter relevance filtering
 
   # Agentic search (iterative LLM-guided research)
   agentic_search_enabled: true
