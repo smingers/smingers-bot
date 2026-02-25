@@ -1,0 +1,3 @@
+**Evaluating timeframe sensitivities**
+
+I want to mention that there's a major spring week in New York right after May 1. It seems I need to consider how the timeframe affects things. If it’s doubled to 130 days, including May and June, the probability could rise to about 25-30%. However, if I halve it to 32 days, then the probability drops to around 4-5%. I should probably create a checklist to keep track of these likelihoods effectively.

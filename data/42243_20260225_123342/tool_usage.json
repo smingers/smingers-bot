@@ -1,0 +1,748 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "https://press.christies.com/section/press-releases",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1,
+          "domain": "press.christies.com",
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_words": 104,
+          "error": null
+        },
+        {
+          "query": "https://www.sothebys.com/en/press",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0,
+          "domain": "www.sothebys.com",
+          "method": null,
+          "status_code": 404,
+          "content_words": null,
+          "error": "HTTP 404"
+        },
+        {
+          "query": "https://www.phillips.com/press",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1,
+          "domain": "www.phillips.com",
+          "method": "density",
+          "status_code": 200,
+          "content_words": 85,
+          "error": null
+        },
+        {
+          "query": "https://www.barnebys.com/blog/auctions-101-hammer-price-vs.-buyers-premium",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1,
+          "domain": "www.barnebys.com",
+          "method": "site-specific",
+          "status_code": 200,
+          "content_words": 342,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "$100 million painting auction record",
+          "tool": "Google",
+          "url_results": [
+            {
+              "url": "https://en.wikipedia.org/wiki/List_of_most_expensive_paintings",
+              "domain": "en.wikipedia.org",
+              "success": true,
+              "error": null,
+              "method": "wikipedia_api",
+              "status_code": 200,
+              "content_chars": 5534,
+              "truncated": false
+            },
+            {
+              "url": "https://www.artprice.com/artprice-news/7490/the-18-artworks-that-have-fetched-over-100-million",
+              "domain": "www.artprice.com",
+              "success": false,
+              "error": "Content extraction failed",
+              "method": null,
+              "status_code": 200,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://verusart.com/blogs/news/top-5-most-expensive-claude-monet-paintings-ever-sold?srsltid=AfmBOopKKPlVmsQgMHNMxjvmvQJoIyyOKbKXafuGUODlXanBPJdpDv-V",
+              "domain": "verusart.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 5081,
+              "truncated": false
+            },
+            {
+              "url": "https://www.nytimes.com/2017/05/18/arts/jean-michel-basquiat-painting-is-sold-for-110-million-at-auction.html",
+              "domain": "www.nytimes.com",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.artsy.net/article/artsy-editorial-expensive-artworks-sold-2021",
+              "domain": "www.artsy.net",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.culturetype.com/2017/05/25/basquiats-moment-record-shattering-110-million-painting-is-most-expensive-ever-by-an-american-artist-sold-at-auction/",
+              "domain": "www.culturetype.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 5917,
+              "truncated": false
+            },
+            {
+              "url": "https://www.youtube.com/watch?v=qB48b_m8G2A",
+              "domain": "www.youtube.com",
+              "success": false,
+              "error": "Content extraction failed",
+              "method": null,
+              "status_code": 200,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.facebook.com/groups/662150088408244/posts/1505048644118380/",
+              "domain": "www.facebook.com",
+              "success": false,
+              "error": "Blocked domain",
+              "method": null,
+              "status_code": null,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://news.artnet.com/market/sothebys-100-million-contemporary-art-evening-sale-422258",
+              "domain": "news.artnet.com",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.instagram.com/reel/DNa32NICsFQ/?hl=en",
+              "domain": "www.instagram.com",
+              "success": false,
+              "error": "Blocked domain",
+              "method": null,
+              "status_code": null,
+              "content_chars": 0,
+              "truncated": false
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 10,
+            "urls_extracted": 3,
+            "urls_failed": 7,
+            "urls_summarized": 3
+          },
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Christie's spring 2026 evening sale estimate",
+          "tool": "Google News",
+          "url_results": [
+            {
+              "url": "https://press.christies.com/christies-presents-its-march-2026-the-art-of-the-surreal-evening-sale",
+              "domain": "press.christies.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 9089,
+              "truncated": false
+            },
+            {
+              "url": "https://press.christies.com/major-works-and-landmark-collections-christies-marquee-week-2021-this-spring",
+              "domain": "press.christies.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 10141,
+              "truncated": false
+            },
+            {
+              "url": "https://www.artsy.net/article/artsy-editorial-211-million-kandinsky-painting-headline-christie-s-london-march-evening-sale",
+              "domain": "www.artsy.net",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.christies.com/en/stories/walk-the-auction-may-2025-230866cccaae43ad8092a01b4d787ac5",
+              "domain": "www.christies.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 12132,
+              "truncated": false
+            },
+            {
+              "url": "https://press.christies.com/christies-new-york-presents-2021-spring-marquee-week",
+              "domain": "press.christies.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 4775,
+              "truncated": false
+            },
+            {
+              "url": "https://www.christies.com/en/stories/artist-museum-moments-november-2025-87e838b3230147bda18f6c95fd9daf7f",
+              "domain": "www.christies.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 8415,
+              "truncated": false
+            },
+            {
+              "url": "https://press.christies.com/jean-michel-basquiats-baby-boom-highlights-christies-21st-century-evening-sale",
+              "domain": "press.christies.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 1332,
+              "truncated": false
+            },
+            {
+              "url": "https://press.christies.com/andy-warhols-big-electric-chair-from-the-matthys-colle-collection-will-highlight-christies-20th-century-evening-sale",
+              "domain": "press.christies.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 5025,
+              "truncated": false
+            },
+            {
+              "url": "https://press.christies.com/?p=58239&lang=eng",
+              "domain": "press.christies.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 8186,
+              "truncated": false
+            },
+            {
+              "url": "https://press.christies.com/claude-monets-peupliers-au-bord-de-lepte-crepuscule-highlights-christies-20th-century-evening-sale",
+              "domain": "press.christies.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 2711,
+              "truncated": false
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 10,
+            "urls_extracted": 9,
+            "urls_failed": 1,
+            "urls_summarized": 3
+          },
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "List all \u2265$80 m painting auction results at Christie's, Sotheby's, Phillips since 2010 and note any announced 2026 consignments expected above $100 m.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "painting auction results $100 million Christie's Sotheby's record sales",
+              "2026 auction consignment $100 million painting Christie's Sotheby's",
+              "most expensive paintings sold auction 2024 2025 results",
+              "Sotheby's Christie's Phillips 2026 spring auction highlights announced",
+              "$80 million painting auction results list since 2010"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "painting auction results $100 million Christie's Sotheby's record sales",
+                    "Google"
+                  ],
+                  [
+                    "2026 auction consignment $100 million painting Christie's Sotheby's",
+                    "Google News"
+                  ],
+                  [
+                    "most expensive paintings sold auction 2024 2025 results",
+                    "Google"
+                  ],
+                  [
+                    "Sotheby's Christie's Phillips 2026 spring auction highlights announced",
+                    "Google News"
+                  ],
+                  [
+                    "$80 million painting auction results list since 2010",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 86588,
+                "analysis_chars": 0
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Agent",
+        "Google"
+      ],
+      "llm_cost": 0.3888,
+      "llm_cost_summarization": 0.2293,
+      "llm_cost_agentic": 0.1596,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Christie's Sotheby's painting $100 million sale",
+          "tool": "Google",
+          "url_results": [
+            {
+              "url": "https://press.christies.com/press-release-christies-to-offer-the-last-leonardo-da-vinci-painting-in-private-hands",
+              "domain": "press.christies.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 5838,
+              "truncated": false
+            },
+            {
+              "url": "https://www.nytimes.com/2017/05/18/arts/jean-michel-basquiat-painting-is-sold-for-110-million-at-auction.html",
+              "domain": "www.nytimes.com",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.cnbc.com/2024/02/29/christies-sells-rothko-painting-for-100-million-in-a-secret-sale.html",
+              "domain": "www.cnbc.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 3611,
+              "truncated": false
+            },
+            {
+              "url": "https://www.youtube.com/watch?v=qB48b_m8G2A",
+              "domain": "www.youtube.com",
+              "success": false,
+              "error": "Content extraction failed",
+              "method": null,
+              "status_code": 200,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.theguardian.com/artanddesign/2017/nov/15/leonardo-da-vinci-salvator-mundi-auction",
+              "domain": "www.theguardian.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 7336,
+              "truncated": false
+            },
+            {
+              "url": "https://galeriemagazine.com/picasso-christies-100-million/",
+              "domain": "galeriemagazine.com",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://news.artnet.com/market/leonard-lauders-klimt-2684502",
+              "domain": "news.artnet.com",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.theartnewspaper.com/2017/11/14/from-pound45-to-dollar100m-leonardo-heads-to-new-york",
+              "domain": "www.theartnewspaper.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 4825,
+              "truncated": false
+            },
+            {
+              "url": "https://hyperallergic.com/claude-monet-sells-for-110m-at-sothebys-van-gogh-museum-acquires-three-works/",
+              "domain": "hyperallergic.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 6183,
+              "truncated": false
+            },
+            {
+              "url": "https://finance.yahoo.com/news/christie-auction-holy-grail-da-190857966.html",
+              "domain": "finance.yahoo.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 2486,
+              "truncated": false
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 10,
+            "urls_extracted": 6,
+            "urls_failed": 4,
+            "urls_summarized": 3
+          },
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "upcoming $100m painting auction 2026",
+          "tool": "Google News",
+          "url_results": [
+            {
+              "url": "https://www.theartnewspaper.com/2025/09/08/independent-20th-century-fair-sothebys-breuer-building",
+              "domain": "www.theartnewspaper.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 2714,
+              "truncated": false
+            },
+            {
+              "url": "https://puck.news/newsletter_content/lauders-150m-klimt-a-karpidas-blockbuster-the-independents-uptown-whirl/",
+              "domain": "puck.news",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.theguardian.com/artanddesign/2025/dec/31/picasso-portrait-charity-auction-alzheimers",
+              "domain": "www.theguardian.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 4155,
+              "truncated": false
+            },
+            {
+              "url": "https://triblive.com/local/regional/giant-eagle-plans-to-invest-100m-in-strategic-push-amid-heavy-competition/",
+              "domain": "triblive.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 893,
+              "truncated": false
+            },
+            {
+              "url": "https://www.tradingview.com/news/chainwire:219c5d75b094b:0-zama-s-public-auction-attracts-118m-for-ethereum-s-first-encrypted-ico/",
+              "domain": "www.tradingview.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 2238,
+              "truncated": false
+            },
+            {
+              "url": "https://crypto.news/zero-knowledge-proof-enters-2026-with-a-presale-auction-and-a-5m-giveaway-this-could-be-the-start-of-something-big/",
+              "domain": "crypto.news",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 7072,
+              "truncated": false
+            },
+            {
+              "url": "https://2urbangirls.com/2026/01/this-crypto-presale-already-deployed-100m-zkps-unique-auction-structure-could-drive-300x-to-10000x-returns/",
+              "domain": "2urbangirls.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 7523,
+              "truncated": false
+            },
+            {
+              "url": "https://www.theartnewspaper.com/2026/01/30/as-the-great-wealth-transfer-gets-underway-what-are-the-current-inheritance-tax-rules",
+              "domain": "www.theartnewspaper.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 13492,
+              "truncated": false
+            },
+            {
+              "url": "https://indianexpress.com/article/long-reads/return-buddha-relics-piprahwa-gems-india-10465265/",
+              "domain": "indianexpress.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 11917,
+              "truncated": false
+            },
+            {
+              "url": "https://www.newsnationnow.com/us-news/northeast/picasso-oil-painting-sells-for-over-100m-at-new-york-auction/",
+              "domain": "www.newsnationnow.com",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 10,
+            "urls_extracted": 8,
+            "urls_failed": 2,
+            "urls_summarized": 3
+          },
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "List any Christie's, Sotheby's, or Phillips press releases since 2025 announcing a painting selling for 100 million dollars or more.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 25
+        },
+        {
+          "query": "Will Christie\u2019s, Sotheby\u2019s, or Phillips report a public auction sale of a painting for at least US$100 million before May 1, 2026?",
+          "tool": "AskNews",
+          "deep_research_query": "List any Christie's, Sotheby's, or Phillips press releases since 2025 announcing a painting selling for 100 million dollars or more."
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "AskNews",
+        "Google"
+      ],
+      "llm_cost": 0.3888,
+      "llm_cost_summarization": 0.2293,
+      "llm_cost_agentic": 0.1596,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7426,
+        "token_output": 1651,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.061895000000000006,
+        "duration_seconds": 68.66383147239685,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16248,
+        "token_output": 3219,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.129525,
+        "duration_seconds": 66.40071558952332,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7426,
+        "token_output": 1627,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.061535000000000006,
+        "duration_seconds": 68.66389513015747,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15755,
+        "token_output": 2727,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.11968000000000001,
+        "duration_seconds": 66.40070152282715,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6498,
+        "token_output": 3355,
+        "token_reasoning": 1620,
+        "used_reasoning": true,
+        "cost": 0.0583415,
+        "duration_seconds": 68.66392278671265,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14121,
+        "token_output": 2467,
+        "token_reasoning": 476,
+        "used_reasoning": true,
+        "cost": 0.059249750000000004,
+        "duration_seconds": 66.40068507194519,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6498,
+        "token_output": 2866,
+        "token_reasoning": 1792,
+        "used_reasoning": true,
+        "cost": 0.035924,
+        "duration_seconds": 68.66395044326782,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14373,
+        "token_output": 2155,
+        "token_reasoning": 1152,
+        "used_reasoning": true,
+        "cost": 0.045986,
+        "duration_seconds": 66.40066957473755,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6498,
+        "token_output": 2904,
+        "token_reasoning": 1600,
+        "used_reasoning": true,
+        "cost": 0.036227999999999996,
+        "duration_seconds": 68.6639895439148,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13862,
+        "token_output": 1515,
+        "token_reasoning": 576,
+        "used_reasoning": true,
+        "cost": 0.039844,
+        "duration_seconds": 66.40065431594849,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0116,
+    "step2_search": 0.3888,
+    "step3_outside_view": 0.2539,
+    "step5_inside_view": 0.3943,
+    "step6_aggregation": 0.3943,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 1.0486
+}

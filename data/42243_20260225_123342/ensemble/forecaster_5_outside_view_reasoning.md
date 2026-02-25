@@ -1,0 +1,7 @@
+**Analyzing sales probabilities**
+
+I'm considering a 10-year window from 2013-2019 and 2022-2025 for analyzing sales probabilities, which gives me a 62.5% chance for each year. However, since I'm only looking at a two-month window, that complicates things. Historically, major sales cluster in May and sometimes March, but I need to remember that my analysis ends before those May sales kick in. I should break down trends by quarter and examine monthly distributions to get clearer insights.**Examining auction patterns**
+
+Looking at historic nine-figure auctions, they tend to cluster in May and November, with a few in March and June. Our focus is on March-April 2026, and typically there might be only one sale in March historically, possibly the Magritte. So, the chance of a nine-figure auction in that two-month window could be around 10%. I also need to consider private sales that might occur earlier, but overall, expectations should remain low based on past data.**Calculating auction probabilities**
+
+Historically, March-April might have had just one significant auction event, which gives about a 1% chance in that two-month window. However, when considering sales before May 1 across 16 years, there's only one occurrence, roughly translating to a 6% likelihood for sales in that period. I can adjust that upward to around 8-10% due to recent market trends and increasing frequency. The final probability estimate I’m aiming for is around 9%, and I should summarize my findings next.

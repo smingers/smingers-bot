@@ -1,0 +1,13 @@
+**Calculating auction probability**
+
+I need to figure out the baseline probability for the time between February 25 and May 1, 2026, which is about 65 days. I’m looking to estimate the likelihood of any painting selling for $100 million or more at public auctions during this time. To do this, I’ll analyze historical sales data, factoring in seasonality. It's crucial to keep in mind that major sales often happen in May, so this window may result in a lower base rate. I’ll reference sales of $100 million+ paintings in that timeframe.**Estimating $100m+ painting sales**
+
+I'm trying to estimate sales of paintings worth $100 million or more in Q1, particularly in March and April. Since 2013, there have been notable sales like Warhol in November 2013 and Picasso in May 2015. The only observed sale in February was a Picasso that went for over $100 million in February 2016. This suggests there’s potential for similar high-value sales in early 2026. I’m curious about any additional sales in March or April to inform my estimates.**Estimating events in the timeframe**
+
+I'm considering past events where paintings valued at over $100 million have sold, particularly in a March-April window. It seems like there haven't been any significant sales in March 2021, which makes me think that perhaps only about one of these high-value events occurs per decade in that specific timeframe. I should quantify this by looking at the sales data from 2013 to 2025, covering 13 years, to get a clearer picture.**Analyzing high-value painting sales**
+
+I’m looking at the sales of paintings worth over $100 million by month and see that most sales happen in May or November, with only one in February 2016. If I calculate the chances for sales in the February to April window, that gives me about a 7.7% chance per year. However, since we're narrowing it down to late February through April, this percentage could be lower. I also wonder if there are historical sales in March or April, even at private auctions, which might affect this estimate. So, maybe a base rate of 5-10% is more accurate.**Evaluating high-value painting sales probabilities**
+
+In 2026, the market might have trophy consignments, but demand might be lower as previous sales have been "used up." While the outside estimate could be around 8-12%, we don’t want to go too low since unannounced lots could appear, especially before May. There have historically been significant sales in April, notably in Hong Kong. 
+
+Using a systematic approach, considering past sales from 2013 to 2025, I calculate a small base rate of around 5-10% for $100 million painting sales in this timeframe, possibly adjusting to 9.7% to reflect uncertainty and market conditions.
