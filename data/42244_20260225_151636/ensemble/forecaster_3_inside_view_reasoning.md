@@ -1,0 +1,9 @@
+**Analyzing Masters forecast**
+
+I need to produce an inside view forecast for the 2026 Masters, focusing on February 25, 2026. I can't rely on the PGA TOUR past results since that's based on outside views, which the user mentioned is already done. We should ensure proper sourcing, avoiding treating future predictions as facts. The odds should align more with reliable current betting markets rather than the 72% for McIlroy. The previous distribution seems skewed, so we’ll need solid justification for adjustments based on higher-quality data.**Producing final inside view**
+
+Following the instruction, I need to wrap up the inside view after gathering the current info. I noticed that the PGA TOUR results page claims results for 2026, but this is inconsistent, so I should downweight it and lean more toward market odds. Scheffler's odds imply about 25-27%, McIlroy around 12-14%, Rahm about 9%, and DeChambeau around 8%, with the remaining field at 45%. I’ll assign final percentages as Scheffler 26%, McIlroy 14%, Rahm 9%, DeChambeau 8%, and Others 43%. I’ll also analyze sources, summarizing key ones concisely.**Analyzing sources and probabilities**
+
+I’ll include sources like BetMGM, DraftKings, Sporting News, and others for odds and evaluations. I find that sportsbook data is generally reliable, while opinions from Yardbarker and Mirror are weak. I’ll also note issues like Easyofficepools being broken. 
+
+For evidence analysis, I’ll weigh the information carefully. The timeframe is 44 days until April 9, so I’ll adjust estimates accordingly. I want to justify the shift from the outside view by emphasizing the reliance on better-quality market data. I’ll organize this response with clear sections and include final probabilities.

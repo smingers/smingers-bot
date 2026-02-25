@@ -1,0 +1,7 @@
+**Analyzing Masters probabilities**
+
+I need to determine the outside view probabilities for the winner of the 2026 Masters by analyzing historical data up to February 25, 2026. Instead of focusing on current player conditions, I'll look at patterns among past favorites and the entire field. Historically, winners seldom repeat, and the top players don’t always dominate. The "other golfer" probability may be high due to a large field, while top players might account for about 40%. I'll estimate based on historical frequencies and betting odds.**Analyzing Masters winners**
+
+I want to analyze the Masters winners from the last 15 tournaments, between 2011 and 2025. Looking at the names, I see past winners include names like Schwartzel, Watson, and Spieth, with Scheffler winning twice and others like Rahm and McIlroy winning once. That gives me a base of 26.7% for those three top players and 73.3% for the rest. As I set baseline probabilities for 2026, I’ll weigh by world ranking and past performances.
+
+However, I noticed that the forecast for the 2026 winner listed McIlroy, which doesn’t make sense since that event hasn’t occurred yet. I’ll treat that information skeptically. My analysis will focus on historical context and create a solid reference class to inform the probabilities.

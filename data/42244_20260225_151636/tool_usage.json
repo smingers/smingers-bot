@@ -1,0 +1,737 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 2,
+      "queries": [
+        {
+          "query": "https://www.masters.com/en_US/tournament/past_winners.html",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0,
+          "domain": "www.masters.com",
+          "method": null,
+          "status_code": 200,
+          "content_words": null,
+          "error": "Content extraction failed"
+        },
+        {
+          "query": "https://www.pgatour.com/tournaments/2026/masters-tournament/R2026014/past-results",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1,
+          "domain": "www.pgatour.com",
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_words": 2149,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Masters Tournament past winners",
+          "tool": "Google",
+          "url_results": [
+            {
+              "url": "https://www.masters.com/en_US/tournament/past_winners.html",
+              "domain": "www.masters.com",
+              "success": false,
+              "error": "Content extraction failed",
+              "method": null,
+              "status_code": 200,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://en.wikipedia.org/wiki/List_of_Masters_Tournament_champions",
+              "domain": "en.wikipedia.org",
+              "success": true,
+              "error": null,
+              "method": "wikipedia_api",
+              "status_code": 200,
+              "content_chars": 2587,
+              "truncated": false
+            },
+            {
+              "url": "https://www.nbcsports.com/golf/news/complete-list-past-champions-masters-tournament",
+              "domain": "www.nbcsports.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 1531,
+              "truncated": false
+            },
+            {
+              "url": "https://www.topendsports.com/events/golf-majors/masters/winners.htm",
+              "domain": "www.topendsports.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 4395,
+              "truncated": false
+            },
+            {
+              "url": "https://www.augustachronicle.com/story/news/2025/04/12/masters-winners-year-by-year-champions-at-augusta-national-1934-2024/83059058007/",
+              "domain": "www.augustachronicle.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 4303,
+              "truncated": false
+            },
+            {
+              "url": "https://www.espn.com/golf/story/_/id/39894241/who-won-masters-all-augusta-winners-list",
+              "domain": "www.espn.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 2235,
+              "truncated": false
+            },
+            {
+              "url": "https://www.masters.com/en_US/scores/stats/historical/index.html",
+              "domain": "www.masters.com",
+              "success": false,
+              "error": "Content extraction failed",
+              "method": null,
+              "status_code": 200,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.foxsports.com/stories/golf/masters-champions-list-of-tournament-winners-by-year",
+              "domain": "www.foxsports.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 4484,
+              "truncated": false
+            },
+            {
+              "url": "https://www.pga.com/story/past-winners-of-the-masters?srsltid=AfmBOooAS7lidobND6s7tS3Z430yyGjMf5ZFcacHTGVxjc6_oS5W0lMk",
+              "domain": "www.pga.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 3536,
+              "truncated": false
+            },
+            {
+              "url": "https://www.britannica.com/sports/Masters-Tournament-champions-2229244",
+              "domain": "www.britannica.com",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 10,
+            "urls_extracted": 7,
+            "urls_failed": 3,
+            "urls_summarized": 3
+          },
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "2026 Masters early odds favorites",
+          "tool": "Google News",
+          "url_results": [
+            {
+              "url": "https://www.nytimes.com/athletic/7053304/2026/02/17/masters-2026-odds-scottie-scheffler-tiger-woods/",
+              "domain": "www.nytimes.com",
+              "success": false,
+              "error": "HTTP 404",
+              "method": null,
+              "status_code": 404,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://sports.yahoo.com/articles/masters-odds-updated-betting-lines-180600323.html",
+              "domain": "sports.yahoo.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 6831,
+              "truncated": false
+            },
+            {
+              "url": "https://sports.betmgm.com/en/blog/pga/masters-odds-to-win-bm10/",
+              "domain": "sports.betmgm.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 2104,
+              "truncated": false
+            },
+            {
+              "url": "https://www.sportingnews.com/uk/golf/news/who-will-win-masters-26-latest-betting-odds-favourite-win-predictions-first-major-augusta/717f5175ff06696755c0c146",
+              "domain": "www.sportingnews.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 5135,
+              "truncated": false
+            },
+            {
+              "url": "https://golfweek.usatoday.com/story/sports/golf/majors/masters/2025/10/30/masters-2026-odds-betting-favorites-scottie-scheffler-rory-mcilroy/86984724007/",
+              "domain": "golfweek.usatoday.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 1071,
+              "truncated": false
+            },
+            {
+              "url": "https://www.golfchannel.com/pga-tour/news/wm-phoenix-open-2026-odds-favorites-props-predictions",
+              "domain": "www.golfchannel.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 3428,
+              "truncated": false
+            },
+            {
+              "url": "https://www.golfmagic.com/tour/us-masters/masters-2026-odds-are-out-and-favourite-no-shock",
+              "domain": "www.golfmagic.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 3201,
+              "truncated": false
+            },
+            {
+              "url": "https://www.thebiglead.com/early-2026-masters-odds-headlined-familiar-names-one-big-surprise/",
+              "domain": "www.thebiglead.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 2443,
+              "truncated": false
+            },
+            {
+              "url": "https://blog.hollywoodbets.net/golf/2026-masters-power-rankings-early-favourites-for-augusta/",
+              "domain": "blog.hollywoodbets.net",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://progolfnow.com/rory-mcilroy-not-favorite-early-2026-masters-odds",
+              "domain": "progolfnow.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 4878,
+              "truncated": false
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 10,
+            "urls_extracted": 8,
+            "urls_failed": 2,
+            "urls_summarized": 3
+          },
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Compile statistics on Scheffler, McIlroy, Rahm and DeChambeau at Augusta (2020-2025 finishes, strokes-gained, scoring averages). Note any 2025-26 injuries, coaching or equipment changes, and list top OWGR contenders without a Masters win as of Feb 2026.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 3,
+            "queries_executed": [
+              "Scheffler McIlroy Rahm DeChambeau Masters Augusta results 2020 2025",
+              "Scheffler McIlroy Rahm DeChambeau injury coaching equipment change 2025 2026",
+              "Masters Augusta strokes gained scoring average statistics 2020 2025",
+              "world golf rankings top players without Masters win 2026",
+              "2025 Masters results leaderboard finishing positions scores",
+              "Scheffler McIlroy 2025 2026 injury news",
+              "Ludvig Aberg Xander Schauffele 2026 form ranking",
+              "Jordan Spieth 2025 2026 Masters preparation"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "Scheffler McIlroy Rahm DeChambeau Masters Augusta results 2020 2025",
+                    "Google"
+                  ],
+                  [
+                    "Scheffler McIlroy Rahm DeChambeau injury coaching equipment change 2025 2026",
+                    "Google News"
+                  ],
+                  [
+                    "Masters Augusta strokes gained scoring average statistics 2020 2025",
+                    "Google"
+                  ],
+                  [
+                    "world golf rankings top players without Masters win 2026",
+                    "Google"
+                  ],
+                  [
+                    "2025 Masters results leaderboard finishing positions scores",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 46512,
+                "analysis_chars": 0
+              },
+              {
+                "step_number": 2,
+                "queries_executed": [
+                  [
+                    "Scheffler McIlroy 2025 2026 injury news",
+                    "Google News"
+                  ],
+                  [
+                    "Ludvig Aberg Xander Schauffele 2026 form ranking",
+                    "Google News"
+                  ],
+                  [
+                    "Jordan Spieth 2025 2026 Masters preparation",
+                    "Google News"
+                  ]
+                ],
+                "search_results_chars": 48920,
+                "analysis_chars": 8191
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google",
+        "Google News"
+      ],
+      "llm_cost": 0.4584,
+      "llm_cost_summarization": 0.1894,
+      "llm_cost_agentic": 0.2689,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "2026 Masters odds Scheffler Rahm",
+          "tool": "Google",
+          "url_results": [
+            {
+              "url": "https://www.golfchannel.com/pga-tour/news/major-odds-scottie-scheffler-current-favorite-to-win-each-major-in-2026",
+              "domain": "www.golfchannel.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 2096,
+              "truncated": false
+            },
+            {
+              "url": "https://www.nytimes.com/athletic/7053304/2026/02/17/masters-2026-odds-scottie-scheffler-tiger-woods/",
+              "domain": "www.nytimes.com",
+              "success": false,
+              "error": "HTTP 404",
+              "method": null,
+              "status_code": 404,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://sports.betmgm.com/en/blog/pga/masters-odds-to-win-bm10/",
+              "domain": "sports.betmgm.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 2104,
+              "truncated": false
+            },
+            {
+              "url": "https://www.fanduel.com/research/masters-2026-betting-odds-who-are-this-year-s-favorites",
+              "domain": "www.fanduel.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 873,
+              "truncated": false
+            },
+            {
+              "url": "https://www.bleachernation.com/betting/2026/02/17/masters-odds-2/",
+              "domain": "www.bleachernation.com",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.easyofficepools.com/masters-field-listed-by-world-ranking-and-odds-to-win/",
+              "domain": "www.easyofficepools.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 616,
+              "truncated": false
+            },
+            {
+              "url": "https://www.vegasinsider.com/golf/odds/masters/",
+              "domain": "www.vegasinsider.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 6331,
+              "truncated": false
+            },
+            {
+              "url": "https://www.cbssports.com/golf/news/2026-cognizant-classic-odds-picks-favorites-date-predictions-projected-leaderboard/",
+              "domain": "www.cbssports.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 5329,
+              "truncated": false
+            },
+            {
+              "url": "https://golfweek.usatoday.com/story/sports/golf/majors/2025/07/24/golf-odds-2026-scottie-scheffler-favorite-masters-all-majors/85353583007/",
+              "domain": "golfweek.usatoday.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 5205,
+              "truncated": false
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 9,
+            "urls_extracted": 7,
+            "urls_failed": 2,
+            "urls_summarized": 3
+          },
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Early favorites 2026 Masters tournament",
+          "tool": "Google News",
+          "url_results": [
+            {
+              "url": "https://sports.betmgm.com/en/blog/pga/masters-odds-to-win-bm10/",
+              "domain": "sports.betmgm.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 2104,
+              "truncated": false
+            },
+            {
+              "url": "https://golfoklahoma.org/the-early-favourites-to-win-the-masters/",
+              "domain": "golfoklahoma.org",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.covers.com/golf/masters/odds",
+              "domain": "www.covers.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 7485,
+              "truncated": false
+            },
+            {
+              "url": "https://golfweek.usatoday.com/story/sports/golf/majors/masters/2025/10/30/masters-2026-odds-betting-favorites-scottie-scheffler-rory-mcilroy/86984724007/",
+              "domain": "golfweek.usatoday.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 1071,
+              "truncated": false
+            },
+            {
+              "url": "https://www.golfchannel.com/pga-tour/news/wm-phoenix-open-2026-odds-favorites-props-predictions",
+              "domain": "www.golfchannel.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 3428,
+              "truncated": false
+            },
+            {
+              "url": "https://www.sportingnews.com/uk/golf/news/who-will-win-masters-26-latest-betting-odds-favourite-win-predictions-first-major-augusta/717f5175ff06696755c0c146",
+              "domain": "www.sportingnews.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 5135,
+              "truncated": false
+            },
+            {
+              "url": "https://betspertsgolf.com/golf-betting/lookahead-2026-masters-at-augusta-national",
+              "domain": "betspertsgolf.com",
+              "success": false,
+              "error": "Content extraction failed",
+              "method": null,
+              "status_code": 200,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://blog.hollywoodbets.net/golf/2026-masters-power-rankings-early-favourites-for-augusta/",
+              "domain": "blog.hollywoodbets.net",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.golfmagic.com/tour/us-masters/masters-field-2026",
+              "domain": "www.golfmagic.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 3499,
+              "truncated": false
+            },
+            {
+              "url": "https://www.aboutamazon.com/news/entertainment/the-masters-stream-prime-video",
+              "domain": "www.aboutamazon.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 2588,
+              "truncated": false
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 10,
+            "urls_extracted": 7,
+            "urls_failed": 3,
+            "urls_summarized": 3
+          },
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Provide reports on recent performances, injuries, and betting expectations for Scottie Scheffler, Rory McIlroy, Jon Rahm, Bryson DeChambeau, and other top golfers in the run-up to the April 2026 Masters Tournament at Augusta National in the United States.",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 53
+        },
+        {
+          "query": "Provide reports on recent performances, injuries, and betting expectations for Scottie Scheffler, Rory McIlroy, Jon Rahm, Bryson DeChambeau, and other top golfers in the run-up to the April 2026 Masters Tournament at Augusta National in the United States.",
+          "tool": "AskNews"
+        }
+      ],
+      "tools_used": [
+        "AskNews",
+        "Google",
+        "Google News"
+      ],
+      "llm_cost": 0.1976,
+      "llm_cost_summarization": 0.1894,
+      "llm_cost_agentic": 0.0082,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7653,
+        "token_output": 1968,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.067785,
+        "duration_seconds": 56.36829471588135,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 18623,
+        "token_output": 2847,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.13582,
+        "duration_seconds": 58.7120144367218,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7653,
+        "token_output": 2049,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.069,
+        "duration_seconds": 56.36834502220154,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 18019,
+        "token_output": 2583,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.12884,
+        "duration_seconds": 58.71198749542236,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6558,
+        "token_output": 3129,
+        "token_reasoning": 1070,
+        "used_reasoning": true,
+        "cost": 0.0552825,
+        "duration_seconds": 56.368372201919556,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16177,
+        "token_output": 2267,
+        "token_reasoning": 527,
+        "used_reasoning": true,
+        "cost": 0.060047750000000004,
+        "duration_seconds": 58.71196627616882,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6558,
+        "token_output": 1965,
+        "token_reasoning": 704,
+        "used_reasoning": true,
+        "cost": 0.028836,
+        "duration_seconds": 56.36839818954468,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16388,
+        "token_output": 1602,
+        "token_reasoning": 448,
+        "used_reasoning": true,
+        "cost": 0.045592,
+        "duration_seconds": 58.71194839477539,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6558,
+        "token_output": 1935,
+        "token_reasoning": 1024,
+        "used_reasoning": true,
+        "cost": 0.028596,
+        "duration_seconds": 56.368433237075806,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15187,
+        "token_output": 1190,
+        "token_reasoning": 320,
+        "used_reasoning": true,
+        "cost": 0.039894,
+        "duration_seconds": 58.71193027496338,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.0121,
+    "step2_search": 0.4584,
+    "step3_outside_view": 0.2495,
+    "step5_inside_view": 0.4102,
+    "step6_aggregation": 0.4102,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 1.1302
+}
