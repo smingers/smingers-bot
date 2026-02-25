@@ -1004,8 +1004,6 @@ class SearchPipeline:
                 # Pull config values
                 research_cfg = self.config.get("research", {})
                 n_articles = research_cfg.get("asknews_max_results", 10)
-                hours_back = research_cfg.get("asknews_hours_back", 72)
-                similarity_threshold = research_cfg.get("asknews_similarity_score_threshold", 0.5)
 
                 # Run searches sequentially with rate limit delay
                 # AskNews Pro tier (via Metaculus): 1 request per 10 seconds, add 2s buffer
@@ -1018,9 +1016,6 @@ class SearchPipeline:
                     n_articles=n_articles,
                     return_type="both",
                     strategy="latest news",
-                    method="both",
-                    hours_back=hours_back,
-                    similarity_score_threshold=similarity_threshold,
                 )
 
                 # Rate limit delay between calls
@@ -1033,9 +1028,7 @@ class SearchPipeline:
                     query=news_query,
                     n_articles=n_articles,
                     return_type="both",
-                    strategy="news knowledge",  # knowledge-base strategy, not time-scoped — hours_back not applicable
-                    method="both",
-                    similarity_score_threshold=similarity_threshold,
+                    strategy="news knowledge",
                 )
 
                 # Combine and deduplicate articles by URL
