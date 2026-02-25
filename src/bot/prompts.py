@@ -103,7 +103,7 @@ For Google/Google News:
 Google and Google News use keyword search. Write short queries (max six words) using terms likely to appear on relevant web pages.
 
 For AskNews:
-AskNews supports natural language. Write a query of up to two sentences, specifying relevant scope (e.g., geography, industry, time period). Avoid ambiguous acronyms.
+AskNews uses semantic (meaning-based) search and is different from Google News keyword search — it finds articles that are conceptually related even without exact keyword matches. Your query determines which articles are retrieved. Write a descriptive, natural-language query of up to two sentences focusing on the underlying topic, key actors, and context (not a yes/no restatement of the question). Include relevant scope: geography, industry, time period. Avoid ambiguous acronyms.
 
 Format your answer exactly as below, with the source in parentheses () on the same line after each query. Do not wrap your query in quotes or brackets. Include one Google query, one Google News query, and one AskNews query.
 
@@ -355,7 +355,7 @@ For Google/Google News:
 Google and Google News use keyword search. Write short queries (max six words) using terms likely to appear on relevant web pages.
 
 For AskNews:
-AskNews supports natural language. Write a query of up to two sentences, specifying relevant scope (e.g., geography, industry, time period). Avoid ambiguous acronyms.
+AskNews uses semantic (meaning-based) search and is different from Google News keyword search — it finds articles that are conceptually related even without exact keyword matches. Your query determines which articles are retrieved. Write a descriptive, natural-language query of up to two sentences focusing on the underlying topic, key actors, and context (not a yes/no restatement of the question). Include relevant scope: geography, industry, time period. Avoid ambiguous acronyms.
 
 Format your answer exactly as below, with the source in parentheses () on the same line after each query. Do not wrap your query in quotes or brackets. Include one Google query, one Google News query, and one AskNews query.
 
@@ -614,7 +614,7 @@ For Google/Google News:
 Google and Google News use keyword search. Write short queries (max six words) using terms likely to appear on relevant web pages.
 
 For AskNews:
-AskNews supports natural language. Write a query of up to two sentences, specifying relevant scope (e.g., geography, industry, time period). Avoid ambiguous acronyms.
+AskNews uses semantic (meaning-based) search and is different from Google News keyword search — it finds articles that are conceptually related even without exact keyword matches. Your query determines which articles are retrieved. Write a descriptive, natural-language query of up to two sentences focusing on the underlying topic, key actors, and context (not a yes/no restatement of the question). Include relevant scope: geography, industry, time period. Avoid ambiguous acronyms.
 
 Format your answer exactly as below, with the source in parentheses () on the same line after each query. Do not wrap your query in quotes or brackets. Include one Google query, one Google News query, and one AskNews query.
 

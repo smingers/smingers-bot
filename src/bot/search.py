@@ -288,7 +288,7 @@ class SearchPipeline:
             response: The response containing search queries (from query generation)
             search_id: Identifier for logging (e.g., "historical", "current")
             question_details: Question context for summarization
-            include_asknews: If True, also call AskNews with question title (for current search)
+            include_asknews: If True, also call AskNews for current search
 
         Returns:
             Tuple of (formatted_results_string, metadata_dict)
@@ -345,8 +345,8 @@ class SearchPipeline:
             tasks = []
             query_sources = []
 
-            # Track LLM-generated AskNews query for Deep Research
-            asknews_deep_research_query: str | None = None
+            # Track LLM-generated AskNews query (used for news search + Deep Research)
+            asknews_query: str | None = None
 
             for match in search_queries:
                 if len(match) == 3:
@@ -404,30 +404,34 @@ class SearchPipeline:
                         agentic_context += f"\n\n{question_details.stock_return_context}"
                     tasks.append(self._agentic_search(query, context=agentic_context))
                 elif source == "AskNews":
-                    # Store the LLM-generated query for Deep Research
+                    # Store the LLM-generated query for news search + Deep Research
                     # The actual AskNews call will be added below with include_asknews
-                    asknews_deep_research_query = query
+                    asknews_query = query
                     logger.info(
-                        f"Search[{search_id}]: Found AskNews Deep Research query: {query[:50]}..."
+                        f"Search[{search_id}]: Found AskNews query: {query[:50]}..."
                     )
 
             # Programmatically add AskNews for current search
-            # Uses question title for news search, LLM-generated query for Deep Research
+            # Uses LLM-generated query for news search and Deep Research (falls back to title)
             if include_asknews:
-                logger.info(f"Search[{search_id}]: Adding AskNews search with question title")
-                if asknews_deep_research_query:
-                    logger.info(f"Search[{search_id}]: Deep Research will use LLM-generated query")
+                news_query = asknews_query or question_details.title
+                if asknews_query:
+                    logger.info(
+                        f"Search[{search_id}]: Adding AskNews search with LLM-generated query: {asknews_query[:50]}..."
+                    )
+                else:
+                    logger.info(
+                        f"Search[{search_id}]: Adding AskNews search with question title (no LLM query found)"
+                    )
                 tasks.append(
                     self._call_asknews(
-                        news_query=question_details.title,
-                        deep_research_query=asknews_deep_research_query,
+                        news_query=news_query,
+                        deep_research_query=asknews_query,
                     )
                 )
-                query_sources.append((question_details.title, "AskNews"))
-                # Track in metadata (include both queries if Deep Research query exists)
-                asknews_metadata = {"query": question_details.title, "tool": "AskNews"}
-                if asknews_deep_research_query:
-                    asknews_metadata["deep_research_query"] = asknews_deep_research_query
+                query_sources.append((news_query, "AskNews"))
+                # Track in metadata
+                asknews_metadata = {"query": news_query, "tool": "AskNews"}
                 metadata["queries"].append(asknews_metadata)
                 metadata["tools_used"].add("AskNews")
 
@@ -997,6 +1001,12 @@ class SearchPipeline:
                     scopes=set(["news"]),
                 )
 
+                # Pull config values
+                research_cfg = self.config.get("research", {})
+                n_articles = research_cfg.get("asknews_max_results", 10)
+                hours_back = research_cfg.get("asknews_hours_back", 72)
+                similarity_threshold = research_cfg.get("asknews_similarity_score_threshold", 0.5)
+
                 # Run searches sequentially with rate limit delay
                 # AskNews Pro tier (via Metaculus): 1 request per 10 seconds, add 2s buffer
                 rate_limit_delay = 12
@@ -1005,9 +1015,12 @@ class SearchPipeline:
                 hot_response = await asyncio.to_thread(
                     ask.news.search_news,
                     query=news_query,
-                    n_articles=8,
+                    n_articles=n_articles,
                     return_type="both",
                     strategy="latest news",
+                    method="both",
+                    hours_back=hours_back,
+                    similarity_score_threshold=similarity_threshold,
                 )
 
                 # Rate limit delay between calls
@@ -1018,9 +1031,11 @@ class SearchPipeline:
                 historical_response = await asyncio.to_thread(
                     ask.news.search_news,
                     query=news_query,
-                    n_articles=8,
+                    n_articles=n_articles,
                     return_type="both",
-                    strategy="news knowledge",
+                    strategy="news knowledge",  # knowledge-base strategy, not time-scoped — hours_back not applicable
+                    method="both",
+                    similarity_score_threshold=similarity_threshold,
                 )
 
                 # Combine and deduplicate articles by URL
