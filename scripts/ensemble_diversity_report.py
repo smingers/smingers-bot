@@ -341,7 +341,27 @@ def extract_mc_probabilities_from_text(text: str) -> list[float] | None:
     for m in re.finditer(r":\s*(\d+(?:\.\d+)?)\s*%", search_text):
         probs.append(float(m.group(1)) / 100)
 
-    return probs if len(probs) >= 2 else None
+    if len(probs) >= 2:
+        return probs
+
+    # Fallback: handle bare-integer format used by Sonnet 4.5/4.6, e.g.:
+    #   Increases: 10          (Sonnet 4.5 — option labels directly)
+    #   Doesn't change: 60
+    #   Option_A: 20           (Sonnet 4.6 — Option_ prefix)
+    #   Option_A (Label): 7
+    # We collect all "Label: N" end-of-line matches (no % sign) within the
+    # prediction block, then validate the sum ≈ 100 to avoid picking up
+    # spurious numbers from reasoning text.
+    candidates = []
+    for m in re.finditer(r"^[^\n:]+:\s*(\d+(?:\.\d+)?)\s*$", search_text, re.MULTILINE):
+        val = float(m.group(1))
+        if 0 < val < 100:
+            candidates.append(val / 100)
+
+    if len(candidates) >= 2 and abs(sum(candidates) - 1.0) <= 0.02:
+        return candidates
+
+    return None
 
 
 def load_json(path: Path) -> dict | None:
