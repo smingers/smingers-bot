@@ -99,6 +99,47 @@ class ResearchPlanResult:
 # Valid tools that the planner can dispatch to
 VALID_TOOLS = {"Google", "Google News", "Agent", "AskNews", "FRED", "yFinance", "Google Trends"}
 
+# Tool descriptions for the planner prompt, keyed by tool name.
+# Google and Google News are always available; others are gated by config.
+TOOL_DESCRIPTIONS = {
+    "Google": (
+        "Google: Keyword search. Write short queries (max 6 words) using terms likely "
+        "to appear on relevant web pages. Best for reference pages, datasets, official reports."
+    ),
+    "Google News": (
+        "Google News: Keyword search over recent news articles. Max 6 words. "
+        "Best for breaking news, recent events, and current developments."
+    ),
+    "Agent": (
+        "Agent: Your query will be processed by a reasoning model with web search capability. "
+        "Write a detailed, multi-part query of up to 3 sentences. Best for complex questions "
+        "needing synthesis across sources, base rate computation, or multi-factor analysis. "
+        "IMPORTANT: Use exactly one Agent query, tagged [HISTORICAL], for base rate or "
+        "reference class research. Do not use Agent for current events."
+    ),
+    "AskNews": (
+        "AskNews: Semantic (meaning-based) news search. Write a descriptive 1-2 sentence "
+        "natural language query focusing on the underlying topic, key actors, and context. "
+        "Include relevant scope: geography, industry, time period. Avoid ambiguous acronyms. "
+        "Best for finding conceptually related coverage even without exact keyword matches."
+    ),
+    "FRED": (
+        'FRED: Federal Reserve Economic Data. Use a FRED series ID (e.g., "UNRATE", '
+        '"CPIAUCSL") or a plain-language description (e.g., "US unemployment rate"). '
+        "Returns historical data with computed statistics. Only use for economic/financial data."
+    ),
+    "yFinance": (
+        'yFinance: Yahoo Finance ticker symbol (e.g., "AAPL", "^GSPC"). Returns price '
+        "history, fundamentals, analyst targets, and options data. Only use for stocks, "
+        "indices, or ETFs."
+    ),
+    "Google Trends": (
+        'Google Trends: A search term (e.g., "hospital"). Returns 90-day search interest '
+        "data with base rate analysis. Only use when the question specifically involves "
+        "Google Trends data."
+    ),
+}
+
 # Regex for parsing tagged queries from LLM output
 # Matches: 1. [HISTORICAL] query text (Google) -- Intent: description
 _TAGGED_QUERY_PATTERN = re.compile(
@@ -341,6 +382,9 @@ class IterativeResearchPlanner(ForecasterMixin):
         planner_config = self.config.get("research", {}).get("planner", {})
         max_queries = planner_config.get("max_plan_queries", 10)
 
+        # Build available tools section based on enabled config flags
+        available_tools = self._build_available_tools()
+
         # Format prompt
         prompt = RESEARCH_PLAN_PROMPT.format(
             title=question_params.get("question_title", ""),
@@ -357,6 +401,7 @@ class IterativeResearchPlanner(ForecasterMixin):
             seed_context=seed_section,
             stock_return_context=stock_section,
             max_queries=max_queries,
+            available_tools=available_tools,
         )
 
         # Call LLM
@@ -373,8 +418,11 @@ class IterativeResearchPlanner(ForecasterMixin):
         queries = self._parse_tagged_queries(response, phase="plan")
 
         if not queries:
-            logger.warning("Research planner generated no parseable queries, falling back")
-            # Try to parse as untagged queries (legacy format compatibility)
+            logger.warning(
+                "Tagged query parser found 0 matches, falling back to untagged parser. "
+                "Response snippet: %s",
+                response[:300],
+            )
             queries = self._parse_untagged_queries_fallback(response)
 
         return analysis, queries
@@ -820,6 +868,27 @@ class IterativeResearchPlanner(ForecasterMixin):
     # -------------------------------------------------------------------------
     # Helper methods
     # -------------------------------------------------------------------------
+
+    def _build_available_tools(self) -> str:
+        """Build the AVAILABLE TOOLS prompt section based on enabled config flags."""
+        research_config = self.config.get("research", {})
+
+        # Google and Google News are always available
+        enabled = ["Google", "Google News"]
+
+        # Conditionally add tools based on config
+        if research_config.get("agentic_search_enabled", True):
+            enabled.append("Agent")
+        if research_config.get("asknews_enabled", True):
+            enabled.append("AskNews")
+        if research_config.get("fred_enabled", True):
+            enabled.append("FRED")
+        if research_config.get("yfinance_enabled", True):
+            enabled.append("yFinance")
+        if research_config.get("google_trends_enabled", True):
+            enabled.append("Google Trends")
+
+        return "\n".join(f"- {TOOL_DESCRIPTIONS[t]}" for t in enabled)
 
     def _build_type_specific_fields(
         self,

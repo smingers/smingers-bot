@@ -422,6 +422,40 @@ Coverage: SUFFICIENT
         p = IterativeResearchPlanner(base_config, None)
         assert p._is_reflection_enabled() is False
 
+    def test_build_available_tools_all_enabled(self, planner):
+        tools_text = planner._build_available_tools()
+        assert "Google:" in tools_text
+        assert "Google News:" in tools_text
+        assert "Agent:" in tools_text
+        assert "AskNews:" in tools_text
+        assert "FRED:" in tools_text
+        assert "yFinance:" in tools_text
+        assert "Google Trends:" in tools_text
+
+    def test_build_available_tools_some_disabled(self, base_config):
+        base_config["research"]["asknews_enabled"] = False
+        base_config["research"]["fred_enabled"] = False
+        p = IterativeResearchPlanner(base_config, None)
+        tools_text = p._build_available_tools()
+        assert "Google:" in tools_text
+        assert "Agent:" in tools_text
+        assert "AskNews:" not in tools_text
+        assert "FRED:" not in tools_text
+        assert "yFinance:" in tools_text
+
+    def test_build_available_tools_only_google(self, base_config):
+        base_config["research"]["agentic_search_enabled"] = False
+        base_config["research"]["asknews_enabled"] = False
+        base_config["research"]["fred_enabled"] = False
+        base_config["research"]["yfinance_enabled"] = False
+        base_config["research"]["google_trends_enabled"] = False
+        p = IterativeResearchPlanner(base_config, None)
+        tools_text = p._build_available_tools()
+        assert "Google:" in tools_text
+        assert "Google News:" in tools_text
+        assert "Agent:" not in tools_text
+        assert "AskNews:" not in tools_text
+
 
 # =============================================================================
 # Results Summary Tests
