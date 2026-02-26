@@ -156,6 +156,7 @@ class ResolvedConfig:
         - All raw config values (models, ensemble, research, etc.)
         - "mode" is set to the resolved mode (CLI override > config file)
         - Resolved values for handlers: active_models, active_agents, should_submit
+        - research.agentic_search_max_steps resolved to a scalar for the current mode
 
         Returns:
             Dictionary ready for serialization with unambiguous mode
@@ -167,6 +168,16 @@ class ResolvedConfig:
         result["active_models"] = self.active_models
         result["active_agents"] = self.active_agents
         result["should_submit"] = self.should_submit
+        # Resolve research.agentic_search_max_steps by mode (scalar or per-mode dict)
+        research = (self.source.get("research") or {}).copy()
+        raw_steps = research.get("agentic_search_max_steps", 7)
+        if isinstance(raw_steps, dict):
+            research["agentic_search_max_steps"] = raw_steps.get(
+                self.mode, raw_steps.get("live", 7)
+            )
+        else:
+            research["agentic_search_max_steps"] = raw_steps
+        result["research"] = research
         return result
 
     # Default temperatures per task type (used when config.yaml doesn't specify)

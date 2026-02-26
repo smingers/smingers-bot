@@ -28,6 +28,7 @@ from .extractors import AgentResult
 from .handler_mixin import ForecasterMixin
 from .metrics import AgentMetrics, PipelineMetrics, ResearchMetrics
 from .prompts import SUPERFORECASTER_CONTEXT
+from .research_planner import IterativeResearchPlanner
 from .search import QuestionDetails, SearchPipeline
 from .supervisor import SupervisorAgent, SupervisorInput
 
@@ -184,118 +185,174 @@ class BaseForecaster(ForecasterMixin, ABC):
             self._get_prompt_templates()
         )
 
-        # =========================================================================
-        # STEP 1: Generate historical and current search queries
-        # =========================================================================
-        log("\n=== Step 1: Generating search queries ===")
-
-        historical_prompt, current_prompt = self._format_query_prompts(
-            prompt_historical, prompt_current, **question_params
-        )
-
-        query_model = self._resolve_model("query_generator", "openrouter/openai/o3")
-
-        query_temp = self._get_temperature("query_generation")
-        historical_task = self._call_model(query_model, historical_prompt, temperature=query_temp)
-        current_task = self._call_model(query_model, current_prompt, temperature=query_temp)
-        historical_output, current_output = await asyncio.gather(historical_task, current_task)
-
-        log(f"\nHistorical query output:\n{historical_output[:500]}...")
-        log(f"\nCurrent query output:\n{current_output[:500]}...")
-
-        step1_end_cost = snapshot_cost("step1_query_generation", pipeline_start_cost)
-
-        if self.artifact_store:
-            self.artifact_store.save_query_generation(
-                "historical", historical_prompt, historical_output
-            )
-            self.artifact_store.save_query_generation("current", current_prompt, current_output)
-
-        # =========================================================================
-        # STEP 2: Execute searches
-        # =========================================================================
-        log("\n=== Step 2: Executing searches ===")
-
         # Initialize pipeline metrics tracking
         metrics = PipelineMetrics.create_empty()
 
-        async with SearchPipeline(self.config, self.llm) as search:
-            results = await asyncio.gather(
-                search.scrape_question_urls(question_details),
-                search.execute_searches_from_response(
-                    historical_output,
-                    search_id="historical",
-                    question_details=question_details,
-                    include_asknews=False,
-                ),
-                search.execute_searches_from_response(
-                    current_output,
-                    search_id="current",
-                    question_details=question_details,
-                    include_asknews=True,
-                ),
+        # Check if iterative research planner is enabled
+        use_planner = self.config.get("research", {}).get("iterative_planner_enabled", False)
+
+        if use_planner:
+            # =================================================================
+            # STEPS 1-2 (ITERATIVE): Plan → Execute → Reflect → Assemble
+            # =================================================================
+            log("\n=== Steps 1-2: Iterative Research Planner ===")
+
+            planner = IterativeResearchPlanner(self.config, self.llm, self.artifact_store)
+            plan_result = await planner.run(
+                question_details, self.question_type, question_params, log
             )
-            (question_url_context, question_url_metadata) = results[0]
-            (historical_context, historical_metadata) = results[1]
-            (current_context, current_metadata) = results[2]
+            historical_context = plan_result.historical_context
+            current_context = plan_result.current_context
 
-        # Prepend question URL content to historical context
-        # (resolution source data should appear first for forecasters)
-        if question_url_context:
-            historical_context = question_url_context + "\n" + historical_context
-            log(
-                f"\nQuestion URL context ({len(question_url_context)} chars, "
-                f"{question_url_metadata.get('urls_summarized', 0)} URLs summarized)"
+            log(f"\nHistorical context ({len(historical_context)} chars)")
+            log(f"Current context ({len(current_context)} chars)")
+
+            step2_end_cost = snapshot_cost("steps1_2_research", pipeline_start_cost)
+
+            # Populate metrics from planner metadata
+            plan_meta = plan_result.metadata
+            all_queries = plan_meta.get("query_details", [])
+            hist_queries = [q for q in all_queries if q["temporal_role"] == "historical"]
+            curr_queries = [q for q in all_queries if q["temporal_role"] == "current"]
+
+            metrics.centralized_research["historical"] = ResearchMetrics(
+                search_id="historical",
+                searched=len(hist_queries) > 0,
+                num_queries=len(hist_queries),
+                queries=hist_queries,
+                tools_used=list({q["tool"] for q in hist_queries}),
+            )
+            metrics.centralized_research["current"] = ResearchMetrics(
+                search_id="current",
+                searched=len(curr_queries) > 0,
+                num_queries=len(curr_queries),
+                queries=curr_queries,
+                tools_used=list({q["tool"] for q in curr_queries}),
             )
 
-        # Prepend stock return distribution to both contexts for close price questions
-        # This gives all 5 forecasters the programmatic base rate
-        stock_return_context = question_params.get("stock_return_context", "")
-        if stock_return_context:
-            historical_context = stock_return_context + "\n" + historical_context
-            current_context = stock_return_context + "\n" + current_context
-            log(f"\nStock return distribution context injected ({len(stock_return_context)} chars)")
-
-        log(f"\nHistorical context ({len(historical_context)} chars)")
-        log(f"Current context ({len(current_context)} chars)")
-
-        step2_end_cost = snapshot_cost("step2_search", step1_end_cost)
-
-        # Store research metadata
-        metrics.centralized_research["question_urls"] = ResearchMetrics(
-            search_id="question_urls",
-            searched=question_url_metadata.get("searched", False),
-            num_queries=question_url_metadata.get("urls_found", 0),
-            queries=[
-                {
-                    "query": u["url"],
-                    "tool": "QuestionURLScrape",
-                    "success": u.get("scraped", False),
-                    "num_results": 1 if u.get("scraped") else 0,
-                    "domain": u.get("domain"),
-                    "method": u.get("method"),
-                    "status_code": u.get("status_code"),
-                    "content_words": u.get("content_words"),
-                    "error": u.get("error"),
-                }
-                for u in question_url_metadata.get("urls", [])
-            ],
-            tools_used=question_url_metadata.get("tools_used", []),
-        )
-        metrics.centralized_research["historical"] = ResearchMetrics.from_search_metadata(
-            historical_metadata
-        )
-        metrics.centralized_research["current"] = ResearchMetrics.from_search_metadata(
-            current_metadata
-        )
-
-        if self.artifact_store:
-            if question_url_context:
+            if self.artifact_store:
                 self.artifact_store.save_search_results(
-                    "question_urls", {"context": question_url_context}
+                    "historical", {"context": historical_context}
                 )
-            self.artifact_store.save_search_results("historical", {"context": historical_context})
-            self.artifact_store.save_search_results("current", {"context": current_context})
+                self.artifact_store.save_search_results("current", {"context": current_context})
+
+        else:
+            # =================================================================
+            # STEPS 1-2 (LEGACY): Independent historical + current queries
+            # =================================================================
+            log("\n=== Step 1: Generating search queries ===")
+
+            historical_prompt, current_prompt = self._format_query_prompts(
+                prompt_historical, prompt_current, **question_params
+            )
+
+            query_model = self._resolve_model("query_generator", "openrouter/openai/o3")
+
+            query_temp = self._get_temperature("query_generation")
+            historical_task = self._call_model(
+                query_model, historical_prompt, temperature=query_temp
+            )
+            current_task = self._call_model(query_model, current_prompt, temperature=query_temp)
+            historical_output, current_output = await asyncio.gather(historical_task, current_task)
+
+            log(f"\nHistorical query output:\n{historical_output[:500]}...")
+            log(f"\nCurrent query output:\n{current_output[:500]}...")
+
+            step1_end_cost = snapshot_cost("step1_query_generation", pipeline_start_cost)
+
+            if self.artifact_store:
+                self.artifact_store.save_query_generation(
+                    "historical", historical_prompt, historical_output
+                )
+                self.artifact_store.save_query_generation("current", current_prompt, current_output)
+
+            # =========================================================================
+            # STEP 2: Execute searches
+            # =========================================================================
+            log("\n=== Step 2: Executing searches ===")
+
+            async with SearchPipeline(self.config, self.llm) as search:
+                results = await asyncio.gather(
+                    search.scrape_question_urls(question_details),
+                    search.execute_searches_from_response(
+                        historical_output,
+                        search_id="historical",
+                        question_details=question_details,
+                        include_asknews=False,
+                    ),
+                    search.execute_searches_from_response(
+                        current_output,
+                        search_id="current",
+                        question_details=question_details,
+                        include_asknews=True,
+                    ),
+                )
+                (question_url_context, question_url_metadata) = results[0]
+                (historical_context, historical_metadata) = results[1]
+                (current_context, current_metadata) = results[2]
+
+            # Prepend question URL content to historical context
+            # (resolution source data should appear first for forecasters)
+            if question_url_context:
+                historical_context = question_url_context + "\n" + historical_context
+                log(
+                    f"\nQuestion URL context ({len(question_url_context)} chars, "
+                    f"{question_url_metadata.get('urls_summarized', 0)} URLs summarized)"
+                )
+
+            # Prepend stock return distribution to both contexts for close price questions
+            # This gives all 5 forecasters the programmatic base rate
+            stock_return_context = question_params.get("stock_return_context", "")
+            if stock_return_context:
+                historical_context = stock_return_context + "\n" + historical_context
+                current_context = stock_return_context + "\n" + current_context
+                log(
+                    f"\nStock return distribution context injected "
+                    f"({len(stock_return_context)} chars)"
+                )
+
+            log(f"\nHistorical context ({len(historical_context)} chars)")
+            log(f"Current context ({len(current_context)} chars)")
+
+            step2_end_cost = snapshot_cost("step2_search", step1_end_cost)
+
+            # Store research metadata
+            metrics.centralized_research["question_urls"] = ResearchMetrics(
+                search_id="question_urls",
+                searched=question_url_metadata.get("searched", False),
+                num_queries=question_url_metadata.get("urls_found", 0),
+                queries=[
+                    {
+                        "query": u["url"],
+                        "tool": "QuestionURLScrape",
+                        "success": u.get("scraped", False),
+                        "num_results": 1 if u.get("scraped") else 0,
+                        "domain": u.get("domain"),
+                        "method": u.get("method"),
+                        "status_code": u.get("status_code"),
+                        "content_words": u.get("content_words"),
+                        "error": u.get("error"),
+                    }
+                    for u in question_url_metadata.get("urls", [])
+                ],
+                tools_used=question_url_metadata.get("tools_used", []),
+            )
+            metrics.centralized_research["historical"] = ResearchMetrics.from_search_metadata(
+                historical_metadata
+            )
+            metrics.centralized_research["current"] = ResearchMetrics.from_search_metadata(
+                current_metadata
+            )
+
+            if self.artifact_store:
+                if question_url_context:
+                    self.artifact_store.save_search_results(
+                        "question_urls", {"context": question_url_context}
+                    )
+                self.artifact_store.save_search_results(
+                    "historical", {"context": historical_context}
+                )
+                self.artifact_store.save_search_results("current", {"context": current_context})
 
         # =========================================================================
         # STEP 3: Run 5 forecasters on outside view prediction

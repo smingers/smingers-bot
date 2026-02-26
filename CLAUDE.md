@@ -485,6 +485,8 @@ SQLite at `data/forecasts.db` for analytics with three tables:
 
 3. **Cost tracking**: All LLM calls tracked via `src/utils/llm.py`. Check `metadata.json` for per-forecast costs.
 
+4. **OpenRouter "No allowed providers are available for the selected model"**: Your API key's guardrail limits which providers can be used. The error lists `requested_providers` (allowed by your key) and `available_providers` (where the model is currently served). If they don't overlap (e.g. key allows only openai/anthropic/google-ai-studio but the model is only on amazon-bedrock/google-vertex), requests fail. Fix: OpenRouter → **Settings → Privacy** → edit the guardrail for your key and add the missing providers (e.g. `amazon-bedrock`, `google-vertex`) or clear the provider allowlist to allow all.
+
 ## API Keys
 
 **Required in `.env`:**

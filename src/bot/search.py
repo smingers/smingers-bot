@@ -249,6 +249,10 @@ class SearchPipeline:
         # Rate limiter for AskNews calls (free tier has concurrency limit)
         self._asknews_rate_limiter = asyncio.Semaphore(1)
 
+        # Per-invocation cost tracking (reset each time execute_searches_from_response is called)
+        self._current_summarization_cost = 0.0
+        self._current_agentic_cost = 0.0
+
     def _get_temperature(self, task: str) -> float:
         """Get configured temperature for a task type from llm.temperature config."""
         llm_config = self.config.get("llm", {})
