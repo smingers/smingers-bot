@@ -1,0 +1,11 @@
+**Crafting source analysis**
+
+I need to create an analysis of sources, focusing on an outside view baseline before considering internal factors. We have an agent report showing an 8.6% base rate for U.S. kinetic military actions against sovereign states. The specific question involves the likelihood of a U.S. attack on Iran within 70 days, from January 21 to April 1, 2026. Today is February 26, so we have about 34 days left; however, I should base my analysis on historical data rather than current specifics, isolating facts from opinions in the evaluated sources.**Summarizing categories and reference classes**
+
+I need to produce summaries for major categories related to U.S.-Iran relations. First, there are historical context articles, like those covering the Iranian Revolution and U.S. relations, which are high quality. Then there's past U.S.-Iran relations under Trump, Operation Midnight Hammer in June 2025, and various articles of moderate reliability from sources like Wikipedia and CGTN.
+
+I’ll analyze the reliability of each source and reference a base rate of 8.6% for U.S. attacks on sovereign states, refining it specifically to U.S. attacks on Iran, which shows a low occurrence. We can consider instances of repeat attacks on the same adversary within a year as a useful reference class, with an expected rate of about 1% per quarter for my timeframe.**Establishing an attack probability**
+
+I'm considering the likelihood of a U.S. attack on Middle Eastern states, like Iraq and Syria, where I've noted that about 8 out of 12 historical events targeted this region, giving a base rate of 5.7%. 
+
+For the timeframe of January 21 to April 1, 2026, I’ll adjust this base rate since it's roughly 70 days rather than the typical 90-day quarter. I find that the probability for U.S. attacks on Iran might be around 1.5%, while factoring in the history of repeated attacks after initial strikes could bring this baseline up to roughly 4% to 5%. I’ll finalize the outside view calibration reflecting this.

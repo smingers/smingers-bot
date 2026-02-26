@@ -1,0 +1,5 @@
+**Summarizing outside predictions**
+
+I’m looking at how to write an analysis according to the instructions — summarizing and evaluating the sources with their quality and recency. I need to focus on an outside view prediction regarding the likelihood of a U.S. attack on Iran before April 1, 2026. This involves using historical data and general patterns, not current tensions. While base rates might suggest a low probability, previous strikes could influence perceived risks. I'll summarize the sources and calibrate the findings accordingly.**Creating attack probability analysis**
+
+I’m thinking about using the base rate of 8.6% per quarter for any U.S. attack on a sovereign state, but since the focus is specifically on Iran, I’ll need to refine that. Historically, there haven't been many attacks on Iran, like Operation Praying Mantis in 1988 and the 2020 drone strike, which technically occurred in Iraq. That could suggest a low attack probability—around 2.2% per year. I’ll summarize various sources, including Wikipedia and others, and assess their reliability before drafting the final analysis.

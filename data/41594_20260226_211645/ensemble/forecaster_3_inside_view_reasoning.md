@@ -1,0 +1,3 @@
+**Estimating probabilities for escalation**
+
+There's a high chance within the current window, but I’m considering that Trump has backed down before, alongside expert concerns about escalation and US public opposition. Still, he might proceed. If I estimate a conditional probability at 60%, adjusting it slightly down to 58% sounds reasonable, especially given the evidence from reliable sources like CBS and NYT. Also, Geneva talks indicate potential de-escalation. I'd set it at 57% and aim to format my analysis accordingly in markdown.

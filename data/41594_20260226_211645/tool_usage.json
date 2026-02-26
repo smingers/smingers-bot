@@ -1,0 +1,265 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": false,
+      "num_queries": 0,
+      "queries": [],
+      "tools_used": [],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 5,
+      "queries": [
+        {
+          "query": "list of United States military operations 1990-2025",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Compile frequency and timing of U.S. strikes on foreign territory to establish a broad base rate.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "United States direct attacks on Iran timeline",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Identify every instance of U.S. forces physically hitting Iranian targets, giving a specific Iran-focused base rate.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "carrier strike group deployments Persian Gulf crisis periods",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Study historical correlation between carrier presence and subsequent U.S. strikes on regional adversaries, refining indicators.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 2,
+          "error": null
+        },
+        {
+          "query": "War Powers Resolution votes or authorizations regarding Iran",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Gauge how often congressional action has constrained or green-lit potential Iran strikes.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Over the last 35 years, in how many discrete calendar quarters did the United States initiate kinetic military action against a sovereign state? List each operation with start date and target country, then compute the empirical quarterly base rate.",
+          "tool": "Agent",
+          "temporal_role": "historical",
+          "intent": "Produce a quantified reference class for \u201cU.S. starts a new attack within a 3-month window,\u201d directly comparable to the 1-quarter horizon of this forecast.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "carrier deployment Gulf February 2026 CENTCOM",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "Detect current U.S. naval/air force posture that could enable imminent strikes.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Trump administration deliberates Iran strike February 2026",
+          "tool": "AskNews",
+          "temporal_role": "current",
+          "intent": "Surface recent leaks, policy meetings, or statements indicating serious consideration of military action.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 32,
+          "error": null
+        },
+        {
+          "query": "back-channel talks or de-escalation US Iran 2026",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "Look for evidence of diplomacy or Pentagon/Congress push-back that could decrease strike probability.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "AskNews",
+        "Google News"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12265,
+        "token_output": 2135,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.09335,
+        "duration_seconds": 79.77098727226257,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 23076,
+        "token_output": 4779,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.18706499999999998,
+        "duration_seconds": 110.2020194530487,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12265,
+        "token_output": 1871,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.08939,
+        "duration_seconds": 79.7710394859314,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 110.20199084281921,
+        "error": "Response truncated after 5000 tokens (limit: 5000)"
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 10876,
+        "token_output": 2852,
+        "token_reasoning": 1058,
+        "used_reasoning": true,
+        "cost": 0.058961,
+        "duration_seconds": 79.77109742164612,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 20253,
+        "token_output": 2590,
+        "token_reasoning": 415,
+        "used_reasoning": true,
+        "cost": 0.07170275000000001,
+        "duration_seconds": 110.20196175575256,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 10876,
+        "token_output": 2206,
+        "token_reasoning": 1024,
+        "used_reasoning": true,
+        "cost": 0.039400000000000004,
+        "duration_seconds": 79.77114462852478,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 20366,
+        "token_output": 2256,
+        "token_reasoning": 1024,
+        "used_reasoning": true,
+        "cost": 0.05878,
+        "duration_seconds": 110.20193147659302,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 10876,
+        "token_output": 1676,
+        "token_reasoning": 448,
+        "used_reasoning": true,
+        "cost": 0.03516,
+        "duration_seconds": 79.77121472358704,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 19708,
+        "token_output": 1937,
+        "token_reasoning": 768,
+        "used_reasoning": true,
+        "cost": 0.054912,
+        "duration_seconds": 110.20190119743347,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "steps1_2_research": 0.6203,
+    "step3_outside_view": 0.3163,
+    "step5_inside_view": 0.5584,
+    "step6_aggregation": 0.5584,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 1.495
+}

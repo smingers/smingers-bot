@@ -1,0 +1,224 @@
+{
+  "plan_analysis": "The pre-research context supplies long-term background (1979 revolution, JCPOA collapse, 2025 war, December-2025 protests) but leaves operational forecasting gaps:\n1. Base rate: How often has the U.S. struck foreign (and specifically Iranian) territory in comparable timeframes? What are the typical lead-up indicators (carrier deployments, congressional votes, public warnings)?\n2. Resolution mechanism: Which sources would unambiguously confirm a physical U.S. strike and how have such events been reported in the past?\n3. Key drivers going forward: a) U.S. military posture in CENTCOM (assets in/near the Gulf), b) policy deliberations inside the Trump administration, c) evolution of Iran\u2019s internal unrest and any humanitarian rationales, d) diplomatic or congressional constraints that could block action.\n4. Current state: February-2026 troop movements, leaks about strike plans, protest casualty updates, any ongoing U.S.\u2013Iran (or U.S.\u2013Israel\u2013Gulf) negotiations.\n5. Contrarian check: Evidence of de-escalation\u2014back-channel talks, Pentagon or congressional push-back, or competing crises diverting U.S. attention.\n\nThe search strategy therefore pairs five historical queries (to build priors and understand precedent and constraints) with three current-news queries (to track near-term catalysts or inhibitors). One Agent [HISTORICAL] query synthesises a reference class base-rate across U.S. military operations.",
+  "reflect_analysis": null,
+  "queries_planned": [
+    {
+      "query": "list of United States military operations 1990-2025",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Compile frequency and timing of U.S. strikes on foreign territory to establish a broad base rate.",
+      "phase": "plan"
+    },
+    {
+      "query": "United States direct attacks on Iran timeline",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Identify every instance of U.S. forces physically hitting Iranian targets, giving a specific Iran-focused base rate.",
+      "phase": "plan"
+    },
+    {
+      "query": "carrier strike group deployments Persian Gulf crisis periods",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Study historical correlation between carrier presence and subsequent U.S. strikes on regional adversaries, refining indicators.",
+      "phase": "plan"
+    },
+    {
+      "query": "War Powers Resolution votes or authorizations regarding Iran",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Gauge how often congressional action has constrained or green-lit potential Iran strikes.",
+      "phase": "plan"
+    },
+    {
+      "query": "Over the last 35 years, in how many discrete calendar quarters did the United States initiate kinetic military action against a sovereign state? List each operation with start date and target country, then compute the empirical quarterly base rate.",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "Produce a quantified reference class for \u201cU.S. starts a new attack within a 3-month window,\u201d directly comparable to the 1-quarter horizon of this forecast.",
+      "phase": "plan"
+    },
+    {
+      "query": "carrier deployment Gulf February 2026 CENTCOM",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Detect current U.S. naval/air force posture that could enable imminent strikes.",
+      "phase": "plan"
+    },
+    {
+      "query": "Trump administration deliberates Iran strike February 2026",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "Surface recent leaks, policy meetings, or statements indicating serious consideration of military action.",
+      "phase": "plan"
+    },
+    {
+      "query": "back-channel talks or de-escalation US Iran 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Look for evidence of diplomacy or Pentagon/Congress push-back that could decrease strike probability.",
+      "phase": "plan"
+    }
+  ],
+  "gap_queries": [],
+  "seed_context_chars": 12068,
+  "historical_context_chars": 41524,
+  "current_context_chars": 73366,
+  "phases": {
+    "pre_research": {
+      "duration_seconds": 21.74,
+      "seed_context_chars": 12068,
+      "search_id": "question_urls",
+      "searched": true,
+      "urls_found": 14,
+      "urls_scraped": 5,
+      "urls_summarized": 5,
+      "urls": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Iranian_Revolution",
+          "domain": "en.wikipedia.org",
+          "scraped": true,
+          "method": "wikipedia_api",
+          "status_code": 200,
+          "content_words": 2312
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Iran%E2%80%93United_States_relations",
+          "domain": "en.wikipedia.org",
+          "scraped": true,
+          "method": "wikipedia_api",
+          "status_code": 200,
+          "content_words": 2330
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Iran%E2%80%93United_States_relations_during_the_first_Trump_administration",
+          "domain": "en.wikipedia.org",
+          "scraped": true,
+          "method": "wikipedia_api",
+          "status_code": 200,
+          "content_words": 2311
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Joint_Comprehensive_Plan_of_Action",
+          "domain": "en.wikipedia.org",
+          "scraped": true,
+          "method": "wikipedia_api",
+          "status_code": 200,
+          "content_words": 2311
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Assassination_of_Qasem_Soleimani",
+          "domain": "en.wikipedia.org",
+          "scraped": true,
+          "method": "wikipedia_api",
+          "status_code": 200,
+          "content_words": 2321
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ]
+    },
+    "plan": {
+      "duration_seconds": 51.61,
+      "cost": 0.0223,
+      "num_queries": 8
+    },
+    "execute": {
+      "duration_seconds": 99.92,
+      "cost": 0.4384,
+      "queries_executed": 8,
+      "queries_successful": 8
+    },
+    "assemble": {
+      "historical_context_chars": 41524,
+      "current_context_chars": 73366
+    }
+  },
+  "total_queries_planned": 8,
+  "total_queries_executed": 8,
+  "total_gap_queries": 0,
+  "total_cost": 0.6203,
+  "total_duration_seconds": 173.27,
+  "query_details": [
+    {
+      "query": "list of United States military operations 1990-2025",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Compile frequency and timing of U.S. strikes on foreign territory to establish a broad base rate.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "United States direct attacks on Iran timeline",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Identify every instance of U.S. forces physically hitting Iranian targets, giving a specific Iran-focused base rate.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "carrier strike group deployments Persian Gulf crisis periods",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Study historical correlation between carrier presence and subsequent U.S. strikes on regional adversaries, refining indicators.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 2,
+      "error": null
+    },
+    {
+      "query": "War Powers Resolution votes or authorizations regarding Iran",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Gauge how often congressional action has constrained or green-lit potential Iran strikes.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "Over the last 35 years, in how many discrete calendar quarters did the United States initiate kinetic military action against a sovereign state? List each operation with start date and target country, then compute the empirical quarterly base rate.",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "Produce a quantified reference class for \u201cU.S. starts a new attack within a 3-month window,\u201d directly comparable to the 1-quarter horizon of this forecast.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 1,
+      "error": null
+    },
+    {
+      "query": "carrier deployment Gulf February 2026 CENTCOM",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Detect current U.S. naval/air force posture that could enable imminent strikes.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "Trump administration deliberates Iran strike February 2026",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "Surface recent leaks, policy meetings, or statements indicating serious consideration of military action.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 32,
+      "error": null
+    },
+    {
+      "query": "back-channel talks or de-escalation US Iran 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Look for evidence of diplomacy or Pentagon/Congress push-back that could decrease strike probability.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    }
+  ]
+}
