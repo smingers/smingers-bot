@@ -101,6 +101,7 @@ Each row shows the average Inside View (S2) score for a specific Outside View â†
 | ID | Question | Type | Forecast | Grade | Date | Reviewed |
 |----|----------|------|----------|-------|------|----------|
 | [41593](./41593_20260201_150927_assessment.md) | When will Claude Plays Pokemon beat the first Pokemon game? (2026) | date | Median ~May 20 | **A-** | 2026-02-01 | âœ… |
+| [41593](./41593_20260226_154434_assessment.md) | When will Claude Plays Pokemon beat the first Pokemon game? (2026) | date | Median ~Jun 20 | **B** | 2026-02-26 | |
 | [41594](./41594_20260206_012327_assessment.md) | Will the United States attack Iran before April 2026? | binary | 30.6% | **B-** | 2026-02-06 | |
 | [41597](./41597_20260206_015718_assessment.md) | How many US banks will fail from January through April 2026? | multiple_choice | 1: 64.5%, 2: 25.0% | **B+** | 2026-02-06 | |
 | [41699](./41699_20260205_202748_assessment.md) | Will U.S. consumer sentiment in March 2026 be higher than in February 2026? | binary | 44.4% | **B+** | 2026-02-05 | |
@@ -204,6 +205,12 @@ Each row shows the average Inside View (S2) score for a specific Outside View â†
 
 Some questions have multiple assessment runs for comparison:
 
+### 41593: When Will Claude Plays Pokemon Beat the First PokÃ©mon Game?
+| Run | Forecast | Grade | Link | Reviewed |
+|-----|----------|-------|------|----------|
+| Run 1 (old pipeline) | Median ~May 20 | **A-** | [41593_20260201_150927](./41593_20260201_150927_assessment.md) | âœ… |
+| Run 2 (iterative planner + supervisor) | Median ~Jun 20 | **B** | [41593_20260226_154434](./41593_20260226_154434_assessment.md) | |
+
 ### 41759: State Bank of Pakistan Policy Rate
 | Run | Forecast | Grade | Link | Reviewed |
 |-----|----------|-------|------|----------|
@@ -231,7 +238,7 @@ Some questions have multiple assessment runs for comparison:
 | A | 2 |
 | A- | 11 |
 | B+ | 26 |
-| B | 30 |
+| B | 31 |
 | B- | 15 |
 | C+ | 8 |
 | C | 7 |
@@ -246,7 +253,7 @@ Some questions have multiple assessment runs for comparison:
 | binary | 49 |
 | numeric | 38 |
 | multiple_choice | 16 |
-| date | 1 |
+| date | 2 |
 
 ## Assessment Template
 
