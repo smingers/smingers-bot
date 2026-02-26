@@ -407,9 +407,7 @@ class SearchPipeline:
                     # Store the LLM-generated query for news search + Deep Research
                     # The actual AskNews call will be added below with include_asknews
                     asknews_query = query
-                    logger.info(
-                        f"Search[{search_id}]: Found AskNews query: {query[:50]}..."
-                    )
+                    logger.info(f"Search[{search_id}]: Found AskNews query: {query[:50]}...")
 
             # Programmatically add AskNews for current search
             # Uses LLM-generated query for news search and Deep Research (falls back to title)

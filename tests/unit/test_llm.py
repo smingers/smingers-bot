@@ -993,9 +993,7 @@ class TestCostTrackerReasoning:
         """Failed calls (no response) don't affect reasoning token total."""
         tracker = CostTracker()
 
-        tracker.add_call(
-            LLMCall(model="test", messages=[], response=None, error="API Error")
-        )
+        tracker.add_call(LLMCall(model="test", messages=[], response=None, error="API Error"))
 
         assert tracker.total_reasoning_tokens == 0
 
