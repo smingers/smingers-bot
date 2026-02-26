@@ -1,0 +1,286 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": false,
+      "num_queries": 0,
+      "queries": [],
+      "tools_used": [],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 6,
+      "queries": [
+        {
+          "query": "Claude Plays Pokemon progress timeline",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Find community-made wikis, spreadsheets, or blog posts logging each badge, major obstacle, and date to chart pace so far.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Twitch Plays Pokemon completion times",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Retrieve duration data for all TPP games to anchor a reference class for Gen I completion.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "AI completed Pokemon Red date",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Locate first-ever and subsequent autonomous AI completions and publication dates for base-rate evidence.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Claude Plays Pokemon GitHub commits",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Examine code-repo activity to infer development tempo and upcoming feature drops that could hasten victory.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "autonomous agents beat retro games",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Broader sample of AI completion times on comparable, turn-based or menu-heavy retro titles.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "List documented cases since 2010 of autonomous AI agents (not crowd-sourced humans) completing Pok\u00e9mon Red/Blue/Yellow, including date of first completion, total training/play time, and typical lag from first public demo to completion.",
+          "tool": "Agent",
+          "temporal_role": "historical",
+          "intent": "Produce a synthesized base-rate table and descriptive stats.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "Claude Plays Pokemon February 2026 update",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "Capture the newest articles or blogs summarising present in-game location, team level, and remaining hurdles.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Anthropic Claude update January 2026",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "Identify any freshly released Claude versions or tool integrations that could improve game-playing competence before Oct 2026.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Claude Plays Pokemon recent VOD Champion",
+          "tool": "Google",
+          "temporal_role": "current",
+          "intent": "Scrutinise stream/VOD titles and descriptions for any Elite Four or Champion attempts in 2026.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 2,
+          "error": null
+        },
+        {
+          "query": "Reports on Claude Plays Pokemon stream hiatus, technical issues, or resets during 2026 across gaming and AI news outlets.",
+          "tool": "AskNews",
+          "temporal_role": "current",
+          "intent": "Surface contrarian evidence of potential setbacks that might postpone completion.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 32,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "AskNews"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 10791,
+        "token_output": 1858,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.08182500000000001,
+        "duration_seconds": 65.46228671073914,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 18036,
+        "token_output": 2156,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.12251999999999999,
+        "duration_seconds": 66.50077104568481,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 10791,
+        "token_output": 1831,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.08142,
+        "duration_seconds": 65.46252918243408,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17747,
+        "token_output": 2539,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.12682,
+        "duration_seconds": 66.50078177452087,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 9199,
+        "token_output": 2914,
+        "token_reasoning": 951,
+        "used_reasoning": true,
+        "cost": 0.05689425,
+        "duration_seconds": 65.46260285377502,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15408,
+        "token_output": 2628,
+        "token_reasoning": 727,
+        "used_reasoning": true,
+        "cost": 0.06375600000000001,
+        "duration_seconds": 66.50073599815369,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 9199,
+        "token_output": 2226,
+        "token_reasoning": 768,
+        "used_reasoning": true,
+        "cost": 0.036206,
+        "duration_seconds": 65.46265387535095,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15749,
+        "token_output": 1485,
+        "token_reasoning": 448,
+        "used_reasoning": true,
+        "cost": 0.043378,
+        "duration_seconds": 66.50066995620728,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 9199,
+        "token_output": 1786,
+        "token_reasoning": 576,
+        "used_reasoning": true,
+        "cost": 0.032686,
+        "duration_seconds": 65.46276092529297,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14908,
+        "token_output": 1977,
+        "token_reasoning": 704,
+        "used_reasoning": true,
+        "cost": 0.045632,
+        "duration_seconds": 66.5006251335144,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "steps1_2_research": 0.5115,
+    "step3_outside_view": 0.289,
+    "step5_inside_view": 0.4021,
+    "step6_aggregation": 0.4021,
+    "step7_supervisor": 0.4409
+  },
+  "total_pipeline_cost": 1.6435
+}

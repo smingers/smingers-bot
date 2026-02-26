@@ -1,0 +1,315 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": false,
+      "num_queries": 0,
+      "queries": [],
+      "tools_used": [],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 8,
+      "queries": [
+        {
+          "query": "US military strikes Iranian territory timeline",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "list and details of every overt U.S. kinetic action on Iranian soil to establish base rate and precedent.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "dataset US overseas combat operations 1945-2025 frequency",
+          "tool": "Agent",
+          "temporal_role": "historical",
+          "intent": "obtain quantitative base rate of U.S. attacking any country within two-year windows.",
+          "phase": "plan",
+          "success": false,
+          "num_results": 0,
+          "error": "Error during agentic search: 'SearchPipeline' object has no attribute '_current_agentic_cost'"
+        },
+        {
+          "query": "US interventions following large foreign protests case studies",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "identify past instances where the U.S. used force to support protest movements, to gauge analogy strength.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "congressional authorization history limited strikes without AUMF",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "understand legal/political threshold for presidents ordering short, undeclared strikes (e.g., Syria 2017, Libya 1986).",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "media confirmation process past US strikes Iran 2025 bunker busters",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "learn which \u201ccredible sources\u201d confirmed the 2025 strikes to inform resolution mechanism expectations.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "US carrier deployments Persian Gulf crisis 1990-2025 data",
+          "tool": "Agent",
+          "temporal_role": "historical",
+          "intent": "map past carrier movements versus strike events to evaluate current deployment signals.",
+          "phase": "plan",
+          "success": false,
+          "num_results": 0,
+          "error": "Error during agentic search: 'SearchPipeline' object has no attribute '_current_agentic_cost'"
+        },
+        {
+          "query": "List of U.S. kinetic military actions against Iran 1980-2026",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "establish empirical base rate of past U.S. attacks on Iranian territory/personnel.",
+          "phase": "reflect",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Cases of U.S. limited strikes without Congressional authorization 2000-2025 frequency study",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "quantify how often presidents order short, undeclared strikes to inform likelihood.",
+          "phase": "reflect",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 5,
+      "queries": [
+        {
+          "query": "US carrier group Gulf February 2026",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "check if a carrier/air-wing is currently positioned to strike Iran.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Trump administration Iran strike deliberations 2026",
+          "tool": "AskNews",
+          "temporal_role": "current",
+          "intent": "uncover leaks or reporting on internal U.S. decision-making about possible attacks.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 33,
+          "error": null
+        },
+        {
+          "query": "Iran protests crackdown February 2026 death toll escalation",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "update scale/intensity of unrest that might trigger U.S. intervention.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "US Iran backchannel negotiations ceasefire 2026",
+          "tool": "AskNews",
+          "temporal_role": "current",
+          "intent": "search for evidence of de-escalation talks that could make a strike less likely.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 29,
+          "error": null
+        },
+        {
+          "query": "Pentagon deployment orders or asset movements toward Iran February-March 2026",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "gauge current U.S. force posture as a key driver of near-term strike probability.",
+          "phase": "reflect",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "AskNews"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 3569,
+        "token_output": 1593,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.04174,
+        "duration_seconds": 89.19469904899597,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 103.24900603294373,
+        "error": "Response truncated after 5000 tokens (limit: 5000)"
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 3569,
+        "token_output": 1396,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.038785,
+        "duration_seconds": 89.19488096237183,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 29397,
+        "token_output": 3159,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.19437,
+        "duration_seconds": 103.24897313117981,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 3020,
+        "token_output": 4393,
+        "token_reasoning": 2589,
+        "used_reasoning": true,
+        "cost": 0.066787,
+        "duration_seconds": 89.19492602348328,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 26043,
+        "token_output": 2885,
+        "token_reasoning": 625,
+        "used_reasoning": true,
+        "cost": 0.08596524999999999,
+        "duration_seconds": 103.24891591072083,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 3020,
+        "token_output": 2192,
+        "token_reasoning": 896,
+        "used_reasoning": true,
+        "cost": 0.023576,
+        "duration_seconds": 89.1950330734253,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 26581,
+        "token_output": 1837,
+        "token_reasoning": 576,
+        "used_reasoning": true,
+        "cost": 0.067858,
+        "duration_seconds": 103.24883770942688,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 3020,
+        "token_output": 1952,
+        "token_reasoning": 448,
+        "used_reasoning": true,
+        "cost": 0.021656,
+        "duration_seconds": 89.19505786895752,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 26165,
+        "token_output": 1581,
+        "token_reasoning": 448,
+        "used_reasoning": true,
+        "cost": 0.06497800000000001,
+        "duration_seconds": 103.24874806404114,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "steps1_2_research": 0.7558,
+    "step3_outside_view": 0.1925,
+    "step5_inside_view": 0.636,
+    "step6_aggregation": 0.636,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 1.5844
+}

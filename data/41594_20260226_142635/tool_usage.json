@@ -1,0 +1,315 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": false,
+      "num_queries": 0,
+      "queries": [],
+      "tools_used": [],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 5,
+      "queries": [
+        {
+          "query": "historical U.S. military actions against Iran",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "To find precedents for U.S. military actions in Iran.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "frequency of U.S. military interventions in the Middle East",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "To understand how often the U.S. has engaged militarily in the region.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "analysis of U.S. responses to Iranian protests",
+          "tool": "Agent",
+          "temporal_role": "historical",
+          "intent": "To explore how the U.S. has historically reacted to internal unrest in Iran.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        },
+        {
+          "query": "historical context of U.S. military strikes in response to protests",
+          "tool": "Agent",
+          "temporal_role": "historical",
+          "intent": "To find out if the U.S. has previously intervened militarily during similar situations in other countries.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        },
+        {
+          "query": "factors leading to U.S. military de-escalation in conflicts",
+          "tool": "Agent",
+          "temporal_role": "historical",
+          "intent": "To identify historical factors that have led to the U.S. avoiding military action in tense situations.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 8,
+      "queries": [
+        {
+          "query": "latest news on U.S. military readiness regarding Iran",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "To gather recent updates on U.S. military posture towards Iran.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "current U.S. political statements on Iran conflict",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "To find out what U.S. officials are currently saying about Iran and potential military actions.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "recent developments in Iran protests and government response",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "To get the latest updates on the protests in Iran and the government's actions.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "international reactions to U.S. threats against Iran",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "To understand how other countries are responding to U.S. threats of military action against Iran.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "analysis of U.S. military strategy in the Middle East",
+          "tool": "Agent",
+          "temporal_role": "current",
+          "intent": "To gain insights into current U.S. military strategies and how they might affect the likelihood of an attack on Iran.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        },
+        {
+          "query": "analysis of U.S. public opinion on military action against Iran",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "To understand public sentiment that may influence U.S. decision-making regarding military action.",
+          "phase": "reflect",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "expert opinions on potential U.S. military restraint regarding Iran",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "To gather insights from analysts or experts on factors that may lead to non-engagement.",
+          "phase": "reflect",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "diplomatic negotiations or peace talks involving the U.S. and Iran",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "To identify any ongoing diplomatic efforts that could reduce the likelihood of military action.",
+          "phase": "reflect",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google News"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/openai/gpt-4o-mini",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 9559,
+        "token_output": 894,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0019702499999999998,
+        "duration_seconds": 40.12872529029846,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12613,
+        "token_output": 796,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0023695499999999998,
+        "duration_seconds": 40.07969784736633,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/openai/gpt-4o-mini",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 9559,
+        "token_output": 879,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.00196125,
+        "duration_seconds": 40.12891602516174,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12408,
+        "token_output": 490,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0021552,
+        "duration_seconds": 40.07970714569092,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-4o-mini",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 9559,
+        "token_output": 839,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.00193725,
+        "duration_seconds": 40.128994941711426,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12598,
+        "token_output": 762,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0023469,
+        "duration_seconds": 40.07967209815979,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/gpt-4o-mini",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 9559,
+        "token_output": 689,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.00184725,
+        "duration_seconds": 40.12904095649719,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12558,
+        "token_output": 750,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0023336999999999998,
+        "duration_seconds": 40.07962203025818,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/gpt-4o-mini",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 9559,
+        "token_output": 895,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0019708499999999997,
+        "duration_seconds": 40.12916398048401,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12614,
+        "token_output": 805,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0023750999999999998,
+        "duration_seconds": 40.07957911491394,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "steps1_2_research": 0.12,
+    "step3_outside_view": 0.0097,
+    "step5_inside_view": 0.0116,
+    "step6_aggregation": 0.0116,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.1413
+}

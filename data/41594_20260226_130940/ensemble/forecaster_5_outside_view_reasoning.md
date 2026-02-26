@@ -1,0 +1,5 @@
+**Forecasting attack probabilities**
+
+For this question, I'm focusing only on potential attacks after January 21, 2026. I’ll assess the probability of a U.S. attack on Iran's territory until April 1, 2026, using an outside view, which considers historical data rather than specific situational details. Since 1979, there have been two notable attacks, making the annual probability around 4.3%. For a 35-day timeframe, it’s approximately 0.42%, but current tensions might escalate that estimate to between 1-3%.**Analyzing escalation probabilities**
+
+I think I need to adjust my initial analysis to account for recent escalation indicators, which suggests the outside view might raise the probability to about 5-10%. However, I need to remember that the outside view focuses on historical data rather than specific situations. A precise estimate might settle around 7%. To support this, I should gather reliable sources that provide relevant information, like timelines from CNN or commentary from Fox News, and summarize their insights for a thorough analysis.

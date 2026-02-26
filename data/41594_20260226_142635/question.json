@@ -1,0 +1,759 @@
+{
+  "id": 41594,
+  "title": "Will the United States attack Iran before April 2026?",
+  "short_title": "Will the U.S. attack Iran before April 2026?",
+  "url_title": "Will the U.S. attack Iran before April 2026?",
+  "slug": "will-the-us-attack-iran-before-april-2026",
+  "author_id": 103907,
+  "author_username": "darkives",
+  "coauthors": [],
+  "created_at": "2026-01-17T18:58:49.294817Z",
+  "published_at": "2026-01-19T22:51:59Z",
+  "edited_at": "2026-02-26T13:55:25.063903Z",
+  "curation_status": "approved",
+  "curation_status_updated_at": "2026-01-19T22:57:26.955939Z",
+  "comment_count": 80,
+  "status": "open",
+  "resolved": false,
+  "actual_close_time": null,
+  "scheduled_close_time": "2026-04-01T00:00:00Z",
+  "scheduled_resolve_time": "2026-04-01T00:00:00Z",
+  "actual_resolve_time": null,
+  "open_time": "2026-01-21T17:00:00Z",
+  "nr_forecasters": 368,
+  "html_metadata_json": null,
+  "projects": {
+    "leaderboard_tag": [
+      {
+        "id": 32925,
+        "name": "2026 Leaderboard",
+        "slug": "2026_leaderboard",
+        "type": "leaderboard_tag"
+      }
+    ],
+    "tournament": [
+      {
+        "id": 32921,
+        "type": "tournament",
+        "name": "Metaculus Cup Spring 2026",
+        "slug": "metaculus-cup-spring-2026",
+        "header_image": "https://cdn.metaculus.com/cup-cover.jpg",
+        "prize_pool": "5000.00",
+        "start_date": "2026-01-07T17:00:00Z",
+        "close_date": "2026-05-01T00:00:00Z",
+        "forecasting_end_date": "2026-05-01T00:00:00Z",
+        "html_metadata_json": {
+          "image_url": "https://cdn.metaculus.com/user_uploaded/image_8.png"
+        },
+        "is_ongoing": true,
+        "user_permission": null,
+        "order": 6,
+        "created_at": "2025-12-29T12:43:16.555925Z",
+        "edited_at": "2026-02-26T14:26:33.490286Z",
+        "score_type": "peer_tournament",
+        "default_permission": "forecaster",
+        "visibility": "normal",
+        "show_on_homepage": true,
+        "is_current_content_translated": false,
+        "bot_leaderboard_status": "exclude_and_show",
+        "description_preview": "<p>Welcome to the Metaculus Cup! Forecasting novices and veterans are invited to make predictions on new topical questions each week while c"
+      }
+    ],
+    "default_project": {
+      "id": 32921,
+      "type": "tournament",
+      "name": "Metaculus Cup Spring 2026",
+      "slug": "metaculus-cup-spring-2026",
+      "header_image": "https://cdn.metaculus.com/cup-cover.jpg",
+      "prize_pool": "5000.00",
+      "start_date": "2026-01-07T17:00:00Z",
+      "close_date": "2026-05-01T00:00:00Z",
+      "forecasting_end_date": "2026-05-01T00:00:00Z",
+      "html_metadata_json": {
+        "image_url": "https://cdn.metaculus.com/user_uploaded/image_8.png"
+      },
+      "is_ongoing": true,
+      "user_permission": null,
+      "order": 6,
+      "created_at": "2025-12-29T12:43:16.555925Z",
+      "edited_at": "2026-02-26T14:26:33.490286Z",
+      "score_type": "peer_tournament",
+      "default_permission": "forecaster",
+      "visibility": "normal",
+      "show_on_homepage": true,
+      "is_current_content_translated": false,
+      "bot_leaderboard_status": "exclude_and_show",
+      "description_preview": "<p>Welcome to the Metaculus Cup! Forecasting novices and veterans are invited to make predictions on new topical questions each week while c"
+    },
+    "category": [
+      {
+        "id": 3687,
+        "name": "Geopolitics",
+        "slug": "geopolitics",
+        "emoji": "\ud83c\udf0d",
+        "description": "Geopolitics",
+        "type": "category"
+      }
+    ]
+  },
+  "question": {
+    "id": 41340,
+    "title": "Will the United States attack Iran before April 2026?",
+    "created_at": "2026-01-17T18:58:49.295277Z",
+    "open_time": "2026-01-21T17:00:00Z",
+    "cp_reveal_time": "2026-01-23T17:00:00Z",
+    "spot_scoring_time": "2026-01-23T17:00:00Z",
+    "scheduled_resolve_time": "2026-04-01T00:00:00Z",
+    "actual_resolve_time": null,
+    "resolution_set_time": null,
+    "scheduled_close_time": "2026-04-01T00:00:00Z",
+    "actual_close_time": "2026-04-01T00:00:00Z",
+    "type": "binary",
+    "options": null,
+    "all_options_ever": null,
+    "options_history": null,
+    "options_order": null,
+    "group_variable": "",
+    "status": "open",
+    "possibilities": null,
+    "resolution": null,
+    "include_bots_in_aggregates": false,
+    "question_weight": 1,
+    "default_score_type": "peer",
+    "default_aggregation_method": "recency_weighted",
+    "label": "",
+    "unit": "",
+    "open_upper_bound": false,
+    "open_lower_bound": false,
+    "inbound_outcome_count": null,
+    "scaling": {
+      "range_min": null,
+      "range_max": null,
+      "nominal_min": null,
+      "nominal_max": null,
+      "zero_point": null,
+      "open_upper_bound": false,
+      "open_lower_bound": false,
+      "inbound_outcome_count": null,
+      "continuous_range": null
+    },
+    "group_rank": null,
+    "coherence_links": null,
+    "coherence_link_aggregations": null,
+    "description": "In 1979, the people of Iran [overthrew](https://en.wikipedia.org/wiki/Iranian_Revolution) the United States\u2013backed Shah Mohammad Reza Pahlavi and installed an Islamic government, [relations between the two countries](https://en.wikipedia.org/wiki/Iran%E2%80%93United_States_relations) have since ranged from hostile to non-existent ever since.\n\nDecades later, in his first term, U.S. President Donald Trump [increased pressure on Iran](https://en.wikipedia.org/wiki/Iran%E2%80%93United_States_relations_during_the_first_Trump_administration) by means of sanctions, withdrew from an [international agreement](https://en.wikipedia.org/wiki/Joint_Comprehensive_Plan_of_Action) to limit Iran's nuclear program, and [assassinated](https://en.wikipedia.org/wiki/Assassination_of_Qasem_Soleimani) the highest-ranking Iranian military official while they were in Iraq.\n\nIn June 2025, Israel launched an attack on Iran's military and nuclear facilities, sparking a [twelve-day war](https://en.wikipedia.org/wiki/Iran%E2%80%93Israel_war) between the countries, which ended shortly after the U.S. [dropped \"bunker-buster\" bombs](https://en.wikipedia.org/wiki/United_States_strikes_on_Iranian_nuclear_sites) on three Iranian nuclear sites.\n\nIn December 2025, [protests](https://en.wikipedia.org/wiki/2025%E2%80%932026_Iranian_protests) erupted across Iran in what has been described as the largest popular demonstrations in the country since the 1979 revolution. The protests take place in the context of an [economic crisis](https://en.wikipedia.org/wiki/Iranian_economic_crisis) exacerbated by international sanctions, while the Iranian government has responded by [killing thousands of protesters](https://en.wikipedia.org/wiki/2026_Iran_massacres).&#x20;\n\nU.S. President Trump has previously [threatened](https://www.reuters.com/world/middle-east/iran-warns-retaliation-if-trump-strikes-us-withdraws-some-personnel-bases-2026-01-14/) that the U.S. would intervene on behalf of the protesters, while he has also called for [\"new leadership\" for Iran](https://www.politico.com/news/2026/01/17/trump-to-politico-its-time-to-look-for-new-leadership-in-iran-00735528). Reza Pahlavi, the son of the deposed shah, [attempted to position](https://apnews.com/article/iran-protests-reza-pahlavi-trump-shah-63348442feefaaf1cdd7fffc142b2062) himself as a future leader of a secular Iranian state.\n\n[According to Sentinel](https://blog.sentinel-team.org/p/trump-administration-mulls-strikes), a foresight team that aims to anticipate large-scale catastrophes:\n\n> Forecasters think there\u2019s a 59% chance (55% to 65%) that the US strikes Iranian territory by March 31, 2026, and a 26.5% chance (10% to 51%) that Ayatollah Khamenei is out of power by then, for any reason (including death). Last week, they gave an aggregate estimate of 43% that the Iranian regime will fall by the end of 2026. Some readers, including some sharp prediction market traders, think those probabilities are too high.",
+    "resolution_criteria": "This question will resolve as **Yes** if, before April 1, 2026, the United States carries out a military attack against Iran's territory or military personnel, according to credible sources.",
+    "fine_print": "To qualify for this question, the attack must physically affect Iran's territory or military personnel: cyberattacks, warning shots in international waters, or other actions without immediate physical impact will not count.\n\nIf it is disputed whether the United States is responsible for an attack, this question will refer to credible sources or may resolve as ambiguous.",
+    "short_title": "Will the U.S. attack Iran before April 2026?",
+    "post_id": 41594,
+    "aggregations": null,
+    "average_coverage": null,
+    "my_forecasts": {
+      "history": [
+        {
+          "question_id": 41340,
+          "author_id": 290288,
+          "start_time": 1769416929.225087,
+          "end_time": 1769468713.667236,
+          "forecast_values": [
+            0.9402,
+            0.059800000000000006
+          ],
+          "interval_lower_bounds": null,
+          "centers": null,
+          "interval_upper_bounds": null,
+          "distribution_input": null
+        },
+        {
+          "question_id": 41340,
+          "author_id": 290288,
+          "start_time": 1769468713.667236,
+          "end_time": 1770341346.994881,
+          "forecast_values": [
+            0.8942857142857144,
+            0.1057142857142857
+          ],
+          "interval_lower_bounds": null,
+          "centers": null,
+          "interval_upper_bounds": null,
+          "distribution_input": null
+        },
+        {
+          "question_id": 41340,
+          "author_id": 290288,
+          "start_time": 1770341346.994881,
+          "end_time": null,
+          "forecast_values": [
+            0.694,
+            0.306
+          ],
+          "interval_lower_bounds": null,
+          "centers": null,
+          "interval_upper_bounds": null,
+          "distribution_input": null
+        }
+      ],
+      "latest": {
+        "question_id": 41340,
+        "author_id": 290288,
+        "start_time": 1770341346.994881,
+        "end_time": null,
+        "forecast_values": [
+          0.694,
+          0.306
+        ],
+        "interval_lower_bounds": null,
+        "centers": null,
+        "interval_upper_bounds": null,
+        "distribution_input": null
+      },
+      "score_data": {}
+    }
+  },
+  "user_permission": "forecaster",
+  "vote": {
+    "score": 8,
+    "user_vote": null
+  },
+  "forecasts_count": 2118,
+  "subscriptions": null,
+  "unread_comment_count": 0,
+  "last_viewed_at": "2026-02-26T13:53:20.636100Z",
+  "private_note": null,
+  "key_factors": [
+    {
+      "id": 1430,
+      "author": {
+        "id": 119188,
+        "username": "exmateriae",
+        "is_bot": false,
+        "is_staff": false,
+        "metadata": {
+          "pro_details": {
+            "pro_end_date": null,
+            "is_current_pro": true,
+            "pro_start_date": "1/6/2025"
+          }
+        }
+      },
+      "comment_id": 646022,
+      "vote": {
+        "score": 4.8125,
+        "aggregated_data": [
+          {
+            "score": 5,
+            "count": 15
+          },
+          {
+            "score": 2,
+            "count": 1
+          }
+        ],
+        "user_vote": null,
+        "count": 16
+      },
+      "question_id": null,
+      "question": null,
+      "question_option": "",
+      "freshness": 4.795839519697256,
+      "driver": null,
+      "base_rate": null,
+      "news": {
+        "itn_article_id": null,
+        "url": "https://www.aljazeera.com/news/2026/1/29/how-does-us-military-build-up-off-iran-compare-to-the-june-2025-strikes",
+        "title": "How does US military build-up off Iran compare to the June 2025 strikes?",
+        "img_url": "https://www.aljazeera.com/favicon_aje.ico",
+        "source": "aljazeera.com",
+        "published_at": "2026-01-31T02:14:32.984000Z",
+        "impact_direction": 1,
+        "certainty": null
+      },
+      "post": {
+        "id": 41594,
+        "question_type": "binary",
+        "unit": ""
+      }
+    },
+    {
+      "id": 1429,
+      "author": {
+        "id": 119188,
+        "username": "exmateriae",
+        "is_bot": false,
+        "is_staff": false,
+        "metadata": {
+          "pro_details": {
+            "pro_end_date": null,
+            "is_current_pro": true,
+            "pro_start_date": "1/6/2025"
+          }
+        }
+      },
+      "comment_id": 646022,
+      "vote": {
+        "score": 4.2,
+        "aggregated_data": [
+          {
+            "score": 5,
+            "count": 15
+          },
+          {
+            "score": 2,
+            "count": 4
+          },
+          {
+            "score": 1,
+            "count": 1
+          }
+        ],
+        "user_vote": null,
+        "count": 20
+      },
+      "question_id": null,
+      "question": null,
+      "question_option": "",
+      "freshness": 4.050515488302888,
+      "driver": {
+        "text": "US military buildup suggests likelihood of attack",
+        "impact_direction": 1,
+        "certainty": null
+      },
+      "base_rate": null,
+      "news": null,
+      "post": {
+        "id": 41594,
+        "question_type": "binary",
+        "unit": ""
+      }
+    },
+    {
+      "id": 1432,
+      "author": {
+        "id": 119188,
+        "username": "exmateriae",
+        "is_bot": false,
+        "is_staff": false,
+        "metadata": {
+          "pro_details": {
+            "pro_end_date": null,
+            "is_current_pro": true,
+            "pro_start_date": "1/6/2025"
+          }
+        }
+      },
+      "comment_id": 646022,
+      "vote": {
+        "score": 4.076923076923077,
+        "aggregated_data": [
+          {
+            "score": 2,
+            "count": 4
+          },
+          {
+            "score": 5,
+            "count": 9
+          }
+        ],
+        "user_vote": null,
+        "count": 13
+      },
+      "question_id": null,
+      "question": null,
+      "question_option": "",
+      "freshness": 4.1978736690127585,
+      "driver": {
+        "text": "The IRGC and the regime overall have not been so weak for a long time",
+        "impact_direction": 1,
+        "certainty": null
+      },
+      "base_rate": null,
+      "news": null,
+      "post": {
+        "id": 41594,
+        "question_type": "binary",
+        "unit": ""
+      }
+    },
+    {
+      "id": 1653,
+      "author": {
+        "id": 139161,
+        "username": "Zaldath",
+        "is_bot": false,
+        "is_staff": false,
+        "metadata": {
+          "pro_details": {
+            "pro_end_date": null,
+            "is_current_pro": true,
+            "pro_start_date": "10/6/2023"
+          }
+        }
+      },
+      "comment_id": 695437,
+      "vote": {
+        "score": 2.4285714285714284,
+        "aggregated_data": [
+          {
+            "score": 1,
+            "count": 3
+          },
+          {
+            "score": 5,
+            "count": 2
+          },
+          {
+            "score": 2,
+            "count": 2
+          }
+        ],
+        "user_vote": null,
+        "count": 7
+      },
+      "question_id": null,
+      "question": null,
+      "question_option": "",
+      "freshness": 2.416873093310737,
+      "driver": {
+        "text": "Shortening timelines point to military solution",
+        "impact_direction": 1,
+        "certainty": null
+      },
+      "base_rate": null,
+      "news": null,
+      "post": {
+        "id": 41594,
+        "question_type": "binary",
+        "unit": ""
+      }
+    },
+    {
+      "id": 1398,
+      "author": {
+        "id": 290711,
+        "username": "stevefan1999",
+        "is_bot": false,
+        "is_staff": false,
+        "metadata": null
+      },
+      "comment_id": 639409,
+      "vote": {
+        "score": 1.875,
+        "aggregated_data": [
+          {
+            "score": 2,
+            "count": 3
+          },
+          {
+            "score": 5,
+            "count": 1
+          },
+          {
+            "score": 1,
+            "count": 4
+          }
+        ],
+        "user_vote": null,
+        "count": 8
+      },
+      "question_id": null,
+      "question": null,
+      "question_option": "",
+      "freshness": 1.8778540011319806,
+      "driver": null,
+      "base_rate": null,
+      "news": {
+        "itn_article_id": null,
+        "url": "https://www.middleeasteye.net/news/turkey-plans-buffer-zone-if-iran-government-fall",
+        "title": "Turkey plans buffer zone if Iran government falls",
+        "img_url": "https://www.middleeasteye.net/sites/default/files/MEE%20Purple.png",
+        "source": "middleeasteye.net",
+        "published_at": "2026-01-28T05:58:39.368000Z",
+        "impact_direction": 1,
+        "certainty": null
+      },
+      "post": {
+        "id": 41594,
+        "question_type": "binary",
+        "unit": ""
+      }
+    },
+    {
+      "id": 1647,
+      "author": {
+        "id": 135380,
+        "username": "lubossaloky",
+        "is_bot": false,
+        "is_staff": false,
+        "metadata": {
+          "pro_details": {
+            "pro_end_date": null,
+            "is_current_pro": true,
+            "pro_start_date": "8/7/2025"
+          }
+        }
+      },
+      "comment_id": 692303,
+      "vote": {
+        "score": 1.8571428571428572,
+        "aggregated_data": [
+          {
+            "score": 2,
+            "count": 3
+          },
+          {
+            "score": 5,
+            "count": 1
+          },
+          {
+            "score": 0,
+            "count": 1
+          },
+          {
+            "score": 1,
+            "count": 2
+          }
+        ],
+        "user_vote": null,
+        "count": 7
+      },
+      "question_id": null,
+      "question": null,
+      "question_option": "",
+      "freshness": 1.901379741273057,
+      "driver": {
+        "text": "Oil prices indicate rising geopolitical tension",
+        "impact_direction": 1,
+        "certainty": null
+      },
+      "base_rate": null,
+      "news": null,
+      "post": {
+        "id": 41594,
+        "question_type": "binary",
+        "unit": ""
+      }
+    },
+    {
+      "id": 1431,
+      "author": {
+        "id": 119188,
+        "username": "exmateriae",
+        "is_bot": false,
+        "is_staff": false,
+        "metadata": {
+          "pro_details": {
+            "pro_end_date": null,
+            "is_current_pro": true,
+            "pro_start_date": "1/6/2025"
+          }
+        }
+      },
+      "comment_id": 646022,
+      "vote": {
+        "score": 1.8461538461538463,
+        "aggregated_data": [
+          {
+            "score": 1,
+            "count": 6
+          },
+          {
+            "score": 2,
+            "count": 4
+          },
+          {
+            "score": 5,
+            "count": 2
+          },
+          {
+            "score": 0,
+            "count": 1
+          }
+        ],
+        "user_vote": null,
+        "count": 13
+      },
+      "question_id": null,
+      "question": null,
+      "question_option": "",
+      "freshness": 1.620149881906942,
+      "driver": {
+        "text": "Netanyahu needs major wins for the election at the end of the year",
+        "impact_direction": 1,
+        "certainty": null
+      },
+      "base_rate": null,
+      "news": null,
+      "post": {
+        "id": 41594,
+        "question_type": "binary",
+        "unit": ""
+      }
+    },
+    {
+      "id": 1510,
+      "author": {
+        "id": 245211,
+        "username": "Russell-viper",
+        "is_bot": false,
+        "is_staff": false,
+        "metadata": null
+      },
+      "comment_id": 653474,
+      "vote": {
+        "score": 1.8,
+        "aggregated_data": [
+          {
+            "score": 1,
+            "count": 4
+          },
+          {
+            "score": 2,
+            "count": 2
+          },
+          {
+            "score": 5,
+            "count": 2
+          },
+          {
+            "score": 0,
+            "count": 2
+          }
+        ],
+        "user_vote": null,
+        "count": 10
+      },
+      "question_id": null,
+      "question": null,
+      "question_option": "",
+      "freshness": 1.7114553499049783,
+      "driver": {
+        "text": "Regional powers oppose US airspace use for strikes",
+        "impact_direction": -1,
+        "certainty": null
+      },
+      "base_rate": null,
+      "news": null,
+      "post": {
+        "id": 41594,
+        "question_type": "binary",
+        "unit": ""
+      }
+    },
+    {
+      "id": 1533,
+      "author": {
+        "id": 119188,
+        "username": "exmateriae",
+        "is_bot": false,
+        "is_staff": false,
+        "metadata": {
+          "pro_details": {
+            "pro_end_date": null,
+            "is_current_pro": true,
+            "pro_start_date": "1/6/2025"
+          }
+        }
+      },
+      "comment_id": 659325,
+      "vote": {
+        "score": 1.7142857142857142,
+        "aggregated_data": [
+          {
+            "score": 1,
+            "count": 3
+          },
+          {
+            "score": 2,
+            "count": 2
+          },
+          {
+            "score": 5,
+            "count": 1
+          },
+          {
+            "score": 0,
+            "count": 1
+          }
+        ],
+        "user_vote": null,
+        "count": 7
+      },
+      "question_id": null,
+      "question": null,
+      "question_option": "",
+      "freshness": 1.5937390576637234,
+      "driver": null,
+      "base_rate": null,
+      "news": {
+        "itn_article_id": null,
+        "url": "https://www.state.gov/releases/office-of-the-spokesperson/2026/02/sanctions-to-combat-illicit-traders-of-iranian-oil-and-the-shadow-fleet",
+        "title": "Sanctions to Combat Illicit Traders of Iranian Oil and the Shadow Fleet - United States Department of State",
+        "img_url": "https://www.state.gov/wp-content/uploads/2022/04/cropped-dos_seal-192x192.png",
+        "source": "state.gov",
+        "published_at": "2026-02-06T15:54:38Z",
+        "impact_direction": -1,
+        "certainty": null
+      },
+      "post": {
+        "id": 41594,
+        "question_type": "binary",
+        "unit": ""
+      }
+    },
+    {
+      "id": 1399,
+      "author": {
+        "id": 290711,
+        "username": "stevefan1999",
+        "is_bot": false,
+        "is_staff": false,
+        "metadata": null
+      },
+      "comment_id": 639411,
+      "vote": {
+        "score": 1.5,
+        "aggregated_data": [
+          {
+            "score": 1,
+            "count": 3
+          },
+          {
+            "score": 5,
+            "count": 1
+          },
+          {
+            "score": 0,
+            "count": 2
+          },
+          {
+            "score": 2,
+            "count": 2
+          }
+        ],
+        "user_vote": null,
+        "count": 8
+      },
+      "question_id": null,
+      "question": null,
+      "question_option": "",
+      "freshness": 1.7225159674317136,
+      "driver": null,
+      "base_rate": null,
+      "news": {
+        "itn_article_id": null,
+        "url": "https://www.prokerala.com/news/articles/a1722990.html",
+        "title": "Iran ready for peace process within international law, president tells Saudi crown prince",
+        "img_url": "https://www.prokerala.com/favicon.svg",
+        "source": "prokerala.com",
+        "published_at": "2026-01-28T06:05:44.262000Z",
+        "impact_direction": -1,
+        "certainty": null
+      },
+      "post": {
+        "id": 41594,
+        "question_type": "binary",
+        "unit": ""
+      }
+    }
+  ],
+  "is_current_content_translated": false
+}
