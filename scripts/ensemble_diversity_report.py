@@ -688,6 +688,49 @@ def analyze_forecast(forecast_dir: Path) -> ForecastAnalysis | None:
                 if p40 is not None and p60 is not None:
                     p50 = (p40 + p60) / 2
             analysis.supervisor_prediction = p50
+        elif question_type in ("numeric", "discrete", "date") and isinstance(raw_pred, list):
+            # raw_pred is a 201-point CDF array (probability values, not timestamps).
+            # Extract the median by finding where the CDF crosses 0.5, then interpolate
+            # the corresponding value from the question's continuous_range or scaling.
+            scaling = q.get("scaling", {})
+            continuous_range = scaling.get("continuous_range", [])
+            p50_val: float | None = None
+            if continuous_range and len(continuous_range) == len(raw_pred):
+                for i in range(len(raw_pred) - 1):
+                    if raw_pred[i] <= 0.5 <= raw_pred[i + 1]:
+                        denom = raw_pred[i + 1] - raw_pred[i]
+                        frac = (0.5 - raw_pred[i]) / denom if denom else 0.0
+                        try:
+                            t1 = datetime.fromisoformat(
+                                continuous_range[i].replace("Z", "+00:00")
+                            ).timestamp()
+                            t2 = datetime.fromisoformat(
+                                continuous_range[i + 1].replace("Z", "+00:00")
+                            ).timestamp()
+                            p50_val = t1 + frac * (t2 - t1)
+                        except Exception:
+                            pass
+                        break
+                if p50_val is None and raw_pred and raw_pred[-1] >= 0.5:
+                    try:
+                        p50_val = datetime.fromisoformat(
+                            continuous_range[-1].replace("Z", "+00:00")
+                        ).timestamp()
+                    except Exception:
+                        pass
+            else:
+                # Fallback: linear interpolation between range_min and range_max
+                range_min = scaling.get("range_min")
+                range_max = scaling.get("range_max")
+                if range_min is not None and range_max is not None and len(raw_pred) > 1:
+                    n = len(raw_pred) - 1
+                    for i in range(len(raw_pred) - 1):
+                        if raw_pred[i] <= 0.5 <= raw_pred[i + 1]:
+                            denom = raw_pred[i + 1] - raw_pred[i]
+                            frac = (0.5 - raw_pred[i]) / denom if denom else 0.0
+                            p50_val = range_min + (i + frac) / n * (range_max - range_min)
+                            break
+            analysis.supervisor_prediction = p50_val
         elif question_type == "multiple_choice" and isinstance(raw_pred, list):
             if any(p > 1 for p in raw_pred):
                 analysis.supervisor_prediction = [p / 100 for p in raw_pred]
