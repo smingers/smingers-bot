@@ -311,24 +311,52 @@ The `--mode` flag controls model tier and submission behavior:
 
 ### Research Pipeline
 
-Research is integrated into each handler. The pipeline:
-1. Generate historical queries (for outside view context)
-2. Generate current queries (for inside view context)
-3. Execute searches via Google (Serper), AskNews, Google Trends, FRED, and yFinance
-4. Scrape URLs found in question text (resolution_criteria, fine_print, description)
-5. Optionally run agentic search (iterative LLM-guided research with access to FRED + yFinance)
-6. Extract and summarize article content
+Research is integrated into each handler. Two modes are available, controlled by `research.iterative_planner_enabled`:
 
-**Configuration in `config.yaml`:**
+#### Iterative Research Planner (default, `iterative_planner_enabled: true`)
+
+Replaces the legacy 2-step approach with a unified plan-execute pipeline:
+
+1. **Phase 0: Pre-research** — Scrape URLs from question text fields (description, resolution_criteria, fine_print) to build seed context *before* generating queries
+2. **Phase 1: Plan** — Single LLM call generates up to 10 tagged queries (`[HISTORICAL]`/`[CURRENT]`) across all available tools, informed by seed context. Covers 5 dimensions: base rate, resolution mechanism, key drivers, current state, contrarian check
+3. **Phase 2: Execute** — All queries dispatched concurrently to appropriate tools (Google, AskNews, Agent, FRED, yFinance, Google Trends)
+4. **Phase 3: Reflect** *(disabled by default)* — Evaluates coverage gaps and generates up to 3 gap-fill queries
+5. **Phase 4: Assemble** — Partitions results into `historical_context` and `current_context` by temporal tag
+
+Key differences from legacy: queries are planned holistically (no overlap between historical/current), seed context prevents redundant queries, only enabled tools appear in the prompt, Agent search is limited to 1 historical query for cost control.
+
+**Implementation**: `src/bot/research_planner.py` (planner), `src/bot/prompts.py` (`RESEARCH_PLAN_PROMPT`, `RESEARCH_REFLECT_PROMPT`)
+
+#### Legacy Pipeline (`iterative_planner_enabled: false`)
+
+1. Generate historical queries and current queries independently (2 parallel LLM calls)
+2. Execute searches via Google (Serper), AskNews, Google Trends, FRED, and yFinance
+3. Scrape URLs found in question text (resolution_criteria, fine_print, description)
+4. Optionally run agentic search (iterative LLM-guided research with access to FRED + yFinance)
+5. Extract and summarize article content
+
+#### Research Configuration
+
 ```yaml
 research:
+  # Planner toggle and settings
+  iterative_planner_enabled: true   # false = legacy pipeline
+  planner:
+    max_plan_queries: 10            # Max queries in planning phase
+    max_gap_queries: 3              # Max gap-fill queries from reflection
+    reflection_enabled: false       # Phase 3 reflect/gap-fill (saves 1 LLM call)
+
+  # Tool toggles (planner auto-excludes disabled tools from the prompt)
   google_enabled: true
   google_max_results: 10
   asknews_enabled: true
   asknews_max_results: 10
   asknews_hours_back: 72
   agentic_search_enabled: true
-  agentic_search_max_steps: 7
+  agentic_search_max_steps:
+    test: 3
+    preview: 5
+    live: 7
   google_trends_enabled: true
   fred_enabled: true
   yfinance_enabled: true
@@ -484,6 +512,8 @@ SQLite at `data/forecasts.db` for analytics with three tables:
 2. **Search failures**: Verify `SERPER_API_KEY` and `ASKNEWS_*` credentials. Searches gracefully degrade if APIs are unavailable.
 
 3. **Cost tracking**: All LLM calls tracked via `src/utils/llm.py`. Check `metadata.json` for per-forecast costs.
+
+4. **OpenRouter "No allowed providers are available for the selected model"**: Your API key's guardrail limits which providers can be used. The error lists `requested_providers` (allowed by your key) and `available_providers` (where the model is currently served). If they don't overlap (e.g. key allows only openai/anthropic/google-ai-studio but the model is only on amazon-bedrock/google-vertex), requests fail. Fix: OpenRouter → **Settings → Privacy** → edit the guardrail for your key and add the missing providers (e.g. `amazon-bedrock`, `google-vertex`) or clear the provider allowlist to allow all.
 
 ## API Keys
 

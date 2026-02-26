@@ -24,9 +24,9 @@ mode: "test"
 models:
   # Models for test mode (fast, inexpensive)
   fast:
-    query_generator: "openrouter/anthropic/claude-3.5-haiku"
-    article_summarizer: "openrouter/anthropic/claude-3.5-haiku"
-    agentic_search: "openrouter/anthropic/claude-3.5-haiku"
+    query_generator: "openrouter/openai/gpt-4o-mini"
+    article_summarizer: "openrouter/openai/gpt-4o-mini"
+    agentic_search: "openrouter/openai/gpt-4o-mini"
 
   # Models for preview and live modes (higher quality)
   quality:
@@ -48,26 +48,26 @@ models:
 #   - Agent 5 (o3) receives Agent 5's step 1 output (o3)
 
 ensemble:
-  # Agents for test mode (all Haiku - fast, inexpensive)
+  # Agents for test mode (all gpt-4o-mini - fast, inexpensive)
   fast:
     - name: "forecaster_1"
-      model: "openrouter/anthropic/claude-3.5-haiku"
+      model: "openrouter/openai/gpt-4o-mini"
       weight: 1.0
 
     - name: "forecaster_2"
-      model: "openrouter/anthropic/claude-3.5-haiku"
+      model: "openrouter/openai/gpt-4o-mini"
       weight: 1.0
 
     - name: "forecaster_3"
-      model: "openrouter/anthropic/claude-3.5-haiku"
+      model: "openrouter/openai/gpt-4o-mini"
       weight: 1.0
 
     - name: "forecaster_4"
-      model: "openrouter/anthropic/claude-3.5-haiku"
+      model: "openrouter/openai/gpt-4o-mini"
       weight: 1.0
 
     - name: "forecaster_5"
-      model: "openrouter/anthropic/claude-3.5-haiku"
+      model: "openrouter/openai/gpt-4o-mini"
       weight: 1.0
 
   # Agents for preview and live modes (higher quality)
@@ -104,6 +104,17 @@ ensemble:
 # 4. Extract and summarize content
 
 research:
+  # Iterative research planner (replaces legacy 2-step query generation)
+  # When enabled, uses a unified plan-execute-reflect loop instead of
+  # independent historical + current query generation
+  iterative_planner_enabled: true
+
+  # Planner configuration (only used when iterative_planner_enabled is true)
+  planner:
+    max_plan_queries: 10     # Max queries generated in planning phase
+    max_gap_queries: 3       # Max gap-fill queries from reflection phase
+    reflection_enabled: false # Set false to skip reflection (saves 1 LLM call)
+
   # Google search via Serper API
   google_enabled: true
   google_max_results: 10
@@ -114,7 +125,11 @@ research:
 
   # Agentic search (iterative LLM-guided research)
   agentic_search_enabled: true
-  agentic_search_max_steps: 7
+  # Max steps per mode (use a single number for all modes, or per-mode overrides)
+  agentic_search_max_steps:
+    test: 3
+    preview: 5
+    live: 7
 
   # Google Trends (historical data for trends questions)
   google_trends_enabled: true
@@ -204,7 +219,9 @@ llm:
   # Utility tasks use low temps for consistency; forecasting uses moderate temps
   # since diversity already comes from model mixing + cross-pollination.
   temperature:
-    query_generation: 0.3       # Focused, relevant search queries
+    query_generation: 0.3       # Focused, relevant search queries (legacy path)
+    research_planning: 0.3      # Research plan generation (iterative planner)
+    research_reflection: 0.2    # Coverage evaluation (iterative planner, lower = more conservative)
     article_summarization: 0.1  # Faithful extraction of article content
     agentic_search: 0.3         # Focused iterative research
     forecasting: 0.5            # Moderate diversity (model mix provides the rest)
@@ -226,7 +243,7 @@ supervisor:
 
   # Model used for supervisor analysis and update
   model:
-    fast: "openrouter/anthropic/claude-3.5-haiku"
+    fast: "openrouter/openai/gpt-4o-mini"
     quality: "openrouter/anthropic/claude-opus-4.6"
 
   # Divergence thresholds - supervisor only runs when ensemble divergence exceeds these

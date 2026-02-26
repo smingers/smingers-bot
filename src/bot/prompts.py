@@ -1190,3 +1190,113 @@ Confidence: HIGH/MEDIUM/LOW
 
 Probabilities: [Probability_A, Probability_B, ..., Probability_N]
 """
+
+
+# =============================================================================
+# ITERATIVE RESEARCH PLANNER PROMPTS
+# =============================================================================
+
+RESEARCH_PLAN_PROMPT = """You are a research planner for a forecasting question. Your task is to design a search strategy that gives forecasters the best possible evidence base.
+
+QUESTION:
+{title}
+
+Type: {question_type}
+
+Background:
+{background}
+
+Resolution criteria:
+{resolution_criteria}
+
+Fine print:
+{fine_print}
+
+{type_specific}
+
+Question metadata:
+- Opened: {open_time}
+- Resolves: {scheduled_resolve_time}
+- Today: {today} ({days_to_resolution} days until resolution)
+
+PRE-RESEARCH CONTEXT:
+The following information has already been gathered from sources referenced in the question. Use this to avoid redundant queries and to identify what additional research is needed.
+
+{seed_context}
+
+{stock_return_context}
+
+YOUR TASK:
+1. Analyze the question and the pre-research context
+2. Identify what information a skilled forecaster would need beyond what's already available
+3. Generate {max_queries} search queries to fill the remaining gaps
+
+COVERAGE DIMENSIONS (ensure your queries collectively address these):
+- Base rate: Historical frequency, distribution, or precedent for the outcome being forecast. How often has something like this happened before?
+- Resolution mechanism: How exactly does this question resolve? What specific data source, metric, threshold, or event determines the outcome? What is the current state of that mechanism?
+- Key drivers: The 1-3 most important causal factors that will determine the outcome. What moves this metric or makes this event more/less likely?
+- Current state: Latest news, data points, or developments relevant to the question
+- Contrarian check: Information that could support the less obvious outcome. What would make the unlikely scenario happen?
+
+TYPE-SPECIFIC GUIDANCE:
+- For binary "will X reach Y by Z" questions: Include a query for the historical base rate of X reaching Y in comparable timeframes. Also query the current trajectory/trend.
+- For numeric questions: Query for recent values of the metric AND its primary upstream drivers. For financial metrics, query for upcoming scheduled events (data releases, FOMC meetings, earnings) before the resolution date.
+- For multiple choice questions: Ensure at least one query is relevant to each substantive option. For catch-all/"other" options, query for the base rate of non-favored outcomes.
+
+AVAILABLE TOOLS (only use tools listed here):
+{available_tools}
+
+TAG each query as [HISTORICAL] (for base rates, reference classes, past data, background context) or [CURRENT] (for recent news, latest values, current developments, upcoming events). Aim for roughly 60% historical and 40% current. Include at least 2 of each.
+
+Format your answer exactly as below. Each query on its own line. The source in parentheses, temporal tag in brackets. Do not wrap queries in quotes.
+
+Analysis:
+{{Your analysis of the question, what the pre-research context already provides, what key information gaps remain, and your search strategy.}}
+
+Search queries:
+1. [HISTORICAL] your query here (Google) -- Intent: what this query aims to find
+2. [CURRENT] your query here (Google News) -- Intent: what this query aims to find
+3. [HISTORICAL] your detailed multi-part query here (Agent) -- Intent: what this query aims to find
+...
+"""
+
+
+RESEARCH_REFLECT_PROMPT = """You are evaluating the completeness of research gathered for a forecasting question and identifying critical gaps.
+
+QUESTION: {title}
+Type: {question_type}
+Resolution criteria: {resolution_criteria}
+Fine print: {fine_print}
+Days to resolution: {days_to_resolution}
+
+RESEARCH RESULTS SUMMARY:
+The following searches were executed and their results summarized below.
+
+{results_summary}
+
+YOUR TASK:
+Evaluate coverage across these dimensions. For each, state COVERED or GAP with a brief note (1 sentence):
+
+1. Base rate: Do we have historical frequency/distribution data for the outcome?
+2. Resolution mechanism: Do we know the current state of the specific metric/event that determines resolution?
+3. Key drivers: Do we have data on the main causal factors?
+4. Current state: Do we have recent (last 7 days) news or data?
+5. Contrarian: Do we have information supporting the less obvious outcome?
+
+Then decide:
+- If research is sufficient for a well-calibrated forecast: Write "Coverage: SUFFICIENT"
+- If there are important gaps that would materially change a forecast: Write "Coverage: GAPS_FOUND" followed by 1-{max_gap_queries} targeted queries to fill the most critical gaps
+
+Only generate gap-fill queries for gaps that would materially affect a forecaster's prediction. Do not generate queries for nice-to-have information.
+
+Use the same tagged format:
+1. [HISTORICAL/CURRENT] query (Tool) -- Intent: what gap this fills
+
+Analysis:
+{{Your coverage evaluation across the 5 dimensions.}}
+
+Coverage: SUFFICIENT/GAPS_FOUND
+
+Search queries:
+{{Only if GAPS_FOUND. 1-{max_gap_queries} queries.}}
+"""
