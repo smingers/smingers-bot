@@ -1,0 +1,7 @@
+**Considering outside view predictions**
+
+I'm thinking about how to craft predictions using the outside view method, which focuses on historical base rates without internal adjustments. I wonder if we should incorporate some early 2026 figures, but cautiously, since that might lean toward an inside view. I’ve gathered several sources, like UN News articles and some from Thomson Reuters, that provide statistics on migrant casualties over the years. These figures can help us establish a historical pattern, even if they aren't all early-year data.**Summarizing migrant death data**
+
+I'm compiling early-year totals for Mediterranean migrant deaths from previous years. It looks like 2015 and 2016 each exceeded 1,000, while other years showed lower early numbers, like 2014 with only 96 and 2025 with 555. For my analysis, I think I'll focus on "Mediterranean migrant deaths by April 30" for 2014-2025. The goal is to craft a probability based on the outside view, but I realize the dataset is incomplete. I'll estimate using full-year correlations and calculate a base rate around 15-20%.**Adjusting the probability estimate**
+
+I’m noting that the early 2026 figure shows 606 deaths by February 22, which indicates a rapid pace. While I might typically disregard this for an outside view prediction, I’m considering whether a slight adjustment is warranted. Normally, the outside view sets the baseline, and the inside view makes adjustments. So I think a base rate of around 20% could work, but maybe I can narrow it down to 18%. Let's finalize that probability of 18%.

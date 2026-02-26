@@ -1,0 +1,758 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 1,
+      "queries": [
+        {
+          "query": "https://missingmigrants.iom.int/region/mediterranean",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0,
+          "domain": "missingmigrants.iom.int",
+          "method": null,
+          "status_code": 403,
+          "content_words": null,
+          "error": "HTTP 403"
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "IOM Missing Migrants Mediterranean 2024",
+          "tool": "Google",
+          "url_results": [
+            {
+              "url": "https://missingmigrants.iom.int/region/mediterranean",
+              "domain": "missingmigrants.iom.int",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.iom.int/news/30-migrants-dead-or-missing-greece-latest-tragedy-mediterranean",
+              "domain": "www.iom.int",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.iom.int/news/iom-chief-nearly-100-disappeared-or-dead-mediterranean-2024-underscoring-need-regular-pathways",
+              "domain": "www.iom.int",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.iom.int/news/2024-deadliest-year-record-migrants-new-iom-data-reveals",
+              "domain": "www.iom.int",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://missingmigrants.iom.int/data",
+              "domain": "missingmigrants.iom.int",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.reuters.com/world/almost-8000-died-migration-routes-2025-toll-likely-far-higher-says-un-agency-2026-02-26/",
+              "domain": "www.reuters.com",
+              "success": false,
+              "error": "HTTP 401",
+              "method": null,
+              "status_code": 401,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.facebook.com/middleeastmonitor/posts/at-least-606-migrants-have-died-or-gone-missing-in-the-mediterranean-sea-since-t/1324615466365146/",
+              "domain": "www.facebook.com",
+              "success": false,
+              "error": "Blocked domain",
+              "method": null,
+              "status_code": null,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://missingmigrants.iom.int/",
+              "domain": "missingmigrants.iom.int",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://news.un.org/en/story/2024/01/1145997",
+              "domain": "news.un.org",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 3225,
+              "truncated": false
+            },
+            {
+              "url": "https://www.onlinelibrary.iihl.org/wp-content/uploads/2025/02/2024-%E2%80%93-IOM-A-decade-of-documenting-migrant-deaths-Data-analysis-and-reflection-on-deaths-during-migration-documented-by-IOM%E2%80%99s-Missing-Migrants-Project-2014-2023.pdf",
+              "domain": "www.onlinelibrary.iihl.org",
+              "success": false,
+              "error": "Content extraction failed",
+              "method": null,
+              "status_code": 200,
+              "content_chars": 0,
+              "truncated": false
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 10,
+            "urls_extracted": 1,
+            "urls_failed": 9,
+            "urls_summarized": 1
+          },
+          "success": true,
+          "num_results": 1
+        },
+        {
+          "query": "Mediterranean migrant deaths April 2025",
+          "tool": "Google News",
+          "url_results": [
+            {
+              "url": "https://refugees.org/no-safe-pathway-migrant-deaths-by-drowning/",
+              "domain": "refugees.org",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.unicef.org/press-releases/approximately-3500-children-have-died-central-mediterranean-over-past-10-years",
+              "domain": "www.unicef.org",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://etias.com/articles/eu-migrant-crossings-drop,-med-route-still-hot",
+              "domain": "etias.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 6314,
+              "truncated": false
+            },
+            {
+              "url": "https://www.infomigrants.net/en/post/68969/over-3000-people-died-while-trying-to-reach-spain-in-2025",
+              "domain": "www.infomigrants.net",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.unhcr.org/europe/news/press-releases/10-years-largest-loss-life-mediterranean-unhcr-urges-decisive-action-save-lives",
+              "domain": "www.unhcr.org",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://news.un.org/en/story/2025/06/1164246",
+              "domain": "news.un.org",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 2464,
+              "truncated": false
+            },
+            {
+              "url": "https://www.nature.com/articles/s41599-025-04900-1",
+              "domain": "www.nature.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 53251,
+              "truncated": true
+            },
+            {
+              "url": "https://www.madamasr.com/en/2025/07/31/news/u/dozens-of-egyptians-still-missing-after-migrant-boat-sinks-off-tobruk-coast/",
+              "domain": "www.madamasr.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 6635,
+              "truncated": false
+            },
+            {
+              "url": "https://www.context.news/socioeconomic-inclusion/in-data-a-decade-of-irregular-migration-to-europe",
+              "domain": "www.context.news",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 3263,
+              "truncated": false
+            },
+            {
+              "url": "https://www.reuters.com/world/europe/europes-hardened-frontier-greek-island-keeps-migrants-bay-2025-07-30/",
+              "domain": "www.reuters.com",
+              "success": false,
+              "error": "HTTP 401",
+              "method": null,
+              "status_code": 401,
+              "content_chars": 0,
+              "truncated": false
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 10,
+            "urls_extracted": 5,
+            "urls_failed": 5,
+            "urls_summarized": 3
+          },
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Retrieve IOM Missing Migrants Project year-to-date totals (dead+missing) for the Mediterranean for every year 2014-2025 through 30 April and any preliminary 2026 figures; list whether totals exceeded 1,000.",
+          "tool": "Agent",
+          "agentic_instrumentation": {
+            "steps_taken": 4,
+            "queries_executed": [
+              "IOM Missing Migrants dataset Mediterranean",
+              "Missing Migrants API documentation",
+              "Mediterranean migrant deaths 30 April 2023 IOM",
+              "Mediterranean migrant deaths 30 April 2016",
+              "IOM press release 2 May 2026 Mediterranean deaths",
+              "Missing Migrants Mediterranean 30 April 2014",
+              "site:missingmigrants.iom.int \u201c30 April 2018\u201d Mediterranean",
+              "Missing Migrants download Mediterranean CSV",
+              "Missing Migrants Mediterranean April 30 totals",
+              "Missing Migrants CSV download Mediterranean",
+              "Missing Migrants API Mediterranean deaths",
+              "IOM 30 April Mediterranean deaths 2024",
+              "Mediterranean migrant deaths by April 2015 IOM"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "IOM Missing Migrants dataset Mediterranean",
+                    "Google"
+                  ],
+                  [
+                    "Missing Migrants API documentation",
+                    "Google"
+                  ],
+                  [
+                    "Mediterranean migrant deaths 30 April 2023 IOM",
+                    "Google"
+                  ],
+                  [
+                    "Mediterranean migrant deaths 30 April 2016",
+                    "Google News"
+                  ],
+                  [
+                    "IOM press release 2 May 2026 Mediterranean deaths",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 46081,
+                "analysis_chars": 0
+              },
+              {
+                "step_number": 2,
+                "queries_executed": [
+                  [
+                    "Missing Migrants Mediterranean 30 April 2014",
+                    "Google"
+                  ],
+                  [
+                    "site:missingmigrants.iom.int \u201c30 April 2018\u201d Mediterranean",
+                    "Google"
+                  ],
+                  [
+                    "Missing Migrants download Mediterranean CSV",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 34811,
+                "analysis_chars": 3559
+              },
+              {
+                "step_number": 3,
+                "queries_executed": [
+                  [
+                    "Missing Migrants Mediterranean April 30 totals",
+                    "Google"
+                  ],
+                  [
+                    "Missing Migrants CSV download Mediterranean",
+                    "Google"
+                  ],
+                  [
+                    "Missing Migrants API Mediterranean deaths",
+                    "Google"
+                  ],
+                  [
+                    "IOM 30 April Mediterranean deaths 2024",
+                    "Google News"
+                  ],
+                  [
+                    "Mediterranean migrant deaths by April 2015 IOM",
+                    "Google News"
+                  ]
+                ],
+                "search_results_chars": 81142,
+                "analysis_chars": 3479
+              }
+            ],
+            "error": null
+          },
+          "success": true,
+          "num_results": 1
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google News",
+        "Google"
+      ],
+      "llm_cost": 0.25,
+      "llm_cost_summarization": 0.1227,
+      "llm_cost_agentic": 0.1273,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Mediterranean migrant deaths 2026 tally",
+          "tool": "Google",
+          "url_results": [
+            {
+              "url": "https://www.theguardian.com/world/2026/feb/23/migrants-die-trying-to-cross-mediterranean-2026",
+              "domain": "www.theguardian.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 3037,
+              "truncated": false
+            },
+            {
+              "url": "https://www.visahq.com/news/2026-02-24/it/mediterranean-crossing-deaths-top-600-in-early-2026-as-italy-doubles-down-on-maritime-deterrence/",
+              "domain": "www.visahq.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 4099,
+              "truncated": false
+            },
+            {
+              "url": "https://www.dailysabah.com/world/europe/at-least-606-migrants-dead-or-missing-in-mediterranean-so-far-in-2026",
+              "domain": "www.dailysabah.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 1615,
+              "truncated": false
+            },
+            {
+              "url": "https://www.lemonde.fr/en/international/article/2026/02/12/2026-could-quickly-become-deadliest-year-for-migrants-crossing-the-mediterranean_6750405_4.html",
+              "domain": "www.lemonde.fr",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 1472,
+              "truncated": false
+            },
+            {
+              "url": "https://www.the-independent.com/news/world/migrant-deaths-un-record-numbers-b2874335.html",
+              "domain": "www.the-independent.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 7341,
+              "truncated": false
+            },
+            {
+              "url": "https://www.facebook.com/middleeastmonitor/posts/at-least-606-migrants-have-died-or-gone-missing-in-the-mediterranean-sea-since-t/1324615466365146/",
+              "domain": "www.facebook.com",
+              "success": false,
+              "error": "Blocked domain",
+              "method": null,
+              "status_code": null,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://world.infonasional.com/mediterranean-migrant-deaths-record-high",
+              "domain": "world.infonasional.com",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.aljazeera.com/news/2026/2/22/eight-bodies-found-in-libya-and-greece-as-mediterranean-crossings-continue",
+              "domain": "www.aljazeera.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 4052,
+              "truncated": false
+            },
+            {
+              "url": "https://www.instagram.com/p/DVIk3w3GNIZ/",
+              "domain": "www.instagram.com",
+              "success": false,
+              "error": "Blocked domain",
+              "method": null,
+              "status_code": null,
+              "content_chars": 0,
+              "truncated": false
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 9,
+            "urls_extracted": 6,
+            "urls_failed": 3,
+            "urls_summarized": 3
+          },
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "IOM Missing Migrants Feb 2026 Mediterranean",
+          "tool": "Google News",
+          "url_results": [
+            {
+              "url": "https://shiawaves.com/english/news/world/migration-news/140379-at-least-606-migrants-dead-or-missing-in-the-mediterranean-since-start-of-2026/",
+              "domain": "shiawaves.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 1731,
+              "truncated": false
+            },
+            {
+              "url": "https://www.theguardian.com/world/2026/feb/23/migrants-die-trying-to-cross-mediterranean-2026",
+              "domain": "www.theguardian.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 3037,
+              "truncated": false
+            },
+            {
+              "url": "https://www.iom.int/news/two-babies-among-53-dead-or-missing-after-migrant-boat-capsizes-libya",
+              "domain": "www.iom.int",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.newarab.com/news/least-606-migrants-dead-or-missing-med-start-2026?amp",
+              "domain": "www.newarab.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 1562,
+              "truncated": false
+            },
+            {
+              "url": "https://news.un.org/en/story/2026/02/1166922",
+              "domain": "news.un.org",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 3342,
+              "truncated": false
+            },
+            {
+              "url": "https://www.lemonde.fr/en/international/article/2026/02/12/2026-could-quickly-become-deadliest-year-for-migrants-crossing-the-mediterranean_6750405_4.html",
+              "domain": "www.lemonde.fr",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 1472,
+              "truncated": false
+            },
+            {
+              "url": "https://www.aljazeera.com/news/2026/2/9/at-least-53-people-dead-or-missing-after-boat-capsizes-off-libya",
+              "domain": "www.aljazeera.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 1534,
+              "truncated": false
+            },
+            {
+              "url": "https://www.bbc.com/news/articles/cy9ge3844q0o",
+              "domain": "www.bbc.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 2701,
+              "truncated": false
+            },
+            {
+              "url": "https://www.newindianexpress.com/amp/story/world/2026/Feb/23/about-30-people-feared-dead-after-migrant-boat-capsized-off-greek-island-of-crete",
+              "domain": "www.newindianexpress.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 1852,
+              "truncated": false
+            },
+            {
+              "url": "https://www.theguardian.com/world/2026/feb/09/deaths-migrant-boat-capsizes-mediterranean-libya",
+              "domain": "www.theguardian.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 2575,
+              "truncated": false
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 10,
+            "urls_extracted": 9,
+            "urls_failed": 1,
+            "urls_summarized": 3
+          },
+          "success": true,
+          "num_results": 3
+        },
+        {
+          "query": "Latest figures on Mediterranean sea migrant fatalities January-February 2026 and analysis of risks for early spring crossings; focus on IOM data and recent shipwreck incidents near Libya, Tunisia, Greece, and Italy",
+          "tool": "AskNews",
+          "success": true,
+          "num_results": 35
+        },
+        {
+          "query": "Latest figures on Mediterranean sea migrant fatalities January-February 2026 and analysis of risks for early spring crossings; focus on IOM data and recent shipwreck incidents near Libya, Tunisia, Greece, and Italy",
+          "tool": "AskNews"
+        }
+      ],
+      "tools_used": [
+        "AskNews",
+        "Google News",
+        "Google"
+      ],
+      "llm_cost": 0.13,
+      "llm_cost_summarization": 0.1227,
+      "llm_cost_agentic": 0.0073,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4280,
+        "token_output": 1396,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.04234,
+        "duration_seconds": 57.32595610618591,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 18201,
+        "token_output": 2292,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.125385,
+        "duration_seconds": 67.84948015213013,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4280,
+        "token_output": 1464,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.043359999999999996,
+        "duration_seconds": 57.326024293899536,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17906,
+        "token_output": 2353,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.12482499999999999,
+        "duration_seconds": 67.84945368766785,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 3792,
+        "token_output": 3189,
+        "token_reasoning": 1597,
+        "used_reasoning": true,
+        "cost": 0.051281999999999994,
+        "duration_seconds": 57.32606887817383,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16325,
+        "token_output": 3407,
+        "token_reasoning": 1670,
+        "used_reasoning": true,
+        "cost": 0.07626675,
+        "duration_seconds": 67.84939503669739,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 3792,
+        "token_output": 1835,
+        "token_reasoning": 832,
+        "used_reasoning": true,
+        "cost": 0.022264,
+        "duration_seconds": 57.32611060142517,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16598,
+        "token_output": 3314,
+        "token_reasoning": 2240,
+        "used_reasoning": true,
+        "cost": 0.059708000000000004,
+        "duration_seconds": 67.84936690330505,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 3792,
+        "token_output": 1828,
+        "token_reasoning": 576,
+        "used_reasoning": true,
+        "cost": 0.022208,
+        "duration_seconds": 57.32614278793335,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16150,
+        "token_output": 1835,
+        "token_reasoning": 512,
+        "used_reasoning": true,
+        "cost": 0.04698,
+        "duration_seconds": 67.84934639930725,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "step1_query_generation": 0.01,
+    "step2_search": 0.25,
+    "step3_outside_view": 0.1815,
+    "step5_inside_view": 0.4332,
+    "step6_aggregation": 0.4332,
+    "step7_supervisor": 0.3367
+  },
+  "total_pipeline_cost": 1.2114
+}

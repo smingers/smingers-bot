@@ -1,0 +1,16 @@
+{
+  "confidence": "medium",
+  "prediction": 0.75,
+  "search_queries": [
+    "IOM Missing Migrants Mediterranean 2026 monthly data (Google)",
+    "IOM Missing Migrants Project Mediterranean March 2026 deaths (Google News)",
+    "Please carefully read the resolution criteria for this question: \"This question resolves to Yes if the IOM Missing Migrants Project incident dataset shows that the year-to-date sum of dead plus missing through the end of April 2026 for Mediterranean is at least 1,000.\" The note says \"Events before [Feb 26] do not count toward resolution.\" Does \"year-to-date sum\" mean counting from January 1, 2026, or only from February 26, 2026? Check the IOM Missing Migrants Project site at https://missingmigrants.iom.int/region/mediterranean to see what the current year-to-date total is and how it is displayed. (Agent)",
+    "Mediterranean migrant deaths after winter storms historical pattern spring reversion (Google)"
+  ],
+  "cost": 0.3367,
+  "divergence": {
+    "metric_name": "std_dev",
+    "metric_value": 39.03,
+    "threshold": 15.0
+  }
+}
