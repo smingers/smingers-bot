@@ -454,10 +454,7 @@ def analyze_forecast(forecast_dir: Path) -> ForecastAnalysis | None:
     if not metadata:
         return None
 
-    # Skip errored forecasts
-    if metadata.get("errors"):
-        return None
-
+    # Include forecasts that completed (even with pipeline warnings in metadata.errors)
     config = metadata.get("config_snapshot", {})
     mode = config.get("mode", "unknown")
 

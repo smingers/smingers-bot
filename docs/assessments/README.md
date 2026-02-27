@@ -103,6 +103,7 @@ Each row shows the average Inside View (S2) score for a specific Outside View �
 | [41593](./41593_20260201_150927_assessment.md) | When will Claude Plays Pokemon beat the first Pokemon game? (2026) | date | Median ~May 20 | **A-** | 2026-02-01 | ✅ |
 | [41593](./41593_20260226_154434_assessment.md) | When will Claude Plays Pokemon beat the first Pokemon game? (2026) | date | Median ~Jun 20 | **B** | 2026-02-26 | |
 | [41594](./41594_20260206_012327_assessment.md) | Will the United States attack Iran before April 2026? | binary | 30.6% | **B-** | 2026-02-06 | |
+| [41594](./41594_20260226_211645_assessment.md) | Will the United States attack Iran before April 2026? | binary | 42.5% | **B+** | 2026-02-26 | |
 | [41597](./41597_20260206_015718_assessment.md) | How many US banks will fail from January through April 2026? | multiple_choice | 1: 64.5%, 2: 25.0% | **B+** | 2026-02-06 | |
 | [41699](./41699_20260205_202748_assessment.md) | Will U.S. consumer sentiment in March 2026 be higher than in February 2026? | binary | 44.4% | **B+** | 2026-02-05 | |
 | [41760](./41760_20260130_014738_assessment.md) | What will be the monthly average CO2 concentration (in ppm) recorded at Mauna Loa Observatory for April 2026? | numeric | Median ~427.5 ppm | **B+** | 2026-01-30 | ✅ |
@@ -211,6 +212,12 @@ Some questions have multiple assessment runs for comparison:
 | Run 1 (old pipeline) | Median ~May 20 | **A-** | [41593_20260201_150927](./41593_20260201_150927_assessment.md) | ✅ |
 | Run 2 (iterative planner + supervisor) | Median ~Jun 20 | **B** | [41593_20260226_154434](./41593_20260226_154434_assessment.md) | |
 
+### 41594: Will the United States attack Iran before April 2026?
+| Run | Forecast | Grade | Link | Reviewed |
+|-----|----------|-------|------|----------|
+| Run 1 | 30.6% | **B-** | [41594_20260206_012327](./41594_20260206_012327_assessment.md) | |
+| Run 2 (iterative planner) | 42.5% | **B+** | [41594_20260226_211645](./41594_20260226_211645_assessment.md) | |
+
 ### 41759: State Bank of Pakistan Policy Rate
 | Run | Forecast | Grade | Link | Reviewed |
 |-----|----------|-------|------|----------|
@@ -237,7 +244,7 @@ Some questions have multiple assessment runs for comparison:
 |-------|-------|
 | A | 2 |
 | A- | 11 |
-| B+ | 26 |
+| B+ | 27 |
 | B | 31 |
 | B- | 15 |
 | C+ | 8 |
@@ -250,7 +257,7 @@ Some questions have multiple assessment runs for comparison:
 
 | Type | Count |
 |------|-------|
-| binary | 49 |
+| binary | 50 |
 | numeric | 38 |
 | multiple_choice | 16 |
 | date | 2 |
