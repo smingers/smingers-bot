@@ -47,24 +47,23 @@ logger = logging.getLogger(__name__)
 # - The source forecaster's outside view output becomes part of this forecaster's inside view context
 #
 # MAPPING STRATEGY:
-# The specific model assignments are configured in config.yaml. The key principle is:
-# - Forecasters 1 & 5 receive their OWN outside view output (self-consistency anchors)
-# - Forecasters 2, 3, 4 receive output from a DIFFERENT model family
+# The specific model assignments are configured in config.yaml. For the current
+# spring-aib-2026 configuration, the cross-pollination mapping is:
+# - Forecaster 1 (Sonnet 4.6) receives its OWN outside view output
+# - Forecaster 2 (Sonnet 4.6) receives Forecaster 5's outside view output (o3)
+# - Forecaster 3 (GPT-5.2) receives Forecaster 1's outside view output (Sonnet 4.6)
+# - Forecaster 4 (o3) receives Forecaster 3's outside view output (GPT-5.2)
+# - Forecaster 5 (o3) receives its OWN outside view output
 #
-# Example with typical production models (Claude + OpenAI mix):
-#   - Forecaster 2 (Claude) <- Forecaster 4 (OpenAI): Claude sees OpenAI reasoning
-#   - Forecaster 3 (OpenAI) <- Forecaster 2 (Claude): OpenAI sees Claude reasoning
-#   - Forecaster 4 (OpenAI) <- Forecaster 3 (OpenAI): Cross-pollination within same family
-#
-# This creates a "reasoning exchange" where different model architectures
-# critique and build upon each other's initial forecasts.
-# See config.yaml ensemble.production.agents for actual model assignments.
+# This creates a three-outside-view structure where only forecasters 1, 3, and 5
+# produce distinct outside views, but all five forecasters still run inside view
+# predictions with cross-pollinated context.
 CROSS_POLLINATION_MAP: dict[int, tuple[int, str]] = {
-    0: (0, "Outside view prediction"),  # Forecaster 1 <- self
-    1: (3, "Outside view prediction"),  # Forecaster 2 <- Forecaster 4
-    2: (1, "Outside view prediction"),  # Forecaster 3 <- Forecaster 2
+    0: (0, "Outside view prediction"),  # Forecaster 1 <- Forecaster 1
+    1: (4, "Outside view prediction"),  # Forecaster 2 <- Forecaster 5
+    2: (0, "Outside view prediction"),  # Forecaster 3 <- Forecaster 1
     3: (2, "Outside view prediction"),  # Forecaster 4 <- Forecaster 3
-    4: (4, "Outside view prediction"),  # Forecaster 5 <- self
+    4: (4, "Outside view prediction"),  # Forecaster 5 <- Forecaster 5
 }
 
 
@@ -374,13 +373,18 @@ class BaseForecaster(ForecasterMixin, ABC):
         )
 
         forecast_temp = self._get_temperature("forecasting")
-        outside_view_tasks = []
-        outside_view_timings = []
-        for agent in agents:
+
+        # Only forecasters 1, 3, and 5 (indices 0, 2, 4) generate distinct outside views.
+        # Forecasters 2 and 4 (indices 1 and 3) reuse outputs from 5 and 3 respectively.
+        outside_view_tasks: list[asyncio.Future] = []
+        outside_view_timings: list[float] = []
+        real_indices = [0, 2, 4]
+
+        for idx in real_indices:
+            agent = agents[idx]
             model = agent["model"]
             system_prompt = SUPERFORECASTER_CONTEXT
 
-            # Record start time for this forecaster
             start_time = time.time()
             outside_view_timings.append(start_time)
 
@@ -393,22 +397,26 @@ class BaseForecaster(ForecasterMixin, ABC):
                 )
             )
 
-        outside_view_results = await asyncio.gather(*outside_view_tasks, return_exceptions=True)
-        outside_view_outputs = []
-        outside_view_reasoning = {}  # Store reasoning content by forecaster index
+        outside_view_results_raw = await asyncio.gather(*outside_view_tasks, return_exceptions=True)
 
-        for i, result in enumerate(outside_view_results):
-            agent_id = f"forecaster_{i + 1}"
-            duration = time.time() - outside_view_timings[i]
+        # Initialize outputs for all 5 forecasters
+        outside_view_outputs: list[str] = ["" for _ in range(len(agents))]
+        outside_view_reasoning: dict[int, str] = {}  # Store reasoning content by forecaster index
+
+        # First, populate results for the forecasters that actually ran outside view
+        for offset, idx in enumerate(real_indices):
+            result = outside_view_results_raw[offset]
+            agent_id = f"forecaster_{idx + 1}"
+            duration = time.time() - outside_view_timings[offset]
             outside_view_metrics = metrics.agents[agent_id].step1
 
             if isinstance(result, Exception):
-                log(f"\nForecaster_{i + 1} outside view ERROR: {result}")
-                outside_view_outputs.append(f"{_FAILED_OUTPUT_PREFIX}{result}")
+                log(f"\nForecaster_{idx + 1} outside view ERROR: {result}")
+                outside_view_outputs[idx] = f"{_FAILED_OUTPUT_PREFIX}{result}"
                 outside_view_metrics.error = str(result)
                 outside_view_metrics.duration_seconds = duration
                 self.pipeline_warnings.append(
-                    f"forecaster_{i + 1} outside view failed ({agents[i]['model']}): {result}"
+                    f"forecaster_{idx + 1} outside view failed ({agents[idx]['model']}): {result}"
                 )
             else:
                 output, response_metadata = result
@@ -417,9 +425,9 @@ class BaseForecaster(ForecasterMixin, ABC):
                     f" [reasoning: {reasoning_tokens} tokens]" if reasoning_tokens else ""
                 )
                 log(
-                    f"\nForecaster_{i + 1} outside view output{reasoning_label}:\n{output[:300]}..."
+                    f"\nForecaster_{idx + 1} outside view output{reasoning_label}:\n{output[:300]}..."
                 )
-                outside_view_outputs.append(output)
+                outside_view_outputs[idx] = output
 
                 # Track LLM metrics including reasoning
                 outside_view_metrics.token_input = response_metadata.get("input_tokens", 0)
@@ -432,7 +440,32 @@ class BaseForecaster(ForecasterMixin, ABC):
                 # Store reasoning content if available
                 reasoning_content = response_metadata.get("reasoning_content")
                 if reasoning_content:
-                    outside_view_reasoning[i] = reasoning_content
+                    outside_view_reasoning[idx] = reasoning_content
+
+        # Then, assign reused outside views for forecasters 2 and 4
+        # Forecaster 2 (index 1) reuses forecaster 5 (index 4)
+        # Forecaster 4 (index 3) reuses forecaster 3 (index 2)
+        reuse_mapping = {1: 4, 3: 2}
+        for idx, source_idx in reuse_mapping.items():
+            agent_id = f"forecaster_{idx + 1}"
+            outside_view_metrics = metrics.agents[agent_id].step1
+
+            source_output = outside_view_outputs[source_idx]
+            if not source_output:
+                # This should only happen if the source itself completely failed to produce output.
+                # In that case, mark this as a failed outside view as well.
+                msg = (
+                    f"forecaster_{idx + 1} outside view reused from "
+                    f"forecaster_{source_idx + 1}, but source output is empty"
+                )
+                log(f"\n{msg}")
+                self.pipeline_warnings.append(msg)
+                outside_view_outputs[idx] = f"{_FAILED_OUTPUT_PREFIX}{msg}"
+                outside_view_metrics.error = msg
+                outside_view_metrics.duration_seconds = 0.0
+            else:
+                outside_view_outputs[idx] = source_output
+                # No additional LLM cost; metrics remain at default (zero cost, zero tokens).
 
         if self.artifact_store:
             self.artifact_store.save_outside_view_prompt(outside_view_prompt)

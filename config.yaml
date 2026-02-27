@@ -42,8 +42,8 @@ models:
 #
 # Cross-pollination structure (creates cross-model diversity):
 #   - Agent 1 (Sonnet 4.6) receives Agent 1's step 1 output (Sonnet 4.6)
-#   - Agent 2 (Sonnet 4.6) receives Agent 4's step 1 output (o3)
-#   - Agent 3 (GPT-5.2) receives Agent 2's step 1 output (Sonnet 4.6)
+#   - Agent 2 (Sonnet 4.6) receives Agent 5's step 1 output (o3)
+#   - Agent 3 (GPT-5.2) receives Agent 1's step 1 output (Sonnet 4.6)
 #   - Agent 4 (o3) receives Agent 3's step 1 output (GPT-5.2)
 #   - Agent 5 (o3) receives Agent 5's step 1 output (o3)
 
