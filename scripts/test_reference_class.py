@@ -5,18 +5,11 @@ Reference Class Selection Test
 Fetches a Metaculus question and makes a single focused LLM call to identify
 candidate reference classes and recommend the most appropriate one.
 
-Output is always saved to scratchpad/base_rate_selection/<filename>.md.
+Output is always saved to scratchpad/base_rate_selection/<question_id>_<timestamp>.md.
 
 Usage:
-    # Basic: saves to scratchpad/base_rate_selection/rc_41594.md
-    poetry run python scripts/test_reference_class.py --question 41594 rc_41594
-
-    # Use a specific model (default: claude-3.5-haiku, cheap)
-    poetry run python scripts/test_reference_class.py --question 41594 rc_41594_o3mini \
-        --model openrouter/openai/o3-mini
-
-    # Show the prompt being sent (default: hidden to keep output clean)
-    poetry run python scripts/test_reference_class.py --question 41594 rc_41594 --show-prompt
+    poetry run python scripts/test_reference_class.py --question 41594
+    poetry run python scripts/test_reference_class.py --question 41594 --show-prompt
 """
 
 import argparse
@@ -36,7 +29,7 @@ from src.utils.metaculus_api import MetaculusClient  # noqa: E402
 
 SAVE_DIR = Path(__file__).parent.parent / "scratchpad" / "base_rate_selection"
 
-DEFAULT_MODEL = "openrouter/anthropic/claude-3.5-haiku"
+DEFAULT_MODEL = "openrouter/openai/o3"
 
 # ---------------------------------------------------------------------------
 # Prompt
@@ -182,7 +175,7 @@ def format_output(q, prompt: str, response: str, model: str, cost: float, latenc
     return "\n".join(parts)
 
 
-async def run(question_id: int, filename: str, model: str, show_prompt: bool) -> None:
+async def run(question_id: int, model: str, show_prompt: bool) -> None:
     print(f"\nFetching question {question_id} from Metaculus...")
     async with MetaculusClient() as client:
         q = await client.get_question(question_id)
@@ -219,7 +212,8 @@ async def run(question_id: int, filename: str, model: str, show_prompt: bool) ->
     print("\n" + output)
 
     SAVE_DIR.mkdir(parents=True, exist_ok=True)
-    save_path = SAVE_DIR / f"{filename}.md"
+    timestamp = datetime.now(UTC).strftime("%Y%m%d_%H%M%S")
+    save_path = SAVE_DIR / f"{question_id}_{timestamp}.md"
     full_output = output + "\n\nFULL PROMPT\n" + "-" * 72 + "\n" + prompt
     save_path.write_text(full_output)
     print(f"\nSaved to {save_path}")
@@ -238,10 +232,6 @@ def main():
         help="Metaculus question ID (post ID from the URL)",
     )
     parser.add_argument(
-        "filename",
-        help="Output filename (no extension) — saved to scratchpad/base_rate_selection/<filename>.md",
-    )
-    parser.add_argument(
         "--model",
         default=DEFAULT_MODEL,
         help=f"LLM model to use (default: {DEFAULT_MODEL})",
@@ -256,7 +246,6 @@ def main():
     asyncio.run(
         run(
             question_id=args.question,
-            filename=args.filename,
             model=args.model,
             show_prompt=args.show_prompt,
         )
