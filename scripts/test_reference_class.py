@@ -18,9 +18,9 @@ Usage:
     poetry run python scripts/test_reference_class.py --question 41594 \
         --model openrouter/openai/o3-mini
 
-    # Save output to a file
+    # Save output to a file (default output dir)
     poetry run python scripts/test_reference_class.py --question 41594 \
-        --save output/rc_test_41594.md
+        --save scratchpad/base_rate_selection/rc_41594.md
 
     # Show the prompt being sent (default: hidden to keep output clean)
     poetry run python scripts/test_reference_class.py --question 41594 \

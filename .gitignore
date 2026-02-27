@@ -2,6 +2,9 @@
 .env
 .env.local
 
+# Scratchpad (local experiments, not for version control)
+scratchpad/
+
 # Python
 __pycache__/
 *.py[cod]
