@@ -5,26 +5,18 @@ Reference Class Selection Test
 Fetches a Metaculus question and makes a single focused LLM call to identify
 candidate reference classes and recommend the most appropriate one.
 
-This tests whether a model can select the right base rate from question text
-alone, before any research is executed. Run it on multiple questions with
-different models to calibrate whether this approach is worth building into
-the pipeline.
+Output is always saved to scratchpad/base_rate_selection/<filename>.md.
 
 Usage:
-    # Basic: fetch question and test reference class selection
-    poetry run python scripts/test_reference_class.py --question 41594
+    # Basic: saves to scratchpad/base_rate_selection/rc_41594.md
+    poetry run python scripts/test_reference_class.py --question 41594 rc_41594
 
     # Use a specific model (default: claude-3.5-haiku, cheap)
-    poetry run python scripts/test_reference_class.py --question 41594 \
+    poetry run python scripts/test_reference_class.py --question 41594 rc_41594_o3mini \
         --model openrouter/openai/o3-mini
 
-    # Save output to a file (default output dir)
-    poetry run python scripts/test_reference_class.py --question 41594 \
-        --save scratchpad/base_rate_selection/rc_41594.md
-
     # Show the prompt being sent (default: hidden to keep output clean)
-    poetry run python scripts/test_reference_class.py --question 41594 \
-        --show-prompt
+    poetry run python scripts/test_reference_class.py --question 41594 rc_41594 --show-prompt
 """
 
 import argparse
@@ -42,9 +34,8 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 from src.utils.llm import LLMClient  # noqa: E402
 from src.utils.metaculus_api import MetaculusClient  # noqa: E402
 
-# ---------------------------------------------------------------------------
-# Default model: cheap but capable enough for this reasoning task
-# ---------------------------------------------------------------------------
+SAVE_DIR = Path(__file__).parent.parent / "scratchpad" / "base_rate_selection"
+
 DEFAULT_MODEL = "openrouter/anthropic/claude-3.5-haiku"
 
 # ---------------------------------------------------------------------------
@@ -191,7 +182,7 @@ def format_output(q, prompt: str, response: str, model: str, cost: float, latenc
     return "\n".join(parts)
 
 
-async def run(question_id: int, model: str, show_prompt: bool, save_path: str | None) -> None:
+async def run(question_id: int, filename: str, model: str, show_prompt: bool) -> None:
     print(f"\nFetching question {question_id} from Metaculus...")
     async with MetaculusClient() as client:
         q = await client.get_question(question_id)
@@ -227,19 +218,11 @@ async def run(question_id: int, model: str, show_prompt: bool, save_path: str | 
 
     print("\n" + output)
 
-    if save_path:
-        path = Path(save_path)
-        path.parent.mkdir(parents=True, exist_ok=True)
-        # Save both prompt and response when saving to file
-        full_output = (
-            output
-            + "\n\nFULL PROMPT\n"
-            + "-" * 72
-            + "\n"
-            + prompt
-        )
-        path.write_text(full_output)
-        print(f"\nSaved to {path}")
+    SAVE_DIR.mkdir(parents=True, exist_ok=True)
+    save_path = SAVE_DIR / f"{filename}.md"
+    full_output = output + "\n\nFULL PROMPT\n" + "-" * 72 + "\n" + prompt
+    save_path.write_text(full_output)
+    print(f"\nSaved to {save_path}")
 
 
 def main():
@@ -255,6 +238,10 @@ def main():
         help="Metaculus question ID (post ID from the URL)",
     )
     parser.add_argument(
+        "filename",
+        help="Output filename (no extension) — saved to scratchpad/base_rate_selection/<filename>.md",
+    )
+    parser.add_argument(
         "--model",
         default=DEFAULT_MODEL,
         help=f"LLM model to use (default: {DEFAULT_MODEL})",
@@ -264,19 +251,14 @@ def main():
         action="store_true",
         help="Print the full prompt before sending",
     )
-    parser.add_argument(
-        "--save",
-        metavar="PATH",
-        help="Save the full output (including prompt) to a file",
-    )
     args = parser.parse_args()
 
     asyncio.run(
         run(
             question_id=args.question,
+            filename=args.filename,
             model=args.model,
             show_prompt=args.show_prompt,
-            save_path=args.save,
         )
     )
 
