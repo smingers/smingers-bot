@@ -1,0 +1,265 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": false,
+      "num_queries": 0,
+      "queries": [],
+      "tools_used": [],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 5,
+      "queries": [
+        {
+          "query": "Six Nations champions list 2000 2025",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Get full list of winners to calculate frequency for each team.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Six Nations grand slam by nation",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Measure historical dominance and likelihood of an unbeaten run leading to title.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Six Nations tie breaker rules points difference",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Confirm official resolution mechanism used to rank teams level on match points.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Six Nations leader after round 3 champion",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Find articles or stats tracking how often mid-tournament leaders win the championship.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "[Agent] Provide dataset of every Six Nations season 2000-2025: identify the team leading the table after Round 3 and the eventual champion; calculate probability that the Round-3 leader wins and list seasons where another team overtook them.",
+          "tool": "Agent",
+          "temporal_role": "historical",
+          "intent": "Produce a precise historical conversion rate for mid-tournament leaders.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "2026 Six Nations table update",
+          "tool": "Google",
+          "temporal_role": "current",
+          "intent": "Retrieve the latest official standings after the most recent matches.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "2026 Six Nations injuries France Ireland",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "Gather breaking reports on injuries or squad changes affecting top contenders.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "2026 Six Nations winner odds",
+          "tool": "Google",
+          "temporal_role": "current",
+          "intent": "Capture current bookmaker odds/market expectations for each team to win the championship.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 2,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8299,
+        "token_output": 1913,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.07019,
+        "duration_seconds": 49.57442378997803,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7567,
+        "token_output": 2426,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.07422500000000001,
+        "duration_seconds": 175.13412523269653,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8299,
+        "token_output": 1940,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.070595,
+        "duration_seconds": 49.57445788383484,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6821,
+        "token_output": 2502,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.071635,
+        "duration_seconds": 175.13410305976868,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7421,
+        "token_output": 2492,
+        "token_reasoning": 773,
+        "used_reasoning": true,
+        "cost": 0.047874749999999994,
+        "duration_seconds": 49.57448863983154,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 175.1340789794922,
+        "error": "Response truncated after 5000 tokens (limit: 5000)"
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7421,
+        "token_output": 2189,
+        "token_reasoning": 1088,
+        "used_reasoning": true,
+        "cost": 0.032354,
+        "duration_seconds": 49.57451319694519,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6755,
+        "token_output": 1451,
+        "token_reasoning": 576,
+        "used_reasoning": true,
+        "cost": 0.025118,
+        "duration_seconds": 175.13405871391296,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7421,
+        "token_output": 2435,
+        "token_reasoning": 1408,
+        "used_reasoning": true,
+        "cost": 0.034322,
+        "duration_seconds": 49.5745575428009,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5962,
+        "token_output": 2851,
+        "token_reasoning": 1792,
+        "used_reasoning": true,
+        "cost": 0.034732,
+        "duration_seconds": 175.13403630256653,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "steps1_2_research": 0.4341,
+    "step3_outside_view": 0.2553,
+    "step5_inside_view": 0.2877,
+    "step6_aggregation": 0.2877,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.9771
+}

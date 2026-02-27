@@ -1,0 +1,200 @@
+{
+  "plan_analysis": "The pre-research context gives only the first three rounds\u2019 results; it does not show the current table, injury/squad news, betting odds, or any quantified historical patterns that link mid-tournament position to the final champion.  \nForecasters still need:\n\nBase rate: How often each nation wins; how often the Round-3 leader goes on to be champion; any comeback patterns.  \nResolution mechanism: Exact tie-break rules used in the official table.  \nKey drivers: (1) Current standings/points-difference, (2) Injury or selection news for title contenders, (3) Market-implied probabilities/odds.  \nCurrent state: Up-to-date table, injury updates, bookmaker odds, and previews of Rounds 4-5.  \nContrarian check: Historical examples of late-round turnarounds.\n\nThe search plan therefore mixes:\n\u2022 Five historical queries (base rates, rules, past conversion rates).  \n\u2022 Three current queries (table, injuries, odds).  \nExactly one Agent query provides a ready-made historical dataset of Round-3 leaders vs. final champions.",
+  "reflect_analysis": null,
+  "queries_planned": [
+    {
+      "query": "Six Nations champions list 2000 2025",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Get full list of winners to calculate frequency for each team.",
+      "phase": "plan"
+    },
+    {
+      "query": "Six Nations grand slam by nation",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Measure historical dominance and likelihood of an unbeaten run leading to title.",
+      "phase": "plan"
+    },
+    {
+      "query": "Six Nations tie breaker rules points difference",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Confirm official resolution mechanism used to rank teams level on match points.",
+      "phase": "plan"
+    },
+    {
+      "query": "Six Nations leader after round 3 champion",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Find articles or stats tracking how often mid-tournament leaders win the championship.",
+      "phase": "plan"
+    },
+    {
+      "query": "[Agent] Provide dataset of every Six Nations season 2000-2025: identify the team leading the table after Round 3 and the eventual champion; calculate probability that the Round-3 leader wins and list seasons where another team overtook them.",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "Produce a precise historical conversion rate for mid-tournament leaders.",
+      "phase": "plan"
+    },
+    {
+      "query": "2026 Six Nations table update",
+      "tool": "Google",
+      "temporal_role": "current",
+      "intent": "Retrieve the latest official standings after the most recent matches.",
+      "phase": "plan"
+    },
+    {
+      "query": "2026 Six Nations injuries France Ireland",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Gather breaking reports on injuries or squad changes affecting top contenders.",
+      "phase": "plan"
+    },
+    {
+      "query": "2026 Six Nations winner odds",
+      "tool": "Google",
+      "temporal_role": "current",
+      "intent": "Capture current bookmaker odds/market expectations for each team to win the championship.",
+      "phase": "plan"
+    }
+  ],
+  "gap_queries": [],
+  "seed_context_chars": 2800,
+  "historical_context_chars": 25925,
+  "current_context_chars": 13445,
+  "phases": {
+    "pre_research": {
+      "duration_seconds": 17.04,
+      "seed_context_chars": 2800,
+      "search_id": "question_urls",
+      "searched": true,
+      "urls_found": 2,
+      "urls_scraped": 1,
+      "urls_summarized": 1,
+      "urls": [
+        {
+          "url": "https://en.wikipedia.org/wiki/2026_Six_Nations_Championship",
+          "domain": "en.wikipedia.org",
+          "scraped": true,
+          "method": "wikipedia_api",
+          "status_code": 200,
+          "content_words": 890
+        },
+        {
+          "url": "https://www.sixnationsrugby.com/en/m6n/fixtures/202600/table",
+          "domain": "www.sixnationsrugby.com",
+          "scraped": false,
+          "method": null,
+          "status_code": 200,
+          "error": "Content extraction failed"
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ]
+    },
+    "plan": {
+      "duration_seconds": 29.49,
+      "cost": 0.0188,
+      "num_queries": 8
+    },
+    "execute": {
+      "duration_seconds": 38.39,
+      "cost": 0.3952,
+      "queries_executed": 8,
+      "queries_successful": 8
+    },
+    "assemble": {
+      "historical_context_chars": 25925,
+      "current_context_chars": 13445
+    }
+  },
+  "total_queries_planned": 8,
+  "total_queries_executed": 8,
+  "total_gap_queries": 0,
+  "total_cost": 0.4341,
+  "total_duration_seconds": 84.93,
+  "query_details": [
+    {
+      "query": "Six Nations champions list 2000 2025",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Get full list of winners to calculate frequency for each team.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "Six Nations grand slam by nation",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Measure historical dominance and likelihood of an unbeaten run leading to title.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "Six Nations tie breaker rules points difference",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Confirm official resolution mechanism used to rank teams level on match points.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "Six Nations leader after round 3 champion",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Find articles or stats tracking how often mid-tournament leaders win the championship.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "[Agent] Provide dataset of every Six Nations season 2000-2025: identify the team leading the table after Round 3 and the eventual champion; calculate probability that the Round-3 leader wins and list seasons where another team overtook them.",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "Produce a precise historical conversion rate for mid-tournament leaders.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 1,
+      "error": null
+    },
+    {
+      "query": "2026 Six Nations table update",
+      "tool": "Google",
+      "temporal_role": "current",
+      "intent": "Retrieve the latest official standings after the most recent matches.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "2026 Six Nations injuries France Ireland",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Gather breaking reports on injuries or squad changes affecting top contenders.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "2026 Six Nations winner odds",
+      "tool": "Google",
+      "temporal_role": "current",
+      "intent": "Capture current bookmaker odds/market expectations for each team to win the championship.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 2,
+      "error": null
+    }
+  ]
+}
