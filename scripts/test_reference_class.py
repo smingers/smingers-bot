@@ -2,18 +2,17 @@
 """
 Reference Class Selection Test
 
-Fetches a Metaculus question and makes a single focused LLM call to identify
-candidate reference classes and recommend the most appropriate one.
-
-Output is always saved to scratchpad/base_rate_selection/<question_id>_<timestamp>.md.
+Loads a forecast artifact directory and makes one LLM call to identify
+the most appropriate reference class for base rate estimation.
 
 Usage:
-    poetry run python scripts/test_reference_class.py --question 41594
-    poetry run python scripts/test_reference_class.py --question 41594 --show-prompt
+    poetry run python scripts/test_reference_class.py data/41594_20260226_211645
+    poetry run python scripts/test_reference_class.py data/41594_20260226_211645 --show-prompt
 """
 
 import argparse
 import asyncio
+import json
 import sys
 from datetime import UTC, datetime
 from pathlib import Path
@@ -25,21 +24,11 @@ load_dotenv()
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from src.utils.llm import LLMClient  # noqa: E402
-from src.utils.metaculus_api import MetaculusClient  # noqa: E402
 
 SAVE_DIR = Path(__file__).parent.parent / "scratchpad" / "base_rate_selection"
-
 DEFAULT_MODEL = "openrouter/openai/o3"
 
-# ---------------------------------------------------------------------------
-# Prompt
-# ---------------------------------------------------------------------------
-
-REFERENCE_CLASS_PROMPT = """You are a forecasting expert preparing to research a prediction question.
-
-Before running any searches, your task is to identify the most appropriate reference class(es) for this question. A reference class is a set of past situations comparable enough to the current one that their historical frequency can anchor a base rate.
-
-Good reference class selection is often the most important step in superforecasting: too broad a class dilutes the signal; too narrow a class gives too few cases to be reliable. The goal is the most specific class that still has enough historical cases to be meaningful.
+PROMPT_TEMPLATE = """You are a research planner for a forecasting question. Your task is to analyze the question and the pre-research context to identify the most appropriate reference class for base rate estimation.
 
 ---
 
@@ -48,148 +37,115 @@ Type: {question_type}
 Today: {today}
 Resolves: {scheduled_resolve_time}
 
-Background:
-{background}
+Question and pre-research context:
 
-Resolution criteria:
-{resolution_criteria}
-
-Fine print:
-{fine_print}
+{context_block}
 
 ---
 
 YOUR TASK
 
-Propose 3 candidate reference classes at different levels of specificity:
+Step 1: Describe the current situation in 2-4 key dimensions that matter for the outcome.
 
-1. NARROW — A tightly defined class with high comparability to the current situation (possibly few cases)
-2. MEDIUM — A moderately scoped class balancing comparability and sample size
-3. BROAD — A general class with many cases but lower comparability
+Step 2: Define a reference class as a set of past situations that match those dimensions. How many cases? In what fraction did the outcome occur?
 
-For each class, provide:
-- A precise description of what historical cases qualify
-- Your best estimate of the base rate (even if rough — "~15%" is fine; "unknown" is not useful)
-- A brief argument for and against using this class
+Step 3: State your base rate estimate and the biggest uncertainty.
 
-Then choose the most appropriate class and explain why. Key considerations:
-- Does the proposed class actually match the resolution criteria (not just the surface topic)?
-- Are the conditions that distinguish this situation from others relevant to the outcome?
-- Is the sample size large enough to be informative?
-
-Finally, propose one concrete research query that would confirm or refine the base rate for your recommended class.
+Step 4: Propose one research query to validate the base rate.
 
 ---
 
-FORMAT YOUR RESPONSE EXACTLY AS FOLLOWS:
+FORMAT:
 
-Candidate Reference Classes:
+Current Situation:
+- [Dimension 1]: [State]
+- [Dimension 2]: [State]
+- [Dimension 3]: [State]
+- [Dimension 4]: [State]
 
-1. Narrow: [precise description]
-   Estimated cases: [N or range]
-   Estimated base rate: [X%]
-   For: [1-2 sentences]
-   Against: [1-2 sentences]
+Reference Class: [Description of past situations that match]
+Cases: [N]
+Base Rate: [X% of those cases led to the outcome]
 
-2. Medium: [precise description]
-   Estimated cases: [N or range]
-   Estimated base rate: [X%]
-   For: [1-2 sentences]
-   Against: [1-2 sentences]
-
-3. Broad: [precise description]
-   Estimated cases: [N or range]
-   Estimated base rate: [X%]
-   For: [1-2 sentences]
-   Against: [1-2 sentences]
-
-Recommended Class: [Narrow / Medium / Broad]
-Reasoning: [Why this class is most appropriate for THIS question]
-Estimated Base Rate: [Your best estimate from the recommended class]
-
-Key Uncertainty: [The single biggest factor that could make the true base rate different from your estimate]
-
-Research Query: [One concrete query — ideally for the Agent tool — that would confirm or refine this base rate]
+Estimate: [Your final probability]
+Key Uncertainty: [Biggest factor that could change this]
+Research Query: [One query to validate]
 """
 
 
-def build_prompt(q) -> str:
+def load_artifact(artifact_dir: Path) -> tuple[dict, str]:
+    """Load question metadata and context from artifact directory."""
+    q_path = artifact_dir / "question.json"
+    if not q_path.exists():
+        raise FileNotFoundError(f"question.json not found in {artifact_dir}")
+
+    raw = json.loads(q_path.read_text())
+    q_inner = raw.get("question", raw)
+
+    metadata = {
+        "id": raw.get("id") or q_inner.get("post_id"),
+        "title": raw.get("title") or q_inner.get("title", ""),
+        "question_type": q_inner.get("type", "binary"),
+        "scheduled_resolve_time": raw.get("scheduled_resolve_time")
+        or q_inner.get("scheduled_resolve_time")
+        or "unknown",
+        "status": raw.get("status") or q_inner.get("status", "unknown"),
+    }
+
+    prompt_path = artifact_dir / "research" / "query_plan_prompt.md"
+    if not prompt_path.exists():
+        raise FileNotFoundError(
+            "research/query_plan_prompt.md not found; only recent forecasts have this file"
+        )
+
+    text = prompt_path.read_text()
+    idx = text.find("YOUR TASK:")
+    if idx == -1:
+        raise ValueError("Could not find 'YOUR TASK:' marker in query_plan_prompt.md")
+
+    context_block = text[:idx].rstrip()
+
+    # Replace first line: research planner intro → reference class framing
+    old_first_line = "You are a research planner for a forecasting question. Your task is to design a search strategy that gives forecasters the best possible evidence base."
+    new_first_line = "You are a research planner for a forecasting question. Your task is to identify the most appropriate reference class(es) for this question. A reference class is a set of past situations comparable enough to the current one that their historical frequency can anchor a base rate."
+
+    if context_block.startswith(old_first_line):
+        context_block = new_first_line + context_block[len(old_first_line) :]
+
+    return metadata, context_block
+
+
+def build_prompt(metadata: dict, context_block: str) -> str:
+    """Build the reference class prompt."""
     today = datetime.now(UTC).strftime("%Y-%m-%d")
-
-    # Collapse background fields — use description, fallback to background_info
-    background = q.description or q.background_info or "(none provided)"
-    resolution_criteria = q.resolution_criteria or "(none provided)"
-    fine_print = q.fine_print or "(none provided)"
-
-    return REFERENCE_CLASS_PROMPT.format(
-        title=q.title,
-        question_type=q.question_type,
+    return PROMPT_TEMPLATE.format(
+        title=metadata["title"],
+        question_type=metadata["question_type"],
         today=today,
-        scheduled_resolve_time=q.scheduled_resolve_time or "unknown",
-        background=background,
-        resolution_criteria=resolution_criteria,
-        fine_print=fine_print,
+        scheduled_resolve_time=metadata["scheduled_resolve_time"],
+        context_block=context_block,
     )
 
 
-def format_question_summary(q) -> str:
-    lines = [
-        f"  Title:    {q.title}",
-        f"  Type:     {q.question_type}",
-        f"  Status:   {q.status}",
-        f"  Resolves: {q.scheduled_resolve_time}",
-        f"  URL:      {q.page_url}",
-    ]
-    if q.num_forecasters:
-        lines.append(f"  Forecasters: {q.num_forecasters}")
-    return "\n".join(lines)
+async def run(artifact_dir: Path, model: str, show_prompt: bool) -> None:
+    """Run reference class selection."""
+    print(f"\nLoading {artifact_dir.name}...")
+    metadata, context_block = load_artifact(artifact_dir)
 
+    print(f"  {metadata['title'][:80]}")
+    print(f"  Type: {metadata['question_type']}  |  Status: {metadata['status']}")
 
-def format_output(q, prompt: str, response: str, model: str, cost: float, latency_ms: int) -> str:
-    sep = "=" * 72
-    thin = "-" * 72
-
-    parts = [
-        sep,
-        "REFERENCE CLASS SELECTION TEST",
-        sep,
-        "",
-        "QUESTION",
-        thin,
-        format_question_summary(q),
-        "",
-        "MODEL",
-        thin,
-        f"  {model}",
-        "",
-        "RESPONSE",
-        thin,
-        response,
-        "",
-        "COST / PERFORMANCE",
-        thin,
-        f"  Cost:    ${cost:.4f}",
-        f"  Latency: {latency_ms}ms",
-        sep,
-    ]
-    return "\n".join(parts)
-
-
-async def run(question_id: int, model: str, show_prompt: bool) -> None:
-    print(f"\nFetching question {question_id} from Metaculus...")
-    async with MetaculusClient() as client:
-        q = await client.get_question(question_id)
-
-    print(f"  {q.title[:80]}")
-    print(f"  Type: {q.question_type}  |  Status: {q.status}")
-
-    prompt = build_prompt(q)
+    prompt = build_prompt(metadata, context_block)
 
     if show_prompt:
+        lines = prompt.splitlines()
+        preview = "\n".join(lines[:50])
+        if len(lines) > 50:
+            preview += f"\n\n... [{len(lines) - 50} more lines]"
         print("\n" + "=" * 72)
         print("PROMPT")
         print("-" * 72)
-        print(prompt)
+        print(preview)
 
     print(f"\nCalling {model}...")
 
@@ -197,23 +153,45 @@ async def run(question_id: int, model: str, show_prompt: bool) -> None:
     response = await llm.complete(
         model=model,
         messages=[{"role": "user", "content": prompt}],
-        temperature=0.3,  # Low temperature: this is a reasoning/classification task
+        temperature=0.3,
     )
 
-    output = format_output(
-        q=q,
-        prompt=prompt,
-        response=response.content,
-        model=model,
-        cost=response.cost,
-        latency_ms=response.latency_ms,
+    # Format output
+    sep = "=" * 72
+    thin = "-" * 72
+    output = "\n".join(
+        [
+            sep,
+            "REFERENCE CLASS SELECTION",
+            sep,
+            "",
+            "QUESTION",
+            thin,
+            f"  {metadata['title']}",
+            f"  Type: {metadata['question_type']}  |  Resolves: {metadata['scheduled_resolve_time']}",
+            "",
+            "MODEL",
+            thin,
+            f"  {model}",
+            "",
+            "RESPONSE",
+            thin,
+            response.content,
+            "",
+            "COST / PERFORMANCE",
+            thin,
+            f"  Cost:    ${response.cost:.4f}",
+            f"  Latency: {response.latency_ms}ms",
+            sep,
+        ]
     )
 
     print("\n" + output)
 
+    # Save
     SAVE_DIR.mkdir(parents=True, exist_ok=True)
     timestamp = datetime.now(UTC).strftime("%Y%m%d_%H%M%S")
-    save_path = SAVE_DIR / f"{question_id}_{timestamp}.md"
+    save_path = SAVE_DIR / f"{metadata['id']}_{timestamp}.md"
     full_output = output + "\n\nFULL PROMPT\n" + "-" * 72 + "\n" + prompt
     save_path.write_text(full_output)
     print(f"\nSaved to {save_path}")
@@ -221,35 +199,31 @@ async def run(question_id: int, model: str, show_prompt: bool) -> None:
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Test reference class selection on a Metaculus question",
+        description="Reference class selection from forecast artifacts",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=__doc__,
     )
     parser.add_argument(
-        "--question",
-        type=int,
-        required=True,
-        help="Metaculus question ID (post ID from the URL)",
+        "artifact_dir",
+        type=Path,
+        help="Path to forecast artifact directory (e.g. data/41594_20260226_211645)",
     )
     parser.add_argument(
         "--model",
         default=DEFAULT_MODEL,
-        help=f"LLM model to use (default: {DEFAULT_MODEL})",
+        help=f"LLM model (default: {DEFAULT_MODEL})",
     )
     parser.add_argument(
         "--show-prompt",
         action="store_true",
-        help="Print the full prompt before sending",
+        help="Show prompt preview before calling LLM",
     )
     args = parser.parse_args()
 
-    asyncio.run(
-        run(
-            question_id=args.question,
-            model=args.model,
-            show_prompt=args.show_prompt,
-        )
-    )
+    if not args.artifact_dir.is_dir():
+        parser.error(f"Not a directory: {args.artifact_dir}")
+
+    asyncio.run(run(args.artifact_dir, args.model, args.show_prompt))
 
 
 if __name__ == "__main__":
