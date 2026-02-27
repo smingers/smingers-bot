@@ -1,5 +1,0 @@
-{
-  "percentiles": null,
-  "cdf_length": 0,
-  "error": "'<=' not supported between instances of 'NoneType' and 'NoneType'"
-}

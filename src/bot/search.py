@@ -826,6 +826,7 @@ class SearchPipeline:
         is_news: bool,
         question_details: QuestionDetails,
         date_before: str | None = None,
+        seen_urls: set[str] | None = None,
     ) -> GoogleScrapeResult:
         """
         Search Google and scrape/summarize results.
@@ -835,6 +836,9 @@ class SearchPipeline:
             is_news: Use Google News
             question_details: Question context for summarization
             date_before: Date filter
+            seen_urls: Shared set of already-processed URLs; new URLs are claimed
+                synchronously (before any await) so concurrent callers don't
+                double-scrape the same URL.
 
         Returns:
             GoogleScrapeResult with formatted output and per-URL scrape details
@@ -848,6 +852,28 @@ class SearchPipeline:
                 logger.warning(f"[google_search_and_scrape] No URLs returned for: '{query}'")
                 return GoogleScrapeResult(
                     formatted_output=f'<Summary query="{query}">No URLs returned from Google.</Summary>\n',
+                    url_results=[],
+                )
+
+            # Deduplicate against the shared seen_urls set.  We claim all new URLs
+            # synchronously (no await between check and update) so that concurrent
+            # asyncio tasks cannot claim the same URL twice.
+            if seen_urls is not None:
+                new_urls = [u for u in urls if u not in seen_urls]
+                seen_urls.update(new_urls)
+                skipped = len(urls) - len(new_urls)
+                if skipped:
+                    logger.debug(
+                        f"[google_search_and_scrape] Skipped {skipped} already-seen URL(s) for '{query}'"
+                    )
+                urls = new_urls
+
+            if not urls:
+                logger.info(
+                    f"[google_search_and_scrape] All URLs already seen for '{query}', skipping scrape"
+                )
+                return GoogleScrapeResult(
+                    formatted_output=f'<Summary query="{query}">All URLs already processed in an earlier research phase.</Summary>\n',
                     url_results=[],
                 )
 

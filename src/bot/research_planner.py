@@ -213,6 +213,11 @@ class IterativeResearchPlanner(ForecasterMixin):
         else:
             log("  No seed context from question URLs")
 
+        # Build the cross-phase URL deduplication set from Phase 0 results.
+        # All URLs attempted during Phase 0 are pre-claimed so Phase 2/3 Google
+        # searches skip them automatically.
+        seen_urls: set[str] = {u["url"] for u in seed_metadata.get("urls", [])}
+
         # Phase 1: Generate research plan
         log("\n--- Phase 1: Generating research plan ---")
         phase1_start = time.time()
@@ -234,7 +239,7 @@ class IterativeResearchPlanner(ForecasterMixin):
         log("\n--- Phase 2: Executing planned queries ---")
         phase2_start = time.time()
         phase2_cost_start = cost_tracker.total_cost
-        query_results = await self._execute_queries(planned_queries, question_details)
+        query_results = await self._execute_queries(planned_queries, question_details, seen_urls)
         successful = sum(1 for r in query_results if r.success)
         metadata["phases"]["execute"] = {
             "duration_seconds": round(time.time() - phase2_start, 2),
@@ -266,7 +271,7 @@ class IterativeResearchPlanner(ForecasterMixin):
 
             if gap_queries:
                 log(f"  Found gaps, executing {len(gap_queries)} gap-fill queries")
-                gap_results = await self._execute_queries(gap_queries, question_details)
+                gap_results = await self._execute_queries(gap_queries, question_details, seen_urls)
                 query_results.extend(gap_results)
                 gap_successful = sum(1 for r in gap_results if r.success)
                 log(f"  Gap-fill: {gap_successful}/{len(gap_results)} successful")
@@ -435,12 +440,19 @@ class IterativeResearchPlanner(ForecasterMixin):
         self,
         queries: list[ResearchQuery],
         question_details: QuestionDetails,
+        seen_urls: set[str] | None = None,
     ) -> list[QueryResult]:
         """
         Execute a list of research queries via SearchPipeline.
 
         Dispatches each query to the appropriate search tool and runs all
         queries concurrently.
+
+        Args:
+            queries: Research queries to execute.
+            question_details: Question context for summarization.
+            seen_urls: Shared set of already-processed URLs for cross-phase
+                deduplication. Updated in place as new URLs are claimed.
         """
         if not queries:
             return []
@@ -451,7 +463,7 @@ class IterativeResearchPlanner(ForecasterMixin):
             task_queries = []
 
             for rq in queries:
-                task = self._build_search_task(search, rq, question_details)
+                task = self._build_search_task(search, rq, question_details, seen_urls)
                 if task is not None:
                     tasks.append(task)
                     task_queries.append(rq)
@@ -474,6 +486,7 @@ class IterativeResearchPlanner(ForecasterMixin):
         search: SearchPipeline,
         rq: ResearchQuery,
         question_details: QuestionDetails,
+        seen_urls: set[str] | None = None,
     ) -> Any | None:
         """Build an async task for a single query dispatch."""
         tool = rq.tool
@@ -486,6 +499,7 @@ class IterativeResearchPlanner(ForecasterMixin):
                 is_news=(tool == "Google News"),
                 question_details=question_details,
                 date_before=question_details.resolution_date,
+                seen_urls=seen_urls,
             )
         elif tool == "Agent":
             if not research_config.get("agentic_search_enabled", True):
