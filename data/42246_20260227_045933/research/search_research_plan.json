@@ -1,0 +1,208 @@
+{
+  "plan_analysis": "The forecaster must judge whether H.R. 33 will finish the entire legislative process (both chambers + president + publication) in only 63 days.  Key missing knowledge:\n\n1. Current state and momentum  \n   \u2022 Where exactly is H.R. 33 now? (House passage? Senate companion? Committee referral? Planned floor action?)  \n   \u2022 Does leadership (Senate Finance Committee, Majority/Minority leaders, White House) support fast-tracking it?  \n   \u2022 Is there an alternative vehicle (e.g., being folded into a broader tax package or a CR) scheduled before May 1?\n\n2. Base rate / historical precedent  \n   \u2022 How often do stand-alone bilateral tax-relief bills (or low-number priority bills) become law, especially within ~60 days of the end of April?  \n   \u2022 Overall success rate and typical time-to-passage for House-passed bills during the 2nd session of recent Congresses.  \n   \u2022 Success rate for bills referred to Senate Finance that emerge and pass quickly.\n\n3. Key drivers / obstacles  \n   \u2022 Congressional schedule between now and May 1 (recesses, must-pass vehicles).  \n   \u2022 Any organized opposition or \u201cholds\u201d in the Senate, or Administration concerns.  \n   \u2022 Whether the bill\u2019s content could instead be implemented by treaty/executive agreement, reducing urgency.\n\n4. Contrarian evidence  \n   \u2022 Indications the Senate may attach the text to a large must-pass bill (e.g., FAA re-authorization, tax extenders), raising the chance of enactment despite time pressure.  \n   \u2022 Signs of partisan gridlock or unrelated hostage-taking that could stall all tax legislation.\n\nThe existing context gives none of this, so the search strategy needs to surface: (a) live status pages and news coverage for H.R. 33 and any Senate counterpart; (b) historical enactment statistics for comparable bills; (c) congressional calendar and legislative vehicle information; (d) commentary from tax-policy outlets and Taiwan-US relations analysts that could reveal insider expectations.",
+  "reflect_analysis": null,
+  "queries_planned": [
+    {
+      "query": "House bills double taxation foreign country became law",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Find past stand-alone foreign double-tax bills that successfully became law to build a reference class and frequency.",
+      "phase": "plan"
+    },
+    {
+      "query": "enactment rate House passed bills 117th 118th Congress",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Gather statistics on what share of House-passed bills became law recently for baseline probability.",
+      "phase": "plan"
+    },
+    {
+      "query": "Senate Finance committee reported bills time to enact",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Identify typical lag from committee report to final enactment for Finance-related tax legislation.",
+      "phase": "plan"
+    },
+    {
+      "query": "congressional schedule April 2026 recess dates",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Determine available legislative days before May 1 for floor action in each chamber.",
+      "phase": "plan"
+    },
+    {
+      "query": "Among U.S. bills addressing foreign double taxation relief since 2000, how many were enacted and what was the median days from introduction to becoming Public Law?",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "Produce quantified base-rate data and timeline distribution for comparable legislation.",
+      "phase": "plan"
+    },
+    {
+      "query": "H.R. 33 status Senate companion bill",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Get the latest procedural position of H.R. 33 and whether a Senate version exists.",
+      "phase": "plan"
+    },
+    {
+      "query": "\u201cUnited States\u2013Taiwan Expedited Double-Tax Relief Act\u201d prospects 2026",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "Surface expert commentary and analysis about likelihood and pathways for enactment before May 1.",
+      "phase": "plan"
+    },
+    {
+      "query": "Senate Finance Chair Wyden Taiwan tax bill comments 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Find statements from key gatekeepers indicating support, scheduling, or obstacles, serving as leading indicators.",
+      "phase": "plan"
+    }
+  ],
+  "gap_queries": [],
+  "seed_context_chars": 0,
+  "historical_context_chars": 17678,
+  "current_context_chars": 62975,
+  "phases": {
+    "pre_research": {
+      "duration_seconds": 0.22,
+      "seed_context_chars": 0,
+      "search_id": "question_urls",
+      "searched": true,
+      "urls_found": 3,
+      "urls_scraped": 0,
+      "urls_summarized": 0,
+      "urls": [
+        {
+          "url": "https://www.congress.gov/bill/119th-congress/house-bill/33",
+          "domain": "www.congress.gov",
+          "scraped": false,
+          "method": null,
+          "status_code": 403,
+          "error": "HTTP 403"
+        },
+        {
+          "url": "https://www.govinfo.gov/app/collection/plaw",
+          "domain": "www.govinfo.gov",
+          "scraped": false,
+          "method": null,
+          "status_code": 200,
+          "error": "Content extraction failed"
+        },
+        {
+          "url": "https://www.congress.gov/bill/119th-congress/house-bill/33/all-actions",
+          "domain": "www.congress.gov",
+          "scraped": false,
+          "method": null,
+          "status_code": 403,
+          "error": "HTTP 403"
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ]
+    },
+    "plan": {
+      "duration_seconds": 25.54,
+      "cost": 0.0149,
+      "num_queries": 8
+    },
+    "execute": {
+      "duration_seconds": 53.98,
+      "cost": 0.2707,
+      "queries_executed": 8,
+      "queries_successful": 8
+    },
+    "assemble": {
+      "historical_context_chars": 17678,
+      "current_context_chars": 62975
+    }
+  },
+  "total_queries_planned": 8,
+  "total_queries_executed": 8,
+  "total_gap_queries": 0,
+  "total_cost": 0.2856,
+  "total_duration_seconds": 79.74,
+  "query_details": [
+    {
+      "query": "House bills double taxation foreign country became law",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Find past stand-alone foreign double-tax bills that successfully became law to build a reference class and frequency.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "enactment rate House passed bills 117th 118th Congress",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Gather statistics on what share of House-passed bills became law recently for baseline probability.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "Senate Finance committee reported bills time to enact",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Identify typical lag from committee report to final enactment for Finance-related tax legislation.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "congressional schedule April 2026 recess dates",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Determine available legislative days before May 1 for floor action in each chamber.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 1,
+      "error": null
+    },
+    {
+      "query": "Among U.S. bills addressing foreign double taxation relief since 2000, how many were enacted and what was the median days from introduction to becoming Public Law?",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "Produce quantified base-rate data and timeline distribution for comparable legislation.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 1,
+      "error": null
+    },
+    {
+      "query": "H.R. 33 status Senate companion bill",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Get the latest procedural position of H.R. 33 and whether a Senate version exists.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "\u201cUnited States\u2013Taiwan Expedited Double-Tax Relief Act\u201d prospects 2026",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "Surface expert commentary and analysis about likelihood and pathways for enactment before May 1.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 30,
+      "error": null
+    },
+    {
+      "query": "Senate Finance Chair Wyden Taiwan tax bill comments 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Find statements from key gatekeepers indicating support, scheduling, or obstacles, serving as leading indicators.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    }
+  ]
+}

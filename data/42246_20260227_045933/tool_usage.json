@@ -1,0 +1,265 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": false,
+      "num_queries": 0,
+      "queries": [],
+      "tools_used": [],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 5,
+      "queries": [
+        {
+          "query": "House bills double taxation foreign country became law",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Find past stand-alone foreign double-tax bills that successfully became law to build a reference class and frequency.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "enactment rate House passed bills 117th 118th Congress",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Gather statistics on what share of House-passed bills became law recently for baseline probability.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Senate Finance committee reported bills time to enact",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Identify typical lag from committee report to final enactment for Finance-related tax legislation.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "congressional schedule April 2026 recess dates",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Determine available legislative days before May 1 for floor action in each chamber.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        },
+        {
+          "query": "Among U.S. bills addressing foreign double taxation relief since 2000, how many were enacted and what was the median days from introduction to becoming Public Law?",
+          "tool": "Agent",
+          "temporal_role": "historical",
+          "intent": "Produce quantified base-rate data and timeline distribution for comparable legislation.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Agent"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "H.R. 33 status Senate companion bill",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "Get the latest procedural position of H.R. 33 and whether a Senate version exists.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "\u201cUnited States\u2013Taiwan Expedited Double-Tax Relief Act\u201d prospects 2026",
+          "tool": "AskNews",
+          "temporal_role": "current",
+          "intent": "Surface expert commentary and analysis about likelihood and pathways for enactment before May 1.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 30,
+          "error": null
+        },
+        {
+          "query": "Senate Finance Chair Wyden Taiwan tax bill comments 2026",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "Find statements from key gatekeepers indicating support, scheduling, or obstacles, serving as leading indicators.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "AskNews",
+        "Google News"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5878,
+        "token_output": 1218,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.04766,
+        "duration_seconds": 55.972623348236084,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 18162,
+        "token_output": 2539,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.128895,
+        "duration_seconds": 57.947489976882935,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5878,
+        "token_output": 1205,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.047465,
+        "duration_seconds": 55.97268199920654,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 18190,
+        "token_output": 2686,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.13124,
+        "duration_seconds": 57.94745969772339,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5258,
+        "token_output": 2624,
+        "token_reasoning": 841,
+        "used_reasoning": true,
+        "cost": 0.0459375,
+        "duration_seconds": 55.97271156311035,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16086,
+        "token_output": 2296,
+        "token_reasoning": 531,
+        "used_reasoning": true,
+        "cost": 0.0602945,
+        "duration_seconds": 57.947423696517944,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5258,
+        "token_output": 1912,
+        "token_reasoning": 768,
+        "used_reasoning": true,
+        "cost": 0.025812,
+        "duration_seconds": 55.97276544570923,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16792,
+        "token_output": 1549,
+        "token_reasoning": 512,
+        "used_reasoning": true,
+        "cost": 0.045976,
+        "duration_seconds": 57.9473922252655,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5258,
+        "token_output": 1635,
+        "token_reasoning": 640,
+        "used_reasoning": true,
+        "cost": 0.023596,
+        "duration_seconds": 55.97280955314636,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15938,
+        "token_output": 1955,
+        "token_reasoning": 832,
+        "used_reasoning": true,
+        "cost": 0.047516,
+        "duration_seconds": 57.947362661361694,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "steps1_2_research": 0.2856,
+    "step3_outside_view": 0.1905,
+    "step5_inside_view": 0.4139,
+    "step6_aggregation": 0.4139,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.89
+}
