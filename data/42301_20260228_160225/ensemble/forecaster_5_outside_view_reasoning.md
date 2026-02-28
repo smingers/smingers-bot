@@ -1,0 +1,7 @@
+**Analyzing tournament probabilities**
+
+I'm working on an analysis to estimate how many #1 seeds will make it to the Elite Eight in 2026. Focusing on the outside view, I won’t consider specific teams just yet since March Selection Sunday isn’t here. Historically, about 3 out of 4 #1 seeds reach the Elite Eight. I need to check the frequency of 0 to 4 #1 seeds reaching the Elite Eight from 1979 to 2025, which gives me a total of 46 tournaments.**Approximating distribution probabilities**
+
+I'm working on approximating the distribution of how many #1 seeds reach the Elite Eight. Historically, there was only one instance with 0 seeds reaching (2023), while all four seeds likely happened around nine times. The average is three, giving an expected value of 0.75 probability for each #1 seed to succeed. I'm calculating some probabilities based on this assumption using a binomial distribution, yielding percentages for 0 to 4 seeds making it. However, I need to keep in mind that historical correlations might affect these extremes.**Compiling statistical analysis**
+
+I'm compiling data from tournaments since 1985 to analyze how many #1 seeds reach the Elite Eight. To account for greater extremes than the binomial model suggests, I'll adjust weights for the probabilities, especially for 0 and 4 seeds. Historically, 0 seeds have occurred only once in 46 tournaments, while all 4 reached the Elite Eight about 9 times. Based on this, I estimate a distribution of probabilities by setting the percentages to sum to 100, leading to a final distribution update for 2026.

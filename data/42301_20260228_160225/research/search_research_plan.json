@@ -1,0 +1,224 @@
+{
+  "plan_analysis": "The question is resolved by counting how many of the four regional #1 seeds make the Elite Eight in the 2026 men\u2019s NCAA tournament.  \nWhat we already have: two recent extremes (all four in 2025, none in 2023) and a general description of seeding.  \nInformation still needed for a solid forecast:\n\nBase rate  \n\u2022 Full historical distribution (1979-2025) of 0/1/2/3/4 #1 seeds reaching the Elite Eight.  \n\u2022 Recent trend (last 10-15 years) to see if parity/upsets are increasing.  \n\u2022 Odds or betting market history for the four vs. zero outcome.\n\nResolution mechanism  \n\u2022 Confirmation that the NCAA\u2019s official bracket page or another authoritative source (e.g., NCAA stats database) will list Elite Eight qualifiers on/after 28 Mar 2026.\n\nKey drivers  \n\u2022 Identity and true strength of the 2026 projected #1 seeds (KenPom, NET, AP poll, Bracketology consensus).  \n\u2022 Match-up vulnerability factors: injury reports, star-player status, suspension, or stylistic mismatch that historically increases upset risk.  \n\u2022 Overall parity this season (gap between #1 and #16 seeds, upset frequency during 2025-26 regular season).\n\nCurrent state  \n\u2022 Up-to-date Bracketology projections as of late Feb 2026.  \n\u2022 KenPom / NET rankings and any late-season injuries affecting potential #1 seeds.  \n\u2022 Conference tournament surprises that might change seeding in the next two weeks.\n\nContrarian check  \n\u2022 Articles or analyst takes arguing this is a particularly weak or strong crop of #1 seeds, raising the chance of 0 or 4 advancing.  \n\u2022 Statistical pieces highlighting how rarely back-to-back years repeat extreme outcomes, or how unusual it is for the same conference makeup to dominate.",
+  "reflect_analysis": null,
+  "queries_planned": [
+    {
+      "query": "NCAA No. 1 seeds elite eight by year",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "retrieve tables or articles listing how many #1 seeds reached the Elite Eight each season since 1979.",
+      "phase": "plan"
+    },
+    {
+      "query": "distribution 0 1 2 3 4 one seeds elite eight",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "find compiled frequency stats or visualizations of that distribution.",
+      "phase": "plan"
+    },
+    {
+      "query": "NCAA tournament 1 seed upset rates round sweet sixteen",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "quantify how often #1 seeds lose before the Elite Eight, identifying drivers.",
+      "phase": "plan"
+    },
+    {
+      "query": "odds all four number one seeds reach elite eight",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "locate historical betting or model probabilities for extreme outcomes (0 or 4).",
+      "phase": "plan"
+    },
+    {
+      "query": "In NCAA tournaments 1979-2025 how many times did exactly three 1 seeds reach elite eight?",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "produce a count for each outcome category to create a base-rate table.",
+      "phase": "plan"
+    },
+    {
+      "query": "2026 bracketology latest projected 1 seeds",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "get consensus list of likely 2026 #1 seeds.",
+      "phase": "plan"
+    },
+    {
+      "query": "KenPom rankings February 28 2026 top 10 teams",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "gauge relative strength of projected #1 seeds versus field.",
+      "phase": "plan"
+    },
+    {
+      "query": "projected 1 seed injuries 2026 NCAA tournament",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "surface recent reporting on injuries/suspensions that could weaken any likely #1 seed and create upset risk.",
+      "phase": "plan"
+    }
+  ],
+  "gap_queries": [],
+  "seed_context_chars": 8339,
+  "historical_context_chars": 28954,
+  "current_context_chars": 41111,
+  "phases": {
+    "pre_research": {
+      "duration_seconds": 16.67,
+      "seed_context_chars": 8339,
+      "search_id": "question_urls",
+      "searched": true,
+      "urls_found": 5,
+      "urls_scraped": 5,
+      "urls_summarized": 5,
+      "urls": [
+        {
+          "url": "https://www.ncaa.com/march-madness-live/bracket",
+          "domain": "www.ncaa.com",
+          "scraped": true,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_words": 384
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/NCAA_Division_I_men%27s_basketball_tournament",
+          "domain": "en.wikipedia.org",
+          "scraped": true,
+          "method": "wikipedia_api",
+          "status_code": 200,
+          "content_words": 2454
+        },
+        {
+          "url": "https://www.ncaa.com/news/basketball-men/article/2025-01-16/how-field-68-di-mens-teams-picked-march-madness-each-season",
+          "domain": "www.ncaa.com",
+          "scraped": true,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_words": 2441
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/2025_NCAA_Division_I_men%27s_basketball_tournament",
+          "domain": "en.wikipedia.org",
+          "scraped": true,
+          "method": "wikipedia_api",
+          "status_code": 200,
+          "content_words": 2191
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/2023_NCAA_Division_I_men%27s_basketball_tournament",
+          "domain": "en.wikipedia.org",
+          "scraped": true,
+          "method": "wikipedia_api",
+          "status_code": 200,
+          "content_words": 2343
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ]
+    },
+    "plan": {
+      "duration_seconds": 22.22,
+      "cost": 0.0161,
+      "num_queries": 8
+    },
+    "execute": {
+      "duration_seconds": 57.9,
+      "cost": 0.3642,
+      "queries_executed": 8,
+      "queries_successful": 8
+    },
+    "assemble": {
+      "historical_context_chars": 28954,
+      "current_context_chars": 41111
+    }
+  },
+  "total_queries_planned": 8,
+  "total_queries_executed": 8,
+  "total_gap_queries": 0,
+  "total_cost": 0.5025,
+  "total_duration_seconds": 96.8,
+  "query_details": [
+    {
+      "query": "NCAA No. 1 seeds elite eight by year",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "retrieve tables or articles listing how many #1 seeds reached the Elite Eight each season since 1979.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "distribution 0 1 2 3 4 one seeds elite eight",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "find compiled frequency stats or visualizations of that distribution.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "NCAA tournament 1 seed upset rates round sweet sixteen",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "quantify how often #1 seeds lose before the Elite Eight, identifying drivers.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "odds all four number one seeds reach elite eight",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "locate historical betting or model probabilities for extreme outcomes (0 or 4).",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "In NCAA tournaments 1979-2025 how many times did exactly three 1 seeds reach elite eight?",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "produce a count for each outcome category to create a base-rate table.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 1,
+      "error": null
+    },
+    {
+      "query": "2026 bracketology latest projected 1 seeds",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "get consensus list of likely 2026 #1 seeds.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "KenPom rankings February 28 2026 top 10 teams",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "gauge relative strength of projected #1 seeds versus field.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "projected 1 seed injuries 2026 NCAA tournament",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "surface recent reporting on injuries/suspensions that could weaken any likely #1 seed and create upset risk.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 30,
+      "error": null
+    }
+  ]
+}

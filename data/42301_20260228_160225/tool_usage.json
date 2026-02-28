@@ -1,0 +1,265 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": false,
+      "num_queries": 0,
+      "queries": [],
+      "tools_used": [],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 5,
+      "queries": [
+        {
+          "query": "NCAA No. 1 seeds elite eight by year",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "retrieve tables or articles listing how many #1 seeds reached the Elite Eight each season since 1979.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "distribution 0 1 2 3 4 one seeds elite eight",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "find compiled frequency stats or visualizations of that distribution.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "NCAA tournament 1 seed upset rates round sweet sixteen",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "quantify how often #1 seeds lose before the Elite Eight, identifying drivers.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "odds all four number one seeds reach elite eight",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "locate historical betting or model probabilities for extreme outcomes (0 or 4).",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "In NCAA tournaments 1979-2025 how many times did exactly three 1 seeds reach elite eight?",
+          "tool": "Agent",
+          "temporal_role": "historical",
+          "intent": "produce a count for each outcome category to create a base-rate table.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Agent"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "2026 bracketology latest projected 1 seeds",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "get consensus list of likely 2026 #1 seeds.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "KenPom rankings February 28 2026 top 10 teams",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "gauge relative strength of projected #1 seeds versus field.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "projected 1 seed injuries 2026 NCAA tournament",
+          "tool": "AskNews",
+          "temporal_role": "current",
+          "intent": "surface recent reporting on injuries/suspensions that could weaken any likely #1 seed and create upset risk.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 30,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "AskNews",
+        "Google News"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 9834,
+        "token_output": 2277,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.08332500000000001,
+        "duration_seconds": 46.68799948692322,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15734,
+        "token_output": 1917,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.107425,
+        "duration_seconds": 50.392396211624146,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14674,
+        "token_output": 1902,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.10189999999999999,
+        "duration_seconds": 50.39237093925476,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8745,
+        "token_output": 2744,
+        "token_reasoning": 1199,
+        "used_reasoning": true,
+        "cost": 0.05371975,
+        "duration_seconds": 46.68805956840515,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14017,
+        "token_output": 3078,
+        "token_reasoning": 1355,
+        "used_reasoning": true,
+        "cost": 0.06762175,
+        "duration_seconds": 50.39234137535095,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13538,
+        "token_output": 1493,
+        "token_reasoning": 960,
+        "used_reasoning": true,
+        "cost": 0.03902,
+        "duration_seconds": 50.392311573028564,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8745,
+        "token_output": 2740,
+        "token_reasoning": 1600,
+        "used_reasoning": true,
+        "cost": 0.03941,
+        "duration_seconds": 46.68810057640076,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13074,
+        "token_output": 1906,
+        "token_reasoning": 832,
+        "used_reasoning": true,
+        "cost": 0.041396,
+        "duration_seconds": 50.39228916168213,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "steps1_2_research": 0.5025,
+    "step3_outside_view": 0.1765,
+    "step5_inside_view": 0.3574,
+    "step6_aggregation": 0.3574,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 1.0363
+}
