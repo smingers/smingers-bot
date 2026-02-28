@@ -222,6 +222,7 @@ metaculus-bot/
 │   │   ├── divergence.py      # Ensemble divergence calculation
 │   │   ├── exceptions.py      # Custom exception types
 │   │   ├── metrics.py         # Typed metrics dataclasses
+│   │   ├── pipeline_data.py   # Typed intermediate data structures between pipeline steps
 │   │   └── content_extractor.py # Web scraping
 │   ├── utils/
 │   │   ├── llm.py             # LLM client with cost tracking
@@ -258,6 +259,7 @@ metaculus-bot/
 | `src/bot/search.py` | Search pipeline (Google, AskNews, Google Trends, FRED, yFinance, agentic) |
 | `src/bot/extractors.py` | Probability/percentile extraction from LLM responses |
 | `src/bot/handler_mixin.py` | Shared methods for agent config, model selection |
+| `src/bot/pipeline_data.py` | Typed intermediate data structures (`ResearchContext`, `OutsideViewResult`, `CrossPollinatedContext`, `InsideViewResult`, `EnsembleResult`) |
 | `src/bot/cdf.py` | CDF generation and interpolation for numeric questions |
 | `src/bot/supervisor.py` | Supervisor agent for ensemble disagreement resolution |
 | `src/bot/divergence.py` | Ensemble divergence calculation |
@@ -457,10 +459,11 @@ ruff format .
 
 ### Test Infrastructure
 
-22 test files in `tests/unit/`. Key test files:
+23 test files in `tests/unit/`. Key test files:
 - `test_extractors.py` - Probability/percentile extraction (100+ tests)
 - `test_cdf_generation.py` - 201-point CDF generation
 - `test_base_forecaster.py` - Base forecaster with mocked LLM pipeline
+- `test_pipeline_steps.py` - Individual pipeline steps tested in isolation (see below)
 - `test_handler_mixin.py` - Handler mixin methods
 - `test_divergence.py` - Ensemble divergence calculation
 - `test_supervisor.py` - Supervisor agent
@@ -474,6 +477,58 @@ Fixtures in `conftest.py` provide sample LLM responses for:
 - Binary responses (standard, decimal, extreme, missing)
 - Multiple choice responses (3-option, 4-option)
 - Numeric percentile responses
+
+### Pipeline Step Testing
+
+The forecasting pipeline in `BaseForecaster` is decomposed into independently-callable step methods, each with typed inputs and outputs defined in `src/bot/pipeline_data.py`. This enables testing any single step without running the full pipeline.
+
+**Pipeline flow (typed data structures):**
+```
+ResearchContext -> OutsideViewResult -> CrossPollinatedContext -> InsideViewResult -> EnsembleResult
+```
+
+**Step methods on `BaseForecaster`:**
+
+| Method | Input | Output | Description |
+|--------|-------|--------|-------------|
+| `_run_research()` | `QuestionDetails`, params, prompts | `ResearchContext` | Steps 1-2: Run research (planner or legacy) |
+| `_run_outside_view()` | agents, prompt, temp, metrics | `OutsideViewResult` | Step 3: Outside view (3 real LLM calls) |
+| `_cross_pollinate()` | outputs, current_context | `CrossPollinatedContext` | Step 4: Assemble cross-pollinated context |
+| `_run_inside_view()` | agents, context_map, prompt, temp | `InsideViewResult` | Step 5: Inside view (5 LLM calls) |
+| `_extract_and_aggregate()` | agents, outputs, inside_view | `EnsembleResult` | Step 6: Extract predictions and aggregate |
+
+**Testing individual steps:**
+
+```python
+from src.bot.pipeline_data import InsideViewResult, CrossPollinatedContext
+
+# Test cross-pollination with specific inputs
+forecaster = BinaryForecaster(config, llm_client=mock_llm)
+result = forecaster._cross_pollinate(
+    outside_view_outputs=["Analysis 1", "Analysis 2", "Analysis 3", "Analysis 4", "Analysis 5"],
+    current_context="Current news...",
+)
+assert isinstance(result, CrossPollinatedContext)
+assert len(result.context_map) == 5
+
+# Test extraction + aggregation with mocked inside view outputs
+inside_view = InsideViewResult(outputs=["probability: 60%", "probability: 70%", ...])
+ensemble = forecaster._extract_and_aggregate(
+    agents=agents,
+    outside_view_outputs=[""] * 5,
+    inside_view_result=inside_view,
+    question_params={},
+    log=print,
+)
+assert ensemble.final_prediction is not None
+```
+
+**Test file:** `tests/unit/test_pipeline_steps.py` covers:
+- `TestCrossPollinateStep` - Context mapping, failed output filtering, self-pollination for edge agents
+- `TestRunOutsideViewStep` - Typed output, three-outside-view optimization (only 3 LLM calls), output reuse
+- `TestRunInsideViewStep` - Typed output, all 5 forecasters called
+- `TestExtractAndAggregateStep` - Typed output, exception handling, failed outside view replacement
+- `TestPipelineDataTypes` - Construction of all 5 data types with edge cases
 
 ### GitHub Actions
 

@@ -27,6 +27,13 @@ from .divergence import compute_divergence
 from .extractors import AgentResult
 from .handler_mixin import ForecasterMixin
 from .metrics import AgentMetrics, PipelineMetrics, ResearchMetrics
+from .pipeline_data import (
+    CrossPollinatedContext,
+    EnsembleResult,
+    InsideViewResult,
+    OutsideViewResult,
+    ResearchContext,
+)
 from .prompts import SUPERFORECASTER_CONTEXT
 from .research_planner import IterativeResearchPlanner
 from .search import QuestionDetails, SearchPipeline
@@ -149,6 +156,9 @@ class BaseForecaster(ForecasterMixin, ABC):
         """
         Run the full forecasting pipeline.
 
+        This is the top-level orchestrator that calls each pipeline step in sequence.
+        Individual steps can also be called directly for testing or experimentation.
+
         Args:
             log: Progress logging callback (default: print). Called with status messages.
             **question_params: Question-specific parameters (title, text, criteria, etc.)
@@ -161,7 +171,7 @@ class BaseForecaster(ForecasterMixin, ABC):
 
         # Cost tracking by step
         cost_tracker = get_cost_tracker()
-        step_costs = {}
+        step_costs: dict[str, float] = {}
 
         def snapshot_cost(step_name: str, start_cost: float) -> float:
             """Record cost for a step and return current total for next step."""
@@ -187,177 +197,36 @@ class BaseForecaster(ForecasterMixin, ABC):
         # Initialize pipeline metrics tracking
         metrics = PipelineMetrics.create_empty()
 
-        # Check if iterative research planner is enabled
-        use_planner = self.config.get("research", {}).get("iterative_planner_enabled", False)
+        # =====================================================================
+        # Steps 1-2: Research
+        # =====================================================================
+        research = await self._run_research(
+            question_details=question_details,
+            question_params=question_params,
+            prompt_historical=prompt_historical,
+            prompt_current=prompt_current,
+            metrics=metrics,
+            log=log,
+        )
+        step2_end_cost = snapshot_cost(
+            "steps1_2_research"
+            if self.config.get("research", {}).get("iterative_planner_enabled", False)
+            else "step2_search",
+            pipeline_start_cost,
+        )
 
-        if use_planner:
-            # =================================================================
-            # STEPS 1-2 (ITERATIVE): Plan → Execute → Reflect → Assemble
-            # =================================================================
-            log("\n=== Steps 1-2: Iterative Research Planner ===")
-
-            planner = IterativeResearchPlanner(self.config, self.llm, self.artifact_store)
-            plan_result = await planner.run(
-                question_details, self.question_type, question_params, log
+        # Save research artifacts
+        if self.artifact_store:
+            self.artifact_store.save_search_results(
+                "historical", {"context": research.historical_context}
             )
-            historical_context = plan_result.historical_context
-            current_context = plan_result.current_context
-
-            log(f"\nHistorical context ({len(historical_context)} chars)")
-            log(f"Current context ({len(current_context)} chars)")
-
-            step2_end_cost = snapshot_cost("steps1_2_research", pipeline_start_cost)
-
-            # Populate metrics from planner metadata
-            plan_meta = plan_result.metadata
-            all_queries = plan_meta.get("query_details", [])
-            hist_queries = [q for q in all_queries if q["temporal_role"] == "historical"]
-            curr_queries = [q for q in all_queries if q["temporal_role"] == "current"]
-
-            metrics.centralized_research["historical"] = ResearchMetrics(
-                search_id="historical",
-                searched=len(hist_queries) > 0,
-                num_queries=len(hist_queries),
-                queries=hist_queries,
-                tools_used=list({q["tool"] for q in hist_queries}),
-            )
-            metrics.centralized_research["current"] = ResearchMetrics(
-                search_id="current",
-                searched=len(curr_queries) > 0,
-                num_queries=len(curr_queries),
-                queries=curr_queries,
-                tools_used=list({q["tool"] for q in curr_queries}),
+            self.artifact_store.save_search_results(
+                "current", {"context": research.current_context}
             )
 
-            if self.artifact_store:
-                self.artifact_store.save_search_results(
-                    "historical", {"context": historical_context}
-                )
-                self.artifact_store.save_search_results("current", {"context": current_context})
-
-        else:
-            # =================================================================
-            # STEPS 1-2 (LEGACY): Independent historical + current queries
-            # =================================================================
-            log("\n=== Step 1: Generating search queries ===")
-
-            historical_prompt, current_prompt = self._format_query_prompts(
-                prompt_historical, prompt_current, **question_params
-            )
-
-            query_model = self._resolve_model("query_generator", "openrouter/openai/o3")
-
-            query_temp = self._get_temperature("query_generation")
-            historical_task = self._call_model(
-                query_model, historical_prompt, temperature=query_temp
-            )
-            current_task = self._call_model(query_model, current_prompt, temperature=query_temp)
-            historical_output, current_output = await asyncio.gather(historical_task, current_task)
-
-            log(f"\nHistorical query output:\n{historical_output[:500]}...")
-            log(f"\nCurrent query output:\n{current_output[:500]}...")
-
-            step1_end_cost = snapshot_cost("step1_query_generation", pipeline_start_cost)
-
-            if self.artifact_store:
-                self.artifact_store.save_query_generation(
-                    "historical", historical_prompt, historical_output
-                )
-                self.artifact_store.save_query_generation("current", current_prompt, current_output)
-
-            # =========================================================================
-            # STEP 2: Execute searches
-            # =========================================================================
-            log("\n=== Step 2: Executing searches ===")
-
-            async with SearchPipeline(self.config, self.llm) as search:
-                results = await asyncio.gather(
-                    search.scrape_question_urls(question_details),
-                    search.execute_searches_from_response(
-                        historical_output,
-                        search_id="historical",
-                        question_details=question_details,
-                        include_asknews=False,
-                    ),
-                    search.execute_searches_from_response(
-                        current_output,
-                        search_id="current",
-                        question_details=question_details,
-                        include_asknews=True,
-                    ),
-                )
-                (question_url_context, question_url_metadata) = results[0]
-                (historical_context, historical_metadata) = results[1]
-                (current_context, current_metadata) = results[2]
-
-            # Prepend question URL content to historical context
-            # (resolution source data should appear first for forecasters)
-            if question_url_context:
-                historical_context = question_url_context + "\n" + historical_context
-                log(
-                    f"\nQuestion URL context ({len(question_url_context)} chars, "
-                    f"{question_url_metadata.get('urls_summarized', 0)} URLs summarized)"
-                )
-
-            # Prepend stock return distribution to both contexts for close price questions
-            # This gives all 5 forecasters the programmatic base rate
-            stock_return_context = question_params.get("stock_return_context", "")
-            if stock_return_context:
-                historical_context = stock_return_context + "\n" + historical_context
-                current_context = stock_return_context + "\n" + current_context
-                log(
-                    f"\nStock return distribution context injected "
-                    f"({len(stock_return_context)} chars)"
-                )
-
-            log(f"\nHistorical context ({len(historical_context)} chars)")
-            log(f"Current context ({len(current_context)} chars)")
-
-            step2_end_cost = snapshot_cost("step2_search", step1_end_cost)
-
-            # Store research metadata
-            metrics.centralized_research["question_urls"] = ResearchMetrics(
-                search_id="question_urls",
-                searched=question_url_metadata.get("searched", False),
-                num_queries=question_url_metadata.get("urls_found", 0),
-                queries=[
-                    {
-                        "query": u["url"],
-                        "tool": "QuestionURLScrape",
-                        "success": u.get("scraped", False),
-                        "num_results": 1 if u.get("scraped") else 0,
-                        "domain": u.get("domain"),
-                        "method": u.get("method"),
-                        "status_code": u.get("status_code"),
-                        "content_words": u.get("content_words"),
-                        "error": u.get("error"),
-                    }
-                    for u in question_url_metadata.get("urls", [])
-                ],
-                tools_used=question_url_metadata.get("tools_used", []),
-            )
-            metrics.centralized_research["historical"] = ResearchMetrics.from_search_metadata(
-                historical_metadata
-            )
-            metrics.centralized_research["current"] = ResearchMetrics.from_search_metadata(
-                current_metadata
-            )
-
-            if self.artifact_store:
-                if question_url_context:
-                    self.artifact_store.save_search_results(
-                        "question_urls", {"context": question_url_context}
-                    )
-                self.artifact_store.save_search_results(
-                    "historical", {"context": historical_context}
-                )
-                self.artifact_store.save_search_results("current", {"context": current_context})
-
-        # =========================================================================
-        # STEP 3: Run 5 forecasters on outside view prediction
-        # =========================================================================
-        log("\n=== Step 3: Running outside view prediction ===")
-
+        # =====================================================================
+        # Step 3: Outside view prediction
+        # =====================================================================
         agents = self._get_agents()
 
         # Initialize agent metrics
@@ -369,13 +238,349 @@ class BaseForecaster(ForecasterMixin, ABC):
             )
 
         outside_view_prompt = self._format_outside_view_prompt(
-            prompt_outside_view, historical_context, **question_params
+            prompt_outside_view, research.historical_context, **question_params
         )
-
         forecast_temp = self._get_temperature("forecasting")
 
-        # Only forecasters 1, 3, and 5 (indices 0, 2, 4) generate distinct outside views.
-        # Forecasters 2 and 4 (indices 1 and 3) reuse outputs from 5 and 3 respectively.
+        outside_view = await self._run_outside_view(
+            agents=agents,
+            outside_view_prompt=outside_view_prompt,
+            forecast_temp=forecast_temp,
+            metrics=metrics,
+            log=log,
+        )
+
+        # Save outside view artifacts
+        if self.artifact_store:
+            self.artifact_store.save_outside_view_prompt(outside_view.prompt)
+            for i, output in enumerate(outside_view.outputs):
+                if not _is_failed_output(output):
+                    self.artifact_store.save_forecaster_outside_view(i + 1, output)
+                    if i in outside_view.reasoning:
+                        self.artifact_store.save_forecaster_reasoning(
+                            i + 1, "outside_view", outside_view.reasoning[i]
+                        )
+
+        step3_end_cost = snapshot_cost("step3_outside_view", step2_end_cost)
+
+        # =====================================================================
+        # Step 4: Cross-pollinate context
+        # =====================================================================
+        log("\n=== Step 4: Cross-pollinating context ===")
+
+        cross_poll = self._cross_pollinate(
+            outside_view_outputs=outside_view.outputs,
+            current_context=research.current_context,
+        )
+
+        # =====================================================================
+        # Step 5: Inside view prediction
+        # =====================================================================
+        inside_view = await self._run_inside_view(
+            agents=agents,
+            context_map=cross_poll.context_map,
+            prompt_inside_view=prompt_inside_view,
+            forecast_temp=forecast_temp,
+            question_params=question_params,
+            metrics=metrics,
+            log=log,
+        )
+
+        snapshot_cost("step5_inside_view", step3_end_cost)
+
+        # =====================================================================
+        # Step 6: Extract predictions and aggregate
+        # =====================================================================
+        ensemble = self._extract_and_aggregate(
+            agents=agents,
+            outside_view_outputs=outside_view.outputs,
+            inside_view_result=inside_view,
+            question_params=question_params,
+            log=log,
+        )
+
+        # Save inside view and extraction artifacts
+        if self.artifact_store:
+            for i, result in enumerate(ensemble.agent_results):
+                if result.inside_view_output:
+                    self.artifact_store.save_forecaster_inside_view(
+                        i + 1, result.inside_view_output
+                    )
+                    if i in inside_view.reasoning:
+                        self.artifact_store.save_forecaster_reasoning(
+                            i + 1, "inside_view", inside_view.reasoning[i]
+                        )
+                self.artifact_store.save_forecaster_prediction(
+                    i + 1, self._get_extracted_data(result)
+                )
+            self.artifact_store.save_aggregation(
+                self._get_aggregation_data(
+                    ensemble.agent_results, agents, ensemble.final_prediction
+                )
+            )
+
+        step6_end_cost = snapshot_cost("step6_aggregation", step3_end_cost)
+
+        # =====================================================================
+        # Step 7: Optional supervisor review
+        # =====================================================================
+        final_prediction = ensemble.final_prediction
+        supervisor_config = self.config.get("supervisor", {})
+        if supervisor_config.get("enabled", False):
+            final_prediction = await self._run_supervisor(
+                agent_results=ensemble.agent_results,
+                agents=agents,
+                final_prediction=final_prediction,
+                question_params=question_params,
+                log=log,
+            )
+            snapshot_cost("step7_supervisor", step6_end_cost)
+
+        # Save metrics (after supervisor so cost is included)
+        if self.artifact_store:
+            metrics.step_costs = step_costs
+            metrics.total_pipeline_cost = round(cost_tracker.total_cost - pipeline_start_cost, 4)
+            self.artifact_store.save_tool_usage(metrics.to_dict())
+
+        # Log cost breakdown
+        self._log_cost_breakdown(metrics, step_costs, log)
+
+        return self._build_result(
+            final_prediction=final_prediction,
+            agent_results=ensemble.agent_results,
+            historical_context=research.historical_context,
+            current_context=research.current_context,
+            agents=agents,
+            **question_params,
+        )
+
+    # =========================================================================
+    # Pipeline step methods — each can be called independently for testing
+    # =========================================================================
+
+    async def _run_research(
+        self,
+        question_details: QuestionDetails,
+        question_params: dict,
+        prompt_historical: str,
+        prompt_current: str,
+        metrics: PipelineMetrics,
+        log: Callable[[str], Any] = print,
+    ) -> ResearchContext:
+        """
+        Steps 1-2: Run research to gather historical and current context.
+
+        Supports two modes controlled by config.research.iterative_planner_enabled:
+        - Iterative planner: unified plan-execute-reflect-assemble pipeline
+        - Legacy: independent historical + current query generation and search
+
+        Args:
+            question_details: Structured question metadata for search tools
+            question_params: Raw question parameters dict
+            prompt_historical: Historical query generation prompt template
+            prompt_current: Current query generation prompt template
+            metrics: PipelineMetrics to populate with research metadata
+            log: Progress logging callback
+
+        Returns:
+            ResearchContext with historical_context, current_context, and metrics
+        """
+        use_planner = self.config.get("research", {}).get("iterative_planner_enabled", False)
+
+        if use_planner:
+            return await self._run_research_planner(question_details, question_params, metrics, log)
+        else:
+            return await self._run_research_legacy(
+                question_details, question_params, prompt_historical, prompt_current, metrics, log
+            )
+
+    async def _run_research_planner(
+        self,
+        question_details: QuestionDetails,
+        question_params: dict,
+        metrics: PipelineMetrics,
+        log: Callable[[str], Any],
+    ) -> ResearchContext:
+        """Steps 1-2 via iterative research planner."""
+        log("\n=== Steps 1-2: Iterative Research Planner ===")
+
+        planner = IterativeResearchPlanner(self.config, self.llm, self.artifact_store)
+        plan_result = await planner.run(question_details, self.question_type, question_params, log)
+
+        log(f"\nHistorical context ({len(plan_result.historical_context)} chars)")
+        log(f"Current context ({len(plan_result.current_context)} chars)")
+
+        # Populate metrics from planner metadata
+        plan_meta = plan_result.metadata
+        all_queries = plan_meta.get("query_details", [])
+        hist_queries = [q for q in all_queries if q["temporal_role"] == "historical"]
+        curr_queries = [q for q in all_queries if q["temporal_role"] == "current"]
+
+        research_metrics = {
+            "historical": ResearchMetrics(
+                search_id="historical",
+                searched=len(hist_queries) > 0,
+                num_queries=len(hist_queries),
+                queries=hist_queries,
+                tools_used=list({q["tool"] for q in hist_queries}),
+            ),
+            "current": ResearchMetrics(
+                search_id="current",
+                searched=len(curr_queries) > 0,
+                num_queries=len(curr_queries),
+                queries=curr_queries,
+                tools_used=list({q["tool"] for q in curr_queries}),
+            ),
+        }
+
+        metrics.centralized_research.update(research_metrics)
+
+        return ResearchContext(
+            historical_context=plan_result.historical_context,
+            current_context=plan_result.current_context,
+            metrics=research_metrics,
+        )
+
+    async def _run_research_legacy(
+        self,
+        question_details: QuestionDetails,
+        question_params: dict,
+        prompt_historical: str,
+        prompt_current: str,
+        metrics: PipelineMetrics,
+        log: Callable[[str], Any],
+    ) -> ResearchContext:
+        """Steps 1-2 via legacy independent query generation + search."""
+        # Step 1: Generate queries
+        log("\n=== Step 1: Generating search queries ===")
+
+        historical_prompt, current_prompt = self._format_query_prompts(
+            prompt_historical, prompt_current, **question_params
+        )
+
+        query_model = self._resolve_model("query_generator", "openrouter/openai/o3")
+        query_temp = self._get_temperature("query_generation")
+
+        historical_task = self._call_model(query_model, historical_prompt, temperature=query_temp)
+        current_task = self._call_model(query_model, current_prompt, temperature=query_temp)
+        historical_output, current_output = await asyncio.gather(historical_task, current_task)
+
+        log(f"\nHistorical query output:\n{historical_output[:500]}...")
+        log(f"\nCurrent query output:\n{current_output[:500]}...")
+
+        if self.artifact_store:
+            self.artifact_store.save_query_generation(
+                "historical", historical_prompt, historical_output
+            )
+            self.artifact_store.save_query_generation("current", current_prompt, current_output)
+
+        # Step 2: Execute searches
+        log("\n=== Step 2: Executing searches ===")
+
+        async with SearchPipeline(self.config, self.llm) as search:
+            results = await asyncio.gather(
+                search.scrape_question_urls(question_details),
+                search.execute_searches_from_response(
+                    historical_output,
+                    search_id="historical",
+                    question_details=question_details,
+                    include_asknews=False,
+                ),
+                search.execute_searches_from_response(
+                    current_output,
+                    search_id="current",
+                    question_details=question_details,
+                    include_asknews=True,
+                ),
+            )
+            (question_url_context, question_url_metadata) = results[0]
+            (historical_context, historical_metadata) = results[1]
+            (current_context, current_metadata) = results[2]
+
+        # Prepend question URL content to historical context
+        if question_url_context:
+            historical_context = question_url_context + "\n" + historical_context
+            log(
+                f"\nQuestion URL context ({len(question_url_context)} chars, "
+                f"{question_url_metadata.get('urls_summarized', 0)} URLs summarized)"
+            )
+
+        # Prepend stock return distribution to both contexts
+        stock_return_context = question_params.get("stock_return_context", "")
+        if stock_return_context:
+            historical_context = stock_return_context + "\n" + historical_context
+            current_context = stock_return_context + "\n" + current_context
+            log(f"\nStock return distribution context injected ({len(stock_return_context)} chars)")
+
+        log(f"\nHistorical context ({len(historical_context)} chars)")
+        log(f"Current context ({len(current_context)} chars)")
+
+        # Populate research metrics
+        research_metrics: dict[str, ResearchMetrics] = {}
+        research_metrics["question_urls"] = ResearchMetrics(
+            search_id="question_urls",
+            searched=question_url_metadata.get("searched", False),
+            num_queries=question_url_metadata.get("urls_found", 0),
+            queries=[
+                {
+                    "query": u["url"],
+                    "tool": "QuestionURLScrape",
+                    "success": u.get("scraped", False),
+                    "num_results": 1 if u.get("scraped") else 0,
+                    "domain": u.get("domain"),
+                    "method": u.get("method"),
+                    "status_code": u.get("status_code"),
+                    "content_words": u.get("content_words"),
+                    "error": u.get("error"),
+                }
+                for u in question_url_metadata.get("urls", [])
+            ],
+            tools_used=question_url_metadata.get("tools_used", []),
+        )
+        research_metrics["historical"] = ResearchMetrics.from_search_metadata(historical_metadata)
+        research_metrics["current"] = ResearchMetrics.from_search_metadata(current_metadata)
+
+        metrics.centralized_research.update(research_metrics)
+
+        # Save question URL context artifact (separate from historical/current)
+        if self.artifact_store and question_url_context:
+            self.artifact_store.save_search_results(
+                "question_urls", {"context": question_url_context}
+            )
+
+        return ResearchContext(
+            historical_context=historical_context,
+            current_context=current_context,
+            metrics=research_metrics,
+        )
+
+    async def _run_outside_view(
+        self,
+        agents: list[dict],
+        outside_view_prompt: str,
+        forecast_temp: float,
+        metrics: PipelineMetrics,
+        log: Callable[[str], Any] = print,
+    ) -> OutsideViewResult:
+        """
+        Step 3: Run outside view prediction with the forecaster ensemble.
+
+        Only forecasters 1, 3, and 5 (indices 0, 2, 4) generate distinct outside views.
+        Forecasters 2 and 4 (indices 1, 3) reuse outputs from 5 and 3 respectively.
+
+        Args:
+            agents: List of 5 agent config dicts (name, model, weight)
+            outside_view_prompt: Formatted outside view prompt
+            forecast_temp: Temperature for forecasting LLM calls
+            metrics: PipelineMetrics to populate with agent step1 data
+            log: Progress logging callback
+
+        Returns:
+            OutsideViewResult with 5 outputs, reasoning, and the prompt used
+        """
+        log("\n=== Step 3: Running outside view prediction ===")
+
+        # Only forecasters 1, 3, and 5 generate distinct outside views
         outside_view_tasks: list[asyncio.Future] = []
         outside_view_timings: list[float] = []
         real_indices = [0, 2, 4]
@@ -401,9 +606,9 @@ class BaseForecaster(ForecasterMixin, ABC):
 
         # Initialize outputs for all 5 forecasters
         outside_view_outputs: list[str] = ["" for _ in range(len(agents))]
-        outside_view_reasoning: dict[int, str] = {}  # Store reasoning content by forecaster index
+        outside_view_reasoning: dict[int, str] = {}
 
-        # First, populate results for the forecasters that actually ran outside view
+        # Populate results for the forecasters that actually ran
         for offset, idx in enumerate(real_indices):
             result = outside_view_results_raw[offset]
             agent_id = f"forecaster_{idx + 1}"
@@ -425,11 +630,11 @@ class BaseForecaster(ForecasterMixin, ABC):
                     f" [reasoning: {reasoning_tokens} tokens]" if reasoning_tokens else ""
                 )
                 log(
-                    f"\nForecaster_{idx + 1} outside view output{reasoning_label}:\n{output[:300]}..."
+                    f"\nForecaster_{idx + 1} outside view output"
+                    f"{reasoning_label}:\n{output[:300]}..."
                 )
                 outside_view_outputs[idx] = output
 
-                # Track LLM metrics including reasoning
                 outside_view_metrics.token_input = response_metadata.get("input_tokens", 0)
                 outside_view_metrics.token_output = response_metadata.get("output_tokens", 0)
                 outside_view_metrics.token_reasoning = reasoning_tokens
@@ -437,14 +642,11 @@ class BaseForecaster(ForecasterMixin, ABC):
                 outside_view_metrics.cost = response_metadata.get("cost", 0.0)
                 outside_view_metrics.duration_seconds = duration
 
-                # Store reasoning content if available
                 reasoning_content = response_metadata.get("reasoning_content")
                 if reasoning_content:
                     outside_view_reasoning[idx] = reasoning_content
 
-        # Then, assign reused outside views for forecasters 2 and 4
-        # Forecaster 2 (index 1) reuses forecaster 5 (index 4)
-        # Forecaster 4 (index 3) reuses forecaster 3 (index 2)
+        # Assign reused outside views for forecasters 2 and 4
         reuse_mapping = {1: 4, 3: 2}
         for idx, source_idx in reuse_mapping.items():
             agent_id = f"forecaster_{idx + 1}"
@@ -452,8 +654,6 @@ class BaseForecaster(ForecasterMixin, ABC):
 
             source_output = outside_view_outputs[source_idx]
             if not source_output:
-                # This should only happen if the source itself completely failed to produce output.
-                # In that case, mark this as a failed outside view as well.
                 msg = (
                     f"forecaster_{idx + 1} outside view reused from "
                     f"forecaster_{source_idx + 1}, but source output is empty"
@@ -465,35 +665,39 @@ class BaseForecaster(ForecasterMixin, ABC):
                 outside_view_metrics.duration_seconds = 0.0
             else:
                 outside_view_outputs[idx] = source_output
-                # No additional LLM cost; metrics remain at default (zero cost, zero tokens).
 
-        if self.artifact_store:
-            self.artifact_store.save_outside_view_prompt(outside_view_prompt)
-            for i, output in enumerate(outside_view_outputs):
-                if not _is_failed_output(output):
-                    self.artifact_store.save_forecaster_outside_view(i + 1, output)
-                    # Save reasoning content if available
-                    if i in outside_view_reasoning:
-                        self.artifact_store.save_forecaster_reasoning(
-                            i + 1, "outside_view", outside_view_reasoning[i]
-                        )
+        return OutsideViewResult(
+            outputs=outside_view_outputs,
+            reasoning=outside_view_reasoning,
+            prompt=outside_view_prompt,
+        )
 
-        step3_end_cost = snapshot_cost("step3_outside_view", step2_end_cost)
+    def _cross_pollinate(
+        self,
+        outside_view_outputs: list[str],
+        current_context: str,
+    ) -> CrossPollinatedContext:
+        """
+        Step 4: Assemble cross-pollinated context for inside view.
 
-        # =========================================================================
-        # STEP 4: Cross-pollinate context
-        # =========================================================================
-        log("\n=== Step 4: Cross-pollinating context ===")
+        Each forecaster receives current_context combined with another forecaster's
+        outside view output, per the CROSS_POLLINATION_MAP. Failed outputs trigger
+        fallback to self or the first valid output.
 
+        Args:
+            outside_view_outputs: List of 5 outside view outputs (may contain failed sentinels)
+            current_context: Current news/search context
+
+        Returns:
+            CrossPollinatedContext mapping each forecaster index to its enriched context
+        """
         context_map = {}
         for i in range(5):
             source_idx, label = CROSS_POLLINATION_MAP[i]
             source_output = outside_view_outputs[source_idx]
 
-            # If the designated source failed, fall back to another valid outside view
             if _is_failed_output(source_output):
                 fallback_idx = None
-                # Try self first (preserves diversity), then scan for any valid output
                 if not _is_failed_output(outside_view_outputs[i]):
                     fallback_idx = i
                 else:
@@ -506,20 +710,49 @@ class BaseForecaster(ForecasterMixin, ABC):
                     source_output = outside_view_outputs[fallback_idx]
                     logger.warning(
                         f"Cross-pollination source forecaster {source_idx + 1} failed; "
-                        f"forecaster {i + 1} will receive forecaster {fallback_idx + 1}'s output instead"
+                        f"forecaster {i + 1} will receive forecaster "
+                        f"{fallback_idx + 1}'s output instead"
                     )
                 else:
                     logger.warning(
                         f"Cross-pollination source forecaster {source_idx + 1} failed; "
-                        f"no valid outside views available; forecaster {i + 1} will receive empty context"
+                        f"no valid outside views available; "
+                        f"forecaster {i + 1} will receive empty context"
                     )
                     source_output = ""
 
             context_map[i] = f"Current context: {current_context}\n{label}: {source_output}"
 
-        # =========================================================================
-        # STEP 5: Run 5 forecasters on inside view prediction
-        # =========================================================================
+        return CrossPollinatedContext(context_map=context_map)
+
+    async def _run_inside_view(
+        self,
+        agents: list[dict],
+        context_map: dict[int, str],
+        prompt_inside_view: str,
+        forecast_temp: float,
+        question_params: dict,
+        metrics: PipelineMetrics,
+        log: Callable[[str], Any] = print,
+    ) -> InsideViewResult:
+        """
+        Step 5: Run inside view prediction with all 5 forecasters.
+
+        Each forecaster receives its cross-pollinated context (current context +
+        another forecaster's outside view output).
+
+        Args:
+            agents: List of 5 agent config dicts
+            context_map: Cross-pollinated context per forecaster (from _cross_pollinate)
+            prompt_inside_view: Inside view prompt template
+            forecast_temp: Temperature for forecasting LLM calls
+            question_params: Question parameters for prompt formatting
+            metrics: PipelineMetrics to populate with agent step2 data
+            log: Progress logging callback
+
+        Returns:
+            InsideViewResult with 5 outputs and reasoning content
+        """
         log("\n=== Step 5: Running inside view prediction ===")
 
         inside_view_tasks = []
@@ -532,7 +765,6 @@ class BaseForecaster(ForecasterMixin, ABC):
                 prompt_inside_view, context_map[i], **question_params
             )
 
-            # Record start time for this forecaster
             start_time = time.time()
             inside_view_timings.append(start_time)
 
@@ -546,8 +778,8 @@ class BaseForecaster(ForecasterMixin, ABC):
             )
 
         inside_view_results = await asyncio.gather(*inside_view_tasks, return_exceptions=True)
-        inside_view_outputs = []
-        inside_view_reasoning = {}  # Store reasoning content by forecaster index
+        inside_view_outputs: list[Any] = []
+        inside_view_reasoning: dict[int, str] = {}
 
         for i, result in enumerate(inside_view_results):
             agent_id = f"forecaster_{i + 1}"
@@ -565,7 +797,6 @@ class BaseForecaster(ForecasterMixin, ABC):
                 output, response_metadata = result
                 inside_view_outputs.append(output)
 
-                # Track LLM metrics including reasoning
                 reasoning_tokens = response_metadata.get("reasoning_tokens", 0)
                 inside_view_metrics.token_input = response_metadata.get("input_tokens", 0)
                 inside_view_metrics.token_output = response_metadata.get("output_tokens", 0)
@@ -574,21 +805,44 @@ class BaseForecaster(ForecasterMixin, ABC):
                 inside_view_metrics.cost = response_metadata.get("cost", 0.0)
                 inside_view_metrics.duration_seconds = duration
 
-                # Store reasoning content if available
                 reasoning_content = response_metadata.get("reasoning_content")
                 if reasoning_content:
                     inside_view_reasoning[i] = reasoning_content
 
-        snapshot_cost("step5_inside_view", step3_end_cost)
+        return InsideViewResult(
+            outputs=inside_view_outputs,
+            reasoning=inside_view_reasoning,
+        )
 
-        # =========================================================================
-        # STEP 6: Extract predictions and aggregate
-        # =========================================================================
+    def _extract_and_aggregate(
+        self,
+        agents: list[dict],
+        outside_view_outputs: list[str],
+        inside_view_result: InsideViewResult,
+        question_params: dict,
+        log: Callable[[str], Any] = print,
+    ) -> EnsembleResult:
+        """
+        Step 6: Extract predictions from inside view outputs and aggregate.
+
+        For each forecaster, extracts the type-specific prediction from its inside
+        view output, then aggregates all valid predictions into a final prediction.
+
+        Args:
+            agents: List of 5 agent config dicts
+            outside_view_outputs: Outside view outputs (for building AgentResults)
+            inside_view_result: Inside view outputs from _run_inside_view
+            question_params: Question parameters for extraction
+            log: Progress logging callback
+
+        Returns:
+            EnsembleResult with per-forecaster AgentResults and final_prediction
+        """
         log("\n=== Step 6: Extracting and aggregating predictions ===")
 
         agent_results = []
 
-        for i, (agent, output) in enumerate(zip(agents, inside_view_outputs, strict=True)):
+        for i, (agent, output) in enumerate(zip(agents, inside_view_result.outputs, strict=True)):
             if isinstance(output, Exception):
                 log(f"\nForecaster_{i + 1} inside view ERROR: {output}")
                 prediction = None
@@ -620,59 +874,24 @@ class BaseForecaster(ForecasterMixin, ABC):
             )
             agent_results.append(agent_result)
 
-        # Save inside view artifacts
-        if self.artifact_store:
-            for i, result in enumerate(agent_results):
-                if result.inside_view_output:
-                    self.artifact_store.save_forecaster_inside_view(
-                        i + 1, result.inside_view_output
-                    )
-                    # Save reasoning content if available
-                    if i in inside_view_reasoning:
-                        self.artifact_store.save_forecaster_reasoning(
-                            i + 1, "inside_view", inside_view_reasoning[i]
-                        )
-                self.artifact_store.save_forecaster_prediction(
-                    i + 1, self._get_extracted_data(result)
-                )
-
-        # Aggregate results
         final_prediction = self._aggregate_results(agent_results, agents, log)
 
-        # Save aggregation
-        if self.artifact_store:
-            self.artifact_store.save_aggregation(
-                self._get_aggregation_data(agent_results, agents, final_prediction)
-            )
+        return EnsembleResult(
+            agent_results=agent_results,
+            final_prediction=final_prediction,
+        )
 
-        step6_end_cost = snapshot_cost("step6_aggregation", step3_end_cost)
-
-        # =========================================================================
-        # STEP 7: Optional supervisor review
-        # =========================================================================
-        supervisor_config = self.config.get("supervisor", {})
-        if supervisor_config.get("enabled", False):
-            final_prediction = await self._run_supervisor(
-                agent_results=agent_results,
-                agents=agents,
-                final_prediction=final_prediction,
-                question_params=question_params,
-                log=log,
-            )
-            snapshot_cost("step7_supervisor", step6_end_cost)
-
-        # Save metrics (after supervisor so cost is included)
-        if self.artifact_store:
-            metrics.step_costs = step_costs
-            metrics.total_pipeline_cost = round(cost_tracker.total_cost - pipeline_start_cost, 4)
-            self.artifact_store.save_tool_usage(metrics.to_dict())
-
-        # Log cost breakdown
+    def _log_cost_breakdown(
+        self,
+        metrics: PipelineMetrics,
+        step_costs: dict[str, float],
+        log: Callable[[str], Any],
+    ) -> None:
+        """Log the cost breakdown for the pipeline run."""
         log("\n=== Cost Breakdown ===")
         for step_name, cost in step_costs.items():
             log(f"  {step_name}: ${cost:.4f}")
 
-        # Show search cost breakdown
         search_hist = metrics.centralized_research["historical"]
         search_curr = metrics.centralized_research["current"]
         if search_hist.llm_cost or search_curr.llm_cost:
@@ -686,7 +905,6 @@ class BaseForecaster(ForecasterMixin, ABC):
             if search_curr.llm_cost_agentic:
                 log(f"      current agentic: ${search_curr.llm_cost_agentic:.4f}")
 
-        # Show agent costs and reasoning usage
         log("  Agent costs:")
         for agent_id, agent_metrics in metrics.agents.items():
             s1 = agent_metrics.step1
@@ -698,19 +916,11 @@ class BaseForecaster(ForecasterMixin, ABC):
                 reasoning_parts.append(f"S2={s2.token_reasoning}tok")
             reasoning_info = f" reasoning[{', '.join(reasoning_parts)}]" if reasoning_parts else ""
             log(
-                f"    {agent_id} ({agent_metrics.model}): S1=${s1.cost:.4f} S2=${s2.cost:.4f}{reasoning_info}"
+                f"    {agent_id} ({agent_metrics.model}): "
+                f"S1=${s1.cost:.4f} S2=${s2.cost:.4f}{reasoning_info}"
             )
 
         log(f"  TOTAL: ${metrics.total_pipeline_cost:.4f}")
-
-        return self._build_result(
-            final_prediction=final_prediction,
-            agent_results=agent_results,
-            historical_context=historical_context,
-            current_context=current_context,
-            agents=agents,
-            **question_params,
-        )
 
     def _format_query_prompts(
         self,
