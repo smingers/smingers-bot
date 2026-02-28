@@ -1,3 +1,8 @@
+---
+description: 
+alwaysApply: true
+---
+
 # CLAUDE.md - Metaculus AI Forecasting Bot
 
 ## Project Overview

@@ -36,9 +36,12 @@ BASE_URL = "https://www.metaculus.com/questions"
 
 
 def get_questions_needing_resolution(tracking_file: Path) -> tuple[dict, list[tuple[int, str]]]:
-    """Find questions that are resolved but missing a resolution value,
-    or questions that haven't been marked resolved yet (may have resolved
-    since the last API update).
+    """Find questions that are resolved (per API) but missing a resolution value.
+
+    Uses the tracking file's resolved field (from the Metaculus API), not score_data.
+    The API can return score_data for unresolved questions (e.g. zeros), so we must
+    require resolved is True. Only then do we scrape to fill in resolution (which
+    the API no longer returns).
 
     Returns (tracking_data, list_of_(question_id, question_type) tuples).
     """
@@ -47,7 +50,7 @@ def get_questions_needing_resolution(tracking_file: Path) -> tuple[dict, list[tu
     questions = [
         (f["question_id"], f["question_type"])
         for f in data["forecasts"]
-        if f.get("resolution") is None  # covers both resolved=true/null and unresolved
+        if f.get("resolved") is True and f.get("resolution") is None
     ]
     return data, questions
 
@@ -55,27 +58,112 @@ def get_questions_needing_resolution(tracking_file: Path) -> tuple[dict, list[tu
 def extract_resolution_from_page(page) -> str | None:
     """Extract resolution value from the Metaculus question page DOM.
 
-    Looks for the "Resolved" label element and reads the sibling element
-    that contains the outcome (Yes/No for binary, option name for MC,
-    numeric value for numeric questions).
+    Tries multiple strategies because layout differs by question type:
+    - Numeric: page shows "Result X Points" or "RESOLVED X" (the value) but
+      sidebar has "RESOLVED Feb 23, 2026" (the date). We must prefer the result value.
+    - Binary: "Resolved" and "Yes"/"No" as siblings.
+    - Multiple choice: resolved option name in sibling or parent text.
     """
     return page.evaluate("""
         () => {
-            const elems = document.querySelectorAll('span, div, p, h2, h3');
+            const trim = (s) => (s || '').trim();
+            const looksLikeDate = (t) => /^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\\s+\\d{1,2},?\\s*\\d{4}$/i.test(trim(t));
+            const elems = document.querySelectorAll('span, div, p, h2, h3, td, th');
+            // Strategy 0a: prefer "Result X" / "RESOLVED X" (actual result), not bare "X Points" (often community)
             for (const el of elems) {
-                if (/^Resolved$/i.test(el.textContent.trim())) {
+                const text = trim(el.textContent);
+                if (!text || text.length > 120) continue;
+                const m = text.match(/\\b(?:Result|Resolved)\\s+([\\d.,]+)(?:\\s|$)/i);
+                if (m) return m[1].trim();
+            }
+            // Strategy 0b: fallback "X Points" only when no Result/Resolved match; skip if near "Community"
+            for (const el of elems) {
+                const text = trim(el.textContent);
+                if (!text || text.length > 50) continue;
+                const parentText = el.parentElement ? trim(el.parentElement.textContent) : '';
+                if (/Community/i.test(text) || /Community/i.test(parentText)) continue;
+                const m = text.match(/^([\\d.,]+)\\s*Points?\\s*$/i);
+                if (m) return m[1].trim();
+            }
+            for (const el of elems) {
+                const text = trim(el.textContent);
+                if (!text) continue;
+                // Strategy 1: exact "Resolved" then first sibling (binary-style); skip if sibling is a date
+                if (/^Resolved$/i.test(text)) {
                     const parent = el.parentElement;
                     if (parent) {
                         for (const sib of parent.children) {
-                            const t = sib.textContent.trim();
-                            if (sib !== el && t && t !== 'Resolved') return t;
+                            const t = trim(sib.textContent);
+                            if (sib !== el && t && t !== 'Resolved') {
+                                if (looksLikeDate(t)) break;
+                                return t;
+                            }
+                        }
+                        const parentText = trim(parent.textContent);
+                        if (parentText.length > 8 && !looksLikeDate(parentText)) {
+                            const after = parentText.replace(/^Resolved\\s*:?\\s*/i, '').trim();
+                            if (after && after !== parentText && !looksLikeDate(after)) return after;
                         }
                     }
+                    let next = el.nextElementSibling;
+                    for (let i = 0; i < 3 && next; i++, next = next.nextElementSibling) {
+                        const t = trim(next.textContent);
+                        if (t && t.length < 200 && !looksLikeDate(t)) return t;
+                    }
+                    continue;
+                }
+                if (/^Resolved\\s*:?\\s*.+$/i.test(text) && text.length < 150) {
+                    const after = text.replace(/^Resolved\\s*:?\\s*/i, '').trim();
+                    if (after && !looksLikeDate(after)) return after;
                 }
             }
             return null;
         }
     """)
+
+
+def _find_resolution_in_obj(obj: dict, depth: int = 0) -> str | int | float | None:
+    """Recursively search a dict for resolution/outcome-like keys (e.g. in __NEXT_DATA__)."""
+    if depth > 15:
+        return None
+    for key in ("resolution", "outcome", "resolved_value", "value", "resolved"):
+        v = obj.get(key)
+        if v is None:
+            continue
+        if isinstance(v, (str, int, float)) and (v != "" or key == "resolution"):
+            return v
+        if isinstance(v, dict) and depth < 10:
+            found = _find_resolution_in_obj(v, depth + 1)
+            if found is not None:
+                return found
+    for v in obj.values():
+        if isinstance(v, dict) and depth < 8:
+            found = _find_resolution_in_obj(v, depth + 1)
+            if found is not None:
+                return found
+    return None
+
+
+def extract_resolution_from_script(page, question_type: str) -> str | None:
+    """Fallback: try to get resolution from page JSON (e.g. Next.js __NEXT_DATA__)."""
+    try:
+        script_json = page.evaluate("""
+            () => {
+                const el = document.getElementById('__NEXT_DATA__');
+                if (!el || !el.textContent) return null;
+                try { return JSON.parse(el.textContent); } catch (e) { return null; }
+            }
+        """)
+        if not script_json:
+            return None
+        props = script_json.get("props", {}) or {}
+        page_props = props.get("pageProps", {}) or {}
+        found = _find_resolution_in_obj(page_props)
+        if found is not None:
+            return str(found).strip()
+        return None
+    except Exception:
+        return None
 
 
 def parse_resolution_value(raw: str, question_type: str) -> str | float | None:
@@ -87,19 +175,32 @@ def parse_resolution_value(raw: str, question_type: str) -> str | float | None:
     """
     if not raw:
         return None
+    # Take first line and strip; DOM may return "2.48\\nIndex" or trailing whitespace
+    raw = raw.split("\n")[0].strip()
+
+    # Metaculus often shows resolution as to "value". or to "Option Name".
+    if raw.startswith('to "') and (raw.endswith('".') or raw.endswith('"')):
+        raw = raw[4 : (raw.rindex('"'))].strip()
 
     if question_type == "binary":
-        if raw in ("Yes", "No"):
-            return raw
+        lower = raw.lower()
+        if lower == "yes":
+            return "Yes"
+        if lower == "no":
+            return "No"
         return None
 
     if question_type == "multiple_choice":
-        # Return as-is — the option name (e.g. "Increases", "Decreases", "Doesn't change")
+        # Option name (e.g. "Green Party", "Doesn't change")
         return raw
 
     if question_type in ("numeric", "date", "discrete"):
+        # Reject resolution-date text (e.g. "Feb 23, 2026") — that's when it resolved, not the value
+        if re.search(
+            r"\b(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+\d{1,2},?\s*\d{4}\b", raw
+        ):
+            return None
         # Strip unit suffixes: "117.5216 Index Jan 2006=100" -> 117.5216
-        # Also handles "1880.37 Index", "11 Percent", and plain numbers
         m = re.match(r"([\d,]+(?:\.\d+)?)", raw.replace(",", ""))
         if m:
             return float(m.group(1))
@@ -146,6 +247,20 @@ def scrape_with_playwright(questions: list[tuple[int, str]]) -> dict[int, dict]:
                     pass
 
                 raw = extract_resolution_from_page(page)
+                # If DOM only gave us a date (e.g. "Feb 23, 2026") for numeric, try script for actual value
+                if (
+                    raw
+                    and qtype in ("numeric", "date", "discrete")
+                    and re.search(
+                        r"\b(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+\d{1,2},?\s*\d{4}\b",
+                        raw,
+                    )
+                ):
+                    script_raw = extract_resolution_from_script(page, qtype)
+                    if script_raw:
+                        raw = script_raw
+                if not raw:
+                    raw = extract_resolution_from_script(page, qtype)
                 resolution = parse_resolution_value(raw, qtype) if raw else None
 
                 if resolution is not None:
@@ -196,9 +311,12 @@ def main():
 
     tracking, questions = get_questions_needing_resolution(args.tracking_file)
     if not questions:
-        print("All questions already have resolution values.")
+        print(
+            "No questions to scrape: every resolved question already has a resolution value, "
+            "or there are no resolved questions missing one."
+        )
         return
-    print(f"Scraping resolution for {len(questions)} questions from {args.tracking_file}...")
+    print(f"Scraping resolution for {len(questions)} resolved question(s) missing resolution ...")
     results = scrape_with_playwright(questions)
     if results:
         merge_into_tracking(tracking, results, args.tracking_file)

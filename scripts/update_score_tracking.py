@@ -29,12 +29,16 @@ from dotenv import load_dotenv
 
 DEFAULT_TRACKING_FILE = Path("data/tracking/minibench.json")
 
-# Rate limit: Metaculus returns 429 if we go too fast.
-# 1.2s between requests keeps us under their limit.
-REQUEST_DELAY_SECONDS = 1.2
+# Rate limit: Metaculus returns 429 if we go too fast. Use a conservative delay
+# so we stay under their limit; override with --delay if needed.
+DEFAULT_DELAY_SECONDS = 2.5
+# After a 429, wait this long before the next request to let the limit window reset.
+POST_429_COOLDOWN_SECONDS = 6.0
 
 
-def fetch_score_data(token: str, question_ids: list[int]) -> dict[int, dict]:
+def fetch_score_data(
+    token: str, question_ids: list[int], delay_seconds: float = DEFAULT_DELAY_SECONDS
+) -> dict[int, dict]:
     """Fetch score data for each question from the Metaculus API.
 
     Uses the /posts/{id}/ endpoint which includes my_forecasts.score_data
@@ -48,12 +52,19 @@ def fetch_score_data(token: str, question_ids: list[int]) -> dict[int, dict]:
 
     results = {}
     for i, qid in enumerate(question_ids):
+        hit_429 = False
         for attempt in range(4):
             try:
                 resp = client.get(f"/posts/{qid}/")
                 if resp.status_code == 429:
-                    # Exponential backoff: 4s, 8s, 16s, 32s
-                    wait = 2 ** (attempt + 2)
+                    hit_429 = True
+                    # Prefer Retry-After if present, else exponential backoff
+                    retry_after = resp.headers.get("Retry-After")
+                    wait = (
+                        int(retry_after)
+                        if retry_after and retry_after.isdigit()
+                        else 2 ** (attempt + 2)
+                    )
                     print(f"  Rate limited on {qid}, waiting {wait}s...")
                     time.sleep(wait)
                     continue
@@ -82,7 +93,9 @@ def fetch_score_data(token: str, question_ids: list[int]) -> dict[int, dict]:
         print(
             f"  [{i + 1}/{len(question_ids)}] {qid}: resolved={data.get('resolved')}, scored={has_scores}"
         )
-        time.sleep(REQUEST_DELAY_SECONDS)
+        time.sleep(delay_seconds)
+        if hit_429:
+            time.sleep(POST_429_COOLDOWN_SECONDS)
 
     client.close()
     return results
@@ -181,6 +194,13 @@ def main():
         default=DEFAULT_TRACKING_FILE,
         help=f"Path to tracking JSON file (default: {DEFAULT_TRACKING_FILE})",
     )
+    parser.add_argument(
+        "--delay",
+        type=float,
+        default=DEFAULT_DELAY_SECONDS,
+        metavar="SECS",
+        help=f"Seconds to wait between API requests (default: {DEFAULT_DELAY_SECONDS}). Increase if you hit 429s.",
+    )
     args = parser.parse_args()
 
     load_dotenv()
@@ -195,8 +215,9 @@ def main():
 
     question_ids = [f["question_id"] for f in tracking["forecasts"]]
     print(f"Fetching score data for {len(question_ids)} questions from {tracking_file}...")
+    print(f"  (delay between requests: {args.delay}s)")
 
-    api_results = fetch_score_data(token, question_ids)
+    api_results = fetch_score_data(token, question_ids, delay_seconds=args.delay)
     newly_resolved, score_updates = update_tracking(tracking, api_results)
     recompute_stats(tracking)
     tracking["last_updated"] = datetime.now(tz=UTC).isoformat()

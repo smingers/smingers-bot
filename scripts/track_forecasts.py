@@ -24,6 +24,10 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+# Rate limit: Metaculus returns 429 if we go too fast.
+REQUEST_DELAY_SECONDS = 2.5
+POST_429_COOLDOWN_SECONDS = 6.0
+
 
 @dataclass
 class BinaryComparison:
@@ -200,13 +204,28 @@ class ForecastTracker:
         self, method: str, url: str, retry_count: int = 5, **kwargs
     ) -> httpx.Response:
         """Make an HTTP request with retry and exponential backoff on 429."""
+        hit_429 = False
         for attempt in range(retry_count):
             try:
                 resp = await self.client.request(method, url, **kwargs)
+                if resp.status_code == 429 and attempt < retry_count - 1:
+                    hit_429 = True
+                    retry_after = resp.headers.get("Retry-After")
+                    wait_time = (
+                        int(retry_after)
+                        if retry_after and retry_after.isdigit()
+                        else 2 ** (attempt + 1)
+                    )
+                    print(f"    Rate limited, waiting {wait_time}s...")
+                    await asyncio.sleep(wait_time)
+                    continue
                 resp.raise_for_status()
+                if hit_429:
+                    await asyncio.sleep(POST_429_COOLDOWN_SECONDS)
                 return resp
             except httpx.HTTPStatusError as e:
                 if e.response.status_code == 429 and attempt < retry_count - 1:
+                    hit_429 = True
                     wait_time = 2 ** (attempt + 1)  # 2, 4, 8, 16 seconds
                     print(f"    Rate limited, waiting {wait_time}s...")
                     await asyncio.sleep(wait_time)
@@ -560,7 +579,7 @@ class ForecastTracker:
                     forecasts.append(comparison)
 
                 # Rate limiting: delay between requests to avoid 429 errors
-                await asyncio.sleep(1.0)
+                await asyncio.sleep(REQUEST_DELAY_SECONDS)
             except Exception as e:
                 print(f"    Error: {e}")
                 continue

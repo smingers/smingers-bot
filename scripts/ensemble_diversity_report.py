@@ -1039,6 +1039,14 @@ def _diversity_indicator(std: float | None, qtype: str) -> str:
 
 def _build_resolved_section(resolved: list[ForecastAnalysis]) -> str:
     """Build the Resolved Questions section with scores."""
+    missing_resolution = sum(1 for a in resolved if a.resolution is None)
+    resolution_note = (
+        f'<p class="resolved-note">Resolution value missing for {missing_resolution} question(s). '
+        "Metaculus API no longer returns it. Run <code>poetry run python scripts/scrape_resolutions.py --tracking-file data/tracking/32916.json</code> "
+        "(or the relevant tracking file) to fetch from the website, then regenerate this report.</p>"
+        if missing_resolution
+        else ""
+    )
 
     # Compute summary stats
     peer_scores = [
@@ -1102,7 +1110,8 @@ def _build_resolved_section(resolved: list[ForecastAnalysis]) -> str:
             "score-positive" if peer and peer > 0 else "score-negative" if peer and peer < 0 else ""
         )
 
-        # Format resolution value
+        # Format resolution value (API no longer returns resolution; run scrape_resolutions.py to fetch)
+        res_title = ""
         if a.resolution is not None:
             if a.question_type == "binary":
                 res_display = str(a.resolution)
@@ -1115,7 +1124,8 @@ def _build_resolved_section(resolved: list[ForecastAnalysis]) -> str:
             else:
                 res_display = str(a.resolution)
         else:
-            res_display = "—"
+            res_display = "— (not in data)"
+            res_title = "Metaculus API no longer returns resolution. Run: poetry run python scripts/scrape_resolutions.py --tracking-file data/tracking/32916.json"
 
         # Format prediction comparison
         if a.question_type == "binary":
@@ -1193,7 +1203,7 @@ def _build_resolved_section(resolved: list[ForecastAnalysis]) -> str:
             <div class="resolved-comparison">
                 <div class="comparison-item">
                     <span class="comparison-label">Resolution</span>
-                    <span class="comparison-value resolution-value">{res_display}</span>
+                    <span class="comparison-value resolution-value" title="{res_title}">{res_display}</span>
                 </div>
                 <div class="comparison-item">
                     <span class="comparison-label">My Forecast</span>
@@ -1213,6 +1223,7 @@ def _build_resolved_section(resolved: list[ForecastAnalysis]) -> str:
     return f"""
     <section class="type-section" id="resolved">
         <h2>Resolved Questions</h2>
+        {resolution_note}
         {summary}
         <div class="forecast-list">
             {"".join(cards)}
@@ -2081,6 +2092,17 @@ def _build_html(
     .stat-sublabel {{ font-size: 0.65rem; color: var(--text-dim); opacity: 0.7; }}
 
     .type-section {{ margin-bottom: 48px; }}
+    .resolved-note {{
+        color: var(--text-dim);
+        font-size: 0.9rem;
+        margin: 0 0 16px 0;
+    }}
+    .resolved-note code {{
+        font-size: 0.85em;
+        background: var(--surface2);
+        padding: 2px 6px;
+        border-radius: 4px;
+    }}
 
     .forecast-card {{
         background: var(--surface);
