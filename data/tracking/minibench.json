@@ -1,7 +1,7 @@
 {
   "tournament_id": "minibench",
   "tournament_name": "Tournament minibench",
-  "last_updated": "2026-02-28T11:45:20.610315+00:00",
+  "last_updated": "2026-02-28T12:59:50.713541+00:00",
   "total_forecasts": 108,
   "binary_count": 56,
   "numeric_count": 24,
@@ -1250,7 +1250,7 @@
       "snapshot_timestamp": "2026-02-08T15:27:17.917286+00:00",
       "num_forecasters": 96,
       "resolved": true,
-      "resolution": null,
+      "resolution": 69.96,
       "comparison": {
         "type": "numeric",
         "my_median": 64.91526033790345,
@@ -1862,7 +1862,7 @@
       "snapshot_timestamp": "2026-02-18T22:40:00.516828+00:00",
       "num_forecasters": 1,
       "resolved": true,
-      "resolution": null,
+      "resolution": "Yes",
       "comparison": {
         "type": "binary",
         "my_probability": 0.542,
@@ -1889,7 +1889,7 @@
       "snapshot_timestamp": "2026-02-18T22:40:00.516828+00:00",
       "num_forecasters": 1,
       "resolved": true,
-      "resolution": null,
+      "resolution": "Decreases",
       "comparison": {
         "type": "multiple_choice",
         "my_probabilities": {
@@ -1948,7 +1948,7 @@
       "snapshot_timestamp": "2026-02-18T22:40:00.516828+00:00",
       "num_forecasters": 1,
       "resolved": true,
-      "resolution": null,
+      "resolution": "Yes",
       "comparison": {
         "type": "binary",
         "my_probability": 0.528,
@@ -1975,7 +1975,7 @@
       "snapshot_timestamp": "2026-02-18T22:40:00.516828+00:00",
       "num_forecasters": 1,
       "resolved": true,
-      "resolution": null,
+      "resolution": "Increases",
       "comparison": {
         "type": "multiple_choice",
         "my_probabilities": {
@@ -2016,7 +2016,7 @@
       "snapshot_timestamp": "2026-02-18T22:42:43.751187+00:00",
       "num_forecasters": 1,
       "resolved": true,
-      "resolution": null,
+      "resolution": 3.38,
       "comparison": {
         "type": "numeric",
         "my_median": 3.712,
@@ -2068,7 +2068,7 @@
       "snapshot_timestamp": "2026-02-18T22:42:43.751187+00:00",
       "num_forecasters": 1,
       "resolved": true,
-      "resolution": null,
+      "resolution": 2.47,
       "comparison": {
         "type": "numeric",
         "my_median": 2.517,
@@ -2120,7 +2120,7 @@
       "snapshot_timestamp": "2026-02-18T22:42:43.751187+00:00",
       "num_forecasters": 1,
       "resolved": true,
-      "resolution": null,
+      "resolution": 2.26,
       "comparison": {
         "type": "numeric",
         "my_median": 2.34,
@@ -2154,7 +2154,7 @@
       "snapshot_timestamp": "2026-02-18T22:42:43.751187+00:00",
       "num_forecasters": 1,
       "resolved": true,
-      "resolution": null,
+      "resolution": "Yes",
       "comparison": {
         "type": "binary",
         "my_probability": 0.54,
@@ -2213,7 +2213,7 @@
       "snapshot_timestamp": "2026-02-18T22:44:56.724362+00:00",
       "num_forecasters": 1,
       "resolved": true,
-      "resolution": null,
+      "resolution": "No",
       "comparison": {
         "type": "binary",
         "my_probability": 0.518,
@@ -2240,7 +2240,7 @@
       "snapshot_timestamp": "2026-02-18T22:44:56.724362+00:00",
       "num_forecasters": 1,
       "resolved": true,
-      "resolution": null,
+      "resolution": 5.633,
       "comparison": {
         "type": "numeric",
         "my_median": 6.152,
@@ -2292,7 +2292,7 @@
       "snapshot_timestamp": "2026-02-18T22:44:56.724362+00:00",
       "num_forecasters": 1,
       "resolved": true,
-      "resolution": null,
+      "resolution": "No",
       "comparison": {
         "type": "binary",
         "my_probability": 0.534,
@@ -2319,7 +2319,7 @@
       "snapshot_timestamp": "2026-02-18T22:47:58.445284+00:00",
       "num_forecasters": 1,
       "resolved": true,
-      "resolution": null,
+      "resolution": 3.67,
       "comparison": {
         "type": "numeric",
         "my_median": 4.095,
@@ -2353,7 +2353,7 @@
       "snapshot_timestamp": "2026-02-18T22:47:58.445284+00:00",
       "num_forecasters": 1,
       "resolved": true,
-      "resolution": null,
+      "resolution": "No",
       "comparison": {
         "type": "binary",
         "my_probability": 0.36,
@@ -2438,7 +2438,7 @@
       "snapshot_timestamp": "2026-02-18T22:47:58.445284+00:00",
       "num_forecasters": 1,
       "resolved": true,
-      "resolution": null,
+      "resolution": 3.2,
       "comparison": {
         "type": "numeric",
         "my_median": 3.812,
@@ -2562,7 +2562,7 @@
       "snapshot_timestamp": "2026-02-18T22:50:46.405831+00:00",
       "num_forecasters": 1,
       "resolved": true,
-      "resolution": null,
+      "resolution": "Yes",
       "comparison": {
         "type": "binary",
         "my_probability": 0.37,
@@ -2589,7 +2589,7 @@
       "snapshot_timestamp": "2026-02-18T22:50:46.405831+00:00",
       "num_forecasters": 1,
       "resolved": true,
-      "resolution": null,
+      "resolution": "Yes",
       "comparison": {
         "type": "binary",
         "my_probability": 0.45,
@@ -2616,7 +2616,7 @@
       "snapshot_timestamp": "2026-02-18T22:50:46.405831+00:00",
       "num_forecasters": 1,
       "resolved": true,
-      "resolution": null,
+      "resolution": 20.81,
       "comparison": {
         "type": "numeric",
         "my_median": 28.38,
@@ -2650,7 +2650,7 @@
       "snapshot_timestamp": "2026-02-18T22:50:46.405831+00:00",
       "num_forecasters": 1,
       "resolved": true,
-      "resolution": null,
+      "resolution": 4.84,
       "comparison": {
         "type": "numeric",
         "my_median": 5.271,
@@ -2684,7 +2684,7 @@
       "snapshot_timestamp": "2026-02-18T22:50:46.405831+00:00",
       "num_forecasters": 1,
       "resolved": true,
-      "resolution": null,
+      "resolution": "Doesn't change",
       "comparison": {
         "type": "multiple_choice",
         "my_probabilities": {
@@ -2725,7 +2725,7 @@
       "snapshot_timestamp": "2026-02-18T22:50:46.405831+00:00",
       "num_forecasters": 1,
       "resolved": true,
-      "resolution": null,
+      "resolution": "Decreases",
       "comparison": {
         "type": "multiple_choice",
         "my_probabilities": {
@@ -2766,7 +2766,7 @@
       "snapshot_timestamp": "2026-02-18T22:54:46.704677+00:00",
       "num_forecasters": 1,
       "resolved": true,
-      "resolution": null,
+      "resolution": 25034.37,
       "comparison": {
         "type": "numeric",
         "my_median": 22430,
@@ -2800,7 +2800,7 @@
       "snapshot_timestamp": "2026-02-18T22:54:46.704677+00:00",
       "num_forecasters": 1,
       "resolved": true,
-      "resolution": null,
+      "resolution": "No",
       "comparison": {
         "type": "binary",
         "my_probability": 0.5720000000000001,
@@ -2827,7 +2827,7 @@
       "snapshot_timestamp": "2026-02-18T22:54:46.704677+00:00",
       "num_forecasters": 1,
       "resolved": true,
-      "resolution": null,
+      "resolution": 2.64,
       "comparison": {
         "type": "numeric",
         "my_median": 3.434,
@@ -2861,7 +2861,7 @@
       "snapshot_timestamp": "2026-02-18T22:54:46.704677+00:00",
       "num_forecasters": 1,
       "resolved": true,
-      "resolution": null,
+      "resolution": "Decreases",
       "comparison": {
         "type": "multiple_choice",
         "my_probabilities": {
@@ -2902,7 +2902,7 @@
       "snapshot_timestamp": "2026-02-18T22:54:46.704677+00:00",
       "num_forecasters": 1,
       "resolved": true,
-      "resolution": null,
+      "resolution": "No",
       "comparison": {
         "type": "binary",
         "my_probability": 0.41600000000000004,
@@ -2947,7 +2947,7 @@
       "snapshot_timestamp": "2026-02-18T22:54:46.704677+00:00",
       "num_forecasters": 1,
       "resolved": true,
-      "resolution": null,
+      "resolution": "No",
       "comparison": {
         "type": "binary",
         "my_probability": 0.534,
@@ -2974,7 +2974,7 @@
       "snapshot_timestamp": "2026-02-18T22:54:46.704677+00:00",
       "num_forecasters": 1,
       "resolved": true,
-      "resolution": null,
+      "resolution": "Decreases",
       "comparison": {
         "type": "multiple_choice",
         "my_probabilities": {
@@ -3015,7 +3015,7 @@
       "snapshot_timestamp": "2026-02-18T22:54:46.704677+00:00",
       "num_forecasters": 1,
       "resolved": true,
-      "resolution": null,
+      "resolution": "Doesn't change",
       "comparison": {
         "type": "multiple_choice",
         "my_probabilities": {
@@ -3056,7 +3056,7 @@
       "snapshot_timestamp": "2026-02-18T22:54:46.704677+00:00",
       "num_forecasters": 1,
       "resolved": true,
-      "resolution": null,
+      "resolution": "Yes",
       "comparison": {
         "type": "binary",
         "my_probability": 0.374,
@@ -3083,7 +3083,7 @@
       "snapshot_timestamp": "2026-02-18T22:54:46.704677+00:00",
       "num_forecasters": 1,
       "resolved": true,
-      "resolution": null,
+      "resolution": "Yes",
       "comparison": {
         "type": "binary",
         "my_probability": 0.408,
@@ -3110,7 +3110,7 @@
       "snapshot_timestamp": "2026-02-20T21:58:58.157367+00:00",
       "num_forecasters": 1,
       "resolved": true,
-      "resolution": null,
+      "resolution": 0.1,
       "comparison": {
         "type": "numeric",
         "community_lower_quartile": 0.2916,
@@ -3177,7 +3177,7 @@
       "snapshot_timestamp": "2026-02-20T21:58:58.158020+00:00",
       "num_forecasters": 1,
       "resolved": true,
-      "resolution": null,
+      "resolution": "No",
       "comparison": {
         "type": "binary",
         "my_probability": 0.454,
@@ -3204,7 +3204,7 @@
       "snapshot_timestamp": "2026-02-20T21:58:58.158587+00:00",
       "num_forecasters": 1,
       "resolved": true,
-      "resolution": null,
+      "resolution": "Decreases",
       "comparison": {
         "type": "multiple_choice",
         "my_probabilities": {
@@ -3245,7 +3245,7 @@
       "snapshot_timestamp": "2026-02-20T21:58:58.158795+00:00",
       "num_forecasters": 1,
       "resolved": true,
-      "resolution": null,
+      "resolution": 3.62,
       "comparison": {
         "type": "numeric",
         "my_median": 3.979,
@@ -3279,7 +3279,7 @@
       "snapshot_timestamp": "2026-02-20T21:58:58.159000+00:00",
       "num_forecasters": 1,
       "resolved": true,
-      "resolution": null,
+      "resolution": "No",
       "comparison": {
         "type": "binary",
         "my_probability": 0.498,
@@ -3306,7 +3306,7 @@
       "snapshot_timestamp": null,
       "num_forecasters": null,
       "resolved": true,
-      "resolution": null,
+      "resolution": "Yes",
       "comparison": null,
       "score_data": null,
       "status": "resolved"
@@ -3320,7 +3320,7 @@
       "snapshot_timestamp": null,
       "num_forecasters": null,
       "resolved": true,
-      "resolution": null,
+      "resolution": "No",
       "comparison": null,
       "score_data": null,
       "status": "resolved"
@@ -3334,7 +3334,7 @@
       "snapshot_timestamp": "2026-02-20T21:58:58.159541+00:00",
       "num_forecasters": 1,
       "resolved": true,
-      "resolution": null,
+      "resolution": 5.25,
       "comparison": {
         "type": "numeric",
         "my_median": 5.408,
@@ -3368,7 +3368,7 @@
       "snapshot_timestamp": "2026-02-20T21:58:58.159763+00:00",
       "num_forecasters": 1,
       "resolved": true,
-      "resolution": null,
+      "resolution": "Doesn't change",
       "comparison": {
         "type": "multiple_choice",
         "my_probabilities": {
@@ -3409,7 +3409,7 @@
       "snapshot_timestamp": "2026-02-20T21:58:58.160078+00:00",
       "num_forecasters": 1,
       "resolved": true,
-      "resolution": null,
+      "resolution": "Yes",
       "comparison": {
         "type": "binary",
         "my_probability": 0.5,
@@ -3436,7 +3436,7 @@
       "snapshot_timestamp": "2026-02-22T13:10:40.395101+00:00",
       "num_forecasters": 101,
       "resolved": true,
-      "resolution": null,
+      "resolution": "Yes",
       "comparison": {
         "type": "binary",
         "my_probability": 0.532,
@@ -3463,7 +3463,7 @@
       "snapshot_timestamp": "2026-02-22T13:10:40.395101+00:00",
       "num_forecasters": 99,
       "resolved": true,
-      "resolution": null,
+      "resolution": "Yes",
       "comparison": {
         "type": "binary",
         "my_probability": 0.506,

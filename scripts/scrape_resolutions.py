@@ -55,26 +55,83 @@ def get_questions_needing_resolution(tracking_file: Path) -> tuple[dict, list[tu
     return data, questions
 
 
-def extract_resolution_from_page(page) -> str | None:
+def extract_resolution_from_page(page, question_type: str) -> str | None:
     """Extract resolution value from the Metaculus question page DOM.
 
-    Tries multiple strategies because layout differs by question type:
-    - Numeric: page shows "Result X Points" or "RESOLVED X" (the value) but
-      sidebar has "RESOLVED Feb 23, 2026" (the date). We must prefer the result value.
-    - Binary: "Resolved" and "Yes"/"No" as siblings.
-    - Multiple choice: resolved option name in sibling or parent text.
+    For multiple_choice we must return the winning OPTION NAME (e.g. "Decreases", "Green Party"),
+    never the literal "Yes" — "Result: Yes" on the page means "the question resolved"; the outcome
+    to store is the option that won (the text before "Result: Yes" or from "Result OptionName").
     """
-    return page.evaluate("""
-        () => {
+    return page.evaluate(
+        """
+        (questionType) => {
             const trim = (s) => (s || '').trim();
             const looksLikeDate = (t) => /^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\\s+\\d{1,2},?\\s*\\d{4}$/i.test(trim(t));
+            const isMC = (questionType || '').toLowerCase() === 'multiple_choice';
+            const rejectForMC = (val) => { if (!isMC) return false; const v = trim(String(val)).toLowerCase(); return v === 'yes' || v === 'no'; };
             const elems = document.querySelectorAll('span, div, p, h2, h3, td, th');
-            // Strategy 0a: prefer "Result X" / "RESOLVED X" (actual result), not bare "X Points" (often community)
+            // MC-only: use the three places the resolution is shown. Never use "Yes"/"No".
+            if (isMC) {
+                // 1) Option row: span with only the option name (e.g. "Decreases"), inside a container that has "Result: Yes"
+                const optionSpans = document.querySelectorAll('span[class*="line-clamp"]');
+                for (const span of optionSpans) {
+                    const t = trim(span.textContent);
+                    if (!t || t.length > 80 || /Result|\\d+\\.?\\d*\\s*%|^\\s*Yes\\s*$|^\\s*No\\s*$/i.test(t)) continue;
+                    let p = span.parentElement;
+                    for (let i = 0; i < 12 && p; i++, p = p.parentElement) {
+                        if (p && /Result:\\s*Yes\\b/i.test(p.textContent || '')) return t;
+                    }
+                }
+                // 2) Option row div: text is exactly "OptionName Result: Yes" (short = single row)
+                for (const el of elems) {
+                    const text = trim(el.textContent);
+                    if (!text || text.length > 80) continue;
+                    const m = text.match(/^(.+?)\\s+Result:\\s*Yes\\s*$/i);
+                    if (m) { const v = trim(m[1]); if (v && !rejectForMC(v)) return v; }
+                }
+                // 3) Comments: "This question resolves as \"Decreases\""
+                const bodyTextForMC = trim(document.body ? document.body.innerText : '');
+                const commentM = bodyTextForMC.match(/resolves\\s+as\\s+\\"([^\\"]+)\\"/i);
+                if (commentM) { const v = trim(commentM[1]); if (v && !rejectForMC(v)) return v; }
+            }
+            // Strategy 0a: "Result 69.96" or "RESOLVED 69.96" (or "Result: 69.96") — number only, no units.
+            // Same div may have "Community 65.5 ... Result 69.96 ..."; use last match so we get result, not community.
+            const numRegex = /\\b(?:Result|Resolved):?\\s+([\\d.,]+)(?:\\s|$)/gi;
             for (const el of elems) {
                 const text = trim(el.textContent);
-                if (!text || text.length > 120) continue;
-                const m = text.match(/\\b(?:Result|Resolved)\\s+([\\d.,]+)(?:\\s|$)/i);
-                if (m) return m[1].trim();
+                if (!text || text.length > 1500) continue;
+                const matches = [...text.matchAll(numRegex)];
+                if (matches.length) return matches[matches.length - 1][1].trim();
+            }
+            const bodyText = trim(document.body ? document.body.innerText : '');
+            if (bodyText.length > 0 && bodyText.length < 50000) {
+                const bodyMatches = [...bodyText.matchAll(/\\b(?:Result|Resolved):?\\s+([\\d.,]+)(?:\\s|$)/gi)];
+                if (bodyMatches.length) return bodyMatches[bodyMatches.length - 1][1].trim();
+            }
+            // Strategy 0a2a: MC with "Result: Yes" — the winning option is the text BEFORE "Result: Yes" (e.g. "Decreases").
+            // Must check "OptionName Result: Yes" first in ALL elements (no length skip), else we hit a child that only says "Result: Yes" and wrongly return "Yes".
+            for (const el of elems) {
+                const text = trim(el.textContent);
+                if (!text) continue;
+                const mBefore = text.match(/\\s*(.+?)\\s+Result:\\s*Yes\\b/i);
+                if (mBefore) { const v = trim(mBefore[1]); if (!rejectForMC(v)) return v; }
+            }
+            for (const el of elems) {
+                const text = trim(el.textContent);
+                if (!text || text.length > 1500) continue;
+                if (!isMC) {
+                    const mColon = text.match(/\\bResult:\\s*(Yes|No)\\b/i);
+                    if (mColon) return trim(mColon[1]).toLowerCase() === 'no' ? 'No' : 'Yes';
+                }
+                const mMulti = text.match(/\\bResult:\\s*(.+?)(?=\\s+\\d+\\.?\\d*\\s*%|$)/i);
+                if (mMulti) { const v = trim(mMulti[1]); if (!rejectForMC(v)) return v; }
+            }
+            // Strategy 0a2b: "Result Green Party" / "RESOLVED Labour Party" (MC without colon)
+            for (const el of elems) {
+                const text = trim(el.textContent);
+                if (!text || text.length > 400) continue;
+                const m = text.match(/\\b(?:Result|Resolved)\\s+([A-Za-z][A-Za-z0-9\\s]*?)(?=\\s*(?:Dollars|Points|Percent|Index|$))/i);
+                if (m) { const v = trim(m[1]); if (!rejectForMC(v)) return v; }
             }
             // Strategy 0b: fallback "X Points" only when no Result/Resolved match; skip if near "Community"
             for (const el of elems) {
@@ -96,30 +153,33 @@ def extract_resolution_from_page(page) -> str | None:
                             const t = trim(sib.textContent);
                             if (sib !== el && t && t !== 'Resolved') {
                                 if (looksLikeDate(t)) break;
-                                return t;
+                                if (!rejectForMC(t)) return t;
+                                break;
                             }
                         }
                         const parentText = trim(parent.textContent);
                         if (parentText.length > 8 && !looksLikeDate(parentText)) {
                             const after = parentText.replace(/^Resolved\\s*:?\\s*/i, '').trim();
-                            if (after && after !== parentText && !looksLikeDate(after)) return after;
+                            if (after && after !== parentText && !looksLikeDate(after) && !rejectForMC(after)) return after;
                         }
                     }
                     let next = el.nextElementSibling;
                     for (let i = 0; i < 3 && next; i++, next = next.nextElementSibling) {
                         const t = trim(next.textContent);
-                        if (t && t.length < 200 && !looksLikeDate(t)) return t;
+                        if (t && t.length < 200 && !looksLikeDate(t) && !rejectForMC(t)) return t;
                     }
                     continue;
                 }
                 if (/^Resolved\\s*:?\\s*.+$/i.test(text) && text.length < 150) {
                     const after = text.replace(/^Resolved\\s*:?\\s*/i, '').trim();
-                    if (after && !looksLikeDate(after)) return after;
+                    if (after && !looksLikeDate(after) && !rejectForMC(after)) return after;
                 }
             }
             return null;
         }
-    """)
+    """,
+        question_type,
+    )
 
 
 def _find_resolution_in_obj(obj: dict, depth: int = 0) -> str | int | float | None:
@@ -246,7 +306,7 @@ def scrape_with_playwright(questions: list[tuple[int, str]]) -> dict[int, dict]:
                 except Exception:
                     pass
 
-                raw = extract_resolution_from_page(page)
+                raw = extract_resolution_from_page(page, qtype)
                 # If DOM only gave us a date (e.g. "Feb 23, 2026") for numeric, try script for actual value
                 if (
                     raw
@@ -262,6 +322,9 @@ def scrape_with_playwright(questions: list[tuple[int, str]]) -> dict[int, dict]:
                 if not raw:
                     raw = extract_resolution_from_script(page, qtype)
                 resolution = parse_resolution_value(raw, qtype) if raw else None
+                # Never store literal "Yes"/"No" for MC — only the winning option name (e.g. "Decreases").
+                if qtype == "multiple_choice" and resolution in ("Yes", "No"):
+                    resolution = None
 
                 if resolution is not None:
                     results[qid] = {"resolution": resolution}
