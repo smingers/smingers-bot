@@ -68,7 +68,7 @@ class InsideViewResult:
     Exceptions (failure). Reasoning content is tracked separately by index.
     """
 
-    outputs: list[Any] = field(default_factory=list)  # list[str | Exception]
+    outputs: list[str | Exception] = field(default_factory=list)
     reasoning: dict[int, str] = field(default_factory=dict)
 
 

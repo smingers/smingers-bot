@@ -281,6 +281,9 @@ class TestExtractAndAggregateStep:
 
         assert result.agent_results[0].outside_view_output == "valid"
         assert result.agent_results[1].outside_view_output == ""
+        assert result.agent_results[2].outside_view_output == "valid"
+        assert result.agent_results[3].outside_view_output == "valid"
+        assert result.agent_results[4].outside_view_output == "valid"
 
 
 # ============================================================================
