@@ -1,0 +1,5 @@
+**Analyzing outage risks**
+
+I need to adjust my perspective on outage risks, starting from a baseline of 55%. The February 20 outage shows there are ongoing issues, but we might see Code Orange improvements by the end of Q1, which could help reduce risk somewhat. However, the rollout carries its own risks. New features like HTTP/3 could also introduce problems, even though they are optional. It seems reasonable to adjust down to around 45%, considering the short time without critical incidents. Overall, I'll continue to analyze the situation closely.**Assessing incident probabilities**
+
+I’m thinking that the Code Orange process is likely to reduce incidents by around 35-40%. Although, there are still issues like the BYOIP bug caused by some new remediation automation, which seems uncertain for now. The definition of "critical incident" varies, and many don't fit that label. Historically, the probability falls around 25-40%, but with recent trends, I’ll estimate it at 42%. It seems reasonable to expect a couple of multiday outages in 2026, so I might stay around 45% for projections.

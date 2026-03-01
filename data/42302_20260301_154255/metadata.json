@@ -1,0 +1,224 @@
+{
+  "question_id": 42302,
+  "timestamp": "20260301_154255",
+  "created_at": "2026-03-01T15:46:16.403586+00:00",
+  "config_hash": "8ba1730d5110",
+  "config_snapshot": {
+    "mode": "live",
+    "models": {
+      "fast": {
+        "query_generator": "openrouter/openai/gpt-4o-mini",
+        "article_summarizer": "openrouter/openai/gpt-4o-mini",
+        "agentic_search": "openrouter/openai/gpt-4o-mini"
+      },
+      "quality": {
+        "query_generator": "openrouter/openai/o3",
+        "article_summarizer": "openrouter/anthropic/claude-sonnet-4.6",
+        "agentic_search": "openrouter/openai/o3"
+      }
+    },
+    "ensemble": {
+      "fast": [
+        {
+          "name": "forecaster_1",
+          "model": "openrouter/openai/gpt-4o-mini",
+          "weight": 1.0
+        },
+        {
+          "name": "forecaster_2",
+          "model": "openrouter/openai/gpt-4o-mini",
+          "weight": 1.0
+        },
+        {
+          "name": "forecaster_3",
+          "model": "openrouter/openai/gpt-4o-mini",
+          "weight": 1.0
+        },
+        {
+          "name": "forecaster_4",
+          "model": "openrouter/openai/gpt-4o-mini",
+          "weight": 1.0
+        },
+        {
+          "name": "forecaster_5",
+          "model": "openrouter/openai/gpt-4o-mini",
+          "weight": 1.0
+        }
+      ],
+      "quality": [
+        {
+          "name": "forecaster_1",
+          "model": "openrouter/anthropic/claude-sonnet-4.6",
+          "weight": 1.0
+        },
+        {
+          "name": "forecaster_2",
+          "model": "openrouter/anthropic/claude-sonnet-4.6",
+          "weight": 1.0
+        },
+        {
+          "name": "forecaster_3",
+          "model": "openrouter/openai/gpt-5.2",
+          "weight": 1.0
+        },
+        {
+          "name": "forecaster_4",
+          "model": "openrouter/openai/o3",
+          "weight": 1.0
+        },
+        {
+          "name": "forecaster_5",
+          "model": "openrouter/openai/o3",
+          "weight": 1.0
+        }
+      ],
+      "aggregation": "weighted_average"
+    },
+    "research": {
+      "iterative_planner_enabled": true,
+      "planner": {
+        "max_plan_queries": 8,
+        "max_gap_queries": 3,
+        "reflection_enabled": false
+      },
+      "google_enabled": true,
+      "google_max_results": 10,
+      "asknews_enabled": true,
+      "asknews_max_results": 10,
+      "agentic_search_enabled": true,
+      "agentic_search_max_steps": 7,
+      "google_trends_enabled": true,
+      "fred_enabled": true,
+      "yfinance_enabled": true,
+      "stock_return_enabled": true,
+      "stock_return_history_years": 10,
+      "question_url_scraping_enabled": true,
+      "question_url_max_scrape": 5,
+      "community_prediction_scraping_enabled": true,
+      "community_prediction_wait_seconds": 5.0,
+      "scraping_enabled": true,
+      "max_articles_to_scrape": 10,
+      "max_content_length": 15000,
+      "sources": [
+        {
+          "type": "llm_knowledge",
+          "enabled": true
+        },
+        {
+          "type": "asknews",
+          "enabled": true,
+          "cache_mode": "no_cache"
+        },
+        {
+          "type": "asknews_wiki",
+          "enabled": true,
+          "max_results": 5
+        },
+        {
+          "type": "article_scraping",
+          "enabled": true,
+          "max_articles": 5,
+          "max_content_length": 5000
+        }
+      ]
+    },
+    "submission": {
+      "store_reasoning": true,
+      "tournament_id": null
+    },
+    "storage": {
+      "base_dir": "./data",
+      "database_path": "./data/forecasts.db",
+      "snapshot_configs": true
+    },
+    "logging": {
+      "level": "INFO",
+      "log_llm_calls": true,
+      "track_costs": true
+    },
+    "llm": {
+      "timeout_seconds": 240,
+      "max_output_tokens": 5000,
+      "temperature": {
+        "query_generation": 0.3,
+        "research_planning": 0.3,
+        "research_reflection": 0.2,
+        "article_summarization": 0.1,
+        "agentic_search": 0.3,
+        "forecasting": 0.5
+      }
+    },
+    "supervisor": {
+      "enabled": true,
+      "model": {
+        "fast": "openrouter/openai/gpt-4o-mini",
+        "quality": "openrouter/anthropic/claude-opus-4.6"
+      },
+      "divergence_threshold": {
+        "binary": 15.0,
+        "numeric": 0.045,
+        "multiple_choice": 25.0
+      },
+      "max_search_queries": 4,
+      "temperature": 0.3
+    },
+    "active_models": {
+      "query_generator": "openrouter/openai/o3",
+      "article_summarizer": "openrouter/anthropic/claude-sonnet-4.6",
+      "agentic_search": "openrouter/openai/o3"
+    },
+    "active_agents": [
+      {
+        "name": "forecaster_1",
+        "model": "openrouter/anthropic/claude-sonnet-4.6",
+        "weight": 1.0
+      },
+      {
+        "name": "forecaster_2",
+        "model": "openrouter/anthropic/claude-sonnet-4.6",
+        "weight": 1.0
+      },
+      {
+        "name": "forecaster_3",
+        "model": "openrouter/openai/gpt-5.2",
+        "weight": 1.0
+      },
+      {
+        "name": "forecaster_4",
+        "model": "openrouter/openai/o3",
+        "weight": 1.0
+      },
+      {
+        "name": "forecaster_5",
+        "model": "openrouter/openai/o3",
+        "weight": 1.0
+      }
+    ],
+    "should_submit": true
+  },
+  "costs": {
+    "total_calls": 27,
+    "successful_calls": 27,
+    "failed_calls": 0,
+    "total_input_tokens": 162611,
+    "total_output_tokens": 30621,
+    "total_reasoning_tokens": 6662,
+    "total_cost": 0.94725825
+  },
+  "timing": {
+    "start": "2026-03-01T15:42:55.051694+00:00",
+    "end": "2026-03-01T15:46:16.403536+00:00",
+    "duration_seconds": 201.351842
+  },
+  "errors": [],
+  "analysis": {
+    "id": 42302,
+    "title": "Will Cloudflare experience another critical incident before May 2026?",
+    "type": "binary",
+    "status": "open",
+    "scheduled_close": "2026-03-01T17:00:00Z",
+    "scheduled_resolve": "2026-04-01T01:00:00Z",
+    "community_prediction": null,
+    "num_forecasters": 54
+  }
+}

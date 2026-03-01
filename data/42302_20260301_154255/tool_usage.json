@@ -1,0 +1,265 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": false,
+      "num_queries": 0,
+      "queries": [],
+      "tools_used": [],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 5,
+      "queries": [
+        {
+          "query": "Cloudflare status critical incidents history",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Find archived lists or third-party scrapes summarizing every \u201cCritical\u201d incident, enabling base-rate calculations.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 2,
+          "error": null
+        },
+        {
+          "query": "site:cloudflarestatus.com \"[Critical]\" 2023",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Pull individual status posts from 2023 to sample historical frequency before the recent spike.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        },
+        {
+          "query": "Cloudflare outage configuration error history",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Identify recurring root-cause patterns (config changes, software pushes) to assess causal drivers.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 2,
+          "error": null
+        },
+        {
+          "query": "Cloudflare reliability engineering blog incident frequency",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Locate Cloudflare engineering blogs or SRE talks disclosing yearly incident counts and mitigation efforts.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "During 2018-2022 how many Cloudflare status incidents were labelled Critical and what was the average monthly frequency? Provide counts by year and note any clustering.",
+          "tool": "Agent",
+          "temporal_role": "historical",
+          "intent": "Produce a structured base-rate dataset for earlier years.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Cloudflare maintenance March 2026",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "Surface announcements of large scheduled changes or maintenance windows within the forecast horizon.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Cloudflare outage February 2026 postmortem",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "Find detailed analysis or official post-mortem for the 4 Feb 2026 broadcast incident and any \u201clessons learned\u201d that might change future risk.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Cloudflare reliability improvements 2026 initiative",
+          "tool": "AskNews",
+          "temporal_role": "current",
+          "intent": "Search recent coverage for contrarian evidence that Cloudflare has launched new reliability, change-freeze, or chaos-engineering initiatives that could reduce the likelihood of another critical incident.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 28,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "AskNews",
+        "Google News"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7453,
+        "token_output": 2217,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.07052,
+        "duration_seconds": 61.37799954414368,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 18171,
+        "token_output": 2538,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.12892499999999998,
+        "duration_seconds": 59.12686491012573,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17149,
+        "token_output": 2713,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.12644,
+        "duration_seconds": 59.12684512138367,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6414,
+        "token_output": 3757,
+        "token_reasoning": 1490,
+        "used_reasoning": true,
+        "cost": 0.0638225,
+        "duration_seconds": 61.378060817718506,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15773,
+        "token_output": 2359,
+        "token_reasoning": 564,
+        "used_reasoning": true,
+        "cost": 0.060628749999999995,
+        "duration_seconds": 59.12681984901428,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16093,
+        "token_output": 1686,
+        "token_reasoning": 576,
+        "used_reasoning": true,
+        "cost": 0.045674,
+        "duration_seconds": 59.12679624557495,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6414,
+        "token_output": 2158,
+        "token_reasoning": 1088,
+        "used_reasoning": true,
+        "cost": 0.030092,
+        "duration_seconds": 61.37810254096985,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14825,
+        "token_output": 2098,
+        "token_reasoning": 1088,
+        "used_reasoning": true,
+        "cost": 0.046434,
+        "duration_seconds": 59.12677478790283,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "steps1_2_research": 0.3747,
+    "step3_outside_view": 0.1644,
+    "step5_inside_view": 0.4081,
+    "step6_aggregation": 0.4081,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.9473
+}

@@ -1,0 +1,5 @@
+**Assessing outage risks**
+
+I’m considering the classification of the outage on February 20, which could be seen as "Major" or "Critical." Since it's labeled an outage and affects BYOIP customers, I’ll assume it’s critical. This puts us in a risk window until May 1. There were two critical incidents earlier in 2026, both before February 25. The outage frequency was high, but it might decrease due to potential internal changes. I’ll model the monthly rate based on the January-February cluster.**Calculating incident probabilities**
+
+I'm using a probability mixture of 0.3 for a high state (λ=1/month) and 0.7 for a low state (λ=0.1/month). This gives a weighted expected rate of 0.37. Over two months, that totals λ=0.74, leading to a probability of at least one incident of about 52%. Considering outside perspectives at 0.25 and an inside view around 40-45%, I think settling on 38% is reasonable. Next, I’ll outline the supporting evidence for my analysis based on recent critical incidents and other factors.
