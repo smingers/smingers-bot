@@ -357,16 +357,18 @@ class TestSubmitBinaryPrediction:
     async def test_submits_valid_prediction(self, mock_client):
         """Submits valid binary prediction."""
         mock_response = MagicMock()
+        mock_response.status_code = 200
         mock_response.json.return_value = {"success": True}
         mock_response.raise_for_status = MagicMock()
-        mock_client.client.post = AsyncMock(return_value=mock_response)
+        mock_client.client.request = AsyncMock(return_value=mock_response)
 
         result = await mock_client.submit_binary_prediction(12345, 0.65)
 
         assert result == {"success": True}
-        mock_client.client.post.assert_called_once()
-        call_args = mock_client.client.post.call_args
-        assert call_args[0][0] == "/questions/forecast/"
+        mock_client.client.request.assert_called_once()
+        call_args = mock_client.client.request.call_args
+        assert call_args[0][0] == "POST"
+        assert call_args[0][1] == "/questions/forecast/"
         payload = call_args[1]["json"]
         assert payload[0]["question"] == 12345
         assert payload[0]["probability_yes"] == 0.65
@@ -375,18 +377,19 @@ class TestSubmitBinaryPrediction:
     async def test_clamps_prediction_to_bounds(self, mock_client):
         """Clamps prediction to [0.001, 0.999]."""
         mock_response = MagicMock()
+        mock_response.status_code = 200
         mock_response.json.return_value = {"success": True}
         mock_response.raise_for_status = MagicMock()
-        mock_client.client.post = AsyncMock(return_value=mock_response)
+        mock_client.client.request = AsyncMock(return_value=mock_response)
 
         # Test lower bound
         await mock_client.submit_binary_prediction(12345, 0.0)
-        payload = mock_client.client.post.call_args[1]["json"]
+        payload = mock_client.client.request.call_args[1]["json"]
         assert payload[0]["probability_yes"] == 0.001
 
         # Test upper bound
         await mock_client.submit_binary_prediction(12345, 1.0)
-        payload = mock_client.client.post.call_args[1]["json"]
+        payload = mock_client.client.request.call_args[1]["json"]
         assert payload[0]["probability_yes"] == 0.999
 
 
@@ -410,15 +413,16 @@ class TestSubmitNumericPrediction:
     async def test_submits_valid_cdf(self, mock_client):
         """Submits valid 201-point CDF."""
         mock_response = MagicMock()
+        mock_response.status_code = 200
         mock_response.json.return_value = {"success": True}
         mock_response.raise_for_status = MagicMock()
-        mock_client.client.post = AsyncMock(return_value=mock_response)
+        mock_client.client.request = AsyncMock(return_value=mock_response)
 
         cdf = [0.001 + i * 0.00499 for i in range(201)]
         result = await mock_client.submit_numeric_prediction(12345, cdf)
 
         assert result == {"success": True}
-        call_args = mock_client.client.post.call_args
+        call_args = mock_client.client.request.call_args
         payload = call_args[1]["json"]
         assert payload[0]["question"] == 12345
         assert "continuous_cdf" in payload[0]
@@ -438,9 +442,10 @@ class TestSubmitNumericPrediction:
     async def test_accepts_discrete_cdf_size(self, mock_client):
         """Accepts 102-point CDF for discrete questions."""
         mock_response = MagicMock()
+        mock_response.status_code = 200
         mock_response.json.return_value = {"success": True}
         mock_response.raise_for_status = MagicMock()
-        mock_client.client.post = AsyncMock(return_value=mock_response)
+        mock_client.client.request = AsyncMock(return_value=mock_response)
 
         cdf = [i / 101 for i in range(102)]
         result = await mock_client.submit_numeric_prediction(12345, cdf, expected_cdf_size=102)
@@ -468,15 +473,16 @@ class TestSubmitMultipleChoicePrediction:
     async def test_submits_valid_probabilities(self, mock_client):
         """Submits valid multiple choice probabilities."""
         mock_response = MagicMock()
+        mock_response.status_code = 200
         mock_response.json.return_value = {"success": True}
         mock_response.raise_for_status = MagicMock()
-        mock_client.client.post = AsyncMock(return_value=mock_response)
+        mock_client.client.request = AsyncMock(return_value=mock_response)
 
         probs = {"option_a": 0.3, "option_b": 0.5, "option_c": 0.2}
         result = await mock_client.submit_multiple_choice_prediction(12345, probs)
 
         assert result == {"success": True}
-        call_args = mock_client.client.post.call_args
+        call_args = mock_client.client.request.call_args
         payload = call_args[1]["json"]
         assert payload[0]["question"] == 12345
         assert "probability_yes_per_category" in payload[0]
@@ -485,15 +491,16 @@ class TestSubmitMultipleChoicePrediction:
     async def test_normalizes_probabilities(self, mock_client):
         """Normalizes probabilities that don't sum to 1."""
         mock_response = MagicMock()
+        mock_response.status_code = 200
         mock_response.json.return_value = {"success": True}
         mock_response.raise_for_status = MagicMock()
-        mock_client.client.post = AsyncMock(return_value=mock_response)
+        mock_client.client.request = AsyncMock(return_value=mock_response)
 
         # Probabilities that don't sum to 1
         probs = {"option_a": 0.5, "option_b": 0.5, "option_c": 0.5}
         await mock_client.submit_multiple_choice_prediction(12345, probs)
 
-        call_args = mock_client.client.post.call_args
+        call_args = mock_client.client.request.call_args
         payload = call_args[1]["json"]
         submitted_probs = payload[0]["probability_yes_per_category"]
 
@@ -522,9 +529,10 @@ class TestSubmitPrediction:
     async def test_routes_binary_question(self, mock_client):
         """Routes binary question to submit_binary_prediction."""
         mock_response = MagicMock()
+        mock_response.status_code = 200
         mock_response.json.return_value = {"success": True}
         mock_response.raise_for_status = MagicMock()
-        mock_client.client.post = AsyncMock(return_value=mock_response)
+        mock_client.client.request = AsyncMock(return_value=mock_response)
 
         question = MagicMock()
         question.question_type = "binary"
@@ -532,7 +540,7 @@ class TestSubmitPrediction:
 
         await mock_client.submit_prediction(question, 0.65)
 
-        call_args = mock_client.client.post.call_args
+        call_args = mock_client.client.request.call_args
         payload = call_args[1]["json"]
         assert "probability_yes" in payload[0]
 
@@ -540,9 +548,10 @@ class TestSubmitPrediction:
     async def test_routes_numeric_question(self, mock_client):
         """Routes numeric question to submit_numeric_prediction."""
         mock_response = MagicMock()
+        mock_response.status_code = 200
         mock_response.json.return_value = {"success": True}
         mock_response.raise_for_status = MagicMock()
-        mock_client.client.post = AsyncMock(return_value=mock_response)
+        mock_client.client.request = AsyncMock(return_value=mock_response)
 
         question = MagicMock()
         question.question_type = "numeric"
@@ -554,7 +563,7 @@ class TestSubmitPrediction:
         cdf = [0.001 + i * 0.00499 for i in range(201)]
         await mock_client.submit_prediction(question, cdf)
 
-        call_args = mock_client.client.post.call_args
+        call_args = mock_client.client.request.call_args
         payload = call_args[1]["json"]
         assert "continuous_cdf" in payload[0]
 
@@ -562,9 +571,10 @@ class TestSubmitPrediction:
     async def test_routes_multiple_choice_question(self, mock_client):
         """Routes multiple choice question to submit_multiple_choice_prediction."""
         mock_response = MagicMock()
+        mock_response.status_code = 200
         mock_response.json.return_value = {"success": True}
         mock_response.raise_for_status = MagicMock()
-        mock_client.client.post = AsyncMock(return_value=mock_response)
+        mock_client.client.request = AsyncMock(return_value=mock_response)
 
         question = MagicMock()
         question.question_type = "multiple_choice"
@@ -573,7 +583,7 @@ class TestSubmitPrediction:
         probs = {"a": 0.5, "b": 0.5}
         await mock_client.submit_prediction(question, probs)
 
-        call_args = mock_client.client.post.call_args
+        call_args = mock_client.client.request.call_args
         payload = call_args[1]["json"]
         assert "probability_yes_per_category" in payload[0]
 

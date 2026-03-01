@@ -33,15 +33,19 @@ jobs:
     timeout-minutes: 2
     outputs:
       has_work: ${{ steps.check_new.outputs.has_work }}
+      questions_32916: ${{ steps.check_new.outputs.questions_32916 }}
+      questions_minibench: ${{ steps.check_new.outputs.questions_minibench }}
     steps:
       - name: Check for new questions
         id: check_new
         env:
           METACULUS_TOKEN: ${{ secrets.METACULUS_TOKEN }}
         run: |
-          # Manual dispatch with test question always has work
+          # Manual dispatch with test question always has work (no ID list to pass)
           if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ -n "${{ github.event.inputs.test_question_id }}" ]; then
             echo "has_work=true" >> $GITHUB_OUTPUT
+            echo "questions_32916=" >> $GITHUB_OUTPUT
+            echo "questions_minibench=" >> $GITHUB_OUTPUT
             echo "Manual dispatch with test question — skipping API check"
             exit 0
           fi
@@ -52,6 +56,8 @@ jobs:
           echo "User ID: $USER_ID"
 
           HAS_WORK=false
+          NEW_32916=""
+          NEW_MINIBENCH=""
 
           for TOURNAMENT in 32916 minibench; do
             sleep 1.5  # Rate limiting
@@ -70,17 +76,25 @@ jobs:
               | jq -r '.results[].id' | sort -n)
             MY_COUNT=$(echo "$MY_IDS" | grep -c '[0-9]' || true)
 
-            # Find IDs in OPEN but not in MY
-            NEW_COUNT=$(comm -23 <(echo "$OPEN_IDS") <(echo "$MY_IDS") | grep -c '[0-9]' || true)
+            # New = in OPEN but not in MY (comma-separated for job output)
+            NEW_IDS=$(comm -23 <(echo "$OPEN_IDS") <(echo "$MY_IDS") | tr '\n' ',' | sed 's/,$//')
+            NEW_COUNT=$(echo "$NEW_IDS" | grep -c '[0-9]' || true)
 
             echo "$TOURNAMENT: $OPEN_COUNT open, $MY_COUNT forecasted, $NEW_COUNT new"
 
+            if [ "$TOURNAMENT" = "32916" ]; then
+              NEW_32916="$NEW_IDS"
+            else
+              NEW_MINIBENCH="$NEW_IDS"
+            fi
             if [ "$NEW_COUNT" -gt 0 ]; then
               HAS_WORK=true
             fi
           done
 
           echo "has_work=$HAS_WORK" >> $GITHUB_OUTPUT
+          echo "questions_32916=$NEW_32916" >> $GITHUB_OUTPUT
+          echo "questions_minibench=$NEW_MINIBENCH" >> $GITHUB_OUTPUT
 
           if [ "$HAS_WORK" = "false" ]; then
             echo "No new questions in any tournament — skipping forecast job"
@@ -180,7 +194,8 @@ jobs:
           poetry run python run_bot.py \
             --tournament 32916 \
             --question-selection new-only \
-            --limit 50
+            --limit 50 \
+            --question-ids "${{ needs.check.outputs.questions_32916 }}"
         env:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           METACULUS_TOKEN: ${{ secrets.METACULUS_TOKEN }}
@@ -197,7 +212,8 @@ jobs:
           poetry run python run_bot.py \
             --tournament minibench \
             --question-selection new-only \
-            --limit 50
+            --limit 50 \
+            --question-ids "${{ needs.check.outputs.questions_minibench }}"
         env:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           METACULUS_TOKEN: ${{ secrets.METACULUS_TOKEN }}

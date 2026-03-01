@@ -34,6 +34,7 @@ async def forecast_metaculus_questions(
     question_selection: str = "new-only",
     reforecast_threshold_days: int = 7,
     limit: int = 50,
+    question_ids: str | None = None,
 ):
     """
     Run automated forecasting for Metaculus questions from a tournament.
@@ -43,6 +44,7 @@ async def forecast_metaculus_questions(
         question_selection: "new-only" (new questions only) or "reforecast" (new + old)
         reforecast_threshold_days: For reforecast mode, re-forecast questions older than this
         limit: Maximum questions to forecast per run
+        question_ids: Optional comma-separated post IDs from CI check job; skips list API calls
 
     Returns:
         Number of new/unforecasted questions that were available (0 if none or early exit).
@@ -50,63 +52,80 @@ async def forecast_metaculus_questions(
     """
     resolved = ResolvedConfig.from_yaml("config.yaml", mode="live")
 
-    # Convert tournament_id to int if numeric
-    tournament_id_parsed: int | str
-    try:
-        tournament_id_parsed = int(tournament_id)
-    except ValueError:
-        tournament_id_parsed = tournament_id  # Keep as string (e.g., "minibench")
+    # Optional: use IDs from check job to avoid duplicate list API calls (and 429)
+    use_ids_from_check = question_ids is not None
+    ids_from_check = (
+        [int(x.strip()) for x in question_ids.split(",") if x.strip()] if use_ids_from_check else []
+    )
 
-    async with MetaculusClient() as client:
-        # Get open questions
-        questions = await client.get_tournament_questions(tournament_id_parsed)
-        logger.info(f"Found {len(questions)} open questions in tournament {tournament_id}")
-
-        if not questions:
-            logger.info("No open questions found. Exiting.")
+    if use_ids_from_check:
+        # Fetch each question by ID (no get_tournament_questions / get_my_forecasts)
+        if not ids_from_check:
+            logger.info("No question IDs from check job. Exiting.")
             return 0
-
-        # Get my past forecasts
-        my_forecasts = await client.get_my_forecasts(tournament_id_parsed)
-        forecasted_ids = set(my_forecasts.keys()) if my_forecasts else set()
-        logger.info(f"Already forecasted: {len(forecasted_ids)} questions")
-
-        # Filter questions based on question_selection
-        questions_to_forecast = []
-
-        if question_selection == "new-only":
-            # New-only mode: only forecast new questions (skip already forecasted)
-            for q in questions:
-                if q.id not in forecasted_ids:
+        async with MetaculusClient() as client:
+            questions_to_forecast = []
+            for i, post_id in enumerate(ids_from_check):
+                if i > 0:
+                    await asyncio.sleep(1)  # Rate limit: 1s between fetches
+                try:
+                    q = await client.get_question(post_id)
                     questions_to_forecast.append(q)
-            logger.info(f"new-only: {len(questions_to_forecast)} new questions to forecast")
+                except Exception as e:
+                    logger.warning(f"Skip question {post_id}: {e}")
+            if not questions_to_forecast:
+                logger.info("No questions to forecast (IDs from check). Exiting.")
+                return 0
+            # Sort by scheduled_close_time (None last)
+            questions_to_forecast.sort(key=lambda q: (q.scheduled_close_time or "") or "z")
+    else:
+        # Original path: list API then filter
+        tournament_id_parsed: int | str
+        try:
+            tournament_id_parsed = int(tournament_id)
+        except ValueError:
+            tournament_id_parsed = tournament_id
 
-        elif question_selection == "reforecast":
-            # Reforecast mode: new questions + old forecasts needing update
-            cutoff = datetime.now(UTC) - timedelta(days=reforecast_threshold_days)
+        async with MetaculusClient() as client:
+            questions = await client.get_tournament_questions(tournament_id_parsed)
+            logger.info(f"Found {len(questions)} open questions in tournament {tournament_id}")
 
-            for q in questions:
-                if q.id not in forecasted_ids:
-                    # New question
-                    questions_to_forecast.append(q)
-                else:
-                    # Check if forecast is old enough to refresh
-                    my_forecast = my_forecasts.get(q.id)
-                    if my_forecast and my_forecast.timestamp:
-                        if my_forecast.timestamp < cutoff:
-                            questions_to_forecast.append(q)
-                    else:
-                        # No timestamp available, include to be safe
+            if not questions:
+                logger.info("No open questions found. Exiting.")
+                return 0
+
+            my_forecasts = await client.get_my_forecasts(tournament_id_parsed)
+            forecasted_ids = set(my_forecasts.keys()) if my_forecasts else set()
+            logger.info(f"Already forecasted: {len(forecasted_ids)} questions")
+
+            questions_to_forecast = []
+
+            if question_selection == "new-only":
+                for q in questions:
+                    if q.id not in forecasted_ids:
                         questions_to_forecast.append(q)
+                logger.info(f"new-only: {len(questions_to_forecast)} new questions to forecast")
 
-            logger.info(
-                f"reforecast: {len(questions_to_forecast)} questions "
-                f"(new + older than {reforecast_threshold_days} days)"
-            )
+            elif question_selection == "reforecast":
+                cutoff = datetime.now(UTC) - timedelta(days=reforecast_threshold_days)
+                for q in questions:
+                    if q.id not in forecasted_ids:
+                        questions_to_forecast.append(q)
+                    else:
+                        my_forecast = my_forecasts.get(q.id)
+                        if my_forecast and my_forecast.timestamp:
+                            if my_forecast.timestamp < cutoff:
+                                questions_to_forecast.append(q)
+                        else:
+                            questions_to_forecast.append(q)
+                logger.info(
+                    f"reforecast: {len(questions_to_forecast)} questions "
+                    f"(new + older than {reforecast_threshold_days} days)"
+                )
 
-        if not questions_to_forecast:
-            logger.info("No questions need forecasting. Exiting.")
-            return 0
+            if not questions_to_forecast:
+                logger.info("No questions need forecasting. Exiting.")
+                return 0
 
     # Forecast questions using shared runner
     questions_to_process = questions_to_forecast[:limit]
@@ -185,6 +204,11 @@ def main():
     parser.add_argument(
         "--limit", type=int, default=50, help="Maximum questions to forecast per run"
     )
+    parser.add_argument(
+        "--question-ids",
+        default=None,
+        help="Comma-separated post IDs from CI check job; skips list API calls (pass empty to skip list API with no work)",
+    )
 
     args = parser.parse_args()
 
@@ -200,6 +224,7 @@ def main():
             question_selection=args.question_selection,
             reforecast_threshold_days=args.reforecast_threshold_days,
             limit=args.limit,
+            question_ids=args.question_ids,
         )
     )
 

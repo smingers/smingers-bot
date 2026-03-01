@@ -107,7 +107,7 @@
       "snapshot_timestamp": "2026-02-08T15:19:57.895422+00:00",
       "num_forecasters": 106,
       "resolved": true,
-      "resolution": "to \"Green Party\".",
+      "resolution": "Green Party",
       "comparison": {
         "type": "multiple_choice",
         "my_probabilities": {

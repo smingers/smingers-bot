@@ -7,6 +7,7 @@ Handles all interactions with the Metaculus API:
 - Getting question details
 """
 
+import asyncio
 import logging
 import os
 from dataclasses import dataclass
@@ -427,13 +428,43 @@ class MetaculusClient:
     async def __aexit__(self, *args):
         await self.close()
 
+    async def _request(
+        self, method: str, url: str, retry_count: int = 5, **kwargs
+    ) -> httpx.Response:
+        """Make an HTTP request with retry and exponential backoff on 429."""
+        last_response: httpx.Response | None = None
+        for attempt in range(retry_count):
+            try:
+                resp = await self.client.request(method, url, **kwargs)
+                last_response = resp
+                if resp.status_code == 429 and attempt < retry_count - 1:
+                    retry_after = resp.headers.get("Retry-After")
+                    wait_time = (
+                        int(retry_after)
+                        if retry_after and str(retry_after).isdigit()
+                        else 2 ** (attempt + 1)
+                    )
+                    logger.warning("Metaculus API rate limited (429), waiting %ds...", wait_time)
+                    await asyncio.sleep(wait_time)
+                    continue
+                return resp
+            except httpx.HTTPStatusError as e:
+                if e.response.status_code == 429 and attempt < retry_count - 1:
+                    wait_time = 2 ** (attempt + 1)
+                    logger.warning("Metaculus API rate limited (429), waiting %ds...", wait_time)
+                    await asyncio.sleep(wait_time)
+                else:
+                    raise
+        assert last_response is not None
+        return last_response
+
     # =========================================================================
     # Questions
     # =========================================================================
 
     async def get_question(self, question_id: int) -> MetaculusQuestion:
         """Get a single question by ID (post ID)."""
-        response = await self.client.get(f"/posts/{question_id}/")
+        response = await self._request("GET", f"/posts/{question_id}/")
         response.raise_for_status()
         data = response.json()
         return MetaculusQuestion.from_api_response(data)
@@ -475,7 +506,7 @@ class MetaculusClient:
         if status:
             params["statuses"] = status
 
-        response = await self.client.get("/posts/", params=params)
+        response = await self._request("GET", "/posts/", params=params)
         response.raise_for_status()
         data = response.json()
 
@@ -514,7 +545,7 @@ class MetaculusClient:
 
     async def get_current_user_id(self) -> int:
         """Get the current authenticated user's ID."""
-        response = await self.client.get("/users/me/")
+        response = await self._request("GET", "/users/me/")
         response.raise_for_status()
         return response.json()["id"]
 
@@ -541,7 +572,7 @@ class MetaculusClient:
         if tournament_id:
             params["tournaments"] = tournament_id
 
-        response = await self.client.get("/posts/", params=params)
+        response = await self._request("GET", "/posts/", params=params)
         response.raise_for_status()
         data = response.json()
 
@@ -589,10 +620,7 @@ class MetaculusClient:
             }
         ]
 
-        response = await self.client.post(
-            "/questions/forecast/",
-            json=payload,
-        )
+        response = await self._request("POST", "/questions/forecast/", json=payload)
         return self._handle_response(response, f"submitting binary prediction for Q{question_id}")
 
     async def submit_numeric_prediction(
@@ -631,10 +659,7 @@ class MetaculusClient:
             }
         ]
 
-        response = await self.client.post(
-            "/questions/forecast/",
-            json=payload,
-        )
+        response = await self._request("POST", "/questions/forecast/", json=payload)
         return self._handle_response(response, f"submitting numeric prediction for Q{question_id}")
 
     async def submit_multiple_choice_prediction(
@@ -669,10 +694,7 @@ class MetaculusClient:
             }
         ]
 
-        response = await self.client.post(
-            "/questions/forecast/",
-            json=payload,
-        )
+        response = await self._request("POST", "/questions/forecast/", json=payload)
         return self._handle_response(
             response, f"submitting multiple choice prediction for Q{question_id}"
         )
@@ -805,13 +827,14 @@ class MetaculusClient:
 
     async def get_tournament_info(self, tournament_id: int) -> dict:
         """Get information about a tournament."""
-        response = await self.client.get(f"/projects/{tournament_id}/")
+        response = await self._request("GET", f"/projects/{tournament_id}/")
         response.raise_for_status()
         return response.json()
 
     async def get_leaderboard(self, tournament_id: int, limit: int = 50) -> list[dict]:
         """Get the tournament leaderboard."""
-        response = await self.client.get(
+        response = await self._request(
+            "GET",
             f"/projects/{tournament_id}/leaderboard/",
             params={"limit": limit},
         )
