@@ -1,0 +1,265 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": false,
+      "num_queries": 0,
+      "queries": [],
+      "tools_used": [],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 5,
+      "queries": [
+        {
+          "query": "Colombia election postponement history",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Find any instances where Colombian national elections (parliamentary, presidential, referendums) were delayed, cancelled, or rescheduled.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Colombian congressional election date constitution",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Retrieve constitutional articles or electoral law specifying when congressional elections must occur and under what conditions they may be altered.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 2,
+          "error": null
+        },
+        {
+          "query": "Latin America elections postponed security",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Establish regional precedents for postponing elections due to security issues, creating a comparative base rate.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "worldwide parliamentary elections postponed since 2000",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Broader global data set on parliamentary election delays to contextualize risk.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Provide list of Colombian national elections 1990-2022 with scheduled vs actual dates and note any postponements; cite primary sources.",
+          "tool": "Agent",
+          "temporal_role": "historical",
+          "intent": "Generate a concise reference table for Colombian election punctuality over the past three decades.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Agent"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Colombia 2026 parliamentary election delay rumours",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "Surface any contemporaneous reporting hinting at postponement or logistical difficulties.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Colombia Registradur\u00eda National election logistics March 2026",
+          "tool": "AskNews",
+          "temporal_role": "current",
+          "intent": "Fetch recent statements from the election authority on readiness, ballot distribution, or contingency plans.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 50,
+          "error": null
+        },
+        {
+          "query": "ELN ceasefire election security March 2026",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "Check for breaches of the ceasefire or new security warnings that could jeopardize election day.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "AskNews",
+        "Google News"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7118,
+        "token_output": 1121,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.05240500000000001,
+        "duration_seconds": 42.381178855895996,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16362,
+        "token_output": 2785,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.123585,
+        "duration_seconds": 58.88035583496094,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16419,
+        "token_output": 2343,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.11724000000000001,
+        "duration_seconds": 58.88033175468445,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6284,
+        "token_output": 2039,
+        "token_reasoning": 475,
+        "used_reasoning": true,
+        "cost": 0.039543,
+        "duration_seconds": 42.38125133514404,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14433,
+        "token_output": 1857,
+        "token_reasoning": 259,
+        "used_reasoning": true,
+        "cost": 0.05125575,
+        "duration_seconds": 58.8803014755249,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14976,
+        "token_output": 1031,
+        "token_reasoning": 192,
+        "used_reasoning": true,
+        "cost": 0.0382,
+        "duration_seconds": 58.88027048110962,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6284,
+        "token_output": 1536,
+        "token_reasoning": 448,
+        "used_reasoning": true,
+        "cost": 0.024856,
+        "duration_seconds": 42.38133478164673,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14421,
+        "token_output": 1272,
+        "token_reasoning": 192,
+        "used_reasoning": true,
+        "cost": 0.039018,
+        "duration_seconds": 58.88023853302002,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "steps1_2_research": 0.3628,
+    "step3_outside_view": 0.1168,
+    "step5_inside_view": 0.3693,
+    "step6_aggregation": 0.3693,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.8489
+}

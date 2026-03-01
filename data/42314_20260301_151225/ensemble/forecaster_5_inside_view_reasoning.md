@@ -1,0 +1,3 @@
+**Finalizing the forecast**
+
+I need to finalize the forecast and integrate both the inside and outside views. The outside view suggests a 93% likelihood, but I’m thinking we can adjust it higher based on new information about the March 8 election, which shows no signs of postponement. I'll shift the probability to 96%, considering the low risk factors like natural disasters or security threats. I’ll also prepare sections for source analysis, evidence analysis, timeframe analysis, and a probability calibration summary. Let’s get to crafting!

@@ -1,0 +1,192 @@
+{
+  "plan_analysis": "The Wikipedia excerpt confirms the election is scheduled for 8 March 2026, but forecasters still need to gauge (a) how often Colombian or comparable elections slip, (b) the legal/constitutional rigidity of the date, and (c) any breaking indications\u2014security, logistical, political, or natural-disaster-related\u2014that might force a last-minute delay.  The plan therefore:\n\n1. Build a historical base rate of Colombian and peer-country election postponements.\n2. Locate the legal provisions that lock the date (or allow suspension) so forecasters know the hurdle for any change.\n3. Capture current-week news from Colombian authorities, election agencies, and security actors (e.g., ELN, CNE, Registradur\u00eda Nacional) about election readiness or threats.\n4. Run a contrarian check for postponement rumours or emergency declarations.\n5. Use one Agent query to pull a compact history of Colombian national elections vs. schedule\u2014quickly surfacing any prior deviations.",
+  "reflect_analysis": null,
+  "queries_planned": [
+    {
+      "query": "Colombia election postponement history",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Find any instances where Colombian national elections (parliamentary, presidential, referendums) were delayed, cancelled, or rescheduled.",
+      "phase": "plan"
+    },
+    {
+      "query": "Colombian congressional election date constitution",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Retrieve constitutional articles or electoral law specifying when congressional elections must occur and under what conditions they may be altered.",
+      "phase": "plan"
+    },
+    {
+      "query": "Latin America elections postponed security",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Establish regional precedents for postponing elections due to security issues, creating a comparative base rate.",
+      "phase": "plan"
+    },
+    {
+      "query": "worldwide parliamentary elections postponed since 2000",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Broader global data set on parliamentary election delays to contextualize risk.",
+      "phase": "plan"
+    },
+    {
+      "query": "Provide list of Colombian national elections 1990-2022 with scheduled vs actual dates and note any postponements; cite primary sources.",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "Generate a concise reference table for Colombian election punctuality over the past three decades.",
+      "phase": "plan"
+    },
+    {
+      "query": "Colombia 2026 parliamentary election delay rumours",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Surface any contemporaneous reporting hinting at postponement or logistical difficulties.",
+      "phase": "plan"
+    },
+    {
+      "query": "Colombia Registradur\u00eda National election logistics March 2026",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "Fetch recent statements from the election authority on readiness, ballot distribution, or contingency plans.",
+      "phase": "plan"
+    },
+    {
+      "query": "ELN ceasefire election security March 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Check for breaches of the ceasefire or new security warnings that could jeopardize election day.",
+      "phase": "plan"
+    }
+  ],
+  "gap_queries": [],
+  "seed_context_chars": 1517,
+  "historical_context_chars": 23911,
+  "current_context_chars": 55698,
+  "phases": {
+    "pre_research": {
+      "duration_seconds": 8.49,
+      "seed_context_chars": 1517,
+      "search_id": "question_urls",
+      "searched": true,
+      "urls_found": 1,
+      "urls_scraped": 1,
+      "urls_summarized": 1,
+      "urls": [
+        {
+          "url": "https://en.wikipedia.org/wiki/2026_Colombian_parliamentary_election",
+          "domain": "en.wikipedia.org",
+          "scraped": true,
+          "method": "wikipedia_api",
+          "status_code": 200,
+          "content_words": 209
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ]
+    },
+    "plan": {
+      "duration_seconds": 28.12,
+      "cost": 0.0144,
+      "num_queries": 8
+    },
+    "execute": {
+      "duration_seconds": 141.18,
+      "cost": 0.3394,
+      "queries_executed": 8,
+      "queries_successful": 8
+    },
+    "assemble": {
+      "historical_context_chars": 23911,
+      "current_context_chars": 55698
+    }
+  },
+  "total_queries_planned": 8,
+  "total_queries_executed": 8,
+  "total_gap_queries": 0,
+  "total_cost": 0.3628,
+  "total_duration_seconds": 177.79,
+  "query_details": [
+    {
+      "query": "Colombia election postponement history",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Find any instances where Colombian national elections (parliamentary, presidential, referendums) were delayed, cancelled, or rescheduled.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "Colombian congressional election date constitution",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Retrieve constitutional articles or electoral law specifying when congressional elections must occur and under what conditions they may be altered.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 2,
+      "error": null
+    },
+    {
+      "query": "Latin America elections postponed security",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Establish regional precedents for postponing elections due to security issues, creating a comparative base rate.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "worldwide parliamentary elections postponed since 2000",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Broader global data set on parliamentary election delays to contextualize risk.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "Provide list of Colombian national elections 1990-2022 with scheduled vs actual dates and note any postponements; cite primary sources.",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "Generate a concise reference table for Colombian election punctuality over the past three decades.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 1,
+      "error": null
+    },
+    {
+      "query": "Colombia 2026 parliamentary election delay rumours",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Surface any contemporaneous reporting hinting at postponement or logistical difficulties.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "Colombia Registradur\u00eda National election logistics March 2026",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "Fetch recent statements from the election authority on readiness, ballot distribution, or contingency plans.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 50,
+      "error": null
+    },
+    {
+      "query": "ELN ceasefire election security March 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Check for breaches of the ceasefire or new security warnings that could jeopardize election day.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    }
+  ]
+}
