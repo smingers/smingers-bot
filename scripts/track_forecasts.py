@@ -73,7 +73,7 @@ class ForecastComparison:
     question_title: str
     question_type: str
     question_url: str
-    forecast_timestamp: str
+    forecast_timestamp: str | None
     snapshot_timestamp: str
     num_forecasters: int
 
@@ -171,6 +171,55 @@ class TrackingData:
             "multiple_choice_stats": self.multiple_choice_stats,
             "forecasts": self.forecasts,
         }
+
+
+def _compute_aggregate_stats_from_dicts(forecast_dicts: list[dict]) -> dict:
+    """Compute aggregate statistics from a list of forecast dicts (e.g. after merge)."""
+    binary_diffs = []
+    numeric_median_diffs = []
+    numeric_uncertainty_ratios = []
+    mc_max_diffs = []
+
+    for fc in forecast_dicts:
+        comp = fc.get("comparison")
+        if not comp:
+            continue
+        ctype = comp.get("type")
+        if ctype == "binary" and "difference" in comp:
+            binary_diffs.append(comp["difference"])
+        elif ctype == "numeric":
+            if "median_difference" in comp:
+                numeric_median_diffs.append(comp["median_difference"])
+            if "uncertainty_ratio" in comp:
+                numeric_uncertainty_ratios.append(comp["uncertainty_ratio"])
+        elif ctype == "multiple_choice" and "max_difference_value" in comp:
+            mc_max_diffs.append(comp["max_difference_value"])
+
+    stats = {}
+    if binary_diffs:
+        stats["binary"] = {
+            "count": len(binary_diffs),
+            "mean_difference": sum(binary_diffs) / len(binary_diffs),
+            "abs_mean_difference": sum(abs(d) for d in binary_diffs) / len(binary_diffs),
+            "more_confident_count": sum(1 for d in binary_diffs if d > 0.05),
+            "less_confident_count": sum(1 for d in binary_diffs if d < -0.05),
+            "aligned_count": sum(1 for d in binary_diffs if abs(d) <= 0.05),
+        }
+    if numeric_median_diffs:
+        stats["numeric"] = {
+            "count": len(numeric_median_diffs),
+            "mean_median_difference": sum(numeric_median_diffs) / len(numeric_median_diffs),
+            "mean_uncertainty_ratio": sum(numeric_uncertainty_ratios)
+            / len(numeric_uncertainty_ratios),
+            "more_uncertain_count": sum(1 for r in numeric_uncertainty_ratios if r > 1.1),
+            "less_uncertain_count": sum(1 for r in numeric_uncertainty_ratios if r < 0.9),
+        }
+    if mc_max_diffs:
+        stats["multiple_choice"] = {
+            "count": len(mc_max_diffs),
+            "mean_max_difference": sum(abs(d) for d in mc_max_diffs) / len(mc_max_diffs),
+        }
+    return stats
 
 
 class ForecastTracker:
@@ -433,28 +482,46 @@ class ForecastTracker:
 
     async def compare_forecast(self, post_data: dict) -> ForecastComparison | None:
         """Create a comparison for a single forecast."""
+        if not post_data:
+            return None
         post_id = post_data.get("id")
         title = post_data.get("title", "Unknown")
-        question = post_data.get("question", {})
+        question = post_data.get("question") or {}
         q_type = question.get("type", "unknown")
 
-        # Get my forecast and community aggregation
-        my_forecasts = question.get("my_forecasts", {})
+        # Get my forecast and community aggregation (may be missing under API lockdown)
+        my_forecasts = question.get("my_forecasts") or {}
         my_latest = my_forecasts.get("latest") if my_forecasts else None
 
-        if not my_latest:
-            return None
+        snapshot_timestamp = datetime.now(tz=UTC).isoformat()
 
-        aggregations = question.get("aggregations", {})
+        # When API returns partial data (e.g. question null or no my_forecasts), still
+        # emit a minimal record so the question stays in the tracking file and merge
+        # can preserve existing score_data/resolution/comparison.
+        if not my_latest:
+            return ForecastComparison(
+                question_id=post_id,
+                question_title=title,
+                question_type=q_type,
+                question_url=f"https://www.metaculus.com/questions/{post_id}/",
+                forecast_timestamp=None,
+                snapshot_timestamp=snapshot_timestamp,
+                num_forecasters=0,
+                comparison=None,
+                resolved=post_data.get("resolved", False),
+                resolution=question.get("resolution"),
+            )
+
+        aggregations = question.get("aggregations") or {}
         # Prefer unweighted (includes all forecasters) for comparison
-        community_data = aggregations.get("unweighted", {})
+        community_data = aggregations.get("unweighted") or {}
         comm_latest = community_data.get("latest") if community_data else None
 
         # Fall back to recency_weighted if unweighted not available
         if not comm_latest:
-            community_data = aggregations.get("recency_weighted", {})
+            community_data = aggregations.get("recency_weighted") or {}
             if community_data:
-                history = community_data.get("history", [])
+                history = community_data.get("history") or []
                 comm_latest = history[-1] if history else None
 
         # Extract timestamps
@@ -464,8 +531,6 @@ class ForecastTracker:
         else:
             forecast_timestamp = None
 
-        snapshot_timestamp = datetime.now(tz=UTC).isoformat()
-
         # Get forecaster count
         num_forecasters = comm_latest.get("forecaster_count", 0) if comm_latest else 0
 
@@ -474,10 +539,10 @@ class ForecastTracker:
         if q_type == "binary":
             comparison = self.extract_binary_comparison(my_latest, comm_latest)
         elif q_type in ("numeric", "date"):
-            scaling = question.get("scaling", {}) or {}
+            scaling = question.get("scaling") or {}
             comparison = self.extract_numeric_comparison(my_latest, comm_latest, scaling)
         elif q_type == "multiple_choice":
-            options = question.get("options", [])
+            options = question.get("options") or []
             comparison = self.extract_mc_comparison(my_latest, comm_latest, options)
 
         return ForecastComparison(
@@ -545,7 +610,12 @@ class ForecastTracker:
     async def track_tournament(
         self, tournament_id: int | str, existing_data: TrackingData | None = None
     ) -> TrackingData:
-        """Track all forecasts in a tournament and compare to community."""
+        """Track all forecasts in a tournament and compare to community.
+
+        If existing_data is provided (e.g. from a previous run or from update_score_tracking
+        / scrape_resolutions), merges preserved fields into the API result so we do not
+        overwrite score_data, resolution, or comparison when the API no longer returns them.
+        """
         # Get tournament info
         try:
             tournament_info = await self.get_tournament_info(tournament_id)
@@ -561,9 +631,6 @@ class ForecastTracker:
         forecasts = []
         for i, q in enumerate(questions):
             post_id = q["id"]
-
-            # Skip if we already have this question (unless we want to update)
-            # For now, always update to get latest community consensus
 
             print(
                 f"  [{i + 1}/{len(questions)}] Processing {post_id}: {q.get('title', 'Unknown')[:50]}..."
@@ -584,22 +651,49 @@ class ForecastTracker:
                 print(f"    Error: {e}")
                 continue
 
-        # Compute statistics
-        stats = self.compute_aggregate_stats(forecasts)
+        # Convert to dicts and merge with existing data (preserve score_data, resolution,
+        # comparison when API no longer provides them)
+        forecast_dicts = [f.to_dict() for f in forecasts]
+        existing_by_id: dict[int, dict] = {}
+        if existing_data and existing_data.forecasts:
+            for prev in existing_data.forecasts:
+                qid = prev.get("question_id")
+                if qid is not None:
+                    existing_by_id[qid] = prev
+
+        for fc in forecast_dicts:
+            qid = fc.get("question_id")
+            existing = existing_by_id.get(qid) if qid is not None else None
+            if not existing:
+                continue
+            # Preserve fields that other scripts or a previous API provided
+            if existing.get("score_data"):
+                fc["score_data"] = existing["score_data"]
+            if fc.get("resolution") is None and existing.get("resolution") is not None:
+                fc["resolution"] = existing["resolution"]
+            if fc.get("comparison") is None and existing.get("comparison") is not None:
+                fc["comparison"] = existing["comparison"]
+
+        # Recompute statistics from merged list (so preserved comparisons are included)
+        stats = _compute_aggregate_stats_from_dicts(forecast_dicts)
 
         # Create tracking data
         data = TrackingData(
             tournament_id=tournament_id,
             tournament_name=tournament_name,
             last_updated=datetime.now(tz=UTC).isoformat(),
-            total_forecasts=len(forecasts),
-            binary_count=sum(1 for f in forecasts if f.question_type == "binary"),
-            numeric_count=sum(1 for f in forecasts if f.question_type in ("numeric", "date")),
-            multiple_choice_count=sum(1 for f in forecasts if f.question_type == "multiple_choice"),
+            total_forecasts=len(forecast_dicts),
+            binary_count=sum(1 for f in forecast_dicts if f.get("question_type") == "binary"),
+            numeric_count=sum(
+                1 for f in forecast_dicts if f.get("question_type") in ("numeric", "date")
+            ),
+            multiple_choice_count=sum(
+                1 for f in forecast_dicts if f.get("question_type") == "multiple_choice"
+            ),
             binary_stats=stats.get("binary", {}),
             numeric_stats=stats.get("numeric", {}),
             multiple_choice_stats=stats.get("multiple_choice", {}),
-            forecasts=[f.to_dict() for f in forecasts],
+            forecasts=forecast_dicts,
         )
 
         return data

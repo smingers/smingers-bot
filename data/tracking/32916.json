@@ -1,11 +1,11 @@
 {
   "tournament_id": 32916,
   "tournament_name": "Tournament 32916",
-  "last_updated": "2026-02-28T12:10:27.760858+00:00",
-  "total_forecasts": 101,
-  "binary_count": 50,
-  "numeric_count": 39,
-  "multiple_choice_count": 4,
+  "last_updated": "2026-03-01T10:17:13.595082+00:00",
+  "total_forecasts": 112,
+  "binary_count": 57,
+  "numeric_count": 48,
+  "multiple_choice_count": 7,
   "binary_stats": {
     "count": 20,
     "mean_difference": -0.03412500000000001,
@@ -2414,6 +2414,149 @@
         "difference": 0.024
       },
       "score_data": null
+    },
+    {
+      "question_id": 42234,
+      "question_title": "What will Finland score on the 2026 World Happiness Report?",
+      "question_type": "numeric",
+      "question_url": "https://www.metaculus.com/questions/42234/",
+      "forecast_timestamp": "2026-02-24T16:38:11.046050+00:00",
+      "snapshot_timestamp": "2026-02-24T16:38:11.046050+00:00",
+      "num_forecasters": 104,
+      "resolved": false,
+      "resolution": null,
+      "comparison": null,
+      "score_data": null
+    },
+    {
+      "question_id": 42237,
+      "question_title": "Will the IOM Missing Migrants Project record at least 900 Mediterranean migrant deaths in 2026 before April 2026?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/42237/",
+      "forecast_timestamp": "2026-02-22T12:26:16.373679+00:00",
+      "snapshot_timestamp": "2026-02-22T12:26:16.373679+00:00",
+      "num_forecasters": 71,
+      "resolved": false,
+      "resolution": null,
+      "comparison": null,
+      "score_data": null
+    },
+    {
+      "question_id": 42239,
+      "question_title": "Will CDC\u2019s preliminary estimate of cumulative flu-related hospitalizations for the 2025\u201326 season reach 850,000 before April 5, 2026?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/42239/",
+      "forecast_timestamp": "2026-02-23T10:43:27.287974+00:00",
+      "snapshot_timestamp": "2026-02-23T10:43:27.287974+00:00",
+      "num_forecasters": 12,
+      "resolved": false,
+      "resolution": null,
+      "comparison": null,
+      "score_data": null
+    },
+    {
+      "question_id": 42240,
+      "question_title": "Will the Cannes Film Festival publish its 2026 official selection before April 10, 2026?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/42240/",
+      "forecast_timestamp": "2026-02-24T10:41:50.688404+00:00",
+      "snapshot_timestamp": "2026-02-24T10:41:50.688404+00:00",
+      "num_forecasters": 7,
+      "resolved": false,
+      "resolution": null,
+      "comparison": null,
+      "score_data": null
+    },
+    {
+      "question_id": 42241,
+      "question_title": "Will at least one film surpass US$1 billion in worldwide box office before May 1, 2026?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/42241/",
+      "forecast_timestamp": "2026-02-24T15:31:12.562881+00:00",
+      "snapshot_timestamp": "2026-02-24T15:31:12.562881+00:00",
+      "num_forecasters": 33,
+      "resolved": false,
+      "resolution": null,
+      "comparison": null,
+      "score_data": null
+    },
+    {
+      "question_id": 42243,
+      "question_title": "Will Christie\u2019s, Sotheby\u2019s, or Phillips report a public auction sale of a painting for at least US$100 million before May 1, 2026?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/42243/",
+      "forecast_timestamp": "2026-02-25T12:37:29.819785+00:00",
+      "snapshot_timestamp": "2026-02-25T12:37:29.819785+00:00",
+      "num_forecasters": 97,
+      "resolved": false,
+      "resolution": null,
+      "comparison": null,
+      "score_data": null
+    },
+    {
+      "question_id": 42244,
+      "question_title": "Who will win the 2026 Masters Tournament?",
+      "question_type": "multiple_choice",
+      "question_url": "https://www.metaculus.com/questions/42244/",
+      "forecast_timestamp": "2026-02-25T15:21:27.356108+00:00",
+      "snapshot_timestamp": "2026-02-25T15:21:27.356108+00:00",
+      "num_forecasters": 27,
+      "resolved": false,
+      "resolution": null,
+      "comparison": null,
+      "score_data": null
+    },
+    {
+      "question_id": 42245,
+      "question_title": "Will the IOM Missing Migrants Project record at least 1,000 Mediterranean migrant deaths in 2026 before May 2026?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/42245/",
+      "forecast_timestamp": "2026-02-26T12:40:08.078987+00:00",
+      "snapshot_timestamp": "2026-02-26T12:40:08.078987+00:00",
+      "num_forecasters": 105,
+      "resolved": false,
+      "resolution": null,
+      "comparison": null,
+      "score_data": null
+    },
+    {
+      "question_id": 42246,
+      "question_title": "Will H.R. 33 (United States\u2013Taiwan Expedited Double-Tax Relief Act) be enacted into law before May 1, 2026?",
+      "question_type": "binary",
+      "question_url": "https://www.metaculus.com/questions/42246/",
+      "forecast_timestamp": "2026-02-27T05:02:46.924756+00:00",
+      "snapshot_timestamp": "2026-02-27T05:02:46.924756+00:00",
+      "num_forecasters": 22,
+      "resolved": false,
+      "resolution": null,
+      "comparison": null,
+      "score_data": null
+    },
+    {
+      "question_id": 42247,
+      "question_title": "Which team will win the 2026 Six Nations Championship?",
+      "question_type": "multiple_choice",
+      "question_url": "https://www.metaculus.com/questions/42247/",
+      "forecast_timestamp": "2026-02-27T06:42:22.641957+00:00",
+      "snapshot_timestamp": "2026-02-27T06:42:22.641957+00:00",
+      "num_forecasters": 101,
+      "resolved": false,
+      "resolution": null,
+      "comparison": null,
+      "score_data": null
+    },
+    {
+      "question_id": 42301,
+      "question_title": "How many #1 seeds will reach the Elite Eight in the NCAA's 2026 March Madness?",
+      "question_type": "multiple_choice",
+      "question_url": "https://www.metaculus.com/questions/42301/",
+      "forecast_timestamp": "2026-02-28T16:05:39.939664+00:00",
+      "snapshot_timestamp": "2026-02-28T16:05:39.939664+00:00",
+      "num_forecasters": 110,
+      "resolved": false,
+      "resolution": null,
+      "comparison": null,
+      "score_data": null
     }
   ],
   "resolution_stats": {
@@ -2433,5 +2576,6 @@
     "worst_score": -38.8328620750541,
     "total_spot_peer_score": 476.2152738279932
   },
-  "discrete_count": 6
+  "discrete_count": 6,
+  "date_count": 0
 }

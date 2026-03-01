@@ -8,7 +8,8 @@ This document lists all the non-core helper scripts, dashboards, and visualizers
 |------|---------|---------|
 | HTML Dashboard | `python scripts/dashboard_html.py` | Static HTML dashboard to browse forecasts |
 | Streamlit Dashboard | `streamlit run scripts/dashboard_streamlit.py` | Interactive dashboard with filtering |
-| Forecast Tracker | `python scripts/track_forecasts.py --tournament 32916` | Compare forecasts vs community consensus |
+| ~~Forecast Tracker~~ | ~~`python scripts/track_forecasts.py --tournament 32916`~~ | *Unavailable: Metaculus API locked down (see Analysis & Tracking).* |
+| Tracking Backfill | `python scripts/backfill_tracking_from_artifacts.py [--apply]` | Add missing questions to tracking files from local artifact dirs (no API) |
 | Score Updater | `python scripts/update_score_tracking.py` | Fetch score data from Metaculus API |
 | Resolution Scraper | `python scripts/scrape_resolutions.py` | Scrape resolution values via browser |
 | Score Scatter Plot | `python scripts/plot_score_scatter.py` | Generate score scatter plot |
@@ -67,35 +68,30 @@ python scripts/migrate_artifacts.py
 
 ## Analysis & Tracking
 
-### Forecast Tracker (Consensus Comparison)
+### ~~Forecast Tracker (Consensus Comparison)~~ — *Not usable currently*
 
 **Location:** `scripts/track_forecasts.py`
 
-Fetches community consensus probabilities from Metaculus and compares them against your submitted forecasts. Helps identify systematic biases.
+**Status:** The Metaculus API was locked down in Feb 2026. The tracker relied on the API for the list of questions you’ve forecasted and for `aggregations` (community predictions). Those endpoints now return `null` or restricted data, so **track_forecasts.py cannot be used** to build or refresh tracking files from the API.
+
+**Instead:** Use **`scripts/backfill_tracking_from_artifacts.py`** to add missing questions to `data/tracking/*.json` from your local forecast artifact dirs (no API calls). Then use the Score Updater and Resolution Scraper below to fill in scores and resolution values.
+
+~~Fetches community consensus probabilities from Metaculus and compares them against your submitted forecasts. Helps identify systematic biases.~~
 
 ```bash
-# Track all forecasts for a tournament
-python scripts/track_forecasts.py --tournament 32916
-
-# Custom output file
-python scripts/track_forecasts.py --tournament 32916 --output data/tracking/spring_aib_2026.json
-
-# Quiet mode (just save, minimal output)
-python scripts/track_forecasts.py --tournament 32916 --quiet
+# (No longer usable — API lockdown)
+# python scripts/track_forecasts.py --tournament 32916
 ```
 
-**Output:**
-- Per-forecast comparison (your probability vs community)
-- Aggregate statistics (mean difference, over/under confidence counts)
-- JSON file saved to `data/tracking/<tournament_id>.json`
-
-**Requires:** `METACULUS_TOKEN` environment variable
+~~**Output:** Per-forecast comparison, aggregate statistics, JSON saved to `data/tracking/<tournament_id>.json`. **Requires:** `METACULUS_TOKEN`.~~
 
 ### Score Tracking
 
-Three scripts work together to track tournament performance. They exist because the Metaculus API was locked down in Feb 2026 — `resolution` and `aggregations` fields now return `null`, but `score_data` on `my_forecasts` is still available. All scripts accept `--tracking-file` to work with any tournament.
+Three scripts work together to track tournament performance. They exist because the Metaculus API was locked down in Feb 2026 — `resolution` and `aggregations` fields now return `null`, but `score_data` on `my_forecasts` is still available.
 
-**Data files:** `data/tracking/minibench.json`, `data/tracking/32916.json`
+**Parameter:** These scripts do *not* take a tournament ID. They take **`--tracking-file`** (path to a tracking JSON). With no arguments, each defaults to **`data/tracking/minibench.json`**. To run for another set of questions, pass the path explicitly (e.g. `--tracking-file data/tracking/32916.json` or `data/tracking/other.json`). Run the script once per tracking file if you want to update all of them.
+
+**Data files:** `data/tracking/minibench.json`, `data/tracking/32916.json`, `data/tracking/other.json`
 
 #### Score Updater
 

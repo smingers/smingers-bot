@@ -1127,27 +1127,29 @@ def _build_resolved_section(resolved: list[ForecastAnalysis]) -> str:
             res_display = "— (not in data)"
             res_title = "Metaculus API no longer returns resolution. Run: poetry run python scripts/scrape_resolutions.py --tracking-file data/tracking/32916.json"
 
+        # My submitted forecast: supervisor overrides ensemble when it ran
+        my_submitted = (
+            a.supervisor_prediction
+            if (a.supervisor_ran and a.supervisor_prediction is not None)
+            else a.final_prediction
+        )
+        my_is_supervisor = a.supervisor_ran and a.supervisor_prediction is not None
+
         # Format prediction comparison
         if a.question_type == "binary":
-            my_display = _fmt(a.final_prediction, "pct") if a.final_prediction is not None else "—"
+            my_display = _fmt(my_submitted, "pct") if my_submitted is not None else "—"
             comm_display = (
                 _fmt(a.community_prediction, "pct") if a.community_prediction is not None else "—"
             )
         elif a.question_type in ("numeric", "discrete", "date"):
             fmt = "date" if a.question_type == "date" else "num"
-            my_display = _fmt(a.final_prediction, fmt) if a.final_prediction is not None else "—"
+            my_display = _fmt(my_submitted, fmt) if my_submitted is not None else "—"
             comm_display = (
                 _fmt(a.community_prediction, fmt) if a.community_prediction is not None else "—"
             )
-        elif (
-            a.question_type == "multiple_choice"
-            and isinstance(a.final_prediction, list)
-            and a.options
-        ):
+        elif a.question_type == "multiple_choice" and isinstance(my_submitted, list) and a.options:
             parts = [
-                f"{a.options[i]}: {p:.0%}"
-                for i, p in enumerate(a.final_prediction)
-                if i < len(a.options)
+                f"{a.options[i]}: {p:.0%}" for i, p in enumerate(my_submitted) if i < len(a.options)
             ]
             my_display = " | ".join(parts)
             if isinstance(a.community_prediction, dict):
@@ -1158,7 +1160,7 @@ def _build_resolved_section(resolved: list[ForecastAnalysis]) -> str:
             else:
                 comm_display = "—"
         else:
-            my_display = str(a.final_prediction) if a.final_prediction is not None else "—"
+            my_display = str(my_submitted) if my_submitted is not None else "—"
             comm_display = "—"
 
         # Score rows
@@ -1207,6 +1209,7 @@ def _build_resolved_section(resolved: list[ForecastAnalysis]) -> str:
                 </div>
                 <div class="comparison-item">
                     <span class="comparison-label">My Forecast</span>
+                    <span class="supervisor-badge-resolved">{"(Supervisor)" if my_is_supervisor else ""}</span>
                     <span class="comparison-value my-value">{my_display}</span>
                 </div>
                 <div class="comparison-item">
@@ -2455,6 +2458,12 @@ def _build_html(
     }}
     .resolution-value {{ color: #fff; }}
     .my-value {{ color: var(--accent); }}
+    .supervisor-badge-resolved {{
+        font-size: 0.7rem;
+        color: var(--text-dim);
+        font-style: italic;
+        margin-left: 4px;
+    }}
     .community-value {{ color: var(--purple); }}
     .score-table {{
         width: auto;

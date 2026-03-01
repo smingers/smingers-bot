@@ -1,7 +1,7 @@
 {
   "tournament_id": "minibench",
   "tournament_name": "Tournament minibench",
-  "last_updated": "2026-02-28T12:59:50.713541+00:00",
+  "last_updated": "2026-03-01T10:47:35.113409+00:00",
   "total_forecasts": 108,
   "binary_count": 56,
   "numeric_count": 24,
@@ -1811,15 +1811,24 @@
       "forecast_timestamp": "2026-02-17T01:11:00.877205+00:00",
       "snapshot_timestamp": "2026-02-18T22:40:00.516828+00:00",
       "num_forecasters": 1,
-      "resolved": false,
-      "resolution": null,
+      "resolved": true,
+      "resolution": "Yes",
       "comparison": {
         "type": "binary",
         "my_probability": 0.562,
         "community_probability": 0.55,
         "difference": 0.012
       },
-      "score_data": null
+      "score_data": {
+        "baseline_score": 10.122263900674357,
+        "peer_score": 3.5901076804647483,
+        "coverage": 0.6002218763033549,
+        "relative_legacy_score": 0.030919434552197624,
+        "weighted_coverage": 0.6002218763033549,
+        "spot_peer_score": 5.753756270708668,
+        "spot_baseline_score": 16.864203555883922
+      },
+      "status": "resolved"
     },
     {
       "question_id": 42156,
@@ -1929,15 +1938,24 @@
       "forecast_timestamp": "2026-02-17T03:41:18.215292+00:00",
       "snapshot_timestamp": "2026-02-18T22:40:00.516828+00:00",
       "num_forecasters": 1,
-      "resolved": false,
-      "resolution": null,
+      "resolved": true,
+      "resolution": "No",
       "comparison": {
         "type": "binary",
         "my_probability": 0.564,
         "community_probability": 0.53,
         "difference": 0.034
       },
-      "score_data": null
+      "score_data": {
+        "baseline_score": -11.577582473405194,
+        "peer_score": -3.31694743875725,
+        "coverage": 0.5859101631464781,
+        "relative_legacy_score": -0.06063502578205368,
+        "weighted_coverage": 0.5859101631464781,
+        "spot_peer_score": -5.690460511280011,
+        "spot_baseline_score": -19.759995988516053
+      },
+      "status": "resolved"
     },
     {
       "question_id": 42161,
@@ -2049,15 +2067,24 @@
       "forecast_timestamp": "2026-02-17T05:26:53.137150+00:00",
       "snapshot_timestamp": "2026-02-18T22:42:43.751187+00:00",
       "num_forecasters": 1,
-      "resolved": false,
-      "resolution": null,
+      "resolved": true,
+      "resolution": "Yes",
       "comparison": {
         "type": "binary",
         "my_probability": 0.41600000000000004,
         "community_probability": 0.35,
         "difference": 0.066
       },
-      "score_data": null
+      "score_data": {
+        "baseline_score": -22.83399120811296,
+        "peer_score": 4.985702494453543,
+        "coverage": 0.8605411261099354,
+        "relative_legacy_score": 0.10358745236764935,
+        "weighted_coverage": 0.8605411261099354,
+        "spot_peer_score": 21.499471966052248,
+        "spot_baseline_score": -26.53445665209948
+      },
+      "status": "resolved"
     },
     {
       "question_id": 42165,
@@ -2101,15 +2128,24 @@
       "forecast_timestamp": "2026-02-17T06:20:11.886212+00:00",
       "snapshot_timestamp": "2026-02-18T22:42:43.751187+00:00",
       "num_forecasters": 1,
-      "resolved": false,
-      "resolution": null,
+      "resolved": true,
+      "resolution": "No",
       "comparison": {
         "type": "binary",
         "my_probability": 0.312,
         "community_probability": 0.275,
         "difference": 0.037
       },
-      "score_data": null
+      "score_data": {
+        "baseline_score": 23.426491738852032,
+        "peer_score": 0.5637136902769182,
+        "coverage": 0.5087401803776069,
+        "relative_legacy_score": -0.04862402602630213,
+        "weighted_coverage": 0.5087401803776069,
+        "spot_peer_score": -1.7474600720530702,
+        "spot_baseline_score": 46.04804700400107
+      },
+      "status": "resolved"
     },
     {
       "question_id": 42167,
@@ -2180,8 +2216,8 @@
       "forecast_timestamp": "2026-02-17T11:17:47.613400+00:00",
       "snapshot_timestamp": "2026-02-18T22:44:56.724362+00:00",
       "num_forecasters": 1,
-      "resolved": false,
-      "resolution": null,
+      "resolved": true,
+      "resolution": "Decreases",
       "comparison": {
         "type": "multiple_choice",
         "my_probabilities": {
@@ -2202,7 +2238,16 @@
         "max_difference_option": "Decreases",
         "max_difference_value": 0.3137446373850869
       },
-      "score_data": null
+      "score_data": {
+        "baseline_score": 46.55854100504334,
+        "peer_score": 42.074397405657265,
+        "coverage": 0.5682290768623353,
+        "relative_legacy_score": 0.43068791948937096,
+        "weighted_coverage": 0.5682290768623353,
+        "spot_peer_score": 73.78772910501363,
+        "spot_baseline_score": 81.93621710126436
+      },
+      "status": "resolved"
     },
     {
       "question_id": 42170,
@@ -2273,15 +2318,24 @@
       "forecast_timestamp": "2026-02-17T14:01:36.997610+00:00",
       "snapshot_timestamp": "2026-02-18T22:44:56.724362+00:00",
       "num_forecasters": 1,
-      "resolved": false,
-      "resolution": null,
+      "resolved": true,
+      "resolution": "Yes",
       "comparison": {
         "type": "binary",
         "my_probability": 0.45799999999999996,
         "community_probability": 0.45,
         "difference": 0.008
       },
-      "score_data": null
+      "score_data": {
+        "baseline_score": -8.047485437881363,
+        "peer_score": 1.5725966838379075,
+        "coverage": 0.6357602992764226,
+        "relative_legacy_score": 0,
+        "weighted_coverage": 0.6357602992764226,
+        "spot_peer_score": 2.3893735128935907,
+        "spot_baseline_score": -12.658049656514322
+      },
+      "status": "resolved"
     },
     {
       "question_id": 42173,
@@ -2379,15 +2433,24 @@
       "forecast_timestamp": "2026-02-17T14:50:43.389901+00:00",
       "snapshot_timestamp": "2026-02-18T22:47:58.445284+00:00",
       "num_forecasters": 1,
-      "resolved": false,
-      "resolution": null,
+      "resolved": true,
+      "resolution": "No",
       "comparison": {
         "type": "binary",
         "my_probability": 0.294,
         "community_probability": 0.255,
         "difference": 0.039
       },
-      "score_data": null
+      "score_data": {
+        "baseline_score": 41.37411193406494,
+        "peer_score": -3.375443165948427,
+        "coverage": 0.8312392929748251,
+        "relative_legacy_score": -0.07361798265886102,
+        "weighted_coverage": 0.8312392929748251,
+        "spot_peer_score": -2.5137050591283123,
+        "spot_baseline_score": 49.77400886090931
+      },
+      "status": "resolved"
     },
     {
       "question_id": 42177,
@@ -2471,15 +2534,24 @@
       "forecast_timestamp": "2026-02-17T15:55:41.281305+00:00",
       "snapshot_timestamp": "2026-02-18T22:47:58.445284+00:00",
       "num_forecasters": 1,
-      "resolved": false,
-      "resolution": null,
+      "resolved": true,
+      "resolution": "Yes",
       "comparison": {
         "type": "binary",
         "my_probability": 0.594,
         "community_probability": 0.46,
         "difference": 0.134
       },
-      "score_data": null
+      "score_data": {
+        "baseline_score": 21.67684632011563,
+        "peer_score": 25.03265459139172,
+        "coverage": 0.872185431100704,
+        "relative_legacy_score": 0.35616990235523766,
+        "weighted_coverage": 0.872185431100704,
+        "spot_peer_score": 28.22768825916311,
+        "spot_baseline_score": 24.85348361386787
+      },
+      "status": "resolved"
     },
     {
       "question_id": 42180,
@@ -2489,8 +2561,8 @@
       "forecast_timestamp": "2026-02-17T16:46:40.678937+00:00",
       "snapshot_timestamp": "2026-02-18T22:47:58.445284+00:00",
       "num_forecasters": 1,
-      "resolved": false,
-      "resolution": null,
+      "resolved": true,
+      "resolution": "Decreases",
       "comparison": {
         "type": "multiple_choice",
         "my_probabilities": {
@@ -2512,14 +2584,15 @@
         "max_difference_value": 0.17637075180226558
       },
       "score_data": {
-        "baseline_score": 87.084,
-        "peer_score": 17.017,
-        "coverage": 1.0,
-        "relative_legacy_score": 0,
-        "weighted_coverage": 1.0,
-        "spot_peer_score": 7.076,
-        "spot_baseline_score": 89.53
-      }
+        "baseline_score": -15.169019072345463,
+        "peer_score": 2.2632045717543074,
+        "coverage": 0.5072957212836654,
+        "relative_legacy_score": -0.05306616133708782,
+        "weighted_coverage": 0.5072957212836654,
+        "spot_peer_score": 3.926118952980823,
+        "spot_baseline_score": -29.90172878643969
+      },
+      "status": "resolved"
     },
     {
       "question_id": 42181,
@@ -2928,15 +3001,24 @@
       "forecast_timestamp": "2026-02-18T15:43:02.296689+00:00",
       "snapshot_timestamp": "2026-02-18T22:54:46.704677+00:00",
       "num_forecasters": 1,
-      "resolved": false,
-      "resolution": null,
+      "resolved": true,
+      "resolution": "No",
       "comparison": {
         "type": "binary",
         "my_probability": 0.266,
         "community_probability": 0.3935,
         "difference": -0.1275
       },
-      "score_data": null
+      "score_data": {
+        "baseline_score": 39.37239259222084,
+        "peer_score": 21.206682157121946,
+        "coverage": 0.7108829588801773,
+        "relative_legacy_score": 0.22776990146698023,
+        "weighted_coverage": 0.7108829588801773,
+        "spot_peer_score": 29.84348474536063,
+        "spot_baseline_score": 55.38519681811257
+      },
+      "status": "resolved"
     },
     {
       "question_id": 42195,
@@ -3098,40 +3180,6 @@
         "weighted_coverage": 0.7346895672215356,
         "spot_peer_score": -2.4494493177893766,
         "spot_baseline_score": -29.335894269059157
-      },
-      "status": "resolved"
-    },
-    {
-      "question_id": 41968,
-      "question_title": "What will be the value of \"Overnight Repurchase Agreements: Treasury Securities Purchased by the Federal Reserve in the Temporary Open Market Operations\" on 2026-02-10?",
-      "question_type": "numeric",
-      "question_url": "https://www.metaculus.com/questions/41968/",
-      "forecast_timestamp": "2026-02-02T14:39:58+00:00",
-      "snapshot_timestamp": "2026-02-20T21:58:58.157367+00:00",
-      "num_forecasters": 1,
-      "resolved": true,
-      "resolution": 0.1,
-      "comparison": {
-        "type": "numeric",
-        "community_lower_quartile": 0.2916,
-        "community_median": 1.709,
-        "community_upper_quartile": 8.19,
-        "community_iqr": 7.8984,
-        "my_median": null,
-        "my_lower_quartile": null,
-        "my_upper_quartile": null,
-        "median_difference": null,
-        "my_iqr": null,
-        "uncertainty_ratio": null
-      },
-      "score_data": {
-        "baseline_score": 76.5769345422429,
-        "peer_score": 27.18386333644195,
-        "coverage": 0.9966642887593993,
-        "relative_legacy_score": 0,
-        "weighted_coverage": 0.9966642887593993,
-        "spot_peer_score": 0,
-        "spot_baseline_score": 0
       },
       "status": "resolved"
     },
@@ -3298,34 +3346,6 @@
       "status": "resolved"
     },
     {
-      "question_id": 42205,
-      "question_title": "Will DELL's market close price on 2026-02-27 be higher than its market close price on 2026-02-20?",
-      "question_type": "binary",
-      "question_url": "https://www.metaculus.com/questions/42205/",
-      "forecast_timestamp": "2026-02-20T03:27:29+00:00",
-      "snapshot_timestamp": null,
-      "num_forecasters": null,
-      "resolved": true,
-      "resolution": "Yes",
-      "comparison": null,
-      "score_data": null,
-      "status": "resolved"
-    },
-    {
-      "question_id": 42206,
-      "question_title": "Will LMT's market close price on 2026-02-26 be higher than its market close price on 2026-02-20?",
-      "question_type": "binary",
-      "question_url": "https://www.metaculus.com/questions/42206/",
-      "forecast_timestamp": "2026-02-20T03:27:29+00:00",
-      "snapshot_timestamp": null,
-      "num_forecasters": null,
-      "resolved": true,
-      "resolution": "No",
-      "comparison": null,
-      "score_data": null,
-      "status": "resolved"
-    },
-    {
       "question_id": 42207,
       "question_title": "What will be the value of \"Moody's Seasoned Aaa Corporate Bond Yield\" on 2026-02-25?",
       "question_type": "numeric",
@@ -3483,21 +3503,21 @@
     }
   ],
   "resolution_stats": {
-    "total_resolved": 92,
-    "total_unresolved": 16,
-    "binary_resolved": 48,
+    "total_resolved": 102,
+    "total_unresolved": 6,
+    "binary_resolved": 56,
     "numeric_resolved": 22,
-    "multiple_choice_resolved": 22
+    "multiple_choice_resolved": 24
   },
   "score_stats": {
-    "mean_spot_peer_score": 10.111634097670402,
-    "median_spot_peer_score": 8.000924965113152,
-    "total_scored": 94,
-    "positive_scores": 64,
-    "negative_scores": 27,
+    "mean_spot_peer_score": 10.668869925735228,
+    "median_spot_peer_score": 7.482392619554489,
+    "total_scored": 103,
+    "positive_scores": 70,
+    "negative_scores": 30,
     "best_score": 87.05270476644584,
     "worst_score": -106.52283259743741,
-    "total_spot_peer_score": 950.4936051810178
+    "total_spot_peer_score": 1098.8936023507285
   },
   "binary_resolution_stats": {
     "correct_direction": 6,

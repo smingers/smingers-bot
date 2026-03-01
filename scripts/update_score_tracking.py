@@ -213,8 +213,13 @@ def main():
     with open(tracking_file) as f:
         tracking = json.load(f)
 
-    question_ids = [f["question_id"] for f in tracking["forecasts"]]
-    print(f"Fetching score data for {len(question_ids)} questions from {tracking_file}...")
+    # Only fetch unresolved questions; once resolved the question is scored and does not need re-checking.
+    question_ids = [
+        f["question_id"] for f in tracking["forecasts"] if f.get("resolved") is not True
+    ]
+    print(
+        f"Fetching score data for {len(question_ids)} unresolved question(s) from {tracking_file}..."
+    )
     print(f"  (delay between requests: {args.delay}s)")
 
     api_results = fetch_score_data(token, question_ids, delay_seconds=args.delay)
