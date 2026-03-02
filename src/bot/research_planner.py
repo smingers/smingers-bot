@@ -199,7 +199,11 @@ class IterativeResearchPlanner(ForecasterMixin):
             "total_gap_queries": 0,
         }
 
-        # Phase 0: Pre-research
+        # Community prediction context (for meta-questions about CP)
+        # This is scraped via Playwright before the research planner runs.
+        cp_context = (question_params.get("community_prediction_context") or "").strip()
+
+        # Phase 0: Pre-research (question URL scraping)
         log("\n--- Phase 0: Pre-research (scraping question URLs) ---")
         phase0_start = time.time()
         seed_context, seed_metadata = await self._gather_seed_context(question_details)
@@ -311,6 +315,14 @@ class IterativeResearchPlanner(ForecasterMixin):
             for r in query_results
         ]
 
+        # Pre-research context for downstream consumers (outside/inside view + supervisor)
+        # Combine community prediction context (if any) with question URL seed context.
+        combined_seed_context = seed_context
+        if cp_context:
+            combined_seed_context = (
+                f"{cp_context}\n\n{seed_context}" if seed_context else cp_context
+            )
+
         result = ResearchPlanResult(
             historical_context=historical_context,
             current_context=current_context,
@@ -318,7 +330,7 @@ class IterativeResearchPlanner(ForecasterMixin):
             reflect_analysis=reflect_analysis,
             queries_planned=planned_queries,
             gap_queries=gap_queries,
-            seed_context=seed_context,
+            seed_context=combined_seed_context,
             metadata=metadata,
         )
 
@@ -377,8 +389,14 @@ class IterativeResearchPlanner(ForecasterMixin):
         # Get stock return context if available
         stock_return_context = question_params.get("stock_return_context", "")
 
-        # Build seed context section
-        seed_section = seed_context if seed_context else "No pre-research context available."
+        # Build seed context section: combine community prediction (if any) with URL seed context
+        cp_context = (question_params.get("community_prediction_context") or "").strip()
+        if cp_context and seed_context:
+            seed_section = f"{cp_context}\n\n{seed_context}"
+        elif cp_context:
+            seed_section = cp_context
+        else:
+            seed_section = seed_context or "No pre-research context available."
 
         # Build stock return section
         stock_section = stock_return_context if stock_return_context else ""
@@ -749,7 +767,16 @@ class IterativeResearchPlanner(ForecasterMixin):
         historical_context = "\n".join(historical_parts)
         current_context = "\n".join(current_parts)
 
-        # Prepend seed context to historical (resolution sources first)
+        # Community prediction context (for meta-questions about CP) is useful for
+        # both historical (outside view) and current (inside view) analyses.
+        cp_context = (question_params.get("community_prediction_context") or "").strip()
+        if cp_context:
+            historical_context = (
+                f"{cp_context}\n{historical_context}" if historical_context else cp_context
+            )
+            current_context = f"{cp_context}\n{current_context}" if current_context else cp_context
+
+        # Prepend seed context to historical (resolution sources from question URLs)
         if seed_context:
             historical_context = seed_context + "\n" + historical_context
 

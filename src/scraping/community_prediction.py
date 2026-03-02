@@ -556,7 +556,7 @@ def format_community_prediction_context(
         f'<CommunityPrediction source="metaculus_browser_scrape" '
         f'underlying_question_id="{details.underlying_post_id}">',
         "This is a meta-question about community forecaster behavior on Metaculus. "
-        "The data below was scraped directly from the Metaculus question page.",
+        "The data below was scraped directly from the relevant Metaculus question page.",
         "",
     ]
 
