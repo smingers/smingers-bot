@@ -1,0 +1,67 @@
+{
+  "ticker": "YUM",
+  "start_date": "2026-03-03",
+  "end_date": "2026-03-14",
+  "trading_days": 9,
+  "current_price": 162.92,
+  "reference_price": null,
+  "return_so_far": null,
+  "sample_size": 2504,
+  "positive_return_rate": 0.5755,
+  "mean_return": 0.54,
+  "median_return": 0.62,
+  "std_return": 4.0,
+  "percentile_5": -5.28,
+  "percentile_25": -1.48,
+  "percentile_75": 2.64,
+  "percentile_95": 6.41,
+  "recent_return_5d": -2.12,
+  "recent_return_1m": 5.27,
+  "recent_return_3m": 6.92,
+  "volatility_30d": 22.6,
+  "recent_return_5d_percentile": 15,
+  "recent_return_1m_percentile": 80,
+  "recent_return_3m_percentile": 64,
+  "conditional_rates": [
+    {
+      "label": "Price in top decile of 52wk range",
+      "condition": "range_top_decile",
+      "probability": 0.5645,
+      "sample_size": 698,
+      "delta": -1.1,
+      "applicable": false
+    },
+    {
+      "label": "Prior 5-day return > 0",
+      "condition": "mean_reversion_up",
+      "probability": 0.5588,
+      "sample_size": 1378,
+      "delta": -1.7,
+      "applicable": "False"
+    },
+    {
+      "label": "Prior 5-day return < 0",
+      "condition": "mean_reversion_down",
+      "probability": 0.5952,
+      "sample_size": 1119,
+      "delta": 2.0,
+      "applicable": "True"
+    },
+    {
+      "label": "30-day vol above median",
+      "condition": "vol_high",
+      "probability": 0.5982,
+      "sample_size": 1237,
+      "delta": 2.3,
+      "applicable": true
+    },
+    {
+      "label": "30-day vol below median",
+      "condition": "vol_low",
+      "probability": 0.5473,
+      "sample_size": 1237,
+      "delta": -2.8,
+      "applicable": false
+    }
+  ]
+}

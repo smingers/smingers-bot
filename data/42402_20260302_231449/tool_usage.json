@@ -1,0 +1,266 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": false,
+      "num_queries": 0,
+      "queries": [],
+      "tools_used": [],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 5,
+      "queries": [
+        {
+          "query": "YUM nine day return history",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Retrieve data, charts, or academic notes showing historical 9-trading-day return distribution for YUM.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "YUM price seasonality March",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Find analyses of YUM\u2019s average performance during March or mid-March windows across years.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Yum Brands ex dividend effect",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Check if YUM typically drifts up or down in the days following its ex-dividend date; relevant because Q1 ex-dividend often falls in late Feb/early Mar.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Restaurant sector payroll report reaction",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Identify studies/newsletters showing how restaurant or consumer-discretionary stocks move around Non-Farm Payroll releases.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Compute historical probability YUM closes higher 9 trading days later since 2000; include conditional probabilities by 52-week-range decile and prior 5-day return sign; summarize mean, median, stdev, highlight outliers.",
+          "tool": "Agent",
+          "temporal_role": "historical",
+          "intent": "Produce a comprehensive, quantified base-rate table forecasters can reference.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Yum Brands news March 2026",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "Surface the most recent corporate headlines, press releases, analyst notes that could move the stock within the forecast window.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Fast food consumer demand 2026",
+          "tool": "AskNews",
+          "temporal_role": "current",
+          "intent": "Gather recent coverage on U.S. and global quick-service restaurant demand, pricing power, or traffic trends that might impact YUM in the next two weeks.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 53,
+          "error": null
+        },
+        {
+          "query": "Upcoming CPI release March 2026",
+          "tool": "Google",
+          "temporal_role": "current",
+          "intent": "Confirm the exact date/consensus expectations for the February CPI release that will occur before 14 Mar, to gauge likely market volatility drivers.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "AskNews",
+        "Google",
+        "Google News"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8889,
+        "token_output": 1475,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.06656999999999999,
+        "duration_seconds": 42.479732036590576,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17726,
+        "token_output": 2391,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.124495,
+        "duration_seconds": 50.08638334274292,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17410,
+        "token_output": 2219,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.120335,
+        "duration_seconds": 50.086371660232544,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7811,
+        "token_output": 1915,
+        "token_reasoning": 245,
+        "used_reasoning": true,
+        "cost": 0.04047925,
+        "duration_seconds": 42.4797842502594,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15451,
+        "token_output": 2317,
+        "token_reasoning": 518,
+        "used_reasoning": true,
+        "cost": 0.05947725,
+        "duration_seconds": 50.08635473251343,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15811,
+        "token_output": 1521,
+        "token_reasoning": 640,
+        "used_reasoning": true,
+        "cost": 0.043789999999999996,
+        "duration_seconds": 50.08633637428284,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7811,
+        "token_output": 1589,
+        "token_reasoning": 512,
+        "used_reasoning": true,
+        "cost": 0.028333999999999998,
+        "duration_seconds": 42.479817152023315,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15102,
+        "token_output": 1378,
+        "token_reasoning": 384,
+        "used_reasoning": true,
+        "cost": 0.041228,
+        "duration_seconds": 50.08631920814514,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "steps1_2_research": 0.407,
+    "step3_outside_view": 0.1354,
+    "step5_inside_view": 0.3893,
+    "step6_aggregation": 0.3893,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.9317
+}
