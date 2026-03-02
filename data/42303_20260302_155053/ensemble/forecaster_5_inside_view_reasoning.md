@@ -1,0 +1,5 @@
+**Analyzing election seat differences**
+
+I'm working on calculating the seat difference between SDS and GS for the upcoming election. The goal is to forecast the results for March 22, 2026, using polling data like the Ninamedia poll showing SDS at 22.6% and GS at 19.1%. I'll translate this into a projected seat difference, factoring in historical biases, undecided voters, and the incumbency penalty. I estimate a median expectation of SDS leading by around +4 seats, with a possible range from -10 to +14 seats across percentiles.**Crafting percentiles for analysis**
+
+I'm focusing on creating an analysis that includes percentiles and their associated values over a 20-day timeframe. I want to ensure a structured distribution that starts with the 10th percentile at -11 and goes up to the 90th percentile at +14, making sure the values are strictly increasing. The mean might be around +3. I'll summarize everything in bullet points and categorize the evidence with appropriate weight, along with a source analysis to support my conclusions. Let's go ahead and produce this answer!

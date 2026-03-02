@@ -1,0 +1,266 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": false,
+      "num_queries": 0,
+      "queries": [],
+      "tools_used": [],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "slovenia parliamentary election seat results 1992 2022",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Retrieve a full historical table of seat counts for all elections to calculate typical SDS/GS (or predecessors) seat differences and leadership patterns.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "slovenia electoral system d\u2019hondt 88 seats allocation",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Obtain an authoritative description of the legal seat-allocation rules that will determine the official result used for resolution.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "[HISTORICAL] Provide a table of every Slovenian parliamentary election since 1992 showing the seat counts of the two largest parties, compute the seat-difference (1st minus 2nd), indicate which party formed the government, and summarise average final-poll vs result errors for SDS and GS or their predecessors.",
+          "tool": "Agent",
+          "temporal_role": "historical",
+          "intent": "Build a quantitative base rate for seat differences and poll accuracy.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        },
+        {
+          "query": "slovene opinion polls accuracy past elections",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Find academic or media analyses measuring historical polling errors to refine uncertainty estimates.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "Mediana poll March 2026 SDS GS seats",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "Pull the very latest Mediana vote-share and seat-projection numbers published in March 2026.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        },
+        {
+          "query": "Vox Populi poll February 2026 Slovenia election",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "Capture the newest Ninamedia/Vox Populi polling to compare with other series.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        },
+        {
+          "query": "MRP seat projection Slovenia 2026 SDS",
+          "tool": "Google",
+          "temporal_role": "current",
+          "intent": "Locate any March 2026 MRP or model-based seat forecasts that directly estimate SDS and GS seat counts.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "AskNews: Coverage since January 2026 on Slovenian campaign setbacks or scandals affecting Freedom Movement or SDS, including economic data releases, debates, or corruption stories.",
+          "tool": "AskNews",
+          "temporal_role": "current",
+          "intent": "Surface contrarian or late-breaking developments that could swing undecided voters and alter the expected seat difference.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 24,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google",
+        "AskNews"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8986,
+        "token_output": 1739,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.071015,
+        "duration_seconds": 51.46774196624756,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16291,
+        "token_output": 2392,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.117335,
+        "duration_seconds": 61.48566198348999,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15824,
+        "token_output": 2600,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.11812,
+        "duration_seconds": 61.48563003540039,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7913,
+        "token_output": 2666,
+        "token_reasoning": 940,
+        "used_reasoning": true,
+        "cost": 0.051171749999999995,
+        "duration_seconds": 51.46779918670654,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14347,
+        "token_output": 2129,
+        "token_reasoning": 427,
+        "used_reasoning": true,
+        "cost": 0.05491325,
+        "duration_seconds": 61.48559498786926,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14573,
+        "token_output": 1487,
+        "token_reasoning": 320,
+        "used_reasoning": true,
+        "cost": 0.041041999999999995,
+        "duration_seconds": 61.48555874824524,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7913,
+        "token_output": 2104,
+        "token_reasoning": 896,
+        "used_reasoning": true,
+        "cost": 0.032658,
+        "duration_seconds": 51.467833280563354,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13934,
+        "token_output": 1392,
+        "token_reasoning": 320,
+        "used_reasoning": true,
+        "cost": 0.039004,
+        "duration_seconds": 61.485522508621216,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "steps1_2_research": 0.399,
+    "step3_outside_view": 0.1548,
+    "step5_inside_view": 0.3704,
+    "step6_aggregation": 0.3704,
+    "step7_supervisor": 0.3845
+  },
+  "total_pipeline_cost": 1.3088
+}

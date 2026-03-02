@@ -1,0 +1,23 @@
+{
+  "confidence": "low",
+  "prediction": {
+    "10": -5.0,
+    "20": 0.0,
+    "40": 5.0,
+    "60": 8.0,
+    "80": 12.0,
+    "90": 16.0
+  },
+  "search_queries": [
+    "Slovenia 2026 election polls March SDS GS (Google News)",
+    "Resni.ca Logar Democrats Slovenia polls 2026 (Google News)",
+    "What were the final pre-election polls versus actual results for SDS in each Slovenian parliamentary election from 2008 to 2022? Specifically, how large was the polling error (in percentage points and seats) for SDS and the main liberal/center-left challenger in each election? (Agent)",
+    "Slovenia parliamentary election 2026 seat projection March (Google News)"
+  ],
+  "cost": 0.3845,
+  "divergence": {
+    "metric_name": "rn_spread",
+    "metric_value": 0.0675,
+    "threshold": 0.045
+  }
+}

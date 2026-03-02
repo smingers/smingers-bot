@@ -1,0 +1,10 @@
+**Estimating seat differences**
+
+I need to predict the seat difference between SDS and GS in the 2026 Slovenian parliamentary election using an outside view approach.   
+This means I should focus on historical patterns and analyze components like source, reference class, and timeframe. I’ll provide percentiles—choosing 10, 20, 40, 60, 80, and 90—to establish a plausible seat difference range. I’ll rely on historical seat gaps from past elections to calibrate my estimates, specifically examining the differences between the leading conservative and leading liberal parties.**Analyzing seat gaps**
+
+I’m focusing on the historical seat gaps between SDS and their leading liberal opponents. I've gathered data from past elections, showing differences like -9, -20, +6, and more. The average difference is about -5.4 seats, with a standard deviation around 10. Although current polling shows SDS with a small lead, I'll rely on historical data for my outside view prediction. I see that SDS tends to have slight leads but rarely significantly outperforms, suggesting a symmetrical distribution around zero with some extremes. Given the incumbents' position, I estimate a 25-30% chance for SDS to have a seat advantage.**Estimating percentiles for seat distribution**
+
+Historically, SDS has led in just 2 of the last 8 elections against liberal parties. I estimate a 25% chance for SDS to have a seat advantage. Even though current polls show SDS ahead, I should stick to an outside view, focusing on historical data rather than specific polls. 
+
+I’ll propose percentiles for the seat difference, ensuring they’re symmetrical around zero and monotonic: 10th at -18, 20th at -12, 40th at -5, 60th at +1, 80th at +8, and 90th at +13. This fits my open bounds for analysis. I’ll finalize justifications based on this distribution.

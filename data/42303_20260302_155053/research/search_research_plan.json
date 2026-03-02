@@ -1,0 +1,224 @@
+{
+  "plan_analysis": "The pre-research context gives biographical background on the two leaders, historical overviews of their parties, and a skeletal description of the opinion-polling page, but it is missing the numerical poll tables, seat-projection data, details of the electoral formula, and any evaluation of past poll accuracy.  \nTo build a strong evidence base, forecasters still need:  \n\u2022 Base-rate data \u2013 historical seat differences between the first and second parties, how often the poll leader ultimately wins, and typical poll-to-result errors.  \n\u2022 Precise resolution mechanism \u2013 description of the Slovenian electoral system (districts, D\u2019Hondt allocation, 88 vs 90 seats) so that vote shares can be translated into seats.  \n\u2022 Key drivers \u2013 up-to-date polling (vote shares, seat projections, leader and cabinet approval); macro indicators and salient events that could move late voters (economy, scandals, referendums).  \n\u2022 Current state \u2013 the most recent polls from Mediana, Ninamedia/Vox Populi, Parsifal, Valicon, and any March 2026 MRP seat projections; news on campaign themes, debates, or last-minute shocks.  \n\u2022 Contrarian signals \u2013 reporting that GS is regaining momentum, a possible SDS misstep, or evidence turnout patterns may favour the incumbent coalition.  \n\nThe eight queries below are designed to pull in (1) historical election and polling accuracy data; (2) details of the seat-allocation mechanism; (3) the very latest published polling and seat projections; and (4) news that could flip the conventional narrative.",
+  "reflect_analysis": null,
+  "queries_planned": [
+    {
+      "query": "slovenia parliamentary election seat results 1992 2022",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Retrieve a full historical table of seat counts for all elections to calculate typical SDS/GS (or predecessors) seat differences and leadership patterns.",
+      "phase": "plan"
+    },
+    {
+      "query": "slovenia electoral system d\u2019hondt 88 seats allocation",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Obtain an authoritative description of the legal seat-allocation rules that will determine the official result used for resolution.",
+      "phase": "plan"
+    },
+    {
+      "query": "[HISTORICAL] Provide a table of every Slovenian parliamentary election since 1992 showing the seat counts of the two largest parties, compute the seat-difference (1st minus 2nd), indicate which party formed the government, and summarise average final-poll vs result errors for SDS and GS or their predecessors.",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "Build a quantitative base rate for seat differences and poll accuracy.",
+      "phase": "plan"
+    },
+    {
+      "query": "slovene opinion polls accuracy past elections",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Find academic or media analyses measuring historical polling errors to refine uncertainty estimates.",
+      "phase": "plan"
+    },
+    {
+      "query": "Mediana poll March 2026 SDS GS seats",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Pull the very latest Mediana vote-share and seat-projection numbers published in March 2026.",
+      "phase": "plan"
+    },
+    {
+      "query": "Vox Populi poll February 2026 Slovenia election",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Capture the newest Ninamedia/Vox Populi polling to compare with other series.",
+      "phase": "plan"
+    },
+    {
+      "query": "MRP seat projection Slovenia 2026 SDS",
+      "tool": "Google",
+      "temporal_role": "current",
+      "intent": "Locate any March 2026 MRP or model-based seat forecasts that directly estimate SDS and GS seat counts.",
+      "phase": "plan"
+    },
+    {
+      "query": "AskNews: Coverage since January 2026 on Slovenian campaign setbacks or scandals affecting Freedom Movement or SDS, including economic data releases, debates, or corruption stories.",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "Surface contrarian or late-breaking developments that could swing undecided voters and alter the expected seat difference.",
+      "phase": "plan"
+    }
+  ],
+  "gap_queries": [],
+  "seed_context_chars": 7985,
+  "historical_context_chars": 26042,
+  "current_context_chars": 47302,
+  "phases": {
+    "pre_research": {
+      "duration_seconds": 16.13,
+      "seed_context_chars": 7985,
+      "search_id": "question_urls",
+      "searched": true,
+      "urls_found": 9,
+      "urls_scraped": 4,
+      "urls_summarized": 4,
+      "urls": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Janez_Jan%C5%A1a",
+          "domain": "en.wikipedia.org",
+          "scraped": true,
+          "method": "wikipedia_api",
+          "status_code": 200,
+          "content_words": 2355
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Slovenian_Democratic_Party",
+          "domain": "en.wikipedia.org",
+          "scraped": true,
+          "method": "wikipedia_api",
+          "status_code": 200,
+          "content_words": 2262
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Robert_Golob",
+          "domain": "en.wikipedia.org",
+          "scraped": true,
+          "method": "wikipedia_api",
+          "status_code": 200,
+          "content_words": 490
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Freedom_Movement_\\(Slovenia\\",
+          "domain": "en.wikipedia.org",
+          "scraped": false,
+          "method": "wikipedia_api",
+          "status_code": 200,
+          "error": "Wikipedia page not found: Freedom Movement \\(Slovenia\\"
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Opinion_polling_for_the_2026_Slovenian_parliamentary_election",
+          "domain": "en.wikipedia.org",
+          "scraped": true,
+          "method": "wikipedia_api",
+          "status_code": 200,
+          "content_words": 466
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ]
+    },
+    "plan": {
+      "duration_seconds": 45.43,
+      "cost": 0.0208,
+      "num_queries": 8
+    },
+    "execute": {
+      "duration_seconds": 64.38,
+      "cost": 0.2873,
+      "queries_executed": 8,
+      "queries_successful": 8
+    },
+    "assemble": {
+      "historical_context_chars": 26042,
+      "current_context_chars": 47302
+    }
+  },
+  "total_queries_planned": 8,
+  "total_queries_executed": 8,
+  "total_gap_queries": 0,
+  "total_cost": 0.399,
+  "total_duration_seconds": 125.94,
+  "query_details": [
+    {
+      "query": "slovenia parliamentary election seat results 1992 2022",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Retrieve a full historical table of seat counts for all elections to calculate typical SDS/GS (or predecessors) seat differences and leadership patterns.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "slovenia electoral system d\u2019hondt 88 seats allocation",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Obtain an authoritative description of the legal seat-allocation rules that will determine the official result used for resolution.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "[HISTORICAL] Provide a table of every Slovenian parliamentary election since 1992 showing the seat counts of the two largest parties, compute the seat-difference (1st minus 2nd), indicate which party formed the government, and summarise average final-poll vs result errors for SDS and GS or their predecessors.",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "Build a quantitative base rate for seat differences and poll accuracy.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 1,
+      "error": null
+    },
+    {
+      "query": "slovene opinion polls accuracy past elections",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Find academic or media analyses measuring historical polling errors to refine uncertainty estimates.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "Mediana poll March 2026 SDS GS seats",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Pull the very latest Mediana vote-share and seat-projection numbers published in March 2026.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 1,
+      "error": null
+    },
+    {
+      "query": "Vox Populi poll February 2026 Slovenia election",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Capture the newest Ninamedia/Vox Populi polling to compare with other series.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 1,
+      "error": null
+    },
+    {
+      "query": "MRP seat projection Slovenia 2026 SDS",
+      "tool": "Google",
+      "temporal_role": "current",
+      "intent": "Locate any March 2026 MRP or model-based seat forecasts that directly estimate SDS and GS seat counts.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "AskNews: Coverage since January 2026 on Slovenian campaign setbacks or scandals affecting Freedom Movement or SDS, including economic data releases, debates, or corruption stories.",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "Surface contrarian or late-breaking developments that could swing undecided voters and alter the expected seat difference.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 24,
+      "error": null
+    }
+  ]
+}

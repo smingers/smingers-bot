@@ -1,0 +1,5 @@
+**Analyzing election forecasts**
+
+I need to put together a professional analysis incorporating current polling data. It seems the SDS party is leading by about 3-4 points, translating into a potential seat difference of 7-8. There’s an important adjustment for undecided voters and the chance of late tactical voting against Janša, similar to previous elections. Incumbents often lose, and the rise of right-populist Resni.ca could affect SDS's seat share. The allocation is 90 seats, with SDS expected around 30 and GS at 23. There’s a high undecided rate, which may lead to surprises.**Crafting percentile analysis**
+
+I need to provide a clear analysis that includes percentiles: 10th at -6, 20th at -1, 40th at +4, 60th at +7, 80th at +11, and 90th at +16. These should be in strictly increasing order, but it's important to note that the gap could exceed 15.5. I’ll also address the timeframe—20 days, possibly halved to 10 days or doubled to 40 days. Additionally, I want to summarize insights from key sources like Reuters for acquittals and various polls to ensure a well-rounded evaluation.
