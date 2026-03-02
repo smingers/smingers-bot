@@ -936,6 +936,8 @@ IMPORTANT: Today's date is {today}.
 
 {type_specific_section}
 
+{pre_research_section}
+
 === FORECASTER PREDICTIONS AND REASONING ===
 
 {forecaster_summaries}
@@ -1007,6 +1009,8 @@ Question metadata:
 
 IMPORTANT: Today's date is {today}.
 
+{pre_research_section}
+
 === FORECASTER PREDICTIONS ===
 {forecaster_summaries}
 
@@ -1074,6 +1078,8 @@ Question metadata:
 IMPORTANT: Today's date is {today}.
 
 {type_specific_section}
+
+{pre_research_section}
 
 === FORECASTER PREDICTIONS ===
 {forecaster_summaries}
@@ -1150,6 +1156,8 @@ Question metadata:
 IMPORTANT: Today's date is {today}.
 
 Options: {options}
+
+{pre_research_section}
 
 === FORECASTER PREDICTIONS ===
 {forecaster_summaries}

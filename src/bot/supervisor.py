@@ -54,6 +54,10 @@ class SupervisorInput:
     # The current aggregated result (probability for binary, etc.)
     weighted_average_prediction: Any
 
+    # Pre-research: scraped/summarized content from links in the question (e.g. resolution URL).
+    # Treat as primary-source evidence for "current state" when the question resolves from that source.
+    pre_research_context: str = ""
+
     # Optional type-specific fields
     options: list[str] | None = None  # Multiple choice options
     units: str | None = None  # Numeric units
@@ -171,6 +175,7 @@ class SupervisorAgent:
         forecaster_summaries = self._format_forecaster_summaries(supervisor_input)
         weighted_avg_display = self._format_weighted_average(supervisor_input)
         type_section = self._format_type_specific_section(supervisor_input)
+        pre_research_section = self._format_pre_research_section(supervisor_input)
 
         prompt = SUPERVISOR_ANALYSIS_PROMPT.format(
             title=supervisor_input.question_title,
@@ -181,6 +186,7 @@ class SupervisorAgent:
             scheduled_resolve_time=supervisor_input.scheduled_resolve_time,
             today=supervisor_input.today,
             type_specific_section=type_section,
+            pre_research_section=pre_research_section,
             forecaster_summaries=forecaster_summaries,
             weighted_average_display=weighted_avg_display,
         )
@@ -266,6 +272,7 @@ class SupervisorAgent:
             "disagreement_analysis": analysis,
             "research_results": search_context or "(No targeted research conducted)",
             "weighted_average_display": weighted_avg_display,
+            "pre_research_section": self._format_pre_research_section(supervisor_input),
         }
 
         # Add type-specific fields
@@ -368,6 +375,22 @@ class SupervisorAgent:
                 return str([f"{p * 100:.1f}%" for p in wa])
             return str(wa)
         return str(wa)
+
+    def _format_pre_research_section(self, supervisor_input: SupervisorInput) -> str:
+        """Format pre-research (question URL scrape) for supervisor prompts."""
+        pre = (supervisor_input.pre_research_context or "").strip()
+        if not pre:
+            return (
+                "=== PRE-RESEARCH (primary source) ===\n"
+                "(No pre-research context — no links were scraped from the question fields.)"
+            )
+        return (
+            "=== PRE-RESEARCH (primary source) ===\n"
+            "The following was scraped and summarized from links in the question (e.g. resolution URL). "
+            "Treat it as the primary-source snapshot for 'current state' when the question resolves from that source. "
+            "Do not override it with third-party or search results unless they explicitly update or supersede it.\n\n"
+            f"{pre}"
+        )
 
     def _format_type_specific_section(self, supervisor_input: SupervisorInput) -> str:
         """Format type-specific context for prompts."""
