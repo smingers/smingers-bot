@@ -1,0 +1,217 @@
+{
+  "plan_analysis": "The FRED page gives only the last five trading days. A forecaster still needs:  \n\u2022 Base rate: historical distribution of 5-to-10-day moves in the Nikkei 225; typical early-March seasonality; context of past rallies/draw-downs at similar index levels.  \n\u2022 Resolution mechanism: confirmation that the FRED series ID is NIKKEI225 and how the API will supply the 2026-03-11 print (already mostly known, but a quick check of the series metadata and any revision lags is useful).  \n\u2022 Key drivers: monetary policy (Bank of Japan guidance, YCC adjustments), USD/JPY moves, global equity sentiment, major Japanese earnings releases or macro data scheduled before 11 March.  \n\u2022 Current state: latest closing prices after 2 March, news on BoJ speeches, yen movements, earnings season headlines, technical support/resistance commentary.  \n\u2022 Contrarian check: sudden risk-off catalysts (geopolitics, U.S. recession scare) that could swing the index sharply.\n\nThe queries below supply:  \n\u2013 Deep historical price data (FRED + yFinance) and computed base-rate stats (Agent).  \n\u2013 Historical seasonality and policy-impact studies.  \n\u2013 Upcoming macro/earnings calendars.  \n\u2013 Very recent market/FX news and technical commentary for the nine-day forecast horizon.",
+  "reflect_analysis": null,
+  "queries_planned": [
+    {
+      "query": "NIKKEI225",
+      "tool": "FRED",
+      "temporal_role": "historical",
+      "intent": "pull full daily history for Nikkei 225 to examine long-run distribution and calculate recent volatility.",
+      "phase": "plan"
+    },
+    {
+      "query": "Nikkei 225 March seasonality",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "find studies or charts showing typical index performance in early March over many years.",
+      "phase": "plan"
+    },
+    {
+      "query": "BoJ policy effect Nikkei 225",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "research past instances where Bank of Japan announcements moved the Nikkei, to gauge sensitivity.",
+      "phase": "plan"
+    },
+    {
+      "query": "Japan earnings calendar March 2026",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "list major TSE companies reporting results between 3-11 March that could move the index.",
+      "phase": "plan"
+    },
+    {
+      "query": "Nikkei 225 drawdowns 2020-2026",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "catalogue recent sharp corrections/rallies to provide a base rate for 1-week moves near current levels.",
+      "phase": "plan"
+    },
+    {
+      "query": "[HISTORICAL] Over last 10 years of daily Nikkei 225 closes, compute distribution of 7-trading-day percentage changes and summary statistics; identify percentile ranks for \u00b11%, \u00b12%, \u00b13% moves.",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "produce quantitative base-rate table for how far the index usually moves in a week.",
+      "phase": "plan"
+    },
+    {
+      "query": "Nikkei 225 technical resistance 60k",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "fetch latest analyst/technical notes on near-term support and resistance levels relevant to 58-60 k range.",
+      "phase": "plan"
+    },
+    {
+      "query": "USDJPY trend March 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "get up-to-date coverage on yen moves that could push Nikkei higher/lower.",
+      "phase": "plan"
+    },
+    {
+      "query": "Japan economic releases 3-11 March",
+      "tool": "Google",
+      "temporal_role": "current",
+      "intent": "show schedule/expectations for GDP, wage, CPI, or BoJ speeches before resolution date.",
+      "phase": "plan"
+    }
+  ],
+  "gap_queries": [],
+  "seed_context_chars": 1269,
+  "historical_context_chars": 25319,
+  "current_context_chars": 13535,
+  "phases": {
+    "pre_research": {
+      "duration_seconds": 7.73,
+      "seed_context_chars": 1269,
+      "search_id": "question_urls",
+      "searched": true,
+      "urls_found": 2,
+      "urls_scraped": 1,
+      "urls_summarized": 1,
+      "urls": [
+        {
+          "url": "https://api.stlouisfed.org/fred/series/observations?series_id=NIKKEI225`",
+          "domain": "api.stlouisfed.org",
+          "scraped": false,
+          "method": null,
+          "status_code": 400,
+          "error": "HTTP 400"
+        },
+        {
+          "url": "https://fred.stlouisfed.org/series/NIKKEI225",
+          "domain": "fred.stlouisfed.org",
+          "scraped": true,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_words": 228
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ]
+    },
+    "plan": {
+      "duration_seconds": 22.34,
+      "cost": 0.0152,
+      "num_queries": 9
+    },
+    "execute": {
+      "duration_seconds": 67.33,
+      "cost": 0.3794,
+      "queries_executed": 9,
+      "queries_successful": 9
+    },
+    "assemble": {
+      "historical_context_chars": 25319,
+      "current_context_chars": 13535
+    }
+  },
+  "total_queries_planned": 9,
+  "total_queries_executed": 9,
+  "total_gap_queries": 0,
+  "total_cost": 0.4071,
+  "total_duration_seconds": 97.4,
+  "query_details": [
+    {
+      "query": "NIKKEI225",
+      "tool": "FRED",
+      "temporal_role": "historical",
+      "intent": "pull full daily history for Nikkei 225 to examine long-run distribution and calculate recent volatility.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 1,
+      "error": null
+    },
+    {
+      "query": "Nikkei 225 March seasonality",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "find studies or charts showing typical index performance in early March over many years.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "BoJ policy effect Nikkei 225",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "research past instances where Bank of Japan announcements moved the Nikkei, to gauge sensitivity.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "Japan earnings calendar March 2026",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "list major TSE companies reporting results between 3-11 March that could move the index.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "Nikkei 225 drawdowns 2020-2026",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "catalogue recent sharp corrections/rallies to provide a base rate for 1-week moves near current levels.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "[HISTORICAL] Over last 10 years of daily Nikkei 225 closes, compute distribution of 7-trading-day percentage changes and summary statistics; identify percentile ranks for \u00b11%, \u00b12%, \u00b13% moves.",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "produce quantitative base-rate table for how far the index usually moves in a week.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 1,
+      "error": null
+    },
+    {
+      "query": "Nikkei 225 technical resistance 60k",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "fetch latest analyst/technical notes on near-term support and resistance levels relevant to 58-60 k range.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 1,
+      "error": null
+    },
+    {
+      "query": "USDJPY trend March 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "get up-to-date coverage on yen moves that could push Nikkei higher/lower.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "Japan economic releases 3-11 March",
+      "tool": "Google",
+      "temporal_role": "current",
+      "intent": "show schedule/expectations for GDP, wage, CPI, or BoJ speeches before resolution date.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    }
+  ]
+}

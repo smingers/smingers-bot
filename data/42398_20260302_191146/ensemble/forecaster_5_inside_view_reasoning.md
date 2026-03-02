@@ -1,0 +1,7 @@
+**Analyzing Nikkei 225 forecasts**
+
+I'm crafting a detailed analysis for the Nikkei 225's closing on March 11, 2026, needing both an outside view update and an inside view update. The previous distribution shows a mean of around 58,100, with relevant percentiles. However, recent US-Israel strikes on Iran may cause a global risk-off sentiment, leading to a potential market slump, although this news is somewhat uncertain. Meanwhile, yen weakness at 154-156 supports exporters, while the BOJ meeting is upcoming after March 18, suggesting limited domestic risk for now. Volatility could arise from US economic events, with a computed 7-day realization of 3.3%.**Updating risk outlook**
+
+I’m considering maintaining or slightly adjusting my outlook. If geopolitical tensions increase, the downside risk could also rise a bit, but yen weakness might offset that. It's a bit ambiguous since the yen typically gains strength during risk-off situations, although recent trends might change this. 
+
+Given that, I might slightly widen the distribution: the 10th percentile could be around 54,800 and the 90th at 60,700. I could also adjust the mean downward to about 57,800. I’ll finalize those percentiles and create a checklist for clarity.

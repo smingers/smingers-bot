@@ -1,0 +1,276 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": false,
+      "num_queries": 0,
+      "queries": [],
+      "tools_used": [],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 6,
+      "queries": [
+        {
+          "query": "NIKKEI225",
+          "tool": "FRED",
+          "temporal_role": "historical",
+          "intent": "pull full daily history for Nikkei 225 to examine long-run distribution and calculate recent volatility.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        },
+        {
+          "query": "Nikkei 225 March seasonality",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "find studies or charts showing typical index performance in early March over many years.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "BoJ policy effect Nikkei 225",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "research past instances where Bank of Japan announcements moved the Nikkei, to gauge sensitivity.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Japan earnings calendar March 2026",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "list major TSE companies reporting results between 3-11 March that could move the index.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Nikkei 225 drawdowns 2020-2026",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "catalogue recent sharp corrections/rallies to provide a base rate for 1-week moves near current levels.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "[HISTORICAL] Over last 10 years of daily Nikkei 225 closes, compute distribution of 7-trading-day percentage changes and summary statistics; identify percentile ranks for \u00b11%, \u00b12%, \u00b13% moves.",
+          "tool": "Agent",
+          "temporal_role": "historical",
+          "intent": "produce quantitative base-rate table for how far the index usually moves in a week.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "FRED",
+        "Google"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Nikkei 225 technical resistance 60k",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "fetch latest analyst/technical notes on near-term support and resistance levels relevant to 58-60 k range.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        },
+        {
+          "query": "USDJPY trend March 2026",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "get up-to-date coverage on yen moves that could push Nikkei higher/lower.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Japan economic releases 3-11 March",
+          "tool": "Google",
+          "temporal_role": "current",
+          "intent": "show schedule/expectations for GDP, wage, CPI, or BoJ speeches before resolution date.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 9163,
+        "token_output": 1664,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.07077499999999999,
+        "duration_seconds": 48.34419250488281,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7807,
+        "token_output": 2320,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.073835,
+        "duration_seconds": 54.2432599067688,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7325,
+        "token_output": 2224,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.06998499999999999,
+        "duration_seconds": 54.243232011795044,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7992,
+        "token_output": 2688,
+        "token_reasoning": 1118,
+        "used_reasoning": true,
+        "cost": 0.051618,
+        "duration_seconds": 48.34424304962158,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6874,
+        "token_output": 1881,
+        "token_reasoning": 404,
+        "used_reasoning": true,
+        "cost": 0.0383635,
+        "duration_seconds": 54.2432074546814,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6993,
+        "token_output": 1781,
+        "token_reasoning": 768,
+        "used_reasoning": true,
+        "cost": 0.028234000000000002,
+        "duration_seconds": 54.24319076538086,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7992,
+        "token_output": 1883,
+        "token_reasoning": 768,
+        "used_reasoning": true,
+        "cost": 0.031048,
+        "duration_seconds": 48.344271659851074,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6434,
+        "token_output": 1476,
+        "token_reasoning": 512,
+        "used_reasoning": true,
+        "cost": 0.024676,
+        "duration_seconds": 54.24317455291748,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "steps1_2_research": 0.4071,
+    "step3_outside_view": 0.1534,
+    "step5_inside_view": 0.2351,
+    "step6_aggregation": 0.2351,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.7956
+}

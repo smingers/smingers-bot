@@ -1,0 +1,5 @@
+**Estimating Nikkei 225 Forecast**
+
+I need to create a forecast for the Nikkei 225 value on March 11, 2026. Given that today is March 2, I've got about seven trading days to consider, including the weekdays but excluding weekends. I’ll rely on historical volatility data to analyze the expected change over this period. Historically, daily volatility for the Nikkei 225 is around 1%, and during more active periods, it can go up to 1.5%. I'll compute statistics based on these assumptions.**Calculating Percentile Changes for Nikkei 225**
+
+I’m analyzing the typical 7-day changes for the Nikkei 225, finding them to range within ±3%. This allows me to derive percentiles like the 10th and 90th. With a small expected drift from a risk premium of 6% annualized, I’ll focus on calculating price changes based on standard deviations for each percentile. For example, the 10th percentile correlates to about a -4.27% change, leading to a value of around 55,580. I’ll also consider potential larger movements based on upcoming events. This will help guide my analysis.
