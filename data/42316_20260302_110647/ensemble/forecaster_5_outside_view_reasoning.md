@@ -1,0 +1,5 @@
+**Generating outside view predictions**
+
+I'm focusing on creating an outside view prediction based on general patterns and historical data. I can't include the latest specific details, such as recent PGA results, since they're more like inside views. However, I think it's okay to use precursor stats because they provide useful historical context. The plan is to establish an outside view baseline first, then later adjust based on more recent insights, while keeping in mind the overall seasonal patterns.**Analyzing film nominations**
+
+I’m trying to assess the nominations for films like "Bugonia," "Frankenstein," and "Sinners," but "One Battle After Another," the PGA winner, isn’t in the list of options. While "Bugonia" is only mentioned as a nominee, it seems like the front runners are "Sinners" and "One Battle After Another." For my outside view, I think I should focus on general nomination trends, even though I lack specific counts. Historically, most Oscar winners come from the top 2 in nominations, so I’ll weigh "Other" as having a high probability due to recent patterns.

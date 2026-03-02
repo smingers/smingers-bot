@@ -1,0 +1,200 @@
+{
+  "plan_analysis": "The forecaster\u2019s goal is to estimate which nominee\u2014Bugonia, Frankenstein, Sinners, or \u201cOther\u201d\u2014will be announced as Best Picture at the 98th Oscars in roughly two weeks.  \nAlready known: nothing beyond the question text.  \nNeeded evidence:\n\n1. Base rate / historical precedents  \n   \u2022 How reliably do precursor awards (PGA, DGA, BAFTA, Golden Globes, SAG Ensemble) predict Best Picture?  \n   \u2022 How often do upsets occur and under what conditions (e.g., preferential ballot quirks, vote-splits)?  \n   \u2022 Historical accuracy of betting markets.\n\n2. Resolution mechanism  \n   \u2022 Confirmation that oscars.org will publish the winner; mechanics are straightforward but a quick primer on preferential ballot voting can clarify drivers of surprise outcomes.\n\n3. Key drivers for 2026 race  \n   \u2022 Results of this season\u2019s precursor awards.  \n   \u2022 Current betting odds / prediction markets.  \n   \u2022 Industry commentary on campaign strength, controversies, or shifts in sentiment.\n\n4. Current state  \n   \u2022 Which film has already won the major precursors (PGA, BAFTA, etc.) and critics\u2019 awards.  \n   \u2022 Latest odds and pundit forecasts less than two weeks from ceremony.\n\n5. Contrarian check  \n   \u2022 Articles or commentary highlighting scenarios where the perceived front-runner could lose or where a vote-split boosts an underdog, informed by past upsets.\n\nThe eight queries below are designed to collect that evidence: five historical (base-rate, mechanism, upset frequency) and three current (recent precursor results, odds, expert commentary).",
+  "reflect_analysis": null,
+  "queries_planned": [
+    {
+      "query": "PGA Best Picture winners vs Oscar",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Quantify how often the Producers Guild of America winner matches the eventual Oscar Best Picture.",
+      "phase": "plan"
+    },
+    {
+      "query": "Golden Globe Best Picture correlation Oscar",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Determine historic alignment rates between Golden Globe winners (Drama/Comedy) and Oscar Best Picture.",
+      "phase": "plan"
+    },
+    {
+      "query": "Preferential ballot Oscar Best Picture analysis",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Explain how the Academy\u2019s ranked-choice ballot influences outcomes and potential surprise winners.",
+      "phase": "plan"
+    },
+    {
+      "query": "Oscar Best Picture upset frequency",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Identify and summarize past years when presumed favorites lost, giving a base rate for upsets.",
+      "phase": "plan"
+    },
+    {
+      "query": "Provide statistics for last 20 Oscar cycles comparing winners of PGA, DGA, BAFTA Best Film, Golden Globe (Drama), and SAG Ensemble to eventual Best Picture winners; calculate hit rates and highlight patterns",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "Produce a consolidated dataset of precursor predictive power.",
+      "phase": "plan"
+    },
+    {
+      "query": "Bugonia Frankenstein Sinners betting odds Oscars",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Retrieve the latest bookmaker or prediction-market odds for each nominee to gauge market consensus.",
+      "phase": "plan"
+    },
+    {
+      "query": "2026 PGA Awards winner Bugonia Frankenstein",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Confirm which film just won the 2026 Producers Guild Award, a key predictor.",
+      "phase": "plan"
+    },
+    {
+      "query": "Recent analysis 98th Oscars Best Picture race industry experts",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "Surface up-to-date expert commentary, including contrarian takes on potential upsets or vote-split scenarios.",
+      "phase": "plan"
+    }
+  ],
+  "gap_queries": [],
+  "seed_context_chars": 0,
+  "historical_context_chars": 26797,
+  "current_context_chars": 47861,
+  "phases": {
+    "pre_research": {
+      "duration_seconds": 0.12,
+      "seed_context_chars": 0,
+      "search_id": "question_urls",
+      "searched": true,
+      "urls_found": 2,
+      "urls_scraped": 0,
+      "urls_summarized": 0,
+      "urls": [
+        {
+          "url": "https://www.oscars.org/oscars/ceremonies/2026",
+          "domain": "www.oscars.org",
+          "scraped": false,
+          "method": null,
+          "status_code": 403,
+          "error": "HTTP 403"
+        },
+        {
+          "url": "https://awardsdatabase.oscars.org",
+          "domain": "awardsdatabase.oscars.org",
+          "scraped": false,
+          "method": null,
+          "status_code": 403,
+          "error": "HTTP 403"
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ]
+    },
+    "plan": {
+      "duration_seconds": 42.53,
+      "cost": 0.0171,
+      "num_queries": 8
+    },
+    "execute": {
+      "duration_seconds": 99.75,
+      "cost": 0.3554,
+      "queries_executed": 8,
+      "queries_successful": 8
+    },
+    "assemble": {
+      "historical_context_chars": 26797,
+      "current_context_chars": 47861
+    }
+  },
+  "total_queries_planned": 8,
+  "total_queries_executed": 8,
+  "total_gap_queries": 0,
+  "total_cost": 0.3725,
+  "total_duration_seconds": 142.4,
+  "query_details": [
+    {
+      "query": "PGA Best Picture winners vs Oscar",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Quantify how often the Producers Guild of America winner matches the eventual Oscar Best Picture.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "Golden Globe Best Picture correlation Oscar",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Determine historic alignment rates between Golden Globe winners (Drama/Comedy) and Oscar Best Picture.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "Preferential ballot Oscar Best Picture analysis",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Explain how the Academy\u2019s ranked-choice ballot influences outcomes and potential surprise winners.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "Oscar Best Picture upset frequency",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Identify and summarize past years when presumed favorites lost, giving a base rate for upsets.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "Provide statistics for last 20 Oscar cycles comparing winners of PGA, DGA, BAFTA Best Film, Golden Globe (Drama), and SAG Ensemble to eventual Best Picture winners; calculate hit rates and highlight patterns",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "Produce a consolidated dataset of precursor predictive power.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 1,
+      "error": null
+    },
+    {
+      "query": "Bugonia Frankenstein Sinners betting odds Oscars",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Retrieve the latest bookmaker or prediction-market odds for each nominee to gauge market consensus.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "2026 PGA Awards winner Bugonia Frankenstein",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Confirm which film just won the 2026 Producers Guild Award, a key predictor.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "Recent analysis 98th Oscars Best Picture race industry experts",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "Surface up-to-date expert commentary, including contrarian takes on potential upsets or vote-split scenarios.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 45,
+      "error": null
+    }
+  ]
+}
