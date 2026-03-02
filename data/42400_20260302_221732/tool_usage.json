@@ -1,0 +1,266 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": false,
+      "num_queries": 0,
+      "queries": [],
+      "tools_used": [],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 5,
+      "queries": [
+        {
+          "query": "ECBESTRVOLWGTTRMDMNRT",
+          "tool": "FRED",
+          "temporal_role": "historical",
+          "intent": "retrieve complete daily series to compute mean, st-dev, and distribution of daily/8-day changes.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        },
+        {
+          "query": "euroSTR trimmed mean volatility",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "find papers or blog analyses quantifying \u20acSTR historical variability and drivers.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "euroSTR deposit facility spread history",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "obtain historical spread between \u20acSTR and ECB deposit rate, establishing an anchor level.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "euro short-term rate\" quarter-end spike",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "identify studies on seasonality or date-specific anomalies that could cause contrarian moves.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Provide mean, standard deviation, and distribution of daily changes in the ECBESTRVOLWGTTRMDMNRT series from 2020-01-01 to 2026-03-01; highlight any moves >5 bp and their dates.",
+          "tool": "Agent",
+          "temporal_role": "historical",
+          "intent": "generate summary statistics and flag outlier events for base-rate assessment.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "FRED",
+        "Agent"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "\u20acSTR value 2026-03-02",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "capture the newest published \u20acSTR readings from 28 Feb onward to update the immediate trend.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "ECB meeting March 2026 preview",
+          "tool": "AskNews",
+          "temporal_role": "current",
+          "intent": "gather reporting on any expected policy decision or surprise rate action before 10 March.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 39,
+          "error": null
+        },
+        {
+          "query": "eurozone excess liquidity March 2026",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "spot recent articles on money-market liquidity conditions that could shift \u20acSTR short-term.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "AskNews"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8701,
+        "token_output": 1837,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.07106000000000001,
+        "duration_seconds": 40.71675658226013,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17349,
+        "token_output": 1854,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.114555,
+        "duration_seconds": 39.91888189315796,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16654,
+        "token_output": 1651,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.10803499999999999,
+        "duration_seconds": 39.91884779930115,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7659,
+        "token_output": 2302,
+        "token_reasoning": 546,
+        "used_reasoning": true,
+        "cost": 0.04563125,
+        "duration_seconds": 40.7168173789978,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15301,
+        "token_output": 2509,
+        "token_reasoning": 859,
+        "used_reasoning": true,
+        "cost": 0.06190275,
+        "duration_seconds": 39.9188072681427,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15424,
+        "token_output": 1449,
+        "token_reasoning": 576,
+        "used_reasoning": true,
+        "cost": 0.04244,
+        "duration_seconds": 39.918782472610474,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7659,
+        "token_output": 2006,
+        "token_reasoning": 960,
+        "used_reasoning": true,
+        "cost": 0.031366,
+        "duration_seconds": 40.716870069503784,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14610,
+        "token_output": 1477,
+        "token_reasoning": 576,
+        "used_reasoning": true,
+        "cost": 0.041036,
+        "duration_seconds": 39.91876029968262,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "steps1_2_research": 0.3655,
+    "step3_outside_view": 0.1481,
+    "step5_inside_view": 0.368,
+    "step6_aggregation": 0.368,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.8816
+}
