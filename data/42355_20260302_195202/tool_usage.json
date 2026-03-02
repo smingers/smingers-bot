@@ -1,0 +1,266 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": false,
+      "num_queries": 0,
+      "queries": [],
+      "tools_used": [],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "NQ vs ES futures spread history",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "find long-run charts or datasets showing the return differential between Nasdaq-100 and S&P 500 futures.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Nasdaq outperform percentage 2-week periods",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "obtain statistics or blog posts that calculate how frequently Nasdaq beats the S&P in rolling bi-weekly returns.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Over last 15 years, calculate every 10-trading-day total-return difference between CME NQ and ES futures; provide mean, median, stdev, 25th/75th percentiles, and share of periods where spread <0. Also list top five positive and negative outliers.",
+          "tool": "Agent",
+          "temporal_role": "historical",
+          "intent": "generate a quantitative base-rate distribution and extreme-case examples for the spread.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 5,
+      "queries": [
+        {
+          "query": "NQ=F",
+          "tool": "yFinance",
+          "temporal_role": "current",
+          "intent": "pull the latest Nasdaq-100 futures price history to compute recent returns and volatility.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        },
+        {
+          "query": "ES=F",
+          "tool": "yFinance",
+          "temporal_role": "current",
+          "intent": "pull the latest S&P 500 futures price history to compute recent returns and volatility.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        },
+        {
+          "query": "March 2026 economic calendar FOMC CPI",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "identify macro events scheduled between 16 Mar and 27 Mar 2026 that could drive index moves.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Tech sector rotation early 2026 value stocks",
+          "tool": "AskNews",
+          "temporal_role": "current",
+          "intent": "surface news or analysis discussing a potential shift out of tech into other sectors, a key contrarian factor.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 38,
+          "error": null
+        },
+        {
+          "query": "Nasdaq vs S&P performance 2026 YTD",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "get up-to-date commentary and numbers on how much Nasdaq has already out-/under-performed the S&P this year.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "yFinance",
+        "Google News",
+        "AskNews"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7097,
+        "token_output": 1724,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.061345000000000004,
+        "duration_seconds": 39.77785062789917,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 20564,
+        "token_output": 3015,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.14804499999999998,
+        "duration_seconds": 65.33291244506836,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 20124,
+        "token_output": 2638,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.14019,
+        "duration_seconds": 65.3328812122345,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6303,
+        "token_output": 2724,
+        "token_reasoning": 719,
+        "used_reasoning": true,
+        "cost": 0.049166249999999995,
+        "duration_seconds": 39.77790117263794,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 18240,
+        "token_output": 1856,
+        "token_reasoning": 405,
+        "used_reasoning": true,
+        "cost": 0.057904,
+        "duration_seconds": 65.33284831047058,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 18724,
+        "token_output": 1652,
+        "token_reasoning": 768,
+        "used_reasoning": true,
+        "cost": 0.050664,
+        "duration_seconds": 65.33281779289246,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6303,
+        "token_output": 1538,
+        "token_reasoning": 320,
+        "used_reasoning": true,
+        "cost": 0.02491,
+        "duration_seconds": 39.77792763710022,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17822,
+        "token_output": 1419,
+        "token_reasoning": 448,
+        "used_reasoning": true,
+        "cost": 0.046996,
+        "duration_seconds": 65.33278775215149,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "steps1_2_research": 0.4426,
+    "step3_outside_view": 0.1354,
+    "step5_inside_view": 0.4438,
+    "step6_aggregation": 0.4438,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 1.0219
+}

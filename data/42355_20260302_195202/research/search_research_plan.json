@@ -1,0 +1,216 @@
+{
+  "plan_analysis": "The pre-research material only gives generic background on the two indices; it does not supply (a) the historical distribution of NQ-minus-ES total-return spreads over comparable two-week windows, (b) quantitative information on how large the spread has been recently, (c) key upcoming catalysts during 16-27 Mar 2026 that could swing the spread, or (d) any counter-narrative evidence for ES outperformance.  \n\nA well-prepared forecaster therefore needs:\n\u2022 Base-rate numbers: how often and by how much NQ beats (or trails) ES over 10-11 trading-day spans; mean, st-dev, and percentiles of the spread.  \n\u2022 Mechanical clarity: confirmation of the exact Yahoo Finance tickers, trading-day schedule around 16 Mar and 27 Mar, and any half-days that could affect P\u2080/P\u2081 selection.  \n\u2022 Current market state: the most recent NQ and ES close prices, the YTD spread, volatility, and positioning.  \n\u2022 Key drivers through 27 Mar: scheduled macro events (FOMC, CPI, PCE, durable goods), large-cap tech news (earnings pre-announcements, regulation, guidance), and sentiment shifts (sector rotation into value/financials).  \n\u2022 Contrarian evidence: reasons the broader S&P could outperform (e.g., bank or energy rallies, tech pull-backs, higher rates hurting growth stocks).\n\nThe eight queries below are designed to surface datasets, statistics, upcoming catalysts, and relevant news flow that collectively cover those information gaps.",
+  "reflect_analysis": null,
+  "queries_planned": [
+    {
+      "query": "NQ vs ES futures spread history",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "find long-run charts or datasets showing the return differential between Nasdaq-100 and S&P 500 futures.",
+      "phase": "plan"
+    },
+    {
+      "query": "Nasdaq outperform percentage 2-week periods",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "obtain statistics or blog posts that calculate how frequently Nasdaq beats the S&P in rolling bi-weekly returns.",
+      "phase": "plan"
+    },
+    {
+      "query": "Over last 15 years, calculate every 10-trading-day total-return difference between CME NQ and ES futures; provide mean, median, stdev, 25th/75th percentiles, and share of periods where spread <0. Also list top five positive and negative outliers.",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "generate a quantitative base-rate distribution and extreme-case examples for the spread.",
+      "phase": "plan"
+    },
+    {
+      "query": "NQ=F",
+      "tool": "yFinance",
+      "temporal_role": "current",
+      "intent": "pull the latest Nasdaq-100 futures price history to compute recent returns and volatility.",
+      "phase": "plan"
+    },
+    {
+      "query": "ES=F",
+      "tool": "yFinance",
+      "temporal_role": "current",
+      "intent": "pull the latest S&P 500 futures price history to compute recent returns and volatility.",
+      "phase": "plan"
+    },
+    {
+      "query": "March 2026 economic calendar FOMC CPI",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "identify macro events scheduled between 16 Mar and 27 Mar 2026 that could drive index moves.",
+      "phase": "plan"
+    },
+    {
+      "query": "Tech sector rotation early 2026 value stocks",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "surface news or analysis discussing a potential shift out of tech into other sectors, a key contrarian factor.",
+      "phase": "plan"
+    },
+    {
+      "query": "Nasdaq vs S&P performance 2026 YTD",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "get up-to-date commentary and numbers on how much Nasdaq has already out-/under-performed the S&P this year.",
+      "phase": "plan"
+    }
+  ],
+  "gap_queries": [],
+  "seed_context_chars": 3078,
+  "historical_context_chars": 19155,
+  "current_context_chars": 60440,
+  "phases": {
+    "pre_research": {
+      "duration_seconds": 10.43,
+      "seed_context_chars": 3078,
+      "search_id": "question_urls",
+      "searched": true,
+      "urls_found": 4,
+      "urls_scraped": 2,
+      "urls_summarized": 2,
+      "urls": [
+        {
+          "url": "https://finance.yahoo.com/quote/NQ%3DF/history/",
+          "domain": "finance.yahoo.com",
+          "scraped": false,
+          "method": null,
+          "status_code": 404,
+          "error": "HTTP 404"
+        },
+        {
+          "url": "https://finance.yahoo.com/quote/ES%3DF/history/",
+          "domain": "finance.yahoo.com",
+          "scraped": false,
+          "method": null,
+          "status_code": 404,
+          "error": "HTTP 404"
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Nasdaq-100",
+          "domain": "en.wikipedia.org",
+          "scraped": true,
+          "method": "wikipedia_api",
+          "status_code": 200,
+          "content_words": 1412
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/S%26P_500",
+          "domain": "en.wikipedia.org",
+          "scraped": true,
+          "method": "wikipedia_api",
+          "status_code": 200,
+          "content_words": 1334
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ]
+    },
+    "plan": {
+      "duration_seconds": 32.13,
+      "cost": 0.0169,
+      "num_queries": 8
+    },
+    "execute": {
+      "duration_seconds": 202.94,
+      "cost": 0.3794,
+      "queries_executed": 8,
+      "queries_successful": 8
+    },
+    "assemble": {
+      "historical_context_chars": 19155,
+      "current_context_chars": 60440
+    }
+  },
+  "total_queries_planned": 8,
+  "total_queries_executed": 8,
+  "total_gap_queries": 0,
+  "total_cost": 0.4426,
+  "total_duration_seconds": 245.5,
+  "query_details": [
+    {
+      "query": "NQ vs ES futures spread history",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "find long-run charts or datasets showing the return differential between Nasdaq-100 and S&P 500 futures.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "Nasdaq outperform percentage 2-week periods",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "obtain statistics or blog posts that calculate how frequently Nasdaq beats the S&P in rolling bi-weekly returns.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "Over last 15 years, calculate every 10-trading-day total-return difference between CME NQ and ES futures; provide mean, median, stdev, 25th/75th percentiles, and share of periods where spread <0. Also list top five positive and negative outliers.",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "generate a quantitative base-rate distribution and extreme-case examples for the spread.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 1,
+      "error": null
+    },
+    {
+      "query": "NQ=F",
+      "tool": "yFinance",
+      "temporal_role": "current",
+      "intent": "pull the latest Nasdaq-100 futures price history to compute recent returns and volatility.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 1,
+      "error": null
+    },
+    {
+      "query": "ES=F",
+      "tool": "yFinance",
+      "temporal_role": "current",
+      "intent": "pull the latest S&P 500 futures price history to compute recent returns and volatility.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 1,
+      "error": null
+    },
+    {
+      "query": "March 2026 economic calendar FOMC CPI",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "identify macro events scheduled between 16 Mar and 27 Mar 2026 that could drive index moves.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "Tech sector rotation early 2026 value stocks",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "surface news or analysis discussing a potential shift out of tech into other sectors, a key contrarian factor.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 38,
+      "error": null
+    },
+    {
+      "query": "Nasdaq vs S&P performance 2026 YTD",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "get up-to-date commentary and numbers on how much Nasdaq has already out-/under-performed the S&P this year.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    }
+  ]
+}

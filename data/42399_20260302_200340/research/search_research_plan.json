@@ -1,0 +1,191 @@
+{
+  "plan_analysis": "The forecaster needs to judge whether the Google-Trends value for \u201cfox\u201d on 2026-03-12 will differ from the 2026-03-02 value by more than 3 points.  \nWhat we already know: the current (2026-03-01) value equals 100 when the preceding 30-day window is locked; the resolution URL and SerpApi call that will be authoritative.  \nRemaining gaps:  \n1. Base rate \u2013 How often does a \u00b13 (or larger) 10-day swing happen for \u201cfox\u201d? What does daily volatility look like across months/years?  \n2. Resolution mechanism \u2013 Confirm how SerpApi returns daily points and whether day-to-day rescaling frequently shifts values by >3 without real search changes.  \n3. Key drivers \u2013 What usually makes \u201cfox\u201d spike or slump? Examples: big Fox Corporation news (earnings, scandals), major Fox-broadcast sporting events, viral fox-animal stories, new TV show/movie releases.  \n4. Current state \u2013 The most recent daily data trend for late Feb\u2013early Mar 2026; any scheduled events for 2\u201312 Mar (e.g., earnings call, program premieres) that could push interest up or down.  \n5. Contrarian check \u2013 Evidence that despite apparent stability large random rescalings still occur, or that an unexpected viral event could erupt.\n\nThe search strategy:  \n\u2022 Use Google and Agent to pull multi-year daily data and compute historical frequencies of >3-point moves.  \n\u2022 Use Google News and AskNews to surface any planned or breaking Fox-related events between 2 Mar and 12 Mar 2026.  \n\u2022 Include searches on volatility/rescaling quirks of Google Trends to understand random changes (resolution mechanism).",
+  "reflect_analysis": null,
+  "queries_planned": [
+    {
+      "query": "fox google trends daily pattern 2025",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "retrieve graphs/tables showing day-level interest for \u201cfox\u201d last year to measure typical volatility.",
+      "phase": "plan"
+    },
+    {
+      "query": "fox search interest seasonal spikes",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "find analyses or blog posts identifying recurrent events (sports, TV, scandals) that historically drive large \u201cfox\u201d spikes.",
+      "phase": "plan"
+    },
+    {
+      "query": "super bowl fox broadcast search interest",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "check whether Fox-aired Super Bowls or big games historically lift \u201cfox\u201d searches, clarifying sports as a driver.",
+      "phase": "plan"
+    },
+    {
+      "query": "google trends daily volatility search term",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "gather studies/posts quantifying how often Google Trends rescaling moves daily values by >3, informing resolution-mechanism risk.",
+      "phase": "plan"
+    },
+    {
+      "query": "Fox Corporation events March 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "discover any earnings calls, court cases, mergers, or major announcements scheduled 2\u201312 Mar 2026 that could spike searches.",
+      "phase": "plan"
+    },
+    {
+      "query": "new fox tv series premiere march 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "identify any TV/streaming premieres on Fox network during the resolution window that might raise interest.",
+      "phase": "plan"
+    },
+    {
+      "query": "Any viral fox animal story early March 2026 United States",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "surface reports of anticipated or just-breaking wildlife/viral \u201cfox\u201d stories that could unexpectedly move search volumes.",
+      "phase": "plan"
+    }
+  ],
+  "gap_queries": [],
+  "seed_context_chars": 1517,
+  "historical_context_chars": 19001,
+  "current_context_chars": 43156,
+  "phases": {
+    "pre_research": {
+      "duration_seconds": 7.1,
+      "seed_context_chars": 1517,
+      "search_id": "question_urls",
+      "searched": true,
+      "urls_found": 3,
+      "urls_scraped": 1,
+      "urls_summarized": 1,
+      "urls": [
+        {
+          "url": "https://trends.google.com/trends/explore?geo=US&tz=0&q=fox&date=2026-02-10%202026-03-12",
+          "domain": "trends.google.com",
+          "scraped": false,
+          "method": null,
+          "status_code": null,
+          "error": "Blocked domain"
+        },
+        {
+          "url": "https://serpapi.com/",
+          "domain": "serpapi.com",
+          "scraped": true,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_words": 273
+        },
+        {
+          "url": "https://trends.google.com/trends/explore?geo=US&tz=0&q=fox&date=2026-01-30%202026-03-01",
+          "domain": "trends.google.com",
+          "scraped": false,
+          "method": null,
+          "status_code": null,
+          "error": "Blocked domain"
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ]
+    },
+    "plan": {
+      "duration_seconds": 34.64,
+      "cost": 0.0171,
+      "num_queries": 7
+    },
+    "execute": {
+      "duration_seconds": 56.27,
+      "cost": 0.3241,
+      "queries_executed": 7,
+      "queries_successful": 7
+    },
+    "assemble": {
+      "historical_context_chars": 19001,
+      "current_context_chars": 43156
+    }
+  },
+  "total_queries_planned": 7,
+  "total_queries_executed": 7,
+  "total_gap_queries": 0,
+  "total_cost": 0.3535,
+  "total_duration_seconds": 98.01,
+  "query_details": [
+    {
+      "query": "fox google trends daily pattern 2025",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "retrieve graphs/tables showing day-level interest for \u201cfox\u201d last year to measure typical volatility.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "fox search interest seasonal spikes",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "find analyses or blog posts identifying recurrent events (sports, TV, scandals) that historically drive large \u201cfox\u201d spikes.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "super bowl fox broadcast search interest",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "check whether Fox-aired Super Bowls or big games historically lift \u201cfox\u201d searches, clarifying sports as a driver.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "google trends daily volatility search term",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "gather studies/posts quantifying how often Google Trends rescaling moves daily values by >3, informing resolution-mechanism risk.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "Fox Corporation events March 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "discover any earnings calls, court cases, mergers, or major announcements scheduled 2\u201312 Mar 2026 that could spike searches.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "new fox tv series premiere march 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "identify any TV/streaming premieres on Fox network during the resolution window that might raise interest.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "Any viral fox animal story early March 2026 United States",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "surface reports of anticipated or just-breaking wildlife/viral \u201cfox\u201d stories that could unexpectedly move search volumes.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 26,
+      "error": null
+    }
+  ]
+}

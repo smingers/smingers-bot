@@ -1,0 +1,23 @@
+{
+  "confidence": "medium",
+  "prediction": {
+    "10": 19.0,
+    "20": 22.0,
+    "40": 28.0,
+    "60": 35.0,
+    "80": 45.0,
+    "90": 58.0
+  },
+  "search_queries": [
+    "VIX closing high March 2 2026 (Google News)",
+    "Iran Israel war ceasefire March 2026 (Google News)",
+    "What is the current VIX level as of early March 2026, and what has happened with the Iran-Israel-US conflict since the initial strikes on February 28? Has there been any ceasefire, escalation involving the Strait of Hormuz, or significant oil supply disruption? (Agent)",
+    "FOMC March 2026 rate decision expectations (Google News)"
+  ],
+  "cost": 0.4233,
+  "divergence": {
+    "metric_name": "rn_spread",
+    "metric_value": 0.12,
+    "threshold": 0.045
+  }
+}

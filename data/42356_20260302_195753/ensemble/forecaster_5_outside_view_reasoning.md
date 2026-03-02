@@ -1,0 +1,7 @@
+**Estimating return differences**
+
+I’m working on crafting a forecast for the difference in returns between GC and ES for the biweekly period of March 16-27, 2026. I need to produce percentiles of the distribution based on historical excess returns from 2010 to 2025, but I don't have the actual numbers. I believe the daily volatility for Gold and S&P 500 is about 1%, leading to an estimated difference in volatility around 1.4%. Over 10 trading days, that averages to about 4.4% for the price difference. I can refine this further, as I expect 2-week return volatility for both to be around 4-5%.**Calculating variance and percentiles**
+
+I’m computing the difference variance if both gold and equities are at 5% with a correlation of 0.2. Initially, I thought the variance would be zero, but I recalculated and found it to be 0.004, resulting in a standard deviation of about 6.3%, close to my earlier estimate. Since the historical trend suggests gold may underperform equities, I’m estimating the outside view baseline mean at zero. I’ll propose percentiles from -10 to +10, adjusting for a slight positive bias due to inflation expectations. 
+
+After adjustments, I found the 10th percentile at -8.5 and the 90th at 9, showing an increasing pattern. Now I can summarize my analysis!

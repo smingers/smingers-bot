@@ -1,0 +1,5 @@
+**Analyzing VIX forecast**
+
+I need to forecast the maximum intraday VIX for March 16-27, 2026. Today, March 2, 2026, there was a notable spike due to major events, with VIX potentially rising to around 20, but reports indicate it stood at 19.86. There's potential for more volatility with FOMC on March 17-18 and CPI on March 11. Historically, big wars can push VIX into the 30s, but if the market has digested recent events, the peak could be around 28-35, possibly shifting the median down to 34.**Crafting VIX distribution analysis**
+
+I’m considering a range for the VIX distribution. The p10 could be around 18, but the maximum in two weeks might be lower than 22 if things stay calm. Given the current elevated baseline of about 20, I think p10 may be closer to 20. For p90, I’ll suggest 55 instead of 62. I'll structure the analysis systematically and ensure to mention sources and their quality, aiming for a distribution like: 10-20, 20-24, 40-30, 60-36, 80-45, 90-55, while maintaining a strictly increasing order. The mean may skew around 35.

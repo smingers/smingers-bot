@@ -1,0 +1,254 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": false,
+      "num_queries": 0,
+      "queries": [],
+      "tools_used": [],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "fox google trends daily pattern 2025",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "retrieve graphs/tables showing day-level interest for \u201cfox\u201d last year to measure typical volatility.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "fox search interest seasonal spikes",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "find analyses or blog posts identifying recurrent events (sports, TV, scandals) that historically drive large \u201cfox\u201d spikes.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "super bowl fox broadcast search interest",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "check whether Fox-aired Super Bowls or big games historically lift \u201cfox\u201d searches, clarifying sports as a driver.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "google trends daily volatility search term",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "gather studies/posts quantifying how often Google Trends rescaling moves daily values by >3, informing resolution-mechanism risk.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "Google"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Fox Corporation events March 2026",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "discover any earnings calls, court cases, mergers, or major announcements scheduled 2\u201312 Mar 2026 that could spike searches.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "new fox tv series premiere march 2026",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "identify any TV/streaming premieres on Fox network during the resolution window that might raise interest.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Any viral fox animal story early March 2026 United States",
+          "tool": "AskNews",
+          "temporal_role": "current",
+          "intent": "surface reports of anticipated or just-breaking wildlife/viral \u201cfox\u201d stories that could unexpectedly move search volumes.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 26,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "AskNews",
+        "Google News"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6662,
+        "token_output": 1326,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0532,
+        "duration_seconds": 40.40210294723511,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14930,
+        "token_output": 2229,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.10808500000000001,
+        "duration_seconds": 56.3690242767334,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14324,
+        "token_output": 2018,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.10189000000000001,
+        "duration_seconds": 56.36899733543396,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5897,
+        "token_output": 2385,
+        "token_reasoning": 773,
+        "used_reasoning": true,
+        "cost": 0.043709750000000006,
+        "duration_seconds": 40.40215730667114,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13158,
+        "token_output": 2457,
+        "token_reasoning": 837,
+        "used_reasoning": true,
+        "cost": 0.057424499999999996,
+        "duration_seconds": 56.36897611618042,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13584,
+        "token_output": 1985,
+        "token_reasoning": 1152,
+        "used_reasoning": true,
+        "cost": 0.043048,
+        "duration_seconds": 56.36895442008972,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5897,
+        "token_output": 1495,
+        "token_reasoning": 832,
+        "used_reasoning": true,
+        "cost": 0.023754,
+        "duration_seconds": 40.402188539505005,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12582,
+        "token_output": 2152,
+        "token_reasoning": 1024,
+        "used_reasoning": true,
+        "cost": 0.04238,
+        "duration_seconds": 56.3689329624176,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "steps1_2_research": 0.3535,
+    "step3_outside_view": 0.1207,
+    "step5_inside_view": 0.3528,
+    "step6_aggregation": 0.3528,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.827
+}

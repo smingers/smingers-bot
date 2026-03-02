@@ -1,0 +1,7 @@
+**Analyzing SP and gold drift**
+
+I'm assessing the 10-day drift for SP at about 0.3% and gold at around 0.1%, which gives a mean excess of -0.2%. This distribution leans slightly negative with a standard deviation of about 4.5 percentage points. I’m calculating the bounds for different percentiles; for example, the 10th and 90th percentiles could be -6.0 to 5.6. Given the potential for extreme fluctuations, especially during crises, I might widen these tails further. I’m considering setting the 10th at -8.5 and the 90th at 7.5.**Crafting source analysis**
+
+I'm planning to analyze various sources: Wikipedia seems general, Indexbox looks suspicious, the script on Yahoo API needs consideration, and the patent appears irrelevant. I have to look at the Guggenheim correlation map and note that Monetary Metals provides annual data with possible biases. Kitco data seems incomplete, and the agent report indicates it hasn't computed the necessary statistics.
+
+For my reference class, I’m reviewing the rolling 10-trading-day excess return for GC vs. ES from 2010-2025, as well as gold vs. SP spot returns. The timeframe of March 16-27, 2026, is about two to three weeks from now, which aligns with today being March 2. Lastly, I want to consider the seasonal volatility around FOMC in mid-March while still focusing on the bigger picture. I’ll provide those percentiles for calibration.

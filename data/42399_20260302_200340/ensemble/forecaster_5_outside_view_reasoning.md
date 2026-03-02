@@ -1,0 +1,9 @@
+**Analyzing Google Trends Probability**
+
+I need to look at change probabilities for "fox" in Google Trends between March 2 and March 12, 2026, focusing on relative changes greater than 3 units. I want to take an outside view and consider the base rates, so I’ll analyze typical volatility for terms like "fox." I'll reference classes such as animal names and news networks to inform my analysis, aiming to produce whole percentages across three options. Let's start with a source analysis to evaluate summaries and their quality!**Evaluating Search Data for "Fox"**
+
+I’ve listed potential sources related to search trends and searches, but none of them provide values for "fox" in March 2026, so they won’t be helpful. Still, I can summarize what I find. Next, I want to analyze the variation in daily Google Trends values for "fox," especially knowing that a peak occurred on March 1, which could indicate a big event impacting interest. Since March 2 values should be lower than the peak, I might estimate it could be around 80, but I need to confirm with the appropriate date range.**Projecting Trends for "Fox"**
+
+In the next 10 days, I expect trends to likely revert to a baseline of around 40. This suggests a high probability of downward changes greater than 3 units. Since I'm focusing on an outside view, I’ll analyze typical baseline behaviors without incorporating inside event specifics.
+
+For a stable term like "fox," average daily changes might be about 5 units. I could estimate that there’s a 50% probability of staying within plus or minus 3 units over 10 days, and due to potential volatility in trending terms, I’ll set an outside perspective of 30% for increases, 40% for no change, and 30% for decreases.

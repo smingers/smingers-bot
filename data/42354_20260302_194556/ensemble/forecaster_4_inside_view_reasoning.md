@@ -1,0 +1,3 @@
+**Crafting distribution analysis**
+
+I need to analyze the max intraday VIX for March 16-27, 2026, especially since events like the US-Israel strike against Iran could impact it. Currently, the VIX is at 19.86, and with the FOMC meeting coming up, there’s a chance for increased volatility. I'll suggest a distribution between the 10th and 90th percentiles, adjusting for elevated baselines due to possible conflict. My proposed figures are 10th: 13.0, 20th: 15.0, 40th: 18.5, 60th: 23.5, 80th: 32.0, and 90th: 45.0. Let's develop this analysis thoroughly.

@@ -1,0 +1,5 @@
+**Analyzing VIX predictions**
+
+I'm focusing on predicting the maximum intraday VIX for the period of March 16-27, 2026. I need to analyze relevant sources and summarize their quality, noting that only a few reliable sources have recent data. My approach includes establishing a baseline distribution of VIX maxima for past biweekly periods. By using historical data, I can estimate percentiles for the predicted maximum intraday highs. The typical VIX range is around 19, with spikes above 30 during stressful periods, but those above 60 are extremely rare.**Approximating VIX probabilities**
+
+I'm estimating the VIX distribution based on historical data from 1990 to 2025, noting there's approximately 252 trading days each year and about 26 biweekly windows. Large spikes above 40 occurred several times, with probabilities around 0.3% for intraday spikes over 60, and maybe 3-4% for those above 40. Given the recent spike related to geopolitical tensions, the projected maximum for March 16-27 might average around 24. I’ll refine this using a logistic distribution while ensuring it stays within expected bounds.

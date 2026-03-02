@@ -1,0 +1,3 @@
+**Analyzing market performance**
+
+I'm looking at the current price changes over different time frames: NQ has seen a slight underperformance compared to ES, notably over one week and one month. The news indicates weakness in tech and strength in value, prompting an adjustment to my base distribution. Considering the upcoming Fed meeting, if the outcome is dovish, tech might benefit. The median adjustments I’m proposing are: 10th -1.6, 20th -0.8, 40th -0.1, 60th 0.3, 80th 1.0, 90th 1.5. Let’s move forward with crafting the analysis sections.

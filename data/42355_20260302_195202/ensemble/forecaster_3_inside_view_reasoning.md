@@ -1,0 +1,5 @@
+**Assessing forecast data**
+
+I need to create a forecast for March 16-27, 2026, focusing on NQ - ES returns. Based on the current evidence, there's a strong rotation from tech to value, suggesting NQ may underperform compared to ES in the coming weeks. Recent performance shows NQ slightly outperformed, but with upcoming events like the FOMC and CPI, the tech sector is under pressure while energy and materials are leading. I’ll adjust the mean downward, targeting a slightly negative median around -0.2.**Crafting analysis components**
+
+I need to adjust the probability of a negative outcome due to the ongoing rotation, while keeping the tails roughly similar but slightly more negative (-2.8) and positive (2.8). I'll maintain a standard deviation of about 2.0. Now, I need to outline the percentiles: 10 at -2.9, 20 at -1.8, 40 at -0.7, and so on, ensuring they strictly increase. The analysis will cover a two-week timeframe, and I'll highlight the status quo of rotation continuing to put NQ at a disadvantage, but recognize the catalysts including an inflation miss that could lead to strong NQ performance.
