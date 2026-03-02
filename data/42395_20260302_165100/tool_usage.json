@@ -1,0 +1,266 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": false,
+      "num_queries": 0,
+      "queries": [],
+      "tools_used": [],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 6,
+      "queries": [
+        {
+          "query": "DEXUSEU",
+          "tool": "FRED",
+          "temporal_role": "historical",
+          "intent": "Download full daily history of the official \u201cU.S. Dollars to Euro\u201d FRED series for base-rate and volatility calculations",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        },
+        {
+          "query": "EURUSD daily change distribution 10 days",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Find academic/industry analyses of typical 10-day EURUSD percentage moves to benchmark forecast error ranges",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "EURUSD seasonality March pattern",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Identify any recurring seasonal tendencies in EURUSD during early-mid March that might inform the forecast",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "EURUSD realized volatility 2023-2026",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Gather data or charts on recent realized/annualized volatility to parameterize a simple stochastic model",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "DEXUSEU methodology noon buying rate",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Verify how and when the reference series is fixed/published to ensure the correct resolution source and timing",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "[HISTORICAL] Over last 20 years, what is the distribution of 10-calendar-day percentage changes in the FRED series DEXUSEU? Provide mean, median, standard deviation, and 5th/95th percentiles.",
+          "tool": "Agent",
+          "temporal_role": "historical",
+          "intent": "Generate a statistical base-rate summary of 10-day moves ending anywhere in the sample so forecasters can set probabilistic bounds",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Agent",
+        "FRED"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 2,
+      "queries": [
+        {
+          "query": "EURUSD rate March 2 2026",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "Retrieve today\u2019s spot price and very recent movement context",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "ECB policy outlook March 2026 euro dollar",
+          "tool": "AskNews",
+          "temporal_role": "current",
+          "intent": "Surface commentary/news on expected ECB policy actions, speeches, and macro data likely to influence EURUSD before 12 Mar",
+          "phase": "plan",
+          "success": true,
+          "num_results": 38,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "AskNews",
+        "Google News"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7721,
+        "token_output": 1895,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.06703,
+        "duration_seconds": 39.4974045753479,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15243,
+        "token_output": 3011,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.12138,
+        "duration_seconds": 66.7422616481781,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14559,
+        "token_output": 2739,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.11388000000000001,
+        "duration_seconds": 66.74222874641418,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6949,
+        "token_output": 2306,
+        "token_reasoning": 494,
+        "used_reasoning": true,
+        "cost": 0.044444750000000005,
+        "duration_seconds": 39.49746608734131,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13489,
+        "token_output": 2063,
+        "token_reasoning": 439,
+        "used_reasoning": true,
+        "cost": 0.05248775,
+        "duration_seconds": 66.74219226837158,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13666,
+        "token_output": 1631,
+        "token_reasoning": 448,
+        "used_reasoning": true,
+        "cost": 0.04038,
+        "duration_seconds": 66.7421498298645,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6949,
+        "token_output": 1710,
+        "token_reasoning": 640,
+        "used_reasoning": true,
+        "cost": 0.027578,
+        "duration_seconds": 39.497514963150024,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12863,
+        "token_output": 1768,
+        "token_reasoning": 576,
+        "used_reasoning": true,
+        "cost": 0.03987,
+        "duration_seconds": 66.74211382865906,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "steps1_2_research": 0.3037,
+    "step3_outside_view": 0.1391,
+    "step5_inside_view": 0.368,
+    "step6_aggregation": 0.368,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.8108
+}

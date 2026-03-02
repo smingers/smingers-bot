@@ -112,3 +112,13 @@ Success: 0 | Failed: 2
 
 🟡 OTHER Q42206: Will LMT's market close price on 2026-02-26 be higher than i
   TypeError: BinaryForecaster.forecast() got an unexpected keyword argument 'community_prediction_context'
+
+======================================================================
+RUN: 2026-03-02T16:54:46.640350+00:00
+Tournament: minibench | Selection: new-only | Via: run_bot.py
+Success: 0 | Failed: 1
+======================================================================
+
+🔴 SUBMISSION Q42395: What will be the value of "U.S. Dollars to Euro Spot Exchang
+  SubmissionError: API returned 405: Client error '405 Method Not Allowed' for url 'https://www.metaculus.com/api/questions/forecast/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
