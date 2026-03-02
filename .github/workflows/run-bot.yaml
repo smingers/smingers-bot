@@ -63,39 +63,40 @@ jobs:
             sleep 3  # Rate limiting (Cloudflare blocks at 1.5s)
 
             # Get open question IDs (filter out non-question posts like announcements)
-            OPEN_RESPONSE=$(curl -s -w "\nHTTP_CODE:%{http_code}" -H "Authorization: Token $METACULUS_TOKEN" \
-              "https://www.metaculus.com/api/posts/?tournaments=$TOURNAMENT&statuses=open&limit=100&order_by=scheduled_close_time")
-            HTTP_CODE=$(echo "$OPEN_RESPONSE" | tail -1 | sed 's/HTTP_CODE://')
-            OPEN_BODY=$(echo "$OPEN_RESPONSE" | sed '$d')
-            
+            for attempt in 1 2; do
+              OPEN_RESPONSE=$(curl -s -w "\nHTTP_CODE:%{http_code}" -H "Authorization: Token $METACULUS_TOKEN" \
+                "https://www.metaculus.com/api/posts/?tournaments=$TOURNAMENT&statuses=open&limit=100&order_by=scheduled_close_time")
+              HTTP_CODE=$(echo "$OPEN_RESPONSE" | tail -1 | sed 's/HTTP_CODE://')
+              OPEN_BODY=$(echo "$OPEN_RESPONSE" | sed '$d')
+              [ "$HTTP_CODE" = "200" ] && break
+              echo "Attempt $attempt: HTTP $HTTP_CODE for $TOURNAMENT open questions"
+              [ "$attempt" -lt 2 ] && sleep 10
+            done
             if [ "$HTTP_CODE" != "200" ]; then
-              echo "API error for $TOURNAMENT open questions: HTTP $HTTP_CODE"
-              echo "$OPEN_BODY" | head -5
-              OPEN_IDS=""
-            else
-              OPEN_IDS=$(echo "$OPEN_BODY" | jq -r '[.results[] | select(.question or .group_of_questions)] | map(.id) | .[]' | sort -n)
+              echo "API error for $TOURNAMENT open questions after retry: HTTP $HTTP_CODE — using Python fallback"
+              HAS_WORK=true
+              if [ "$TOURNAMENT" = "32916" ]; then NEW_32916=""; else NEW_MINIBENCH=""; fi
+              continue
             fi
+            OPEN_IDS=$(echo "$OPEN_BODY" | jq -r '[.results[] | select(.question or .group_of_questions)] | map(.id) | .[]' | sort -n)
             OPEN_COUNT=$(echo "$OPEN_IDS" | grep -c '[0-9]' || true)
 
             sleep 3
 
             # Get my forecasted question IDs for this tournament
-            MY_RESPONSE=$(curl -s -w "\nHTTP_CODE:%{http_code}" -H "Authorization: Token $METACULUS_TOKEN" \
-              "https://www.metaculus.com/api/posts/?forecaster_id=$USER_ID&tournaments=$TOURNAMENT&limit=500")
-            MY_HTTP_CODE=$(echo "$MY_RESPONSE" | tail -1 | sed 's/HTTP_CODE://')
-            MY_BODY=$(echo "$MY_RESPONSE" | sed '$d')
-
+            for attempt in 1 2; do
+              MY_RESPONSE=$(curl -s -w "\nHTTP_CODE:%{http_code}" -H "Authorization: Token $METACULUS_TOKEN" \
+                "https://www.metaculus.com/api/posts/?forecaster_id=$USER_ID&tournaments=$TOURNAMENT&limit=500")
+              MY_HTTP_CODE=$(echo "$MY_RESPONSE" | tail -1 | sed 's/HTTP_CODE://')
+              MY_BODY=$(echo "$MY_RESPONSE" | sed '$d')
+              [ "$MY_HTTP_CODE" = "200" ] && break
+              echo "Attempt $attempt: HTTP $MY_HTTP_CODE for $TOURNAMENT my forecasts"
+              [ "$attempt" -lt 2 ] && sleep 10
+            done
             if [ "$MY_HTTP_CODE" != "200" ]; then
-              echo "API error fetching my forecasts for $TOURNAMENT: HTTP $MY_HTTP_CODE"
-              echo "$MY_BODY" | head -3
-              # Can't safely determine new questions — pass empty IDs so Python handles deduplication
-              echo "$TOURNAMENT: MY_IDS fetch failed — will use Python fallback path for deduplication"
+              echo "API error fetching my forecasts for $TOURNAMENT after retry: HTTP $MY_HTTP_CODE — using Python fallback"
               HAS_WORK=true
-              if [ "$TOURNAMENT" = "32916" ]; then
-                NEW_32916=""
-              else
-                NEW_MINIBENCH=""
-              fi
+              if [ "$TOURNAMENT" = "32916" ]; then NEW_32916=""; else NEW_MINIBENCH=""; fi
               continue
             fi
 
