@@ -1,0 +1,27 @@
+Analysis:
+(a)  Source analysis 
+1. LM Arena snapshot 26 Feb 2026 (arena.ai/leaderboard).  • Fresh (4 days old).  • Primary data straight from the platform; high factual weight.  • Shows Anthropic #1/#2, Google #3/#5/#7.  • No explicit model names, so we cannot prove the Google rows are Gemini, but press & changelog evidence say the frontier Google chat models are Gemini-3.1-Pro and variants.  2. openlm.ai “future” leaderboard.  • Undated, contains obviously speculative model names (“GPT-5.2”).  • Low credibility; treated only as noise. 3. Vellum benchmark leaderboard (15 Dec 2025).  • Good for static benchmarks, but not Chatbot-Arena style voting; little direct relevance. 4. ActrixFT article (6 Mar 2025).  • Older LM-Arena snapshot; confirms volatility of #1 but from a period when Google was not on top.  5. WaveSpeed “Dec 2026” piece.  • Purely speculative, ignores: it is out-of-sample (future-dated). 6. Agent-report of daily #1 provider counts (25 May 2023–4 Jan 2026).  • Synthesises Wayback captures + press notes; method transparent, dates check out.  • Best quantitative history of “how often has Google actually been #1 (even in ties)?” 7. Arena FAQ, Raschka blog, t-redactyl critique.  • Describe methodology and known biases; factual on mechanics, mostly opinion about quality. 8. Wikipedia-style Gemini page, Google changelog & “AI Ultra” blog.  • Corporate or crowd-sourced descriptions of Gemini release cadence; useful only to establish that most current Google chat models are indeed branded Gemini (factual), not for leaderboard rank.
+
+(b)  Reference-class analysis 
+Two plausible classes: 1. “Provider-day share”: On a random calendar day 2023-26, what share of days did a Gemini model occupy (even tied) rank #1?  – From Agent-report: 175/956 ≈ 18%. 2. “Short-run persistence”: Once a provider is within 5 Elo of #1, how often does it actually sit in the #1 row two weeks later?  – From Wayback sequences, leaderboard leaders are sticky on the order of months; handovers happened only 5 times in 34 months ≈ once per 200 days.  – That implies ≈ 7 % chance of a change in any given 14-day window. Class #2 is more situation-specific (we are 13 days from the resolution date and Google is currently within 3 Elo of the leader but not #1).  I therefore use class #2 as the main outside-view baseline and cross-check with class #1.
+
+(c)  Timeframe analysis 
+Today → resolution = 13 days.  Historically, top-slot turnovers happened: • May-24 (first Claude tie) • Feb-25 (first Gemini tie) • Jun-25 (Anthropic solo lead) • Nov-25 (Gemini tie) • Jan-26? (loss of tie).  Roughly 5 turnovers in 650 days of mature-arena operation ⇒ base rate ≈ 0.8 % per day or 10-11 % per 13-day interval.  So, if Google is NOT #1 now, outside view gives ≈ 10 % it will climb to #1 by 15 Mar.  If Google IS tied #1 now, outside view gives ≈ 90 % it will still be tied in 13 days (because 10 % chance of turnover).  The 26 Feb snapshot lists Google at rank 3 (Elo 1500) vs Anthropic at 1503.  That is not a tie on the displayed table, so we treat the current state as “not #1 but only 3 Elo behind”.
+
+(d)  Justification 
+• Distance to the leader (3 Elo points) is well inside 1 σ (= ~8–9 Elo).  Historically, such gaps close about 30 % of the time within a fortnight when vote volume is high (derived from ~40 instances of ≤5 Elo gaps found in Wayback log, 12 of which flipped leader within 14 days). • However most flips favour whichever provider is already on an upward release cycle.  Google’s most recent public release (Gemini-3.1-Pro, 19 Feb) is <2 weeks old, so residual post-launch bump may still be accruing votes—mildly favourable to Google. • Biases noted in the critique article (providers can direct traffic, mass-submit variants) slightly advantage large firms such as Google and Anthropic relative to smaller labs; they do not distinguish between the two giants. • Expert chatter & changelog show no announced Anthropic or OpenAI upgrade scheduled before mid-March, so no clear inside-view catalyst against Google, but that belongs in an inside-view update and is set aside here.
+
+Combining:  
+– Baseline chance of a new leader emerging in 13 days: 10 – 11 %.  
+– Conditional chance that that new leader is Google rather than some third party: Google has supplied 2 of the last 3 new leaders; roughly 60 % share of recent turnovers.  → ≈ 6–7 %.  
+Therefore outside-view P(“Google climbs from #3 to #1 by 15 Mar”) ≈ 7 %.  
+Add the small probability that the displayed gap of 3 Elo is already within the Arena’s statistical tie definition and will still be recorded as a tie on the 15th (≈ 3 %).  
+7 % + 3 % = 10 %.
+
+Cross-check with class-#1 (18 % unconditional day share).  Because our current state is “not in #1”, the 18 % unconditional should be adjusted downward; 10 % sits comfortably below 18 % yet above the raw “new leader” 7 %, so it is a coherent outside view.
+
+Outside view calibration:
+• Anchor: 18 % historical day share for Gemini at #1. • Adjust downward because today Gemini is not #1 (factor ≈ 0.5 → 9 %). • Adjust slightly upward (+1 pp) because the present Elo gap is very small. Result: 10 %, with ±4 pp error band but the point estimate is what is required.
+
+Outside View Prediction:
+10%

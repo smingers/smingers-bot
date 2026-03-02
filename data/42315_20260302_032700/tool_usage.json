@@ -1,0 +1,266 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": false,
+      "num_queries": 0,
+      "queries": [],
+      "tools_used": [],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 5,
+      "queries": [
+        {
+          "query": "LM Arena leaderboard archives",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Locate archived snapshots to reconstruct historical #1 rankings and provider turnover.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Google Gemini LM Arena rank",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Find prior occasions where Gemini models topped or nearly topped the leaderboard to gauge precedent.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        },
+        {
+          "query": "Analyze historical LM Arena #1 provider frequency 2023-2026; calculate days Google held top spot vs Anthropic, OpenAI; include tie periods.",
+          "tool": "Agent",
+          "temporal_role": "historical",
+          "intent": "Produce quantitative base-rate statistics of Google/Gemini at #1.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        },
+        {
+          "query": "LM Arena score methodology",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Understand calculation, update cadence, and naming conventions that determine official #1.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Gemini Ultra release roadmap",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Identify publicly known or leaked schedules for new Gemini versions before 15 Mar 2026.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Google Gemini model launch 2026",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "Catch breaking news of any just-released Gemini variant that could boost ranking.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "LM Arena leaderboard March 2026",
+          "tool": "Google",
+          "temporal_role": "current",
+          "intent": "Retrieve the most recent leaderboard snapshot to assess current gap and momentum.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Anthropic Claude upgrade imminent 2026",
+          "tool": "AskNews",
+          "temporal_role": "current",
+          "intent": "Surface reports of forthcoming Anthropic improvements that could keep them #1, providing a contrarian perspective.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 34,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "AskNews",
+        "Google",
+        "Google News"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 9433,
+        "token_output": 1904,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.075725,
+        "duration_seconds": 66.08651995658875,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17959,
+        "token_output": 3044,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.135455,
+        "duration_seconds": 63.03392004966736,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17693,
+        "token_output": 2330,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.123415,
+        "duration_seconds": 63.033896684646606,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8001,
+        "token_output": 3651,
+        "token_reasoning": 1634,
+        "used_reasoning": true,
+        "cost": 0.06511575,
+        "duration_seconds": 66.08659148216248,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15756,
+        "token_output": 2433,
+        "token_reasoning": 482,
+        "used_reasoning": true,
+        "cost": 0.061634999999999995,
+        "duration_seconds": 63.033870220184326,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16143,
+        "token_output": 1754,
+        "token_reasoning": 448,
+        "used_reasoning": true,
+        "cost": 0.046318,
+        "duration_seconds": 63.03384327888489,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8001,
+        "token_output": 2933,
+        "token_reasoning": 1408,
+        "used_reasoning": true,
+        "cost": 0.039466,
+        "duration_seconds": 66.08662700653076,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15509,
+        "token_output": 2132,
+        "token_reasoning": 704,
+        "used_reasoning": true,
+        "cost": 0.048074000000000006,
+        "duration_seconds": 63.033822774887085,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "steps1_2_research": 0.4621,
+    "step3_outside_view": 0.1803,
+    "step5_inside_view": 0.4149,
+    "step6_aggregation": 0.4149,
+    "step7_supervisor": 0.4641
+  },
+  "total_pipeline_cost": 1.5214
+}

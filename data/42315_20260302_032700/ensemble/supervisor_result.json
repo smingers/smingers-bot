@@ -1,0 +1,16 @@
+{
+  "confidence": "medium",
+  "prediction": 0.5,
+  "search_queries": [
+    "LM Arena text leaderboard March 2026 rankings (Google)",
+    "arena.ai leaderboard text overall top model 2026 (Google)",
+    "What is the current #1 model on the LM Arena Text Arena Overall leaderboard (at arena.ai/leaderboard/text or lmarena-ai on HuggingFace) as of late February or early March 2026? Specifically, what are the top 5 models and their Arena scores, and is any Google Gemini model currently ranked #1 or within 5 Elo points of #1? (Agent)",
+    "Gemini 3.1 Pro LM Arena Elo score rank (Google)"
+  ],
+  "cost": 0.4641,
+  "divergence": {
+    "metric_name": "std_dev",
+    "metric_value": 15.83,
+    "threshold": 15.0
+  }
+}
