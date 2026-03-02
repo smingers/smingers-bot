@@ -1,0 +1,255 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": false,
+      "num_queries": 0,
+      "queries": [],
+      "tools_used": [],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "10-year treasury yield daily csv",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Obtain raw historical DGS10 daily data for custom bi-weekly change analysis.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "10y yield biweekly change histogram",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Find any existing statistical work or charts showing distribution/magnitude of 2-week moves.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "yield reaction past FOMC decisions",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Identify historical impact of FOMC meetings on 10-year yields to calibrate expected move around 25 Mar 2026.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "[HISTORICAL] Assess historical distribution of U.S. 10-year Treasury yield changes over every 10-trading-day window from 2010-2025; return mean, standard deviation, 10th and 90th percentiles, and frequency of moves >\u00b125 bp.",
+          "tool": "Agent",
+          "temporal_role": "historical",
+          "intent": "Produce quick base-rate statistics for two-week swings.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Agent"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "DGS10 March 2026 latest value",
+          "tool": "Google",
+          "temporal_role": "current",
+          "intent": "Pull the most recent published 10-year yield level to establish starting point.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "FOMC March 25 2026 expectations dot plot",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "Capture market commentary/forecasts for the imminent FOMC that could shift yields.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Feb 2026 CPI consensus inflation forecast",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "Get economists\u2019 expectations and market pricing for the CPI release on 17 Mar 2026.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Google News"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7215,
+        "token_output": 1400,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.057075,
+        "duration_seconds": 56.72167110443115,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7872,
+        "token_output": 2552,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.07764000000000001,
+        "duration_seconds": 64.04823732376099,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7727,
+        "token_output": 2414,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.074845,
+        "duration_seconds": 64.04820680618286,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6414,
+        "token_output": 2893,
+        "token_reasoning": 822,
+        "used_reasoning": true,
+        "cost": 0.0517265,
+        "duration_seconds": 56.72172832489014,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7053,
+        "token_output": 2296,
+        "token_reasoning": 352,
+        "used_reasoning": true,
+        "cost": 0.04448675,
+        "duration_seconds": 64.0481767654419,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7840,
+        "token_output": 1506,
+        "token_reasoning": 384,
+        "used_reasoning": true,
+        "cost": 0.027728,
+        "duration_seconds": 64.04814553260803,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6414,
+        "token_output": 1653,
+        "token_reasoning": 448,
+        "used_reasoning": true,
+        "cost": 0.026052,
+        "duration_seconds": 56.72178101539612,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6829,
+        "token_output": 1400,
+        "token_reasoning": 448,
+        "used_reasoning": true,
+        "cost": 0.024857999999999998,
+        "duration_seconds": 64.04811716079712,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "steps1_2_research": 0.3459,
+    "step3_outside_view": 0.1349,
+    "step5_inside_view": 0.2496,
+    "step6_aggregation": 0.2496,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.7303
+}

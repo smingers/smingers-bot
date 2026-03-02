@@ -1,0 +1,5 @@
+**Estimating return distributions**
+
+I need to create a prediction distribution for the biweekly spread of CL return minus ES return between March 16 and March 27, 2026. I plan to focus on baseline analysis first, including examining historical data for the past ten years to find the mean, standard deviation, and relevant percentiles. I'll approximate typical crude oil volatility compared to equities, estimating a daily crude volatility of around 2%, which leads to about a 6.3% price change over ten days.**Calculating spread and percentiles**
+
+I need to analyze the spread, defined as the difference between two returns, by summing variances. With calculated values, I found the standard deviation to be about 6.98%. The positive correlation impacts the variance, resulting in a new standard deviation of approximately 5.8 percentage points. This indicates that 68% of the differences will be within ±6 points, and 95% within ±12 points. I’ll set percentiles as -6, -3, -0.5, +0.5, +3, and +6 to reflect expected differences with historical factors considered.

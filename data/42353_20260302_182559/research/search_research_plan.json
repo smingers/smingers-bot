@@ -1,0 +1,183 @@
+{
+  "plan_analysis": "The pre-research context only tells us the official source (FRED series DGS10) and the formal resolution rule (last published daily value for Friday Mar 27 2026 or nearest earlier day).  \nA skilled forecaster will still need:\n\n1. Base rate: How the 10-year yield normally moves over two-week windows; empirical distribution of bi-weekly changes; recent multi-cycle history (e.g., since 2010).  \n2. Current state: The latest DGS10 print, the current trend for the past several weeks, and up-to-date information on Fed Funds futures, inflation data, growth data, and Treasury supply that could push the yield before Mar 27.  \n3. Key drivers: a) Expected Fed policy path (FOMC meeting 25 Mar 2026), b) Inflation data (Feb CPI release 17 Mar 2026), c) Growth/labor data (Mar Non-farm payrolls 06 Mar 2026) and Treasury issuance (mid-Mar refunding & auctions).  \n4. Resolution mechanism check: Verification of how FRED posts daily values and whether holidays/closures around Good Friday (03 Apr) matter for the period.  \n5. Contrarian angles: Possibility of a sharp risk-off move (e.g., banking stress) or a sudden upside inflation surprise that would swing yields unusually far.\n\nThe search strategy therefore mixes:  \n\u2022 Historical queries (yield history, distribution of two-week changes, linkage to Fed moves) \u2013 ~5 queries.  \n\u2022 Current queries (latest DGS10 levels, upcoming FOMC/CPI expectations, auction calendar, market commentary) \u2013 ~3 queries.",
+  "reflect_analysis": null,
+  "queries_planned": [
+    {
+      "query": "10-year treasury yield daily csv",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Obtain raw historical DGS10 daily data for custom bi-weekly change analysis.",
+      "phase": "plan"
+    },
+    {
+      "query": "10y yield biweekly change histogram",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Find any existing statistical work or charts showing distribution/magnitude of 2-week moves.",
+      "phase": "plan"
+    },
+    {
+      "query": "yield reaction past FOMC decisions",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Identify historical impact of FOMC meetings on 10-year yields to calibrate expected move around 25 Mar 2026.",
+      "phase": "plan"
+    },
+    {
+      "query": "[HISTORICAL] Assess historical distribution of U.S. 10-year Treasury yield changes over every 10-trading-day window from 2010-2025; return mean, standard deviation, 10th and 90th percentiles, and frequency of moves >\u00b125 bp.",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "Produce quick base-rate statistics for two-week swings.",
+      "phase": "plan"
+    },
+    {
+      "query": "DGS10 March 2026 latest value",
+      "tool": "Google",
+      "temporal_role": "current",
+      "intent": "Pull the most recent published 10-year yield level to establish starting point.",
+      "phase": "plan"
+    },
+    {
+      "query": "FOMC March 25 2026 expectations dot plot",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Capture market commentary/forecasts for the imminent FOMC that could shift yields.",
+      "phase": "plan"
+    },
+    {
+      "query": "Feb 2026 CPI consensus inflation forecast",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Get economists\u2019 expectations and market pricing for the CPI release on 17 Mar 2026.",
+      "phase": "plan"
+    }
+  ],
+  "gap_queries": [],
+  "seed_context_chars": 1340,
+  "historical_context_chars": 19132,
+  "current_context_chars": 14595,
+  "phases": {
+    "pre_research": {
+      "duration_seconds": 7.3,
+      "seed_context_chars": 1340,
+      "search_id": "question_urls",
+      "searched": true,
+      "urls_found": 2,
+      "urls_scraped": 1,
+      "urls_summarized": 1,
+      "urls": [
+        {
+          "url": "https://fred.stlouisfed.org/series/DGS10",
+          "domain": "fred.stlouisfed.org",
+          "scraped": true,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_words": 373
+        },
+        {
+          "url": "https://fred.stlouisfed.org/series/DGS10 \"Market Yield on U.S. Treasury Securities at 10-Year Constant Maturity\"",
+          "domain": "fred.stlouisfed.org",
+          "scraped": false,
+          "method": null,
+          "status_code": 404,
+          "error": "HTTP 404"
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ]
+    },
+    "plan": {
+      "duration_seconds": 27.74,
+      "cost": 0.0141,
+      "num_queries": 7
+    },
+    "execute": {
+      "duration_seconds": 265.17,
+      "cost": 0.3198,
+      "queries_executed": 7,
+      "queries_successful": 7
+    },
+    "assemble": {
+      "historical_context_chars": 19132,
+      "current_context_chars": 14595
+    }
+  },
+  "total_queries_planned": 7,
+  "total_queries_executed": 7,
+  "total_gap_queries": 0,
+  "total_cost": 0.3459,
+  "total_duration_seconds": 300.22,
+  "query_details": [
+    {
+      "query": "10-year treasury yield daily csv",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Obtain raw historical DGS10 daily data for custom bi-weekly change analysis.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "10y yield biweekly change histogram",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Find any existing statistical work or charts showing distribution/magnitude of 2-week moves.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "yield reaction past FOMC decisions",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Identify historical impact of FOMC meetings on 10-year yields to calibrate expected move around 25 Mar 2026.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "[HISTORICAL] Assess historical distribution of U.S. 10-year Treasury yield changes over every 10-trading-day window from 2010-2025; return mean, standard deviation, 10th and 90th percentiles, and frequency of moves >\u00b125 bp.",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "Produce quick base-rate statistics for two-week swings.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 1,
+      "error": null
+    },
+    {
+      "query": "DGS10 March 2026 latest value",
+      "tool": "Google",
+      "temporal_role": "current",
+      "intent": "Pull the most recent published 10-year yield level to establish starting point.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "FOMC March 25 2026 expectations dot plot",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Capture market commentary/forecasts for the imminent FOMC that could shift yields.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "Feb 2026 CPI consensus inflation forecast",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Get economists\u2019 expectations and market pricing for the CPI release on 17 Mar 2026.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    }
+  ]
+}

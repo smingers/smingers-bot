@@ -1,0 +1,23 @@
+{
+  "confidence": "high",
+  "prediction": {
+    "10": -8.0,
+    "20": -3.0,
+    "40": 1.5,
+    "60": 5.0,
+    "80": 10.0,
+    "90": 16.0
+  },
+  "search_queries": [
+    "Iran Hormuz closure diplomatic negotiations March 2026 (Google News)",
+    "US Iran ceasefire talks Strait Hormuz reopening (Google News)",
+    "What is the current status of the Strait of Hormuz closure as of early March 2026? Are there active diplomatic negotiations between the US and Iran to reopen the strait, and what do geopolitical analysts estimate as the timeline for resolution? (Agent)",
+    "crude oil volatility biweekly returns geopolitical crisis historical (Google)"
+  ],
+  "cost": 0.4881,
+  "divergence": {
+    "metric_name": "rn_spread",
+    "metric_value": 0.0473,
+    "threshold": 0.045
+  }
+}

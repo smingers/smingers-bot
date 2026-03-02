@@ -1,0 +1,3 @@
+**Analyzing yield trends**
+
+It looks like there's been a mild decline in yields, possibly shifting the median down from 4.00 to around 3.98 or 3.99, although I might just keep it at 4.00. I should note that daily yields can fluctuate, especially with geopolitical factors at play, which might lead to higher volatility. The distribution I see suggests adjusting slightly for potential inflation or energy increases. I’ll need to craft a thorough analysis while clearly including all necessary disclaimers!

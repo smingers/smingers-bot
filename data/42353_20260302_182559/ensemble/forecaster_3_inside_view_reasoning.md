@@ -1,0 +1,5 @@
+**Analyzing yield forecast**
+
+I need to forecast the 10-year yield for the period ending March 27, 2026, considering today's yield of 4.06% as of March 2. I'll look at external factors like geopolitical issues and inflation concerns, plus potential Fed cuts later this year. The trend suggests a slight decline to about 3.95% by Q1 end. The next FOMC meeting might maintain a hawkish bias, but volatility from geopolitical events could also shift yields. I'll set a median around 4.00% with increased variance.**Crafting yield analysis**
+
+I'm looking at the 10-year yield with tails ranging from 3.6% to 4.5%. I'm considering a risk-off recession with a dovish Fed on the low end, while an oil shock and hawkish stance push the high end. I need to gather analysis in the required format, focusing on sources, weighting, and a timeframe of 25 days. I want to set final percentiles to be strictly increasing, perhaps 10% at 3.65%, 20% at 3.82%, and so on, with a mean around 4.03%. Let's move forward with this!

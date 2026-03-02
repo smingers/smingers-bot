@@ -1,0 +1,266 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": false,
+      "num_queries": 0,
+      "queries": [],
+      "tools_used": [],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 5,
+      "queries": [
+        {
+          "query": "CL=F",
+          "tool": "yFinance",
+          "temporal_role": "historical",
+          "intent": "Download daily crude-oil futures close prices to calculate historical bi-weekly returns.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        },
+        {
+          "query": "ES=F",
+          "tool": "yFinance",
+          "temporal_role": "historical",
+          "intent": "Download daily S&P 500 futures close prices to calculate historical bi-weekly returns.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        },
+        {
+          "query": "CL minus ES biweekly returns distribution",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Find studies/data sets analysing the historical return spread between oil and S&P 500.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        },
+        {
+          "query": "oil equity correlation research paper",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Obtain academic/industry papers giving long-run correlation and causation insights between crude oil and equity markets.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "[HISTORICAL] Compute last-10-yrs biweekly percent-return spread between CL=F and ES=F, summarise mean, median, stdev, 10th/90th percentiles, and list top 10 positive and negative episodes. Also note any seasonal pattern around March.",
+          "tool": "Agent",
+          "temporal_role": "historical",
+          "intent": "Generate quantitative base-rate statistics directly.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Agent",
+        "yFinance"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "OPEC+ March 2026 meeting agenda",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "Get latest information on any OPEC/OPEC+ gathering that could affect oil prices inside the forecast window.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "S&P 500 futures outlook ahead of March FOMC 2026",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "Capture analyst expectations and potential equity-market drivers linked to the Fed decision occurring during the period.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "crude oil inventory surprise March 2026 EIA",
+          "tool": "AskNews",
+          "temporal_role": "current",
+          "intent": "Surface recent or anticipated U.S. EIA inventory reports and commentary that could swing oil prices, offering a contrarian check if inventories are building.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 44,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "AskNews"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6782,
+        "token_output": 1596,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.05785,
+        "duration_seconds": 44.96213889122009,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16773,
+        "token_output": 3097,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.13032,
+        "duration_seconds": 75.02767133712769,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16167,
+        "token_output": 2661,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.12075000000000001,
+        "duration_seconds": 75.02762508392334,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6035,
+        "token_output": 2411,
+        "token_reasoning": 768,
+        "used_reasoning": true,
+        "cost": 0.04431525,
+        "duration_seconds": 44.96220541000366,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14669,
+        "token_output": 2297,
+        "token_reasoning": 613,
+        "used_reasoning": true,
+        "cost": 0.05782875,
+        "duration_seconds": 75.027583360672,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14935,
+        "token_output": 1997,
+        "token_reasoning": 960,
+        "used_reasoning": true,
+        "cost": 0.045846,
+        "duration_seconds": 75.02754402160645,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6035,
+        "token_output": 1551,
+        "token_reasoning": 640,
+        "used_reasoning": true,
+        "cost": 0.024478,
+        "duration_seconds": 44.96226477622986,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14123,
+        "token_output": 1477,
+        "token_reasoning": 448,
+        "used_reasoning": true,
+        "cost": 0.040062,
+        "duration_seconds": 75.02750587463379,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "steps1_2_research": 0.2951,
+    "step3_outside_view": 0.1266,
+    "step5_inside_view": 0.3948,
+    "step6_aggregation": 0.3948,
+    "step7_supervisor": 0.4881
+  },
+  "total_pipeline_cost": 1.3046
+}
