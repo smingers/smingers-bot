@@ -1,0 +1,265 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": false,
+      "num_queries": 0,
+      "queries": [],
+      "tools_used": [],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "Sudan ceasefire attempts 2023 2025 frequency",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Count and nature of previous Sudan civil-war ceasefire attempts to establish how often short truces are reached and why they fail.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "civil war ceasefire average time to agreement",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Academic/NGO studies giving base-rate duration from war onset to first 30-day bilateral ceasefire in comparable conflicts.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        },
+        {
+          "query": "metaculus prediction daily volatility study",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Blog posts or forum analyses quantifying typical magnitude of community-prediction moves over short horizons.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Likelihood Metaculus binary rises >2pp in 10 days",
+          "tool": "Agent",
+          "temporal_role": "historical",
+          "intent": "Retrieve or approximate statistics across Metaculus binary questions on how often the community prediction increases by more than 2 percentage points within the final 10-14 days, establishing a volatility baseline.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Agent"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "Sudan peace talks March 2026 Jeddah",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "Detect any just-announced or scheduled negotiating sessions that could raise ceasefire odds in the next two weeks.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "AU IGAD UN ceasefire proposal Sudan 2026",
+          "tool": "AskNews",
+          "temporal_role": "current",
+          "intent": "Broader news coverage of multilateral diplomatic pushes or draft resolutions currently under discussion.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 29,
+          "error": null
+        },
+        {
+          "query": "RSF advance Khartoum February 2026",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "Latest battlefield momentum that might shift bargaining power and therefore community expectations.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "UAE Ethiopia weapons RSF 2026 evidence",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "Reports on foreign support/escalation that could dampen ceasefire prospects (contrarian check if such support is instead cut).",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "AskNews",
+        "Google News"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 9131,
+        "token_output": 1478,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.067825,
+        "duration_seconds": 48.16296410560608,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 20104,
+        "token_output": 2826,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.14290999999999998,
+        "duration_seconds": 78.42010307312012,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 19712,
+        "token_output": 2471,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.135625,
+        "duration_seconds": 78.420081615448,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8098,
+        "token_output": 2776,
+        "token_reasoning": 1118,
+        "used_reasoning": true,
+        "cost": 0.05303549999999999,
+        "duration_seconds": 48.16301655769348,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17882,
+        "token_output": 3672,
+        "token_reasoning": 1814,
+        "used_reasoning": true,
+        "cost": 0.08270149999999998,
+        "duration_seconds": 78.42004895210266,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 18185,
+        "token_output": 1494,
+        "token_reasoning": 512,
+        "used_reasoning": true,
+        "cost": 0.048322000000000004,
+        "duration_seconds": 78.42001414299011,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8098,
+        "token_output": 1845,
+        "token_reasoning": 832,
+        "used_reasoning": true,
+        "cost": 0.030955999999999997,
+        "duration_seconds": 48.16304969787598,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17448,
+        "token_output": 1947,
+        "token_reasoning": 768,
+        "used_reasoning": true,
+        "cost": 0.050472,
+        "duration_seconds": 78.41998362541199,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "steps1_2_research": 0.5469,
+    "step3_outside_view": 0.1518,
+    "step5_inside_view": 0.46,
+    "step6_aggregation": 0.46,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 1.1588
+}

@@ -1,0 +1,224 @@
+{
+  "plan_analysis": "Forecasters must judge whether the Metaculus community forecast for a 2026 Sudan ceasefire will rise above 30 % within the next 12 days.  To do that they need two broad evidence streams:  \n\nA) Information that could genuinely change the underlying probability of a 2026 ceasefire (peace talks, diplomatic initiatives, battlefield shifts, international pressure, humanitarian or economic shocks, foreign-backer decisions).  \nB) Information on how Metaculus community predictions normally behave over short horizons (volatility, sensitivity to news, magnitude/frequency of >1\u20132 pp moves in the final fortnight before resolution).  \n\nThe pre-research material is almost entirely historical background; it lacks 1) any 2026-dated news on the war or peace initiatives, and 2) any data on Metaculus forecast dynamics.  Therefore the search strategy must:  \n\n1. Gather base-rate data on ceasefires in comparable civil wars and on prior ceasefire attempts in Sudan (helps judge whether incoming news is \u201cbig enough\u201d to move the crowd above 30 %).  \n2. Retrieve any current or imminent developments (UN/AU/IGAD mediations, Jeddah talks, U.S. or Gulf pressure, battlefield breakthroughs, looming humanitarian catastrophes) that could plausibly shift sentiment in the next 12 days.  \n3. Obtain historical statistics or examples of Metaculus prediction swings over 7- to 14-day windows, giving forecasters a sense of how much movement is typical.  \n4. Look for contrarian signals\u2014e.g., leaks of secret negotiations, surprise international guarantees\u2014that, while low-probability, would strongly push the forecast upward if confirmed.  \n\nThe eight queries below collectively cover:  \n\u2022 Civil-war ceasefire base rates and Sudan\u2019s own pattern of failed/brief truces (base rate)  \n\u2022 Mechanism specifics\u2014Metaculus prediction volatility and update behaviour (resolution mechanism)  \n\u2022 Latest diplomatic or military news that could drive sentiment (current state & key drivers)  \n\u2022 Possibility of suddenly favourable developments (contrarian check)",
+  "reflect_analysis": null,
+  "queries_planned": [
+    {
+      "query": "Sudan ceasefire attempts 2023 2025 frequency",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Count and nature of previous Sudan civil-war ceasefire attempts to establish how often short truces are reached and why they fail.",
+      "phase": "plan"
+    },
+    {
+      "query": "civil war ceasefire average time to agreement",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Academic/NGO studies giving base-rate duration from war onset to first 30-day bilateral ceasefire in comparable conflicts.",
+      "phase": "plan"
+    },
+    {
+      "query": "metaculus prediction daily volatility study",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Blog posts or forum analyses quantifying typical magnitude of community-prediction moves over short horizons.",
+      "phase": "plan"
+    },
+    {
+      "query": "Sudan peace talks March 2026 Jeddah",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Detect any just-announced or scheduled negotiating sessions that could raise ceasefire odds in the next two weeks.",
+      "phase": "plan"
+    },
+    {
+      "query": "AU IGAD UN ceasefire proposal Sudan 2026",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "Broader news coverage of multilateral diplomatic pushes or draft resolutions currently under discussion.",
+      "phase": "plan"
+    },
+    {
+      "query": "RSF advance Khartoum February 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Latest battlefield momentum that might shift bargaining power and therefore community expectations.",
+      "phase": "plan"
+    },
+    {
+      "query": "UAE Ethiopia weapons RSF 2026 evidence",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Reports on foreign support/escalation that could dampen ceasefire prospects (contrarian check if such support is instead cut).",
+      "phase": "plan"
+    },
+    {
+      "query": "Likelihood Metaculus binary rises >2pp in 10 days",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "Retrieve or approximate statistics across Metaculus binary questions on how often the community prediction increases by more than 2 percentage points within the final 10-14 days, establishing a volatility baseline.",
+      "phase": "plan"
+    }
+  ],
+  "gap_queries": [],
+  "seed_context_chars": 6880,
+  "historical_context_chars": 28151,
+  "current_context_chars": 65991,
+  "phases": {
+    "pre_research": {
+      "duration_seconds": 13.08,
+      "seed_context_chars": 6880,
+      "search_id": "question_urls",
+      "searched": true,
+      "urls_found": 7,
+      "urls_scraped": 4,
+      "urls_summarized": 4,
+      "urls": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Sudanese_civil_war_\\(2023%E2%80%93present\\",
+          "domain": "en.wikipedia.org",
+          "scraped": false,
+          "method": "wikipedia_api",
+          "status_code": 200,
+          "error": "Wikipedia page not found: Sudanese civil war \\(2023\u2013present\\"
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Rapid_Support_Forces",
+          "domain": "en.wikipedia.org",
+          "scraped": true,
+          "method": "wikipedia_api",
+          "status_code": 200,
+          "content_words": 2347
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Sudanese_Armed_Forces",
+          "domain": "en.wikipedia.org",
+          "scraped": true,
+          "method": "wikipedia_api",
+          "status_code": 200,
+          "content_words": 2367
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/2021_Sudanese_coup_d'%C3%A9tat",
+          "domain": "en.wikipedia.org",
+          "scraped": true,
+          "method": "wikipedia_api",
+          "status_code": 200,
+          "content_words": 2290
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Omar_al-Bashir",
+          "domain": "en.wikipedia.org",
+          "scraped": true,
+          "method": "wikipedia_api",
+          "status_code": 200,
+          "content_words": 2369
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ]
+    },
+    "plan": {
+      "duration_seconds": 31.57,
+      "cost": 0.0194,
+      "num_queries": 8
+    },
+    "execute": {
+      "duration_seconds": 77.66,
+      "cost": 0.4064,
+      "queries_executed": 8,
+      "queries_successful": 8
+    },
+    "assemble": {
+      "historical_context_chars": 28151,
+      "current_context_chars": 65991
+    }
+  },
+  "total_queries_planned": 8,
+  "total_queries_executed": 8,
+  "total_gap_queries": 0,
+  "total_cost": 0.5469,
+  "total_duration_seconds": 122.31,
+  "query_details": [
+    {
+      "query": "Sudan ceasefire attempts 2023 2025 frequency",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Count and nature of previous Sudan civil-war ceasefire attempts to establish how often short truces are reached and why they fail.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "civil war ceasefire average time to agreement",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Academic/NGO studies giving base-rate duration from war onset to first 30-day bilateral ceasefire in comparable conflicts.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 1,
+      "error": null
+    },
+    {
+      "query": "metaculus prediction daily volatility study",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Blog posts or forum analyses quantifying typical magnitude of community-prediction moves over short horizons.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "Sudan peace talks March 2026 Jeddah",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Detect any just-announced or scheduled negotiating sessions that could raise ceasefire odds in the next two weeks.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "AU IGAD UN ceasefire proposal Sudan 2026",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "Broader news coverage of multilateral diplomatic pushes or draft resolutions currently under discussion.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 29,
+      "error": null
+    },
+    {
+      "query": "RSF advance Khartoum February 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Latest battlefield momentum that might shift bargaining power and therefore community expectations.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "UAE Ethiopia weapons RSF 2026 evidence",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Reports on foreign support/escalation that could dampen ceasefire prospects (contrarian check if such support is instead cut).",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "Likelihood Metaculus binary rises >2pp in 10 days",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "Retrieve or approximate statistics across Metaculus binary questions on how often the community prediction increases by more than 2 percentage points within the final 10-14 days, establishing a volatility baseline.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 1,
+      "error": null
+    }
+  ]
+}
