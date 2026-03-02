@@ -1,0 +1,224 @@
+{
+  "plan_analysis": "This meta-forecast hinges on whether new information during the next 11 days will push the Metaculus community prediction above 55 %.  Key drivers likely to move the crowd are:  \n\u2022 Any Home Office or parliamentary statement on the \u201cearned settlement\u201d consultation outcome or implementation timetable.  \n\u2022 Political signals (polling on immigration, cabinet leaks, party manifestos ahead of the May 2026 local elections).  \n\u2022 Media or think-tank analysis questioning feasibility or legality of a 10-year baseline.  \nBecause the object of prediction is a Metaculus crowd number rather than the policy itself, forecasters also need:  \n\u2022 A base-rate for how often Metaculus community predictions move \u22651\u20133 pp or cross a 55 % threshold in the final 10\u201314 days for comparable policy questions.  \n\u2022 Understanding of the community-prediction algorithm and typical intra-day volatility.  \nCurrent context already gives the policy proposal and its nominal April 2026 start date, but lacks:  \n1. Any up-to-the-minute government or parliamentary signals since Nov 2025.  \n2. The consultation\u2019s scheduled response date and whether it might still land before 13 Mar 2026.  \n3. Opposition or support from business, migrant-rights or Conservative/Reform UK MPs that could influence expectations.  \n4. Latest opinion polling on immigration salience (possible political pressure).  \n5. Historical data on Metaculus crowd-prediction movement magnitudes.  \nThe search strategy therefore mixes:  \n\u2022 Historical/reference queries on past Metaculus volatility and UK settlement-rule change timelines (base rate & mechanism).  \n\u2022 Current-news queries for fresh governmental, parliamentary, and media signals (current state & key drivers).  \n\u2022 Contrarian-angle queries for organised push-back or procedural delays that could lower the crowd\u2019s probability.",
+  "reflect_analysis": null,
+  "queries_planned": [
+    {
+      "query": "Metaculus prediction volatility last 14 days",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "find analyses/blog posts that quantify how much community predictions typically move near resolution.",
+      "phase": "plan"
+    },
+    {
+      "query": "UK indefinite leave qualifying period history",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "establish how often the UK has lengthened or shortened the settlement period, giving precedent and legislative timelines.",
+      "phase": "plan"
+    },
+    {
+      "query": "For Metaculus binary policy questions, collect community prediction 14 days pre-resolve vs on resolve; % crossing 55 % threshold upward",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "build a quantitative base rate for late prediction increases comparable to this question.",
+      "phase": "plan"
+    },
+    {
+      "query": "earned settlement consultation response date",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "learn whether the Home Office has announced when it will publish the consultation outcome, or if publication is imminent.",
+      "phase": "plan"
+    },
+    {
+      "query": "Home Office statement ten year settlement March 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "capture any very recent ministerial or departmental comments that could sway expectations before 13 Mar.",
+      "phase": "plan"
+    },
+    {
+      "query": "UK immigration polling February 2026",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "obtain latest public-opinion data on immigration salience that might raise political pressure to enact the 10-year rule promptly.",
+      "phase": "plan"
+    },
+    {
+      "query": "business groups oppose 10 year ILR plan",
+      "tool": "Google",
+      "temporal_role": "current",
+      "intent": "surface contrarian evidence of organised opposition suggesting possible delays or watering-down of the proposal.",
+      "phase": "plan"
+    },
+    {
+      "query": "Metaculus forecast algorithm weighted median recency",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "locate documentation on how the community prediction is calculated, clarifying resolution mechanics and typical responsiveness.",
+      "phase": "plan"
+    }
+  ],
+  "gap_queries": [],
+  "seed_context_chars": 12427,
+  "historical_context_chars": 30080,
+  "current_context_chars": 66523,
+  "phases": {
+    "pre_research": {
+      "duration_seconds": 20.59,
+      "seed_context_chars": 12427,
+      "search_id": "question_urls",
+      "searched": true,
+      "urls_found": 6,
+      "urls_scraped": 5,
+      "urls_summarized": 5,
+      "urls": [
+        {
+          "url": "https://www.gov.uk/government/statistics/immigration-system-statistics-year-ending-september-2025/how-many-indefinite-leave-settlement-and-euss-settled-status-and-citizenship-grants-have-been-issued-in-the-uk#s-2",
+          "domain": "www.gov.uk",
+          "scraped": true,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_words": 2411
+        },
+        {
+          "url": "https://www.gov.uk/indefinite-leave-to-remain#:~:text=You%20must%20usually%20have%20lived%20and%20worked%20in%20the%20UK%20for%205%20years",
+          "domain": "www.gov.uk",
+          "scraped": true,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_words": 434
+        },
+        {
+          "url": "https://www.gov.uk/government/consultations/earned-settlement/a-fairer-pathway-to-settlement-statement-and-accompanying-consultation-on-earned-settlement-accessible#:~:text=a\\",
+          "domain": "www.gov.uk",
+          "scraped": true,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_words": 2442
+        },
+        {
+          "url": "https://www.gov.uk/government/consultations/earned-settlement/a-fairer-pathway-to-settlement-statement-and-accompanying-consultation-on-earned-settlement-accessible#future-settlement-forecast",
+          "domain": "www.gov.uk",
+          "scraped": true,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_words": 2442
+        },
+        {
+          "url": "https://news.gallup.com/poll/701990/leads-world-concern-migration.aspx",
+          "domain": "news.gallup.com",
+          "scraped": true,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_words": 1772
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ]
+    },
+    "plan": {
+      "duration_seconds": 71.28,
+      "cost": 0.0206,
+      "num_queries": 8
+    },
+    "execute": {
+      "duration_seconds": 76.56,
+      "cost": 0.4042,
+      "queries_executed": 8,
+      "queries_successful": 8
+    },
+    "assemble": {
+      "historical_context_chars": 30080,
+      "current_context_chars": 66523
+    }
+  },
+  "total_queries_planned": 8,
+  "total_queries_executed": 8,
+  "total_gap_queries": 0,
+  "total_cost": 0.5627,
+  "total_duration_seconds": 168.44,
+  "query_details": [
+    {
+      "query": "Metaculus prediction volatility last 14 days",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "find analyses/blog posts that quantify how much community predictions typically move near resolution.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "UK indefinite leave qualifying period history",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "establish how often the UK has lengthened or shortened the settlement period, giving precedent and legislative timelines.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "For Metaculus binary policy questions, collect community prediction 14 days pre-resolve vs on resolve; % crossing 55 % threshold upward",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "build a quantitative base rate for late prediction increases comparable to this question.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 1,
+      "error": null
+    },
+    {
+      "query": "earned settlement consultation response date",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "learn whether the Home Office has announced when it will publish the consultation outcome, or if publication is imminent.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "Home Office statement ten year settlement March 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "capture any very recent ministerial or departmental comments that could sway expectations before 13 Mar.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "UK immigration polling February 2026",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "obtain latest public-opinion data on immigration salience that might raise political pressure to enact the 10-year rule promptly.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 36,
+      "error": null
+    },
+    {
+      "query": "business groups oppose 10 year ILR plan",
+      "tool": "Google",
+      "temporal_role": "current",
+      "intent": "surface contrarian evidence of organised opposition suggesting possible delays or watering-down of the proposal.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "Metaculus forecast algorithm weighted median recency",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "locate documentation on how the community prediction is calculated, clarifying resolution mechanics and typical responsiveness.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 2,
+      "error": null
+    }
+  ]
+}
