@@ -60,7 +60,7 @@ jobs:
           NEW_MINIBENCH=""
 
           for TOURNAMENT in 32916 minibench; do
-            sleep 1.5  # Rate limiting
+            sleep 3  # Rate limiting (Cloudflare blocks at 1.5s)
 
             # Get open question IDs (filter out non-question posts like announcements)
             OPEN_RESPONSE=$(curl -s -w "\nHTTP_CODE:%{http_code}" -H "Authorization: Token $METACULUS_TOKEN" \
@@ -77,7 +77,7 @@ jobs:
             fi
             OPEN_COUNT=$(echo "$OPEN_IDS" | grep -c '[0-9]' || true)
 
-            sleep 1.5
+            sleep 3
 
             # Get my forecasted question IDs for this tournament
             MY_IDS=$(curl -sf -H "Authorization: Token $METACULUS_TOKEN" \
