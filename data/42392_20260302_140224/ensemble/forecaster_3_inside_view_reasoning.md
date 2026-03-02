@@ -1,0 +1,5 @@
+**Analyzing DTB6 prediction**
+
+I need to predict DTB6 for March 12, 2026, based on current value and outside influences. Currently, at 3.53, it might remain similar, but CPI data on March 11 and geopolitical factors could change that. There's an indication of Middle East conflict leading to oil spikes and inflation worries. If inflation fears increase, it could affect yields and rates, possibly raising the 6-month bill rate as expected cuts from the Fed shift. Overall, there’s mixed information regarding the rates too.**Adjusting inflation predictions**
+
+In a short window, I might expect a change of 5-15 basis points. The CPI release could significantly impact this. Looking at the distribution, P10 is around 3.28 and P90 is 3.72, which feels wide. For my inside view, I might shift expectations slightly upward due to inflation risk, setting median estimates around 3.56. I want to ensure my percentiles increase properly. The current situation suggests it could stay around 3.52-3.54 unless there are surprises on CPI or geopolitical events.

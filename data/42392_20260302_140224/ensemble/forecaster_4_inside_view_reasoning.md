@@ -1,0 +1,5 @@
+**Crafting a Treasury forecast**
+
+I need to create a forecast for the 6-month Treasury bill rate on March 12, 2026, starting with the last data point of 3.53 from February 26. My horizon is 14 days, so I’ll base the inside view on the earlier outside view distribution. I should factor in recent news, like the escalating Middle East conflict and its potential impact on yields. Additionally, March's CPI could also influence yields. I need to evaluate the overall effects to get a clear picture.**Analyzing yield movements**
+
+The 2-year yield is close to 3.42, while the 6-month discount stands at 3.53. Historically, discount yields follow 2-year movements but are less affected by long-term shifts. Factors like geopolitical risks and inflation might raise the 6-month yield. Still, safe-haven demand and expectations for a pause in rate hikes could balance it. With the upcoming FOMC meeting and CPI data on March 11, I’ll adjust the median slightly downward to around 3.49 while ensuring a strictly increasing distribution. I’ll set new percentiles and confirm the approximate mean is around 3.53.
