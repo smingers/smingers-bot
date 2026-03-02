@@ -80,9 +80,26 @@ jobs:
             sleep 3
 
             # Get my forecasted question IDs for this tournament
-            MY_IDS=$(curl -sf -H "Authorization: Token $METACULUS_TOKEN" \
-              "https://www.metaculus.com/api/posts/?forecaster_id=$USER_ID&tournaments=$TOURNAMENT&limit=500" \
-              | jq -r '.results[].id' | sort -n)
+            MY_RESPONSE=$(curl -s -w "\nHTTP_CODE:%{http_code}" -H "Authorization: Token $METACULUS_TOKEN" \
+              "https://www.metaculus.com/api/posts/?forecaster_id=$USER_ID&tournaments=$TOURNAMENT&limit=500")
+            MY_HTTP_CODE=$(echo "$MY_RESPONSE" | tail -1 | sed 's/HTTP_CODE://')
+            MY_BODY=$(echo "$MY_RESPONSE" | sed '$d')
+
+            if [ "$MY_HTTP_CODE" != "200" ]; then
+              echo "API error fetching my forecasts for $TOURNAMENT: HTTP $MY_HTTP_CODE"
+              echo "$MY_BODY" | head -3
+              # Can't safely determine new questions — pass empty IDs so Python handles deduplication
+              echo "$TOURNAMENT: MY_IDS fetch failed — will use Python fallback path for deduplication"
+              HAS_WORK=true
+              if [ "$TOURNAMENT" = "32916" ]; then
+                NEW_32916=""
+              else
+                NEW_MINIBENCH=""
+              fi
+              continue
+            fi
+
+            MY_IDS=$(echo "$MY_BODY" | jq -r '.results[].id' | sort -n)
             MY_COUNT=$(echo "$MY_IDS" | grep -c '[0-9]' || true)
 
             # New = in OPEN but not in MY (comma-separated for job output)

@@ -76,6 +76,27 @@ async def forecast_metaculus_questions(
             if not questions_to_forecast:
                 logger.info("No questions to forecast (IDs from check). Exiting.")
                 return 0
+
+            # Dedup: filter out any questions already forecasted (guards against check job
+            # passing stale IDs if its MY_IDS fetch failed or returned wrong results)
+            tournament_id_parsed: int | str
+            try:
+                tournament_id_parsed = int(tournament_id)
+            except ValueError:
+                tournament_id_parsed = tournament_id
+            my_forecasts = await client.get_my_forecasts(tournament_id_parsed)
+            forecasted_ids = set(my_forecasts.keys()) if my_forecasts else set()
+            before_dedup = len(questions_to_forecast)
+            questions_to_forecast = [q for q in questions_to_forecast if q.id not in forecasted_ids]
+            if len(questions_to_forecast) < before_dedup:
+                logger.info(
+                    f"Dedup removed {before_dedup - len(questions_to_forecast)} already-forecasted question(s)"
+                )
+
+            if not questions_to_forecast:
+                logger.info("No questions to forecast after dedup. Exiting.")
+                return 0
+
             # Sort by scheduled_close_time (None last)
             questions_to_forecast.sort(key=lambda q: (q.scheduled_close_time or "") or "z")
     else:
