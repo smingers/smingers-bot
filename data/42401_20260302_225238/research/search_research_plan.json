@@ -1,0 +1,208 @@
+{
+  "plan_analysis": "The question is narrowly focused on how the Google Trends daily value for the search term \u201cirgc\u201d (US, UTC day-granularity) will move between 2 Mar 2026 and 14 Mar 2026.  \nWhat we already know:\n\u2022 The current reading for 1 Mar 2026 is 100\u2014i.e., the term is at its 30-day peak, which likely reflects a very recent news event.  \n\u2022 Resolution will be based on SerpApi\u2019s TIMESERIES end-point, so we must think in terms of the numbers returned by that API, not the in-browser chart.\n\nRemaining information a forecaster needs:\n1. Base rate / historical volatility: How often does the daily value for \u201cirgc\u201d change by >3 points over a 12-day window? What does the distribution of changes look like after past spikes?  \n2. Resolution mechanics fine print: confirmation that locking the date range keeps scaling fixed, plus any quirks seen in SerpApi outputs.  \n3. Key drivers: Which kinds of events (sanctions, military clashes, elections, hostage exchanges) have historically produced large upward or downward moves in \u201cirgc\u201d search traffic?  \n4. Current state & near-term pipeline: What breaking or scheduled events between now and 14 Mar 2026 could plausibly keep interest elevated or cause it to subside? Are there any known anniversaries, planned operations, or diplomatic deadlines?  \n5. Contrarian signals: Evidence that the present spike could be a one-day wonder that normally collapses quickly, or conversely that similar past spikes often lasted two weeks.\n\nSearch strategy:  \n\u2022 Use Google/Agent queries to pull historical Google Trends data and compute frequency of >3-point moves.  \n\u2022 Gather lists of past IRGC-related news spikes to link Google Trends jumps with concrete events (base rate + driver identification).  \n\u2022 Scan current and very recent news for IRGC-linked stories that might keep the topic in headlines through mid-March.  \n\u2022 Look for calendars of upcoming Iranian political/military events in early-to-mid March 2026.  \nRoughly 60 % of the queries are historical, 40 % current, with one Agent query for the heavy base-rate computation.",
+  "reflect_analysis": null,
+  "queries_planned": [
+    {
+      "query": "irgc google trends 2025 daily",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "obtain daily trends data for \u201cirgc\u201d in 2025 to gauge typical volatility and decay after spikes.",
+      "phase": "plan"
+    },
+    {
+      "query": "google trends scaling fixed date range",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "clarify how locking start/end dates affects number stability, relevant to resolution mechanics.",
+      "phase": "plan"
+    },
+    {
+      "query": "irgc search interest spikes history",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "list previous occasions when \u201cirgc\u201d interest surged, to link with causal events.",
+      "phase": "plan"
+    },
+    {
+      "query": "IRGC big news timeline 2024 2025",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "compile a chronological list of major IRGC-related incidents to match with trend jumps.",
+      "phase": "plan"
+    },
+    {
+      "query": "Using Google Trends daily data for \"irgc\" in the United States from 2024-01-01 to 2026-03-01, calculate the distribution of 12-day interest changes and the frequency with which the absolute change exceeds 3 points; provide mean, median, and 90th percentile change sizes.",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "generate quantitative base-rate statistics directly.",
+      "phase": "plan"
+    },
+    {
+      "query": "IRGC attack March 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "detect any fresh or unfolding military incidents that could sustain high search interest.",
+      "phase": "plan"
+    },
+    {
+      "query": "U.S. sanctions IRGC 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "find new or pending sanction actions that might keep the topic in headlines through 14 Mar.",
+      "phase": "plan"
+    },
+    {
+      "query": "Upcoming March 2026 Iran events involving Revolutionary Guard, sanctions, elections, or military drills, United States coverage",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "surface scheduled or expected events in early-to-mid March that could materially move search interest.",
+      "phase": "plan"
+    }
+  ],
+  "gap_queries": [],
+  "seed_context_chars": 1587,
+  "historical_context_chars": 31737,
+  "current_context_chars": 56085,
+  "phases": {
+    "pre_research": {
+      "duration_seconds": 7.95,
+      "seed_context_chars": 1587,
+      "search_id": "question_urls",
+      "searched": true,
+      "urls_found": 3,
+      "urls_scraped": 1,
+      "urls_summarized": 1,
+      "urls": [
+        {
+          "url": "https://trends.google.com/trends/explore?geo=US&tz=0&q=irgc&date=2026-02-12%202026-03-14",
+          "domain": "trends.google.com",
+          "scraped": false,
+          "method": null,
+          "status_code": null,
+          "error": "Blocked domain"
+        },
+        {
+          "url": "https://serpapi.com/",
+          "domain": "serpapi.com",
+          "scraped": true,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_words": 273
+        },
+        {
+          "url": "https://trends.google.com/trends/explore?geo=US&tz=0&q=irgc&date=2026-01-30%202026-03-01",
+          "domain": "trends.google.com",
+          "scraped": false,
+          "method": null,
+          "status_code": null,
+          "error": "Blocked domain"
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ]
+    },
+    "plan": {
+      "duration_seconds": 33.85,
+      "cost": 0.0176,
+      "num_queries": 8
+    },
+    "execute": {
+      "duration_seconds": 57.85,
+      "cost": 0.405,
+      "queries_executed": 8,
+      "queries_successful": 8
+    },
+    "assemble": {
+      "historical_context_chars": 31737,
+      "current_context_chars": 56085
+    }
+  },
+  "total_queries_planned": 8,
+  "total_queries_executed": 8,
+  "total_gap_queries": 0,
+  "total_cost": 0.4353,
+  "total_duration_seconds": 99.65,
+  "query_details": [
+    {
+      "query": "irgc google trends 2025 daily",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "obtain daily trends data for \u201cirgc\u201d in 2025 to gauge typical volatility and decay after spikes.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "google trends scaling fixed date range",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "clarify how locking start/end dates affects number stability, relevant to resolution mechanics.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "irgc search interest spikes history",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "list previous occasions when \u201cirgc\u201d interest surged, to link with causal events.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "IRGC big news timeline 2024 2025",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "compile a chronological list of major IRGC-related incidents to match with trend jumps.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "Using Google Trends daily data for \"irgc\" in the United States from 2024-01-01 to 2026-03-01, calculate the distribution of 12-day interest changes and the frequency with which the absolute change exceeds 3 points; provide mean, median, and 90th percentile change sizes.",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "generate quantitative base-rate statistics directly.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 1,
+      "error": null
+    },
+    {
+      "query": "IRGC attack March 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "detect any fresh or unfolding military incidents that could sustain high search interest.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "U.S. sanctions IRGC 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "find new or pending sanction actions that might keep the topic in headlines through 14 Mar.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "Upcoming March 2026 Iran events involving Revolutionary Guard, sanctions, elections, or military drills, United States coverage",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "surface scheduled or expected events in early-to-mid March that could materially move search interest.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 38,
+      "error": null
+    }
+  ]
+}

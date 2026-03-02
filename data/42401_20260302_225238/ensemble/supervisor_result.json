@@ -1,0 +1,20 @@
+{
+  "confidence": "medium",
+  "prediction": [
+    0.22,
+    0.2,
+    0.58
+  ],
+  "search_queries": [
+    "Google Trends \"Hamas\" October 2023 two week decay pattern (Google)",
+    "Iran IRGC war escalation March 2026 latest (Google News)",
+    "What is the current status of the US-Israel-Iran conflict as of early March 2026? Are there reports of ceasefire negotiations, further IRGC retaliatory strikes, or major new escalations planned? Also, has there been any indication of Strait of Hormuz closure or attacks on US forces that could generate a secondary news spike? (Agent)",
+    "Google Trends relative scaling verification window different dates normalization (Google)"
+  ],
+  "cost": 0.4184,
+  "divergence": {
+    "metric_name": "max_option_range",
+    "metric_value": 40.0,
+    "threshold": 25.0
+  }
+}

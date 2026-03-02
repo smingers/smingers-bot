@@ -1,0 +1,265 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": false,
+      "num_queries": 0,
+      "queries": [],
+      "tools_used": [],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 5,
+      "queries": [
+        {
+          "query": "irgc google trends 2025 daily",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "obtain daily trends data for \u201cirgc\u201d in 2025 to gauge typical volatility and decay after spikes.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "google trends scaling fixed date range",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "clarify how locking start/end dates affects number stability, relevant to resolution mechanics.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "irgc search interest spikes history",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "list previous occasions when \u201cirgc\u201d interest surged, to link with causal events.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "IRGC big news timeline 2024 2025",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "compile a chronological list of major IRGC-related incidents to match with trend jumps.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Using Google Trends daily data for \"irgc\" in the United States from 2024-01-01 to 2026-03-01, calculate the distribution of 12-day interest changes and the frequency with which the absolute change exceeds 3 points; provide mean, median, and 90th percentile change sizes.",
+          "tool": "Agent",
+          "temporal_role": "historical",
+          "intent": "generate quantitative base-rate statistics directly.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "IRGC attack March 2026",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "detect any fresh or unfolding military incidents that could sustain high search interest.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "U.S. sanctions IRGC 2026",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "find new or pending sanction actions that might keep the topic in headlines through 14 Mar.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Upcoming March 2026 Iran events involving Revolutionary Guard, sanctions, elections, or military drills, United States coverage",
+          "tool": "AskNews",
+          "temporal_role": "current",
+          "intent": "surface scheduled or expected events in early-to-mid March that could materially move search interest.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 38,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "AskNews",
+        "Google News"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 9852,
+        "token_output": 2213,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.082455,
+        "duration_seconds": 52.78145670890808,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 18463,
+        "token_output": 2401,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.12833,
+        "duration_seconds": 69.99420547485352,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17467,
+        "token_output": 3066,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.133325,
+        "duration_seconds": 69.99416399002075,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8722,
+        "token_output": 2800,
+        "token_reasoning": 1005,
+        "used_reasoning": true,
+        "cost": 0.0544635,
+        "duration_seconds": 52.78150796890259,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16400,
+        "token_output": 2668,
+        "token_reasoning": 741,
+        "used_reasoning": true,
+        "cost": 0.066052,
+        "duration_seconds": 69.99413108825684,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16227,
+        "token_output": 1460,
+        "token_reasoning": 448,
+        "used_reasoning": true,
+        "cost": 0.04413399999999999,
+        "duration_seconds": 69.99411058425903,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8722,
+        "token_output": 2047,
+        "token_reasoning": 896,
+        "used_reasoning": true,
+        "cost": 0.03382,
+        "duration_seconds": 52.78153657913208,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15460,
+        "token_output": 1962,
+        "token_reasoning": 768,
+        "used_reasoning": true,
+        "cost": 0.046616000000000005,
+        "duration_seconds": 69.99409031867981,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "steps1_2_research": 0.4353,
+    "step3_outside_view": 0.1707,
+    "step5_inside_view": 0.4185,
+    "step6_aggregation": 0.4185,
+    "step7_supervisor": 0.4184
+  },
+  "total_pipeline_cost": 1.4429
+}
