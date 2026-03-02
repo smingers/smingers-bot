@@ -1,0 +1,208 @@
+{
+  "plan_analysis": "This forecast hinges on whether the Google Trends daily value for \u201creza pahlavi\u201d (US, fixed range 2026-02-09 to 2026-03-11) moves by >3 points between  03-02 and 03-11 UTC.  \nWhat we already know:  \n\u2022 Current value on 2026-03-01 is 100 (peak for last 30 days).  \nGaps a forecaster still needs to fill:  \n1. Base-rate / volatility: How often do daily changes for this term exceed 3 points? Knowing the historical distribution of single-day swings in the last 1\u20132 years gives probabilistic grounding for \u201cDoesn\u2019t change\u201d vs the two directional options.  \n2. Resolution mechanics & current benchmark: Exact daily value for 03-02 once the new day is recorded, and the locked scaling URL.  \n3. Key drivers: What typically creates spikes or drops in interest for Reza Pahlavi (e.g., protests in Iran, regime news, interviews, US press appearances)?  \n4. Current state / upcoming catalysts between now and 03-11: Any scheduled speeches, anniversaries (1979 revolution events, Nowruz prep), media appearances, or breaking Iran news that could move search interest.  \n5. Contrarian check: Evidence of an imminent lull or of saturation after a recent peak which might make a >3-point fall more likely.",
+  "reflect_analysis": null,
+  "queries_planned": [
+    {
+      "query": "reza pahlavi google trends 2024 daily changes",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "find charts or analyses showing past day-to-day volatility for the term during 2024.",
+      "phase": "plan"
+    },
+    {
+      "query": "reza pahlavi\" spikes Iran protests 2022-2025",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "identify historical events that drove large positive swings, to understand drivers\u2019 magnitude.",
+      "phase": "plan"
+    },
+    {
+      "query": "recurring march events reza pahlavi",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "see if early-March anniversaries or yearly events reliably move interest.",
+      "phase": "plan"
+    },
+    {
+      "query": "iran crown prince news archive 2025",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "build a catalogue of past media coverage peaks to compare with current situation.",
+      "phase": "plan"
+    },
+    {
+      "query": "Evaluate daily Google Trends US timeseries for \"reza pahlavi\" Jan 2024\u2013Feb 2026; compute frequency of >3-point day-to-day moves and summary statistics.",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "quantify base rate of increases/decreases beyond the resolution threshold.",
+      "phase": "plan"
+    },
+    {
+      "query": "Reza Pahlavi March 2026 speech schedule",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "detect any announced appearances or events between 03-02 and 03-11.",
+      "phase": "plan"
+    },
+    {
+      "query": "Iran opposition exile 2026 protests March",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "catch breaking or planned events in Iran that could spike searches for Pahlavi.",
+      "phase": "plan"
+    },
+    {
+      "query": "Reza Pahlavi interview or coverage early March 2026 US media, Iranian diaspora",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "broad semantic sweep for fresh or upcoming content that could drive search interest.",
+      "phase": "plan"
+    }
+  ],
+  "gap_queries": [],
+  "seed_context_chars": 1525,
+  "historical_context_chars": 31940,
+  "current_context_chars": 49708,
+  "phases": {
+    "pre_research": {
+      "duration_seconds": 9.34,
+      "seed_context_chars": 1525,
+      "search_id": "question_urls",
+      "searched": true,
+      "urls_found": 3,
+      "urls_scraped": 1,
+      "urls_summarized": 1,
+      "urls": [
+        {
+          "url": "https://trends.google.com/trends/explore?geo=US&tz=0&q=reza%20pahlavi&date=2026-02-09%202026-03-11",
+          "domain": "trends.google.com",
+          "scraped": false,
+          "method": null,
+          "status_code": null,
+          "error": "Blocked domain"
+        },
+        {
+          "url": "https://serpapi.com/",
+          "domain": "serpapi.com",
+          "scraped": true,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_words": 273
+        },
+        {
+          "url": "https://trends.google.com/trends/explore?geo=US&tz=0&q=reza%20pahlavi&date=2026-01-30%202026-03-01",
+          "domain": "trends.google.com",
+          "scraped": false,
+          "method": null,
+          "status_code": null,
+          "error": "Blocked domain"
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ]
+    },
+    "plan": {
+      "duration_seconds": 23.17,
+      "cost": 0.0152,
+      "num_queries": 8
+    },
+    "execute": {
+      "duration_seconds": 71.37,
+      "cost": 0.4043,
+      "queries_executed": 8,
+      "queries_successful": 8
+    },
+    "assemble": {
+      "historical_context_chars": 31940,
+      "current_context_chars": 49708
+    }
+  },
+  "total_queries_planned": 8,
+  "total_queries_executed": 8,
+  "total_gap_queries": 0,
+  "total_cost": 0.4322,
+  "total_duration_seconds": 103.89,
+  "query_details": [
+    {
+      "query": "reza pahlavi google trends 2024 daily changes",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "find charts or analyses showing past day-to-day volatility for the term during 2024.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "reza pahlavi\" spikes Iran protests 2022-2025",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "identify historical events that drove large positive swings, to understand drivers\u2019 magnitude.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "recurring march events reza pahlavi",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "see if early-March anniversaries or yearly events reliably move interest.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "iran crown prince news archive 2025",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "build a catalogue of past media coverage peaks to compare with current situation.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "Evaluate daily Google Trends US timeseries for \"reza pahlavi\" Jan 2024\u2013Feb 2026; compute frequency of >3-point day-to-day moves and summary statistics.",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "quantify base rate of increases/decreases beyond the resolution threshold.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 1,
+      "error": null
+    },
+    {
+      "query": "Reza Pahlavi March 2026 speech schedule",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "detect any announced appearances or events between 03-02 and 03-11.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "Iran opposition exile 2026 protests March",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "catch breaking or planned events in Iran that could spike searches for Pahlavi.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "Reza Pahlavi interview or coverage early March 2026 US media, Iranian diaspora",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "broad semantic sweep for fresh or upcoming content that could drive search interest.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 26,
+      "error": null
+    }
+  ]
+}

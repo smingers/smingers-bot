@@ -1,0 +1,7 @@
+**Analyzing trends in interest**
+
+I'm thinking the chance of staying high or further spikes in interest might be higher than a value of 18. Given the ongoing war and Pahlavi's role, there could be ongoing coverage. I'm also looking at Google Trends for the time frame from Feb 9 to Mar 11. If March 1 has a peak value of 100, it needs to be higher than that on March 11 for significant interest. It could be challenging to maintain high values because fluctuations are likely.**Evaluating interest trends**
+
+It seems like a decrease is still the majority, but escalation may keep interest elevated for several days. The value on Mar 2 could be high, perhaps above 95, but if it hits 100, it can't go higher because that's the cap. If Mar 2 is near 100, any increase by 4 seems impossible. For Mar 11 to surpass it, the starting value needs to be below 97. Estimating Mar 2's interest, given the context of the war and recent trends, it might still be around 80.**Assessing interest probabilities**
+
+I'm thinking there's still a possibility for an increase. If Mar 2 has a value of 80, and interest ramps up due to escalating events near Mar 11, it could hit 100 again, which qualifies as a significant increase. But there's also a chance that interest could wane due to competing news. So, I’m considering probabilities: 25% for an increase, 20% for no change, and 55% for a decrease. I’ll compile a full analysis with this classification. Let’s finalize those probabilities at [25, 20, 55].

@@ -1,0 +1,20 @@
+{
+  "confidence": "high",
+  "prediction": [
+    0.14,
+    0.12,
+    0.74
+  ],
+  "search_queries": [
+    "Reza Pahlavi scheduled media appearances March 2026 (Google News)",
+    "Global Freedom Rally\" Pahlavi March 2026 (Google News)",
+    "60 Minutes Reza Pahlavi repeat broadcast March 8 2026 (Google News)",
+    "What upcoming media appearances, rallies, or events involving Reza Pahlavi are confirmed for the period March 3-11, 2026? Specifically, is there a 60 Minutes repeat broadcast scheduled for March 8, a Fox News town hall on March 9, or a \"Global Freedom Rally\" on March 10? (Agent)"
+  ],
+  "cost": 0.3478,
+  "divergence": {
+    "metric_name": "max_option_range",
+    "metric_value": 34.0,
+    "threshold": 25.0
+  }
+}
