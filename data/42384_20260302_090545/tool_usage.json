@@ -1,0 +1,265 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": false,
+      "num_queries": 0,
+      "queries": [],
+      "tools_used": [],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 5,
+      "queries": [
+        {
+          "query": "PFE average 9-day return",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "basic win-rate/mean return stats for PFE over rolling 9-day windows.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Pfizer March seasonality trend",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "historical performance of PFE in early-March to spot seasonal bias.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Large pharma short-term performance study",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "peer-group 7-10 day return statistics for big-pharma stocks.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "SP500 nine day return distribution",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "benchmark base-rate to compare PFE vs. broad market.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Analyze Pfizer daily price data since 2000 to compute probability its close price is higher after 9 trading days when current price is in top decile of 52-week range and prior 5-day return is positive; compare against unconditional rate.",
+          "tool": "Agent",
+          "temporal_role": "historical",
+          "intent": "high-resolution conditional base rate tailored to present setup.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Pfizer FDA decision March 2026",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "find any PDUFA dates, approval deadlines, or advisory-committee meetings within the forecast window.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "PFE unusual options activity March",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "detect option or flow signals pointing to short-term upside or downside bets.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Pharma sector outlook early March 2026",
+          "tool": "AskNews",
+          "temporal_role": "current",
+          "intent": "capture analyst or industry commentary on near-term sector drivers that could move all drug makers, including Pfizer.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 55,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "AskNews"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 9864,
+        "token_output": 1663,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.074265,
+        "duration_seconds": 40.38162875175476,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 21289,
+        "token_output": 2832,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.148925,
+        "duration_seconds": 66.55844712257385,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 20722,
+        "token_output": 2297,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.138065,
+        "duration_seconds": 66.5584237575531,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8552,
+        "token_output": 2169,
+        "token_reasoning": 821,
+        "used_reasoning": true,
+        "cost": 0.045332,
+        "duration_seconds": 40.38167977333069,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 18581,
+        "token_output": 2078,
+        "token_reasoning": 496,
+        "used_reasoning": true,
+        "cost": 0.06160875,
+        "duration_seconds": 66.55839562416077,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 18453,
+        "token_output": 1661,
+        "token_reasoning": 640,
+        "used_reasoning": true,
+        "cost": 0.050194,
+        "duration_seconds": 66.55836749076843,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8552,
+        "token_output": 1571,
+        "token_reasoning": 576,
+        "used_reasoning": true,
+        "cost": 0.029672,
+        "duration_seconds": 40.38171458244324,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 18013,
+        "token_output": 1475,
+        "token_reasoning": 384,
+        "used_reasoning": true,
+        "cost": 0.047826,
+        "duration_seconds": 66.5583393573761,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "steps1_2_research": 0.4418,
+    "step3_outside_view": 0.1493,
+    "step5_inside_view": 0.4466,
+    "step6_aggregation": 0.4466,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 1.0376
+}

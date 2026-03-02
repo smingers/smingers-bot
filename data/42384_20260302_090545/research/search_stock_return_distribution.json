@@ -1,0 +1,83 @@
+{
+  "ticker": "PFE",
+  "start_date": "2026-03-02",
+  "end_date": "2026-03-13",
+  "trading_days": 9,
+  "current_price": 27.65,
+  "reference_price": 27.65,
+  "return_so_far": 0.0,
+  "sample_size": 2506,
+  "positive_return_rate": 0.5243,
+  "mean_return": 0.24,
+  "median_return": 0.25,
+  "std_return": 4.41,
+  "percentile_5": -6.89,
+  "percentile_25": -2.34,
+  "percentile_75": 2.74,
+  "percentile_95": 7.34,
+  "recent_return_5d": 3.75,
+  "recent_return_1m": 6.92,
+  "recent_return_3m": 9.3,
+  "volatility_30d": 24.3,
+  "recent_return_5d_percentile": 89,
+  "recent_return_1m_percentile": 85,
+  "recent_return_3m_percentile": 80,
+  "conditional_rates": [
+    {
+      "label": "3-month return > 20%",
+      "condition": "momentum_positive",
+      "probability": 0.1707,
+      "sample_size": 82,
+      "delta": -35.4,
+      "applicable": "False"
+    },
+    {
+      "label": "Price in top decile of 52wk range",
+      "condition": "range_top_decile",
+      "probability": 0.5827,
+      "sample_size": 254,
+      "delta": 5.8,
+      "applicable": true
+    },
+    {
+      "label": "Price in bottom decile of 52wk range",
+      "condition": "range_bottom_decile",
+      "probability": 0.4812,
+      "sample_size": 266,
+      "delta": -4.3,
+      "applicable": false
+    },
+    {
+      "label": "Prior 5-day return > 0",
+      "condition": "mean_reversion_up",
+      "probability": 0.5378,
+      "sample_size": 1296,
+      "delta": 1.3,
+      "applicable": "True"
+    },
+    {
+      "label": "Prior 5-day return < 0",
+      "condition": "mean_reversion_down",
+      "probability": 0.5088,
+      "sample_size": 1195,
+      "delta": -1.6,
+      "applicable": "False"
+    },
+    {
+      "label": "30-day vol above median",
+      "condition": "vol_high",
+      "probability": 0.479,
+      "sample_size": 1238,
+      "delta": -4.5,
+      "applicable": true
+    },
+    {
+      "label": "30-day vol below median",
+      "condition": "vol_low",
+      "probability": 0.5638,
+      "sample_size": 1238,
+      "delta": 3.9,
+      "applicable": false
+    }
+  ]
+}

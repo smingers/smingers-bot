@@ -1,0 +1,192 @@
+{
+  "plan_analysis": "The forecaster already has (a) the exact resolution rule (Yahoo Finance close on 2026-03-13 vs. 2026-03-02) and (b) a programmatic base-rate table for PFE\u2019s own 9-trading-day returns plus a few simple conditional slices.  \nWhat is still missing:\n\n1. Deeper base rates  \n   \u2022 How often does PFE rise in early-to-mid-March specifically (seasonality)?  \n   \u2022 How does its 9-day win-rate compare with large-pharma peers and the S&P 500?  \n   \u2022 How sensitive is PFE to market moves over a 9-day window (beta/context)?  \n   \u2022 A more granular conditional base-rate calculation that matches the current set-up (price near 52-wk high + positive 5-day return).\n\n2. Key drivers / catalysts inside the forecast window  \n   \u2022 Any scheduled FDA/PDUFA decisions, clinical-trial read-outs, or conference presentations between 3-Mar and 13-Mar 2026.  \n   \u2022 Corporate events (M&A chatter, dividend or share-buy-back announcements, litigation rulings).  \n   \u2022 Sector-wide or macro events (CPI release 03-10, FOMC blackout, etc.) that historically move drug-maker stocks.\n\n3. Contrarian indicators  \n   \u2022 Unusual options flow or short-interest spikes signalling informed positioning.  \n   \u2022 Analyst downgrades or negative news that could offset the recent positive momentum.\n\nThe search strategy therefore splits roughly 60 % historical (to strengthen the statistical anchor and sector context) and 40 % current (to surface catalysts or surprises that could swing the stock in the next 9 trading days).",
+  "reflect_analysis": null,
+  "queries_planned": [
+    {
+      "query": "PFE average 9-day return",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "basic win-rate/mean return stats for PFE over rolling 9-day windows.",
+      "phase": "plan"
+    },
+    {
+      "query": "Pfizer March seasonality trend",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "historical performance of PFE in early-March to spot seasonal bias.",
+      "phase": "plan"
+    },
+    {
+      "query": "Large pharma short-term performance study",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "peer-group 7-10 day return statistics for big-pharma stocks.",
+      "phase": "plan"
+    },
+    {
+      "query": "SP500 nine day return distribution",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "benchmark base-rate to compare PFE vs. broad market.",
+      "phase": "plan"
+    },
+    {
+      "query": "Analyze Pfizer daily price data since 2000 to compute probability its close price is higher after 9 trading days when current price is in top decile of 52-week range and prior 5-day return is positive; compare against unconditional rate.",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "high-resolution conditional base rate tailored to present setup.",
+      "phase": "plan"
+    },
+    {
+      "query": "Pfizer FDA decision March 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "find any PDUFA dates, approval deadlines, or advisory-committee meetings within the forecast window.",
+      "phase": "plan"
+    },
+    {
+      "query": "PFE unusual options activity March",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "detect option or flow signals pointing to short-term upside or downside bets.",
+      "phase": "plan"
+    },
+    {
+      "query": "Pharma sector outlook early March 2026",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "capture analyst or industry commentary on near-term sector drivers that could move all drug makers, including Pfizer.",
+      "phase": "plan"
+    }
+  ],
+  "gap_queries": [],
+  "seed_context_chars": 1623,
+  "historical_context_chars": 28816,
+  "current_context_chars": 66828,
+  "phases": {
+    "pre_research": {
+      "duration_seconds": 14.39,
+      "seed_context_chars": 1623,
+      "search_id": "question_urls",
+      "searched": true,
+      "urls_found": 1,
+      "urls_scraped": 1,
+      "urls_summarized": 1,
+      "urls": [
+        {
+          "url": "https://finance.yahoo.com/quote/PFE",
+          "domain": "finance.yahoo.com",
+          "scraped": true,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_words": 936
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ]
+    },
+    "plan": {
+      "duration_seconds": 29.27,
+      "cost": 0.0214,
+      "num_queries": 8
+    },
+    "execute": {
+      "duration_seconds": 68.49,
+      "cost": 0.3983,
+      "queries_executed": 8,
+      "queries_successful": 8
+    },
+    "assemble": {
+      "historical_context_chars": 28816,
+      "current_context_chars": 66828
+    }
+  },
+  "total_queries_planned": 8,
+  "total_queries_executed": 8,
+  "total_gap_queries": 0,
+  "total_cost": 0.4418,
+  "total_duration_seconds": 112.16,
+  "query_details": [
+    {
+      "query": "PFE average 9-day return",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "basic win-rate/mean return stats for PFE over rolling 9-day windows.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "Pfizer March seasonality trend",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "historical performance of PFE in early-March to spot seasonal bias.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "Large pharma short-term performance study",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "peer-group 7-10 day return statistics for big-pharma stocks.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "SP500 nine day return distribution",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "benchmark base-rate to compare PFE vs. broad market.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "Analyze Pfizer daily price data since 2000 to compute probability its close price is higher after 9 trading days when current price is in top decile of 52-week range and prior 5-day return is positive; compare against unconditional rate.",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "high-resolution conditional base rate tailored to present setup.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 1,
+      "error": null
+    },
+    {
+      "query": "Pfizer FDA decision March 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "find any PDUFA dates, approval deadlines, or advisory-committee meetings within the forecast window.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "PFE unusual options activity March",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "detect option or flow signals pointing to short-term upside or downside bets.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "Pharma sector outlook early March 2026",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "capture analyst or industry commentary on near-term sector drivers that could move all drug makers, including Pfizer.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 55,
+      "error": null
+    }
+  ]
+}
