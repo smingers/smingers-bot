@@ -23,12 +23,16 @@ class ResearchContext:
     Output of the research phase (steps 1-2).
 
     Contains the formatted search results split into historical and current context,
-    plus metrics about the research queries and tools used.
+    plus metrics about the research queries and tools used. pre_research_context is
+    the standalone pre-research (scraped/summarized content from links in the question
+    fields); it is also prepended to historical_context, but kept separate so the
+    supervisor can receive it as primary-source evidence.
     """
 
     historical_context: str
     current_context: str
     metrics: dict[str, ResearchMetrics] = field(default_factory=dict)
+    pre_research_context: str = ""
 
 
 @dataclass
