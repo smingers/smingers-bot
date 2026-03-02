@@ -1,0 +1,265 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": false,
+      "num_queries": 0,
+      "queries": [],
+      "tools_used": [],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 5,
+      "queries": [
+        {
+          "query": "ATP No.1 points weekly 2010",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Find datasets or charts listing weekly #1 ranking points from 2010 onward to establish long-term distribution and volatility.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "ATP rankings archive March 2025 points",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Pull the exact #1 points a year ago to gauge seasonality and point retention entering the 2026 window.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Provide a table of ATP singles world number one ranking points for every Monday between January 2010 and March 2 2026, including player names, their points, and noting Grand Slam and Masters event weeks to highlight swings.",
+          "tool": "Agent",
+          "temporal_role": "historical",
+          "intent": "Generate a comprehensive, cleaned dataset for statistical analysis of base rates and drivers.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        },
+        {
+          "query": "ATP ranking methodology 52 week changes",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Identify official explanations or news of tweaks to the ranking formula or points tables since 2024.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "ATP Masters schedule 2010-2026 calendar",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Obtain an events calendar to overlay with point additions/defenses leading up to 30 Mar 2026.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Agent"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Live ATP rankings March 2026",
+          "tool": "Google",
+          "temporal_role": "current",
+          "intent": "Retrieve real-time or projected points heading into Indian Wells and Miami, showing current gap between #1 and pursuers.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Carlos Alcaraz injury March 2026",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "Check latest reports on the fitness of a main contender whose withdrawal or return could swing point tallies.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "ATP ranking rule change 2026 news",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "Surface any recent announcements or rumors of policy changes that could unexpectedly alter points before resolution.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Google News"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7587,
+        "token_output": 1833,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.06542999999999999,
+        "duration_seconds": 44.798473834991455,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7626,
+        "token_output": 2921,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.08194499999999999,
+        "duration_seconds": 73.9507954120636,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7036,
+        "token_output": 2714,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.07588999999999999,
+        "duration_seconds": 73.9507646560669,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6702,
+        "token_output": 2709,
+        "token_reasoning": 741,
+        "used_reasoning": true,
+        "cost": 0.049654500000000004,
+        "duration_seconds": 44.79853081703186,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6740,
+        "token_output": 3660,
+        "token_reasoning": 1591,
+        "used_reasoning": true,
+        "cost": 0.06303500000000001,
+        "duration_seconds": 73.95073413848877,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7044,
+        "token_output": 3902,
+        "token_reasoning": 2752,
+        "used_reasoning": true,
+        "cost": 0.045304,
+        "duration_seconds": 73.9507086277008,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6702,
+        "token_output": 1813,
+        "token_reasoning": 704,
+        "used_reasoning": true,
+        "cost": 0.027908,
+        "duration_seconds": 44.79857635498047,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6138,
+        "token_output": 3783,
+        "token_reasoning": 2624,
+        "used_reasoning": true,
+        "cost": 0.04254,
+        "duration_seconds": 73.95068883895874,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "steps1_2_research": 0.4819,
+    "step3_outside_view": 0.143,
+    "step5_inside_view": 0.3087,
+    "step6_aggregation": 0.3087,
+    "step7_supervisor": 0.3838
+  },
+  "total_pipeline_cost": 1.3174
+}

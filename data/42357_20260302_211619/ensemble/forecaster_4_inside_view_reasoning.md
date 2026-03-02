@@ -1,0 +1,5 @@
+**Analyzing high yield OAS**
+
+I'm tasked with providing analysis and percentiles for the ICE BofA US High Yield OAS between March 16 and March 27, 2026. I have the current OAS at 3.12% and need to make adjustments based on the macro environment, noting the Fed's pause and some policy uncertainty. With about three weeks until the date in question, I'll slightly shift the outside view upward and widen the upper tail to reflect potential risks, especially around the upcoming FOMC meeting.**Crafting analysis values**
+
+For my analysis, I’m setting the outside median at around 3.25%. The percentiles will be: 10th at 2.6%, 20th at 2.8%, 40th at 3.05%, 60th at 3.35%, 80th at 4.0%, and 90th at 5.2%. I’ll ensure everything is in percentage units and create a checklist to maintain clarity. Now, I’ll craft a complete message that summarizes these findings accurately for easy understanding.

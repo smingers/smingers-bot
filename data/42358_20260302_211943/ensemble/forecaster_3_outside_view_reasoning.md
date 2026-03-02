@@ -1,0 +1,7 @@
+**Modeling returns and volatility**
+
+I’m considering modeling returns as a normal distribution using sigma. For estimated annualized volatility, NVDA could be around 50% and AAPL about 30%. For 10 trading days, I’ll calculate sigma as annual vol multiplied by the square root of 10 divided by 252. Given a correlation of 0.5, I can compute spread variance and convert it to a percent for the 10-day period. I need to account for potential fat tails and historical mean spread values.**Calculating percentiles for distribution**
+
+I'm setting up some percentiles with a rough normal distribution: mean of +1.5 and standard deviation of 9.5. For the 10th percentile, I’ll calculate using z = -1.281, leading to a value of -10.7. I’ll continue this for other percentiles like the 20th and 40th. I’m considering adjustments due to fat tails which suggest widening the bounds. Ultimately, I want a coherent and increasing set of values for each percentile while ensuring the historical context reflects the market conditions.**Calibrating the outside view**
+
+I need to focus on calibrating the outside view, specifically how it connects with the volatility model and the agent report. It’s essential to properly account for tails and potential upsets in the distribution. I should also mention macro shocks, as they could impact this analysis significantly. This calibration will help ensure the model is robust and reflects possible market fluctuations. Let’s prepare the final draft, integrating all these elements!

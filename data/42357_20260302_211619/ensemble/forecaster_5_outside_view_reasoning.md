@@ -1,0 +1,5 @@
+**Analyzing volatility estimates**
+
+I'm thinking about estimating daily volatility, perhaps around 5-6 basis points regularly. An approximation for a 25-day period might be around 0.01%. But wait, high-yield OAS volatility could be 8-10 basis points, leading to approximately 0.40 percentage points over a month. When reviewing historical changes, namely a 1-month change of +0.35 ppts and a 3-month change of +0.20 ppts, I see the potential for significant movement, while also recognizing tail events like those during COVID could create larger spikes.**Calculating percentiles and analysis**
+
+I’m evaluating percentiles, expecting them to range from about 2.4 to 4.4. I’ll look at historical data, particularly spikes during 2008 and 2020, which soared around 7-9, although these are extreme cases. For probabilities, I estimate less than 1% for values over 6 in a 25-day horizon. Here are the revised percentiles: 10th at 2.6, 20th at 2.8, 40th at 3.0, 60th at 3.2, 80th at 3.6, and 90th at 4.3. Now I’ll summarize my sources to support this analysis.

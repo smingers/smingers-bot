@@ -1,0 +1,265 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": false,
+      "num_queries": 0,
+      "queries": [],
+      "tools_used": [],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "ICE BofA High Yield OAS historical average 2010-2024",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Obtain long-term mean/median levels and past percentile distribution for base-rate calibration.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "BAMLH0A0HYM2",
+          "tool": "FRED",
+          "temporal_role": "historical",
+          "intent": "Download full time series to inspect publication timing, compute two-week changes, and verify resolution mechanism.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        },
+        {
+          "query": "Retrieve ICE BofA US High Yield Option-Adjusted Spread daily data since 1997; calculate distribution of end-of-month two-week changes; list all March 16-27 periods and resulting values; flag instances of >75 bp moves within 14 days",
+          "tool": "Agent",
+          "temporal_role": "historical",
+          "intent": "Produce quantitative base-rate statistics for similar windows and volatility episodes.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        },
+        {
+          "query": "drivers of high yield spreads Fed policy VIX recession",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Identify research papers/analyses linking macro variables to HY spreads to frame key drivers.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "FRED",
+        "Google",
+        "Agent"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "high yield bond spreads March 2026",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "Gather the latest commentary and data on current spread levels and sentiment.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "US corporate default rate 2026 outlook",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "Capture fresh forecasts or reports on expected default trends affecting HY risk premiums.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "March 2026 FOMC meeting credit markets reaction",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "Assess how upcoming/just-released Fed decisions may impact spreads before Mar 27.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "energy sector high yield stress early 2026",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "Check for sector-specific problems (oil/gas) that could trigger an unexpected spread spike (contrarian risk).",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "Google News"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6530,
+        "token_output": 1544,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.05581,
+        "duration_seconds": 47.502066135406494,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11473,
+        "token_output": 2555,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.09569,
+        "duration_seconds": 59.35710525512695,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11239,
+        "token_output": 2185,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.08897,
+        "duration_seconds": 59.3570716381073,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5785,
+        "token_output": 2535,
+        "token_reasoning": 853,
+        "used_reasoning": true,
+        "cost": 0.04561375,
+        "duration_seconds": 47.50213432312012,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 10098,
+        "token_output": 2113,
+        "token_reasoning": 490,
+        "used_reasoning": true,
+        "cost": 0.0472535,
+        "duration_seconds": 59.35703921318054,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 10408,
+        "token_output": 1329,
+        "token_reasoning": 320,
+        "used_reasoning": true,
+        "cost": 0.031448000000000004,
+        "duration_seconds": 59.35700869560242,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5785,
+        "token_output": 2088,
+        "token_reasoning": 896,
+        "used_reasoning": true,
+        "cost": 0.028274,
+        "duration_seconds": 47.50217390060425,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 9836,
+        "token_output": 1578,
+        "token_reasoning": 512,
+        "used_reasoning": true,
+        "cost": 0.032296,
+        "duration_seconds": 59.35697793960571,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "steps1_2_research": 0.4481,
+    "step3_outside_view": 0.1297,
+    "step5_inside_view": 0.2957,
+    "step6_aggregation": 0.2957,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.8735
+}

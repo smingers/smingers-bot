@@ -1,0 +1,5 @@
+**Assessing NVDA vs AAPL returns**
+
+I need to create a forecast for the difference between NVDA and AAPL returns from March 16 to 27, 2026, considering key events. For instance, NVDA might benefit from the GTC event starting March 16, which could be a positive driver. On the other hand, Apple’s earlier product launch could increase risks. Additionally, broader market conditions, like geopolitical conflicts and potential global sell-offs, may put pressure on tech stocks, affecting NVDA more due to its volatility and high multiples. I'll weigh these factors carefully.**Analyzing historical performance**
+
+I'm looking at NVDA's past performance during GTC events. In 2024, the stock gained 2% on the keynote day but later fell slightly, while in 2025, it rose 6% before retreating 3%, leading to modest overall gains. There's a risk of "sell-the-news" this time, and considering current macro risks, including escalating war tensions and inflation, NVDA could experience larger drops than Apple. I’m adjusting the expected differential mean down to around +1.5, widening the tails for volatility, and establishing a set of percentiles for my analysis.

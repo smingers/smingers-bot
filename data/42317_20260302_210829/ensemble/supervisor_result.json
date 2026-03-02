@@ -1,0 +1,23 @@
+{
+  "confidence": "high",
+  "prediction": {
+    "10": 13560.0,
+    "20": 13850.0,
+    "40": 14250.0,
+    "60": 14700.0,
+    "80": 15100.0,
+    "90": 15400.0
+  },
+  "search_queries": [
+    "Alcaraz Indian Wells 2025 result champion (Google)",
+    "Alcaraz Miami Open 2025 result (Google)",
+    "What were Carlos Alcaraz's results at Indian Wells 2025 and Miami Open 2025, and how many ATP ranking points did he earn at each tournament? Also, who won each of those tournaments? (Agent)",
+    "ATP rankings March 2026 Alcaraz points (Google News)"
+  ],
+  "cost": 0.3838,
+  "divergence": {
+    "metric_name": "rn_spread",
+    "metric_value": 0.0538,
+    "threshold": 0.045
+  }
+}

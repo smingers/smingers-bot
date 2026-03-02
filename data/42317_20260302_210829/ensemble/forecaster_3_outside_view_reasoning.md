@@ -1,0 +1,7 @@
+**Forecasting point distribution**
+
+I'm analyzing the point changes after Miami in late March and how they might affect the standings. It looks like I need to set the lower end of the distribution around 13550, adjusting for annulment thresholds. If forecasts indicate below 13550, we could face annulment, so I should probably set the 10th percentile a little higher, maybe around 13600. The overall range I’m considering is from about 13,700 to 16,500, up to possibly 17,500 for top players.**Analyzing historical points**
+
+I'm looking into historical #1 totals in March, noting that most seem to range between 12k to 15k, but changes in 2024 could bump those figures a bit. The current #1 likely hovers around 13550, leading me to set percentiles accordingly: 10th at 13750, 20th at 14100, etc., ensuring they trend upward. I also want to analyze weekly data from March since 2010 and consider overall volatility. The available sources feel incomplete, with only limited concrete data from past records.**Justifying point projections**
+
+I think the baseline mean for points could be around 15k, considering system adjustments and the dominance of players like Alcaraz. Late March, after Miami, usually sees elevated rankings since top players often hold recent slam titles and perform well at Masters, potentially reaching between 14k and 16k. However, unexpected events like injuries or increased competition can lower totals. Regardless, I need to ensure the projections truncate at 13550. Let’s put this into a clear written form!

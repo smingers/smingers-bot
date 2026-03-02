@@ -1,0 +1,266 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": false,
+      "num_queries": 0,
+      "queries": [],
+      "tools_used": [],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 5,
+      "queries": [
+        {
+          "query": "NVDA",
+          "tool": "yFinance",
+          "temporal_role": "historical",
+          "intent": "Download full price history to extract Adj Close on Mar 13/Mar 15 and Mar 27 for return calculation; also compute historical vol.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        },
+        {
+          "query": "AAPL",
+          "tool": "yFinance",
+          "temporal_role": "historical",
+          "intent": "Same for Apple; enables direct computation of the return spread.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        },
+        {
+          "query": "NVDA vs AAPL two-week returns history",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Locate studies or data sets comparing their short-term relative performance over time.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Nvidia Apple stock correlation rolling",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Find charts/data on rolling correlation and dispersion, informing typical spread magnitudes.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Analyze past 10-trading-day NVDA minus AAPL return differentials 2016-2025; compute mean, stdev, percentiles; identify periods exceeding \u00b15 pp and associated drivers.",
+          "tool": "Agent",
+          "temporal_role": "historical",
+          "intent": "Produce statistical base-rate benchmarks for the upcoming forecast.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "yFinance",
+        "Agent",
+        "Google"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Nvidia catalysts March 2026 GTC product launch",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "Surface any scheduled events, conference keynotes, or product announcements during Mar 16-27 that could move NVDA.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Apple news March 2026 China demand antitrust",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "Capture recent or upcoming Apple developments that may swing AAPL returns in the forecast window.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Federal Reserve meeting March 18 2026 equity market expectations and reactions worldwide",
+          "tool": "AskNews",
+          "temporal_role": "current",
+          "intent": "Gather in-depth coverage on the FOMC decision occurring inside the period, a major macro driver for both stocks.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 42,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "AskNews",
+        "Google News"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 9686,
+        "token_output": 1924,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.07729,
+        "duration_seconds": 48.9135217666626,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 18860,
+        "token_output": 3204,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.14236,
+        "duration_seconds": 70.59219408035278,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 18031,
+        "token_output": 2928,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.134075,
+        "duration_seconds": 70.59214854240417,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8375,
+        "token_output": 2905,
+        "token_reasoning": 954,
+        "used_reasoning": true,
+        "cost": 0.05532625,
+        "duration_seconds": 48.913575172424316,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16761,
+        "token_output": 2859,
+        "token_reasoning": 925,
+        "used_reasoning": true,
+        "cost": 0.06935775,
+        "duration_seconds": 70.59210991859436,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17019,
+        "token_output": 1539,
+        "token_reasoning": 448,
+        "used_reasoning": true,
+        "cost": 0.04635,
+        "duration_seconds": 70.59207344055176,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8375,
+        "token_output": 1466,
+        "token_reasoning": 448,
+        "used_reasoning": true,
+        "cost": 0.028478000000000003,
+        "duration_seconds": 48.913639545440674,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15986,
+        "token_output": 1849,
+        "token_reasoning": 640,
+        "used_reasoning": true,
+        "cost": 0.046764,
+        "duration_seconds": 70.59203696250916,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "steps1_2_research": 0.3593,
+    "step3_outside_view": 0.1611,
+    "step5_inside_view": 0.4389,
+    "step6_aggregation": 0.4389,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.9593
+}
