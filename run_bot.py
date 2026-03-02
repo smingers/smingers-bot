@@ -53,7 +53,7 @@ async def forecast_metaculus_questions(
     resolved = ResolvedConfig.from_yaml("config.yaml", mode="live")
 
     # Optional: use IDs from check job to avoid duplicate list API calls (and 429)
-    use_ids_from_check = question_ids is not None
+    use_ids_from_check = question_ids is not None and question_ids.strip() != ""
     ids_from_check = (
         [int(x.strip()) for x in question_ids.split(",") if x.strip()] if use_ids_from_check else []
     )
