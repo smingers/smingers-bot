@@ -1,0 +1,91 @@
+{
+  "ticker": "DD",
+  "start_date": "2026-03-02",
+  "end_date": "2026-03-13",
+  "trading_days": 9,
+  "current_price": 50.04,
+  "reference_price": 50.04,
+  "return_so_far": 0.0,
+  "sample_size": 2506,
+  "positive_return_rate": 0.5531,
+  "mean_return": 0.44,
+  "median_return": 0.61,
+  "std_return": 5.75,
+  "percentile_5": -8.44,
+  "percentile_25": -2.59,
+  "percentile_75": 3.54,
+  "percentile_95": 9.18,
+  "recent_return_5d": -0.73,
+  "recent_return_1m": 12.12,
+  "recent_return_3m": 29.69,
+  "volatility_30d": 34.9,
+  "recent_return_5d_percentile": 37,
+  "recent_return_1m_percentile": 92,
+  "recent_return_3m_percentile": 94,
+  "conditional_rates": [
+    {
+      "label": "3-month return > 20%",
+      "condition": "momentum_positive",
+      "probability": 0.5847,
+      "sample_size": 236,
+      "delta": 3.2,
+      "applicable": "True"
+    },
+    {
+      "label": "3-month return < -20%",
+      "condition": "momentum_negative",
+      "probability": 0.6,
+      "sample_size": 110,
+      "delta": 4.7,
+      "applicable": "False"
+    },
+    {
+      "label": "Price in top decile of 52wk range",
+      "condition": "range_top_decile",
+      "probability": 0.5012,
+      "sample_size": 431,
+      "delta": -5.2,
+      "applicable": true
+    },
+    {
+      "label": "Price in bottom decile of 52wk range",
+      "condition": "range_bottom_decile",
+      "probability": 0.4955,
+      "sample_size": 224,
+      "delta": -5.8,
+      "applicable": false
+    },
+    {
+      "label": "Prior 5-day return > 0",
+      "condition": "mean_reversion_up",
+      "probability": 0.5515,
+      "sample_size": 1320,
+      "delta": -0.2,
+      "applicable": "False"
+    },
+    {
+      "label": "Prior 5-day return < 0",
+      "condition": "mean_reversion_down",
+      "probability": 0.5533,
+      "sample_size": 1173,
+      "delta": 0.0,
+      "applicable": "True"
+    },
+    {
+      "label": "30-day vol above median",
+      "condition": "vol_high",
+      "probability": 0.5719,
+      "sample_size": 1238,
+      "delta": 1.9,
+      "applicable": true
+    },
+    {
+      "label": "30-day vol below median",
+      "condition": "vol_low",
+      "probability": 0.5291,
+      "sample_size": 1238,
+      "delta": -2.4,
+      "applicable": false
+    }
+  ]
+}

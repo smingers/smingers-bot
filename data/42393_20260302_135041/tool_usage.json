@@ -1,0 +1,266 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": false,
+      "num_queries": 0,
+      "queries": [],
+      "tools_used": [],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 5,
+      "queries": [
+        {
+          "query": "DuPont ex-dividend price effect",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "quantify how DD usually behaves in the first 5-10 trading days after going ex-dividend.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "DD 10-day return distribution 2010-2025",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "cross-check/extend the 9-day base-rate stats already provided.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Materials sector March seasonality performance",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "find studies or data on early-March seasonal returns for materials/chemicals stocks.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "DuPont beta correlation S&P 500",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "obtain DD\u2019s historical beta and correlation stats to gauge sensitivity to overall market moves before Mar-13.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Over 2010-2025 analyze DD price change 3 days before and 5 days after each monthly US CPI release; compare with non-CPI weeks for positive-return probability.",
+          "tool": "Agent",
+          "temporal_role": "historical",
+          "intent": "see if CPI-week volatility skews the 9-day outcome, relevant because Feb CPI prints on Mar-10.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "DuPont analyst rating March 2026",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "surface any upgrades/downgrades or target changes issued after Feb-29.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "DD options implied volatility March 13 2026",
+          "tool": "Google",
+          "temporal_role": "current",
+          "intent": "retrieve option chain/implied move for the weekly options expiring Mar-13 to gauge market-implied probability of price rise.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Coverage of DuPont de Nemours contracts, litigation, or management commentary February-March 2026, North America and Europe",
+          "tool": "AskNews",
+          "temporal_role": "current",
+          "intent": "catch any breaking corporate or regulatory developments that could swing the stock within the forecast window.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 31,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "AskNews",
+        "Google News"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 9575,
+        "token_output": 1844,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.075535,
+        "duration_seconds": 63.758065938949585,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 19791,
+        "token_output": 2610,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.138105,
+        "duration_seconds": 90.83572053909302,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 19353,
+        "token_output": 2667,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.13677,
+        "duration_seconds": 90.83569955825806,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8386,
+        "token_output": 2190,
+        "token_reasoning": 476,
+        "used_reasoning": true,
+        "cost": 0.0453355,
+        "duration_seconds": 63.75812244415283,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17484,
+        "token_output": 1791,
+        "token_reasoning": 255,
+        "used_reasoning": true,
+        "cost": 0.055671,
+        "duration_seconds": 90.83567428588867,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17549,
+        "token_output": 1387,
+        "token_reasoning": 320,
+        "used_reasoning": true,
+        "cost": 0.046194,
+        "duration_seconds": 90.83564925193787,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8386,
+        "token_output": 2001,
+        "token_reasoning": 704,
+        "used_reasoning": true,
+        "cost": 0.032780000000000004,
+        "duration_seconds": 63.758156299591064,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17036,
+        "token_output": 1916,
+        "token_reasoning": 896,
+        "used_reasoning": true,
+        "cost": 0.0494,
+        "duration_seconds": 90.83562326431274,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "steps1_2_research": 0.4585,
+    "step3_outside_view": 0.1537,
+    "step5_inside_view": 0.4261,
+    "step6_aggregation": 0.4261,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 1.0383
+}
