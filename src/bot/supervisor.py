@@ -256,6 +256,7 @@ class SupervisorAgent:
         """
         forecaster_summaries = self._format_forecaster_summaries(supervisor_input)
         weighted_avg_display = self._format_weighted_average(supervisor_input)
+        pre_research_section = self._format_pre_research_section(supervisor_input)
 
         # Select type-specific update prompt
         prompt_template = self._get_update_prompt_template(supervisor_input.question_type)
@@ -272,7 +273,7 @@ class SupervisorAgent:
             "disagreement_analysis": analysis,
             "research_results": search_context or "(No targeted research conducted)",
             "weighted_average_display": weighted_avg_display,
-            "pre_research_section": self._format_pre_research_section(supervisor_input),
+            "pre_research_section": pre_research_section,
         }
 
         # Add type-specific fields
@@ -377,13 +378,15 @@ class SupervisorAgent:
         return str(wa)
 
     def _format_pre_research_section(self, supervisor_input: SupervisorInput) -> str:
-        """Format pre-research (question URL scrape) for supervisor prompts."""
+        """Format pre-research (question URL scrape) for supervisor prompts.
+
+        Returns an empty string when no pre-research is available so the
+        {pre_research_section} placeholder in prompt templates renders as
+        blank rather than a noisy no-op message.
+        """
         pre = (supervisor_input.pre_research_context or "").strip()
         if not pre:
-            return (
-                "=== PRE-RESEARCH (primary source) ===\n"
-                "(No pre-research context — no links were scraped from the question fields.)"
-            )
+            return ""
         return (
             "=== PRE-RESEARCH (primary source) ===\n"
             "The following was scraped and summarized from links in the question (e.g. resolution URL). "

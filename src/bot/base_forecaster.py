@@ -332,7 +332,7 @@ class BaseForecaster(ForecasterMixin, ABC):
                 agents=agents,
                 final_prediction=final_prediction,
                 question_params=question_params,
-                seed_context=research.seed_context,
+                pre_research_context=research.pre_research_context,
                 log=log,
             )
             snapshot_cost("step7_supervisor", step6_end_cost)
@@ -440,7 +440,7 @@ class BaseForecaster(ForecasterMixin, ABC):
             historical_context=plan_result.historical_context,
             current_context=plan_result.current_context,
             metrics=research_metrics,
-            seed_context=plan_result.seed_context or "",
+            pre_research_context=plan_result.seed_context or "",
         )
 
     async def _run_research_legacy(
@@ -554,7 +554,7 @@ class BaseForecaster(ForecasterMixin, ABC):
             historical_context=historical_context,
             current_context=current_context,
             metrics=research_metrics,
-            seed_context=question_url_context or "",
+            pre_research_context=question_url_context or "",
         )
 
     async def _run_outside_view(
@@ -1171,8 +1171,8 @@ class BaseForecaster(ForecasterMixin, ABC):
         agents: list[dict],
         final_prediction: Any,
         question_params: dict,
-        seed_context: str = "",
-        log: Callable[[str], Any] = print,
+        pre_research_context: str = "",
+        log: Callable[[str], Any] = print,  # defaults to print; callers should pass the pipeline logger
     ) -> Any:
         """
         Run supervisor review if ensemble divergence exceeds threshold.
@@ -1227,7 +1227,7 @@ class BaseForecaster(ForecasterMixin, ABC):
             today=question_params.get("today", ""),
             forecaster_predictions=forecaster_predictions,
             weighted_average_prediction=final_prediction,
-            pre_research_context=seed_context,
+            pre_research_context=pre_research_context,
             options=question_params.get("options"),
             num_options=len(question_params.get("options", []) or []) or None,
             units=question_params.get("unit_of_measure"),

@@ -2,6 +2,12 @@
 
 import pytest
 
+from src.bot.prompts import (
+    BINARY_SUPERVISOR_UPDATE_PROMPT,
+    MULTIPLE_CHOICE_SUPERVISOR_UPDATE_PROMPT,
+    NUMERIC_SUPERVISOR_UPDATE_PROMPT,
+    SUPERVISOR_ANALYSIS_PROMPT,
+)
 from src.bot.supervisor import SupervisorAgent, SupervisorInput, SupervisorResult
 
 # =============================================================================
@@ -121,6 +127,49 @@ class TestFormatting:
         assert "60.0%" in result
         assert "30.0%" in result
         assert "10.0%" in result
+
+    def test_format_pre_research_section_empty_returns_blank(self):
+        """Empty pre_research_context should produce an empty string (no filler noise)."""
+        agent = SupervisorAgent(config={})
+        si = _make_input(pre_research_context="")
+        result = agent._format_pre_research_section(si)
+        assert result == ""
+
+    def test_format_pre_research_section_whitespace_only_returns_blank(self):
+        """Whitespace-only pre_research_context should be treated as empty."""
+        agent = SupervisorAgent(config={})
+        si = _make_input(pre_research_context="   \n  ")
+        result = agent._format_pre_research_section(si)
+        assert result == ""
+
+    def test_format_pre_research_section_none_returns_blank(self):
+        """None pre_research_context should be treated as empty."""
+        agent = SupervisorAgent(config={})
+        si = _make_input(pre_research_context=None)
+        result = agent._format_pre_research_section(si)
+        assert result == ""
+
+    def test_format_pre_research_section_with_content(self):
+        """Non-empty pre_research_context should include header, instructions, and content."""
+        agent = SupervisorAgent(config={})
+        scraped = "Rank 1: Gemini 2.0 Ultra (score: 1450)\nRank 2: GPT-5 (score: 1440)"
+        si = _make_input(pre_research_context=scraped)
+        result = agent._format_pre_research_section(si)
+        assert "=== PRE-RESEARCH (primary source) ===" in result
+        assert "primary-source snapshot" in result
+        assert "Do not override it" in result
+        assert scraped in result
+
+    def test_supervisor_input_pre_research_context_defaults_empty(self):
+        """pre_research_context should default to empty string."""
+        si = _make_input()
+        assert si.pre_research_context == ""
+
+    def test_supervisor_input_pre_research_context_stored(self):
+        """pre_research_context should be stored on SupervisorInput."""
+        content = "Leaderboard snapshot: Gemini #1"
+        si = _make_input(pre_research_context=content)
+        assert si.pre_research_context == content
 
 
 # =============================================================================
@@ -326,3 +375,113 @@ class TestPromptTemplates:
         agent = SupervisorAgent(config={})
         template = agent._get_update_prompt_template("unknown")
         assert "Probability: ZZ%" in template
+
+    def test_analysis_prompt_renders_with_pre_research_section(self):
+        """SUPERVISOR_ANALYSIS_PROMPT should accept pre_research_section without KeyError."""
+        agent = SupervisorAgent(config={})
+        si = _make_input(pre_research_context="Leaderboard: Gemini #1")
+        pre_research_section = agent._format_pre_research_section(si)
+        rendered = SUPERVISOR_ANALYSIS_PROMPT.format(
+            title=si.question_title,
+            background=si.background,
+            resolution_criteria=si.resolution_criteria,
+            fine_print=si.fine_print,
+            open_time=si.open_time,
+            scheduled_resolve_time=si.scheduled_resolve_time,
+            today=si.today,
+            type_specific_section="",
+            pre_research_section=pre_research_section,
+            forecaster_summaries="forecaster_1: 40%",
+            weighted_average_display="40.0%",
+        )
+        assert "PRE-RESEARCH" in rendered
+
+    def test_analysis_prompt_renders_with_empty_pre_research(self):
+        """SUPERVISOR_ANALYSIS_PROMPT should render cleanly when no pre-research available."""
+        agent = SupervisorAgent(config={})
+        si = _make_input(pre_research_context="")
+        pre_research_section = agent._format_pre_research_section(si)
+        rendered = SUPERVISOR_ANALYSIS_PROMPT.format(
+            title=si.question_title,
+            background=si.background,
+            resolution_criteria=si.resolution_criteria,
+            fine_print=si.fine_print,
+            open_time=si.open_time,
+            scheduled_resolve_time=si.scheduled_resolve_time,
+            today=si.today,
+            type_specific_section="",
+            pre_research_section=pre_research_section,
+            forecaster_summaries="forecaster_1: 40%",
+            weighted_average_display="40.0%",
+        )
+        assert "PRE-RESEARCH" not in rendered
+
+    def test_binary_update_prompt_renders_with_pre_research_section(self):
+        """BINARY_SUPERVISOR_UPDATE_PROMPT should accept pre_research_section."""
+        agent = SupervisorAgent(config={})
+        si = _make_input(pre_research_context="Leaderboard: Gemini #1")
+        pre_research_section = agent._format_pre_research_section(si)
+        rendered = BINARY_SUPERVISOR_UPDATE_PROMPT.format(
+            title=si.question_title,
+            background=si.background,
+            resolution_criteria=si.resolution_criteria,
+            fine_print=si.fine_print,
+            open_time=si.open_time,
+            scheduled_resolve_time=si.scheduled_resolve_time,
+            today=si.today,
+            pre_research_section=pre_research_section,
+            forecaster_summaries="forecaster_1: 40%",
+            disagreement_analysis="They disagree.",
+            research_results="No results.",
+            weighted_average_display="40.0%",
+        )
+        assert "Probability: ZZ%" in rendered
+        assert "PRE-RESEARCH" in rendered
+
+    def test_numeric_update_prompt_renders_with_pre_research_section(self):
+        """NUMERIC_SUPERVISOR_UPDATE_PROMPT should accept pre_research_section."""
+        agent = SupervisorAgent(config={})
+        si = _make_input(question_type="numeric", pre_research_context="GDP: $25T")
+        pre_research_section = agent._format_pre_research_section(si)
+        rendered = NUMERIC_SUPERVISOR_UPDATE_PROMPT.format(
+            title=si.question_title,
+            background=si.background,
+            resolution_criteria=si.resolution_criteria,
+            fine_print=si.fine_print,
+            open_time=si.open_time,
+            scheduled_resolve_time=si.scheduled_resolve_time,
+            today=si.today,
+            type_specific_section="",
+            pre_research_section=pre_research_section,
+            forecaster_summaries="forecaster_1: P50=100",
+            disagreement_analysis="They disagree.",
+            research_results="No results.",
+            weighted_average_display="P50=100",
+        )
+        assert "Percentile 10" in rendered
+
+    def test_mc_update_prompt_renders_with_pre_research_section(self):
+        """MULTIPLE_CHOICE_SUPERVISOR_UPDATE_PROMPT should accept pre_research_section."""
+        agent = SupervisorAgent(config={})
+        si = _make_input(
+            question_type="multiple_choice",
+            options=["A", "B", "C"],
+            pre_research_context="Option A is leading.",
+        )
+        pre_research_section = agent._format_pre_research_section(si)
+        rendered = MULTIPLE_CHOICE_SUPERVISOR_UPDATE_PROMPT.format(
+            title=si.question_title,
+            background=si.background,
+            resolution_criteria=si.resolution_criteria,
+            fine_print=si.fine_print,
+            open_time=si.open_time,
+            scheduled_resolve_time=si.scheduled_resolve_time,
+            today=si.today,
+            options="A, B, C",
+            pre_research_section=pre_research_section,
+            forecaster_summaries="forecaster_1: [60%, 30%, 10%]",
+            disagreement_analysis="They disagree.",
+            research_results="No results.",
+            weighted_average_display="[60%, 30%, 10%]",
+        )
+        assert "Probabilities:" in rendered
