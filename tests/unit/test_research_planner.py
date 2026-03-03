@@ -7,6 +7,7 @@ Tests cover:
 - Prompt formatting (type-specific fields)
 - Reflection parsing (SUFFICIENT vs GAPS_FOUND)
 - Helper methods (days to resolution, type-specific fields)
+- Agentic instrumentation and tool_usage collection (regression guard)
 """
 
 import pytest
@@ -362,7 +363,7 @@ class TestReflectionParsing:
         """
 
         # Patch _call_model so we don't hit a real LLM; just return a well-formed reflection response.
-        def fake_call_model(model, prompt, temperature):
+        async def fake_call_model(model, prompt, temperature):
             # Ensure the prompt is a non-empty string and contains expected metadata fields.
             assert isinstance(prompt, str)
             assert "QUESTION:" in prompt
@@ -756,9 +757,36 @@ class TestProcessSearchResultAgentInstrumentation:
         step_data = result.metadata["step_data"]
         assert len(step_data) == 1
         assert step_data[0]["step_number"] == 1
-        assert step_data[0]["queries_executed"] == step1_queries
+        # _agentic_instrumentation_from_result converts tuples to lists for JSON serialization
+        assert step_data[0]["queries_executed"] == [list(q) for q in step1_queries]
         assert step_data[0]["search_results_chars"] == 200
         assert step_data[0]["analysis_chars"] == 50
+
+    def test_agentic_instrumentation_from_result_converts_tuples_to_lists(self, planner):
+        """_agentic_instrumentation_from_result serializes (query, source) tuples as lists."""
+        step_data = [
+            AgenticSearchStepData(
+                step_number=1,
+                queries_executed=[("nvda price", "Google"), ("NVDA", "yFinance")],
+                search_results_raw="x" * 1000,
+                analysis_after_step="y" * 500,
+            ),
+        ]
+        raw = AgenticSearchResult(
+            analysis="Final analysis.",
+            steps_taken=1,
+            queries_executed=["nvda price", "NVDA"],
+            step_data=step_data,
+            error=None,
+        )
+        out = planner._agentic_instrumentation_from_result(raw)
+        assert out["steps_taken"] == 1
+        assert out["queries_executed"] == ["nvda price", "NVDA"]
+        assert out["error"] is None
+        step = out["step_data"][0]
+        assert step["queries_executed"] == [["nvda price", "Google"], ["NVDA", "yFinance"]]
+        assert step["search_results_chars"] == 1000
+        assert step["analysis_chars"] == 500
 
     def test_agent_result_includes_error_in_instrumentation(self, planner):
         rq = ResearchQuery("Agent task", "Agent", "historical", "intent")
@@ -864,3 +892,73 @@ class TestBuildQueryDetailsPreservesAgentInstrumentation:
         assert details[0]["scrape_stats"]["urls_failed"] == 1
         assert details[0]["scrape_stats"]["urls_summarized"] == 2
         assert "agentic_instrumentation" not in details[0]
+
+    @pytest.mark.asyncio
+    async def test_run_query_details_includes_agentic_instrumentation_for_agent_rows(
+        self, base_config
+    ):
+        """When run() completes with an Agent query, metadata['query_details'] has agentic_instrumentation on that row."""
+        from unittest.mock import AsyncMock, MagicMock
+
+        planner = IterativeResearchPlanner(
+            config=base_config,
+            llm_client=MagicMock(),
+            artifact_store=None,
+        )
+        rq_agent = ResearchQuery("agent task", "Agent", "historical", "intent")
+        # Flat metadata as produced by _agentic_instrumentation_from_result
+        agent_result = QueryResult(
+            query=rq_agent,
+            formatted_output="<Agent_report>...</Agent_report>",
+            success=True,
+            num_results=1,
+            metadata={
+                "steps_taken": 1,
+                "queries_executed": ["AAPL"],
+                "step_data": [
+                    {
+                        "step_number": 1,
+                        "queries_executed": [["AAPL", "yFinance"]],
+                        "search_results_chars": 10,
+                        "analysis_chars": 10,
+                    }
+                ],
+                "error": None,
+            },
+        )
+        rq_google = ResearchQuery("google task", "Google", "historical", "intent")
+        google_result = QueryResult(
+            query=rq_google,
+            formatted_output="<Summary>...</Summary>",
+            success=True,
+            num_results=1,
+        )
+        planner._generate_plan = AsyncMock(return_value=("plan analysis", [rq_agent, rq_google]))
+        planner._gather_seed_context = AsyncMock(return_value=("", {}))
+        planner._execute_queries = AsyncMock(return_value=[agent_result, google_result])
+        planner._is_reflection_enabled = MagicMock(return_value=False)
+
+        question_details = MagicMock()
+        question_details.title = "Test"
+        question_details.description = ""
+        question_details.resolution_criteria = ""
+        question_details.fine_print = ""
+        question_details.community_prediction_context = None
+
+        result = await planner.run(
+            question_details=question_details,
+            question_type="binary",
+            question_params={},
+            log=MagicMock(),
+        )
+
+        query_details = result.metadata["query_details"]
+        assert len(query_details) == 2
+        agent_row = next(d for d in query_details if d["tool"] == "Agent")
+        assert "agentic_instrumentation" in agent_row
+        assert agent_row["agentic_instrumentation"]["steps_taken"] == 1
+        assert agent_row["agentic_instrumentation"]["step_data"][0]["queries_executed"] == [
+            ["AAPL", "yFinance"]
+        ]
+        google_row = next(d for d in query_details if d["tool"] == "Google")
+        assert "agentic_instrumentation" not in google_row
