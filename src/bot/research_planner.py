@@ -111,11 +111,12 @@ TOOL_DESCRIPTIONS = {
         "Best for breaking news, recent events, and current developments."
     ),
     "Agent": (
-        "Agent: Your query will be processed by a reasoning model with web search capability. "
-        "Write a detailed, multi-part query of up to 3 sentences. Best for complex questions "
-        "needing synthesis across sources, base rate computation, or multi-factor analysis. "
-        "IMPORTANT: Use exactly one Agent query, tagged [HISTORICAL], for base rate or "
-        "reference class research. Do not use Agent for current events."
+        "Agent: A reasoning model with web search capability. Write a detailed query of "
+        "up to 3 sentences. Best for qualitative synthesis: identifying the most relevant "
+        "historical analogies, evaluating which reference classes apply and why, assessing "
+        "competing explanations, or finding expert analyses that provide base rate estimates. "
+        "The Agent CANNOT compute statistics. IMPORTANT: Use exactly one Agent query, "
+        "tagged [HISTORICAL]. Do not use Agent for current events."
     ),
     "AskNews": (
         "AskNews: Semantic (meaning-based) news search. Write a descriptive 1-2 sentence "
@@ -126,7 +127,8 @@ TOOL_DESCRIPTIONS = {
     "FRED": (
         'FRED: Federal Reserve Economic Data. Use a FRED series ID (e.g., "UNRATE", '
         '"CPIAUCSL") or a plain-language description (e.g., "US unemployment rate"). '
-        "Returns historical data with computed statistics. Only use for economic/financial data."
+        "Returns historical data with computed statistics. Use for economic/financial data."
+        "If the question references a FRED series ID, you MUST include a (FRED) query using that exact series ID."
     ),
     "yFinance": (
         'yFinance: Yahoo Finance ticker symbol (e.g., "AAPL", "^GSPC"). Returns price '
