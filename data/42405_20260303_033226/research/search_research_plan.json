@@ -1,0 +1,181 @@
+{
+  "plan_analysis": "The question hinges on whether the Google Trends search-interest value for the term \u201cahmadinejad\u201d on 2026-03-11 will be higher, unchanged, or lower than it is on 2026-03-03.  \nInformation gaps a forecaster still faces:\n\n1. Resolution mechanics \u2013 How Google Trends defines and timestamps a daily data point, what \u201cunchanged\u201d means numerically (exact equality? rounding?), and typical day-to-day volatility.\n2. Historical base rate \u2013 How often the \u201cahmadinejad\u201d series moves up, down, or stays flat across 8-day windows; typical magnitude of moves; frequency of spikes tied to news.\n3. Current state \u2013 The latest Google Trends values around 3 Mar 2026 and the immediate trajectory in the preceding weeks.\n4. Key drivers \u2013 Any scheduled or plausible events between 3 Mar and 11 Mar that could shift interest (e.g., Ahmadinejad statements, Iranian political developments, anniversaries).\n5. Contrarian factors \u2013 Reasons interest might unexpectedly stay flat or drop (e.g., media censorship, competing news eclipsing Ahmadinejad).\n\nThe search strategy therefore:\n\u2022 Uses Google and Agent for historical patterns and Google Trends methodology.  \n\u2022 Uses Google Trends and News for the current reading and near-term catalysts.  \n\u2022 Ensures at least one query explicitly gathers the base-rate statistics via the Agent.  \n\u2022 Mix of 5 historical (methodology + base-rate) and 3 current (latest data + upcoming news).",
+  "reflect_analysis": null,
+  "queries_planned": [
+    {
+      "query": "ahmadinejad Google Trends 2025",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Retrieve past yearly trend charts to see frequency and size of daily moves and past spikes.",
+      "phase": "plan"
+    },
+    {
+      "query": "Google Trends daily data definition",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Learn how Google timestamps daily values, rounding rules, and whether equal numbers across days are common, informing \u201cdoesn\u2019t change\u201d.",
+      "phase": "plan"
+    },
+    {
+      "query": "Google Trends volatility day to day",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Find analyses/blogs quantifying typical daily variance so forecasters can judge base-rate likelihood of \u201cno change\u201d.",
+      "phase": "plan"
+    },
+    {
+      "query": "ahmadinejad search spikes 2010-2024",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Identify historical events that drove large increases to understand key drivers and their magnitude.",
+      "phase": "plan"
+    },
+    {
+      "query": "Frequency 8-day interest change \u201cahmadinejad\u201d worldwide last 2 years; compute proportion higher, equal, lower values",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "Provide quantitative base-rate of increases, flats, decreases across comparable windows.",
+      "phase": "plan"
+    },
+    {
+      "query": "ahmadinejad Google Trends last 30 days",
+      "tool": "Google Trends",
+      "temporal_role": "current",
+      "intent": "Obtain precise current value on 3 Mar 2026 and observe immediate trajectory.",
+      "phase": "plan"
+    },
+    {
+      "query": "Ahmadinejad news March 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Surface any fresh statements, interviews, or controversies that could drive search interest during the forecast window.",
+      "phase": "plan"
+    },
+    {
+      "query": "Iran political events March 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Detect any scheduled political happenings (elections, anniversaries, nuclear-talk meetings) that might involve Ahmadinejad and spike searches.",
+      "phase": "plan"
+    }
+  ],
+  "gap_queries": [],
+  "seed_context_chars": 0,
+  "historical_context_chars": 22546,
+  "current_context_chars": 11624,
+  "phases": {
+    "pre_research": {
+      "duration_seconds": 0.02,
+      "seed_context_chars": 0,
+      "search_id": "question_urls",
+      "searched": false,
+      "urls_found": 0,
+      "urls_scraped": 0,
+      "urls_summarized": 0,
+      "urls": [],
+      "tools_used": []
+    },
+    "plan": {
+      "duration_seconds": 26.41,
+      "cost": 0.0124,
+      "num_queries": 8
+    },
+    "execute": {
+      "duration_seconds": 94.83,
+      "cost": 0.308,
+      "queries_executed": 8,
+      "queries_successful": 8
+    },
+    "assemble": {
+      "historical_context_chars": 22546,
+      "current_context_chars": 11624
+    }
+  },
+  "total_queries_planned": 8,
+  "total_queries_executed": 8,
+  "total_gap_queries": 0,
+  "total_cost": 0.3204,
+  "total_duration_seconds": 121.26,
+  "query_details": [
+    {
+      "query": "ahmadinejad Google Trends 2025",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Retrieve past yearly trend charts to see frequency and size of daily moves and past spikes.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "Google Trends daily data definition",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Learn how Google timestamps daily values, rounding rules, and whether equal numbers across days are common, informing \u201cdoesn\u2019t change\u201d.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "Google Trends volatility day to day",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Find analyses/blogs quantifying typical daily variance so forecasters can judge base-rate likelihood of \u201cno change\u201d.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "ahmadinejad search spikes 2010-2024",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Identify historical events that drove large increases to understand key drivers and their magnitude.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 2,
+      "error": null
+    },
+    {
+      "query": "Frequency 8-day interest change \u201cahmadinejad\u201d worldwide last 2 years; compute proportion higher, equal, lower values",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "Provide quantitative base-rate of increases, flats, decreases across comparable windows.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 1,
+      "error": null
+    },
+    {
+      "query": "ahmadinejad Google Trends last 30 days",
+      "tool": "Google Trends",
+      "temporal_role": "current",
+      "intent": "Obtain precise current value on 3 Mar 2026 and observe immediate trajectory.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 1,
+      "error": null
+    },
+    {
+      "query": "Ahmadinejad news March 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Surface any fresh statements, interviews, or controversies that could drive search interest during the forecast window.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "Iran political events March 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Detect any scheduled political happenings (elections, anniversaries, nuclear-talk meetings) that might involve Ahmadinejad and spike searches.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    }
+  ]
+}
