@@ -1,0 +1,20 @@
+{
+  "confidence": "high",
+  "prediction": [
+    0.23,
+    0.15,
+    0.62
+  ],
+  "search_queries": [
+    "Iran US Israel military conflict March 2026 (Google News)",
+    "Iran war escalation ceasefire March 2026 (Google News)",
+    "What is the current status of the US-Israel-Iran military conflict as of March 3, 2026? Has there been any ceasefire, de-escalation, or further escalation since the initial strikes on February 28? Are there any major new developments expected in the coming week? (Agent)",
+    "BBC News Google Trends spike decay pattern (Google)"
+  ],
+  "cost": 0.4211,
+  "divergence": {
+    "metric_name": "max_option_range",
+    "metric_value": 30.0,
+    "threshold": 25.0
+  }
+}

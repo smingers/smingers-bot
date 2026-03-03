@@ -1,0 +1,266 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": false,
+      "num_queries": 0,
+      "queries": [],
+      "tools_used": [],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 5,
+      "queries": [
+        {
+          "query": "bbc news daily trends volatility",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Find datasets or analyses showing historical day-to-day Google Trends fluctuations for \u201cbbc news\u201d to gauge typical move sizes.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "bbc news trend spike reasons",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Identify past documented spikes and their causes to understand key drivers of large changes.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "uk budget 2026 date",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Verify whether the UK Spring Budget (a likely catalyst covered by BBC) falls between 3-12 March 2026.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Retrieve Google Trends US daily data for \"bbc news\" from 2024-03-03 to 2026-03-02, compute the 9-day change for every period, and report the proportion where |change| > 3 and the direction distribution; include mean and standard deviation of changes.",
+          "tool": "Agent",
+          "temporal_role": "historical",
+          "intent": "Generate quantitative base-rate statistics for >3-point moves over comparable 9-day windows.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        },
+        {
+          "query": "google trends api bbc news",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Obtain examples and documentation of SerpApi Google Trends TIMESERIES responses for \u201cbbc news\u201d to confirm value scaling and parsing details relevant to resolution.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Agent"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "bbc news trending searches March 2026",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "Surface recent reports or commentary indicating rising or falling search interest for BBC News right now.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "BBC or BBC News major stories likely to spike US search interest between March 3-12 2026",
+          "tool": "AskNews",
+          "temporal_role": "current",
+          "intent": "Discover current or imminent stories, scandals, or events that could materially affect search volume in the forecast window.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 26,
+          "error": null
+        },
+        {
+          "query": "bbc news",
+          "tool": "Google Trends",
+          "temporal_role": "current",
+          "intent": "Retrieve the latest 90-day daily timeseries to see the immediate trajectory up to 2026-03-03.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "Google Trends",
+        "AskNews"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 9220,
+        "token_output": 1590,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.06995,
+        "duration_seconds": 50.54132843017578,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15758,
+        "token_output": 1974,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.1084,
+        "duration_seconds": 63.90217661857605,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15210,
+        "token_output": 1880,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.10425,
+        "duration_seconds": 63.90213894844055,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8138,
+        "token_output": 2661,
+        "token_reasoning": 769,
+        "used_reasoning": true,
+        "cost": 0.0514955,
+        "duration_seconds": 50.541428089141846,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14064,
+        "token_output": 2827,
+        "token_reasoning": 1091,
+        "used_reasoning": true,
+        "cost": 0.06419,
+        "duration_seconds": 63.90210294723511,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14521,
+        "token_output": 2078,
+        "token_reasoning": 1216,
+        "used_reasoning": true,
+        "cost": 0.045666,
+        "duration_seconds": 63.902060985565186,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8138,
+        "token_output": 2201,
+        "token_reasoning": 1216,
+        "used_reasoning": true,
+        "cost": 0.033884,
+        "duration_seconds": 50.54148459434509,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13511,
+        "token_output": 2217,
+        "token_reasoning": 1344,
+        "used_reasoning": true,
+        "cost": 0.044758,
+        "duration_seconds": 63.90202331542969,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "steps1_2_research": 0.3589,
+    "step3_outside_view": 0.1553,
+    "step5_inside_view": 0.3673,
+    "step6_aggregation": 0.3673,
+    "step7_supervisor": 0.4211
+  },
+  "total_pipeline_cost": 1.3026
+}
