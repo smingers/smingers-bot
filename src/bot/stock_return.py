@@ -13,7 +13,7 @@ import asyncio
 import logging
 import re
 from dataclasses import asdict, dataclass
-from datetime import UTC, datetime
+from datetime import UTC, date, datetime
 
 import numpy as np
 
@@ -70,6 +70,24 @@ class StockReturnData:
 
     # Conditional base rates
     conditional_rates: list[dict] | None  # List of serialized ConditionalRate dicts
+
+    # Ex-dividend (from yFinance info/calendar)
+    next_ex_dividend_date: str | None = None  # YYYY-MM-DD or None
+    ex_dividend_in_window: bool | None = None  # True if ex-date in [start_date, end_date]
+
+    # Analyst targets (from yFinance info)
+    analyst_mean_target: float | None = None
+    analyst_low_target: float | None = None
+    analyst_high_target: float | None = None
+    analyst_count: int | None = None
+    analyst_recommendation: str | None = None  # e.g. "Moderate Buy"
+
+    # Dividend yield (from yFinance info, stored as percentage)
+    dividend_yield_pct: float | None = None
+
+    # 52-week range (from yFinance info)
+    fifty_two_week_low: float | None = None
+    fifty_two_week_high: float | None = None
 
 
 def is_stock_close_price_question(description: str) -> bool:
@@ -134,6 +152,68 @@ def compute_trading_days(start_date: str, end_date: str) -> int:
 
 
 MIN_CONDITIONAL_SAMPLE_SIZE = 80
+
+
+def _get_ex_dividend_for_window(
+    stock: object,
+    start_date: str,
+    end_date: str,
+    info: dict | None = None,
+) -> tuple[str | None, bool | None]:
+    """Get next ex-dividend date and whether it falls inside the question window.
+
+    Args:
+        stock: yfinance Ticker instance (used when info is None or for calendar fallback).
+        start_date: YYYY-MM-DD (window start).
+        end_date: YYYY-MM-DD (window end).
+        info: Optional pre-fetched ticker.info dict to avoid a second fetch.
+
+    Returns:
+        (ex_date_str, in_window) with ex_date_str as YYYY-MM-DD or (None, None).
+    """
+    try:
+        info = info if info is not None else (getattr(stock, "info", None) or {})
+
+        # Try info["exDividendDate"] (Unix timestamp)
+        raw = info.get("exDividendDate")
+        if raw is not None and isinstance(raw, (int, float)):
+            try:
+                ex_dt = datetime.fromtimestamp(int(raw), tz=UTC)
+                ex_date = ex_dt.date()
+            except (ValueError, OSError):
+                logger.debug("[stock_return] Invalid exDividendDate timestamp: %s", raw)
+                return (None, None)
+        else:
+            # Fallback: ticker.calendar (e.g. "Ex-Dividend Date" key)
+            calendar = getattr(stock, "calendar", None) or {}
+            if isinstance(calendar, dict):
+                raw = calendar.get("Ex-Dividend Date") or calendar.get("exDividendDate")
+            else:
+                raw = None
+            if raw is None:
+                return (None, None)
+            ex_date = None
+            if isinstance(raw, date):
+                ex_date = raw
+            elif hasattr(raw, "date") and callable(raw.date):
+                try:
+                    ex_date = raw.date()
+                except Exception:
+                    pass
+            if ex_date is None or not isinstance(ex_date, date):
+                return (None, None)
+
+        ex_date_str = ex_date.strftime("%Y-%m-%d")
+        start_d = datetime.strptime(start_date, "%Y-%m-%d").date()
+        end_d = datetime.strptime(end_date, "%Y-%m-%d").date()
+        # yFinance often returns the *last* ex-dividend, not the next; only show if at or after window start
+        if ex_date < start_d:
+            return (None, None)
+        in_window = start_d <= ex_date <= end_d
+        return (ex_date_str, in_window)
+    except Exception as e:
+        logger.debug("[stock_return] ex-dividend lookup failed: %s", e)
+        return (None, None)
 
 
 def _compute_conditional_rates(
@@ -467,6 +547,57 @@ def _compute_return_distribution(
             volatility_30d,
         )
 
+        # Fetch info once for ex-dividend, analyst targets, dividend yield, 52-week range
+        info = getattr(stock, "info", None) or {}
+        ex_date_str, ex_in_window = _get_ex_dividend_for_window(
+            stock, start_date, end_date, info=info
+        )
+
+        # Analyst targets
+        analyst_mean = info.get("targetMeanPrice")
+        analyst_low = info.get("targetLowPrice")
+        analyst_high = info.get("targetHighPrice")
+        analyst_count_val = info.get("numberOfAnalystOpinions")
+        rec_key = info.get("recommendationKey")
+        if analyst_mean is not None and isinstance(analyst_mean, (int, float)):
+            analyst_mean_target = round(float(analyst_mean), 2)
+        else:
+            analyst_mean_target = None
+        if analyst_low is not None and isinstance(analyst_low, (int, float)):
+            analyst_low_target = round(float(analyst_low), 2)
+        else:
+            analyst_low_target = None
+        if analyst_high is not None and isinstance(analyst_high, (int, float)):
+            analyst_high_target = round(float(analyst_high), 2)
+        else:
+            analyst_high_target = None
+        analyst_count = (
+            int(analyst_count_val) if isinstance(analyst_count_val, (int, float)) else None
+        )
+        analyst_recommendation = (str(rec_key).strip() or None) if rec_key else None
+
+        # Dividend yield (yFinance may give decimal 0.0327 or already % e.g. 3.27; store as percentage)
+        div_yield = info.get("dividendYield")
+        if div_yield is not None and isinstance(div_yield, (int, float)):
+            v = float(div_yield)
+            dividend_yield_pct = round(v * 100, 2) if v <= 1 else round(v, 2)
+        else:
+            dividend_yield_pct = None
+
+        # 52-week range
+        low_52 = info.get("fiftyTwoWeekLow")
+        high_52 = info.get("fiftyTwoWeekHigh")
+        fifty_two_week_low = (
+            round(float(low_52), 2)
+            if low_52 is not None and isinstance(low_52, (int, float))
+            else None
+        )
+        fifty_two_week_high = (
+            round(float(high_52), 2)
+            if high_52 is not None and isinstance(high_52, (int, float))
+            else None
+        )
+
         return StockReturnData(
             ticker=ticker,
             start_date=start_date,
@@ -492,6 +623,16 @@ def _compute_return_distribution(
             recent_return_1m_percentile=recent_return_1m_percentile,
             recent_return_3m_percentile=recent_return_3m_percentile,
             conditional_rates=conditional_rates,
+            next_ex_dividend_date=ex_date_str,
+            ex_dividend_in_window=ex_in_window,
+            analyst_mean_target=analyst_mean_target,
+            analyst_low_target=analyst_low_target,
+            analyst_high_target=analyst_high_target,
+            analyst_count=analyst_count,
+            analyst_recommendation=analyst_recommendation,
+            dividend_yield_pct=dividend_yield_pct,
+            fifty_two_week_low=fifty_two_week_low,
+            fifty_two_week_high=fifty_two_week_high,
         )
 
     except Exception as e:
@@ -565,6 +706,22 @@ def _ordinal(n: int) -> str:
     return f"{n}{suffix}"
 
 
+def _humanize_recommendation(key: str) -> str:
+    """Convert yFinance recommendationKey to display form (e.g. moderateBuy -> Moderate Buy)."""
+    if not key or not key.strip():
+        return key
+    s = key.strip()
+    if not s:
+        return key
+    # Insert space before uppercase and title-case (e.g. moderateBuy -> Moderate Buy)
+    out: list[str] = []
+    for i, c in enumerate(s):
+        if c.isupper() and i > 0 and s[i - 1].isalpha() and not s[i - 1].isupper():
+            out.append(" ")
+        out.append(c)
+    return "".join(out).title()
+
+
 def format_stock_return_context(data: StockReturnData) -> str:
     """Format StockReturnData as context for forecaster prompts.
 
@@ -587,6 +744,30 @@ def format_stock_return_context(data: StockReturnData) -> str:
     if data.return_so_far is not None:
         direction = "up" if data.return_so_far > 0 else "down"
         lines.append(f"Return so far: {data.return_so_far:+.2f}% ({direction} from reference)")
+
+    # Ex-dividend, dividend yield, 52-week range, analyst targets (from yFinance info)
+    if data.next_ex_dividend_date is not None:
+        in_out = "inside window" if data.ex_dividend_in_window else "outside window"
+        lines.append(f"Next ex-dividend: {data.next_ex_dividend_date} ({in_out})")
+    if data.dividend_yield_pct is not None:
+        lines.append(f"Dividend yield: {data.dividend_yield_pct}%")
+    if data.fifty_two_week_low is not None and data.fifty_two_week_high is not None:
+        lines.append(
+            f"52-week range: ${data.fifty_two_week_low:.2f} - ${data.fifty_two_week_high:.2f}"
+        )
+    if data.analyst_mean_target is not None:
+        parts = [f"Mean: ${data.analyst_mean_target:.2f}"]
+        if data.analyst_low_target is not None:
+            parts.append(f"Low: ${data.analyst_low_target:.2f}")
+        if data.analyst_high_target is not None:
+            parts.append(f"High: ${data.analyst_high_target:.2f}")
+        lines.append("ANALYST TARGETS:")
+        lines.append("- " + " | ".join(parts))
+        if data.analyst_count is not None:
+            lines.append(f"- Number of analysts: {data.analyst_count}")
+        if data.analyst_recommendation:
+            rec_display = _humanize_recommendation(data.analyst_recommendation)
+            lines.append(f"- Recommendation: {rec_display}")
 
     lines.append("")
     lines.append(
@@ -670,6 +851,17 @@ def format_stock_return_context(data: StockReturnData) -> str:
     return "\n".join(lines)
 
 
+def _to_json_serializable(obj: object) -> object:
+    """Recursively convert numpy scalars and nested structures to JSON-serializable Python types."""
+    if hasattr(obj, "item") and callable(obj.item):
+        return obj.item()
+    if isinstance(obj, dict):
+        return {k: _to_json_serializable(v) for k, v in obj.items()}
+    if isinstance(obj, list):
+        return [_to_json_serializable(v) for v in obj]
+    return obj
+
+
 def stock_return_data_to_dict(data: StockReturnData) -> dict:
     """Convert StockReturnData to a JSON-serializable dict for artifact storage."""
-    return asdict(data)
+    return _to_json_serializable(asdict(data))
