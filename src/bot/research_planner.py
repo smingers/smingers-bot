@@ -97,7 +97,16 @@ class ResearchPlanResult:
 
 
 # Valid tools that the planner can dispatch to
-VALID_TOOLS = {"Google", "Google News", "Agent", "AskNews", "FRED", "yFinance", "Google Trends"}
+VALID_TOOLS = {
+    "Google",
+    "Google News",
+    "Agent",
+    "AskNews",
+    "FRED",
+    "yFinance",
+    "Google Trends",
+    "Analyst",
+}
 
 # Tool descriptions for the planner prompt, keyed by tool name.
 # Google and Google News are always available; others are gated by config.
@@ -137,13 +146,21 @@ TOOL_DESCRIPTIONS = {
         "data with base rate analysis. Only use when the question specifically involves "
         "Google Trends data."
     ),
+    "Analyst": (
+        "Analyst: Code execution for quantitative analysis. Write a detailed natural-language "
+        "description of the computation needed (e.g., 'Compute distribution of 7-trading-day "
+        "percentage changes for ^N225 over 10 years'). A Python environment with pandas, numpy, "
+        "scipy, yfinance, and fredapi will generate and execute code to produce the requested "
+        "statistics. Best for: computing distributions, base rates, conditional probabilities, "
+        "statistical tests, time series analysis. Do NOT use for qualitative research."
+    ),
 }
 
 # Regex for parsing tagged queries from LLM output
 # Matches: 1. [HISTORICAL] query text (Google) -- Intent: description
 _TAGGED_QUERY_PATTERN = re.compile(
     r"\d+\.\s*\[(HISTORICAL|CURRENT)\]\s*(.+?)\s*"
-    r"\((Google|Google News|Agent|AskNews|FRED|yFinance|Google Trends)\)"
+    r"\((Google|Google News|Agent|AskNews|FRED|yFinance|Google Trends|Analyst)\)"
     r"(?:\s*--\s*Intent:\s*(.+))?$",
     re.MULTILINE,
 )
@@ -559,6 +576,11 @@ class IterativeResearchPlanner(ForecasterMixin):
                 logger.info(f"Google Trends disabled, skipping: {query[:50]}")
                 return None
             return search._google_trends_search(query, question_details=question_details)
+        elif tool == "Analyst":
+            if not research_config.get("analyst_enabled", True):
+                logger.info(f"Analyst disabled, skipping: {query[:50]}")
+                return None
+            return search._analyst_search(query)
         else:
             logger.warning(f"Unknown tool '{tool}' for query: {query[:50]}")
             return None
@@ -993,6 +1015,8 @@ class IterativeResearchPlanner(ForecasterMixin):
             enabled.append("yFinance")
         if research_config.get("google_trends_enabled", True):
             enabled.append("Google Trends")
+        if research_config.get("analyst_enabled", True):
+            enabled.append("Analyst")
 
         return "\n".join(f"- {TOOL_DESCRIPTIONS[t]}" for t in enabled)
 

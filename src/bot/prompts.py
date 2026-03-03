@@ -830,11 +830,12 @@ Important guidelines:
 - Do NOT attempt to answer the query yet - focus on understanding what needs to be researched
 - Each search query should target a different aspect of the information needed
 - Make queries specific and likely to return accurate, authoritative information
-- Choose your source as Google, Google News, yFinance, or FRED based on the type of information needed.
+- Choose your source as Google, Google News, yFinance, FRED, or Analyst based on the type of information needed.
 - Please phrase the queries in a way optimal for keyword optimized search (i.e., the phrase you search is likely to appear on desired web pages). Avoid writing overly specific queries. Limit to six words.
 - You can list up to 5 search queries
 - For yFinance: use a Yahoo Finance ticker symbol to retrieve market data (e.g., "AAPL", "^GSPC"). Indices use the ^ prefix. If the ticker fails, you can search Google for the correct symbol and retry.
 - For FRED: use a FRED series ID (e.g., "AMERIBOR", "UNRATE", "CPIAUCSL") or a plain-language description (e.g., "US unemployment rate") to retrieve historical economic data with computed statistics. This returns recent values, mean, median, standard deviation, and trends directly from the Federal Reserve Economic Data API.
+- For Analyst: write a detailed natural-language description of the quantitative computation needed. A Python environment will generate and execute code with pandas, numpy, scipy, yfinance, and fredapi. Use for computing distributions, base rates, conditional probabilities, or statistical analysis.
 
 Format your answer exactly as below, with the source in parentheses () on the same line after each query. Do not wrap your query in quotes or brackets.
 
@@ -847,6 +848,7 @@ Search queries:
 3. your query here (Google)
 4. ticker symbol (yFinance) -- only if query involves stocks, indices, or securities
 5. series ID or description (FRED) -- only if query involves economic/financial data
+6. describe computation needed (Analyst) -- only for quantitative analysis requiring computation
 
 """
 
@@ -878,9 +880,10 @@ Guidelines for analysis:
 
 Guidelines for search:
 - Only generate new search queries if they would materially improve your answer
-- Choose your source as Google, Google News, yFinance, or FRED based on the type of information needed.
+- Choose your source as Google, Google News, yFinance, FRED, or Analyst based on the type of information needed.
 - For yFinance: use a Yahoo Finance ticker symbol to retrieve market data. If a previous yFinance query failed, search Google for the correct ticker and retry.
 - For FRED: use a FRED series ID (e.g., "AMERIBOR", "UNRATE") or a plain-language description to retrieve historical economic data with computed statistics directly from the Federal Reserve Economic Data API.
+- For Analyst: write a detailed natural-language description of the quantitative computation needed. A Python environment will generate and execute code with pandas, numpy, scipy, yfinance, and fredapi. Use for computing distributions, base rates, conditional probabilities, or statistical analysis.
 - Write Google/Google News queries for keyword optimized search. Avoid writing overly specific queries. Limit to six words.
 - List a maximum of five search queries, using only the maximum number of queries when really necessary.
 - If your analysis is sufficiently complete, omit the "Search queries:" section entirely to signal completion. Absence of regex match for 'Search queries:' will signal that this is your final research step.
@@ -898,6 +901,7 @@ Search queries:
 3. your query here (Google)
 4. ticker symbol (yFinance) -- only if query involves stocks, indices, or securities
 5. series ID or description (FRED) -- only if query involves economic/financial data
+6. describe computation needed (Analyst) -- only for quantitative analysis requiring computation
 
 """
 

@@ -1414,7 +1414,7 @@ class SearchPipeline:
                 # Extract queries with sources
                 queries_text = search_queries_match.group(1).strip()
                 search_queries_with_source = re.findall(
-                    r"\d+\.\s*([^(]+?)\s*\((Google|Google News|yFinance|FRED)\)",
+                    r"\d+\.\s*([^(]+?)\s*\((Google|Google News|yFinance|FRED|Analyst)\)",
                     queries_text,
                 )
 
@@ -1445,6 +1445,7 @@ class SearchPipeline:
                 # Execute searches
                 yfinance_enabled = self.config.get("research", {}).get("yfinance_enabled", True)
                 fred_enabled = self.config.get("research", {}).get("fred_enabled", True)
+                analyst_enabled = self.config.get("research", {}).get("analyst_enabled", True)
                 search_tasks = []
                 executed_queries = []
                 for sq, source in search_queries_with_source:
@@ -1459,6 +1460,11 @@ class SearchPipeline:
                             logger.info(f"[agentic_search] FRED disabled, skipping: {sq}")
                             continue
                         search_tasks.append(self._fred_search(sq))
+                    elif source == "Analyst":
+                        if not analyst_enabled:
+                            logger.info(f"[agentic_search] Analyst disabled, skipping: {sq}")
+                            continue
+                        search_tasks.append(self._analyst_search(sq))
                     else:
                         search_tasks.append(
                             self._google_search_agentic(sq, is_news=(source == "Google News"))
@@ -1818,6 +1824,32 @@ Note: Google Trends values are relative (0-100 scale), not absolute search volum
 
         # Last resort: return the whole query
         return query.strip()
+
+    # -------------------------------------------------------------------------
+    # Analyst (code execution for quantitative analysis)
+    # -------------------------------------------------------------------------
+
+    async def _analyst_search(self, query: str) -> str:
+        """
+        Execute quantitative analysis via LLM-generated Python code.
+
+        Creates an AnalystTool and delegates to it. The tool generates Python
+        code from the natural-language query, executes it in a subprocess,
+        and returns XML-wrapped results.
+        """
+        from .analyst import AnalystTool
+
+        active_models = self.config.get("active_models", {})
+        model = active_models.get(
+            "analyst",
+            active_models.get("query_generator", "openrouter/openai/o3"),
+        )
+        research_config = self.config.get("research", {})
+        max_retries = research_config.get("analyst_max_retries", 2)
+        timeout = research_config.get("analyst_timeout", 30)
+
+        tool = AnalystTool(llm=self.llm, model=model, max_retries=max_retries, timeout=timeout)
+        return await tool.run(query)
 
     # -------------------------------------------------------------------------
     # FRED (Federal Reserve Economic Data)

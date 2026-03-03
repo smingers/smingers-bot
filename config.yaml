@@ -145,6 +145,12 @@ research:
   # yFinance (stock/ETF prices, fundamentals, options)
   yfinance_enabled: true
 
+  # Analyst (code execution for quantitative analysis)
+  # Generates and executes Python code to compute statistics, distributions, base rates
+  analyst_enabled: true
+  analyst_max_retries: 2
+  analyst_timeout: 30   # seconds
+
   # Stock return distribution (programmatic base rate for close_price_rises questions)
   # Automatically detects stock close price questions and computes P(positive N-day return)
   # from historical yFinance data. Injected into forecaster prompts as a base rate anchor.
