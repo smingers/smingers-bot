@@ -1,0 +1,224 @@
+{
+  "plan_analysis": "The meta-question hinges on whether Metaculus\u2019 community prediction for a specific biotech approval question moves from 26 % today to above 27 % within the next ten days.  \nThe pre-research material gives: current probability, recent trend, full resolution criteria, and basic CRISPR background.  \nRemaining gaps a forecaster will care about:\n\n1. Base-rate evidence  \n   \u2022 How often do community predictions move \u22651 pp in the final 10 days?  \n   \u2022 Historical track record of gene-editing (or broadly, gene-therapy) approvals by FDA/MHRA/EMA.\n\n2. Resolution-mechanism clarity  \n   \u2022 Exact details of Metaculus\u2019 \u201crecency-weighted median\u201d and whether any mechanical quirks (eg daily sync time, rounding) could sway a tight threshold.\n\n3. Key drivers of an upward move  \n   \u2022 Near-term catalysts: regulatory filings accepted, ad-comms scheduled, CHMP agenda leaks, positive late-stage trial data from companies such as Intellia, CRISPR Tx, Editas, Beam, Verve, Prime, etc.  \n   \u2022 Negative surprises that could suppress probability (clinical hold, trial failure).\n\n4. Current state and contrarian check  \n   \u2022 Fresh news between now and 13 March that either brightens (or darkens) prospects for a 2026 approval of a NEW indication.  \n   \u2022 Whether upcoming CHMP or FDA meeting calendars include a gene-editing therapy.\n\n5. Comparable Metaculus questions  \n   \u2022 Historical forecast trajectories for past \u201cWill the FDA approve X by Y?\u201d questions to gauge typical last-minute volatility.\n\nSearch strategy:  \n\u2013 Use Google for reference pages/data sets (volatility analyses, approval lists, algorithm docs).  \n\u2013 One Agent query to synthesise cross-question volatility statistics.  \n\u2013 Google News and AskNews for breaking regulatory / clinical news and meeting agendas occurring within the next 10 days.  \nThe eight queries below jointly cover the five dimensions (base rate, mechanism, drivers, current state, contrarian).",
+  "reflect_analysis": null,
+  "queries_planned": [
+    {
+      "query": "Metaculus prediction volatility analysis",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Find studies or datasets quantifying day-to-day or week-to-week swings in Metaculus community forecasts.",
+      "phase": "plan"
+    },
+    {
+      "query": "Metaculus recency weighted median method",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Retrieve documentation explaining how the community prediction is calculated and timestamped, clarifying resolution mechanics.",
+      "phase": "plan"
+    },
+    {
+      "query": "FDA EMA gene editing approvals list",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Compile historical approvals of gene-editing therapies to estimate how rare a new-indication approval is.",
+      "phase": "plan"
+    },
+    {
+      "query": "Metaculus gene therapy approval question trends",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Locate past Metaculus approval questions and extract their forecast trajectories for reference-class analysis.",
+      "phase": "plan"
+    },
+    {
+      "query": "Analyze historical Metaculus regulatory approval questions to determine how frequently community forecasts change by more than one percentage point in the final 10 days before close and identify any common triggers for such moves.",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "Synthesize cross-question volatility rates and drivers.",
+      "phase": "plan"
+    },
+    {
+      "query": "CRISPR therapy filing March 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Detect any recent or imminent regulatory submissions/acceptances likely to boost probability.",
+      "phase": "plan"
+    },
+    {
+      "query": "gene editing therapy trial results March 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Surface fresh Phase II/III data releases that could shift sentiment upward or downward.",
+      "phase": "plan"
+    },
+    {
+      "query": "Agenda and leaks for March 2026 European Medicines Agency CHMP meetings discussing any CRISPR or gene editing therapies for new disease indications",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "Identify whether a near-term CHMP opinion could act as a catalyst before 13 March.",
+      "phase": "plan"
+    }
+  ],
+  "gap_queries": [],
+  "seed_context_chars": 9600,
+  "historical_context_chars": 28753,
+  "current_context_chars": 55893,
+  "phases": {
+    "pre_research": {
+      "duration_seconds": 14.1,
+      "seed_context_chars": 8610,
+      "search_id": "question_urls",
+      "searched": true,
+      "urls_found": 5,
+      "urls_scraped": 5,
+      "urls_summarized": 5,
+      "urls": [
+        {
+          "url": "https://en.wikipedia.org/wiki/CRISPR_gene_editing",
+          "domain": "en.wikipedia.org",
+          "scraped": true,
+          "method": "wikipedia_api",
+          "status_code": 200,
+          "content_words": 2337
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Sickle_cell_disease",
+          "domain": "en.wikipedia.org",
+          "scraped": true,
+          "method": "wikipedia_api",
+          "status_code": 200,
+          "content_words": 2305
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Beta_thalassemia",
+          "domain": "en.wikipedia.org",
+          "scraped": true,
+          "method": "wikipedia_api",
+          "status_code": 200,
+          "content_words": 2239
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Hematopoietic_stem_cell",
+          "domain": "en.wikipedia.org",
+          "scraped": true,
+          "method": "wikipedia_api",
+          "status_code": 200,
+          "content_words": 2229
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Fetal_hemoglobin",
+          "domain": "en.wikipedia.org",
+          "scraped": true,
+          "method": "wikipedia_api",
+          "status_code": 200,
+          "content_words": 2468
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ]
+    },
+    "plan": {
+      "duration_seconds": 63.06,
+      "cost": 0.0294,
+      "num_queries": 8
+    },
+    "execute": {
+      "duration_seconds": 54.86,
+      "cost": 0.3205,
+      "queries_executed": 8,
+      "queries_successful": 8
+    },
+    "assemble": {
+      "historical_context_chars": 28753,
+      "current_context_chars": 55893
+    }
+  },
+  "total_queries_planned": 8,
+  "total_queries_executed": 8,
+  "total_gap_queries": 0,
+  "total_cost": 0.4994,
+  "total_duration_seconds": 132.02,
+  "query_details": [
+    {
+      "query": "Metaculus prediction volatility analysis",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Find studies or datasets quantifying day-to-day or week-to-week swings in Metaculus community forecasts.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 2,
+      "error": null
+    },
+    {
+      "query": "Metaculus recency weighted median method",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Retrieve documentation explaining how the community prediction is calculated and timestamped, clarifying resolution mechanics.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 1,
+      "error": null
+    },
+    {
+      "query": "FDA EMA gene editing approvals list",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Compile historical approvals of gene-editing therapies to estimate how rare a new-indication approval is.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "Metaculus gene therapy approval question trends",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Locate past Metaculus approval questions and extract their forecast trajectories for reference-class analysis.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "Analyze historical Metaculus regulatory approval questions to determine how frequently community forecasts change by more than one percentage point in the final 10 days before close and identify any common triggers for such moves.",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "Synthesize cross-question volatility rates and drivers.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 1,
+      "error": null
+    },
+    {
+      "query": "CRISPR therapy filing March 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Detect any recent or imminent regulatory submissions/acceptances likely to boost probability.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "gene editing therapy trial results March 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Surface fresh Phase II/III data releases that could shift sentiment upward or downward.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "Agenda and leaks for March 2026 European Medicines Agency CHMP meetings discussing any CRISPR or gene editing therapies for new disease indications",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "Identify whether a near-term CHMP opinion could act as a catalyst before 13 March.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 36,
+      "error": null
+    }
+  ]
+}

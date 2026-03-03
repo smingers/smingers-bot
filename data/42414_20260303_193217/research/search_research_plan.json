@@ -1,0 +1,208 @@
+{
+  "plan_analysis": "The forecaster must judge whether the Google-Trends value for 14 Mar 2026 will differ from 3 Mar 2026 by more than three points.  Key needs:\n1. Base rate: How volatile are comparable low-volume grant-related phrases over 10-day windows, especially in early-March?  Looking at previous years\u2019 patterns for \u201cgrants for reentry programs 20XX\u201d and generic \u201creentry grants\u201d helps quantify how often changes >3 occur.\n2. Resolution mechanism: Confirm that SerpApi pulls daily values; know the current 3 Mar 2026 reading and the most recent daily trajectory so the forecaster can extrapolate.\n3. Key drivers: Search interest moves when (a) federal or state agencies release reentry-grant solicitations (e.g., DOJ/BJA Second Chance Act), (b) application deadlines approach, or (c) major media/advocacy coverage appears.  We therefore need information on the typical release calendar plus any 2026-specific announcements during the forecast window.\n4. Current state: Pull last 30-90 days of Trend data and scan headlines to see whether an imminent announcement is expected.\n5. Contrarian check: Look for indications that 2026 releases might be delayed or canceled, which would dampen interest.\n\nThe eight queries below cover these dimensions: four historical (two Google-Trends, one general Google, one Agent synthesis) and four current (one Google-Trends, two news, one conceptual AskNews).",
+  "reflect_analysis": null,
+  "queries_planned": [
+    {
+      "query": "grants for reentry programs 2025",
+      "tool": "Google Trends",
+      "temporal_role": "historical",
+      "intent": "Inspect Feb-Mar 2025 daily values to see how often a 10-day swing exceeded three points, giving a direct base-rate comparison.",
+      "phase": "plan"
+    },
+    {
+      "query": "reentry grants seasonality",
+      "tool": "Google Trends",
+      "temporal_role": "historical",
+      "intent": "Identify recurring early-March spikes or lulls in generic \u201creentry grants\u201d searches across multiple years for broader base-rate context.",
+      "phase": "plan"
+    },
+    {
+      "query": "Second Chance Act grant timeline",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Gather past release and deadline dates for federal reentry grants to correlate historical Trend spikes with specific events.",
+      "phase": "plan"
+    },
+    {
+      "query": "Chart past daily Google-Trends data for phrases like \u201cgrants for reentry programs 20XX\u201d (2020-2025) and summarize how often the 10-day change topped \u00b13; note alignment with federal solicitation dates.",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "Produce an integrated historical volatility estimate linking cause (solicitation) and effect (search interest).",
+      "phase": "plan"
+    },
+    {
+      "query": "grants for reentry programs 2026",
+      "tool": "Google Trends",
+      "temporal_role": "current",
+      "intent": "Pull the latest 30-/90-day curve, capturing the exact 3 Mar reading and momentum entering the forecast window.",
+      "phase": "plan"
+    },
+    {
+      "query": "Second Chance Act 2026 grants",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Detect any fresh or imminent federal solicitations likely to boost searches before 14 Mar.",
+      "phase": "plan"
+    },
+    {
+      "query": "reentry grants deadline March 2026",
+      "tool": "Google",
+      "temporal_role": "current",
+      "intent": "Find application-deadline notices or webinars scheduled between 3 Mar and 14 Mar that could spike interest.",
+      "phase": "plan"
+    },
+    {
+      "query": "federal reentry funding 2026 March",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "Surface broader coverage (state initiatives, philanthropy) that could unexpectedly drive search interest, offering a contrarian perspective.",
+      "phase": "plan"
+    }
+  ],
+  "gap_queries": [],
+  "seed_context_chars": 1520,
+  "historical_context_chars": 13774,
+  "current_context_chars": 49674,
+  "phases": {
+    "pre_research": {
+      "duration_seconds": 7.27,
+      "seed_context_chars": 1520,
+      "search_id": "question_urls",
+      "searched": true,
+      "urls_found": 3,
+      "urls_scraped": 1,
+      "urls_summarized": 1,
+      "urls": [
+        {
+          "url": "https://trends.google.com/trends/explore?geo=US&tz=0&q=grants%20for%20reentry%20programs%202026&date=2026-02-12%202026-03-14",
+          "domain": "trends.google.com",
+          "scraped": false,
+          "method": null,
+          "status_code": null,
+          "error": "Blocked domain"
+        },
+        {
+          "url": "https://serpapi.com/",
+          "domain": "serpapi.com",
+          "scraped": true,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_words": 273
+        },
+        {
+          "url": "https://trends.google.com/trends/explore?geo=US&tz=0&q=grants%20for%20reentry%20programs%202026&date=2026-01-30%202026-03-01",
+          "domain": "trends.google.com",
+          "scraped": false,
+          "method": null,
+          "status_code": null,
+          "error": "Blocked domain"
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ]
+    },
+    "plan": {
+      "duration_seconds": 70.15,
+      "cost": 0.0234,
+      "num_queries": 8
+    },
+    "execute": {
+      "duration_seconds": 91.11,
+      "cost": 0.185,
+      "queries_executed": 8,
+      "queries_successful": 8
+    },
+    "assemble": {
+      "historical_context_chars": 13774,
+      "current_context_chars": 49674
+    }
+  },
+  "total_queries_planned": 8,
+  "total_queries_executed": 8,
+  "total_gap_queries": 0,
+  "total_cost": 0.221,
+  "total_duration_seconds": 168.53,
+  "query_details": [
+    {
+      "query": "grants for reentry programs 2025",
+      "tool": "Google Trends",
+      "temporal_role": "historical",
+      "intent": "Inspect Feb-Mar 2025 daily values to see how often a 10-day swing exceeded three points, giving a direct base-rate comparison.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 1,
+      "error": null
+    },
+    {
+      "query": "reentry grants seasonality",
+      "tool": "Google Trends",
+      "temporal_role": "historical",
+      "intent": "Identify recurring early-March spikes or lulls in generic \u201creentry grants\u201d searches across multiple years for broader base-rate context.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 1,
+      "error": null
+    },
+    {
+      "query": "Second Chance Act grant timeline",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Gather past release and deadline dates for federal reentry grants to correlate historical Trend spikes with specific events.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "Chart past daily Google-Trends data for phrases like \u201cgrants for reentry programs 20XX\u201d (2020-2025) and summarize how often the 10-day change topped \u00b13; note alignment with federal solicitation dates.",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "Produce an integrated historical volatility estimate linking cause (solicitation) and effect (search interest).",
+      "phase": "plan",
+      "success": true,
+      "num_results": 1,
+      "error": null
+    },
+    {
+      "query": "grants for reentry programs 2026",
+      "tool": "Google Trends",
+      "temporal_role": "current",
+      "intent": "Pull the latest 30-/90-day curve, capturing the exact 3 Mar reading and momentum entering the forecast window.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 1,
+      "error": null
+    },
+    {
+      "query": "Second Chance Act 2026 grants",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Detect any fresh or imminent federal solicitations likely to boost searches before 14 Mar.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "reentry grants deadline March 2026",
+      "tool": "Google",
+      "temporal_role": "current",
+      "intent": "Find application-deadline notices or webinars scheduled between 3 Mar and 14 Mar that could spike interest.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "federal reentry funding 2026 March",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "Surface broader coverage (state initiatives, philanthropy) that could unexpectedly drive search interest, offering a contrarian perspective.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 28,
+      "error": null
+    }
+  ]
+}

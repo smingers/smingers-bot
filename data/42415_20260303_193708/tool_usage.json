@@ -1,0 +1,265 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": false,
+      "num_queries": 0,
+      "queries": [],
+      "tools_used": [],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 5,
+      "queries": [
+        {
+          "query": "Metaculus prediction volatility analysis",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Find studies or datasets quantifying day-to-day or week-to-week swings in Metaculus community forecasts.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 2,
+          "error": null
+        },
+        {
+          "query": "Metaculus recency weighted median method",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Retrieve documentation explaining how the community prediction is calculated and timestamped, clarifying resolution mechanics.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        },
+        {
+          "query": "FDA EMA gene editing approvals list",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Compile historical approvals of gene-editing therapies to estimate how rare a new-indication approval is.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Metaculus gene therapy approval question trends",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Locate past Metaculus approval questions and extract their forecast trajectories for reference-class analysis.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Analyze historical Metaculus regulatory approval questions to determine how frequently community forecasts change by more than one percentage point in the final 10 days before close and identify any common triggers for such moves.",
+          "tool": "Agent",
+          "temporal_role": "historical",
+          "intent": "Synthesize cross-question volatility rates and drivers.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Agent"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "CRISPR therapy filing March 2026",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "Detect any recent or imminent regulatory submissions/acceptances likely to boost probability.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "gene editing therapy trial results March 2026",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "Surface fresh Phase II/III data releases that could shift sentiment upward or downward.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Agenda and leaks for March 2026 European Medicines Agency CHMP meetings discussing any CRISPR or gene editing therapies for new disease indications",
+          "tool": "AskNews",
+          "temporal_role": "current",
+          "intent": "Identify whether a near-term CHMP opinion could act as a catalyst before 13 March.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 36,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "AskNews",
+        "Google News"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 9045,
+        "token_output": 1524,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.06808499999999999,
+        "duration_seconds": 64.69956588745117,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 18639,
+        "token_output": 2562,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.131625,
+        "duration_seconds": 57.56208395957947,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 18504,
+        "token_output": 2121,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.124335,
+        "duration_seconds": 57.562047481536865,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7870,
+        "token_output": 2624,
+        "token_reasoning": 881,
+        "used_reasoning": true,
+        "cost": 0.0505085,
+        "duration_seconds": 64.69961738586426,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16038,
+        "token_output": 2410,
+        "token_reasoning": 458,
+        "used_reasoning": true,
+        "cost": 0.0618065,
+        "duration_seconds": 57.562018156051636,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16421,
+        "token_output": 1382,
+        "token_reasoning": 320,
+        "used_reasoning": true,
+        "cost": 0.043898000000000006,
+        "duration_seconds": 57.56198978424072,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7870,
+        "token_output": 2071,
+        "token_reasoning": 768,
+        "used_reasoning": true,
+        "cost": 0.032308,
+        "duration_seconds": 64.6996521949768,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15851,
+        "token_output": 1791,
+        "token_reasoning": 640,
+        "used_reasoning": true,
+        "cost": 0.04603,
+        "duration_seconds": 57.561962604522705,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "steps1_2_research": 0.4994,
+    "step3_outside_view": 0.1509,
+    "step5_inside_view": 0.4077,
+    "step6_aggregation": 0.4077,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 1.058
+}
