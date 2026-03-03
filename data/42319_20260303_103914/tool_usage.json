@@ -1,0 +1,265 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": false,
+      "num_queries": 0,
+      "queries": [],
+      "tools_used": [],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 5,
+      "queries": [
+        {
+          "query": "cbp \u201cSouthwest Land Border Encounters\u201d monthly dataset",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Locate an official or mirrored CSV/Excel file with the full month-by-month encounter history for quick download and analysis.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "southwest border encounters 2014-2025 monthly totals",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Find charts or tables that summarise the last decade of monthly data to gauge long-run seasonality and variance.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "cbp release schedule past months encounters",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Determine when CBP typically posts each month\u2019s figures and whether preliminary numbers are later revised, clarifying the resolution mechanism.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "March border encounters previous years",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Pull the specific March values for at least 2014-2025 to quantify a March-specific baseline.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Provide a table of U.S. CBP Southwest Land Border Encounters by month from FY2010 through Feb 2026, note any revisions, and compute average m/m change from Feb to Mar.",
+          "tool": "Agent",
+          "temporal_role": "historical",
+          "intent": "Produce a clean historical series plus descriptive statistics the forecaster can plug straight into a model.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "Google"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "February 2026 southwest border encounters cbp",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "Retrieve the most recently released official number (or credible leak) for February 2026 to anchor near-term trend projections.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 2,
+          "error": null
+        },
+        {
+          "query": "migrant surge March 2026 U.S.\u2013Mexico border",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "Surface breaking reports of unusual increases that might foreshadow a higher March figure.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "new U.S. border policy 2026 crackdown Mexico transit",
+          "tool": "AskNews",
+          "temporal_role": "current",
+          "intent": "Look for coverage of fresh enforcement agreements or policy changes that could sharply reduce March encounters, providing a contrarian scenario.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 27,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "AskNews",
+        "Google News"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7547,
+        "token_output": 2183,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.07048,
+        "duration_seconds": 47.66533303260803,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17985,
+        "token_output": 2453,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.12672,
+        "duration_seconds": 65.14320659637451,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16992,
+        "token_output": 2694,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.12537,
+        "duration_seconds": 65.14317440986633,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6684,
+        "token_output": 2796,
+        "token_reasoning": 744,
+        "used_reasoning": true,
+        "cost": 0.050841,
+        "duration_seconds": 47.665390729904175,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16003,
+        "token_output": 2395,
+        "token_reasoning": 802,
+        "used_reasoning": true,
+        "cost": 0.06153525,
+        "duration_seconds": 65.14313507080078,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16113,
+        "token_output": 1709,
+        "token_reasoning": 384,
+        "used_reasoning": true,
+        "cost": 0.045897999999999994,
+        "duration_seconds": 65.14309620857239,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6684,
+        "token_output": 1999,
+        "token_reasoning": 896,
+        "used_reasoning": true,
+        "cost": 0.029359999999999997,
+        "duration_seconds": 47.66543769836426,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15082,
+        "token_output": 1587,
+        "token_reasoning": 512,
+        "used_reasoning": true,
+        "cost": 0.04286,
+        "duration_seconds": 65.1430594921112,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "steps1_2_research": 0.376,
+    "step3_outside_view": 0.1507,
+    "step5_inside_view": 0.4024,
+    "step6_aggregation": 0.4024,
+    "step7_supervisor": 0.3858
+  },
+  "total_pipeline_cost": 1.3148
+}

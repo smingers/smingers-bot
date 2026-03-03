@@ -1,0 +1,23 @@
+{
+  "confidence": "medium",
+  "prediction": {
+    "10": 5500.0,
+    "20": 7000.0,
+    "40": 8800.0,
+    "60": 10200.0,
+    "80": 12500.0,
+    "90": 16000.0
+  },
+  "search_queries": [
+    "CBP February 2026 southwest border encounters (Google News)",
+    "CBP monthly operational update February 2026 (Google)",
+    "What are the most recent CBP southwest land border encounter numbers for late 2025 and early 2026, broken down by month? Specifically, what were the totals for October 2025, November 2025, December 2025, January 2026, and February 2026 if available? (Agent)",
+    "court ruling third-country deportations March 2026 implementation (Google News)"
+  ],
+  "cost": 0.3858,
+  "divergence": {
+    "metric_name": "rn_spread",
+    "metric_value": 0.0481,
+    "threshold": 0.045
+  }
+}
