@@ -1,0 +1,264 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": false,
+      "num_queries": 0,
+      "queries": [],
+      "tools_used": [],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 5,
+      "queries": [
+        {
+          "query": "DFII20 daily volatility 2024-2026",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Find studies or raw data showing recent day-to-day and week-to-week variability for the series.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        },
+        {
+          "query": "DFII20 download csv FRED",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Locate the direct FRED data file for building a quick historical dataset.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "DFII20 revision history methodology",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Learn how often DFII20 points are revised and typical revision magnitude, informing resolution risk.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "DFII20 vs DGS20 correlation",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Identify historical relationships between real and nominal 20-yr yields to understand drivers.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        },
+        {
+          "query": "compute daily change distribution DFII20 last 5 years; include mean, stdev, 5th/95th percentiles; output table",
+          "tool": "Agent",
+          "temporal_role": "historical",
+          "intent": "Obtain quantitative base-rate stats on yield changes to benchmark plausible ranges by 10 Mar.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Agent"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "20-year TIPS yield March 2026",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "Retrieve the most recent quoted real yields and market commentary since 26 Feb.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "real Treasury yield surge Fed speech",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "Catch any fresh policy comments or shocks moving real yields this week.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "upcoming US CPI release March 2026 impact TIPS",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "Identify near-term economic events (e.g., CPI on 10 Mar) that could swing DFII20 before resolution.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "Google News"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6402,
+        "token_output": 1242,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.05064,
+        "duration_seconds": 40.15957760810852,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8213,
+        "token_output": 2564,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.079525,
+        "duration_seconds": 56.68294048309326,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8194,
+        "token_output": 2388,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.07679,
+        "duration_seconds": 56.68292593955994,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5621,
+        "token_output": 2147,
+        "token_reasoning": 647,
+        "used_reasoning": true,
+        "cost": 0.03989475,
+        "duration_seconds": 40.15963387489319,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7349,
+        "token_output": 2128,
+        "token_reasoning": 555,
+        "used_reasoning": true,
+        "cost": 0.04265275,
+        "duration_seconds": 56.68290877342224,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7707,
+        "token_output": 1759,
+        "token_reasoning": 640,
+        "used_reasoning": true,
+        "cost": 0.029486,
+        "duration_seconds": 56.68289017677307,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5621,
+        "token_output": 1690,
+        "token_reasoning": 576,
+        "used_reasoning": true,
+        "cost": 0.024762,
+        "duration_seconds": 40.159664154052734,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7238,
+        "token_output": 1773,
+        "token_reasoning": 704,
+        "used_reasoning": true,
+        "cost": 0.028659999999999998,
+        "duration_seconds": 56.68287134170532,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "steps1_2_research": 0.377,
+    "step3_outside_view": 0.1153,
+    "step5_inside_view": 0.2571,
+    "step6_aggregation": 0.2571,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.7494
+}

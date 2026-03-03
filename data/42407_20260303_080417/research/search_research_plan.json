@@ -1,0 +1,200 @@
+{
+  "plan_analysis": "Forecasters need to know how much (and how fast) the 20-year real Treasury yield typically moves, what it is right now, and what might push it sharply up or down before 10 March 2026.  \nThe pre-research extract only gives the latest available value (2.2 % on 26 Feb) and general series metadata. Missing pieces:\n\n1. Base rate / historical variability: size and frequency of day-to-day moves, typical 7-day swing, and any seasonality around early-March.  \n2. Resolution mechanics & revisions: confirmation that DFII20 values sometimes revise, how often, and by how much.  \n3. Key drivers: links between DFII20 and nominal 20-yr yields, breakeven inflation, Fed policy expectations, macro data (jobs, CPI).  \n4. Current state: latest readings between 27 Feb and 3 Mar, plus real-time quotes for 20-yr TIPS that will feed the official DFII20 print.  \n5. Contrarian check: news that could cause an unusual spike or plunge\u2014e.g., surprise data releases, Fed communications, market dislocation.\n\nThe queries below supply:  \n\u2022 Five HISTORICAL searches (trend, volatility, correlations, revision patterns) \u224860 %.  \n\u2022 Three CURRENT searches (fresh data, market commentary, upcoming catalysts) \u224840 %.",
+  "reflect_analysis": null,
+  "queries_planned": [
+    {
+      "query": "DFII20 daily volatility 2024-2026",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Find studies or raw data showing recent day-to-day and week-to-week variability for the series.",
+      "phase": "plan"
+    },
+    {
+      "query": "DFII20 download csv FRED",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Locate the direct FRED data file for building a quick historical dataset.",
+      "phase": "plan"
+    },
+    {
+      "query": "DFII20 revision history methodology",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Learn how often DFII20 points are revised and typical revision magnitude, informing resolution risk.",
+      "phase": "plan"
+    },
+    {
+      "query": "DFII20 vs DGS20 correlation",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Identify historical relationships between real and nominal 20-yr yields to understand drivers.",
+      "phase": "plan"
+    },
+    {
+      "query": "compute daily change distribution DFII20 last 5 years; include mean, stdev, 5th/95th percentiles; output table",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "Obtain quantitative base-rate stats on yield changes to benchmark plausible ranges by 10 Mar.",
+      "phase": "plan"
+    },
+    {
+      "query": "20-year TIPS yield March 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Retrieve the most recent quoted real yields and market commentary since 26 Feb.",
+      "phase": "plan"
+    },
+    {
+      "query": "real Treasury yield surge Fed speech",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Catch any fresh policy comments or shocks moving real yields this week.",
+      "phase": "plan"
+    },
+    {
+      "query": "upcoming US CPI release March 2026 impact TIPS",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Identify near-term economic events (e.g., CPI on 10 Mar) that could swing DFII20 before resolution.",
+      "phase": "plan"
+    }
+  ],
+  "gap_queries": [],
+  "seed_context_chars": 1440,
+  "historical_context_chars": 17410,
+  "current_context_chars": 16813,
+  "phases": {
+    "pre_research": {
+      "duration_seconds": 7.69,
+      "seed_context_chars": 1440,
+      "search_id": "question_urls",
+      "searched": true,
+      "urls_found": 2,
+      "urls_scraped": 1,
+      "urls_summarized": 1,
+      "urls": [
+        {
+          "url": "https://api.stlouisfed.org/fred/series/observations?series_id=DFII20`",
+          "domain": "api.stlouisfed.org",
+          "scraped": false,
+          "method": null,
+          "status_code": 400,
+          "error": "HTTP 400"
+        },
+        {
+          "url": "https://fred.stlouisfed.org/series/DFII20",
+          "domain": "fred.stlouisfed.org",
+          "scraped": true,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_words": 381
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ]
+    },
+    "plan": {
+      "duration_seconds": 31.69,
+      "cost": 0.0146,
+      "num_queries": 8
+    },
+    "execute": {
+      "duration_seconds": 48.17,
+      "cost": 0.3492,
+      "queries_executed": 8,
+      "queries_successful": 8
+    },
+    "assemble": {
+      "historical_context_chars": 17410,
+      "current_context_chars": 16813
+    }
+  },
+  "total_queries_planned": 8,
+  "total_queries_executed": 8,
+  "total_gap_queries": 0,
+  "total_cost": 0.377,
+  "total_duration_seconds": 87.54,
+  "query_details": [
+    {
+      "query": "DFII20 daily volatility 2024-2026",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Find studies or raw data showing recent day-to-day and week-to-week variability for the series.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 1,
+      "error": null
+    },
+    {
+      "query": "DFII20 download csv FRED",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Locate the direct FRED data file for building a quick historical dataset.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "DFII20 revision history methodology",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Learn how often DFII20 points are revised and typical revision magnitude, informing resolution risk.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "DFII20 vs DGS20 correlation",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Identify historical relationships between real and nominal 20-yr yields to understand drivers.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 1,
+      "error": null
+    },
+    {
+      "query": "compute daily change distribution DFII20 last 5 years; include mean, stdev, 5th/95th percentiles; output table",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "Obtain quantitative base-rate stats on yield changes to benchmark plausible ranges by 10 Mar.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 1,
+      "error": null
+    },
+    {
+      "query": "20-year TIPS yield March 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Retrieve the most recent quoted real yields and market commentary since 26 Feb.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "real Treasury yield surge Fed speech",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Catch any fresh policy comments or shocks moving real yields this week.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "upcoming US CPI release March 2026 impact TIPS",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Identify near-term economic events (e.g., CPI on 10 Mar) that could swing DFII20 before resolution.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    }
+  ]
+}
