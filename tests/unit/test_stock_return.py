@@ -10,6 +10,8 @@ Tests cover:
 - Pipeline integration (config toggle, async wrapper)
 """
 
+import json
+from datetime import UTC, datetime
 from unittest.mock import MagicMock, patch
 
 import numpy as np
@@ -20,6 +22,8 @@ from src.bot.stock_return import (
     MIN_CONDITIONAL_SAMPLE_SIZE,
     StockReturnData,
     _compute_conditional_rates,
+    _get_ex_dividend_for_window,
+    _humanize_recommendation,
     _ordinal,
     compute_stock_return_distribution,
     compute_trading_days,
@@ -118,6 +122,76 @@ class TestComputeTradingDays:
 
 
 # ============================================================================
+# Ex-dividend helper tests
+# ============================================================================
+
+
+class TestGetExDividendForWindow:
+    def test_returns_date_and_in_window_when_ex_date_inside_window(self):
+        """Ex-dividend date inside [start, end] returns (date_str, True)."""
+        # 2026-02-20 00:00:00 UTC
+        ts_inside = int(datetime(2026, 2, 20, tzinfo=UTC).timestamp())
+        stock = MagicMock()
+        stock.info = {"exDividendDate": ts_inside}
+        stock.calendar = {}
+        date_str, in_window = _get_ex_dividend_for_window(
+            stock, "2026-02-17", "2026-02-28", info=stock.info
+        )
+        assert date_str == "2026-02-20"
+        assert in_window is True
+
+    def test_returns_date_and_outside_when_ex_date_outside_window(self):
+        """Ex-dividend date after end_date returns (date_str, False)."""
+        ts_outside = int(datetime(2026, 3, 15, tzinfo=UTC).timestamp())
+        stock = MagicMock()
+        stock.info = {"exDividendDate": ts_outside}
+        date_str, in_window = _get_ex_dividend_for_window(
+            stock, "2026-02-17", "2026-02-28", info=stock.info
+        )
+        assert date_str == "2026-03-15"
+        assert in_window is False
+
+    def test_returns_none_when_ex_date_before_window(self):
+        """When ex-dividend date is before window start (yFinance returns last, not next), return None."""
+        ts_past = int(datetime(2026, 2, 13, tzinfo=UTC).timestamp())
+        stock = MagicMock()
+        stock.info = {"exDividendDate": ts_past}
+        date_str, in_window = _get_ex_dividend_for_window(
+            stock, "2026-03-03", "2026-03-12", info=stock.info
+        )
+        assert date_str is None
+        assert in_window is None
+
+    def test_returns_none_when_info_empty(self):
+        stock = MagicMock()
+        stock.info = {}
+        stock.calendar = {}
+        date_str, in_window = _get_ex_dividend_for_window(
+            stock, "2026-02-17", "2026-02-28", info={}
+        )
+        assert date_str is None
+        assert in_window is None
+
+    def test_returns_none_when_key_missing(self):
+        date_str, in_window = _get_ex_dividend_for_window(
+            MagicMock(), "2026-02-17", "2026-02-28", info={"otherKey": 123}
+        )
+        assert date_str is None
+        assert in_window is None
+
+
+class TestHumanizeRecommendation:
+    def test_moderate_buy(self):
+        assert _humanize_recommendation("moderateBuy") == "Moderate Buy"
+
+    def test_strong_buy(self):
+        assert _humanize_recommendation("strongBuy") == "Strong Buy"
+
+    def test_empty_unchanged(self):
+        assert _humanize_recommendation("") == ""
+
+
+# ============================================================================
 # Return Distribution Computation Tests (mocked yFinance)
 # ============================================================================
 
@@ -159,6 +233,124 @@ class TestComputeReturnDistribution:
         assert 0 < result.positive_return_rate < 1
         assert result.sample_size > 100
         assert result.std_return > 0
+
+    @pytest.mark.asyncio
+    async def test_computes_distribution_includes_ex_dividend_when_in_window(self, mock_yf):
+        _, ticker_instance = mock_yf
+        ts_inside = int(datetime(2026, 2, 20, tzinfo=UTC).timestamp())
+        ticker_instance.info = {"exDividendDate": ts_inside}
+
+        config = {"research": {"stock_return_enabled": True, "stock_return_history_years": 10}}
+        desc = '`{"format":"close_price_rises","info":{"ticker":"MCO"}}`'
+        title = (
+            "Will MCO's market close price on 2026-02-28 be higher "
+            "than its market close price on 2026-02-17?"
+        )
+        result = await compute_stock_return_distribution(desc, title, config)
+        assert result is not None
+        assert result.next_ex_dividend_date == "2026-02-20"
+        assert result.ex_dividend_in_window is True
+        ctx = format_stock_return_context(result)
+        assert "Next ex-dividend: 2026-02-20 (inside window)" in ctx
+
+    @pytest.mark.asyncio
+    async def test_computes_distribution_ex_dividend_outside_window(self, mock_yf):
+        _, ticker_instance = mock_yf
+        ts_outside = int(datetime(2026, 3, 15, tzinfo=UTC).timestamp())
+        ticker_instance.info = {"exDividendDate": ts_outside}
+
+        config = {"research": {"stock_return_enabled": True, "stock_return_history_years": 10}}
+        desc = '`{"format":"close_price_rises","info":{"ticker":"MCO"}}`'
+        title = (
+            "Will MCO's market close price on 2026-02-28 be higher "
+            "than its market close price on 2026-02-17?"
+        )
+        result = await compute_stock_return_distribution(desc, title, config)
+        assert result is not None
+        assert result.next_ex_dividend_date == "2026-03-15"
+        assert result.ex_dividend_in_window is False
+        ctx = format_stock_return_context(result)
+        assert "Next ex-dividend: 2026-03-15 (outside window)" in ctx
+
+    @pytest.mark.asyncio
+    async def test_computes_distribution_includes_analyst_dividend_52wk_when_in_info(self, mock_yf):
+        _, ticker_instance = mock_yf
+        ticker_instance.info = {
+            "targetMeanPrice": 120.5,
+            "targetLowPrice": 110.0,
+            "targetHighPrice": 135.0,
+            "numberOfAnalystOpinions": 12,
+            "recommendationKey": "moderateBuy",
+            "dividendYield": 0.035,
+            "fiftyTwoWeekLow": 95.0,
+            "fiftyTwoWeekHigh": 125.0,
+        }
+
+        config = {"research": {"stock_return_enabled": True, "stock_return_history_years": 10}}
+        desc = '`{"format":"close_price_rises","info":{"ticker":"MCO"}}`'
+        title = (
+            "Will MCO's market close price on 2026-02-28 be higher "
+            "than its market close price on 2026-02-17?"
+        )
+        result = await compute_stock_return_distribution(desc, title, config)
+        assert result is not None
+        assert result.analyst_mean_target == 120.5
+        assert result.analyst_low_target == 110.0
+        assert result.analyst_high_target == 135.0
+        assert result.analyst_count == 12
+        assert result.analyst_recommendation == "moderateBuy"
+        assert result.dividend_yield_pct == 3.5  # decimal 0.035 -> 3.5%
+        assert result.fifty_two_week_low == 95.0
+        assert result.fifty_two_week_high == 125.0
+
+        ctx = format_stock_return_context(result)
+        assert "ANALYST TARGETS:" in ctx
+        assert "Mean: $120.50" in ctx
+        assert "Dividend yield: 3.5%" in ctx
+        assert "52-week range: $95.00 - $125.00" in ctx
+        assert "Recommendation: Moderate Buy" in ctx
+
+    @pytest.mark.asyncio
+    async def test_computes_distribution_dividend_yield_already_percentage(self, mock_yf):
+        """When yFinance returns dividendYield as percentage (e.g. 3.27), do not multiply by 100."""
+        _, ticker_instance = mock_yf
+        ticker_instance.info = {"dividendYield": 3.27}  # already a percentage
+
+        config = {"research": {"stock_return_enabled": True, "stock_return_history_years": 10}}
+        desc = '`{"format":"close_price_rises","info":{"ticker":"MCO"}}`'
+        title = (
+            "Will MCO's market close price on 2026-02-28 be higher "
+            "than its market close price on 2026-02-17?"
+        )
+        result = await compute_stock_return_distribution(desc, title, config)
+        assert result is not None
+        assert result.dividend_yield_pct == 3.27
+
+    @pytest.mark.asyncio
+    async def test_computes_distribution_new_fields_none_when_info_empty(self, mock_yf):
+        _, ticker_instance = mock_yf
+        ticker_instance.info = {}
+
+        config = {"research": {"stock_return_enabled": True, "stock_return_history_years": 10}}
+        desc = '`{"format":"close_price_rises","info":{"ticker":"MCO"}}`'
+        title = (
+            "Will MCO's market close price on 2026-02-28 be higher "
+            "than its market close price on 2026-02-17?"
+        )
+        result = await compute_stock_return_distribution(desc, title, config)
+        assert result is not None
+        assert result.next_ex_dividend_date is None
+        assert result.ex_dividend_in_window is None
+        assert result.analyst_mean_target is None
+        assert result.dividend_yield_pct is None
+        assert result.fifty_two_week_low is None
+        assert result.fifty_two_week_high is None
+
+        ctx = format_stock_return_context(result)
+        assert "Next ex-dividend" not in ctx
+        assert "Dividend yield:" not in ctx
+        assert "52-week range:" not in ctx
+        assert "ANALYST TARGETS:" not in ctx
 
     @pytest.mark.asyncio
     async def test_returns_none_when_disabled(self):
@@ -401,6 +593,51 @@ class TestSerialization:
         assert d["recent_return_5d"] == 1.5
         assert d["recent_return_5d_percentile"] == 60
         assert d["conditional_rates"] is None
+
+    def test_to_dict_is_json_serializable_with_conditional_rates(self):
+        """Result of stock_return_data_to_dict is JSON-serializable even with numpy types in conditional_rates."""
+        # Simulate numpy scalar types that can appear from asdict() after numpy operations
+        d = stock_return_data_to_dict(
+            StockReturnData(
+                ticker="WEC",
+                start_date="2026-03-03",
+                end_date="2026-03-12",
+                trading_days=7,
+                current_price=116.62,
+                reference_price=116.62,
+                return_so_far=0.0,
+                sample_size=2506,
+                positive_return_rate=0.575,
+                mean_return=0.34,
+                median_return=0.58,
+                std_return=3.25,
+                percentile_5=-4.86,
+                percentile_25=-1.44,
+                percentile_75=2.35,
+                percentile_95=4.99,
+                recent_return_5d=0.71,
+                recent_return_1m=6.51,
+                recent_return_3m=4.78,
+                volatility_30d=13.3,
+                recent_return_5d_percentile=55,
+                recent_return_1m_percentile=88,
+                recent_return_3m_percentile=58,
+                conditional_rates=[
+                    {
+                        "label": "Price in top decile",
+                        "condition": "range_top_decile",
+                        "probability": np.float64(0.5607),
+                        "sample_size": np.int64(610),
+                        "delta": np.float64(-1.4),
+                        "applicable": np.bool_(True),
+                    },
+                ],
+            )
+        )
+        # Should not raise
+        json_str = json.dumps(d)
+        assert "WEC" in json_str
+        assert "0.5607" in json_str or "0.5606999999999999" in json_str
 
 
 # ============================================================================
