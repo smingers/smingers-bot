@@ -16,6 +16,7 @@ This document lists all the non-core helper scripts, dashboards, and visualizers
 | Ensemble Diversity Report | `python scripts/ensemble_diversity_report.py` | Analyze forecaster agreement & anchoring across ensemble |
 | Tool Usage Analyzer | `python scripts/analyze_tool_usage.py <path>` | Analyze research tool usage per forecast |
 | Artifact Migration | `python scripts/migrate_artifacts.py` | Backfill missing database fields |
+| Scraping Analyzer | `poetry run python scripts/analyze_scraping.py` | Aggregate scraping success/failure rates by domain |
 
 ---
 

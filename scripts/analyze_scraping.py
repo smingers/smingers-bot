@@ -2,12 +2,13 @@
 """
 Scraping & Content Extraction Analysis
 
-Aggregates data from tool_usage.json files across all forecasts to show:
+Aggregates data from tool_usage.json (and research/search_research_plan.json for
+planner runs) across all forecasts to show:
 - Per-domain success/failure rates
 - Extraction method distribution (which backends win)
 - Common error types and frequencies
 - Scrape efficiency (URLs returned vs extracted vs summarized)
-- Question URL scraping success rates
+- Question URL scraping success rates (includes iterative planner pre-research)
 
 Usage:
     python scripts/analyze_scraping.py
@@ -25,14 +26,71 @@ from urllib.parse import urlparse
 DATA_DIR = Path("./data")
 
 
+def _question_url_queries_from_plan(plan_path: Path) -> list[dict] | None:
+    """
+    Load question URL scraping data from research/search_research_plan.json
+    (phases.pre_research) and normalize to the same shape as
+    tool_usage.centralized_research.question_urls.queries.
+    """
+    try:
+        plan = json.loads(plan_path.read_text())
+    except (json.JSONDecodeError, OSError):
+        return None
+    pre = plan.get("phases", {}).get("pre_research", {})
+    urls = pre.get("urls", [])
+    if not urls:
+        return None
+    queries = []
+    for u in urls:
+        url = u.get("url", "")
+        domain = u.get("domain") or (urlparse(url).netloc if url else "unknown")
+        if domain.startswith("www."):
+            domain = domain[4:]
+        success = u.get("scraped", False)
+        queries.append(
+            {
+                "query": url,
+                "success": success,
+                "num_results": 1 if success else 0,
+                "domain": domain,
+                "method": u.get("method"),
+                "error": u.get("error"),
+            }
+        )
+    return queries
+
+
 def load_tool_usage_files(data_dir: Path) -> list[dict]:
-    """Load all tool_usage.json files from forecast artifact directories."""
+    """Load all tool_usage.json files from forecast artifact directories.
+
+    For runs that used the iterative planner, question_urls.queries may be
+    empty in tool_usage.json. When so, backfill from
+    research/search_research_plan.json (phases.pre_research) so planner runs
+    are included in question URL scraping stats.
+    """
     files = sorted(data_dir.glob("*/tool_usage.json"))
     results = []
     for f in files:
         try:
             data = json.loads(f.read_text())
             data["_source_file"] = str(f)
+            forecast_dir = f.parent
+            research_plan_path = forecast_dir / "research" / "search_research_plan.json"
+            q_urls = data.get("centralized_research", {}).get("question_urls", {})
+            queries = q_urls.get("queries", [])
+            if not queries and research_plan_path.exists():
+                plan_queries = _question_url_queries_from_plan(research_plan_path)
+                if plan_queries:
+                    if "centralized_research" not in data:
+                        data["centralized_research"] = {}
+                    if "question_urls" not in data["centralized_research"]:
+                        data["centralized_research"]["question_urls"] = {}
+                    data["centralized_research"]["question_urls"]["queries"] = plan_queries
+                    data["centralized_research"]["question_urls"]["searched"] = True
+                    data["centralized_research"]["question_urls"]["num_queries"] = len(plan_queries)
+                    data["centralized_research"]["question_urls"]["tools_used"] = [
+                        "QuestionURLScrape"
+                    ]
             results.append(data)
         except (json.JSONDecodeError, OSError):
             continue
