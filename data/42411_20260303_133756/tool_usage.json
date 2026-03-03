@@ -1,0 +1,266 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": false,
+      "num_queries": 0,
+      "queries": [],
+      "tools_used": [],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 5,
+      "queries": [
+        {
+          "query": "INTC average 7 day return",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "find historical statistics or academic/finance blogs documenting Intel\u2019s typical one-week performance distribution.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Intel stock 3m up 1m down weekly outcome",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "locate analyses or forum posts discussing what happens after the specific pattern of strong 3-month rise but weak 1-month pull-back.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "semiconductor ETF weekly return distribution",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "obtain sector-level base rates for one-week moves to benchmark INTC against SOXX/SMH history.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "SOXX",
+          "tool": "yFinance",
+          "temporal_role": "historical",
+          "intent": "pull recent and historical price, volatility, and performance data for the semiconductor sector ETF for correlation/context.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        },
+        {
+          "query": "Identify periods since 2015 where INTC gained >4% last 5 days but lost 5-10% in prior month and report subsequent 1-week returns",
+          "tool": "Agent",
+          "temporal_role": "historical",
+          "intent": "qualitative synthesis of historical analogues and their forward performance to refine the conditional base rate.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "yFinance",
+        "Google"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "INTC news March 2026",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "surface any breaking corporate developments, guidance updates, or management remarks in the past 48 hours.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Intel analyst price target change March 2026",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "capture fresh analyst upgrades/downgrades that could sway short-term sentiment.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Semiconductor demand outlook early March 2026 United States and Asia",
+          "tool": "AskNews",
+          "temporal_role": "current",
+          "intent": "retrieve recent coverage on macro/industry factors (PC demand, AI server spending, China export policy) that might drive all chip stocks\u2014including Intel\u2014over the coming week.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 54,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "AskNews",
+        "Google News"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8343,
+        "token_output": 1619,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.066,
+        "duration_seconds": 38.615862131118774,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 19997,
+        "token_output": 3951,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.15925,
+        "duration_seconds": 86.20009756088257,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 19515,
+        "token_output": 2513,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.13527,
+        "duration_seconds": 86.20007252693176,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7374,
+        "token_output": 2202,
+        "token_reasoning": 392,
+        "used_reasoning": true,
+        "cost": 0.0437325,
+        "duration_seconds": 38.615915298461914,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17649,
+        "token_output": 2654,
+        "token_reasoning": 520,
+        "used_reasoning": true,
+        "cost": 0.06804175000000001,
+        "duration_seconds": 86.20004844665527,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 18030,
+        "token_output": 1464,
+        "token_reasoning": 384,
+        "used_reasoning": true,
+        "cost": 0.047772,
+        "duration_seconds": 86.20002126693726,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7374,
+        "token_output": 1680,
+        "token_reasoning": 640,
+        "used_reasoning": true,
+        "cost": 0.028188,
+        "duration_seconds": 38.61594915390015,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17162,
+        "token_output": 1602,
+        "token_reasoning": 576,
+        "used_reasoning": true,
+        "cost": 0.04714,
+        "duration_seconds": 86.19999432563782,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "steps1_2_research": 0.3674,
+    "step3_outside_view": 0.1379,
+    "step5_inside_view": 0.4575,
+    "step6_aggregation": 0.4575,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.9628
+}
