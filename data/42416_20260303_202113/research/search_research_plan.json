@@ -1,0 +1,208 @@
+{
+  "plan_analysis": "The question hinges on whether the Google Trends day-level \u201cinterest over time\u201d value for the search term \u201cuss abraham lincoln\u201d moves by more than 3 points in the nine-day window 2026-03-03 \u2192 2026-03-12.  \nWhat we already have:  \n\u2022 Current reading is at its local peak (100) for the last 30 days.  \n\u2022 Exact resolution URL, parameters, and the 3-point threshold are fixed.  \nMissing pieces a forecaster needs:  \n1. Base rate/volatility \u2013 How frequently has this term\u2019s daily value swung >3 points in past 9-day windows? What does a spike usually look like for naval vessels?  \n2. Resolution mechanism subtleties \u2013 How stable is a 3-point margin under Google Trends\u2019 scaling quirks; what does research say about daily variability?  \n3. Key drivers \u2013 What kinds of events historically create big jumps for the ship (e.g., deployments, incidents, port visits, combat operations)?  \n4. Current state \u2013 Are any such events scheduled or breaking now that could maintain or raise attention after the present peak, or is a fade-out more likely?  \n5. Contrarian angles \u2013 Could API vs. UI differences or scaling readjustments produce apparent \u201cDoesn\u2019t change\u201d outcomes even if news flow is busy?\n\nSearch strategy:  \n\u2022 Pull long-run Google Trends data for the exact term to compute historical swing frequency.  \n\u2022 Look for studies/blogs on day-to-day Google Trends noise and the effect of locking start/end dates.  \n\u2022 Mine past news linking carrier events to search spikes.  \n\u2022 Scan breaking/forward-looking news (Google News, AskNews) for any deployments, incidents, or ceremonies around early-mid March 2026.  \n\u2022 Use one Agent query to synthesise historical nine-day swing statistics and map them to event types.",
+  "reflect_analysis": null,
+  "queries_planned": [
+    {
+      "query": "uss abraham lincoln 2024 daily trend",
+      "tool": "Google Trends",
+      "temporal_role": "historical",
+      "intent": "Pull the last year of daily trend data to measure typical >3-point moves.",
+      "phase": "plan"
+    },
+    {
+      "query": "google trends day to day variability",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Find analyses quantifying normal daily fluctuations and noise levels.",
+      "phase": "plan"
+    },
+    {
+      "query": "google trends scale fixed date effect",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Understand how locking start/end dates influences value stability\u2014critical for resolution mechanics.",
+      "phase": "plan"
+    },
+    {
+      "query": "carrier incident search interest spike",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Identify historical cases where naval carrier events drove sharp search-interest increases.",
+      "phase": "plan"
+    },
+    {
+      "query": "Analyze nine-day swings in Google Trends for \"USS Abraham Lincoln\" 2016-2025 and list occasions changes exceeded 3 points; note associated news events.",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "Provide a synthesized base-rate of >3-point moves and the underlying causes.",
+      "phase": "plan"
+    },
+    {
+      "query": "uss abraham lincoln march 2026 news",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Surface any breaking or scheduled events that could influence search interest in the forecast window.",
+      "phase": "plan"
+    },
+    {
+      "query": "abraham lincoln deployment 2026 spring",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "Retrieve coverage or press releases about planned deployments/exercises in early 2026.",
+      "phase": "plan"
+    },
+    {
+      "query": "uss abraham lincoln port visit 2026 schedule",
+      "tool": "Google",
+      "temporal_role": "current",
+      "intent": "Locate official Navy/local port announcements that might spark localized search spikes during 3-12 March 2026.",
+      "phase": "plan"
+    }
+  ],
+  "gap_queries": [],
+  "seed_context_chars": 1666,
+  "historical_context_chars": 17458,
+  "current_context_chars": 37492,
+  "phases": {
+    "pre_research": {
+      "duration_seconds": 8.79,
+      "seed_context_chars": 1666,
+      "search_id": "question_urls",
+      "searched": true,
+      "urls_found": 3,
+      "urls_scraped": 1,
+      "urls_summarized": 1,
+      "urls": [
+        {
+          "url": "https://trends.google.com/trends/explore?geo=US&tz=0&q=uss%20abraham%20lincoln&date=2026-02-10%202026-03-12",
+          "domain": "trends.google.com",
+          "scraped": false,
+          "method": null,
+          "status_code": null,
+          "error": "Blocked domain"
+        },
+        {
+          "url": "https://serpapi.com/",
+          "domain": "serpapi.com",
+          "scraped": true,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_words": 273
+        },
+        {
+          "url": "https://trends.google.com/trends/explore?geo=US&tz=0&q=uss%20abraham%20lincoln&date=2026-01-30%202026-03-01",
+          "domain": "trends.google.com",
+          "scraped": false,
+          "method": null,
+          "status_code": null,
+          "error": "Blocked domain"
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ]
+    },
+    "plan": {
+      "duration_seconds": 53.23,
+      "cost": 0.0218,
+      "num_queries": 8
+    },
+    "execute": {
+      "duration_seconds": 55.82,
+      "cost": 0.2308,
+      "queries_executed": 8,
+      "queries_successful": 7
+    },
+    "assemble": {
+      "historical_context_chars": 17458,
+      "current_context_chars": 37492
+    }
+  },
+  "total_queries_planned": 8,
+  "total_queries_executed": 8,
+  "total_gap_queries": 0,
+  "total_cost": 0.2655,
+  "total_duration_seconds": 117.84,
+  "query_details": [
+    {
+      "query": "uss abraham lincoln 2024 daily trend",
+      "tool": "Google Trends",
+      "temporal_role": "historical",
+      "intent": "Pull the last year of daily trend data to measure typical >3-point moves.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 1,
+      "error": null
+    },
+    {
+      "query": "google trends day to day variability",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Find analyses quantifying normal daily fluctuations and noise levels.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "google trends scale fixed date effect",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Understand how locking start/end dates influences value stability\u2014critical for resolution mechanics.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "carrier incident search interest spike",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Identify historical cases where naval carrier events drove sharp search-interest increases.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "Analyze nine-day swings in Google Trends for \"USS Abraham Lincoln\" 2016-2025 and list occasions changes exceeded 3 points; note associated news events.",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "Provide a synthesized base-rate of >3-point moves and the underlying causes.",
+      "phase": "plan",
+      "success": false,
+      "num_results": 0,
+      "error": "Error during agentic search: expected string or bytes-like object, got 'NoneType'"
+    },
+    {
+      "query": "uss abraham lincoln march 2026 news",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Surface any breaking or scheduled events that could influence search interest in the forecast window.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "abraham lincoln deployment 2026 spring",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "Retrieve coverage or press releases about planned deployments/exercises in early 2026.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 24,
+      "error": null
+    },
+    {
+      "query": "uss abraham lincoln port visit 2026 schedule",
+      "tool": "Google",
+      "temporal_role": "current",
+      "intent": "Locate official Navy/local port announcements that might spark localized search spikes during 3-12 March 2026.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 1,
+      "error": null
+    }
+  ]
+}

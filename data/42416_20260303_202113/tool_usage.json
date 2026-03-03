@@ -1,0 +1,267 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": false,
+      "num_queries": 0,
+      "queries": [],
+      "tools_used": [],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 5,
+      "queries": [
+        {
+          "query": "uss abraham lincoln 2024 daily trend",
+          "tool": "Google Trends",
+          "temporal_role": "historical",
+          "intent": "Pull the last year of daily trend data to measure typical >3-point moves.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        },
+        {
+          "query": "google trends day to day variability",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Find analyses quantifying normal daily fluctuations and noise levels.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "google trends scale fixed date effect",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Understand how locking start/end dates influences value stability\u2014critical for resolution mechanics.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "carrier incident search interest spike",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Identify historical cases where naval carrier events drove sharp search-interest increases.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Analyze nine-day swings in Google Trends for \"USS Abraham Lincoln\" 2016-2025 and list occasions changes exceeded 3 points; note associated news events.",
+          "tool": "Agent",
+          "temporal_role": "historical",
+          "intent": "Provide a synthesized base-rate of >3-point moves and the underlying causes.",
+          "phase": "plan",
+          "success": false,
+          "num_results": 0,
+          "error": "Error during agentic search: expected string or bytes-like object, got 'NoneType'"
+        }
+      ],
+      "tools_used": [
+        "Google Trends",
+        "Google",
+        "Agent"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "uss abraham lincoln march 2026 news",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "Surface any breaking or scheduled events that could influence search interest in the forecast window.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "abraham lincoln deployment 2026 spring",
+          "tool": "AskNews",
+          "temporal_role": "current",
+          "intent": "Retrieve coverage or press releases about planned deployments/exercises in early 2026.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 24,
+          "error": null
+        },
+        {
+          "query": "uss abraham lincoln port visit 2026 schedule",
+          "tool": "Google",
+          "temporal_role": "current",
+          "intent": "Locate official Navy/local port announcements that might spark localized search spikes during 3-12 March 2026.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "AskNews",
+        "Google",
+        "Google News"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6035,
+        "token_output": 1354,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.050485,
+        "duration_seconds": 54.87220644950867,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13229,
+        "token_output": 2225,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.09952,
+        "duration_seconds": 54.657195806503296,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13073,
+        "token_output": 2107,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.09697,
+        "duration_seconds": 54.65717053413391,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5380,
+        "token_output": 2916,
+        "token_reasoning": 914,
+        "used_reasoning": true,
+        "cost": 0.050239,
+        "duration_seconds": 54.8722608089447,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11900,
+        "token_output": 2101,
+        "token_reasoning": 449,
+        "used_reasoning": true,
+        "cost": 0.050239000000000006,
+        "duration_seconds": 54.6571409702301,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12661,
+        "token_output": 1779,
+        "token_reasoning": 768,
+        "used_reasoning": true,
+        "cost": 0.039554,
+        "duration_seconds": 54.657111406326294,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5380,
+        "token_output": 1864,
+        "token_reasoning": 768,
+        "used_reasoning": true,
+        "cost": 0.025672,
+        "duration_seconds": 54.87229061126709,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11678,
+        "token_output": 896,
+        "token_reasoning": 256,
+        "used_reasoning": true,
+        "cost": 0.030524,
+        "duration_seconds": 54.657079219818115,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "steps1_2_research": 0.2655,
+    "step3_outside_view": 0.1264,
+    "step5_inside_view": 0.3168,
+    "step6_aggregation": 0.3168,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.7087
+}
