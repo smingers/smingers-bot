@@ -1,0 +1,265 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": false,
+      "num_queries": 0,
+      "queries": [],
+      "tools_used": [],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 5,
+      "queries": [
+        {
+          "query": "Metaculus prediction volatility weekly",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Find studies or blog posts quantifying typical week-to-week percentage-point moves in Metaculus community forecasts, to establish a base rate of >2 pp swings.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "UK prime ministers resigned while in office stats",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Retrieve historical data on how often and why UK PMs have left office mid-parliament to benchmark the substantive probability.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "labour leadership challenge procedure 20 percent mps threshold",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Clarify formal mechanics/timing of ousting a Labour PM, indicating how quickly such moves could unfold and be priced in.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Metaculus probability spikes before close",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Locate examples/analyses of last-minute sentiment shifts on Metaculus questions to gauge variance risk.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 2,
+          "error": null
+        },
+        {
+          "query": "factors preceding uk pm removal case studies",
+          "tool": "Agent",
+          "temporal_role": "historical",
+          "intent": "Surface comparative analyses of past UK PM departures (e.g., Thatcher 1990, Blair 2007, Johnson 2022) and identify lead indicators (poll slumps, local-election losses, budget fallout) relevant to Starmer. (Agent)",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Agent"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Spring Budget 2026 date chancellor schedule",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "Confirm whether the Budget will occur within the 3-11 March window, a potential catalyst for new information and forecast movement.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Starmer leadership challenge rumours March 2026",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "Capture any fresh reporting or leaks about coup attempts, letters, or MPs rallying behind challengers in the last few days.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "UK voting intention poll March 2026 Labour Reform",
+          "tool": "AskNews",
+          "temporal_role": "current",
+          "intent": "Collect the newest public-opinion polls or internal leaks released this week that could sway perceptions of Starmer\u2019s vulnerability.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 33,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "AskNews",
+        "Google News"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 10780,
+        "token_output": 1565,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.077375,
+        "duration_seconds": 47.11364150047302,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16015,
+        "token_output": 2309,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.11471,
+        "duration_seconds": 56.830915451049805,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15667,
+        "token_output": 2571,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.1169,
+        "duration_seconds": 56.83090353012085,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 9524,
+        "token_output": 2442,
+        "token_reasoning": 949,
+        "used_reasoning": true,
+        "cost": 0.050855,
+        "duration_seconds": 47.11370086669922,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14290,
+        "token_output": 1861,
+        "token_reasoning": 367,
+        "used_reasoning": true,
+        "cost": 0.0510615,
+        "duration_seconds": 56.83088564872742,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14362,
+        "token_output": 1227,
+        "token_reasoning": 320,
+        "used_reasoning": true,
+        "cost": 0.03854,
+        "duration_seconds": 56.83086800575256,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 9524,
+        "token_output": 1551,
+        "token_reasoning": 448,
+        "used_reasoning": true,
+        "cost": 0.031456,
+        "duration_seconds": 47.11375284194946,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13884,
+        "token_output": 1499,
+        "token_reasoning": 576,
+        "used_reasoning": true,
+        "cost": 0.039760000000000004,
+        "duration_seconds": 56.83084988594055,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "steps1_2_research": 0.4786,
+    "step3_outside_view": 0.1597,
+    "step5_inside_view": 0.361,
+    "step6_aggregation": 0.361,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.9993
+}

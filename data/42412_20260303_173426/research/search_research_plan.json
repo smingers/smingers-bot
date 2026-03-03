@@ -1,0 +1,224 @@
+{
+  "plan_analysis": "The meta-question hinges on whether the Metaculus community probability for \u201cStarmer out in 2026\u201d rises (or at least stays) above 63 percent during the eight-day window ending 11 Mar 2026.  \nInformation already supplied: the current CP (65 %), its recent trend (+2 pp in 30 days), and general political context (polling slump, rumoured challengers).  \nKey gaps for forecasters:\n\n1. Base-rate / volatility data: How fast and how far do Metaculus community probabilities typically move in the final week before a question\u2019s checkpoint or close? Also, historic frequency of UK PMs leaving office mid-term or being forced out by their own party.\n2. Resolution mechanics: Confirmation of the precise data time-stamp the site will use and how often the CP auto-updates (hourly? daily?).\n3. Near-term drivers (next 8 days): a) Scheduled political events likely to shift perceptions (Spring Budget 2026 date, by-elections, major polling releases). b) Emerging news or leaks on Labour leadership manoeuvres or Starmer\u2019s health.\n4. Contrarian evidence: Signs that Starmer is safer than assumed\u2014e.g.\\ a strong poll, supportive Budget reception, or quashed challenge rumours.\n\nThe search strategy therefore combines:\n\u2022 Historical queries on Metaculus prediction drift and UK leadership ousters (5 queries \u2248 60 %).  \n\u2022 Current-news queries on imminent events, polls, and rumours (3 queries \u2248 40 %).  \n\u2022 One broader [HISTORICAL] Agent query to surface scholarly or analytical syntheses of past PM removals and their lead-indicators.",
+  "reflect_analysis": null,
+  "queries_planned": [
+    {
+      "query": "Metaculus prediction volatility weekly",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Find studies or blog posts quantifying typical week-to-week percentage-point moves in Metaculus community forecasts, to establish a base rate of >2 pp swings.",
+      "phase": "plan"
+    },
+    {
+      "query": "UK prime ministers resigned while in office stats",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Retrieve historical data on how often and why UK PMs have left office mid-parliament to benchmark the substantive probability.",
+      "phase": "plan"
+    },
+    {
+      "query": "labour leadership challenge procedure 20 percent mps threshold",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Clarify formal mechanics/timing of ousting a Labour PM, indicating how quickly such moves could unfold and be priced in.",
+      "phase": "plan"
+    },
+    {
+      "query": "Metaculus probability spikes before close",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Locate examples/analyses of last-minute sentiment shifts on Metaculus questions to gauge variance risk.",
+      "phase": "plan"
+    },
+    {
+      "query": "factors preceding uk pm removal case studies",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "Surface comparative analyses of past UK PM departures (e.g., Thatcher 1990, Blair 2007, Johnson 2022) and identify lead indicators (poll slumps, local-election losses, budget fallout) relevant to Starmer. (Agent)",
+      "phase": "plan"
+    },
+    {
+      "query": "Spring Budget 2026 date chancellor schedule",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Confirm whether the Budget will occur within the 3-11 March window, a potential catalyst for new information and forecast movement.",
+      "phase": "plan"
+    },
+    {
+      "query": "Starmer leadership challenge rumours March 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Capture any fresh reporting or leaks about coup attempts, letters, or MPs rallying behind challengers in the last few days.",
+      "phase": "plan"
+    },
+    {
+      "query": "UK voting intention poll March 2026 Labour Reform",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "Collect the newest public-opinion polls or internal leaks released this week that could sway perceptions of Starmer\u2019s vulnerability.",
+      "phase": "plan"
+    }
+  ],
+  "gap_queries": [],
+  "seed_context_chars": 10308,
+  "historical_context_chars": 35561,
+  "current_context_chars": 47418,
+  "phases": {
+    "pre_research": {
+      "duration_seconds": 13.39,
+      "seed_context_chars": 9336,
+      "search_id": "question_urls",
+      "searched": true,
+      "urls_found": 6,
+      "urls_scraped": 5,
+      "urls_summarized": 5,
+      "urls": [
+        {
+          "url": "https://en.wikipedia.org/wiki/2024_United_Kingdom_general_election",
+          "domain": "en.wikipedia.org",
+          "scraped": true,
+          "method": "wikipedia_api",
+          "status_code": 200,
+          "content_words": 2359
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Leadership_approval_opinion_polling_for_the_next_United_Kingdom_general_election",
+          "domain": "en.wikipedia.org",
+          "scraped": true,
+          "method": "wikipedia_api",
+          "status_code": 200,
+          "content_words": 514
+        },
+        {
+          "url": "https://electionmaps.uk/polling/vi",
+          "domain": "electionmaps.uk",
+          "scraped": true,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_words": 144
+        },
+        {
+          "url": "https://www.bbc.com/news/live/cgq4zd0lx12t",
+          "domain": "www.bbc.com",
+          "scraped": true,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_words": 1130
+        },
+        {
+          "url": "https://www.bbc.co.uk/news/articles/c9v124znrgmo",
+          "domain": "www.bbc.co.uk",
+          "scraped": true,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_words": 918
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ]
+    },
+    "plan": {
+      "duration_seconds": 45.9,
+      "cost": 0.022,
+      "num_queries": 8
+    },
+    "execute": {
+      "duration_seconds": 65.5,
+      "cost": 0.361,
+      "queries_executed": 8,
+      "queries_successful": 8
+    },
+    "assemble": {
+      "historical_context_chars": 35561,
+      "current_context_chars": 47418
+    }
+  },
+  "total_queries_planned": 8,
+  "total_queries_executed": 8,
+  "total_gap_queries": 0,
+  "total_cost": 0.4786,
+  "total_duration_seconds": 124.78,
+  "query_details": [
+    {
+      "query": "Metaculus prediction volatility weekly",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Find studies or blog posts quantifying typical week-to-week percentage-point moves in Metaculus community forecasts, to establish a base rate of >2 pp swings.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "UK prime ministers resigned while in office stats",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Retrieve historical data on how often and why UK PMs have left office mid-parliament to benchmark the substantive probability.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "labour leadership challenge procedure 20 percent mps threshold",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Clarify formal mechanics/timing of ousting a Labour PM, indicating how quickly such moves could unfold and be priced in.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "Metaculus probability spikes before close",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Locate examples/analyses of last-minute sentiment shifts on Metaculus questions to gauge variance risk.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 2,
+      "error": null
+    },
+    {
+      "query": "factors preceding uk pm removal case studies",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "Surface comparative analyses of past UK PM departures (e.g., Thatcher 1990, Blair 2007, Johnson 2022) and identify lead indicators (poll slumps, local-election losses, budget fallout) relevant to Starmer. (Agent)",
+      "phase": "plan",
+      "success": true,
+      "num_results": 1,
+      "error": null
+    },
+    {
+      "query": "Spring Budget 2026 date chancellor schedule",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Confirm whether the Budget will occur within the 3-11 March window, a potential catalyst for new information and forecast movement.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "Starmer leadership challenge rumours March 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Capture any fresh reporting or leaks about coup attempts, letters, or MPs rallying behind challengers in the last few days.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "UK voting intention poll March 2026 Labour Reform",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "Collect the newest public-opinion polls or internal leaks released this week that could sway perceptions of Starmer\u2019s vulnerability.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 33,
+      "error": null
+    }
+  ]
+}
