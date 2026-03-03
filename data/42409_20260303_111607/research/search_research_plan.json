@@ -1,0 +1,192 @@
+{
+  "plan_analysis": "The pre-research context already gives forecasters:  \n\u2022 The exact resolution mechanism (Yahoo Finance close on 2026-03-10 vs 2026-03-03).  \n\u2022 The latest trading data, recent return path, realised volatility, analyst targets, and programmatic base-rate statistics for EXR\u2019s own 5-day returns.\n\nRemaining gaps a skilled forecaster will still want to cover:\n\nBase-rate / reference class gaps  \n\u2022 Longer and richer history of EXR\u2019s 5-day moves (seasonality, 10-year sample, mean-reversion vs momentum).  \n\u2022 How other self-storage REITs and the broader REIT index behave over similar 5-day windows.  \n\u2022 How REITs historically react to key macro shocks scheduled for the next week (jobs report, rate moves).\n\nKey-driver gaps  \n\u2022 Historical relationship between REIT price changes and movements in the 10-year Treasury yield (cost-of-capital sensitive).  \n\u2022 Historical evidence on short-term momentum reversal for S&P-500 constituents, to assess whether EXR\u2019s strong 1-month run tilts odds down.\n\nCurrent-state gaps  \n\u2022 Any company-specific news between 3-Mar and 10-Mar (acquisitions, guidance, litigation, insider trades, broker rating changes).  \n\u2022 Current macro backdrop: where the 10-year yield is today and whether it is trending up or down.  \n\u2022 Latest sector sentiment on self-storage REITs that could trigger a group move.\n\nContrarian-check gaps  \n\u2022 Articles painting a bearish near-term view (rate-sensitive REIT sell-offs, insider selling, negative catalysts).\n\nSearch strategy: Combine historical reference searches (Google and one Agent synthesis) with current-state / news searches (Google News, AskNews, FRED). The queries below collectively address base rates, resolution clarity, key drivers, current conditions, and contrarian information.",
+  "reflect_analysis": null,
+  "queries_planned": [
+    {
+      "query": "EXR five day return history",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "find long-term statistics/graphs of EXR\u2019s 1-week price changes for a richer base rate and seasonality checks",
+      "phase": "plan"
+    },
+    {
+      "query": "self storage REIT weekly returns",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "obtain historical 5-day return data for peers (PSA, CUBE, NSA) to benchmark EXR against its sector",
+      "phase": "plan"
+    },
+    {
+      "query": "REIT sensitivity ten year yield",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "locate studies/whitepapers quantifying how REIT prices move versus changes in the 10-year Treasury yield",
+      "phase": "plan"
+    },
+    {
+      "query": "S&P 500 short term momentum reversal",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "gather academic/quant research on 5-day odds after strong 1-month gains for index constituents",
+      "phase": "plan"
+    },
+    {
+      "query": "Weekly price change high-momentum S&P components; distribution and probability up vs down; 2000-2025 sample",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "produce a synthesized reference class showing how often a stock that just rose >8% in a month continues to rise over the next trading week",
+      "phase": "plan"
+    },
+    {
+      "query": "Extra Space Storage news March 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "capture any fresh company-specific developments, guidance, M&A, broker actions within the forecast window",
+      "phase": "plan"
+    },
+    {
+      "query": "DGS10",
+      "tool": "FRED",
+      "temporal_role": "current",
+      "intent": "pull the current 10-year Treasury yield and its 5-day change to gauge macro headwind/tailwind for REITs right now",
+      "phase": "plan"
+    },
+    {
+      "query": "Self-storage REIT outlook early March 2026; rising rates impact; United States",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "surface recent analytical or opinion pieces that might present a contrarian negative or positive view for the sector over the coming week",
+      "phase": "plan"
+    }
+  ],
+  "gap_queries": [],
+  "seed_context_chars": 1304,
+  "historical_context_chars": 29542,
+  "current_context_chars": 51965,
+  "phases": {
+    "pre_research": {
+      "duration_seconds": 11.64,
+      "seed_context_chars": 1304,
+      "search_id": "question_urls",
+      "searched": true,
+      "urls_found": 1,
+      "urls_scraped": 1,
+      "urls_summarized": 1,
+      "urls": [
+        {
+          "url": "https://finance.yahoo.com/quote/EXR",
+          "domain": "finance.yahoo.com",
+          "scraped": true,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_words": 760
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ]
+    },
+    "plan": {
+      "duration_seconds": 33.39,
+      "cost": 0.0235,
+      "num_queries": 8
+    },
+    "execute": {
+      "duration_seconds": 61.98,
+      "cost": 0.2815,
+      "queries_executed": 8,
+      "queries_successful": 8
+    },
+    "assemble": {
+      "historical_context_chars": 29542,
+      "current_context_chars": 51965
+    }
+  },
+  "total_queries_planned": 8,
+  "total_queries_executed": 8,
+  "total_gap_queries": 0,
+  "total_cost": 0.3216,
+  "total_duration_seconds": 107.02,
+  "query_details": [
+    {
+      "query": "EXR five day return history",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "find long-term statistics/graphs of EXR\u2019s 1-week price changes for a richer base rate and seasonality checks",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "self storage REIT weekly returns",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "obtain historical 5-day return data for peers (PSA, CUBE, NSA) to benchmark EXR against its sector",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "REIT sensitivity ten year yield",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "locate studies/whitepapers quantifying how REIT prices move versus changes in the 10-year Treasury yield",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "S&P 500 short term momentum reversal",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "gather academic/quant research on 5-day odds after strong 1-month gains for index constituents",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "Weekly price change high-momentum S&P components; distribution and probability up vs down; 2000-2025 sample",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "produce a synthesized reference class showing how often a stock that just rose >8% in a month continues to rise over the next trading week",
+      "phase": "plan",
+      "success": true,
+      "num_results": 1,
+      "error": null
+    },
+    {
+      "query": "Extra Space Storage news March 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "capture any fresh company-specific developments, guidance, M&A, broker actions within the forecast window",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "DGS10",
+      "tool": "FRED",
+      "temporal_role": "current",
+      "intent": "pull the current 10-year Treasury yield and its 5-day change to gauge macro headwind/tailwind for REITs right now",
+      "phase": "plan",
+      "success": true,
+      "num_results": 1,
+      "error": null
+    },
+    {
+      "query": "Self-storage REIT outlook early March 2026; rising rates impact; United States",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "surface recent analytical or opinion pieces that might present a contrarian negative or positive view for the sector over the coming week",
+      "phase": "plan",
+      "success": true,
+      "num_results": 29,
+      "error": null
+    }
+  ]
+}

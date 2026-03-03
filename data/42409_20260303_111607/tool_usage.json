@@ -1,0 +1,266 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": false,
+      "num_queries": 0,
+      "queries": [],
+      "tools_used": [],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 5,
+      "queries": [
+        {
+          "query": "EXR five day return history",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "find long-term statistics/graphs of EXR\u2019s 1-week price changes for a richer base rate and seasonality checks",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "self storage REIT weekly returns",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "obtain historical 5-day return data for peers (PSA, CUBE, NSA) to benchmark EXR against its sector",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "REIT sensitivity ten year yield",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "locate studies/whitepapers quantifying how REIT prices move versus changes in the 10-year Treasury yield",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "S&P 500 short term momentum reversal",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "gather academic/quant research on 5-day odds after strong 1-month gains for index constituents",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Weekly price change high-momentum S&P components; distribution and probability up vs down; 2000-2025 sample",
+          "tool": "Agent",
+          "temporal_role": "historical",
+          "intent": "produce a synthesized reference class showing how often a stock that just rose >8% in a month continues to rise over the next trading week",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Agent"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "Extra Space Storage news March 2026",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "capture any fresh company-specific developments, guidance, M&A, broker actions within the forecast window",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "DGS10",
+          "tool": "FRED",
+          "temporal_role": "current",
+          "intent": "pull the current 10-year Treasury yield and its 5-day change to gauge macro headwind/tailwind for REITs right now",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        },
+        {
+          "query": "Self-storage REIT outlook early March 2026; rising rates impact; United States",
+          "tool": "AskNews",
+          "temporal_role": "current",
+          "intent": "surface recent analytical or opinion pieces that might present a contrarian negative or positive view for the sector over the coming week",
+          "phase": "plan",
+          "success": true,
+          "num_results": 29,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "AskNews",
+        "FRED"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 9584,
+        "token_output": 1499,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.070405,
+        "duration_seconds": 38.078187227249146,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17343,
+        "token_output": 2431,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.12318,
+        "duration_seconds": 59.313570737838745,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16996,
+        "token_output": 2160,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.11738,
+        "duration_seconds": 59.31354904174805,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8410,
+        "token_output": 1929,
+        "token_reasoning": 168,
+        "used_reasoning": true,
+        "cost": 0.0417235,
+        "duration_seconds": 38.07824182510376,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15222,
+        "token_output": 2182,
+        "token_reasoning": 286,
+        "used_reasoning": true,
+        "cost": 0.0571865,
+        "duration_seconds": 59.313523054122925,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15650,
+        "token_output": 1579,
+        "token_reasoning": 448,
+        "used_reasoning": true,
+        "cost": 0.043932,
+        "duration_seconds": 59.31349730491638,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8410,
+        "token_output": 1583,
+        "token_reasoning": 512,
+        "used_reasoning": true,
+        "cost": 0.029484000000000003,
+        "duration_seconds": 38.07827639579773,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14853,
+        "token_output": 1324,
+        "token_reasoning": 384,
+        "used_reasoning": true,
+        "cost": 0.040298,
+        "duration_seconds": 59.31347155570984,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "steps1_2_research": 0.3216,
+    "step3_outside_view": 0.1416,
+    "step5_inside_view": 0.382,
+    "step6_aggregation": 0.382,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.8452
+}
