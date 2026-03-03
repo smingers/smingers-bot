@@ -153,6 +153,15 @@ def _format_research_context(raw: str) -> str:
         series, body = m.group(1), m.group(2).strip()
         sections.append(f"---\n### FRED Data ({series})\n\n{body}")
 
+    # Extract <YFinanceData ticker="..." query="...">...</YFinanceData>
+    for m in re.finditer(
+        r'<YFinanceData\s+ticker="([^"]*)"[^>]*>(.*?)</YFinanceData>',
+        raw,
+        re.DOTALL,
+    ):
+        ticker, body = m.group(1), m.group(2).strip()
+        sections.append(f"---\n### yFinance ({ticker})\n\n{body}")
+
     # Extract <GoogleTrendsData term="...">...</GoogleTrendsData>
     for m in re.finditer(
         r'<GoogleTrendsData\s+term="([^"]*)"[^>]*>(.*?)</GoogleTrendsData>', raw, re.DOTALL
@@ -169,8 +178,8 @@ def _format_research_context(raw: str) -> str:
         body = m.group(1).strip()
         sections.append(f"---\n### Stock Return Distribution\n\n{body}")
 
+    # If we didn't recognize any structured blocks, just return the raw text.
     if not sections:
-        # No recognized tags — return raw text as-is
         return raw.strip()
 
     return "\n\n".join(sections)
