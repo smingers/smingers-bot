@@ -1,0 +1,23 @@
+{
+  "confidence": "high",
+  "prediction": {
+    "10": 68.0,
+    "20": 74.0,
+    "40": 83.0,
+    "60": 91.0,
+    "80": 102.0,
+    "90": 115.0
+  },
+  "search_queries": [
+    "Iran Hormuz ceasefire negotiations March 2026 (Google News)",
+    "Brent crude oil price today March 3 2026 (Google News)",
+    "What is the current status of the Strait of Hormuz closure as of March 3, 2026? Are there any reports of diplomatic negotiations, ceasefire proposals, or US naval escort operations that could reopen shipping lanes? What are the latest analyst forecasts for Brent crude in the next 1-2 weeks? (Agent)",
+    "Strait Hormuz naval escort tanker March 2026 (Google News)"
+  ],
+  "cost": 0.4895,
+  "divergence": {
+    "metric_name": "rn_spread",
+    "metric_value": 0.0914,
+    "threshold": 0.045
+  }
+}
