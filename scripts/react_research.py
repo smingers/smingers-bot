@@ -21,6 +21,10 @@ import sys
 from datetime import UTC, datetime
 from pathlib import Path
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from src.bot.search import QuestionDetails, SearchPipeline
