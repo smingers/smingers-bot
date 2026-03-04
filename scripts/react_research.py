@@ -487,13 +487,14 @@ async def run_react_research(
             )
             response_text = response.content
 
-            # Always show raw response for now (debugging phase)
-            print(f"\n[Raw LLM response]\n{response_text}\n[/Raw LLM response]")
+            if verbose:
+                print(f"\n{response_text}")
 
             thought = extract_thought(response_text)
-            print(f"\n[Parsed thought]: {thought[:200]}{'...' if len(thought) > 200 else ''}")
-            print(f"[Has finish]: {has_finish(response_text)}")
-            print(f"[Parsed action]: {parse_action(response_text)}")
+
+            if not verbose:
+                thought_display = thought[:200] + "..." if len(thought) > 200 else thought
+                print(f"Thought: {thought_display}")
 
             # Finish?
             if has_finish(response_text):
@@ -678,12 +679,14 @@ def main():
     args = parser.parse_args()
 
     logging.basicConfig(
-        level=logging.DEBUG if args.verbose else logging.INFO,
+        level=logging.INFO,
         format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
     )
-    logging.getLogger("httpx").setLevel(logging.WARNING)
-    logging.getLogger("httpcore").setLevel(logging.WARNING)
-    logging.getLogger("litellm").setLevel(logging.WARNING)
+    if args.verbose:
+        logger.setLevel(logging.DEBUG)
+    # Suppress noisy third-party loggers
+    for noisy_logger in ("httpx", "httpcore", "litellm", "LiteLLM"):
+        logging.getLogger(noisy_logger).setLevel(logging.WARNING)
 
     config = ResolvedConfig.from_yaml("config.yaml", mode=args.mode)
 
