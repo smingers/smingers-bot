@@ -677,7 +677,7 @@ class IterativeResearchPlanner(ForecasterMixin):
                 return None
             return search._call_asknews(
                 news_query=query,
-                deep_research_query=query,
+                deep_research_query=None,  # Disabled for ReAct prototyping (re-enable if merging into main pipeline)
             )
         elif tool == "FRED":
             if not research_config.get("fred_enabled", True):
