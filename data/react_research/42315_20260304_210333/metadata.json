@@ -1,0 +1,16 @@
+{
+  "question_id": 42315,
+  "question_title": "Will any Google Gemini model rank #1 on the LMSYS (LM Arena) leaderboard on March 15, 2026?",
+  "question_type": "binary",
+  "timestamp": "2026-03-04T21:03:33.931365+00:00",
+  "cost": {
+    "total_calls": 69,
+    "successful_calls": 69,
+    "failed_calls": 0,
+    "total_input_tokens": 211122,
+    "total_output_tokens": 28658,
+    "total_reasoning_tokens": 3072,
+    "total_cost": 0.41822079999999984
+  },
+  "steps": 25
+}
