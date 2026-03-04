@@ -962,3 +962,74 @@ class TestBuildQueryDetailsPreservesAgentInstrumentation:
         ]
         google_row = next(d for d in query_details if d["tool"] == "Google")
         assert "agentic_instrumentation" not in google_row
+
+
+# =============================================================================
+# Orient Phase Tests
+# =============================================================================
+
+
+class TestOrientEnabled:
+    """Tests for _is_orient_enabled config check."""
+
+    def test_enabled_by_default(self, planner):
+        # Default when not explicitly set should be True
+        assert planner._is_orient_enabled() is True
+
+    def test_disabled_via_config(self, base_config):
+        base_config["research"]["planner"]["orient_enabled"] = False
+        p = IterativeResearchPlanner(config=base_config, llm_client=None)
+        assert p._is_orient_enabled() is False
+
+    def test_enabled_via_config(self, base_config):
+        base_config["research"]["planner"]["orient_enabled"] = True
+        p = IterativeResearchPlanner(config=base_config, llm_client=None)
+        assert p._is_orient_enabled() is True
+
+
+class TestParseOrientQueries:
+    """Tests for _parse_orient_queries static method."""
+
+    def test_parses_numbered_queries(self):
+        response = "1. ethel kennedy\n2. ethel kennedy death 2024"
+        queries = IterativeResearchPlanner._parse_orient_queries(response)
+        assert queries == ["ethel kennedy", "ethel kennedy death 2024"]
+
+    def test_parses_numbered_with_parenthesis(self):
+        response = "1) colombian presidential election 2026\n2) colombia polls 2026"
+        queries = IterativeResearchPlanner._parse_orient_queries(response)
+        assert queries == ["colombian presidential election 2026", "colombia polls 2026"]
+
+    def test_parses_dash_prefix(self):
+        response = "- ethel kennedy\n- ethel kennedy google trends"
+        queries = IterativeResearchPlanner._parse_orient_queries(response)
+        assert queries == ["ethel kennedy", "ethel kennedy google trends"]
+
+    def test_max_two_queries(self):
+        response = "1. query one\n2. query two\n3. query three"
+        queries = IterativeResearchPlanner._parse_orient_queries(response)
+        assert len(queries) == 2
+
+    def test_strips_quotes(self):
+        response = '1. "ethel kennedy"'
+        queries = IterativeResearchPlanner._parse_orient_queries(response)
+        assert queries == ["ethel kennedy"]
+
+    def test_empty_response(self):
+        queries = IterativeResearchPlanner._parse_orient_queries("")
+        assert queries == []
+
+    def test_ignores_short_queries(self):
+        response = "1. ab\n2. ethel kennedy"
+        queries = IterativeResearchPlanner._parse_orient_queries(response)
+        assert queries == ["ethel kennedy"]
+
+    def test_skips_non_query_lines(self):
+        response = "Here are the queries:\n1. ethel kennedy\nSome explanation"
+        queries = IterativeResearchPlanner._parse_orient_queries(response)
+        assert queries == ["ethel kennedy"]
+
+    def test_single_query(self):
+        response = "1. Moody's stock MCO"
+        queries = IterativeResearchPlanner._parse_orient_queries(response)
+        assert queries == ["Moody's stock MCO"]

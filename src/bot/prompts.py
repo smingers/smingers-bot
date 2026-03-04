@@ -1270,6 +1270,35 @@ Search queries:
 """
 
 
+ORIENT_PROMPT = """A forecasting question has been posed. Before planning detailed research, you need to quickly orient yourself on the topic — like a human who would first Google the basics.
+
+QUESTION: {title}
+
+Type: {question_type}
+Resolves: {scheduled_resolve_time}
+
+Background:
+{background}
+
+Resolution criteria:
+{resolution_criteria}
+
+{seed_context_section}
+
+YOUR TASK:
+What are the 1-2 most obvious Google searches a human would do first to understand this topic? These should be broad, simple queries — the kind of thing you'd type into Google if you wanted to quickly get up to speed. Not research strategy, just "what is this thing / what's happening with it."
+
+Rules:
+- Output 1-2 queries, one per line, numbered
+- Keep queries short (2-6 words)
+- Focus on understanding the core topic, not forecasting methodology
+- If the pre-research context already provides strong orientation (e.g. you can clearly tell what's going on), output just 1 query targeting the biggest remaining unknown
+- Do NOT output queries that would duplicate information already in the pre-research context
+
+Queries:
+"""
+
+
 RESEARCH_REFLECT_PROMPT = """You are evaluating the completeness of research gathered for a forecasting question and identifying critical gaps.
 
 QUESTION:

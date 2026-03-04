@@ -28,7 +28,7 @@ from typing import Any
 
 from ..utils.llm import LLMClient, get_cost_tracker
 from .handler_mixin import ForecasterMixin
-from .prompts import RESEARCH_PLAN_PROMPT, RESEARCH_REFLECT_PROMPT
+from .prompts import ORIENT_PROMPT, RESEARCH_PLAN_PROMPT, RESEARCH_REFLECT_PROMPT
 from .search import AgenticSearchResult, GoogleScrapeResult, QuestionDetails, SearchPipeline
 
 logger = logging.getLogger(__name__)
@@ -223,6 +223,32 @@ class IterativeResearchPlanner(ForecasterMixin):
         # searches skip them automatically.
         seen_urls: set[str] = {u["url"] for u in seed_metadata.get("urls", [])}
 
+        # Phase 0.5: Orient — broad searches to ground the planner
+        if self._is_orient_enabled():
+            log("\n--- Phase 0.5: Orient (grounding searches) ---")
+            phase05_start = time.time()
+            phase05_cost_start = cost_tracker.total_cost
+            orient_context, orient_meta = await self._orient(
+                question_details, question_type, question_params, seed_context, seen_urls
+            )
+            metadata["phases"]["orient"] = {
+                "duration_seconds": round(time.time() - phase05_start, 2),
+                "cost": round(cost_tracker.total_cost - phase05_cost_start, 4),
+                "num_queries": orient_meta.get("num_queries", 0),
+                "orient_context_chars": len(orient_context),
+            }
+            if orient_context:
+                seed_context = (
+                    f"{seed_context}\n\n{orient_context}" if seed_context else orient_context
+                )
+                log(
+                    f"  Orient context: {len(orient_context)} chars from {orient_meta.get('num_queries', 0)} queries"
+                )
+            else:
+                log("  Orient: no additional context gathered")
+        else:
+            log("\n--- Phase 0.5: Orient disabled, skipping ---")
+
         # Phase 1: Generate research plan
         log("\n--- Phase 1: Generating research plan ---")
         phase1_start = time.time()
@@ -367,6 +393,115 @@ class IterativeResearchPlanner(ForecasterMixin):
             self.artifact_store.save_search_results("question_urls", {"context": seed_context})
 
         return seed_context, seed_metadata
+
+    # -------------------------------------------------------------------------
+    # Phase 0.5: Orient
+    # -------------------------------------------------------------------------
+
+    def _is_orient_enabled(self) -> bool:
+        """Check if the orient phase is enabled in config."""
+        planner_config = self.config.get("research", {}).get("planner", {})
+        return planner_config.get("orient_enabled", True)
+
+    async def _orient(
+        self,
+        question_details: QuestionDetails,
+        question_type: str,
+        question_params: dict,
+        seed_context: str,
+        seen_urls: set[str],
+    ) -> tuple[str, dict[str, Any]]:
+        """
+        Broad grounding searches before planning.
+
+        A human researcher would first Google the core topic to orient
+        themselves before planning detailed research.  This phase does
+        the same: asks a cheap/fast LLM for 1-2 obvious queries, executes
+        them via Google, and returns the summarized results as additional
+        seed context for the planning phase.
+
+        Returns:
+            Tuple of (orient_context_string, metadata_dict)
+        """
+        orient_meta: dict[str, Any] = {"num_queries": 0, "queries": []}
+
+        # Build the orient prompt
+        seed_section = ""
+        if seed_context:
+            seed_section = (
+                "PRE-RESEARCH CONTEXT (already gathered):\n"
+                f"{seed_context[:3000]}\n"  # Cap to avoid blowing up the prompt
+            )
+
+        prompt = ORIENT_PROMPT.format(
+            title=question_params.get("question_title", ""),
+            question_type=question_type,
+            scheduled_resolve_time=question_params.get("scheduled_resolve_time", ""),
+            background=question_params.get("background_info", "")
+            or question_params.get("question_text", ""),
+            resolution_criteria=question_params.get("resolution_criteria", ""),
+            seed_context_section=seed_section,
+        )
+
+        # Use cheap/fast model for orient
+        planner_config = self.config.get("research", {}).get("planner", {})
+        orient_model = planner_config.get(
+            "orient_model", "openrouter/google/gemini-3-flash-preview"
+        )
+        response = await self._call_model(orient_model, prompt, temperature=0.3)
+
+        # Save orient artifacts
+        if self.artifact_store:
+            self.artifact_store.save_query_generation("orient", prompt, response)
+
+        # Parse queries: expect numbered lines like "1. ethel kennedy"
+        queries = self._parse_orient_queries(response)
+        orient_meta["num_queries"] = len(queries)
+        orient_meta["queries"] = queries
+
+        if not queries:
+            logger.warning("Orient phase produced no queries from response: %s", response[:200])
+            return "", orient_meta
+
+        # Execute orient queries via Google search + scrape
+        orient_context_parts: list[str] = []
+
+        async with SearchPipeline(self.config, self.llm) as search:
+            for query_text in queries:
+                logger.info(f"[orient] Searching: {query_text}")
+                result = await search._google_search_and_scrape(
+                    query=query_text,
+                    is_news=False,
+                    question_details=question_details,
+                    date_before=question_details.resolution_date,
+                    seen_urls=seen_urls,
+                )
+                if result.formatted_output:
+                    orient_context_parts.append(
+                        f'<OrientSearch query="{query_text}">\n'
+                        f"{result.formatted_output}\n"
+                        f"</OrientSearch>"
+                    )
+
+        orient_context = "\n".join(orient_context_parts)
+        return orient_context, orient_meta
+
+    @staticmethod
+    def _parse_orient_queries(response: str) -> list[str]:
+        """Parse 1-2 simple numbered queries from orient LLM response."""
+        queries = []
+        for line in response.strip().splitlines():
+            line = line.strip()
+            # Match "1. query text" or "1) query text" or just "- query text"
+            match = re.match(r"^(?:\d+[.)]\s*|-\s*)", line)
+            if match:
+                query = line[match.end() :].strip().strip('"').strip("'")
+                if query and len(query) > 2:
+                    queries.append(query)
+            # Stop after 2 queries
+            if len(queries) >= 2:
+                break
+        return queries
 
     # -------------------------------------------------------------------------
     # Phase 1: Generate research plan

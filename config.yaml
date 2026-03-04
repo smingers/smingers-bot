@@ -116,6 +116,8 @@ research:
 
   # Planner configuration (only used when iterative_planner_enabled is true)
   planner:
+    orient_enabled: true     # Phase 0.5: broad grounding searches before planning
+    orient_model: "openrouter/google/gemini-3-flash-preview"  # Cheap/fast model for orient
     max_plan_queries: 8     # Max queries generated in planning phase
     max_gap_queries: 3       # Max gap-fill queries from reflection phase
     reflection_enabled: false # Set false to skip reflection (saves 1 LLM call)
