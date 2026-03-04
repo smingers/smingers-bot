@@ -473,8 +473,8 @@ async def run_react_research(
                     if t.get("action"):
                         history_parts.append(f"**Action:** {t['action']}")
                         obs = t.get("observation", "")
-                        if len(obs) > 3000:
-                            obs = obs[:3000] + "\n... [truncated]"
+                        if len(obs) > 6000:
+                            obs = obs[:6000] + "\n... [truncated]"
                         history_parts.append(f"**Observation:**\n{obs}")
                     history_parts.append("")
                 history_text = "\n".join(history_parts)
