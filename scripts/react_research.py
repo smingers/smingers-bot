@@ -178,7 +178,12 @@ the research?
 ### Sources
 List all sources consulted with brief descriptions.
 
-Be factual and concise. Do NOT make a forecast — just present the evidence.\
+Be factual and concise. Do NOT make a forecast — just present the evidence.
+
+CRITICAL: Only cite sources that appear in the research trace above. Do NOT \
+fabricate, hallucinate, or invent sources, data points, or search results that \
+were not actually retrieved. If the research trace is empty or incomplete, say \
+so explicitly and note what information is missing.\
 """
 
 # ---------------------------------------------------------------------------
@@ -480,9 +485,43 @@ async def run_react_research(
             # Parse action
             action = parse_action(response_text)
             if action is None:
-                print(">> No action parsed, treating as finish")
-                trace.append({"step": step, "thought": thought, "action": None, "tool": None, "query": None, "observation": None})
-                break
+                print(">> No action parsed from response. Full LLM output:")
+                print(response_text)
+                print(">> Retrying step with explicit nudge...")
+
+                # Retry once with a nudge to use the correct format
+                retry_prompt = turn_prompt + (
+                    "\n\nIMPORTANT: You must output an Action in this exact format:\n"
+                    "Action: <tool_name>: <query>\n\n"
+                    "For example:\n"
+                    "Action: Google Trends: ethel kennedy\n"
+                    "Action: Google News: iran nuclear talks 2026\n\n"
+                    "Output your Thought and then ONE Action now."
+                )
+                retry_response = await llm.complete(
+                    model=model,
+                    messages=[
+                        {"role": "system", "content": system_prompt},
+                        {"role": "user", "content": retry_prompt},
+                    ],
+                    temperature=0.3,
+                    max_tokens=1500,
+                )
+                response_text = retry_response.content
+                thought = extract_thought(response_text)
+
+                if has_finish(response_text):
+                    print("\n>> Agent signaled FINISH on retry")
+                    trace.append({"step": step, "thought": thought, "action": None, "tool": None, "query": None, "observation": None})
+                    break
+
+                action = parse_action(response_text)
+                if action is None:
+                    print(">> Still no action parsed after retry. Full output:")
+                    print(response_text)
+                    print(">> Giving up on this step.")
+                    trace.append({"step": step, "thought": thought, "action": None, "tool": None, "query": None, "observation": None})
+                    break
 
             tool_name, query = action
             print(f"Action: {tool_name}: {query}")
