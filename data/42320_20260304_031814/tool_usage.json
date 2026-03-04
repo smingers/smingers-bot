@@ -1,0 +1,177 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": false,
+      "num_queries": 0,
+      "queries": [],
+      "tools_used": [],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": false,
+      "num_queries": 0,
+      "queries": [],
+      "tools_used": [],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": false,
+      "num_queries": 0,
+      "queries": [],
+      "tools_used": [],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 1615,
+        "token_output": 1055,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.023899999999999998,
+        "duration_seconds": 40.62037634849548,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 2822,
+        "token_output": 1670,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.03916,
+        "duration_seconds": 33.477909564971924,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 2895,
+        "token_output": 1524,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.037335,
+        "duration_seconds": 33.47789406776428,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 1409,
+        "token_output": 2071,
+        "token_reasoning": 869,
+        "used_reasoning": true,
+        "cost": 0.03145975,
+        "duration_seconds": 40.62042784690857,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 2505,
+        "token_output": 1735,
+        "token_reasoning": 495,
+        "used_reasoning": true,
+        "cost": 0.028673749999999998,
+        "duration_seconds": 33.47787380218506,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 2753,
+        "token_output": 1401,
+        "token_reasoning": 512,
+        "used_reasoning": true,
+        "cost": 0.016714,
+        "duration_seconds": 33.47785210609436,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 1409,
+        "token_output": 1803,
+        "token_reasoning": 768,
+        "used_reasoning": true,
+        "cost": 0.017242,
+        "duration_seconds": 40.62047481536865,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 2512,
+        "token_output": 1493,
+        "token_reasoning": 640,
+        "used_reasoning": true,
+        "cost": 0.016968,
+        "duration_seconds": 33.47783160209656,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "steps1_2_research": 0.0249,
+    "step3_outside_view": 0.0726,
+    "step5_inside_view": 0.1389,
+    "step6_aggregation": 0.1389,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.2364
+}

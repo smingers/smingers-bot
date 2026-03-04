@@ -1,0 +1,62 @@
+{
+  "plan_analysis": "The pre-research context tells us only that the Elections Commission site showed a \u201c30 days\u201d countdown for the 2026 Local Council Election but does not give the exact date or any indication of slippage.  \nForecasters still need to know:\n\n1. Resolution mechanism \u2013 the precise date the election is officially scheduled for and where Wikipedia/Elections Commission will publish it.  \n2. Current state \u2013 any official confirmation, logistical preparations, or hints of delay (legal challenges, emergency decrees, natural-disaster disruptions, funding/logistics problems).  \n3. Key drivers \u2013 political stability and precedent for postponement in the Maldives (e.g., 2021 local elections were delayed twice); potential triggers such as states of emergency or parliamentary action.  \n4. Base-rate / historical frequency \u2013 how often the Maldives (or similar countries) have postponed local elections, especially inside the final month.  \n5. Contrarian evidence \u2013 signals of looming disruption (court cases, security incidents, cyclone warnings) that could still force a delay.\n\nSearch strategy: Combine historical queries on past Maldivian (and regional) election postponements with current-news queries tracking official statements and possible risks. This produces an evidence base covering all five dimensions.",
+  "reflect_analysis": null,
+  "queries_planned": [],
+  "gap_queries": [],
+  "seed_context_chars": 1620,
+  "historical_context_chars": 1621,
+  "current_context_chars": 0,
+  "phases": {
+    "pre_research": {
+      "duration_seconds": 36.72,
+      "seed_context_chars": 1620,
+      "search_id": "question_urls",
+      "searched": true,
+      "urls_found": 2,
+      "urls_scraped": 1,
+      "urls_summarized": 1,
+      "urls": [
+        {
+          "url": "https://en.wikipedia.org/wiki/2026_Maldivian_local_elections",
+          "domain": "en.wikipedia.org",
+          "scraped": false,
+          "method": "wikipedia_api",
+          "status_code": null,
+          "error": "Wikipedia API error: "
+        },
+        {
+          "url": "https://www.elections.gov.mv/en/",
+          "domain": "www.elections.gov.mv",
+          "scraped": true,
+          "method": "density",
+          "status_code": 200,
+          "content_words": 439
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ]
+    },
+    "plan": {
+      "duration_seconds": 19.5,
+      "cost": 0.0126,
+      "num_queries": 0
+    },
+    "execute": {
+      "duration_seconds": 0.0,
+      "cost": 0.0,
+      "queries_executed": 0,
+      "queries_successful": 0
+    },
+    "assemble": {
+      "historical_context_chars": 1621,
+      "current_context_chars": 0
+    }
+  },
+  "total_queries_planned": 0,
+  "total_queries_executed": 0,
+  "total_gap_queries": 0,
+  "total_cost": 0.0249,
+  "total_duration_seconds": 56.22,
+  "query_details": []
+}
