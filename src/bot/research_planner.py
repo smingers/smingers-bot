@@ -213,6 +213,8 @@ class IterativeResearchPlanner(ForecasterMixin):
         }
         if seed_context:
             log(f"  Seed context: {len(seed_context)} chars from question URLs")
+            if seed_metadata.get("google_trends_pre_research"):
+                log("  Google Trends pre-research: included in seed context")
         else:
             log("  No seed context from question URLs")
 
@@ -340,9 +342,25 @@ class IterativeResearchPlanner(ForecasterMixin):
 
         Runs BEFORE query generation so the planner can avoid redundant queries
         and build on what's already available from resolution sources.
+
+        For Google Trends questions (format trends_interest_change_magnitude), also
+        runs the programmatic Google Trends tool and appends its output to seed
+        context so the planner sees current trend data in PRE-RESEARCH CONTEXT.
         """
         async with SearchPipeline(self.config, self.llm) as search:
             seed_context, seed_metadata = await search.scrape_question_urls(question_details)
+
+            # For Google Trends questions: fetch trend data before planning and add to seed context
+            research_config = self.config.get("research", {})
+            if research_config.get("google_trends_enabled", True):
+                topic = search._extract_trends_topic(question_details)
+                if topic:
+                    trends_block = await search._google_trends_search(topic, question_details)
+                    if trends_block and "Error" not in trends_block[:200]:
+                        seed_context = (
+                            f"{seed_context}\n\n{trends_block}" if seed_context else trends_block
+                        )
+                        seed_metadata["google_trends_pre_research"] = True
 
         # Save seed context artifact
         if self.artifact_store and seed_context:

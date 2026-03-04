@@ -1683,6 +1683,32 @@ Note: Google Trends values are relative (0-100 scale), not absolute search volum
         logger.info("[_extract_trends_window] Using default window of 10 days")
         return 10  # Default fallback
 
+    def _extract_trends_topic(self, question_details: QuestionDetails | None) -> str | None:
+        """
+        If the question is a Google Trends question (format trends_interest_change_magnitude),
+        return the search topic from the JSON metadata in the description; otherwise None.
+        Used to run programmatic Google Trends in pre-research and include in seed context.
+        """
+        if question_details is None:
+            return None
+        import json
+
+        description = question_details.description or ""
+        json_match = re.search(r"`(\{[^`]+\})`", description)
+        if not json_match:
+            return None
+        try:
+            data = json.loads(json_match.group(1))
+            if data.get("format") != "trends_interest_change_magnitude":
+                return None
+            topic = (data.get("info") or {}).get("topic")
+            if topic and isinstance(topic, str) and topic.strip():
+                logger.info(f"[_extract_trends_topic] Google Trends question, topic: {topic!r}")
+                return topic.strip()
+        except (json.JSONDecodeError, TypeError, AttributeError):
+            pass
+        return None
+
     def _extract_trends_term(self, query: str) -> str:
         """Extract the search term from a query like 'Google Trends data for "hospital"'"""
         # Try to find quoted term first

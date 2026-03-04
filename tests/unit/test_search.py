@@ -434,6 +434,48 @@ Search queries:
         assert "hospital" in google_trends_queries[0][1]
 
 
+class TestExtractTrendsTopic:
+    """Tests for _extract_trends_topic (Google Trends pre-research detection)."""
+
+    def test_returns_topic_for_trends_interest_change_magnitude(self):
+        """Question with format trends_interest_change_magnitude and topic returns topic."""
+        pipeline = SearchPipeline({})
+        qd = QuestionDetails(
+            title="Trends question",
+            resolution_criteria="Resolves by trend value.",
+            fine_print="",
+            description='Background. `{"format":"trends_interest_change_magnitude","info":{"topic":"ethel kennedy","trend_start":"2026-03-04","trend_end":"2026-03-14"}}`',
+        )
+        assert pipeline._extract_trends_topic(qd) == "ethel kennedy"
+
+    def test_returns_none_when_format_not_trends(self):
+        """Question with other format in JSON returns None."""
+        pipeline = SearchPipeline({})
+        qd = QuestionDetails(
+            title="Other",
+            resolution_criteria="",
+            fine_print="",
+            description='`{"format":"other_format","info":{"topic":"foo"}}`',
+        )
+        assert pipeline._extract_trends_topic(qd) is None
+
+    def test_returns_none_when_no_json_block(self):
+        """Question with no backtick JSON block returns None."""
+        pipeline = SearchPipeline({})
+        qd = QuestionDetails(
+            title="No JSON",
+            resolution_criteria="",
+            fine_print="",
+            description="No JSON here.",
+        )
+        assert pipeline._extract_trends_topic(qd) is None
+
+    def test_returns_none_for_none_question_details(self):
+        """None question_details returns None."""
+        pipeline = SearchPipeline({})
+        assert pipeline._extract_trends_topic(None) is None
+
+
 # ============================================================================
 # Error Handling Tests
 # ============================================================================
