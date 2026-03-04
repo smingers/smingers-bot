@@ -31,7 +31,7 @@ from src.bot.search import QuestionDetails, SearchPipeline  # noqa: E402
 from src.utils.llm import LLMClient  # noqa: E402
 
 SAVE_DIR = Path(__file__).parent.parent / "scratchpad" / "orient"
-DEFAULT_MODEL = "openrouter/google/gemini-3-flash-preview"
+DEFAULT_MODEL = "openrouter/anthropic/claude-haiku-4.5"
 
 
 def load_artifact(artifact_dir: Path) -> tuple[dict, str]:

@@ -30,7 +30,7 @@ from src.utils.llm import LLMClient  # noqa: E402
 SAVE_DIR = Path(__file__).parent.parent / "scratchpad" / "base_rate_selection"
 MODELS = [
     "openrouter/openai/o3",
-    "openrouter/google/gemini-3-flash-preview",
+    "openrouter/anthropic/claude-haiku-4.5",
 ]
 
 PROMPT_TEMPLATE = """You are a research planner for a forecasting question. Your task is to analyze the question and the pre-research context to identify the most appropriate reference class for base rate estimation.

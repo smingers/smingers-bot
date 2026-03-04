@@ -47,6 +47,7 @@ MODEL_COSTS = {
     "openrouter/anthropic/claude-sonnet-4.5": {"input": 3.0, "output": 15.0},
     "openrouter/anthropic/claude-opus-4.5": {"input": 5.0, "output": 25.0},
     "openrouter/anthropic/claude-opus-4.6": {"input": 5.0, "output": 25.0},
+    "openrouter/anthropic/claude-haiku-4.5": {"input": 0.80, "output": 4.0},
     "openrouter/anthropic/claude-sonnet-4.6": {"input": 3.0, "output": 15.0},
     "openrouter/anthropic/claude-sonnet-4": {"input": 3.0, "output": 15.0},
     "openrouter/anthropic/claude-3.5-sonnet": {"input": 3.0, "output": 15.0},

@@ -446,7 +446,7 @@ class IterativeResearchPlanner(ForecasterMixin):
         # Use cheap/fast model for orient
         planner_config = self.config.get("research", {}).get("planner", {})
         orient_model = planner_config.get(
-            "orient_model", "openrouter/google/gemini-3-flash-preview"
+            "orient_model", "openrouter/anthropic/claude-haiku-4.5"
         )
         response = await self._call_model(orient_model, prompt, temperature=0.3)
 
