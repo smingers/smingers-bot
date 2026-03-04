@@ -1237,7 +1237,7 @@ The following information has already been gathered from sources referenced in t
 YOUR TASK:
 1. Analyze the question and the pre-research context
 2. Identify what information a skilled forecaster would need beyond what's already available
-3. Generate {max_queries} search queries to fill the remaining gaps
+3. Generate up to {max_queries} search queries to fill the remaining gaps
 
 COVERAGE DIMENSIONS (ensure your queries collectively address these):
 - Base rate: Historical frequency, distribution, or precedent for the outcome being forecast. How often has something like this happened before?

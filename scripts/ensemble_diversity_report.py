@@ -128,14 +128,27 @@ def _format_research_context(raw: str) -> str:
 
     sections: list[str] = []
 
+    # Track seen blocks to avoid duplicate entries when the same source appears
+    # in both question-url scraping and historical search context.
+    seen_question_sources: set[tuple[str, str]] = set()
+    seen_summaries: set[tuple[str, str]] = set()
+
     # Extract <QuestionSource url="...">...</QuestionSource>
     for m in re.finditer(r'<QuestionSource\s+url="([^"]*)">(.*?)</QuestionSource>', raw, re.DOTALL):
         url, body = m.group(1), m.group(2).strip()
+        key = (url, body)
+        if key in seen_question_sources:
+            continue
+        seen_question_sources.add(key)
         sections.append(f"---\n### Question Source\n**URL:** [{url}]({url})\n\n{body}")
 
     # Extract <Summary source="...">...</Summary>
     for m in re.finditer(r'<Summary\s+source="([^"]*)">(.*?)</Summary>', raw, re.DOTALL):
         url, body = m.group(1), m.group(2).strip()
+        key = (url, body)
+        if key in seen_summaries:
+            continue
+        seen_summaries.add(key)
         sections.append(f"---\n### Search Result\n**Source:** [{url}]({url})\n\n{body}")
 
     # Extract <Asknews_articles>...</Asknews_articles>
