@@ -10,6 +10,7 @@ Handles all interactions with the Metaculus API:
 import asyncio
 import logging
 import os
+import time
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from typing import Any, Literal
@@ -21,6 +22,12 @@ from ..bot.exceptions import QuestionTypeError
 logger = logging.getLogger(__name__)
 
 METACULUS_API_BASE = "https://www.metaculus.com/api"
+
+# Simple global rate limiter for Metaculus API calls.
+# Ensures at least MIN_INTERVAL_SECONDS between requests across the process.
+_RATE_LIMIT_LOCK = asyncio.Lock()
+_LAST_REQUEST_TIME: float | None = None
+MIN_INTERVAL_SECONDS = 1.5
 
 
 @dataclass
@@ -433,6 +440,21 @@ class MetaculusClient:
     ) -> httpx.Response:
         """Make an HTTP request with retry and exponential backoff on 429."""
         last_response: httpx.Response | None = None
+
+        # Global, process-wide spacing between Metaculus API calls.
+        async with _RATE_LIMIT_LOCK:
+            global _LAST_REQUEST_TIME
+            now = time.monotonic()
+            if _LAST_REQUEST_TIME is not None:
+                elapsed = now - _LAST_REQUEST_TIME
+                if elapsed < MIN_INTERVAL_SECONDS:
+                    wait_for = MIN_INTERVAL_SECONDS - elapsed
+                    logger.debug(
+                        "Metaculus API rate limiter sleeping for %.2fs before request", wait_for
+                    )
+                    await asyncio.sleep(wait_for)
+            _LAST_REQUEST_TIME = time.monotonic()
+
         for attempt in range(retry_count):
             try:
                 resp = await self.client.request(method, url, **kwargs)

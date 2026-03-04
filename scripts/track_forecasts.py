@@ -22,10 +22,12 @@ from typing import Any
 import httpx
 from dotenv import load_dotenv
 
+from src.utils.metaculus_api import MIN_INTERVAL_SECONDS
+
 load_dotenv()
 
-# Rate limit: Metaculus returns 429 if we go too fast.
-REQUEST_DELAY_SECONDS = 2.5
+# Rate limit: align with core Metaculus client (MIN_INTERVAL_SECONDS between calls).
+REQUEST_DELAY_SECONDS = MIN_INTERVAL_SECONDS
 POST_429_COOLDOWN_SECONDS = 6.0
 
 

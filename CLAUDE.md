@@ -47,10 +47,7 @@ The bot runs automatically via `.github/workflows/run-bot.yaml` every 30 minutes
 
 ```bash
 # Forecast new tournament questions only (always uses live mode)
-python run_bot.py --tournament 32916 --question-selection new-only
-
-# Re-forecast questions older than N days
-python run_bot.py --tournament 32916 --question-selection reforecast --reforecast-threshold-days 7
+python run_bot.py --tournament 32916
 ```
 
 ### Forecast Tracking

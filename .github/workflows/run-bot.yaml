@@ -60,7 +60,7 @@ jobs:
           NEW_MINIBENCH=""
 
           for TOURNAMENT in 32916 minibench; do
-            sleep 3  # Rate limiting (Cloudflare blocks at 1.5s)
+            sleep 1.5  # Rate limiting: 1.5s between Metaculus API calls
 
             # Get open question IDs (filter out non-question posts like announcements)
             for attempt in 1 2; do
@@ -81,7 +81,7 @@ jobs:
             OPEN_IDS=$(echo "$OPEN_BODY" | jq -r '[.results[] | select(.question or .group_of_questions)] | map(.id) | .[]' | sort -n)
             OPEN_COUNT=$(echo "$OPEN_IDS" | grep -c '[0-9]' || true)
 
-            sleep 3
+            sleep 1.5  # 1.5s between Metaculus API calls
 
             # Get my forecasted question IDs for this tournament
             for attempt in 1 2; do
@@ -220,7 +220,6 @@ jobs:
         run: |
           poetry run python run_bot.py \
             --tournament 32916 \
-            --question-selection new-only \
             --limit 50 \
             --question-ids "${{ needs.check.outputs.questions_32916 }}"
         env:
@@ -238,7 +237,6 @@ jobs:
         run: |
           poetry run python run_bot.py \
             --tournament minibench \
-            --question-selection new-only \
             --limit 50 \
             --question-ids "${{ needs.check.outputs.questions_minibench }}"
         env:
@@ -254,12 +252,10 @@ jobs:
       # These use 1x/week re-forecasting to manage costs
       # ============================================================
 
-      # - name: Forecast Metaculus Cup
+      # - name: Forecast Metaculus Cup (new questions only)
       #   run: |
       #     poetry run python run_bot.py \
       #       --tournament 32917 \
-      #       --question-selection reforecast \
-      #       --reforecast-days 7 \
       #       --limit 20
       #   env:
       #     OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
@@ -267,12 +263,10 @@ jobs:
       #     ASKNEWS_CLIENT_ID: ${{ secrets.ASKNEWS_CLIENT_ID }}
       #     ASKNEWS_CLIENT_SECRET: ${{ secrets.ASKNEWS_CLIENT_SECRET }}
 
-      # - name: Forecast Main Site
+      # - name: Forecast Main Site (new questions only)
       #   run: |
       #     poetry run python run_bot.py \
       #       --tournament main-site \
-      #       --question-selection reforecast \
-      #       --reforecast-days 7 \
       #       --limit 10
       #   env:
       #     OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}

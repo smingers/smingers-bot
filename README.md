@@ -17,7 +17,7 @@ Requires Python 3.11+.
 ## Entry points
 
 - **`main.py`** — Interactive and single-question runs: test/preview/live, list questions, `--forecast-unforecasted`. Use for development and one-off forecasts.
-- **`run_bot.py`** — Batch automation: forecast new tournament questions only, or reforecast questions older than N days. Used by GitHub Actions; run locally for bulk jobs.
+- **`run_bot.py`** — Batch automation: forecast new tournament questions only. Used by GitHub Actions; run locally for bulk jobs.
 
 ## Usage
 
@@ -54,15 +54,12 @@ python main.py --question 41594 --mode test --verbose
 
 ```bash
 # Forecast new tournament questions only (same as GitHub Actions)
-python run_bot.py --tournament 32916 --question-selection new-only
-
-# Re-forecast questions older than N days
-python run_bot.py --tournament 32916 --question-selection reforecast --reforecast-threshold-days 7
+python run_bot.py --tournament 32916
 ```
 
 ## Automation
 
-The bot runs automatically via `.github/workflows/run-bot.yaml` every 30 minutes, using `run_bot.py` with `--question-selection new-only` for the configured tournaments.
+The bot runs automatically via `.github/workflows/run-bot.yaml` every 30 minutes, using `run_bot.py` for the configured tournaments.
 
 ## Forecast artifacts and tracking
 

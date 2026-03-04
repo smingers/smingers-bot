@@ -27,11 +27,13 @@ from pathlib import Path
 import httpx
 from dotenv import load_dotenv
 
+from src.utils.metaculus_api import MIN_INTERVAL_SECONDS
+
 DEFAULT_TRACKING_FILE = Path("data/tracking/minibench.json")
 
-# Rate limit: Metaculus returns 429 if we go too fast. Use a conservative delay
-# so we stay under their limit; override with --delay if needed.
-DEFAULT_DELAY_SECONDS = 2.5
+# Rate limit: align with core Metaculus client (MIN_INTERVAL_SECONDS between calls).
+# Can be overridden via --delay if needed.
+DEFAULT_DELAY_SECONDS = MIN_INTERVAL_SECONDS
 # After a 429, wait this long before the next request to let the limit window reset.
 POST_429_COOLDOWN_SECONDS = 6.0
 

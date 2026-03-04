@@ -201,10 +201,11 @@ JS_EXTRACTOR = r"""
     const tm=d.match(/\\?"type\\?":\\?"(binary|numeric|multiple_choice|date|discrete)\\?"/);
     r.type=tm?tm[1]:null;
 
-    // Collect ALL centers values with their positions.
+    // Collect ALL centers values with their positions and nearby timestamps.
     // The community prediction history is a long run of single-value centers
-    // (e.g. 0.25, 0.30, etc.) in the first ~250K of the payload.
-    // We want the LAST one in this history block.
+    // (e.g. 0.25, 0.30, etc.) early in the payload. For each centers match we
+    // also look in a small window around it for the surrounding start/end
+    // timestamps so we can compute time-based deltas (7/14/30 days).
     const centersAll = [];
     const cRe = /centers\\?"\s*:\s*\[([^\]]*)\]/g;
     let m;
@@ -213,59 +214,93 @@ JS_EXTRACTOR = r"""
         // History entries are single float values (e.g. "0.25")
         // Skip multi-value entries (those are from related questions)
         if (v && !v.includes(',')) {
-            centersAll.push({value: parseFloat(v), position: m.index});
+            const centerVal = parseFloat(v);
+            const pos = m.index;
+
+            // Look in a small window around this match for the corresponding
+            // end_time field. This keeps us from having to fully parse the
+            // enormous RSC payload as JSON.
+            const winStart = Math.max(0, pos - 300);
+            const winEnd = Math.min(d.length, pos + 300);
+            const win = d.slice(winStart, winEnd);
+            let endTime = null;
+            const mEnd = win.match(/end_time\\?"?\\s*:\\s*([0-9.]+)/);
+            if (mEnd) {
+                endTime = parseFloat(mEnd[1]);
+            }
+
+            centersAll.push({value: centerVal, position: pos, end_time: endTime});
         }
     }
 
-    // The history block is a contiguous run of single-value centers.
-    // Find the last entry in the first contiguous block (before a gap).
-    // A "gap" means the position jumps by more than 50K (related questions start later).
     if (centersAll.length > 0) {
-        // Find end of the first contiguous block
+        // Heuristic: use the last value in the first contiguous block as the
+        // current community prediction, and compute min/max and time-based
+        // deltas over that block.
         let lastHistoryIdx = 0;
         for (let i = 1; i < centersAll.length; i++) {
             if (centersAll[i].position - centersAll[i-1].position > 50000) break;
             lastHistoryIdx = i;
         }
-        const histLen = lastHistoryIdx + 1;
-        r.centers = String(centersAll[lastHistoryIdx].value);
+        const block = centersAll.slice(0, lastHistoryIdx + 1);
+
+        // Sort by end_time when available; fall back to position order.
+        block.sort((a, b) => {
+            if (a.end_time != null && b.end_time != null) {
+                return a.end_time - b.end_time;
+            }
+            return a.position - b.position;
+        });
+
+        const histLen = block.length;
         r.history_length = histLen;
 
-        // Extract trend data: last 7, 14, 30 data points
-        const histValues = centersAll.slice(0, histLen).map(c => c.value);
+        const histValues = block.map(c => c.value);
         r.current = histValues[histValues.length - 1];
-        if (histValues.length >= 7) {
-            r.week_ago = histValues[histValues.length - 7];
-            r.week_delta = +(r.current - r.week_ago).toFixed(4);
-        }
-        if (histValues.length >= 14) {
-            r.two_weeks_ago = histValues[histValues.length - 14];
-            r.two_week_delta = +(r.current - r.two_weeks_ago).toFixed(4);
-        }
-        if (histValues.length >= 30) {
-            r.month_ago = histValues[histValues.length - 30];
-            r.month_delta = +(r.current - r.month_ago).toFixed(4);
-        }
-
-        // Min/max/range over full history
+        r.centers = String(r.current);
         r.history_min = Math.min(...histValues);
         r.history_max = Math.max(...histValues);
+
+        // Time-based 7/14/30 day deltas using end_time when available.
+        const last = block[block.length - 1];
+        if (last.end_time != null) {
+            const now = last.end_time;
+            const day = 24 * 60 * 60;
+            const targets = {
+                week: now - 7 * day,
+                twoWeeks: now - 14 * day,
+                month: now - 30 * day,
+            };
+
+            function pickValue(target) {
+                // Last point with end_time <= target; if none, use earliest.
+                let candidate = block[0];
+                for (const pt of block) {
+                    if (pt.end_time != null && pt.end_time <= target) {
+                        candidate = pt;
+                    }
+                }
+                return candidate.value;
+            }
+
+            const weekVal = pickValue(targets.week);
+            const twoWeekVal = pickValue(targets.twoWeeks);
+            const monthVal = pickValue(targets.month);
+
+            r.week_ago = weekVal;
+            r.week_delta = +(r.current - weekVal).toFixed(4);
+            r.two_weeks_ago = twoWeekVal;
+            r.two_week_delta = +(r.current - twoWeekVal).toFixed(4);
+            r.month_ago = monthVal;
+            r.month_delta = +(r.current - monthVal).toFixed(4);
+        }
     }
 
-    // Similarly, find the last forecaster_count in the history block.
-    const fcAll = [];
-    const fcRe = /forecaster_count\\?"\s*:\s*(\d+)/g;
-    while ((m = fcRe.exec(d)) !== null) {
-        fcAll.push({value: +m[1], position: m.index});
-    }
-    if (fcAll.length > 0) {
-        let lastFcIdx = 0;
-        for (let i = 1; i < fcAll.length; i++) {
-            if (fcAll[i].position - fcAll[i-1].position > 50000) break;
-            lastFcIdx = i;
-        }
-        r.fc = fcAll[lastFcIdx].value;
-    }
+    // NOTE: We deliberately do NOT expose a forecaster_count here. Metaculus
+    // uses several different forecaster-count notions internally, and the
+    // UI chip (e.g. "783 forecasters") does not map cleanly onto the
+    // aggregation history. To avoid confusion, we only report the shape and
+    // level of the community prediction itself (current value and range).
 
     return JSON.stringify(r);
 }

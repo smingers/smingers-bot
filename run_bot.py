@@ -2,20 +2,17 @@
 """
 GitHub Actions entry point for automated forecasting.
 
-Question selection modes:
-  - new-only: Forecast new questions only (skip already forecasted)
-  - reforecast: Forecast new + re-forecast old questions
+Forecasts only **new** tournament questions (skips any you have already
+forecasted). Used by GitHub Actions; run locally for bulk new-question runs.
 
 Usage:
-  python run_bot.py --tournament 32916 --question-selection new-only
-  python run_bot.py --tournament 32917 --question-selection reforecast --reforecast-threshold-days 7
+  python run_bot.py --tournament 32916
 """
 
 import argparse
 import asyncio
 import logging
 import sys
-from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
@@ -31,8 +28,6 @@ logger = logging.getLogger(__name__)
 
 async def forecast_metaculus_questions(
     tournament_id: str,
-    question_selection: str = "new-only",
-    reforecast_threshold_days: int = 7,
     limit: int = 50,
     question_ids: str | None = None,
 ):
@@ -41,8 +36,6 @@ async def forecast_metaculus_questions(
 
     Args:
         tournament_id: Tournament ID or slug (e.g., "32916", "minibench")
-        question_selection: "new-only" (new questions only) or "reforecast" (new + old)
-        reforecast_threshold_days: For reforecast mode, re-forecast questions older than this
         limit: Maximum questions to forecast per run
         question_ids: Optional comma-separated post IDs from CI check job; skips list API calls
 
@@ -65,9 +58,7 @@ async def forecast_metaculus_questions(
             return 0
         async with MetaculusClient() as client:
             questions_to_forecast = []
-            for i, post_id in enumerate(ids_from_check):
-                if i > 0:
-                    await asyncio.sleep(1)  # Rate limit: 1s between fetches
+            for post_id in ids_from_check:
                 try:
                     q = await client.get_question(post_id)
                     questions_to_forecast.append(q)
@@ -119,30 +110,8 @@ async def forecast_metaculus_questions(
             forecasted_ids = set(my_forecasts.keys()) if my_forecasts else set()
             logger.info(f"Already forecasted: {len(forecasted_ids)} questions")
 
-            questions_to_forecast = []
-
-            if question_selection == "new-only":
-                for q in questions:
-                    if q.id not in forecasted_ids:
-                        questions_to_forecast.append(q)
-                logger.info(f"new-only: {len(questions_to_forecast)} new questions to forecast")
-
-            elif question_selection == "reforecast":
-                cutoff = datetime.now(UTC) - timedelta(days=reforecast_threshold_days)
-                for q in questions:
-                    if q.id not in forecasted_ids:
-                        questions_to_forecast.append(q)
-                    else:
-                        my_forecast = my_forecasts.get(q.id)
-                        if my_forecast and my_forecast.timestamp:
-                            if my_forecast.timestamp < cutoff:
-                                questions_to_forecast.append(q)
-                        else:
-                            questions_to_forecast.append(q)
-                logger.info(
-                    f"reforecast: {len(questions_to_forecast)} questions "
-                    f"(new + older than {reforecast_threshold_days} days)"
-                )
+            questions_to_forecast = [q for q in questions if q.id not in forecasted_ids]
+            logger.info(f"new-only: {len(questions_to_forecast)} new questions to forecast")
 
             if not questions_to_forecast:
                 logger.info("No questions need forecasting. Exiting.")
@@ -177,9 +146,9 @@ async def forecast_metaculus_questions(
         )
 
     # Print summary and log failures
-    result.print_summary(tournament_id=tournament_id, question_selection=question_selection)
+    result.print_summary(tournament_id=tournament_id, question_selection="new-only")
     result.write_failure_log(
-        question_selection=question_selection, source="run_bot.py", tournament_id=tournament_id
+        question_selection="new-only", source="run_bot.py", tournament_id=tournament_id
     )
 
     # Exit codes:
@@ -210,19 +179,6 @@ def main():
         help="Tournament ID or slug (e.g., 32916, spring-aib-2026)",
     )
     parser.add_argument(
-        "--question-selection",
-        "-s",
-        choices=["new-only", "reforecast"],
-        default="new-only",
-        help="new-only=forecast new questions only, reforecast=new+refresh old",
-    )
-    parser.add_argument(
-        "--reforecast-threshold-days",
-        type=int,
-        default=7,
-        help="Re-forecast questions older than this many days (reforecast mode only)",
-    )
-    parser.add_argument(
         "--limit", type=int, default=50, help="Maximum questions to forecast per run"
     )
     parser.add_argument(
@@ -242,8 +198,6 @@ def main():
     asyncio.run(
         forecast_metaculus_questions(
             tournament_id=args.tournament,
-            question_selection=args.question_selection,
-            reforecast_threshold_days=args.reforecast_threshold_days,
             limit=args.limit,
             question_ids=args.question_ids,
         )

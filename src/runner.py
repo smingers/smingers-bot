@@ -115,7 +115,7 @@ class RunResult:
         Args:
             source: Identifier for the calling entry point (e.g., "main.py", "run_bot.py")
             tournament_id: Optional tournament ID for context
-            question_selection: Optional selection mode (e.g., "new-only", "reforecast")
+            question_selection: Optional selection mode for logging (e.g., "new-only")
         """
         if not self.failures:
             return
@@ -155,7 +155,7 @@ class RunResult:
 
         Args:
             tournament_id: Optional tournament ID to include in summary
-            question_selection: Optional selection mode (e.g., "new-only", "reforecast")
+            question_selection: Optional selection mode for logging (e.g., "new-only")
         """
         print("\n" + "=" * 70)
         print("FORECAST RUN SUMMARY")
