@@ -17,6 +17,7 @@ from src.bot.research_planner import (
     QueryResult,
     ResearchQuery,
 )
+from src.bot.search import AgenticSearchResult, AgenticSearchStepData
 
 # =============================================================================
 # Fixtures
@@ -618,3 +619,202 @@ class TestTaggedQueryRegex:
         match = _TAGGED_QUERY_PATTERN.search(line)
         assert match is not None
         assert match.group(3) == "Google Trends"
+
+
+# =============================================================================
+# Agentic search instrumentation (data collection) tests
+# =============================================================================
+
+
+class TestProcessSearchResultAgentInstrumentation:
+    """Tests that Agent results produce full instrumentation (steps, tools, queries).
+
+    These tests would break if data collection from agentic search were changed:
+    e.g. if steps_taken, queries_executed, or step_data were dropped or renamed.
+    """
+
+    def test_agent_result_includes_steps_taken(self, planner):
+        rq = ResearchQuery(
+            "Synthesize base rate from FRED",
+            "Agent",
+            "historical",
+            "base rate",
+        )
+        raw = AgenticSearchResult(
+            analysis="Final analysis here.",
+            steps_taken=2,
+            queries_executed=["OBMMIFHA30YF (FRED)", "FHA rate volatility (Google)"],
+            step_data=[
+                AgenticSearchStepData(
+                    step_number=1,
+                    queries_executed=[
+                        ("OBMMIFHA30YF (FRED)", "FRED"),
+                        ("FHA rate volatility (Google)", "Google"),
+                    ],
+                    search_results_raw="x" * 1000,
+                    analysis_after_step="Step 1 analysis",
+                ),
+                AgenticSearchStepData(
+                    step_number=2,
+                    queries_executed=[],
+                    search_results_raw="",
+                    analysis_after_step="",
+                ),
+            ],
+            error=None,
+        )
+        result = planner._process_search_result(rq, raw)
+        assert result.success is True
+        assert "steps_taken" in result.metadata
+        assert result.metadata["steps_taken"] == 2
+
+    def test_agent_result_includes_queries_executed(self, planner):
+        rq = ResearchQuery("Agent task", "Agent", "historical", "intent")
+        raw = AgenticSearchResult(
+            analysis="Done.",
+            steps_taken=1,
+            queries_executed=["query one", "query two"],
+            step_data=[
+                AgenticSearchStepData(
+                    step_number=1,
+                    queries_executed=[("query one", "Google"), ("query two", "FRED")],
+                    search_results_raw="",
+                    analysis_after_step="",
+                ),
+            ],
+            error=None,
+        )
+        result = planner._process_search_result(rq, raw)
+        assert "queries_executed" in result.metadata
+        assert result.metadata["queries_executed"] == ["query one", "query two"]
+
+    def test_agent_result_includes_step_data_with_tools_and_queries(self, planner):
+        rq = ResearchQuery("Agent task", "Agent", "historical", "intent")
+        step1_queries = [("UNRATE (FRED)", "FRED"), ("unemployment news", "Google News")]
+        raw = AgenticSearchResult(
+            analysis="Done.",
+            steps_taken=1,
+            queries_executed=["UNRATE (FRED)", "unemployment news"],
+            step_data=[
+                AgenticSearchStepData(
+                    step_number=1,
+                    queries_executed=step1_queries,
+                    search_results_raw="a" * 200,
+                    analysis_after_step="b" * 50,
+                ),
+            ],
+            error=None,
+        )
+        result = planner._process_search_result(rq, raw)
+        assert "step_data" in result.metadata
+        step_data = result.metadata["step_data"]
+        assert len(step_data) == 1
+        assert step_data[0]["step_number"] == 1
+        assert step_data[0]["queries_executed"] == step1_queries
+        assert step_data[0]["search_results_chars"] == 200
+        assert step_data[0]["analysis_chars"] == 50
+
+    def test_agent_result_includes_error_in_instrumentation(self, planner):
+        rq = ResearchQuery("Agent task", "Agent", "historical", "intent")
+        raw = AgenticSearchResult(
+            analysis="",
+            steps_taken=1,
+            queries_executed=[],
+            step_data=[],
+            error="Model timeout",
+        )
+        result = planner._process_search_result(rq, raw)
+        assert result.success is False
+        assert "error" in result.metadata
+        assert result.metadata["error"] == "Model timeout"
+
+
+class TestBuildQueryDetailsPreservesAgentInstrumentation:
+    """Tests that query_details built for tool_usage include agentic_instrumentation.
+
+    Would break if we stopped copying Agent metadata into the detail dict.
+    """
+
+    def test_agent_result_detail_has_agentic_instrumentation(self, planner):
+        agent_meta = {
+            "steps_taken": 2,
+            "queries_executed": ["q1 (FRED)", "q2 (Google)"],
+            "step_data": [
+                {
+                    "step_number": 1,
+                    "queries_executed": [["q1 (FRED)", "FRED"]],
+                    "search_results_chars": 100,
+                    "analysis_chars": 10,
+                },
+            ],
+            "error": None,
+        }
+        agent_rq = ResearchQuery("Agent query", "Agent", "historical", "intent")
+        results = [
+            QueryResult(
+                query=agent_rq,
+                formatted_output="<Agent_report>...</Agent_report>",
+                success=True,
+                num_results=1,
+                metadata=agent_meta,
+            ),
+        ]
+        details = planner._build_query_details(results)
+        assert len(details) == 1
+        assert "agentic_instrumentation" in details[0]
+        assert details[0]["agentic_instrumentation"]["steps_taken"] == 2
+        assert details[0]["agentic_instrumentation"]["queries_executed"] == [
+            "q1 (FRED)",
+            "q2 (Google)",
+        ]
+        assert len(details[0]["agentic_instrumentation"]["step_data"]) == 1
+        assert details[0]["agentic_instrumentation"]["step_data"][0]["queries_executed"] == [
+            ["q1 (FRED)", "FRED"]
+        ]
+
+    def test_non_agent_result_has_no_agentic_instrumentation(self, planner):
+        results = [
+            QueryResult(
+                query=ResearchQuery("UNRATE", "FRED", "historical", "series"),
+                formatted_output="<FREDData>...</FREDData>",
+                success=True,
+                num_results=1,
+                metadata={},  # no metadata
+            ),
+        ]
+        details = planner._build_query_details(results)
+        assert len(details) == 1
+        assert "agentic_instrumentation" not in details[0]
+
+    def test_google_result_detail_has_url_results_and_scrape_stats(self, planner):
+        results = [
+            QueryResult(
+                query=ResearchQuery("test query", "Google", "historical", "intent"),
+                formatted_output="<Summary>...</Summary>",
+                success=True,
+                num_results=2,
+                metadata={
+                    "url_results": [
+                        {"url": "https://a.com", "success": True},
+                        {"url": "https://b.com", "success": True},
+                        {"url": "https://c.com", "success": False},
+                    ],
+                    "scrape_stats": {
+                        "urls_returned": 3,
+                        "urls_extracted": 2,
+                        "urls_failed": 1,
+                        "urls_summarized": 2,
+                    },
+                },
+            ),
+        ]
+        details = planner._build_query_details(results)
+        assert len(details) == 1
+        assert "url_results" in details[0]
+        assert len(details[0]["url_results"]) == 3
+        assert "scrape_stats" in details[0]
+        assert details[0]["scrape_stats"]["urls_returned"] == 3
+        assert details[0]["scrape_stats"]["urls_extracted"] == 2
+        assert details[0]["scrape_stats"]["urls_failed"] == 1
+        assert details[0]["scrape_stats"]["urls_summarized"] == 2
+        assert "agentic_instrumentation" not in details[0]

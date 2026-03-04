@@ -303,21 +303,7 @@ class IterativeResearchPlanner(ForecasterMixin):
         metadata["total_duration_seconds"] = round(time.time() - pipeline_start, 2)
 
         # Build per-query details for tool_usage tracking (include Agent instrumentation when present)
-        metadata["query_details"] = []
-        for r in query_results:
-            detail = {
-                "query": r.query.query,
-                "tool": r.query.tool,
-                "temporal_role": r.query.temporal_role,
-                "intent": r.query.intent,
-                "phase": r.query.phase,
-                "success": r.success,
-                "num_results": r.num_results,
-                "error": r.error,
-            }
-            if r.metadata:
-                detail["agentic_instrumentation"] = r.metadata
-            metadata["query_details"].append(detail)
+        metadata["query_details"] = self._build_query_details(query_results)
 
         # Pre-research context for downstream consumers (outside/inside view + supervisor)
         # Combine community prediction context (if any) with question URL seed context.
@@ -584,12 +570,22 @@ class IterativeResearchPlanner(ForecasterMixin):
         if tool in ("Google", "Google News"):
             scrape_result: GoogleScrapeResult = raw
             num_results = scrape_result.formatted_output.count("<Summary")
+            url_results = scrape_result.url_results
+            metadata = {
+                "url_results": url_results,
+                "scrape_stats": {
+                    "urls_returned": len(url_results),
+                    "urls_extracted": sum(1 for u in url_results if u.get("success")),
+                    "urls_failed": sum(1 for u in url_results if not u.get("success")),
+                    "urls_summarized": num_results,
+                },
+            }
             return QueryResult(
                 query=rq,
                 formatted_output=scrape_result.formatted_output,
                 success=True,
                 num_results=num_results,
-                metadata={"url_results": scrape_result.url_results},
+                metadata=metadata,
             )
         elif tool == "Agent":
             agentic_result: AgenticSearchResult = raw
@@ -731,6 +727,29 @@ class IterativeResearchPlanner(ForecasterMixin):
             gap_queries = gap_queries[:max_gap_queries]
 
         return analysis, gap_queries
+
+    def _build_query_details(self, query_results: list[QueryResult]) -> list[dict[str, Any]]:
+        """Build per-query detail dicts for tool_usage tracking. Preserves Agent instrumentation and Google scrape stats."""
+        details = []
+        for r in query_results:
+            detail = {
+                "query": r.query.query,
+                "tool": r.query.tool,
+                "temporal_role": r.query.temporal_role,
+                "intent": r.query.intent,
+                "phase": r.query.phase,
+                "success": r.success,
+                "num_results": r.num_results,
+                "error": r.error,
+            }
+            if r.metadata:
+                if r.query.tool == "Agent":
+                    detail["agentic_instrumentation"] = r.metadata
+                elif r.query.tool in ("Google", "Google News"):
+                    detail["url_results"] = r.metadata.get("url_results", [])
+                    detail["scrape_stats"] = r.metadata.get("scrape_stats", {})
+            details.append(detail)
+        return details
 
     def _build_results_summary(
         self,
