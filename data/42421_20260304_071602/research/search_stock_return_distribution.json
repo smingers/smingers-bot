@@ -1,0 +1,85 @@
+{
+  "ticker": "MCO",
+  "start_date": "2026-03-04",
+  "end_date": "2026-03-13",
+  "trading_days": 7,
+  "current_price": 464.3,
+  "reference_price": 464.3,
+  "return_so_far": 0.0,
+  "sample_size": 2506,
+  "positive_return_rate": 0.6022,
+  "mean_return": 0.56,
+  "median_return": 0.91,
+  "std_return": 4.23,
+  "percentile_5": -6.44,
+  "percentile_25": -1.63,
+  "percentile_75": 2.96,
+  "percentile_95": 6.61,
+  "recent_return_5d": 2.81,
+  "recent_return_1m": -9.75,
+  "recent_return_3m": -5.19,
+  "volatility_30d": 45.2,
+  "recent_return_5d_percentile": 79,
+  "recent_return_1m_percentile": 5,
+  "recent_return_3m_percentile": 18,
+  "conditional_rates": [
+    {
+      "label": "3-month return > 20%",
+      "condition": "momentum_positive",
+      "probability": 0.6193,
+      "sample_size": 176,
+      "delta": 1.7,
+      "applicable": false
+    },
+    {
+      "label": "Price in top decile of 52wk range",
+      "condition": "range_top_decile",
+      "probability": 0.6031,
+      "sample_size": 970,
+      "delta": 0.1,
+      "applicable": false
+    },
+    {
+      "label": "Prior 5-day return > 0",
+      "condition": "mean_reversion_up",
+      "probability": 0.6045,
+      "sample_size": 1454,
+      "delta": 0.2,
+      "applicable": true
+    },
+    {
+      "label": "Prior 5-day return < 0",
+      "condition": "mean_reversion_down",
+      "probability": 0.5979,
+      "sample_size": 1047,
+      "delta": -0.4,
+      "applicable": false
+    },
+    {
+      "label": "30-day vol above median",
+      "condition": "vol_high",
+      "probability": 0.567,
+      "sample_size": 1238,
+      "delta": -3.5,
+      "applicable": true
+    },
+    {
+      "label": "30-day vol below median",
+      "condition": "vol_low",
+      "probability": 0.6349,
+      "sample_size": 1238,
+      "delta": 3.3,
+      "applicable": false
+    }
+  ],
+  "next_ex_dividend_date": null,
+  "ex_dividend_in_window": null,
+  "analyst_mean_target": 546.7,
+  "analyst_low_target": 460.0,
+  "analyst_high_target": 660.0,
+  "analyst_count": 20,
+  "analyst_recommendation": "buy",
+  "dividend_yield_pct": 89.0,
+  "fifty_two_week_low": 378.71,
+  "fifty_two_week_high": 546.88
+}

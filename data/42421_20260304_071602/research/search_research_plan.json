@@ -1,0 +1,870 @@
+{
+  "plan_analysis": "The pre-research context already supplies: \n\u2022 Latest price (04 Mar 26), 7-day historical return distribution for MCO, broad valuation metrics, recent performance, dividend and earnings calendar information.  \nRemaining gaps a forecaster will care about:  \n1. Deeper base rates:  \u2013 longer price history for 1-week windows, seasonality (early-March, post ex-dividend), and how MCO behaves after sharp pull-backs; \u2013 comparison with parent market/SPGI, MSCI, SPX to judge beta.  \n2. Resolution mechanics check: confirm Yahoo Finance closing price is the reference and what trading days those dates correspond to (no weekend/holiday issues).  \n3. Key drivers between 04 Mar and 13 Mar: macro data releases (NFP 06 Mar, CPI 10 Mar), bond-issuance flow, interest-rate expectations, overall equity sentiment.  \n4. Current state & catalysts: any fresh analyst upgrades/downgrades, regulatory headlines (antitrust/DOJ, ESG backlash), unusual options positioning, large credit events that could sway rating-agency stocks.  \n5. Contrarian possibilities: lawsuits or probes, negative rating controversies, unexpected guidance from peer SPGI, sector-wide AI/Info-services sell-off, etc.\n\nSearch strategy: 8 queries \u2013 5 historical (base-rate/seasonality/analogues), 3 current (news, upcoming events, contrarian risk).  Use one Agent query to pull a richer historical analogue set.",
+  "reflect_analysis": null,
+  "queries_planned": [
+    {
+      "query": "Moody's MCO weekly return distribution",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "locate long-run statistics or charts of 5-7-day price moves for MCO to refine unconditional base rate.",
+      "phase": "plan"
+    },
+    {
+      "query": "Moody's stock March seasonality",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "find analyses of average early-March performance and post-ex-dividend patterns for MCO.",
+      "phase": "plan"
+    },
+    {
+      "query": "rating agency stocks vs yields",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "gather historical correlations of MCO/SPGI with Treasury yields to weight macro-rate risk.",
+      "phase": "plan"
+    },
+    {
+      "query": "S&P 500 early March returns",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "get market-wide seasonality as another base-rate benchmark.",
+      "phase": "plan"
+    },
+    {
+      "query": "SPGI MSCI weekly move compare",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "obtain peer 1-week return distributions to benchmark beta and dispersion.",
+      "phase": "plan"
+    },
+    {
+      "query": "How often MCO rebounds after 8 percent monthly drop in next week given S&P flat or positive and no earnings events; compare to base rate.",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "synthesize historical analogues of sharp 1-month declines and subsequent 1-week bounce probabilities.",
+      "phase": "plan"
+    },
+    {
+      "query": "Moody's analyst rating change March 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "capture any fresh upgrades/downgrades or target revisions since 01 Mar 26.",
+      "phase": "plan"
+    },
+    {
+      "query": "DOJ probe Moody's 2026 news",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "surface any ongoing or newly disclosed investigations/lawsuits that could unexpectedly pressure the stock.",
+      "phase": "plan"
+    }
+  ],
+  "gap_queries": [],
+  "seed_context_chars": 1804,
+  "historical_context_chars": 26710,
+  "current_context_chars": 39275,
+  "phases": {
+    "pre_research": {
+      "duration_seconds": 14.24,
+      "seed_context_chars": 1804,
+      "search_id": "question_urls",
+      "searched": true,
+      "urls_found": 1,
+      "urls_scraped": 1,
+      "urls_summarized": 1,
+      "urls": [
+        {
+          "url": "https://finance.yahoo.com/quote/MCO",
+          "domain": "finance.yahoo.com",
+          "scraped": true,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_words": 990
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ]
+    },
+    "plan": {
+      "duration_seconds": 35.93,
+      "cost": 0.0197,
+      "num_queries": 8
+    },
+    "execute": {
+      "duration_seconds": 110.19,
+      "cost": 0.3085,
+      "queries_executed": 8,
+      "queries_successful": 8
+    },
+    "assemble": {
+      "historical_context_chars": 26710,
+      "current_context_chars": 39275
+    }
+  },
+  "total_queries_planned": 8,
+  "total_queries_executed": 8,
+  "total_gap_queries": 0,
+  "total_cost": 0.3491,
+  "total_duration_seconds": 160.36,
+  "query_details": [
+    {
+      "query": "Moody's MCO weekly return distribution",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "locate long-run statistics or charts of 5-7-day price moves for MCO to refine unconditional base rate.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 1,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://finance.yahoo.com/quote/MCO/key-statistics/",
+          "domain": "finance.yahoo.com",
+          "success": false,
+          "error": "HTTP 404",
+          "method": null,
+          "status_code": 404,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://ir.moodys.com/investor-resources/stock-chart/default.aspx",
+          "domain": "ir.moodys.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.morningstar.com/stocks/xnys/mco/trailing-returns",
+          "domain": "www.morningstar.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 688,
+          "truncated": false
+        },
+        {
+          "url": "https://www.stocktitan.net/sec-filings/MCO/8-k-moodys-corp-de-reports-material-event-c2b3f8eecd39.html",
+          "domain": "www.stocktitan.net",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 2591,
+          "truncated": false
+        },
+        {
+          "url": "https://www.financecharts.com/stocks/MCO/performance/total-return",
+          "domain": "www.financecharts.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.investing.com/equities/moodys-corp-earnings",
+          "domain": "www.investing.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://seekingalpha.com/symbol/MCO",
+          "domain": "seekingalpha.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://stockcircle.com/stocks/mco",
+          "domain": "stockcircle.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.kraken.com/stocks/mco",
+          "domain": "www.kraken.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.moodys.com/web/en/us/insights/resources/overview-of-modeling-credit-portfolios.pdf",
+          "domain": "www.moodys.com",
+          "success": false,
+          "error": "Content extraction failed",
+          "method": null,
+          "status_code": 200,
+          "content_chars": 0,
+          "truncated": false
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 2,
+        "urls_failed": 8,
+        "urls_summarized": 1
+      }
+    },
+    {
+      "query": "Moody's stock March seasonality",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "find analyses of average early-March performance and post-ex-dividend patterns for MCO.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://charts.equityclock.com/moodys-corp-nysemco-seasonal-chart",
+          "domain": "charts.equityclock.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 1832,
+          "truncated": false
+        },
+        {
+          "url": "https://www.barchart.com/stocks/quotes/MCO/seasonality-chart",
+          "domain": "www.barchart.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 2820,
+          "truncated": false
+        },
+        {
+          "url": "https://www.moodys.com/sites/products/productattachments/case-shiller-faq.pdf",
+          "domain": "www.moodys.com",
+          "success": false,
+          "error": "Content extraction failed",
+          "method": null,
+          "status_code": 200,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.macrotrends.net/stocks/charts/MCO/moodys/stock-price-history",
+          "domain": "www.macrotrends.net",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 15355,
+          "truncated": true
+        },
+        {
+          "url": "https://www.cnn.com/markets/stocks/MCO",
+          "domain": "www.cnn.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 1635,
+          "truncated": false
+        },
+        {
+          "url": "https://fred.stlouisfed.org/series/AAA",
+          "domain": "fred.stlouisfed.org",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 554,
+          "truncated": false
+        },
+        {
+          "url": "https://www.economy.com/united-states/stock-market-index",
+          "domain": "www.economy.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 3831,
+          "truncated": false
+        },
+        {
+          "url": "https://www.financecharts.com/stocks/MCO/summary/price",
+          "domain": "www.financecharts.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.marketbeat.com/stocks/NYSE/MCO/chart/",
+          "domain": "www.marketbeat.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 9,
+        "urls_extracted": 6,
+        "urls_failed": 3,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "rating agency stocks vs yields",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "gather historical correlations of MCO/SPGI with Treasury yields to weight macro-rate risk.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://www.investopedia.com/terms/b/bondrating.asp",
+          "domain": "www.investopedia.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 6240,
+          "truncated": false
+        },
+        {
+          "url": "https://www.spglobal.com/ratings/en/credit-ratings/about/understanding-credit-ratings",
+          "domain": "www.spglobal.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.sciencedirect.com/science/article/abs/pii/S1062976999000058",
+          "domain": "www.sciencedirect.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.advisorperspectives.com/articles/2023/05/25/bond-market-credit-agencies-swedroe",
+          "domain": "www.advisorperspectives.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.aeaweb.org/articles?id=10.1257/pandp.20201008",
+          "domain": "www.aeaweb.org",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 1328,
+          "truncated": false
+        },
+        {
+          "url": "https://www.reddit.com/r/finance/comments/n08ct/why_are_ratings_agencies_still_paid_by_issuers_of/",
+          "domain": "www.reddit.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.bbva.com/en/economy-and-finance/high-yield-or-investment-grade-different-bonds-based-on-their-credit-quality/",
+          "domain": "www.bbva.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 2914,
+          "truncated": false
+        },
+        {
+          "url": "https://www.bankrate.com/investing/investment-grade-bonds-vs-high-yield-bonds/",
+          "domain": "www.bankrate.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 4039,
+          "truncated": false
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=FgDT0oNEW9E",
+          "domain": "www.youtube.com",
+          "success": false,
+          "error": "Content extraction failed",
+          "method": null,
+          "status_code": 200,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.treasurers.org/ACTmedia/ITCCMFcorpcreditguide.pdf",
+          "domain": "www.treasurers.org",
+          "success": false,
+          "error": "Content extraction failed",
+          "method": null,
+          "status_code": 200,
+          "content_chars": 0,
+          "truncated": false
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 4,
+        "urls_failed": 6,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "S&P 500 early March returns",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "get market-wide seasonality as another base-rate benchmark.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://finance.yahoo.com/quote/%5EGSPC/history/",
+          "domain": "finance.yahoo.com",
+          "success": false,
+          "error": "HTTP 404",
+          "method": null,
+          "status_code": 404,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://curvo.eu/backtest/en/market-index/sp-500",
+          "domain": "curvo.eu",
+          "success": false,
+          "error": "Content extraction failed",
+          "method": null,
+          "status_code": 200,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.investing.com/indices/us-spx-500-historical-data",
+          "domain": "www.investing.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 1890,
+          "truncated": false
+        },
+        {
+          "url": "https://fred.stlouisfed.org/series/SP500",
+          "domain": "fred.stlouisfed.org",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 1004,
+          "truncated": false
+        },
+        {
+          "url": "https://ycharts.com/indicators/sp_500_3_month_return",
+          "domain": "ycharts.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 3994,
+          "truncated": false
+        },
+        {
+          "url": "https://www.morningstar.com/indexes/spi/spx/performance",
+          "domain": "www.morningstar.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 453,
+          "truncated": false
+        },
+        {
+          "url": "https://tradethatswing.com/average-historical-stock-market-returns-for-sp-500-5-year-up-to-150-year-averages/?srsltid=AfmBOoqcZZp4CHCvymwwrfn7Q-LTA_aBbncadd2wOFh8TZ10pCBV5uEn",
+          "domain": "tradethatswing.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.marketindexhistory.com/historical-insights/2025/sp-500-index-march-2025-performance.html",
+          "domain": "www.marketindexhistory.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 3666,
+          "truncated": false
+        },
+        {
+          "url": "https://www.marketwatch.com/investing/index/spx?gaa_at=eafs&gaa_n=AWEtsqdgi1_hJKcwe2mflwVjBsI8yxOloPMvWCVY5aQqPJZ-iIk2_VAH19kU&gaa_ts=69a7dfee&gaa_sig=yofbVr87OWIDDQcFdltQvZSpxT900gz3WkaIBjXUTJYB2G7AXkBq4f1_yFj3RkhUc5QhF917nI4v2opGZceyCQ%3D%3D",
+          "domain": "www.marketwatch.com",
+          "success": false,
+          "error": "HTTP 401",
+          "method": null,
+          "status_code": 401,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.financialarchitectsllc.com/Ruminations%20Files/Ruminations%20on%20Calendar%20Effects%20on%20Stock%20Returns.pdf",
+          "domain": "www.financialarchitectsllc.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 518503,
+          "truncated": true
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 6,
+        "urls_failed": 4,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "SPGI MSCI weekly move compare",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "obtain peer 1-week return distributions to benchmark beta and dispersion.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://www.alphaspread.com/comparison/nyse/msci/vs/nyse/spgi",
+          "domain": "www.alphaspread.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 1543,
+          "truncated": false
+        },
+        {
+          "url": "https://tickeron.com/compare/MSCI-vs-SPGI/",
+          "domain": "tickeron.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://hellostake.com/au/invest/wall-st/compare/spgi-vs-msci",
+          "domain": "hellostake.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 2311,
+          "truncated": false
+        },
+        {
+          "url": "https://portfolioslab.com/tools/stock-comparison/MSCI/SPGI",
+          "domain": "portfolioslab.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.financecharts.com/compare/SPGI,MSCI",
+          "domain": "www.financecharts.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://hellostake.com/nz/invest/wall-st/compare/spgi-vs-msci",
+          "domain": "hellostake.com",
+          "success": false,
+          "error": "HTTP 404",
+          "method": null,
+          "status_code": 404,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://danelfin.com/stocks/MSCI-msci-vs-SPGI-sp-global-compare",
+          "domain": "danelfin.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 4618,
+          "truncated": false
+        },
+        {
+          "url": "https://seekreturns.com/en/stock-comparisons/msci-vs-spgi",
+          "domain": "seekreturns.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://finance.yahoo.com/quote/SPGI.TO/performance/",
+          "domain": "finance.yahoo.com",
+          "success": false,
+          "error": "HTTP 404",
+          "method": null,
+          "status_code": 404,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.financecharts.com/compare/SPGI,MSCI/performance",
+          "domain": "www.financecharts.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 3,
+        "urls_failed": 7,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "How often MCO rebounds after 8 percent monthly drop in next week given S&P flat or positive and no earnings events; compare to base rate.",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "synthesize historical analogues of sharp 1-month declines and subsequent 1-week bounce probabilities.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 1,
+      "error": null,
+      "agentic_instrumentation": {
+        "steps_taken": 2,
+        "queries_executed": [
+          "Moody's earnings dates history",
+          "MCO earnings calendar 2020-2026",
+          "Moody's 8 percent drop rebound",
+          "MCO",
+          "^GSPC"
+        ],
+        "step_data": [
+          {
+            "step_number": 1,
+            "queries_executed": [
+              [
+                "Moody's earnings dates history",
+                "Google"
+              ],
+              [
+                "MCO earnings calendar 2020-2026",
+                "Google News"
+              ],
+              [
+                "Moody's 8 percent drop rebound",
+                "Google"
+              ],
+              [
+                "MCO",
+                "yFinance"
+              ],
+              [
+                "^GSPC",
+                "yFinance"
+              ]
+            ],
+            "search_results_chars": 28081,
+            "analysis_chars": 0
+          }
+        ],
+        "error": null
+      }
+    },
+    {
+      "query": "Moody's analyst rating change March 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "capture any fresh upgrades/downgrades or target revisions since 01 Mar 26.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://m.investing.com/news/transcripts/moodys-at-raymond-james-conference-strategic-insights-on-ai-and-market-dynamics-93CH-4538707?ampMode=1",
+          "domain": "m.investing.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.marketbeat.com/instant-alerts/filing-intech-investment-management-llc-acquires-3852-shares-of-moodys-corporation-mco-2026-03-02/",
+          "domain": "www.marketbeat.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 6975,
+          "truncated": false
+        },
+        {
+          "url": "https://www.marketbeat.com/instant-alerts/filing-apg-asset-management-nv-acquires-81404-shares-of-moodys-corporation-mco-2026-03-01/",
+          "domain": "www.marketbeat.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 6947,
+          "truncated": false
+        },
+        {
+          "url": "https://www.reuters.com/sustainability/boards-policy-regulation/indonesian-markets-face-more-pressure-after-moodys-cuts-outlook-2026-02-06/",
+          "domain": "www.reuters.com",
+          "success": false,
+          "error": "HTTP 401",
+          "method": null,
+          "status_code": 401,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.marketscreener.com/news/moody-s-ratings-says-agency-changes-outlooks-on-5-indonesian-banks-to-negative-following-change-in-ce7e5ad9d980f12d",
+          "domain": "www.marketscreener.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 1160,
+          "truncated": false
+        },
+        {
+          "url": "https://www.morningstar.com/stocks/3-warren-buffett-stocks-buy-after-berkshires-latest-13f-update",
+          "domain": "www.morningstar.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 7948,
+          "truncated": false
+        },
+        {
+          "url": "https://www.reuters.com/world/china/tech-led-selloff-drags-asian-stocks-indonesia-tumbles-moodys-outlook-cut-2026-02-06/",
+          "domain": "www.reuters.com",
+          "success": false,
+          "error": "HTTP 401",
+          "method": null,
+          "status_code": 401,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.theeduledger.com/leadership-policy/article/15772711/moodys-issues-negative-outlook-for-higher-education-sector-amid-policy-shifts-and-enrollment-pressures",
+          "domain": "www.theeduledger.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.indianchemicalnews.com/general/moodys-ratings-affirms-upls-ba2-ratings-changes-outlook-to-stable-from-negative-27109",
+          "domain": "www.indianchemicalnews.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 5271,
+          "truncated": false
+        },
+        {
+          "url": "https://ts2.tech/en/mercadolibre-meli-stock-news-today-dec-18-2025-moodys-grants-investment-grade-upgrade-as-wall-street-keeps-a-bullish-2026-outlook/",
+          "domain": "ts2.tech",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 6714,
+          "truncated": false
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 6,
+        "urls_failed": 4,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "DOJ probe Moody's 2026 news",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "surface any ongoing or newly disclosed investigations/lawsuits that could unexpectedly pressure the stock.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 25,
+      "error": null
+    }
+  ]
+}
