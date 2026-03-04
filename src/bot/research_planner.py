@@ -302,9 +302,10 @@ class IterativeResearchPlanner(ForecasterMixin):
         metadata["total_cost"] = round(cost_tracker.total_cost - start_cost, 4)
         metadata["total_duration_seconds"] = round(time.time() - pipeline_start, 2)
 
-        # Build per-query details for tool_usage tracking
-        metadata["query_details"] = [
-            {
+        # Build per-query details for tool_usage tracking (include Agent instrumentation when present)
+        metadata["query_details"] = []
+        for r in query_results:
+            detail = {
                 "query": r.query.query,
                 "tool": r.query.tool,
                 "temporal_role": r.query.temporal_role,
@@ -314,8 +315,9 @@ class IterativeResearchPlanner(ForecasterMixin):
                 "num_results": r.num_results,
                 "error": r.error,
             }
-            for r in query_results
-        ]
+            if r.metadata:
+                detail["agentic_instrumentation"] = r.metadata
+            metadata["query_details"].append(detail)
 
         # Pre-research context for downstream consumers (outside/inside view + supervisor)
         # Combine community prediction context (if any) with question URL seed context.
@@ -591,6 +593,20 @@ class IterativeResearchPlanner(ForecasterMixin):
             )
         elif tool == "Agent":
             agentic_result: AgenticSearchResult = raw
+            agentic_meta = {
+                "steps_taken": agentic_result.steps_taken,
+                "queries_executed": agentic_result.queries_executed,
+                "step_data": [
+                    {
+                        "step_number": sd.step_number,
+                        "queries_executed": sd.queries_executed,
+                        "search_results_chars": len(sd.search_results_raw),
+                        "analysis_chars": len(sd.analysis_after_step),
+                    }
+                    for sd in agentic_result.step_data
+                ],
+                "error": agentic_result.error,
+            }
             if agentic_result.error:
                 output = (
                     f"\n<Agent_report>\nQuery: {query}\n"
@@ -601,10 +617,7 @@ class IterativeResearchPlanner(ForecasterMixin):
                     formatted_output=output,
                     success=False,
                     error=agentic_result.error,
-                    metadata={
-                        "steps_taken": agentic_result.steps_taken,
-                        "queries_executed": agentic_result.queries_executed,
-                    },
+                    metadata=agentic_meta,
                 )
             output = f"\n<Agent_report>\nQuery: {query}\n{agentic_result.analysis}</Agent_report>\n"
             num_results = 1 if len(agentic_result.analysis) > 500 else 0
@@ -613,10 +626,7 @@ class IterativeResearchPlanner(ForecasterMixin):
                 formatted_output=output,
                 success=True,
                 num_results=num_results,
-                metadata={
-                    "steps_taken": agentic_result.steps_taken,
-                    "queries_executed": agentic_result.queries_executed,
-                },
+                metadata=agentic_meta,
             )
         elif tool == "AskNews":
             output = f"\n<Asknews_articles>\nQuery: {query}\n{raw}</Asknews_articles>\n"

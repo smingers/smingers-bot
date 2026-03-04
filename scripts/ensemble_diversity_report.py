@@ -148,6 +148,11 @@ def _format_research_context(raw: str) -> str:
         body = m.group(1).strip()
         sections.append(f"---\n### Agentic Research Report\n\n{body}")
 
+    # Extract <CommunityPrediction ...>...</CommunityPrediction> (meta-question community scrape)
+    for m in re.finditer(r"<CommunityPrediction[^>]*>(.*?)</CommunityPrediction>", raw, re.DOTALL):
+        body = m.group(1).strip()
+        sections.append(f"---\n### Community Prediction (Meta Question)\n\n{body}")
+
     # Extract <FREDData series="..." query="...">...</FREDData>
     for m in re.finditer(r'<FREDData\s+series="([^"]*)"[^>]*>(.*?)</FREDData>', raw, re.DOTALL):
         series, body = m.group(1), m.group(2).strip()
