@@ -1,0 +1,865 @@
+{
+  "plan_analysis": "The forecaster already has a generic 7-day base-rate table for SWK, but a confident call for the next nine calendar days also hinges on:\n1. Dividend effect: SWK goes ex-dividend on 2026-03-10; shares often fall roughly the dividend amount. We need historical data on SWK\u2019s ex-div price behaviour and whether the drop is typically recovered within a week.\n2. Large-move mean reversion: The stock just fell ~8.5 % over the last five trading days. What is SWK\u2019s (and the market\u2019s) base rate of bouncing back the following week after similar drops?\n3. Current catalysts and sentiment: Any fresh guidance, order-book news, regulatory items, analyst upgrades/downgrades, or macro releases due before 3-13 that could move the price.\n4. Market-implied expectations: Near-dated option prices/IV give a forward-looking view of the expected price range through 3-13.\n5. Sector/macroeconomic backdrop: Industrials\u2019 correlation with broad indices and any macro data (payrolls on 3-06, CPI on 3-12, etc.) that could sway the whole market.\n6. Contrarian triggers: Supply-chain glitches, product recalls, or acquisition rumours that could cause an outsized move up or down.\n\nThe queries below supply those missing pieces: historical ex-div and rebound statistics, option-implied risk, very recent news, macro calendar context, and a deeper historical slice (via the single Agent query) of SWK after big 5-day drops.",
+  "reflect_analysis": null,
+  "queries_planned": [
+    {
+      "query": "SWK price reaction ex-dividend",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Find studies or tables showing how SWK\u2019s share price behaves on and after past ex-dividend dates.",
+      "phase": "plan"
+    },
+    {
+      "query": "SWK weekly return after 5%+ decline",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Obtain historical statistics on one-week performance following sharp short-term drops, to refine the mean-reversion base rate.",
+      "phase": "plan"
+    },
+    {
+      "query": "S&P 500 1-week returns after \u22653% weekly fall",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Provide a broader market reference class for rebounds after similar declines.",
+      "phase": "plan"
+    },
+    {
+      "query": "How often industrial stocks outperform week after ex-div",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Gauge whether the dividend effect typically suppresses or merely delays price recovery in the industrials/tools peer group.",
+      "phase": "plan"
+    },
+    {
+      "query": "After >8% 5-day SWK drop what happens next week summarise frequency higher close",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "Retrieve a synthesised historical count/percentage of times SWK finished the following week higher when the prior 5-day return was \u2264-8 %.",
+      "phase": "plan"
+    },
+    {
+      "query": "Stanley Black & Decker March 2026 guidance update",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Surface any new corporate guidance, press releases, or conference presentations issued since 2026-03-01.",
+      "phase": "plan"
+    },
+    {
+      "query": "SWK option chain March 13 2026 implied volatility",
+      "tool": "Google",
+      "temporal_role": "current",
+      "intent": "Get the near-dated option IV/skew or straddle pricing to infer the market-implied move through the resolution date.",
+      "phase": "plan"
+    },
+    {
+      "query": "Recent coverage on Stanley Black & Decker, tools market demand, and supply constraints in North America and Europe since Feb 25 2026",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "Capture contrarian or surprise factors (e.g., demand shocks, recalls, M&A rumours) that could drive an unexpected price swing.",
+      "phase": "plan"
+    }
+  ],
+  "gap_queries": [],
+  "seed_context_chars": 1637,
+  "historical_context_chars": 24937,
+  "current_context_chars": 53318,
+  "phases": {
+    "pre_research": {
+      "duration_seconds": 10.16,
+      "seed_context_chars": 1637,
+      "search_id": "question_urls",
+      "searched": true,
+      "urls_found": 1,
+      "urls_scraped": 1,
+      "urls_summarized": 1,
+      "urls": [
+        {
+          "url": "https://finance.yahoo.com/quote/SWK",
+          "domain": "finance.yahoo.com",
+          "scraped": true,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_words": 691
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ]
+    },
+    "plan": {
+      "duration_seconds": 37.4,
+      "cost": 0.0214,
+      "num_queries": 8
+    },
+    "execute": {
+      "duration_seconds": 152.17,
+      "cost": 0.3266,
+      "queries_executed": 8,
+      "queries_successful": 8
+    },
+    "assemble": {
+      "historical_context_chars": 24937,
+      "current_context_chars": 53318
+    }
+  },
+  "total_queries_planned": 8,
+  "total_queries_executed": 8,
+  "total_gap_queries": 0,
+  "total_cost": 0.3639,
+  "total_duration_seconds": 199.73,
+  "query_details": [
+    {
+      "query": "SWK price reaction ex-dividend",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Find studies or tables showing how SWK\u2019s share price behaves on and after past ex-dividend dates.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://www.dividend.com/stocks/consumer-discretionary/home-office-products/home-improvement/swk-stanley-black-and-decker-inc/",
+          "domain": "www.dividend.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.koyfin.com/company/swk/dividends/",
+          "domain": "www.koyfin.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 106,
+          "truncated": false
+        },
+        {
+          "url": "https://finance.yahoo.com/quote/SWK/",
+          "domain": "finance.yahoo.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 4401,
+          "truncated": false
+        },
+        {
+          "url": "https://marketchameleon.com/Overview/SWK/Dividends/",
+          "domain": "marketchameleon.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 776,
+          "truncated": false
+        },
+        {
+          "url": "https://www.nasdaq.com/market-activity/stocks/swk/dividend-history",
+          "domain": "www.nasdaq.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 2194,
+          "truncated": false
+        },
+        {
+          "url": "https://ir.stanleyblackanddecker.com/stock-info/dividend-history/default.aspx",
+          "domain": "ir.stanleyblackanddecker.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 387,
+          "truncated": false
+        },
+        {
+          "url": "https://www.gurufocus.com/news/8648406/stanley-black-decker-swk-dividend-and-earnings-update",
+          "domain": "www.gurufocus.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.alphaspread.com/security/nyse/swk/dividends",
+          "domain": "www.alphaspread.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 1274,
+          "truncated": false
+        },
+        {
+          "url": "https://global.morningstar.com/en-eu/investments/stocks/0P0000053X/dividends",
+          "domain": "global.morningstar.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 280,
+          "truncated": false
+        },
+        {
+          "url": "https://www.dripinvesting.org/stocks/swk-dividend-history-calculator-returns/",
+          "domain": "www.dripinvesting.org",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 5127,
+          "truncated": false
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 8,
+        "urls_failed": 2,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "SWK weekly return after 5%+ decline",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Obtain historical statistics on one-week performance following sharp short-term drops, to refine the mean-reversion base rate.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://simplywall.st/stocks/us/capital-goods/nyse-swk/stanley-black-decker/news/assessing-stanley-black-decker-swk-valuation-as-new-britain",
+          "domain": "simplywall.st",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 4586,
+          "truncated": false
+        },
+        {
+          "url": "https://finance.yahoo.com/news/assessing-stanley-black-decker-swk-081351687.html",
+          "domain": "finance.yahoo.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 2945,
+          "truncated": false
+        },
+        {
+          "url": "https://simplywall.st/stocks/us/capital-goods/nyse-swk/stanley-black-decker/news/stanley-black-decker-swk-valuation-check-after-recent-share",
+          "domain": "simplywall.st",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 4619,
+          "truncated": false
+        },
+        {
+          "url": "https://www.marketbeat.com/instant-alerts/zacks-research-issues-positive-forecast-for-swk-earnings-2026-02-26/",
+          "domain": "www.marketbeat.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 7813,
+          "truncated": false
+        },
+        {
+          "url": "https://ir.stanleyblackanddecker.com/financials/quarterly-results/default.aspx",
+          "domain": "ir.stanleyblackanddecker.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 629,
+          "truncated": false
+        },
+        {
+          "url": "https://stockstory.org/us/stocks/nyse/swk",
+          "domain": "stockstory.org",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 12578,
+          "truncated": false
+        },
+        {
+          "url": "https://finance.yahoo.com/news/look-stanley-black-decker-swk-160731674.html",
+          "domain": "finance.yahoo.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 2809,
+          "truncated": false
+        },
+        {
+          "url": "https://intellectia.ai/stock/SWK/forecast",
+          "domain": "intellectia.ai",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 2407,
+          "truncated": false
+        },
+        {
+          "url": "https://stockinvest.us/stock/SWK",
+          "domain": "stockinvest.us",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 5408,
+          "truncated": false
+        },
+        {
+          "url": "https://www.barchart.com/stocks/quotes/SWK/performance",
+          "domain": "www.barchart.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 2468,
+          "truncated": false
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 10,
+        "urls_failed": 0,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "S&P 500 1-week returns after \u22653% weekly fall",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Provide a broader market reference class for rebounds after similar declines.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://finance.yahoo.com/quote/%5EGSPC/history/",
+          "domain": "finance.yahoo.com",
+          "success": false,
+          "error": "HTTP 404",
+          "method": null,
+          "status_code": 404,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.investing.com/indices/us-spx-500-historical-data",
+          "domain": "www.investing.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 1890,
+          "truncated": false
+        },
+        {
+          "url": "https://www.wsj.com/market-data/quotes/index/SPX/historical-prices?gaa_at=eafs&gaa_n=AWEtsqdVZOZ4UAlJpm4KEcBqv0a0ICc5yM58by7DNYsPG7Lld_bbjejbvVva&gaa_ts=69a7d57f&gaa_sig=3mGAuHWXRRAb_0nM53f0dNfkfslm6qw-Eb-YfiTDrV44IF7_9tc_lqMUAwrgzw1ksc_USAeIl6PDC8LdUx6tUg%3D%3D",
+          "domain": "www.wsj.com",
+          "success": false,
+          "error": "HTTP 401",
+          "method": null,
+          "status_code": 401,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://fred.stlouisfed.org/series/SP500",
+          "domain": "fred.stlouisfed.org",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 1004,
+          "truncated": false
+        },
+        {
+          "url": "https://www.marketwatch.com/investing/index/spx?gaa_at=eafs&gaa_n=AWEtsqc9_X_QbIk0JOOLGx5cd9VqG7wFSuZWkVkGbrARL_PiDOdunMSdRfoB&gaa_ts=69a7d57f&gaa_sig=gh3e1Piu3YjFGUVZ3l0KBrtAYGLRujCZECTf5FIY8W9T6NILiWT7oL1GS-Fr82TBVnckZsXFubCb1ccqA77Ljg%3D%3D",
+          "domain": "www.marketwatch.com",
+          "success": false,
+          "error": "HTTP 401",
+          "method": null,
+          "status_code": 401,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://icfs.com/financial-knowledge-center/sp-500-weekly-drops-5",
+          "domain": "icfs.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 12909,
+          "truncated": false
+        },
+        {
+          "url": "https://ycharts.com/indicators/sp_500_monthly_total_return",
+          "domain": "ycharts.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 4570,
+          "truncated": false
+        },
+        {
+          "url": "https://www.financialarchitectsllc.com/Ruminations%20Files/Ruminations%20on%20Calendar%20Effects%20on%20Stock%20Returns.pdf",
+          "domain": "www.financialarchitectsllc.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 518503,
+          "truncated": true
+        },
+        {
+          "url": "https://www.slickcharts.com/sp500/returns",
+          "domain": "www.slickcharts.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 2763,
+          "truncated": false
+        },
+        {
+          "url": "https://www.reddit.com/r/personalfinance/comments/1avs1e2/why_not_invest_all_of_my_savings_in_sp500/",
+          "domain": "www.reddit.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 6,
+        "urls_failed": 4,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "How often industrial stocks outperform week after ex-div",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Gauge whether the dividend effect typically suppresses or merely delays price recovery in the industrials/tools peer group.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://www.reddit.com/r/dividends/comments/1jancfq/are_there_stocks_that_consistently_go_back_up/",
+          "domain": "www.reddit.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://seekingalpha.com/article/4292013-in-the-wake-of-ex-dividend",
+          "domain": "seekingalpha.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.investopedia.com/articles/stocks/11/dividend-capture-strategy.asp",
+          "domain": "www.investopedia.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 10755,
+          "truncated": false
+        },
+        {
+          "url": "https://www.thebluecollarinvestor.com/review-of-dividend-dates-their-impact-on-our-covered-call-trades/",
+          "domain": "www.thebluecollarinvestor.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 7914,
+          "truncated": false
+        },
+        {
+          "url": "https://www.dividend.com/how-to-invest/dividend-history-of-the-industrials-sector/",
+          "domain": "www.dividend.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.hartfordfunds.com/insights/market-perspectives/equity/the-power-of-dividends.html",
+          "domain": "www.hartfordfunds.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 22899,
+          "truncated": true
+        },
+        {
+          "url": "https://cbonds.com/glossary/dividend-gap/",
+          "domain": "cbonds.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.facebook.com/groups/231682401686058/posts/1228716875315934/",
+          "domain": "www.facebook.com",
+          "success": false,
+          "error": "Blocked domain",
+          "method": null,
+          "status_code": null,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=RwSKVNRh2Po",
+          "domain": "www.youtube.com",
+          "success": false,
+          "error": "Content extraction failed",
+          "method": null,
+          "status_code": 200,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.tsinetwork.ca/daily-advice/dividend-stocks/ex-dividend-date-investing-strategy",
+          "domain": "www.tsinetwork.ca",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 6837,
+          "truncated": false
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 4,
+        "urls_failed": 6,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "After >8% 5-day SWK drop what happens next week summarise frequency higher close",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "Retrieve a synthesised historical count/percentage of times SWK finished the following week higher when the prior 5-day return was \u2264-8 %.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 1,
+      "error": null,
+      "agentic_instrumentation": {
+        "steps_taken": 2,
+        "queries_executed": [
+          "SWK 5-day drop statistics",
+          "Stanley Black Decker decline probability",
+          "Stock rebound after sharp drop study",
+          "SWK"
+        ],
+        "step_data": [
+          {
+            "step_number": 1,
+            "queries_executed": [
+              [
+                "SWK 5-day drop statistics",
+                "Google"
+              ],
+              [
+                "Stanley Black Decker decline probability",
+                "Google News"
+              ],
+              [
+                "Stock rebound after sharp drop study",
+                "Google"
+              ],
+              [
+                "SWK",
+                "yFinance"
+              ]
+            ],
+            "search_results_chars": 33488,
+            "analysis_chars": 0
+          }
+        ],
+        "error": null
+      }
+    },
+    {
+      "query": "Stanley Black & Decker March 2026 guidance update",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Surface any new corporate guidance, press releases, or conference presentations issued since 2026-03-01.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://www.marketbeat.com/instant-alerts/filing-strive-asset-management-llc-acquires-new-position-in-stanley-black-decker-inc-swk-2026-03-03/",
+          "domain": "www.marketbeat.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 7336,
+          "truncated": false
+        },
+        {
+          "url": "https://www.marketbeat.com/instant-alerts/filing-citigroup-inc-trims-stake-in-stanley-black-decker-inc-swk-2026-03-02/",
+          "domain": "www.marketbeat.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 7599,
+          "truncated": false
+        },
+        {
+          "url": "https://www.marketbeat.com/instant-alerts/filing-stanley-black-decker-inc-swk-holdings-boosted-by-clean-energy-transition-llp-2026-03-01/",
+          "domain": "www.marketbeat.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 6912,
+          "truncated": false
+        },
+        {
+          "url": "https://www.marketbeat.com/instant-alerts/filing-fox-run-management-llc-invests-121-million-in-stanley-black-decker-inc-swk-2026-02-26/",
+          "domain": "www.marketbeat.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 6498,
+          "truncated": false
+        },
+        {
+          "url": "https://www.marketbeat.com/instant-alerts/filing-ameritas-investment-partners-inc-acquires-15730-shares-of-stanley-black-decker-inc-swk-2026-02-26/",
+          "domain": "www.marketbeat.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 6113,
+          "truncated": false
+        },
+        {
+          "url": "https://www.marketbeat.com/instant-alerts/stanley-black-decker-inc-nyseswk-declares-083-quarterly-dividend-2026-02-25/",
+          "domain": "www.marketbeat.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 4158,
+          "truncated": false
+        },
+        {
+          "url": "https://www.marketbeat.com/instant-alerts/zacks-research-has-positive-estimate-for-swk-q2-earnings-2026-02-27/",
+          "domain": "www.marketbeat.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 8701,
+          "truncated": false
+        },
+        {
+          "url": "https://www.marketbeat.com/instant-alerts/filing-vulcan-value-partners-llc-acquires-19281-shares-of-stanley-black-decker-inc-swk-2026-02-23/",
+          "domain": "www.marketbeat.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 6843,
+          "truncated": false
+        },
+        {
+          "url": "https://www.marketbeat.com/instant-alerts/filing-envestnet-asset-management-inc-purchases-46619-shares-of-stanley-black-decker-inc-swk-2026-02-19/",
+          "domain": "www.marketbeat.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 6034,
+          "truncated": false
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 9,
+        "urls_extracted": 9,
+        "urls_failed": 0,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "SWK option chain March 13 2026 implied volatility",
+      "tool": "Google",
+      "temporal_role": "current",
+      "intent": "Get the near-dated option IV/skew or straddle pricing to infer the market-implied move through the resolution date.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://finance.yahoo.com/quote/SWK/options/",
+          "domain": "finance.yahoo.com",
+          "success": false,
+          "error": "HTTP 404",
+          "method": null,
+          "status_code": 404,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://fintel.io/soc/us/swk",
+          "domain": "fintel.io",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://optioncharts.io/options/SWK",
+          "domain": "optioncharts.io",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 505,
+          "truncated": false
+        },
+        {
+          "url": "https://marketchameleon.com/Overview/SWK/Earnings/Earnings-Charts/",
+          "domain": "marketchameleon.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 791,
+          "truncated": false
+        },
+        {
+          "url": "https://finance.yahoo.com/quote/SWK/options/?date=1832025600&straddle=false&type=all",
+          "domain": "finance.yahoo.com",
+          "success": false,
+          "error": "HTTP 404",
+          "method": null,
+          "status_code": 404,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.nasdaq.com/market-activity/stocks/swk/option-chain",
+          "domain": "www.nasdaq.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 2190,
+          "truncated": false
+        },
+        {
+          "url": "https://researchtools.fidelity.com/ftgw/mloptions/goto/optionChain?symbol=SWK",
+          "domain": "researchtools.fidelity.com",
+          "success": true,
+          "error": null,
+          "method": "density",
+          "status_code": 200,
+          "content_chars": 900,
+          "truncated": false
+        },
+        {
+          "url": "https://www.tradingview.com/symbols/NYSE-SWK/options-chain/",
+          "domain": "www.tradingview.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 874,
+          "truncated": false
+        },
+        {
+          "url": "https://ng.investing.com/equities/stanley-works-options",
+          "domain": "ng.investing.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://marketchameleon.com/Overview/SWK/IV/",
+          "domain": "marketchameleon.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 766,
+          "truncated": false
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 6,
+        "urls_failed": 4,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "Recent coverage on Stanley Black & Decker, tools market demand, and supply constraints in North America and Europe since Feb 25 2026",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "Capture contrarian or surprise factors (e.g., demand shocks, recalls, M&A rumours) that could drive an unexpected price swing.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 28,
+      "error": null
+    }
+  ]
+}
