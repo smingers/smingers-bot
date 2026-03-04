@@ -1,0 +1,101 @@
+{
+  "ticker": "LULU",
+  "start_date": "2026-03-04",
+  "end_date": "2026-03-14",
+  "trading_days": 8,
+  "current_price": 173.21,
+  "reference_price": 173.21,
+  "return_so_far": 0.0,
+  "sample_size": 2505,
+  "positive_return_rate": 0.5505,
+  "mean_return": 0.6,
+  "median_return": 0.72,
+  "std_return": 7.25,
+  "percentile_5": -11.69,
+  "percentile_25": -3.07,
+  "percentile_75": 4.75,
+  "percentile_95": 11.82,
+  "recent_return_5d": -5.12,
+  "recent_return_1m": -3.28,
+  "recent_return_3m": -5.04,
+  "volatility_30d": 43.8,
+  "recent_return_5d_percentile": 11,
+  "recent_return_1m_percentile": 31,
+  "recent_return_3m_percentile": 30,
+  "conditional_rates": [
+    {
+      "label": "3-month return > 20%",
+      "condition": "momentum_positive",
+      "probability": 0.5357,
+      "sample_size": 560,
+      "delta": -1.5,
+      "applicable": false
+    },
+    {
+      "label": "3-month return < -20%",
+      "condition": "momentum_negative",
+      "probability": 0.584,
+      "sample_size": 387,
+      "delta": 3.3,
+      "applicable": false
+    },
+    {
+      "label": "Price in top decile of 52wk range",
+      "condition": "range_top_decile",
+      "probability": 0.5646,
+      "sample_size": 611,
+      "delta": 1.4,
+      "applicable": false
+    },
+    {
+      "label": "Price in bottom decile of 52wk range",
+      "condition": "range_bottom_decile",
+      "probability": 0.5685,
+      "sample_size": 292,
+      "delta": 1.8,
+      "applicable": true
+    },
+    {
+      "label": "Prior 5-day return > 0",
+      "condition": "mean_reversion_up",
+      "probability": 0.5604,
+      "sample_size": 1342,
+      "delta": 1.0,
+      "applicable": false
+    },
+    {
+      "label": "Prior 5-day return < 0",
+      "condition": "mean_reversion_down",
+      "probability": 0.5398,
+      "sample_size": 1156,
+      "delta": -1.1,
+      "applicable": true
+    },
+    {
+      "label": "30-day vol above median",
+      "condition": "vol_high",
+      "probability": 0.5627,
+      "sample_size": 1237,
+      "delta": 1.2,
+      "applicable": true
+    },
+    {
+      "label": "30-day vol below median",
+      "condition": "vol_low",
+      "probability": 0.5372,
+      "sample_size": 1238,
+      "delta": -1.3,
+      "applicable": false
+    }
+  ],
+  "next_ex_dividend_date": null,
+  "ex_dividend_in_window": null,
+  "analyst_mean_target": 208.35,
+  "analyst_low_target": 160.0,
+  "analyst_high_target": 303.0,
+  "analyst_count": 26,
+  "analyst_recommendation": "hold",
+  "dividend_yield_pct": null,
+  "fifty_two_week_low": 159.25,
+  "fifty_two_week_high": 363.88
+}
