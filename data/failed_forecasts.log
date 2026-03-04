@@ -142,3 +142,12 @@ Success: 1 | Failed: 1
 🔴 SUBMISSION Q42417: Will HBAN's market close price on 2026-03-13 be higher than 
   SubmissionError: API returned 405: Client error '405 Method Not Allowed' for url 'https://www.metaculus.com/api/questions/forecast/'
 For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
+
+======================================================================
+RUN: 2026-03-04T21:56:05.882669+00:00
+Tournament: minibench | Selection: new-only | Via: run_bot.py
+Success: 0 | Failed: 1
+======================================================================
+
+🟡 OTHER Q42423: Will LULU's market close price on 2026-03-14 be higher than 
+  KeyError: 'background'
