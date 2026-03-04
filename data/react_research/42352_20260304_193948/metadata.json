@@ -1,0 +1,16 @@
+{
+  "question_id": 42352,
+  "question_title": "How much will Crude Oil Futures total price returns exceed S&P 500 Futures's in these biweekly periods of Q1 2026? (Mar 16 - Mar 27)",
+  "question_type": "numeric",
+  "timestamp": "2026-03-04T19:39:48.386976+00:00",
+  "cost": {
+    "total_calls": 15,
+    "successful_calls": 15,
+    "failed_calls": 0,
+    "total_input_tokens": 46230,
+    "total_output_tokens": 8563,
+    "total_reasoning_tokens": 1579,
+    "total_cost": 0.123852
+  },
+  "steps": 7
+}
