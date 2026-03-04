@@ -113,7 +113,7 @@ research:
   planner:
     max_plan_queries: 8     # Max queries generated in planning phase
     max_gap_queries: 3       # Max gap-fill queries from reflection phase
-    reflection_enabled: false # Set false to skip reflection (saves 1 LLM call)
+    reflection_enabled: true # Set false to skip reflection (saves 1 LLM call)
 
   # Google search via Serper API
   google_enabled: true
@@ -124,7 +124,7 @@ research:
   asknews_max_results: 10
 
   # Agentic search (iterative LLM-guided research)
-  agentic_search_enabled: true
+  agentic_search_enabled: false
   # Max steps per mode (use a single number for all modes, or per-mode overrides)
   agentic_search_max_steps:
     test: 3

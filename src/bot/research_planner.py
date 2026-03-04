@@ -112,11 +112,8 @@ TOOL_DESCRIPTIONS = {
     ),
     "Agent": (
         "Agent: A reasoning model with web search capability. Write a detailed query of "
-        "up to 3 sentences. Best for qualitative synthesis: identifying the most relevant "
-        "historical analogies, evaluating which reference classes apply and why, assessing "
-        "competing explanations, or finding expert analyses that provide base rate estimates. "
-        "The Agent CANNOT compute statistics. IMPORTANT: Use exactly one Agent query, "
-        "tagged [HISTORICAL]. Do not use Agent for current events."
+        "up to 3 sentences for qualitative research and synthesis. Agent cannot do quantitative "
+        "analysis . IMPORTANT: Use exactly one Agent query, tagged [HISTORICAL]."
     ),
     "AskNews": (
         "AskNews: Semantic (meaning-based) news search. Write a descriptive 1-2 sentence "

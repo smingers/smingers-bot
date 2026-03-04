@@ -1240,6 +1240,7 @@ YOUR TASK:
 3. Generate up to {max_queries} search queries to fill the remaining gaps
 
 COVERAGE DIMENSIONS (ensure your queries collectively address these):
+- Background conditions: The broader environment in which this question plays out. What are the macro-level forces or trends that will influence the outcome during the resolution period (e.g. when predicting if a stock price will go up or down, it is useful to understand recent and projected market conditions).
 - Base rate: Historical frequency, distribution, or precedent for the outcome being forecast. How often has something like this happened before?
 - Resolution mechanism: How exactly does this question resolve? What specific data source, metric, threshold, or event determines the outcome? What is the current state of that mechanism?
 - Key drivers: The 1-3 most important causal factors that will determine the outcome. What moves this metric or makes this event more/less likely?
@@ -1254,7 +1255,7 @@ TYPE-SPECIFIC GUIDANCE:
 AVAILABLE TOOLS (only use tools listed here):
 {available_tools}
 
-TAG each query as [HISTORICAL] (for base rates, reference classes, past data, background context) or [CURRENT] (for recent news, latest values, current developments, upcoming events). Aim for roughly 60% historical and 40% current. Include at least 2 of each.
+TAG each query as [HISTORICAL] (for base rates, reference classes, past data, background context) or [CURRENT] (for recent news, latest values, current developments, upcoming events). Include at least 2 of each. Queries must be appropriately worded for the tool selected.
 
 Format your answer exactly as below. Each query on its own line. The source in parentheses, temporal tag in brackets. Do not wrap queries in quotes.
 
