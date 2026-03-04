@@ -1,0 +1,200 @@
+{
+  "plan_analysis": "Forecasters need the most recent and historical readings of OBMMIFHA30YF; the typical size and frequency of its day-to-day moves (base rate); the time lag and revision pattern of FRED postings (resolution mechanism); and the macro/market factors that drive it\u2014mainly 10-year Treasury yields, MBS spreads, and broad mortgage-rate benchmarks. They also need current information on where FHA / overall mortgage rates and Treasury yields stand in early March 2026, plus any scheduled events (jobs report, CPI, FOMC preview) that could quickly shift rates before 12 March. Finally, they should check for analyses arguing for an unexpected sharp rise or drop (contrarian scenario).",
+  "reflect_analysis": null,
+  "queries_planned": [
+    {
+      "query": "OBMMIFHA30YF",
+      "tool": "FRED",
+      "temporal_role": "historical",
+      "intent": "download full daily time series for the index to examine trends, volatility, posting lags, and revisions.",
+      "phase": "plan"
+    },
+    {
+      "query": "Optimal Blue FHA index history",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "find methodological docs or CSV files that might give longer or cleaner historical data than FRED.",
+      "phase": "plan"
+    },
+    {
+      "query": "daily FHA mortgage rate change",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "locate studies or blogs that quantify typical one-day moves in FHA / OBMMI rates (base-rate volatility).",
+      "phase": "plan"
+    },
+    {
+      "query": "treasury mortgage spread historical",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "get datasets or papers showing relationship between 10-year yields and mortgage rates to model drivers.",
+      "phase": "plan"
+    },
+    {
+      "query": "Identify historical daily percentage-point changes in the 30-Year Fixed Rate FHA Mortgage Index (OBMMIFHA30YF) since 2019 and summarize their distribution, emphasizing typical one-week swings and tail events.",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "synthesize base-rate statistics and highlight extreme but plausible moves.",
+      "phase": "plan"
+    },
+    {
+      "query": "FHA mortgage rates March 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "capture the latest reported FHA / mortgage rate levels up to today.",
+      "phase": "plan"
+    },
+    {
+      "query": "mortgage rate forecast next week",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "gather analysts\u2019 short-term outlooks for mortgage rates through mid-March 2026.",
+      "phase": "plan"
+    },
+    {
+      "query": "10-year Treasury yield outlook week",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "collect recent commentary on expected Treasury movements before 12 March, a key driver of mortgage rates.",
+      "phase": "plan"
+    }
+  ],
+  "gap_queries": [],
+  "seed_context_chars": 1386,
+  "historical_context_chars": 20959,
+  "current_context_chars": 44867,
+  "phases": {
+    "pre_research": {
+      "duration_seconds": 6.61,
+      "seed_context_chars": 1386,
+      "search_id": "question_urls",
+      "searched": true,
+      "urls_found": 2,
+      "urls_scraped": 1,
+      "urls_summarized": 1,
+      "urls": [
+        {
+          "url": "https://api.stlouisfed.org/fred/series/observations?series_id=OBMMIFHA30YF`",
+          "domain": "api.stlouisfed.org",
+          "scraped": false,
+          "method": null,
+          "status_code": 400,
+          "error": "HTTP 400"
+        },
+        {
+          "url": "https://fred.stlouisfed.org/series/OBMMIFHA30YF",
+          "domain": "fred.stlouisfed.org",
+          "scraped": true,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_words": 409
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ]
+    },
+    "plan": {
+      "duration_seconds": 29.87,
+      "cost": 0.0151,
+      "num_queries": 8
+    },
+    "execute": {
+      "duration_seconds": 66.24,
+      "cost": 0.2845,
+      "queries_executed": 8,
+      "queries_successful": 8
+    },
+    "assemble": {
+      "historical_context_chars": 20959,
+      "current_context_chars": 44867
+    }
+  },
+  "total_queries_planned": 8,
+  "total_queries_executed": 8,
+  "total_gap_queries": 0,
+  "total_cost": 0.3121,
+  "total_duration_seconds": 102.72,
+  "query_details": [
+    {
+      "query": "OBMMIFHA30YF",
+      "tool": "FRED",
+      "temporal_role": "historical",
+      "intent": "download full daily time series for the index to examine trends, volatility, posting lags, and revisions.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 1,
+      "error": null
+    },
+    {
+      "query": "Optimal Blue FHA index history",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "find methodological docs or CSV files that might give longer or cleaner historical data than FRED.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "daily FHA mortgage rate change",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "locate studies or blogs that quantify typical one-day moves in FHA / OBMMI rates (base-rate volatility).",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "treasury mortgage spread historical",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "get datasets or papers showing relationship between 10-year yields and mortgage rates to model drivers.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "Identify historical daily percentage-point changes in the 30-Year Fixed Rate FHA Mortgage Index (OBMMIFHA30YF) since 2019 and summarize their distribution, emphasizing typical one-week swings and tail events.",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "synthesize base-rate statistics and highlight extreme but plausible moves.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 1,
+      "error": null
+    },
+    {
+      "query": "FHA mortgage rates March 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "capture the latest reported FHA / mortgage rate levels up to today.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "mortgage rate forecast next week",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "gather analysts\u2019 short-term outlooks for mortgage rates through mid-March 2026.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null
+    },
+    {
+      "query": "10-year Treasury yield outlook week",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "collect recent commentary on expected Treasury movements before 12 March, a key driver of mortgage rates.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 29,
+      "error": null
+    }
+  ]
+}

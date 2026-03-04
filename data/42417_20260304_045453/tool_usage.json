@@ -1,0 +1,267 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": false,
+      "num_queries": 0,
+      "queries": [],
+      "tools_used": [],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "HBAN",
+          "tool": "yFinance",
+          "temporal_role": "historical",
+          "intent": "download full historical daily closing prices and volatilities to compute 9-day return base rates",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        },
+        {
+          "query": "regional bank ETF KRE 10-day returns",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "find studies or data on short-term return patterns for the regional-bank sector as a reference class",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "[HISTORICAL] The proportion of times HBAN\u2019s closing price is higher nine calendar days later over the last decade; compare with KRE and XLF. Identify any seasonality around early March.",
+          "tool": "Agent",
+          "temporal_role": "historical",
+          "intent": "obtain synthesized historical statistics to establish base rate and context  [HISTORICAL]",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        },
+        {
+          "query": "HBAN ex-dividend dates history",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "verify typical timing and price impact of dividend cycles that could influence 4-13 Mar window",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "Agent",
+        "yFinance",
+        "Google"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "HBAN closing price March 4 2026",
+          "tool": "Google",
+          "temporal_role": "current",
+          "intent": "confirm official 4 Mar 2026 close that will be used for resolution",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Huntington Bancshares news March 2026",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "surface any fresh company-specific developments (guidance, credit issues, M&A rumours, legal/regulatory items)",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "HBAN dividend declaration 2026 Q1",
+          "tool": "AskNews",
+          "temporal_role": "current",
+          "intent": "check if a new dividend or ex-dividend date falls within the forecast window, a potential downward mechanical adjustment",
+          "phase": "plan",
+          "success": true,
+          "num_results": 41,
+          "error": null
+        },
+        {
+          "query": "HBAN option implied move March 13 2026",
+          "tool": "Google",
+          "temporal_role": "current",
+          "intent": "find option-market expectations (straddle pricing, IV) which indicate current market-implied probability of a >0 movement by 13 Mar",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "AskNews",
+        "Google"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 5531,
+        "token_output": 1482,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.049885,
+        "duration_seconds": 44.886025190353394,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17235,
+        "token_output": 2396,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.122115,
+        "duration_seconds": 55.01960635185242,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16783,
+        "token_output": 2162,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.11634499999999999,
+        "duration_seconds": 55.019583225250244,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4841,
+        "token_output": 2068,
+        "token_reasoning": 493,
+        "used_reasoning": true,
+        "cost": 0.03742375,
+        "duration_seconds": 44.88609790802002,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15113,
+        "token_output": 1875,
+        "token_reasoning": 317,
+        "used_reasoning": true,
+        "cost": 0.05269775,
+        "duration_seconds": 55.01955604553223,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15390,
+        "token_output": 1239,
+        "token_reasoning": 192,
+        "used_reasoning": true,
+        "cost": 0.040692,
+        "duration_seconds": 55.01952934265137,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4841,
+        "token_output": 1447,
+        "token_reasoning": 448,
+        "used_reasoning": true,
+        "cost": 0.021258,
+        "duration_seconds": 44.886152029037476,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14680,
+        "token_output": 1348,
+        "token_reasoning": 256,
+        "used_reasoning": true,
+        "cost": 0.040144,
+        "duration_seconds": 55.01950144767761,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "steps1_2_research": 0.2392,
+    "step3_outside_view": 0.1086,
+    "step5_inside_view": 0.372,
+    "step6_aggregation": 0.372,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.7198
+}

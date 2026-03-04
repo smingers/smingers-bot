@@ -1,0 +1,266 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": false,
+      "num_queries": 0,
+      "queries": [],
+      "tools_used": [],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 5,
+      "queries": [
+        {
+          "query": "OBMMIFHA30YF",
+          "tool": "FRED",
+          "temporal_role": "historical",
+          "intent": "download full daily time series for the index to examine trends, volatility, posting lags, and revisions.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        },
+        {
+          "query": "Optimal Blue FHA index history",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "find methodological docs or CSV files that might give longer or cleaner historical data than FRED.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "daily FHA mortgage rate change",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "locate studies or blogs that quantify typical one-day moves in FHA / OBMMI rates (base-rate volatility).",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "treasury mortgage spread historical",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "get datasets or papers showing relationship between 10-year yields and mortgage rates to model drivers.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "Identify historical daily percentage-point changes in the 30-Year Fixed Rate FHA Mortgage Index (OBMMIFHA30YF) since 2019 and summarize their distribution, emphasizing typical one-week swings and tail events.",
+          "tool": "Agent",
+          "temporal_role": "historical",
+          "intent": "synthesize base-rate statistics and highlight extreme but plausible moves.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "FRED",
+        "Agent",
+        "Google"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "FHA mortgage rates March 2026",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "capture the latest reported FHA / mortgage rate levels up to today.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "mortgage rate forecast next week",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "gather analysts\u2019 short-term outlooks for mortgage rates through mid-March 2026.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null
+        },
+        {
+          "query": "10-year Treasury yield outlook week",
+          "tool": "AskNews",
+          "temporal_role": "current",
+          "intent": "collect recent commentary on expected Treasury movements before 12 March, a key driver of mortgage rates.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 29,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "AskNews"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7831,
+        "token_output": 1605,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.06323,
+        "duration_seconds": 40.261765480041504,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 15511,
+        "token_output": 2968,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.122075,
+        "duration_seconds": 63.0731999874115,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 14909,
+        "token_output": 2482,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.111775,
+        "duration_seconds": 63.073137521743774,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.2",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6924,
+        "token_output": 2223,
+        "token_reasoning": 788,
+        "used_reasoning": true,
+        "cost": 0.043239,
+        "duration_seconds": 40.261823892593384,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13840,
+        "token_output": 2085,
+        "token_reasoning": 514,
+        "used_reasoning": true,
+        "cost": 0.05341,
+        "duration_seconds": 63.07309937477112,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13866,
+        "token_output": 1739,
+        "token_reasoning": 704,
+        "used_reasoning": true,
+        "cost": 0.041644,
+        "duration_seconds": 63.073063135147095,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 6924,
+        "token_output": 1403,
+        "token_reasoning": 448,
+        "used_reasoning": true,
+        "cost": 0.025071999999999997,
+        "duration_seconds": 40.26187300682068,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 13284,
+        "token_output": 1392,
+        "token_reasoning": 384,
+        "used_reasoning": true,
+        "cost": 0.037704,
+        "duration_seconds": 63.073028326034546,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "steps1_2_research": 0.3121,
+    "step3_outside_view": 0.1315,
+    "step5_inside_view": 0.3666,
+    "step6_aggregation": 0.3666,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.8103
+}
