@@ -31,7 +31,7 @@ models:
   # Models for preview and live modes (higher quality)
   quality:
     query_generator: "openrouter/openai/o3"
-    article_summarizer: "openrouter/anthropic/claude-sonnet-4.6"
+    article_summarizer: "openrouter/google/gemini-3-flash-preview"
     agentic_search: "openrouter/openai/o3"
 
 # =============================================================================

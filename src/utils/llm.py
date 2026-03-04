@@ -46,6 +46,7 @@ MODEL_COSTS = {
     "openrouter/anthropic/claude-sonnet-4.5": {"input": 3.0, "output": 15.0},
     "openrouter/anthropic/claude-opus-4.5": {"input": 5.0, "output": 25.0},
     "openrouter/anthropic/claude-opus-4.6": {"input": 5.0, "output": 25.0},
+    "openrouter/anthropic/claude-sonnet-4.6": {"input": 3.0, "output": 15.0},
     "openrouter/anthropic/claude-sonnet-4": {"input": 3.0, "output": 15.0},
     "openrouter/anthropic/claude-3.5-sonnet": {"input": 3.0, "output": 15.0},
     "openrouter/anthropic/claude-3.5-sonnet-20241022": {"input": 3.0, "output": 15.0},
@@ -60,6 +61,8 @@ MODEL_COSTS = {
     "openrouter/openai/o3": {"input": 2.0, "output": 8.0},
     "openrouter/openai/o3-mini": {"input": 1.10, "output": 4.40},
     "openrouter/openai/o3-mini-high": {"input": 1.10, "output": 4.40},
+    # OpenRouter - Google
+    "openrouter/google/gemini-3-flash-preview": {"input": 0.50, "output": 3.0},
 }
 
 
