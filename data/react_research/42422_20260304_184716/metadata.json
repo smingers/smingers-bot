@@ -1,0 +1,16 @@
+{
+  "question_id": 42422,
+  "question_title": "Will the interest in \u201cethel kennedy\u201d change between 2026-03-04 and 2026-03-14 according to Google Trends?",
+  "question_type": "multiple_choice",
+  "timestamp": "2026-03-04T18:47:16.032331+00:00",
+  "cost": {
+    "total_calls": 3,
+    "successful_calls": 3,
+    "failed_calls": 0,
+    "total_input_tokens": 3462,
+    "total_output_tokens": 3150,
+    "total_reasoning_tokens": 960,
+    "total_cost": 0.032124
+  },
+  "steps": 0
+}
