@@ -1,0 +1,778 @@
+{
+  "plan_analysis": "The question hinges on how much the Google Trends daily value for the term \u201cethel kennedy\u201d moves in a 10-day window, with a \u00b13 band being classified as \u201cDoesn\u2019t change.\u201d  \nWhat forecasters already know:\n\u2022 The current (1 Mar 2026) 30-day-window value is 74.  \n\u2022 The resolution will use SerpApi\u2019s TIMESERIES endpoint for the US, fixed-scale dates 12 Feb\u201314 Mar 2026, and will compare the two single\u2013day values (04 Mar vs 14 Mar, UTC).  \n\nInformation gaps:\n1. Base-rate / historical volatility: How often has \u201cethel kennedy\u201d moved by >3 points in any 10-day span? Are large swings rare or common?  \n2. Resolution mechanics nuance: How noisy is the SerpApi daily data series itself? What is the typical jitter for a low-search-volume proper-name term?  \n3. Key short-term drivers: Is there any scheduled or breaking event in early-to-mid-March 2026 that could suddenly raise or lower search interest (e.g., health news, Kennedy-family legal developments, new documentary releases)?  \n4. Current state / trajectory: What are the exact daily values from mid-February to now? Are they trending up, down, or flat?  \n5. Contrarian possibilities: Rumours of death, viral social-media posts, or RFK-family political stories could create an unexpected spike; knowing whether anything like that is brewing is critical.\n\nSearch strategy:\n\u2022 Pull the full Google Trends time-series to eyeball volatility and recent trajectory.  \n\u2022 Look for prior spikes to understand catalysts (birthdays, anniversaries, obituaries, RFK Jr headlines, documentaries).  \n\u2022 Scan very recent news and upcoming-events coverage (Google News + AskNews) for any March 4-14 hooks.  \n\u2022 Study generic research on daily-level Google Trends noise to calibrate what a \u00b13 move means for a low-volume term.  \n\u2022 Use one Agent query to surface analyses of how often small Google Trends series move by >3 points in ten-day windows across comparable personal-name keywords (historical base rate).",
+  "reflect_analysis": null,
+  "queries_planned": [
+    {
+      "query": "ethel kennedy",
+      "tool": "Google Trends",
+      "temporal_role": "historical",
+      "intent": "Pull multi-year daily/weekly interest data to measure historical volatility and identify typical spike size/frequency.",
+      "phase": "plan"
+    },
+    {
+      "query": "ethel kennedy google trends spike 2024",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Find past articles or blogs noting earlier spikes, giving clues to recurring drivers and their magnitude.",
+      "phase": "plan"
+    },
+    {
+      "query": "google trends daily fluctuation analysis",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Locate studies/posts quantifying normal day-to-day variation for low-volume search terms; informs noise vs real change.",
+      "phase": "plan"
+    },
+    {
+      "query": "elderly public figure google trends variability",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Gather comparative base-rate data for similar proper-name queries to benchmark expected movement.",
+      "phase": "plan"
+    },
+    {
+      "query": "How often do Google Trends daily values for personal names change by more than 3 points within ten days? Provide examples and data",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "Obtain synthesized historical base-rate insight across comparable cases.",
+      "phase": "plan"
+    },
+    {
+      "query": "ethel kennedy news March 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Surface any breaking stories or recent coverage that could affect search interest during the forecast window.",
+      "phase": "plan"
+    },
+    {
+      "query": "kennedy family legal issue 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Check for lawsuits, political activity, or health updates that might unexpectedly drive searches.",
+      "phase": "plan"
+    },
+    {
+      "query": "upcoming ethel kennedy documentary March 2026",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "Detect any scheduled media releases, anniversaries, or events between 4\u201314 Mar 2026 that could spur increased attention.",
+      "phase": "plan"
+    }
+  ],
+  "gap_queries": [],
+  "seed_context_chars": 1553,
+  "historical_context_chars": 18795,
+  "current_context_chars": 47837,
+  "phases": {
+    "pre_research": {
+      "duration_seconds": 7.93,
+      "seed_context_chars": 1553,
+      "search_id": "question_urls",
+      "searched": true,
+      "urls_found": 3,
+      "urls_scraped": 1,
+      "urls_summarized": 1,
+      "urls": [
+        {
+          "url": "https://trends.google.com/trends/explore?geo=US&tz=0&q=ethel%20kennedy&date=2026-02-12%202026-03-14",
+          "domain": "trends.google.com",
+          "scraped": false,
+          "method": null,
+          "status_code": null,
+          "error": "Blocked domain"
+        },
+        {
+          "url": "https://serpapi.com/",
+          "domain": "serpapi.com",
+          "scraped": true,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_words": 273
+        },
+        {
+          "url": "https://trends.google.com/trends/explore?geo=US&tz=0&q=ethel%20kennedy&date=2026-01-30%202026-03-01",
+          "domain": "trends.google.com",
+          "scraped": false,
+          "method": null,
+          "status_code": null,
+          "error": "Blocked domain"
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ]
+    },
+    "plan": {
+      "duration_seconds": 43.56,
+      "cost": 0.0191,
+      "num_queries": 8
+    },
+    "execute": {
+      "duration_seconds": 68.85,
+      "cost": 0.278,
+      "queries_executed": 8,
+      "queries_successful": 8
+    },
+    "assemble": {
+      "historical_context_chars": 18795,
+      "current_context_chars": 47837
+    }
+  },
+  "total_queries_planned": 8,
+  "total_queries_executed": 8,
+  "total_gap_queries": 0,
+  "total_cost": 0.3095,
+  "total_duration_seconds": 120.34,
+  "query_details": [
+    {
+      "query": "ethel kennedy",
+      "tool": "Google Trends",
+      "temporal_role": "historical",
+      "intent": "Pull multi-year daily/weekly interest data to measure historical volatility and identify typical spike size/frequency.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 1,
+      "error": null
+    },
+    {
+      "query": "ethel kennedy google trends spike 2024",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Find past articles or blogs noting earlier spikes, giving clues to recurring drivers and their magnitude.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 2,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://www.youtube.com/watch?v=Ho9burQyols",
+          "domain": "www.youtube.com",
+          "success": false,
+          "error": "Content extraction failed",
+          "method": null,
+          "status_code": 200,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.aaf.org/common/Uploaded%20files/AHOF/AHOF_Program_2025.pdf",
+          "domain": "www.aaf.org",
+          "success": false,
+          "error": "Content extraction failed",
+          "method": null,
+          "status_code": 200,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://apnews.com/article/google-search-trends-2024-election-sports-f10d51e6b7090420777408d3b3d0efb1",
+          "domain": "apnews.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 2097,
+          "truncated": false
+        },
+        {
+          "url": "https://www.facebook.com/fwdus/posts/baltimore-is-experiencing-historically-low-crime-rates-and-it-isnt-because-they-/1103272325233336/",
+          "domain": "www.facebook.com",
+          "success": false,
+          "error": "Blocked domain",
+          "method": null,
+          "status_code": null,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://pubs.acs.org/doi/10.1021/acs.analchem.5b04153",
+          "domain": "pubs.acs.org",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.everythingpolicy.org/search-results",
+          "domain": "www.everythingpolicy.org",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 23106,
+          "truncated": true
+        },
+        {
+          "url": "https://www.sf.gov/documents/42013/3_Historic_and_Cultural_Resources_Documentation.pdf",
+          "domain": "www.sf.gov",
+          "success": false,
+          "error": "Content extraction failed",
+          "method": null,
+          "status_code": 200,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://honorscollege.charlotte.edu/wp-content/uploads/sites/863/2025/12/2025-Honors-Research-Symposium-Full-abstract-book.pdf",
+          "domain": "honorscollege.charlotte.edu",
+          "success": false,
+          "error": "Content extraction failed",
+          "method": null,
+          "status_code": 200,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://magazine.colby.edu/issue/vol109-issue1/class-notes-and-newsmakers/",
+          "domain": "magazine.colby.edu",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.ncasi.org/wp-content/uploads/2020/06/TB1066-Sept2020.pdf",
+          "domain": "www.ncasi.org",
+          "success": false,
+          "error": "Content extraction failed",
+          "method": null,
+          "status_code": 200,
+          "content_chars": 0,
+          "truncated": false
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 2,
+        "urls_failed": 8,
+        "urls_summarized": 2
+      }
+    },
+    {
+      "query": "google trends daily fluctuation analysis",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Locate studies/posts quantifying normal day-to-day variation for low-volume search terms; informs noise vs real change.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://trends.google.com/trends/",
+          "domain": "trends.google.com",
+          "success": false,
+          "error": "Blocked domain",
+          "method": null,
+          "status_code": null,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.linkedin.com/pulse/google-trends-stitching-loose-ends-daily-data-michael-arutyunov-roroe",
+          "domain": "www.linkedin.com",
+          "success": false,
+          "error": "Blocked domain",
+          "method": null,
+          "status_code": null,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.google.com/googleblogs/pdfs/google_predicting_the_present.pdf",
+          "domain": "www.google.com",
+          "success": false,
+          "error": "Content extraction failed",
+          "method": null,
+          "status_code": 200,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=pS2f35vQFvc",
+          "domain": "www.youtube.com",
+          "success": false,
+          "error": "Content extraction failed",
+          "method": null,
+          "status_code": 200,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.sciencedirect.com/science/article/pii/S0040162524001148",
+          "domain": "www.sciencedirect.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://support.google.com/trends/answer/4365533?hl=en",
+          "domain": "support.google.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 5787,
+          "truncated": false
+        },
+        {
+          "url": "https://trends.google.com/trending",
+          "domain": "trends.google.com",
+          "success": false,
+          "error": "Blocked domain",
+          "method": null,
+          "status_code": null,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://seoscout.com/google-trends-seo-explained-how-to-use-trends-for-keyword-research",
+          "domain": "seoscout.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 14025,
+          "truncated": false
+        },
+        {
+          "url": "https://www.quora.com/What-are-possible-ways-to-get-daily-data-in-Google-Trends-for-more-than-90-days",
+          "domain": "www.quora.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://newsinitiative.withgoogle.com/resources/trainings/google-trends-understanding-the-data/",
+          "domain": "newsinitiative.withgoogle.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 4826,
+          "truncated": false
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 3,
+        "urls_failed": 7,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "elderly public figure google trends variability",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Gather comparative base-rate data for similar proper-name queries to benchmark expected movement.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 2,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11612527/",
+          "domain": "pmc.ncbi.nlm.nih.gov",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://infodemiology.jmir.org/2022/1/e32386",
+          "domain": "infodemiology.jmir.org",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 39664,
+          "truncated": true
+        },
+        {
+          "url": "https://dl.acm.org/doi/fullHtml/10.1145/3569966.3571193",
+          "domain": "dl.acm.org",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.frontiersin.org/journals/medicine/articles/10.3389/fmed.2021.778930/full",
+          "domain": "www.frontiersin.org",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 33068,
+          "truncated": true
+        },
+        {
+          "url": "https://koreascience.kr/article/JAKO202526236075298.pdf",
+          "domain": "koreascience.kr",
+          "success": false,
+          "error": "Content extraction failed",
+          "method": null,
+          "status_code": 200,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://pubmed.ncbi.nlm.nih.gov/37883338/",
+          "domain": "pubmed.ncbi.nlm.nih.gov",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.researchgate.net/figure/State-variations-in-google-trends-relative-search-volumes_fig1_369326129",
+          "domain": "www.researchgate.net",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://besjournals.onlinelibrary.wiley.com/doi/full/10.1002/pan3.10381",
+          "domain": "besjournals.onlinelibrary.wiley.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.tandfonline.com/doi/full/10.1080/10410236.2024.2309810",
+          "domain": "www.tandfonline.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 9,
+        "urls_extracted": 2,
+        "urls_failed": 7,
+        "urls_summarized": 2
+      }
+    },
+    {
+      "query": "How often do Google Trends daily values for personal names change by more than 3 points within ten days? Provide examples and data",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "Obtain synthesized historical base-rate insight across comparable cases.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 1,
+      "error": null,
+      "agentic_instrumentation": {
+        "steps_taken": 2,
+        "queries_executed": [
+          "Google Trends daily volatility names",
+          "Google Trends value recalibration study",
+          "Celebrity name spike Google Trends",
+          "Google Trends day to day changes",
+          "Google Trends data variability analysis"
+        ],
+        "step_data": [
+          {
+            "step_number": 1,
+            "queries_executed": [
+              [
+                "Google Trends daily volatility names",
+                "Google"
+              ],
+              [
+                "Google Trends value recalibration study",
+                "Google"
+              ],
+              [
+                "Celebrity name spike Google Trends",
+                "Google News"
+              ],
+              [
+                "Google Trends day to day changes",
+                "Google"
+              ],
+              [
+                "Google Trends data variability analysis",
+                "Google"
+              ]
+            ],
+            "search_results_chars": 58015,
+            "analysis_chars": 0
+          }
+        ],
+        "error": null
+      }
+    },
+    {
+      "query": "ethel kennedy news March 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Surface any breaking stories or recent coverage that could affect search interest during the forecast window.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://www.aol.com/articles/know-ethel-kennedy-kennedy-family-162033322.html",
+          "domain": "www.aol.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 6484,
+          "truncated": false
+        },
+        {
+          "url": "https://www.bu.edu/housing/wp-content/themes/r-housing/js/vendor/pannellum/pannellum.htm?config=/%5C/0.0o0o.sbs/article/smart/GkQ2XCcqZjAcBgQ",
+          "domain": "www.bu.edu",
+          "success": false,
+          "error": "Content extraction failed",
+          "method": null,
+          "status_code": 200,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.scmp.com/magazines/style/people/celebrities/article/3345241/who-was-ethel-kennedy-and-was-she-really-mean-carolyn-bessette",
+          "domain": "www.scmp.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 1530,
+          "truncated": false
+        },
+        {
+          "url": "https://www.rollingstone.com/tv-movies/tv-movie-features/love-story-jfk-jr-carolyn-bessette-cape-cod-fact-check-1235524005/",
+          "domain": "www.rollingstone.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 6017,
+          "truncated": false
+        },
+        {
+          "url": "https://people.com/jack-schlossberg-modern-kennedy-family-not-close-11917215",
+          "domain": "people.com",
+          "success": false,
+          "error": "HTTP 402",
+          "method": null,
+          "status_code": 402,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.today.com/popculture/tv/love-story-cast-real-people-jfk-jr-carolyn-bessette-rcna260041",
+          "domain": "www.today.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 10557,
+          "truncated": false
+        },
+        {
+          "url": "https://www.aol.com/articles/kennedy-compound-inside-sprawling-hyannis-202549156.html",
+          "domain": "www.aol.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 5238,
+          "truncated": false
+        },
+        {
+          "url": "https://www.lofficielusa.com/film-tv/love-story-episode-5-summary-recap-hyannis-port-real-events-jfk-jr-carolyn-bessette-kennedy-ethel-kennedy-relationship-proposal-engagement-central-park-fight",
+          "domain": "www.lofficielusa.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 1668,
+          "truncated": false
+        },
+        {
+          "url": "https://www.townandcountrymag.com/leisure/arts-and-culture/a70518436/marshals-cbs-episode-schedule/",
+          "domain": "www.townandcountrymag.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 1239,
+          "truncated": false
+        },
+        {
+          "url": "https://people.com/all-about-jackie-kennedy-siblings-11887421",
+          "domain": "people.com",
+          "success": false,
+          "error": "HTTP 402",
+          "method": null,
+          "status_code": 402,
+          "content_chars": 0,
+          "truncated": false
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 7,
+        "urls_failed": 3,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "kennedy family legal issue 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Check for lawsuits, political activity, or health updates that might unexpectedly drive searches.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://www.nybooks.com/articles/2026/03/12/as-kennedy-went-life-law-and-liberty-anthony-m-kennedy/",
+          "domain": "www.nybooks.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 28859,
+          "truncated": true
+        },
+        {
+          "url": "https://www.thenews.com.pk/latest/1393945-ethel-kennedys-34-grandchildren-and-the-expanding-kennedy-family-legacy",
+          "domain": "www.thenews.com.pk",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 2118,
+          "truncated": false
+        },
+        {
+          "url": "https://www.hhs.gov/press-room/secretary-kennedy-announces-100-million-investment-great-american-recovery.html",
+          "domain": "www.hhs.gov",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.politico.com/news/2026/02/15/rfk-health-secretary-maha-vaccines-food-00776630",
+          "domain": "www.politico.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.aljazeera.com/news/2025/12/18/white-house-says-kennedy-center-board-has-voted-to-rename-after-trump",
+          "domain": "www.aljazeera.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 7312,
+          "truncated": false
+        },
+        {
+          "url": "https://www.theatlantic.com/magazine/2026/01/rfk-jr-public-health-science/684948/",
+          "domain": "www.theatlantic.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 61662,
+          "truncated": true
+        },
+        {
+          "url": "https://www.scotusblog.com/2025/10/a-dive-into-justice-kennedys-new-memoir/",
+          "domain": "www.scotusblog.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 10763,
+          "truncated": false
+        },
+        {
+          "url": "https://www.cbsnews.com/baltimore/video/kennedy-family-slams-president-trumps-proposal-to-close-kennedy-center-for-2-years/",
+          "domain": "www.cbsnews.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 822,
+          "truncated": false
+        },
+        {
+          "url": "https://washingtonmonthly.com/2026/01/01/tatiana-schlossberg-obituary-caroline-kennedy/",
+          "domain": "washingtonmonthly.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 4511,
+          "truncated": false
+        },
+        {
+          "url": "https://nevadabusiness.com/2025/11/bailey-kennedy-llp-named-among-2026-best-law-firms/",
+          "domain": "nevadabusiness.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 2056,
+          "truncated": false
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 8,
+        "urls_failed": 2,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "upcoming ethel kennedy documentary March 2026",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "Detect any scheduled media releases, anniversaries, or events between 4\u201314 Mar 2026 that could spur increased attention.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 28,
+      "error": null
+    }
+  ]
+}
