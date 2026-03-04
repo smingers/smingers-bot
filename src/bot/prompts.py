@@ -1272,11 +1272,33 @@ Search queries:
 
 RESEARCH_REFLECT_PROMPT = """You are evaluating the completeness of research gathered for a forecasting question and identifying critical gaps.
 
-QUESTION: {title}
+QUESTION:
+{title}
+
 Type: {question_type}
-Resolution criteria: {resolution_criteria}
-Fine print: {fine_print}
-Days to resolution: {days_to_resolution}
+
+Background:
+{background}
+
+Resolution criteria:
+{resolution_criteria}
+
+Fine print:
+{fine_print}
+
+{type_specific}
+
+Question metadata:
+- Opened: {open_time}
+- Resolves: {scheduled_resolve_time}
+- Today: {today} ({days_to_resolution} days until resolution)
+
+PRE-RESEARCH CONTEXT:
+The following information has already been gathered from sources referenced in the question. Use this to avoid redundant queries and to identify what additional research is needed.
+
+{seed_context}
+
+{stock_return_context}
 
 RESEARCH RESULTS SUMMARY:
 The following searches were executed and their results summarized below.
