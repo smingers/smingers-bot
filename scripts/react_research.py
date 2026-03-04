@@ -94,11 +94,14 @@ question by iteratively searching for information and reasoning about what you f
 1. Each turn, you MUST output a Thought (your reasoning) and then EITHER an Action \
 OR a Finish.
 2. Your Thought should reflect on what you've learned so far and what's still missing.
-3. An Action is a single search query using one tool.
+3. An Action is a search query using one tool. You may output MULTIPLE Actions \
+per turn if they are independent (e.g. fetching several tickers, or running a \
+Google query alongside a yFinance lookup). All actions in a turn execute in parallel.
 4. A Finish means you have enough information to write the research brief.
 5. Stay focused on the question. Don't drift into tangentially related topics.
 6. If a search returns nothing useful, reason about why and try a different approach.
-7. You have a limited step budget — be strategic about what you search for.
+7. You have a limited step budget — be strategic. Batch independent queries into \
+one turn to save steps.
 8. You may DEVIATE from the plan if your findings suggest a different direction is \
 more valuable. The plan is a guide, not a mandate.
 
@@ -107,12 +110,16 @@ more valuable. The plan is a guide, not a mandate.
 Thought: <your reasoning about what you know and what you need to find out>
 
 Action: <tool_name>: <query>
+Action: <tool_name>: <query>
+...
 
 OR
 
 Thought: <your reasoning about why you have enough information>
 
 Finish: done
+
+You may output 1-4 Action lines per turn. All will execute in parallel.
 
 Available tools: {tool_list}
 
@@ -122,9 +129,7 @@ Tool guidelines:
 - AskNews: 1-2 sentence semantic query. Good for recent news with geographic/industry scope.
 - FRED: FRED series ID (e.g. "UNRATE") or plain-language description. Economic data only.
 - yFinance: ticker symbol (e.g. "AAPL"). Stock/ETF prices, fundamentals, options.
-- Google Trends: single search term. Returns 90-day interest data.
-
-IMPORTANT: Output exactly ONE Action per turn. Do not output multiple actions.\
+- Google Trends: single search term. Returns 90-day interest data.\
 """
 
 REACT_TURN_PROMPT = """\
@@ -286,11 +291,13 @@ _ACTION_OR_FINISH_RE = re.compile(
 )
 
 
-def parse_action(response: str) -> tuple[str, str] | None:
-    """Parse 'Action: tool_name: query' from LLM response.
+def parse_actions(response: str) -> list[tuple[str, str]]:
+    """Parse all 'Action: tool_name: query' lines from LLM response.
 
     Handles markdown bold (**Action:**), extra whitespace, etc.
+    Returns a list of (tool_name, query) tuples (may be empty).
     """
+    actions: list[tuple[str, str]] = []
     for line in response.split("\n"):
         m = _ACTION_LINE_RE.match(line)
         if m:
@@ -299,8 +306,8 @@ def parse_action(response: str) -> tuple[str, str] | None:
             rest = rest.rstrip("*").strip()
             if ":" in rest:
                 tool, query = rest.split(":", 1)
-                return tool.strip().strip("*"), query.strip().strip("*")
-    return None
+                actions.append((tool.strip().strip("*"), query.strip().strip("*")))
+    return actions
 
 
 def has_finish(response: str) -> bool:
@@ -502,9 +509,9 @@ async def run_react_research(
                 trace.append({"step": step, "thought": thought, "action": None, "tool": None, "query": None, "observation": None})
                 break
 
-            # Parse action
-            action = parse_action(response_text)
-            if action is None:
+            # Parse actions (may be multiple per turn)
+            actions = parse_actions(response_text)
+            if not actions:
                 print(">> No action parsed from response. Full LLM output:")
                 print(response_text)
                 print(">> Retrying step with explicit nudge...")
@@ -516,7 +523,7 @@ async def run_react_research(
                     "For example:\n"
                     "Action: Google Trends: ethel kennedy\n"
                     "Action: Google News: iran nuclear talks 2026\n\n"
-                    "Output your Thought and then ONE Action now."
+                    "Output your Thought and then at least one Action now."
                 )
                 retry_response = await llm.complete(
                     model=model,
@@ -535,32 +542,40 @@ async def run_react_research(
                     trace.append({"step": step, "thought": thought, "action": None, "tool": None, "query": None, "observation": None})
                     break
 
-                action = parse_action(response_text)
-                if action is None:
+                actions = parse_actions(response_text)
+                if not actions:
                     print(">> Still no action parsed after retry. Full output:")
                     print(response_text)
                     print(">> Giving up on this step.")
                     trace.append({"step": step, "thought": thought, "action": None, "tool": None, "query": None, "observation": None})
                     break
 
-            tool_name, query = action
-            print(f"Action: {tool_name}: {query}")
+            # Execute all actions in parallel
+            for tool_name, query in actions:
+                print(f"Action: {tool_name}: {query}")
 
-            observation = await execute_action(
-                tool_name, query, search_pipeline, question_details, seen_urls
+            observations = await asyncio.gather(
+                *(
+                    execute_action(tool_name, query, search_pipeline, question_details, seen_urls)
+                    for tool_name, query in actions
+                )
             )
 
-            obs_display = observation[:300] + "..." if len(observation) > 300 else observation
-            print(f"Observation: {obs_display}")
+            # Record each action+observation as a separate trace entry within this step
+            for i, ((tool_name, query), observation) in enumerate(zip(actions, observations, strict=True)):
+                obs_display = observation[:300] + "..." if len(observation) > 300 else observation
+                label = f"{tool_name}: {query}"
+                suffix = f" [{i + 1}/{len(actions)}]" if len(actions) > 1 else ""
+                print(f"Observation{suffix}: {obs_display}")
 
-            trace.append({
-                "step": step,
-                "thought": thought,
-                "action": f"{tool_name}: {query}",
-                "tool": tool_name,
-                "query": query,
-                "observation": observation,
-            })
+                trace.append({
+                    "step": step,
+                    "thought": thought if i == 0 else f"(parallel with step {step} action 1)",
+                    "action": label,
+                    "tool": tool_name,
+                    "query": query,
+                    "observation": observation,
+                })
 
     # --- Phase 3: Final brief ---
     print("\n" + "=" * 70)
