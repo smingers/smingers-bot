@@ -269,37 +269,57 @@ async def load_question_from_api(question_id: int) -> dict:
 # ---------------------------------------------------------------------------
 
 
+import re
+
+# Patterns that match Action/Thought/Finish with optional markdown bold/italic
+_ACTION_LINE_RE = re.compile(
+    r"^\s*\**\s*Action\s*\**\s*:\s*(.+)", re.IGNORECASE
+)
+_FINISH_LINE_RE = re.compile(
+    r"^\s*\**\s*Finish\s*\**\s*:?\s*(.*)", re.IGNORECASE
+)
+_THOUGHT_PREFIX_RE = re.compile(
+    r"^\s*\**\s*Thought\s*\**\s*:\s*", re.IGNORECASE
+)
+_ACTION_OR_FINISH_RE = re.compile(
+    r"^\s*\**\s*(Action|Finish)\s*\**\s*:", re.IGNORECASE
+)
+
+
 def parse_action(response: str) -> tuple[str, str] | None:
-    """Parse 'Action: tool_name: query' from LLM response."""
+    """Parse 'Action: tool_name: query' from LLM response.
+
+    Handles markdown bold (**Action:**), extra whitespace, etc.
+    """
     for line in response.split("\n"):
-        line = line.strip()
-        if line.lower().startswith("action:"):
-            rest = line[len("action:"):].strip()
+        m = _ACTION_LINE_RE.match(line)
+        if m:
+            rest = m.group(1).strip()
+            # Strip trailing markdown bold if present
+            rest = rest.rstrip("*").strip()
             if ":" in rest:
                 tool, query = rest.split(":", 1)
-                return tool.strip(), query.strip()
+                return tool.strip().strip("*"), query.strip().strip("*")
     return None
 
 
 def has_finish(response: str) -> bool:
     """Check if response contains a Finish signal."""
     for line in response.split("\n"):
-        stripped = line.strip().lower()
-        if stripped.startswith("finish:") or stripped == "finish":
+        if _FINISH_LINE_RE.match(line):
             return True
     return False
 
 
 def extract_thought(response_text: str) -> str:
-    """Extract the Thought portion of a response."""
+    """Extract the Thought portion of a response (everything before Action/Finish)."""
     thought_lines = []
     for line in response_text.split("\n"):
-        stripped = line.strip().lower()
-        if stripped.startswith("action:") or stripped.startswith("finish:"):
+        if _ACTION_OR_FINISH_RE.match(line):
             break
         text = line.strip()
-        if text.startswith("Thought:"):
-            text = text[len("Thought:"):].strip()
+        # Strip Thought: prefix (with optional bold)
+        text = _THOUGHT_PREFIX_RE.sub("", text).strip()
         thought_lines.append(text)
     return "\n".join(thought_lines).strip()
 
@@ -467,14 +487,13 @@ async def run_react_research(
             )
             response_text = response.content
 
-            if verbose:
-                print(f"\n{response_text}")
+            # Always show raw response for now (debugging phase)
+            print(f"\n[Raw LLM response]\n{response_text}\n[/Raw LLM response]")
 
             thought = extract_thought(response_text)
-
-            if not verbose:
-                thought_display = thought[:200] + "..." if len(thought) > 200 else thought
-                print(f"Thought: {thought_display}")
+            print(f"\n[Parsed thought]: {thought[:200]}{'...' if len(thought) > 200 else ''}")
+            print(f"[Has finish]: {has_finish(response_text)}")
+            print(f"[Parsed action]: {parse_action(response_text)}")
 
             # Finish?
             if has_finish(response_text):
