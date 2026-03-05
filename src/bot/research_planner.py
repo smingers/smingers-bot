@@ -264,7 +264,7 @@ class IterativeResearchPlanner(ForecasterMixin):
             phase3_start = time.time()
             phase3_cost_start = cost_tracker.total_cost
             reflect_analysis, gap_queries = await self._reflect_and_gap_fill(
-                question_details, question_type, question_params, query_results
+                question_details, question_type, question_params, query_results, seed_context
             )
             metadata["phases"]["reflect"] = {
                 "duration_seconds": round(time.time() - phase3_start, 2),
@@ -563,6 +563,25 @@ class IterativeResearchPlanner(ForecasterMixin):
             logger.warning(f"Unknown tool '{tool}' for query: {query[:50]}")
             return None
 
+    @staticmethod
+    def _agentic_instrumentation_from_result(agentic_result: AgenticSearchResult) -> dict[str, Any]:
+        """Build agentic_instrumentation dict matching legacy search.py for tool_usage.json."""
+        step_data = [
+            {
+                "step_number": sd.step_number,
+                "queries_executed": [list(pair) for pair in sd.queries_executed],
+                "search_results_chars": len(sd.search_results_raw),
+                "analysis_chars": len(sd.analysis_after_step),
+            }
+            for sd in agentic_result.step_data
+        ]
+        return {
+            "steps_taken": agentic_result.steps_taken,
+            "queries_executed": agentic_result.queries_executed,
+            "step_data": step_data,
+            "error": agentic_result.error,
+        }
+
     def _process_search_result(
         self,
         rq: ResearchQuery,
@@ -604,20 +623,7 @@ class IterativeResearchPlanner(ForecasterMixin):
             )
         elif tool == "Agent":
             agentic_result: AgenticSearchResult = raw
-            agentic_meta = {
-                "steps_taken": agentic_result.steps_taken,
-                "queries_executed": agentic_result.queries_executed,
-                "step_data": [
-                    {
-                        "step_number": sd.step_number,
-                        "queries_executed": sd.queries_executed,
-                        "search_results_chars": len(sd.search_results_raw),
-                        "analysis_chars": len(sd.analysis_after_step),
-                    }
-                    for sd in agentic_result.step_data
-                ],
-                "error": agentic_result.error,
-            }
+            agentic_instrumentation = self._agentic_instrumentation_from_result(agentic_result)
             if agentic_result.error:
                 output = (
                     f"\n<Agent_report>\nQuery: {query}\n"
@@ -628,7 +634,7 @@ class IterativeResearchPlanner(ForecasterMixin):
                     formatted_output=output,
                     success=False,
                     error=agentic_result.error,
-                    metadata=agentic_meta,
+                    metadata=agentic_instrumentation,
                 )
             output = f"\n<Agent_report>\nQuery: {query}\n{agentic_result.analysis}</Agent_report>\n"
             num_results = 1 if len(agentic_result.analysis) > 500 else 0
@@ -637,7 +643,7 @@ class IterativeResearchPlanner(ForecasterMixin):
                 formatted_output=output,
                 success=True,
                 num_results=num_results,
-                metadata=agentic_meta,
+                metadata=agentic_instrumentation,
             )
         elif tool == "AskNews":
             output = f"\n<Asknews_articles>\nQuery: {query}\n{raw}</Asknews_articles>\n"
@@ -694,6 +700,7 @@ class IterativeResearchPlanner(ForecasterMixin):
         question_type: str,
         question_params: dict,
         query_results: list[QueryResult],
+        seed_context: str = "",
     ) -> tuple[str, list[ResearchQuery]]:
         """
         Evaluate research coverage and generate gap-fill queries if needed.
@@ -710,6 +717,9 @@ class IterativeResearchPlanner(ForecasterMixin):
         planner_config = self.config.get("research", {}).get("planner", {})
         max_gap_queries = planner_config.get("max_gap_queries", 3)
 
+        type_specific = self._build_type_specific_fields(question_type, question_params)
+        stock_return_context = question_params.get("stock_return_context", "")
+
         prompt = RESEARCH_REFLECT_PROMPT.format(
             title=question_params.get("question_title", ""),
             question_type=question_type,
@@ -717,7 +727,13 @@ class IterativeResearchPlanner(ForecasterMixin):
             or question_params.get("question_text", ""),
             resolution_criteria=question_params.get("resolution_criteria", ""),
             fine_print=question_params.get("fine_print", ""),
+            type_specific=type_specific,
+            open_time=question_params.get("open_time", ""),
+            scheduled_resolve_time=question_params.get("scheduled_resolve_time", ""),
+            today=question_params.get("today", ""),
             days_to_resolution=days_to_resolution,
+            seed_context=seed_context or "No pre-research context available.",
+            stock_return_context=stock_return_context,
             results_summary=results_summary,
             max_gap_queries=max_gap_queries,
         )
