@@ -713,6 +713,8 @@ class IterativeResearchPlanner(ForecasterMixin):
         prompt = RESEARCH_REFLECT_PROMPT.format(
             title=question_params.get("question_title", ""),
             question_type=question_type,
+            background=question_params.get("background_info", "")
+            or question_params.get("question_text", ""),
             resolution_criteria=question_params.get("resolution_criteria", ""),
             fine_print=question_params.get("fine_print", ""),
             days_to_resolution=days_to_resolution,
