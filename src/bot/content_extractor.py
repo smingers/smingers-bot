@@ -7,11 +7,21 @@ Multi-backend HTML content extraction with site-specific configs:
 3. Readability (fallback)
 4. BoilerPy3 (last resort)
 
+Also handles non-HTML formats via SpreadsheetParser:
+- CSV files (detected by Content-Type or .csv extension) — stdlib csv
+- Excel files (.xlsx, detected by Content-Type or extension) — openpyxl
+- Google Sheets (public) — URL rewritten to CSV export before fetching
+- PDF files (detected by Content-Type or .pdf extension) — pymupdf
+- JSON data endpoints (detected by Content-Type or .json extension) — stdlib json
+
 Also includes ConcurrentContentExtractor for concurrent URL fetching.
 """
 
 import asyncio
+import csv
 import html as html_lib
+import io
+import json
 import logging
 import re
 from dataclasses import dataclass
@@ -44,7 +54,269 @@ try:
 except ImportError:
     HAS_BOILERPY = False
 
+try:
+    import openpyxl
+
+    HAS_OPENPYXL = True
+except ImportError:
+    HAS_OPENPYXL = False
+
+try:
+    import fitz  # pymupdf
+
+    HAS_PYMUPDF = True
+except ImportError:
+    HAS_PYMUPDF = False
+
 logger = logging.getLogger(__name__)
+
+
+class SpreadsheetParser:
+    """
+    Converts tabular data (CSV text or Excel bytes) to LLM-readable markdown tables.
+
+    Row limit prevents excessive token usage. When truncated, a note is appended
+    showing how many rows were omitted.
+
+    All parse_* methods return None on failure (library unavailable or parse error).
+    Callers should treat None as a failure signal and set success=False.
+    """
+
+    MAX_ROWS = 200
+    MAX_SHEETS = 10
+    MAX_TOTAL_ROWS = 500
+
+    @staticmethod
+    def _to_markdown_table(headers: list[str], rows: list[list[str]]) -> str:
+        """Format headers and rows as a pipe-delimited markdown table."""
+
+        # Escape pipe characters in cell values
+        def escape(cell: str) -> str:
+            return str(cell).replace("|", "\\|").replace("\n", " ").strip()
+
+        header_row = "| " + " | ".join(escape(h) for h in headers) + " |"
+        separator = "| " + " | ".join("---" for _ in headers) + " |"
+        data_rows = ["| " + " | ".join(escape(c) for c in row) + " |" for row in rows]
+        return "\n".join([header_row, separator] + data_rows)
+
+    @classmethod
+    def parse_csv(cls, text: str, max_rows: int = MAX_ROWS) -> str | None:
+        """
+        Parse CSV text and return a markdown table string, or None on parse failure.
+
+        Uses csv.Sniffer to auto-detect the delimiter (comma, semicolon, tab, pipe)
+        with a fallback to standard comma-delimited if sniffing fails.
+
+        Args:
+            text: Raw CSV text content
+            max_rows: Maximum number of data rows to include
+
+        Returns:
+            Markdown table string (with truncation note if needed), or None on error
+        """
+        try:
+            # Sniff delimiter from first 4KB to handle semicolon/tab/pipe variants
+            try:
+                dialect = csv.Sniffer().sniff(text[:4096], delimiters=",;\t|")
+            except csv.Error:
+                dialect = csv.excel  # fallback: standard comma-delimited
+
+            reader = csv.DictReader(io.StringIO(text), dialect=dialect)
+            headers = reader.fieldnames or []
+            if not headers:
+                return "(CSV file had no headers or was empty)"
+
+            all_rows = []
+            for row in reader:
+                all_rows.append([row.get(h, "") for h in headers])
+
+            total_rows = len(all_rows)
+            truncated = total_rows > max_rows
+            display_rows = all_rows[:max_rows]
+
+            table = cls._to_markdown_table(list(headers), display_rows)
+            if truncated:
+                table += f"\n[Showing {max_rows} of {total_rows} rows]"
+            return table
+        except Exception as e:
+            logger.debug(f"CSV parsing failed: {e}")
+            return None
+
+    @classmethod
+    def parse_excel(
+        cls,
+        data: bytes,
+        max_rows: int = MAX_ROWS,
+        max_sheets: int = MAX_SHEETS,
+        max_total_rows: int = MAX_TOTAL_ROWS,
+    ) -> str | None:
+        """
+        Parse Excel (.xlsx) bytes and return a markdown table string, or None on parse failure.
+
+        Reads up to max_sheets sheets; if multiple sheets exist, each is rendered as a
+        separate section with a heading. Global limits (max_sheets, max_total_rows)
+        prevent excessive output for large workbooks.
+
+        Args:
+            data: Raw Excel file bytes
+            max_rows: Maximum data rows per sheet
+            max_sheets: Maximum number of sheets to render
+            max_total_rows: Maximum total data rows across all sheets
+
+        Returns:
+            Markdown string with one table per sheet (with truncation notes if needed),
+            or None on parse error
+        """
+        if not HAS_OPENPYXL:
+            logger.debug("Excel parsing unavailable: openpyxl not installed")
+            return None
+
+        try:
+            wb = openpyxl.load_workbook(io.BytesIO(data), read_only=True, data_only=True)
+            parts = []
+            total_rows_rendered = 0
+            skipped_sheets = len(wb.sheetnames) - max_sheets
+
+            for sheet_name in wb.sheetnames[:max_sheets]:
+                if total_rows_rendered >= max_total_rows:
+                    parts.append(f"**Sheet: {sheet_name}**\n[Skipped — global row limit reached]")
+                    continue
+
+                ws = wb[sheet_name]
+                rows_iter = ws.iter_rows(values_only=True)
+
+                # First row as headers
+                try:
+                    raw_headers = next(rows_iter)
+                except StopIteration:
+                    parts.append(f"**Sheet: {sheet_name}**\n(empty sheet)")
+                    continue
+
+                headers = [str(h) if h is not None else "" for h in raw_headers]
+                # Skip sheets with no meaningful header row
+                if not any(h.strip() for h in headers):
+                    continue
+
+                all_rows = []
+                for raw_row in rows_iter:
+                    all_rows.append([str(c) if c is not None else "" for c in raw_row])
+
+                remaining = max_total_rows - total_rows_rendered
+                effective_max = min(max_rows, remaining)
+                total_rows = len(all_rows)
+                truncated = total_rows > effective_max
+                display_rows = all_rows[:effective_max]
+                total_rows_rendered += len(display_rows)
+
+                table = cls._to_markdown_table(headers, display_rows)
+                if truncated:
+                    table += f"\n[Showing {effective_max} of {total_rows} rows]"
+
+                heading = f"**Sheet: {sheet_name}**\n" if len(wb.sheetnames) > 1 else ""
+                parts.append(heading + table)
+
+            wb.close()
+
+            if skipped_sheets > 0:
+                parts.append(f"[{skipped_sheets} additional sheet(s) not shown — sheet limit reached]")
+
+            return "\n\n".join(parts) if parts else "(Excel file had no data)"
+        except Exception as e:
+            logger.debug(f"Excel parsing failed: {e}")
+            return None
+
+    @staticmethod
+    def parse_pdf(data: bytes, max_pages: int = 20) -> str | None:
+        """
+        Parse PDF bytes and return extracted text with page markers, or None on parse failure.
+
+        Extracts text from up to max_pages pages. Scanned/image-only PDFs
+        will return an informational message (OCR is not performed).
+        Password-protected PDFs return a clear message rather than a generic error.
+
+        Args:
+            data: Raw PDF file bytes
+            max_pages: Maximum number of pages to extract
+
+        Returns:
+            Plain text with [Page N] markers (with truncation note if needed),
+            or None on parse error
+        """
+        if not HAS_PYMUPDF:
+            logger.debug("PDF parsing unavailable: pymupdf not installed")
+            return None
+
+        try:
+            doc = fitz.open(stream=data, filetype="pdf")
+            try:
+                if doc.is_encrypted:
+                    return "(PDF is password-protected and cannot be read without credentials)"
+
+                total_pages = len(doc)
+                pages_to_read = min(total_pages, max_pages)
+
+                parts = []
+                for page_num in range(pages_to_read):
+                    page = doc[page_num]
+                    text = page.get_text()
+                    if text.strip():
+                        parts.append(f"[Page {page_num + 1}]\n{text.strip()}")
+
+                if not parts:
+                    return "(PDF had no extractable text — may be a scanned/image-only document)"
+
+                result = "\n\n".join(parts)
+                if total_pages > max_pages:
+                    result += f"\n\n[Showing {max_pages} of {total_pages} pages]"
+                return result
+            finally:
+                doc.close()
+        except Exception as e:
+            logger.debug(f"PDF parsing failed: {e}")
+            return None
+
+    @staticmethod
+    def parse_json(text: str, max_chars: int = 15000) -> str | None:
+        """
+        Parse a JSON string and return a readable representation, or None on parse failure.
+
+        For arrays: shows item count and first 50 items.
+        For objects: shows key count and all keys with their values.
+        Truncates to max_chars to avoid excessive token usage.
+
+        Args:
+            text: Raw JSON text
+            max_chars: Maximum output characters
+
+        Returns:
+            Formatted JSON string (truncated if needed), or None on error
+        """
+        try:
+            data = json.loads(text)
+        except json.JSONDecodeError as e:
+            logger.debug(f"JSON parsing failed: {e}")
+            return None
+
+        try:
+            if isinstance(data, list):
+                total = len(data)
+                preview = json.dumps(data[:50], indent=2, ensure_ascii=False)
+                header = f"[JSON array — {total} items]\n"
+                result = header + preview
+                if total > 50:
+                    result += f"\n... [{total - 50} more items]"
+            elif isinstance(data, dict):
+                header = f"[JSON object — {len(data)} keys]\n"
+                result = header + json.dumps(data, indent=2, ensure_ascii=False)
+            else:
+                result = json.dumps(data, indent=2, ensure_ascii=False)
+
+            if len(result) > max_chars:
+                result = result[:max_chars] + "\n...[truncated]"
+            return result
+        except Exception as e:
+            logger.debug(f"JSON formatting failed: {e}")
+            return None
 
 
 @dataclass
@@ -762,6 +1034,51 @@ class ConcurrentContentExtractor:
         """Check if URL is a Wikipedia page."""
         return "wikipedia.org/wiki/" in url.lower()
 
+    @staticmethod
+    def _is_google_sheets_url(url: str) -> bool:
+        """Check if URL points to a Google Sheets document."""
+        parsed = urlparse(url)
+        return parsed.netloc.lower() == "docs.google.com" and parsed.path.lower().startswith(
+            "/spreadsheets/"
+        )
+
+    @staticmethod
+    def _rewrite_google_sheets_url(url: str) -> str:
+        """
+        Rewrite a Google Sheets URL to its direct CSV export equivalent.
+
+        Extracts the spreadsheet ID from the URL path and the sheet tab ID (gid)
+        from the URL fragment. Falls back to gid=0 (first sheet) if absent.
+
+        Examples:
+            https://docs.google.com/spreadsheets/d/ABC/edit#gid=123
+            -> https://docs.google.com/spreadsheets/d/ABC/export?format=csv&gid=123
+
+            https://docs.google.com/spreadsheets/d/ABC/pub
+            -> https://docs.google.com/spreadsheets/d/ABC/export?format=csv&gid=0
+        """
+        parsed = urlparse(url)
+        # Extract spreadsheet ID: path looks like /spreadsheets/d/{ID}/...
+        path_parts = parsed.path.rstrip("/").split("/")
+        try:
+            d_index = path_parts.index("d")
+            spreadsheet_id = path_parts[d_index + 1]
+        except (ValueError, IndexError):
+            return url  # Can't parse — return unchanged and let it fail naturally
+
+        # Extract gid from fragment (e.g. "#gid=123") or query params (e.g. "?gid=123")
+        gid = "0"
+        for source in (parsed.fragment, parsed.query):
+            if source:
+                gid_match = re.search(r"gid=(\d+)", source)
+                if gid_match:
+                    gid = gid_match.group(1)
+                    break
+
+        return (
+            f"https://docs.google.com/spreadsheets/d/{spreadsheet_id}/export?format=csv&gid={gid}"
+        )
+
     _WIKIPEDIA_USER_AGENT = "MetaculusBot/1.0 (https://github.com/metaculus; forecasting bot)"
 
     @staticmethod
@@ -945,15 +1262,90 @@ class ConcurrentContentExtractor:
         if self._is_wikipedia_url(url):
             return await self._fetch_wikipedia(url)
 
+        # Google Sheets: rewrite to CSV export URL before fetching
+        fetch_url = url
+        if self._is_google_sheets_url(url):
+            fetch_url = self._rewrite_google_sheets_url(url)
+            logger.info(f"[spreadsheet] Rewriting Google Sheets URL to CSV export: {fetch_url}")
+
+        # Detect non-HTML by extension before fetching (Bright Data is for web pages only)
+        url_ext = url.lower().split("?")[0]
+        is_non_html_by_extension = url_ext.endswith((".csv", ".xlsx", ".xls", ".pdf", ".json"))
+
         try:
-            # Try Bright Data API if available
-            if self.bright_data_api_key:
+            # Skip Bright Data for non-HTML content (spreadsheets, PDFs, JSON, Google Sheets)
+            if self.bright_data_api_key and not self._is_google_sheets_url(url) and not is_non_html_by_extension:
                 return await self._fetch_with_bright_data(url)
 
             # Direct HTTP request
-            response = await self._client.get(url)
+            response = await self._client.get(fetch_url)
             status_code = response.status_code
             response.raise_for_status()
+
+            # Detect spreadsheet content by Content-Type header or URL extension
+            content_type = response.headers.get("content-type", "").lower()
+            url_lower = fetch_url.lower().split("?")[0]  # strip query params for extension check
+
+            is_csv = "text/csv" in content_type or url_lower.endswith(".csv")
+            is_excel = (
+                "spreadsheetml" in content_type
+                or "ms-excel" in content_type
+                or url_lower.endswith(".xlsx")
+                or url_lower.endswith(".xls")
+            )
+            is_pdf = "application/pdf" in content_type or url_lower.endswith(".pdf")
+            is_json = (
+                "application/json" in content_type
+                or "text/json" in content_type
+                or url_lower.endswith(".json")
+            )
+            # Google Sheets export always returns CSV regardless of content-type header
+            is_google_sheets = self._is_google_sheets_url(url)
+
+            if is_csv or is_google_sheets:
+                parsed_content = SpreadsheetParser.parse_csv(response.text)
+                if parsed_content is None:
+                    return self._make_result(
+                        url, domain, success=False, error="CSV parsing failed", status_code=status_code, method="spreadsheet_csv"
+                    )
+                return self._make_result(
+                    url, domain, content=parsed_content, success=True, status_code=status_code,
+                    method="spreadsheet_csv", content_chars=len(parsed_content),
+                )
+
+            if is_excel:
+                parsed_content = SpreadsheetParser.parse_excel(response.content)
+                if parsed_content is None:
+                    return self._make_result(
+                        url, domain, success=False, error="Excel parsing failed", status_code=status_code, method="spreadsheet_excel"
+                    )
+                return self._make_result(
+                    url, domain, content=parsed_content, success=True, status_code=status_code,
+                    method="spreadsheet_excel", content_chars=len(parsed_content),
+                )
+
+            if is_pdf:
+                parsed_content = SpreadsheetParser.parse_pdf(response.content)
+                if parsed_content is None:
+                    return self._make_result(
+                        url, domain, success=False, error="PDF parsing failed", status_code=status_code, method="pdf"
+                    )
+                return self._make_result(
+                    url, domain, content=parsed_content, success=True, status_code=status_code,
+                    method="pdf", content_chars=len(parsed_content),
+                )
+
+            if is_json:
+                parsed_content = SpreadsheetParser.parse_json(response.text)
+                if parsed_content is None:
+                    return self._make_result(
+                        url, domain, success=False, error="JSON parsing failed", status_code=status_code, method="json"
+                    )
+                return self._make_result(
+                    url, domain, content=parsed_content, success=True, status_code=status_code,
+                    method="json", content_chars=len(parsed_content),
+                )
+
             raw_html = response.text
 
             if not raw_html or len(raw_html.strip()) < 100:
@@ -992,7 +1384,7 @@ class ConcurrentContentExtractor:
                 truncated=truncated,
             )
 
-        except TimeoutError:
+        except (TimeoutError, httpx.TimeoutException):
             return self._make_result(url, domain, error="Request timed out")
         except httpx.HTTPStatusError as e:
             logger.debug(f"HTTP error for {url}: {e}")
