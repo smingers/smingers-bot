@@ -184,13 +184,16 @@ jobs:
 
       # ============================================================
       # BROWSER SCRAPING SUPPORT (Xvfb + Playwright)
-      # Required for scraping community predictions on meta-questions
+      # NOTE: Disabled because we now skip community-prediction meta-questions
+      # in run_bot.py, so the forecasting workflow no longer needs Playwright.
+      # Re-enable these steps if you restore community prediction scraping
+      # for meta-questions in the automated pipeline.
       # ============================================================
-      - name: Install Xvfb
-        run: sudo apt-get update && sudo apt-get install -y xvfb
-
-      - name: Install Playwright Chromium
-        run: poetry run playwright install --with-deps chromium
+      # - name: Install Xvfb
+      #   run: sudo apt-get update && sudo apt-get install -y xvfb
+      #
+      # - name: Install Playwright Chromium
+      #   run: poetry run playwright install --with-deps chromium
 
       # ============================================================
       # TEST MODE: Single question forecast
