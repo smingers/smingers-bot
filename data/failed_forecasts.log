@@ -178,3 +178,12 @@ Success: 0 | Failed: 1
 
 🟡 OTHER Q42423: Will LULU's market close price on 2026-03-14 be higher than 
   KeyError: 'background'
+
+======================================================================
+RUN: 2026-03-05T01:02:23.615030+00:00
+Tournament: minibench | Selection: new-only | Via: run_bot.py
+Success: 0 | Failed: 1
+======================================================================
+
+🟡 OTHER Q42424: Will the community prediction be higher than 10.00% on 2026-
+  KeyError: 'background'
