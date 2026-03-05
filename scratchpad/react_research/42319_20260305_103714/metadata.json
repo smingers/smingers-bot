@@ -1,0 +1,16 @@
+{
+  "question_id": 42319,
+  "question_title": "What will U.S. Customs and Border Protection report as the number of Southwest Land Border Encounters in March 2026?",
+  "question_type": "numeric",
+  "timestamp": "2026-03-05T10:37:14.234629+00:00",
+  "cost": {
+    "total_calls": 41,
+    "successful_calls": 41,
+    "failed_calls": 0,
+    "total_input_tokens": 127393,
+    "total_output_tokens": 18358,
+    "total_reasoning_tokens": 3776,
+    "total_cost": 0.29621719999999996
+  },
+  "steps": 17
+}
