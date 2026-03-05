@@ -253,20 +253,19 @@ def load_question_from_data_dir(data_dir: str) -> dict:
 
 async def load_question_from_api(question_id: int) -> dict:
     """Fetch question from Metaculus API."""
-    from src.utils.metaculus_api import MetaculusApi
+    from src.utils.metaculus_api import MetaculusClient
 
-    api = MetaculusApi()
-    data = await api.get_question(question_id)
-    q = data.get("question", {})
+    async with MetaculusClient() as client:
+        q = await client.get_question(question_id)
     return {
-        "id": data.get("id", question_id),
-        "title": data.get("title", q.get("title", "Unknown")),
-        "type": q.get("type", "binary"),
-        "description": q.get("description", ""),
-        "resolution_criteria": q.get("resolution_criteria", ""),
-        "fine_print": q.get("fine_print", ""),
-        "resolution_date": q.get("scheduled_resolve_time", ""),
-        "options": q.get("options"),
+        "id": q.id,
+        "title": q.title or "Unknown",
+        "type": q.question_type or "binary",
+        "description": q.description or "",
+        "resolution_criteria": q.resolution_criteria or "",
+        "fine_print": q.fine_print or "",
+        "resolution_date": q.scheduled_resolve_time or "",
+        "options": q.options,
     }
 
 
