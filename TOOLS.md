@@ -200,7 +200,7 @@ python scripts/analyze_tool_usage.py data/41594_20260128_123456/tool_usage.json
 
 **Location:** `scripts/ensemble_diversity_report.py`
 
-Generates a static HTML report analyzing how the 5-forecaster ensemble behaves — whether forecasters agree or diverge, how much they shift between outside and inside views, and whether cross-pollination is creating real diversity.
+Generates a static HTML report analyzing how the 5-forecaster ensemble behaves — whether forecasters agree or diverge, how much they shift between outside and inside views, and whether cross-pollination is creating real diversity. (Only forecasters 1, 3, and 5 produce their own outside views; 2 and 4 reuse 5's and 3's respectively.)
 
 ```bash
 # Generate report (scans all artifacts in data/)
@@ -226,7 +226,7 @@ cd data && python -m http.server 8765
   - Avg outside view and inside view spread (std dev or coefficient of variation)
   - Ensemble spread change (do forecasters converge or diverge after the inside view?)
 - **Per forecast** — all 5 forecasters' outside view and inside view predictions, shift from OV → IV, range, std dev, and final aggregated value
-- **Cross-pollination aware** — shifts are computed against the outside view each forecaster actually *received* (not their own), so F2's shift is relative to F4's outside view, etc.
+- **Cross-pollination aware** — shifts are computed against the outside view each forecaster actually *received* (F1 and F5 use their own; F2 uses F5's, F3 uses F1's, F4 uses F3's).
 - **Tags** — each forecast is labeled CONVERGED, STABLE, or DIVERGED based on whether the inside view spread shrank, stayed flat, or grew relative to the outside view spread
 
 **Important:** This is a manual re-run script, not a live dashboard. It scans all artifact directories in `data/` each time it runs, excluding test mode forecasts and pre-refactor (pre Jan 27) artifacts. Re-run it after new forecasts to update.

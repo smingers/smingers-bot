@@ -175,9 +175,9 @@ Question -> Query Generation -> Search (Historical + Current) -> 5-Agent Ensembl
 Each question type handler does its own integrated pipeline:
 1. **Query Generation** - Generate historical queries (outside view) and current queries (inside view)
 2. **Search Execution** - Google/Serper, AskNews, Google Trends, FRED, yFinance, agentic search
-3. **Outside View Prediction** - 5 forecasters analyze historical context
-4. **Cross-Pollination** - Forecasters share outputs for diverse perspectives
-5. **Inside View Prediction** - 5 forecasters refine with current news
+3. **Outside View Prediction** - Forecasters 1, 3, and 5 each run one outside-view LLM call on historical context; forecasters 2 and 4 do not run outside view (they reuse outputs in the next step)
+4. **Cross-Pollination** - Each forecaster is assigned one outside-view output (see table below); 2 and 4 receive 5's and 3's respectively for diversity
+5. **Inside View Prediction** - All 5 forecasters run, each using their assigned outside-view context plus current news
 6. **Aggregation** - Equal-weighted average of forecaster probabilities
 7. **Supervisor (optional)** - If ensemble divergence exceeds threshold, a supervisor agent analyzes disagreements, conducts targeted research, and produces an updated forecast
 
@@ -185,15 +185,17 @@ Each question type handler does its own integrated pipeline:
 
 All forecasters have equal weight (1.0). Quality tier models:
 - **Forecaster 1-2**: Claude Sonnet 4.6
-- **Forecaster 3**: GPT-5.2
+- **Forecaster 3**: GPT-5.4
 - **Forecaster 4-5**: o3
 
-Cross-pollination structure (creates cross-model diversity):
-- Forecaster 1 receives Forecaster 1's outside view output (Sonnet 4.6 ← self)
-- Forecaster 2 receives Forecaster 5's outside view output (Sonnet 4.6 ← o3)
-- Forecaster 3 receives Forecaster 1's outside view output (GPT-5.2 ← Sonnet 4.6)
-- Forecaster 4 receives Forecaster 3's outside view output (o3 ← GPT-5.2)
-- Forecaster 5 receives Forecaster 5's outside view output (o3 ← self)
+**Who runs outside view:** Only forecasters **1, 3, and 5** run the outside-view LLM call. Forecasters **2 and 4** do not—they are assigned another forecaster's outside-view output for the inside-view step (saves 2 LLM calls, keeps model diversity).
+
+**Cross-pollination** (who receives whose outside-view output for inside view):
+- Forecaster 1 receives Forecaster 1's outside view (self)
+- Forecaster 2 receives Forecaster 5's outside view (Sonnet 4.6 ← o3)
+- Forecaster 3 receives Forecaster 1's outside view (GPT-5.2 ← Sonnet 4.6)
+- Forecaster 4 receives Forecaster 3's outside view (o3 ← GPT-5.2)
+- Forecaster 5 receives Forecaster 5's outside view (self)
 
 ### Question Types
 
@@ -397,19 +399,19 @@ data/41594_20260126_230107/
 │   └── current_search.json             # Search results (Google/AskNews)
 ├── ensemble/
 │   ├── outside_view_prompt.md          # Shared outside view prompt
-│   ├── forecaster_1_outside_view.md    # Forecaster 1 outside view response
-│   ├── forecaster_1_inside_view.md     # Forecaster 1 inside view response
-│   ├── forecaster_1.json               # Extracted: {probability: 0.52}
-│   ├── forecaster_2_outside_view.md
+│   ├── forecaster_1_outside_view.md    # F1 outside view (runs LLM)
+│   ├── forecaster_1_inside_view.md     # F1 inside view
+│   ├── forecaster_1.json                # Extracted: {probability: 0.52}
+│   ├── forecaster_2_outside_view.md    # F2: copy of F5's output (no LLM)
 │   ├── forecaster_2_inside_view.md
 │   ├── forecaster_2.json
-│   ├── forecaster_3_outside_view.md
+│   ├── forecaster_3_outside_view.md    # F3 outside view (runs LLM)
 │   ├── forecaster_3_inside_view.md
 │   ├── forecaster_3.json
-│   ├── forecaster_4_outside_view.md
+│   ├── forecaster_4_outside_view.md    # F4: copy of F3's output (no LLM)
 │   ├── forecaster_4_inside_view.md
 │   ├── forecaster_4.json
-│   ├── forecaster_5_outside_view.md
+│   ├── forecaster_5_outside_view.md    # F5 outside view (runs LLM)
 │   ├── forecaster_5_inside_view.md
 │   ├── forecaster_5.json
 │   └── aggregation.json                # Final: {final_probability: 0.545}
@@ -530,7 +532,7 @@ assert ensemble.final_prediction is not None
 
 **Test file:** `tests/unit/test_pipeline_steps.py` covers:
 - `TestCrossPollinateStep` - Context mapping, failed output filtering, self-pollination for edge agents
-- `TestRunOutsideViewStep` - Typed output, three-outside-view optimization (only 3 LLM calls), output reuse
+- `TestRunOutsideViewStep` - Typed output; only forecasters 1, 3, 5 run outside view (3 LLM calls), forecasters 2 and 4 reuse outputs
 - `TestRunInsideViewStep` - Typed output, all 5 forecasters called
 - `TestExtractAndAggregateStep` - Typed output, exception handling, failed outside view replacement
 - `TestPipelineDataTypes` - Construction of all 5 data types with edge cases
