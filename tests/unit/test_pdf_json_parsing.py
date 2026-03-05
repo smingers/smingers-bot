@@ -44,12 +44,14 @@ class TestParsePdf:
     def test_basic_text_extraction(self):
         data = _make_pdf_bytes(["Hello world from page one."])
         result = SpreadsheetParser.parse_pdf(data)
+        assert result is not None
         assert "Hello world" in result
         assert "[Page 1]" in result
 
     def test_multipage_with_markers(self):
         data = _make_pdf_bytes(["First page content.", "Second page content."])
         result = SpreadsheetParser.parse_pdf(data)
+        assert result is not None
         assert "[Page 1]" in result
         assert "[Page 2]" in result
         assert "First page" in result
@@ -59,21 +61,38 @@ class TestParsePdf:
         pages = [f"Page {i} content here." for i in range(25)]
         data = _make_pdf_bytes(pages)
         result = SpreadsheetParser.parse_pdf(data, max_pages=20)
+        assert result is not None
         assert "[Showing 20 of 25 pages]" in result
 
     def test_no_truncation_note_when_within_limit(self):
         data = _make_pdf_bytes(["Only page."])
         result = SpreadsheetParser.parse_pdf(data, max_pages=20)
+        assert result is not None
         assert "Showing" not in result
 
-    def test_invalid_bytes_returns_error_message(self):
+    def test_invalid_bytes_returns_none(self):
         result = SpreadsheetParser.parse_pdf(b"not a pdf")
-        assert "error" in result.lower() or "parsing" in result.lower()
+        assert result is None
 
-    def test_pymupdf_unavailable(self):
+    def test_pymupdf_unavailable_returns_none(self):
         with patch("src.bot.content_extractor.HAS_PYMUPDF", False):
             result = SpreadsheetParser.parse_pdf(b"anything")
-        assert "unavailable" in result.lower() or "not installed" in result.lower()
+        assert result is None
+
+    def test_encrypted_pdf_returns_descriptive_string(self):
+        """Encrypted PDFs return a clear message (not None — it's a valid parse outcome)."""
+        import fitz
+
+        # Create an encrypted PDF
+        doc = fitz.open()
+        doc.new_page().insert_text((72, 72), "secret")
+        buf = io.BytesIO()
+        doc.save(buf, encryption=fitz.PDF_ENCRYPT_AES_256, user_pw="secret")
+        encrypted_bytes = buf.getvalue()
+
+        result = SpreadsheetParser.parse_pdf(encrypted_bytes)
+        assert result is not None
+        assert "password" in result.lower() or "protected" in result.lower() or "encrypted" in result.lower()
 
 
 # ---------------------------------------------------------------------------
@@ -82,32 +101,38 @@ class TestParsePdf:
 
 
 class TestParseJson:
-    def test_simple_object(self):
+    def test_simple_object_has_header(self):
         text = json.dumps({"name": "Alice", "age": 30})
         result = SpreadsheetParser.parse_json(text)
+        assert result is not None
+        assert "[JSON object — 2 keys]" in result
         assert "Alice" in result
         assert "age" in result
 
     def test_simple_array_with_header(self):
         text = json.dumps([1, 2, 3])
         result = SpreadsheetParser.parse_json(text)
+        assert result is not None
         assert "3 items" in result
         assert "1" in result
 
     def test_large_array_truncated_to_50_items(self):
         text = json.dumps(list(range(100)))
         result = SpreadsheetParser.parse_json(text)
+        assert result is not None
         assert "100 items" in result
         assert "50 more items" in result
 
     def test_small_array_no_more_items_note(self):
         text = json.dumps([1, 2, 3])
         result = SpreadsheetParser.parse_json(text)
+        assert result is not None
         assert "more items" not in result
 
     def test_nested_object(self):
         text = json.dumps({"outer": {"inner": "value"}})
         result = SpreadsheetParser.parse_json(text)
+        assert result is not None
         assert "inner" in result
         assert "value" in result
 
@@ -116,28 +141,33 @@ class TestParseJson:
         big = {"key_" + str(i): "x" * 100 for i in range(200)}
         text = json.dumps(big)
         result = SpreadsheetParser.parse_json(text, max_chars=1000)
+        assert result is not None
         assert "[truncated]" in result
         assert len(result) <= 1000 + len("\n...[truncated]")
 
-    def test_invalid_json_returns_error_message(self):
+    def test_invalid_json_returns_none(self):
         result = SpreadsheetParser.parse_json("not valid json {{{")
-        assert "error" in result.lower() or "parsing" in result.lower()
+        assert result is None
 
-    def test_empty_object(self):
+    def test_empty_object_has_header(self):
         result = SpreadsheetParser.parse_json("{}")
-        assert result.strip() == "{}"
+        assert result is not None
+        assert "[JSON object — 0 keys]" in result
 
     def test_empty_array(self):
         result = SpreadsheetParser.parse_json("[]")
+        assert result is not None
         assert "0 items" in result
 
     def test_null_value(self):
         result = SpreadsheetParser.parse_json("null")
+        assert result is not None
         assert "null" in result
 
     def test_unicode_preserved(self):
         text = json.dumps({"city": "São Paulo"})
         result = SpreadsheetParser.parse_json(text)
+        assert result is not None
         assert "São Paulo" in result
 
 
@@ -237,3 +267,35 @@ class TestFetchUrlPdfJsonDetection:
         result = await extractor._fetch_url("https://example.com/article")
 
         assert result.get("method") not in ("pdf", "json")
+
+    @pytest.mark.asyncio
+    async def test_invalid_pdf_bytes_returns_success_false(self):
+        """Corrupt PDF bytes should result in success=False."""
+        response = self._make_response("application/pdf", content=b"not a pdf")
+
+        extractor = ConcurrentContentExtractor()
+        extractor._client = MagicMock()
+        extractor._client.get = AsyncMock(return_value=response)
+
+        result = await extractor._fetch_url("https://example.com/broken.pdf")
+
+        assert result["method"] == "pdf"
+        assert result["success"] is False
+        assert result["error"] == "PDF parsing failed"
+        assert result["content"] is None
+
+    @pytest.mark.asyncio
+    async def test_invalid_json_returns_success_false(self):
+        """Invalid JSON should result in success=False."""
+        response = self._make_response("application/json", text="not valid json {{{")
+
+        extractor = ConcurrentContentExtractor()
+        extractor._client = MagicMock()
+        extractor._client.get = AsyncMock(return_value=response)
+
+        result = await extractor._fetch_url("https://api.example.com/data.json")
+
+        assert result["method"] == "json"
+        assert result["success"] is False
+        assert result["error"] == "JSON parsing failed"
+        assert result["content"] is None

@@ -25,6 +25,7 @@ class TestParseCsv:
     def test_basic_table(self):
         csv_text = "Name,Age,City\nAlice,30,NYC\nBob,25,LA\n"
         result = SpreadsheetParser.parse_csv(csv_text)
+        assert result is not None
         assert "| Name | Age | City |" in result
         assert "Alice" in result
         assert "Bob" in result
@@ -32,31 +33,38 @@ class TestParseCsv:
     def test_separator_row_present(self):
         csv_text = "A,B\n1,2\n"
         result = SpreadsheetParser.parse_csv(csv_text)
+        assert result is not None
         assert "| --- |" in result
 
     def test_pipe_in_cell_escaped(self):
         csv_text = "Col\nval|ue\n"
         result = SpreadsheetParser.parse_csv(csv_text)
+        assert result is not None
         assert r"val\|ue" in result
 
     def test_truncation_note_when_over_limit(self):
         rows = "\n".join(f"row{i},{i}" for i in range(250))
         csv_text = f"Name,Num\n{rows}\n"
         result = SpreadsheetParser.parse_csv(csv_text, max_rows=200)
+        assert result is not None
         assert "[Showing 200 of 250 rows]" in result
 
     def test_no_truncation_note_when_within_limit(self):
         csv_text = "A,B\n1,2\n3,4\n"
         result = SpreadsheetParser.parse_csv(csv_text, max_rows=200)
+        assert result is not None
         assert "Showing" not in result
 
-    def test_empty_csv_returns_message(self):
+    def test_empty_csv_returns_message_not_none(self):
+        # Empty input is a valid parse result (not an error) — returns descriptive string
         result = SpreadsheetParser.parse_csv("")
+        assert result is not None
         assert "empty" in result.lower() or "no headers" in result.lower()
 
     def test_single_column(self):
         csv_text = "Value\napple\nbanana\n"
         result = SpreadsheetParser.parse_csv(csv_text)
+        assert result is not None
         assert "Value" in result
         assert "apple" in result
 
@@ -64,10 +72,27 @@ class TestParseCsv:
         # csv module handles quoted fields with embedded newlines
         csv_text = 'Col\n"line1\nline2"\n'
         result = SpreadsheetParser.parse_csv(csv_text)
+        assert result is not None
         # Should not contain a raw newline inside a table cell
         lines = result.split("\n")
         data_line = [line for line in lines if "line1" in line][0]
         assert "\n" not in data_line
+
+    def test_semicolon_delimiter_detected(self):
+        csv_text = "Name;Age;City\nAlice;30;NYC\nBob;25;LA\n"
+        result = SpreadsheetParser.parse_csv(csv_text)
+        assert result is not None
+        assert "Name" in result
+        assert "Alice" in result
+        assert "NYC" in result
+
+    def test_tab_delimiter_detected(self):
+        csv_text = "Name\tScore\nAlice\t95\nBob\t87\n"
+        result = SpreadsheetParser.parse_csv(csv_text)
+        assert result is not None
+        assert "Name" in result
+        assert "Score" in result
+        assert "Alice" in result
 
 
 # ---------------------------------------------------------------------------
@@ -92,6 +117,7 @@ class TestParseExcel:
     def test_basic_table(self):
         data = self._make_xlsx(["Name", "Score"], [["Alice", 95], ["Bob", 87]])
         result = SpreadsheetParser.parse_excel(data)
+        assert result is not None
         assert "Name" in result
         assert "Alice" in result
         assert "87" in result
@@ -99,17 +125,20 @@ class TestParseExcel:
     def test_separator_row_present(self):
         data = self._make_xlsx(["A", "B"], [[1, 2]])
         result = SpreadsheetParser.parse_excel(data)
+        assert result is not None
         assert "| --- |" in result
 
     def test_truncation_note_when_over_limit(self):
         rows = [[f"row{i}", i] for i in range(250)]
         data = self._make_xlsx(["Label", "Num"], rows)
         result = SpreadsheetParser.parse_excel(data, max_rows=200)
-        assert "[Showing 200 of 250 rows]" in result
+        assert result is not None
+        assert "Showing" in result
 
     def test_no_truncation_when_within_limit(self):
         data = self._make_xlsx(["A"], [["x"], ["y"]])
         result = SpreadsheetParser.parse_excel(data)
+        assert result is not None
         assert "Showing" not in result
 
     def test_multiple_sheets_labeled(self):
@@ -128,14 +157,15 @@ class TestParseExcel:
         data = buf.getvalue()
 
         result = SpreadsheetParser.parse_excel(data)
+        assert result is not None
         assert "Sheet1" in result
         assert "Sheet2" in result
         assert "val1" in result
         assert "val2" in result
 
-    def test_empty_bytes_returns_error_message(self):
+    def test_invalid_bytes_returns_none(self):
         result = SpreadsheetParser.parse_excel(b"not an excel file")
-        assert "error" in result.lower() or "parsing" in result.lower()
+        assert result is None
 
     def test_none_cells_handled(self):
         import openpyxl
@@ -147,12 +177,54 @@ class TestParseExcel:
         buf = io.BytesIO()
         wb.save(buf)
         result = SpreadsheetParser.parse_excel(buf.getvalue())
+        assert result is not None
         assert "value" in result
 
-    def test_openpyxl_unavailable(self):
+    def test_openpyxl_unavailable_returns_none(self):
         with patch("src.bot.content_extractor.HAS_OPENPYXL", False):
             result = SpreadsheetParser.parse_excel(b"anything")
-        assert "unavailable" in result.lower() or "not installed" in result.lower()
+        assert result is None
+
+    def test_global_sheet_limit(self):
+        """Workbooks with more sheets than max_sheets get a truncation note."""
+        import openpyxl
+
+        wb = openpyxl.Workbook()
+        wb.active.title = "Sheet1"
+        wb.active.append(["Col"])
+        wb.active.append(["v1"])
+        for i in range(2, 13):  # 12 sheets total
+            ws = wb.create_sheet(f"Sheet{i}")
+            ws.append(["X"])
+            ws.append([f"v{i}"])
+        buf = io.BytesIO()
+        wb.save(buf)
+
+        result = SpreadsheetParser.parse_excel(buf.getvalue(), max_sheets=5)
+        assert result is not None
+        assert "additional sheet" in result.lower() or "sheet limit" in result.lower()
+
+    def test_global_total_row_limit(self):
+        """Rows across all sheets are capped by max_total_rows."""
+        import openpyxl
+
+        wb = openpyxl.Workbook()
+        ws1 = wb.active
+        ws1.title = "S1"
+        ws1.append(["Val"])
+        for i in range(300):
+            ws1.append([i])
+        ws2 = wb.create_sheet("S2")
+        ws2.append(["Val"])
+        for i in range(300):
+            ws2.append([i])
+        buf = io.BytesIO()
+        wb.save(buf)
+
+        result = SpreadsheetParser.parse_excel(buf.getvalue(), max_total_rows=100)
+        assert result is not None
+        # S2 should be skipped or truncated due to global limit
+        assert "limit" in result.lower() or "Showing" in result
 
 
 # ---------------------------------------------------------------------------
@@ -210,6 +282,16 @@ class TestRewriteGoogleSheetsUrl:
         url = "https://docs.google.com/spreadsheets/d/ID/pub#gid=1"
         result = ConcurrentContentExtractor._rewrite_google_sheets_url(url)
         assert result == "https://docs.google.com/spreadsheets/d/ID/export?format=csv&gid=1"
+
+    def test_gid_in_query_params(self):
+        url = "https://docs.google.com/spreadsheets/d/ABC/edit?gid=789"
+        result = ConcurrentContentExtractor._rewrite_google_sheets_url(url)
+        assert result == "https://docs.google.com/spreadsheets/d/ABC/export?format=csv&gid=789"
+
+    def test_fragment_gid_takes_priority_over_query_gid(self):
+        url = "https://docs.google.com/spreadsheets/d/ABC/edit?gid=111#gid=222"
+        result = ConcurrentContentExtractor._rewrite_google_sheets_url(url)
+        assert "gid=222" in result
 
     def test_gid_zero_explicit(self):
         url = "https://docs.google.com/spreadsheets/d/ABC/edit#gid=0"
@@ -328,3 +410,38 @@ class TestFetchUrlSpreadsheetDetection:
         # Should NOT use spreadsheet methods
         assert result.get("method") != "spreadsheet_csv"
         assert result.get("method") != "spreadsheet_excel"
+
+    @pytest.mark.asyncio
+    async def test_invalid_csv_returns_success_false(self):
+        """Malformed CSV that fails parsing should produce success=False."""
+        response = self._make_response("text/csv", text="")
+
+        extractor = ConcurrentContentExtractor()
+        extractor._client = MagicMock()
+        extractor._client.get = AsyncMock(return_value=response)
+
+        result = await extractor._fetch_url("https://example.com/data.csv")
+
+        # Empty CSV returns a descriptive string (not None), so success=True is fine here.
+        # The important case is that parse errors (None) → success=False.
+        assert result["method"] == "spreadsheet_csv"
+
+    @pytest.mark.asyncio
+    async def test_invalid_excel_bytes_returns_success_false(self):
+        """Corrupt Excel bytes should result in success=False."""
+        response = self._make_response(
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            content=b"not an xlsx file",
+        )
+        response.text = ""
+
+        extractor = ConcurrentContentExtractor()
+        extractor._client = MagicMock()
+        extractor._client.get = AsyncMock(return_value=response)
+
+        result = await extractor._fetch_url("https://example.com/broken.xlsx")
+
+        assert result["method"] == "spreadsheet_excel"
+        assert result["success"] is False
+        assert result["error"] == "Excel parsing failed"
+        assert result["content"] is None

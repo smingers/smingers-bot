@@ -77,9 +77,14 @@ class SpreadsheetParser:
 
     Row limit prevents excessive token usage. When truncated, a note is appended
     showing how many rows were omitted.
+
+    All parse_* methods return None on failure (library unavailable or parse error).
+    Callers should treat None as a failure signal and set success=False.
     """
 
     MAX_ROWS = 200
+    MAX_SHEETS = 10
+    MAX_TOTAL_ROWS = 500
 
     @staticmethod
     def _to_markdown_table(headers: list[str], rows: list[list[str]]) -> str:
@@ -95,19 +100,28 @@ class SpreadsheetParser:
         return "\n".join([header_row, separator] + data_rows)
 
     @classmethod
-    def parse_csv(cls, text: str, max_rows: int = MAX_ROWS) -> str:
+    def parse_csv(cls, text: str, max_rows: int = MAX_ROWS) -> str | None:
         """
-        Parse CSV text and return a markdown table string.
+        Parse CSV text and return a markdown table string, or None on parse failure.
+
+        Uses csv.Sniffer to auto-detect the delimiter (comma, semicolon, tab, pipe)
+        with a fallback to standard comma-delimited if sniffing fails.
 
         Args:
             text: Raw CSV text content
             max_rows: Maximum number of data rows to include
 
         Returns:
-            Markdown table string, with truncation note if needed
+            Markdown table string (with truncation note if needed), or None on error
         """
         try:
-            reader = csv.DictReader(io.StringIO(text))
+            # Sniff delimiter from first 4KB to handle semicolon/tab/pipe variants
+            try:
+                dialect = csv.Sniffer().sniff(text[:4096], delimiters=",;\t|")
+            except csv.Error:
+                dialect = csv.excel  # fallback: standard comma-delimited
+
+            reader = csv.DictReader(io.StringIO(text), dialect=dialect)
             headers = reader.fieldnames or []
             if not headers:
                 return "(CSV file had no headers or was empty)"
@@ -126,31 +140,48 @@ class SpreadsheetParser:
             return table
         except Exception as e:
             logger.debug(f"CSV parsing failed: {e}")
-            return f"(CSV parsing error: {e})"
+            return None
 
     @classmethod
-    def parse_excel(cls, data: bytes, max_rows: int = MAX_ROWS) -> str:
+    def parse_excel(
+        cls,
+        data: bytes,
+        max_rows: int = MAX_ROWS,
+        max_sheets: int = MAX_SHEETS,
+        max_total_rows: int = MAX_TOTAL_ROWS,
+    ) -> str | None:
         """
-        Parse Excel (.xlsx) bytes and return a markdown table string.
+        Parse Excel (.xlsx) bytes and return a markdown table string, or None on parse failure.
 
-        Reads all sheets; if multiple sheets exist, each is rendered as a
-        separate section with a heading.
+        Reads up to max_sheets sheets; if multiple sheets exist, each is rendered as a
+        separate section with a heading. Global limits (max_sheets, max_total_rows)
+        prevent excessive output for large workbooks.
 
         Args:
             data: Raw Excel file bytes
             max_rows: Maximum data rows per sheet
+            max_sheets: Maximum number of sheets to render
+            max_total_rows: Maximum total data rows across all sheets
 
         Returns:
-            Markdown string with one table per sheet, with truncation notes if needed
+            Markdown string with one table per sheet (with truncation notes if needed),
+            or None on parse error
         """
         if not HAS_OPENPYXL:
-            return "(Excel parsing unavailable: openpyxl not installed)"
+            logger.debug("Excel parsing unavailable: openpyxl not installed")
+            return None
 
         try:
             wb = openpyxl.load_workbook(io.BytesIO(data), read_only=True, data_only=True)
             parts = []
+            total_rows_rendered = 0
+            skipped_sheets = len(wb.sheetnames) - max_sheets
 
-            for sheet_name in wb.sheetnames:
+            for sheet_name in wb.sheetnames[:max_sheets]:
+                if total_rows_rendered >= max_total_rows:
+                    parts.append(f"**Sheet: {sheet_name}**\n[Skipped — global row limit reached]")
+                    continue
+
                 ws = wb[sheet_name]
                 rows_iter = ws.iter_rows(values_only=True)
 
@@ -170,73 +201,87 @@ class SpreadsheetParser:
                 for raw_row in rows_iter:
                     all_rows.append([str(c) if c is not None else "" for c in raw_row])
 
+                remaining = max_total_rows - total_rows_rendered
+                effective_max = min(max_rows, remaining)
                 total_rows = len(all_rows)
-                truncated = total_rows > max_rows
-                display_rows = all_rows[:max_rows]
+                truncated = total_rows > effective_max
+                display_rows = all_rows[:effective_max]
+                total_rows_rendered += len(display_rows)
 
                 table = cls._to_markdown_table(headers, display_rows)
                 if truncated:
-                    table += f"\n[Showing {max_rows} of {total_rows} rows]"
+                    table += f"\n[Showing {effective_max} of {total_rows} rows]"
 
                 heading = f"**Sheet: {sheet_name}**\n" if len(wb.sheetnames) > 1 else ""
                 parts.append(heading + table)
 
             wb.close()
+
+            if skipped_sheets > 0:
+                parts.append(f"[{skipped_sheets} additional sheet(s) not shown — sheet limit reached]")
+
             return "\n\n".join(parts) if parts else "(Excel file had no data)"
         except Exception as e:
             logger.debug(f"Excel parsing failed: {e}")
-            return f"(Excel parsing error: {e})"
+            return None
 
     @staticmethod
-    def parse_pdf(data: bytes, max_pages: int = 20) -> str:
+    def parse_pdf(data: bytes, max_pages: int = 20) -> str | None:
         """
-        Parse PDF bytes and return extracted text with page markers.
+        Parse PDF bytes and return extracted text with page markers, or None on parse failure.
 
         Extracts text from up to max_pages pages. Scanned/image-only PDFs
-        will return empty pages (OCR is not performed).
+        will return an informational message (OCR is not performed).
+        Password-protected PDFs return a clear message rather than a generic error.
 
         Args:
             data: Raw PDF file bytes
             max_pages: Maximum number of pages to extract
 
         Returns:
-            Plain text with [Page N] markers, with truncation note if needed
+            Plain text with [Page N] markers (with truncation note if needed),
+            or None on parse error
         """
         if not HAS_PYMUPDF:
-            return "(PDF parsing unavailable: pymupdf not installed)"
+            logger.debug("PDF parsing unavailable: pymupdf not installed")
+            return None
 
         try:
             doc = fitz.open(stream=data, filetype="pdf")
-            total_pages = len(doc)
-            pages_to_read = min(total_pages, max_pages)
+            try:
+                if doc.is_encrypted:
+                    return "(PDF is password-protected and cannot be read without credentials)"
 
-            parts = []
-            for page_num in range(pages_to_read):
-                page = doc[page_num]
-                text = page.get_text()
-                if text.strip():
-                    parts.append(f"[Page {page_num + 1}]\n{text.strip()}")
+                total_pages = len(doc)
+                pages_to_read = min(total_pages, max_pages)
 
-            doc.close()
+                parts = []
+                for page_num in range(pages_to_read):
+                    page = doc[page_num]
+                    text = page.get_text()
+                    if text.strip():
+                        parts.append(f"[Page {page_num + 1}]\n{text.strip()}")
 
-            if not parts:
-                return "(PDF had no extractable text — may be a scanned/image-only document)"
+                if not parts:
+                    return "(PDF had no extractable text — may be a scanned/image-only document)"
 
-            result = "\n\n".join(parts)
-            if total_pages > max_pages:
-                result += f"\n\n[Showing {max_pages} of {total_pages} pages]"
-            return result
+                result = "\n\n".join(parts)
+                if total_pages > max_pages:
+                    result += f"\n\n[Showing {max_pages} of {total_pages} pages]"
+                return result
+            finally:
+                doc.close()
         except Exception as e:
             logger.debug(f"PDF parsing failed: {e}")
-            return f"(PDF parsing error: {e})"
+            return None
 
     @staticmethod
-    def parse_json(text: str, max_chars: int = 15000) -> str:
+    def parse_json(text: str, max_chars: int = 15000) -> str | None:
         """
-        Parse a JSON string and return a readable representation.
+        Parse a JSON string and return a readable representation, or None on parse failure.
 
-        For arrays: shows length and first few items.
-        For objects: shows all keys with their values.
+        For arrays: shows item count and first 50 items.
+        For objects: shows key count and all keys with their values.
         Truncates to max_chars to avoid excessive token usage.
 
         Args:
@@ -244,23 +289,25 @@ class SpreadsheetParser:
             max_chars: Maximum output characters
 
         Returns:
-            Formatted JSON string, truncated if needed
+            Formatted JSON string (truncated if needed), or None on error
         """
         try:
             data = json.loads(text)
         except json.JSONDecodeError as e:
             logger.debug(f"JSON parsing failed: {e}")
-            return f"(JSON parsing error: {e})"
+            return None
 
         try:
             if isinstance(data, list):
                 total = len(data)
-                # Show a summary header then pretty-print the first items
                 preview = json.dumps(data[:50], indent=2, ensure_ascii=False)
                 header = f"[JSON array — {total} items]\n"
                 result = header + preview
                 if total > 50:
                     result += f"\n... [{total - 50} more items]"
+            elif isinstance(data, dict):
+                header = f"[JSON object — {len(data)} keys]\n"
+                result = header + json.dumps(data, indent=2, ensure_ascii=False)
             else:
                 result = json.dumps(data, indent=2, ensure_ascii=False)
 
@@ -269,7 +316,7 @@ class SpreadsheetParser:
             return result
         except Exception as e:
             logger.debug(f"JSON formatting failed: {e}")
-            return f"(JSON formatting error: {e})"
+            return None
 
 
 @dataclass
@@ -990,7 +1037,10 @@ class ConcurrentContentExtractor:
     @staticmethod
     def _is_google_sheets_url(url: str) -> bool:
         """Check if URL points to a Google Sheets document."""
-        return "docs.google.com/spreadsheets" in url.lower()
+        parsed = urlparse(url)
+        return parsed.netloc.lower() == "docs.google.com" and parsed.path.lower().startswith(
+            "/spreadsheets/"
+        )
 
     @staticmethod
     def _rewrite_google_sheets_url(url: str) -> str:
@@ -1016,12 +1066,14 @@ class ConcurrentContentExtractor:
         except (ValueError, IndexError):
             return url  # Can't parse — return unchanged and let it fail naturally
 
-        # Extract gid from fragment (e.g. "gid=123")
+        # Extract gid from fragment (e.g. "#gid=123") or query params (e.g. "?gid=123")
         gid = "0"
-        if parsed.fragment:
-            gid_match = re.search(r"gid=(\d+)", parsed.fragment)
-            if gid_match:
-                gid = gid_match.group(1)
+        for source in (parsed.fragment, parsed.query):
+            if source:
+                gid_match = re.search(r"gid=(\d+)", source)
+                if gid_match:
+                    gid = gid_match.group(1)
+                    break
 
         return (
             f"https://docs.google.com/spreadsheets/d/{spreadsheet_id}/export?format=csv&gid={gid}"
@@ -1216,9 +1268,13 @@ class ConcurrentContentExtractor:
             fetch_url = self._rewrite_google_sheets_url(url)
             logger.info(f"[spreadsheet] Rewriting Google Sheets URL to CSV export: {fetch_url}")
 
+        # Detect non-HTML by extension before fetching (Bright Data is for web pages only)
+        url_ext = url.lower().split("?")[0]
+        is_non_html_by_extension = url_ext.endswith((".csv", ".xlsx", ".xls", ".pdf", ".json"))
+
         try:
-            # Try Bright Data API if available (HTML only — skip for spreadsheets)
-            if self.bright_data_api_key and not self._is_google_sheets_url(url):
+            # Skip Bright Data for non-HTML content (spreadsheets, PDFs, JSON, Google Sheets)
+            if self.bright_data_api_key and not self._is_google_sheets_url(url) and not is_non_html_by_extension:
                 return await self._fetch_with_bright_data(url)
 
             # Direct HTTP request
@@ -1248,54 +1304,46 @@ class ConcurrentContentExtractor:
 
             if is_csv or is_google_sheets:
                 parsed_content = SpreadsheetParser.parse_csv(response.text)
-                content_chars = len(parsed_content)
+                if parsed_content is None:
+                    return self._make_result(
+                        url, domain, success=False, error="CSV parsing failed", status_code=status_code, method="spreadsheet_csv"
+                    )
                 return self._make_result(
-                    url,
-                    domain,
-                    content=parsed_content,
-                    success=bool(parsed_content),
-                    status_code=status_code,
-                    method="spreadsheet_csv",
-                    content_chars=content_chars,
+                    url, domain, content=parsed_content, success=True, status_code=status_code,
+                    method="spreadsheet_csv", content_chars=len(parsed_content),
                 )
 
             if is_excel:
                 parsed_content = SpreadsheetParser.parse_excel(response.content)
-                content_chars = len(parsed_content)
+                if parsed_content is None:
+                    return self._make_result(
+                        url, domain, success=False, error="Excel parsing failed", status_code=status_code, method="spreadsheet_excel"
+                    )
                 return self._make_result(
-                    url,
-                    domain,
-                    content=parsed_content,
-                    success=bool(parsed_content),
-                    status_code=status_code,
-                    method="spreadsheet_excel",
-                    content_chars=content_chars,
+                    url, domain, content=parsed_content, success=True, status_code=status_code,
+                    method="spreadsheet_excel", content_chars=len(parsed_content),
                 )
 
             if is_pdf:
                 parsed_content = SpreadsheetParser.parse_pdf(response.content)
-                content_chars = len(parsed_content)
+                if parsed_content is None:
+                    return self._make_result(
+                        url, domain, success=False, error="PDF parsing failed", status_code=status_code, method="pdf"
+                    )
                 return self._make_result(
-                    url,
-                    domain,
-                    content=parsed_content,
-                    success=bool(parsed_content),
-                    status_code=status_code,
-                    method="pdf",
-                    content_chars=content_chars,
+                    url, domain, content=parsed_content, success=True, status_code=status_code,
+                    method="pdf", content_chars=len(parsed_content),
                 )
 
             if is_json:
                 parsed_content = SpreadsheetParser.parse_json(response.text)
-                content_chars = len(parsed_content)
+                if parsed_content is None:
+                    return self._make_result(
+                        url, domain, success=False, error="JSON parsing failed", status_code=status_code, method="json"
+                    )
                 return self._make_result(
-                    url,
-                    domain,
-                    content=parsed_content,
-                    success=bool(parsed_content),
-                    status_code=status_code,
-                    method="json",
-                    content_chars=content_chars,
+                    url, domain, content=parsed_content, success=True, status_code=status_code,
+                    method="json", content_chars=len(parsed_content),
                 )
 
             raw_html = response.text
@@ -1336,7 +1384,7 @@ class ConcurrentContentExtractor:
                 truncated=truncated,
             )
 
-        except TimeoutError:
+        except (TimeoutError, httpx.TimeoutException):
             return self._make_result(url, domain, error="Request timed out")
         except httpx.HTTPStatusError as e:
             logger.debug(f"HTTP error for {url}: {e}")
