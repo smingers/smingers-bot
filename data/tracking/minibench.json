@@ -1,7 +1,7 @@
 {
   "tournament_id": "minibench",
   "tournament_name": "Tournament minibench",
-  "last_updated": "2026-03-04T08:49:29.427174+00:00",
+  "last_updated": "2026-03-05T16:39:08.151212+00:00",
   "total_forecasts": 108,
   "binary_count": 56,
   "numeric_count": 24,
@@ -1780,7 +1780,7 @@
       "snapshot_timestamp": "2026-02-18T22:40:00.516828+00:00",
       "num_forecasters": 1,
       "resolved": true,
-      "resolution": null,
+      "resolution": "Doesn't change",
       "comparison": {
         "type": "multiple_choice",
         "my_probabilities": {
@@ -1848,7 +1848,7 @@
       "snapshot_timestamp": "2026-02-18T22:40:00.516828+00:00",
       "num_forecasters": 1,
       "resolved": true,
-      "resolution": null,
+      "resolution": "Decreases",
       "comparison": {
         "type": "multiple_choice",
         "my_probabilities": {
@@ -2479,7 +2479,7 @@
       "snapshot_timestamp": "2026-02-18T22:47:58.445284+00:00",
       "num_forecasters": 1,
       "resolved": true,
-      "resolution": null,
+      "resolution": "Decreases",
       "comparison": {
         "type": "multiple_choice",
         "my_probabilities": {
@@ -2622,7 +2622,7 @@
       "snapshot_timestamp": "2026-02-18T22:50:46.405831+00:00",
       "num_forecasters": 1,
       "resolved": true,
-      "resolution": null,
+      "resolution": "Decreases",
       "comparison": {
         "type": "multiple_choice",
         "my_probabilities": {
@@ -3219,8 +3219,8 @@
       "forecast_timestamp": "2026-02-18T21:53:25+00:00",
       "snapshot_timestamp": "2026-02-20T21:58:58.157685+00:00",
       "num_forecasters": 1,
-      "resolved": false,
-      "resolution": null,
+      "resolved": true,
+      "resolution": 65.1,
       "comparison": {
         "type": "numeric",
         "my_median": 66.9,
@@ -3235,14 +3235,15 @@
         "uncertainty_ratio": 0.3612
       },
       "score_data": {
-        "baseline_score": 41.75602962556957,
-        "peer_score": 1.5857171749625913,
-        "coverage": 0.46231741784988034,
-        "relative_legacy_score": 0,
-        "weighted_coverage": 0.46231741784988034,
-        "spot_peer_score": 0,
-        "spot_baseline_score": 0
-      }
+        "baseline_score": 55.49763908011331,
+        "peer_score": 21.403770967315637,
+        "coverage": 0.7148205255579063,
+        "relative_legacy_score": 0.555373748981904,
+        "weighted_coverage": 0.7148205255579063,
+        "spot_peer_score": 31.25638534179752,
+        "spot_baseline_score": 77.63856394134493
+      },
+      "status": "resolved"
     },
     {
       "question_id": 42201,
@@ -3531,21 +3532,21 @@
     }
   ],
   "resolution_stats": {
-    "total_resolved": 103,
-    "total_unresolved": 2,
+    "total_resolved": 104,
+    "total_unresolved": 1,
     "binary_resolved": 54,
-    "numeric_resolved": 21,
+    "numeric_resolved": 22,
     "multiple_choice_resolved": 28
   },
   "score_stats": {
-    "mean_spot_peer_score": 10.029718541086355,
-    "median_spot_peer_score": 8.954745290311331,
+    "mean_spot_peer_score": 10.327398401484427,
+    "median_spot_peer_score": 9.025257766987886,
     "total_scored": 105,
-    "positive_scores": 73,
+    "positive_scores": 74,
     "negative_scores": 30,
     "best_score": 87.05270476644584,
     "worst_score": -195.28281051964072,
-    "total_spot_peer_score": 1053.1204468140672
+    "total_spot_peer_score": 1084.3768321558648
   },
   "binary_resolution_stats": {
     "correct_direction": 6,

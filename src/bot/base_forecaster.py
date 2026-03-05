@@ -417,7 +417,31 @@ class BaseForecaster(ForecasterMixin, ABC):
         hist_queries = [q for q in all_queries if q["temporal_role"] == "historical"]
         curr_queries = [q for q in all_queries if q["temporal_role"] == "current"]
 
+        # Build question_urls metrics from Phase 0 pre-research so tool_usage.json
+        # contains the same data as the legacy path (no analyze_scraping.py backfill needed).
+        pre_research = plan_meta.get("phases", {}).get("pre_research", {})
+        question_url_queries = [
+            {
+                "query": u.get("url", ""),
+                "tool": "QuestionURLScrape",
+                "success": u.get("scraped", False),
+                "num_results": 1 if u.get("scraped") else 0,
+                "domain": u.get("domain"),
+                "method": u.get("method"),
+                "content_words": u.get("content_words"),
+                "error": u.get("error"),
+            }
+            for u in pre_research.get("urls", [])
+        ]
+
         research_metrics = {
+            "question_urls": ResearchMetrics(
+                search_id="question_urls",
+                searched=pre_research.get("searched", False),
+                num_queries=pre_research.get("urls_found", 0),
+                queries=question_url_queries,
+                tools_used=["QuestionURLScrape"] if question_url_queries else [],
+            ),
             "historical": ResearchMetrics(
                 search_id="historical",
                 searched=len(hist_queries) > 0,
@@ -1172,7 +1196,9 @@ class BaseForecaster(ForecasterMixin, ABC):
         final_prediction: Any,
         question_params: dict,
         pre_research_context: str = "",
-        log: Callable[[str], Any] = print,  # defaults to print; callers should pass the pipeline logger
+        log: Callable[
+            [str], Any
+        ] = print,  # defaults to print; callers should pass the pipeline logger
     ) -> Any:
         """
         Run supervisor review if ensemble divergence exceeds threshold.
