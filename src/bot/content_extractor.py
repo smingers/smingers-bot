@@ -7,11 +7,18 @@ Multi-backend HTML content extraction with site-specific configs:
 3. Readability (fallback)
 4. BoilerPy3 (last resort)
 
+Also handles spreadsheet formats via SpreadsheetParser:
+- CSV files (detected by Content-Type or .csv extension) — stdlib csv
+- Excel files (.xlsx, detected by Content-Type or extension) — openpyxl
+- Google Sheets (public) — URL rewritten to CSV export before fetching
+
 Also includes ConcurrentContentExtractor for concurrent URL fetching.
 """
 
 import asyncio
+import csv
 import html as html_lib
+import io
 import logging
 import re
 from dataclasses import dataclass
@@ -44,7 +51,131 @@ try:
 except ImportError:
     HAS_BOILERPY = False
 
+try:
+    import openpyxl
+
+    HAS_OPENPYXL = True
+except ImportError:
+    HAS_OPENPYXL = False
+
 logger = logging.getLogger(__name__)
+
+
+class SpreadsheetParser:
+    """
+    Converts tabular data (CSV text or Excel bytes) to LLM-readable markdown tables.
+
+    Row limit prevents excessive token usage. When truncated, a note is appended
+    showing how many rows were omitted.
+    """
+
+    MAX_ROWS = 200
+
+    @staticmethod
+    def _to_markdown_table(headers: list[str], rows: list[list[str]]) -> str:
+        """Format headers and rows as a pipe-delimited markdown table."""
+
+        # Escape pipe characters in cell values
+        def escape(cell: str) -> str:
+            return str(cell).replace("|", "\\|").replace("\n", " ").strip()
+
+        header_row = "| " + " | ".join(escape(h) for h in headers) + " |"
+        separator = "| " + " | ".join("---" for _ in headers) + " |"
+        data_rows = ["| " + " | ".join(escape(c) for c in row) + " |" for row in rows]
+        return "\n".join([header_row, separator] + data_rows)
+
+    @classmethod
+    def parse_csv(cls, text: str, max_rows: int = MAX_ROWS) -> str:
+        """
+        Parse CSV text and return a markdown table string.
+
+        Args:
+            text: Raw CSV text content
+            max_rows: Maximum number of data rows to include
+
+        Returns:
+            Markdown table string, with truncation note if needed
+        """
+        try:
+            reader = csv.DictReader(io.StringIO(text))
+            headers = reader.fieldnames or []
+            if not headers:
+                return "(CSV file had no headers or was empty)"
+
+            all_rows = []
+            for row in reader:
+                all_rows.append([row.get(h, "") for h in headers])
+
+            total_rows = len(all_rows)
+            truncated = total_rows > max_rows
+            display_rows = all_rows[:max_rows]
+
+            table = cls._to_markdown_table(list(headers), display_rows)
+            if truncated:
+                table += f"\n[Showing {max_rows} of {total_rows} rows]"
+            return table
+        except Exception as e:
+            logger.debug(f"CSV parsing failed: {e}")
+            return f"(CSV parsing error: {e})"
+
+    @classmethod
+    def parse_excel(cls, data: bytes, max_rows: int = MAX_ROWS) -> str:
+        """
+        Parse Excel (.xlsx) bytes and return a markdown table string.
+
+        Reads all sheets; if multiple sheets exist, each is rendered as a
+        separate section with a heading.
+
+        Args:
+            data: Raw Excel file bytes
+            max_rows: Maximum data rows per sheet
+
+        Returns:
+            Markdown string with one table per sheet, with truncation notes if needed
+        """
+        if not HAS_OPENPYXL:
+            return "(Excel parsing unavailable: openpyxl not installed)"
+
+        try:
+            wb = openpyxl.load_workbook(io.BytesIO(data), read_only=True, data_only=True)
+            parts = []
+
+            for sheet_name in wb.sheetnames:
+                ws = wb[sheet_name]
+                rows_iter = ws.iter_rows(values_only=True)
+
+                # First row as headers
+                try:
+                    raw_headers = next(rows_iter)
+                except StopIteration:
+                    parts.append(f"**Sheet: {sheet_name}**\n(empty sheet)")
+                    continue
+
+                headers = [str(h) if h is not None else "" for h in raw_headers]
+                # Skip sheets with no meaningful header row
+                if not any(h.strip() for h in headers):
+                    continue
+
+                all_rows = []
+                for raw_row in rows_iter:
+                    all_rows.append([str(c) if c is not None else "" for c in raw_row])
+
+                total_rows = len(all_rows)
+                truncated = total_rows > max_rows
+                display_rows = all_rows[:max_rows]
+
+                table = cls._to_markdown_table(headers, display_rows)
+                if truncated:
+                    table += f"\n[Showing {max_rows} of {total_rows} rows]"
+
+                heading = f"**Sheet: {sheet_name}**\n" if len(wb.sheetnames) > 1 else ""
+                parts.append(heading + table)
+
+            wb.close()
+            return "\n\n".join(parts) if parts else "(Excel file had no data)"
+        except Exception as e:
+            logger.debug(f"Excel parsing failed: {e}")
+            return f"(Excel parsing error: {e})"
 
 
 @dataclass
@@ -762,6 +893,46 @@ class ConcurrentContentExtractor:
         """Check if URL is a Wikipedia page."""
         return "wikipedia.org/wiki/" in url.lower()
 
+    @staticmethod
+    def _is_google_sheets_url(url: str) -> bool:
+        """Check if URL points to a Google Sheets document."""
+        return "docs.google.com/spreadsheets" in url.lower()
+
+    @staticmethod
+    def _rewrite_google_sheets_url(url: str) -> str:
+        """
+        Rewrite a Google Sheets URL to its direct CSV export equivalent.
+
+        Extracts the spreadsheet ID from the URL path and the sheet tab ID (gid)
+        from the URL fragment. Falls back to gid=0 (first sheet) if absent.
+
+        Examples:
+            https://docs.google.com/spreadsheets/d/ABC/edit#gid=123
+            -> https://docs.google.com/spreadsheets/d/ABC/export?format=csv&gid=123
+
+            https://docs.google.com/spreadsheets/d/ABC/pub
+            -> https://docs.google.com/spreadsheets/d/ABC/export?format=csv&gid=0
+        """
+        parsed = urlparse(url)
+        # Extract spreadsheet ID: path looks like /spreadsheets/d/{ID}/...
+        path_parts = parsed.path.rstrip("/").split("/")
+        try:
+            d_index = path_parts.index("d")
+            spreadsheet_id = path_parts[d_index + 1]
+        except (ValueError, IndexError):
+            return url  # Can't parse — return unchanged and let it fail naturally
+
+        # Extract gid from fragment (e.g. "gid=123")
+        gid = "0"
+        if parsed.fragment:
+            gid_match = re.search(r"gid=(\d+)", parsed.fragment)
+            if gid_match:
+                gid = gid_match.group(1)
+
+        return (
+            f"https://docs.google.com/spreadsheets/d/{spreadsheet_id}/export?format=csv&gid={gid}"
+        )
+
     _WIKIPEDIA_USER_AGENT = "MetaculusBot/1.0 (https://github.com/metaculus; forecasting bot)"
 
     @staticmethod
@@ -945,15 +1116,62 @@ class ConcurrentContentExtractor:
         if self._is_wikipedia_url(url):
             return await self._fetch_wikipedia(url)
 
+        # Google Sheets: rewrite to CSV export URL before fetching
+        fetch_url = url
+        if self._is_google_sheets_url(url):
+            fetch_url = self._rewrite_google_sheets_url(url)
+            logger.info(f"[spreadsheet] Rewriting Google Sheets URL to CSV export: {fetch_url}")
+
         try:
-            # Try Bright Data API if available
-            if self.bright_data_api_key:
+            # Try Bright Data API if available (HTML only — skip for spreadsheets)
+            if self.bright_data_api_key and not self._is_google_sheets_url(url):
                 return await self._fetch_with_bright_data(url)
 
             # Direct HTTP request
-            response = await self._client.get(url)
+            response = await self._client.get(fetch_url)
             status_code = response.status_code
             response.raise_for_status()
+
+            # Detect spreadsheet content by Content-Type header or URL extension
+            content_type = response.headers.get("content-type", "").lower()
+            url_lower = fetch_url.lower().split("?")[0]  # strip query params for extension check
+
+            is_csv = "text/csv" in content_type or url_lower.endswith(".csv")
+            is_excel = (
+                "spreadsheetml" in content_type
+                or "ms-excel" in content_type
+                or url_lower.endswith(".xlsx")
+                or url_lower.endswith(".xls")
+            )
+            # Google Sheets export always returns CSV regardless of content-type header
+            is_google_sheets = self._is_google_sheets_url(url)
+
+            if is_csv or is_google_sheets:
+                parsed_content = SpreadsheetParser.parse_csv(response.text)
+                content_chars = len(parsed_content)
+                return self._make_result(
+                    url,
+                    domain,
+                    content=parsed_content,
+                    success=bool(parsed_content),
+                    status_code=status_code,
+                    method="spreadsheet_csv",
+                    content_chars=content_chars,
+                )
+
+            if is_excel:
+                parsed_content = SpreadsheetParser.parse_excel(response.content)
+                content_chars = len(parsed_content)
+                return self._make_result(
+                    url,
+                    domain,
+                    content=parsed_content,
+                    success=bool(parsed_content),
+                    status_code=status_code,
+                    method="spreadsheet_excel",
+                    content_chars=content_chars,
+                )
+
             raw_html = response.text
 
             if not raw_html or len(raw_html.strip()) < 100:
