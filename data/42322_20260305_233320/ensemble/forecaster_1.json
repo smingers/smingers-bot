@@ -1,0 +1,5 @@
+{
+  "percentiles": null,
+  "cdf_length": 0,
+  "error": "LLM call failed after 3 attempts: litellm.BadRequestError: LLM Provider NOT provided. Pass in the LLM provider you are trying to call. You passed model=google/gemini-3.1-pro-preview\n Pass model as E.g. For 'Huggingface' inference endpoints pass in `completion(model='huggingface/starcoder',..)` Learn more: https://docs.litellm.ai/docs/providers"
+}

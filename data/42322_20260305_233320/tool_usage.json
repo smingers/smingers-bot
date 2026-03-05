@@ -1,0 +1,964 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 1,
+      "queries": [
+        {
+          "query": "https://www.atptour.com/en/rankings/singles",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1,
+          "domain": "www.atptour.com",
+          "method": "trafilatura",
+          "content_words": 3241,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "atp rankings archive april 2020 2025",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Extract #1 point totals for each late-April week in recent seasons to build a base-rate distribution.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null,
+          "url_results": [
+            {
+              "url": "https://www.atptour.com/en/scores/results-archive",
+              "domain": "www.atptour.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 8899,
+              "truncated": false
+            },
+            {
+              "url": "https://www.espn.com/tennis/rankings/_/season/2020",
+              "domain": "www.espn.com",
+              "success": true,
+              "error": null,
+              "method": "boilerpy",
+              "status_code": 200,
+              "content_chars": 478,
+              "truncated": false
+            },
+            {
+              "url": "https://opencourt.ca/2025/04/20/atp-rankings-report-as-of-april-21-2025/",
+              "domain": "opencourt.ca",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 10332,
+              "truncated": false
+            },
+            {
+              "url": "https://www.ultimatetennisstatistics.com/topRankingsTimeline",
+              "domain": "www.ultimatetennisstatistics.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 5180,
+              "truncated": false
+            },
+            {
+              "url": "https://www.tntsports.co.uk/tennis/atp/standings.shtml",
+              "domain": "www.tntsports.co.uk",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 661,
+              "truncated": false
+            },
+            {
+              "url": "https://www.atptour.com/en/media/rankings-and-stats",
+              "domain": "www.atptour.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 3862,
+              "truncated": false
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 6,
+            "urls_extracted": 6,
+            "urls_failed": 0,
+            "urls_summarized": 3
+          }
+        },
+        {
+          "query": "season end atp no1 points list",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Get year-end #1 point totals 2000-2025 to gauge dominance cycles and ceiling values.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null,
+          "url_results": [
+            {
+              "url": "https://en.wikipedia.org/wiki/List_of_ATP_number_1_ranked_singles_tennis_players",
+              "domain": "en.wikipedia.org",
+              "success": true,
+              "error": null,
+              "method": "wikipedia_api",
+              "status_code": 200,
+              "content_chars": 7712,
+              "truncated": false
+            },
+            {
+              "url": "https://www.atptour.com/en/rankings/former-no-1s",
+              "domain": "www.atptour.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 2597,
+              "truncated": false
+            },
+            {
+              "url": "https://www.tennis365.com/facts-stats/carlos-alcaraz-every-man-achieve-multiple-year-end-world-no-1-finishes",
+              "domain": "www.tennis365.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 3838,
+              "truncated": false
+            },
+            {
+              "url": "https://www.atptour.com/en/news/carlos-alcaraz-clinches-year-end-no-1-2025",
+              "domain": "www.atptour.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 4269,
+              "truncated": false
+            },
+            {
+              "url": "https://www.facebook.com/groups/621956306330798/posts/1379336387259449/",
+              "domain": "www.facebook.com",
+              "success": false,
+              "error": "Blocked domain",
+              "method": null,
+              "status_code": null,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.reddit.com/r/tennis/comments/1owyzzi/only_6_atp_yearend_world_1s_for_22_years/",
+              "domain": "www.reddit.com",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://en.wikipedia.org/wiki/ATP_rankings",
+              "domain": "en.wikipedia.org",
+              "success": true,
+              "error": null,
+              "method": "wikipedia_api",
+              "status_code": 200,
+              "content_chars": 10060,
+              "truncated": false
+            },
+            {
+              "url": "https://news.bet365.com/en-gb/article/every-atp-year-end-number-one/2025111415012400011",
+              "domain": "news.bet365.com",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.atptour.com/en/rankings/singles-race-to-turin",
+              "domain": "www.atptour.com",
+              "success": true,
+              "error": null,
+              "method": "readability",
+              "status_code": 200,
+              "content_chars": 2322,
+              "truncated": false
+            },
+            {
+              "url": "https://www.itftennis.com/media/2213/atp-and-wta-points.pdf",
+              "domain": "www.itftennis.com",
+              "success": true,
+              "error": null,
+              "method": "pdf",
+              "status_code": 200,
+              "content_chars": 9039,
+              "truncated": false
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 10,
+            "urls_extracted": 7,
+            "urls_failed": 3,
+            "urls_summarized": 3
+          }
+        },
+        {
+          "query": "clay season effect on atp rankings",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Find analyses quantifying how Monte-Carlo/Barcelona typically shift the #1 points between March and April.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null,
+          "url_results": [
+            {
+              "url": "https://www.thetennisgazette.com/news/the-five-atp-players-with-the-most-clay-court-titles-since-the-2020-season/",
+              "domain": "www.thetennisgazette.com",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.reddit.com/r/tennis/comments/1jp8qzm/clay_season_is_starting_right_now_so_heres_the/",
+              "domain": "www.reddit.com",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.atptour.com/en/news/clay-court-converts-2024-inside-the-game",
+              "domain": "www.atptour.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 562,
+              "truncated": false
+            },
+            {
+              "url": "https://www.tennis.com/news/articles/most-wide-open-clay-season-atp-20-years-rune-alcaraz-medvedev-fils-draper-nadal",
+              "domain": "www.tennis.com",
+              "success": true,
+              "error": null,
+              "method": "boilerpy",
+              "status_code": 200,
+              "content_chars": 7751,
+              "truncated": false
+            },
+            {
+              "url": "https://www.nytimes.com/2019/05/25/sports/keeping-score-roger-federer-clay.html",
+              "domain": "www.nytimes.com",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.facebook.com/groups/tennisatpwta/posts/2298272107310074/",
+              "domain": "www.facebook.com",
+              "success": false,
+              "error": "Blocked domain",
+              "method": null,
+              "status_code": null,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://nationalbankopen.com/news/read/2025/atp-power-rankings-who-will-fill-kings-void-clay",
+              "domain": "nationalbankopen.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 7825,
+              "truncated": false
+            },
+            {
+              "url": "https://www.tennis365.com/facts-stats/men-with-most-clay-court-points-in-2025-carlos-alcaraz-jannik-sinner",
+              "domain": "www.tennis365.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 4616,
+              "truncated": false
+            },
+            {
+              "url": "https://www.atptour.com/en/stats/leaderboard",
+              "domain": "www.atptour.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 1366,
+              "truncated": false
+            },
+            {
+              "url": "https://www.facebook.com/groups/tennisatpwta/posts/2031891993948088/",
+              "domain": "www.facebook.com",
+              "success": false,
+              "error": "Blocked domain",
+              "method": null,
+              "status_code": null,
+              "content_chars": 0,
+              "truncated": false
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 10,
+            "urls_extracted": 5,
+            "urls_failed": 5,
+            "urls_summarized": 3
+          }
+        }
+      ],
+      "tools_used": [
+        "Google"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 5,
+      "queries": [
+        {
+          "query": "atp singles rankings march 2026",
+          "tool": "Google",
+          "temporal_role": "current",
+          "intent": "Retrieve today\u2019s full rankings, especially #1 points and gaps to #2-#5.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null,
+          "url_results": [
+            {
+              "url": "https://www.espn.com/tennis/rankings",
+              "domain": "www.espn.com",
+              "success": true,
+              "error": null,
+              "method": "boilerpy",
+              "status_code": 200,
+              "content_chars": 478,
+              "truncated": false
+            },
+            {
+              "url": "https://www.atptour.com/en/rankings/singles?dateWeek=2025-03-03",
+              "domain": "www.atptour.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 33068,
+              "truncated": true
+            },
+            {
+              "url": "https://www.atptour.com/en/rankings/singles/live",
+              "domain": "www.atptour.com",
+              "success": true,
+              "error": null,
+              "method": "readability",
+              "status_code": 200,
+              "content_chars": 2331,
+              "truncated": false
+            },
+            {
+              "url": "https://www.perfect-tennis.com/rankings/atp-singles/",
+              "domain": "www.perfect-tennis.com",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.tennismajors.com/rankings/atp-world-tour-singles-week-10-2026",
+              "domain": "www.tennismajors.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 11944,
+              "truncated": false
+            },
+            {
+              "url": "https://www.tennisexplorer.com/ranking/atp-men/?sort=rank",
+              "domain": "www.tennisexplorer.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 2399,
+              "truncated": false
+            },
+            {
+              "url": "https://opencourt.ca/2026/03/02/atp-rankings-report-as-of-march-2-2026/",
+              "domain": "opencourt.ca",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 6049,
+              "truncated": false
+            },
+            {
+              "url": "https://en.wikipedia.org/wiki/2026_ATP_Tour",
+              "domain": "en.wikipedia.org",
+              "success": true,
+              "error": null,
+              "method": "wikipedia_api",
+              "status_code": 200,
+              "content_chars": 5107,
+              "truncated": false
+            },
+            {
+              "url": "https://www.youtube.com/watch?v=imDZMwP8bc4",
+              "domain": "www.youtube.com",
+              "success": false,
+              "error": "Content extraction failed",
+              "method": null,
+              "status_code": 200,
+              "content_chars": 0,
+              "truncated": false
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 9,
+            "urls_extracted": 7,
+            "urls_failed": 2,
+            "urls_summarized": 3
+          }
+        },
+        {
+          "query": "race to turin 2026 standings",
+          "tool": "Google",
+          "temporal_role": "current",
+          "intent": "Capture calendar-year points leaders to assess recent form heading into the clay swing.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null,
+          "url_results": [
+            {
+              "url": "https://en.wikipedia.org/wiki/2026_ATP_Finals",
+              "domain": "en.wikipedia.org",
+              "success": true,
+              "error": null,
+              "method": "wikipedia_api",
+              "status_code": 200,
+              "content_chars": 3917,
+              "truncated": false
+            },
+            {
+              "url": "https://www.tennis24.com/rankings/atp-race/",
+              "domain": "www.tennis24.com",
+              "success": true,
+              "error": null,
+              "method": "boilerpy",
+              "status_code": 200,
+              "content_chars": 62,
+              "truncated": false
+            },
+            {
+              "url": "https://www.perfect-tennis.com/rankings/atp-singles-race-rankings/",
+              "domain": "www.perfect-tennis.com",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.live-tennis.cn/en/rank/atp/s/race",
+              "domain": "www.live-tennis.cn",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 781,
+              "truncated": false
+            },
+            {
+              "url": "https://www.tntsports.co.uk/tennis/atp-race/standings_sea345.shtml",
+              "domain": "www.tntsports.co.uk",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 676,
+              "truncated": false
+            },
+            {
+              "url": "https://www.flashscoreusa.com/tennis/rankings/atp-race/",
+              "domain": "www.flashscoreusa.com",
+              "success": true,
+              "error": null,
+              "method": "boilerpy",
+              "status_code": 200,
+              "content_chars": 2012,
+              "truncated": false
+            },
+            {
+              "url": "https://www.atptour.com/rankings/singles-race-to-turin.aspx",
+              "domain": "www.atptour.com",
+              "success": true,
+              "error": null,
+              "method": "readability",
+              "status_code": 200,
+              "content_chars": 2322,
+              "truncated": false
+            },
+            {
+              "url": "https://www.tennis365.com/tennis-features/atp-rankings-race-turin-alcaraz-sinner-djokovic-qualified-race-for-top-8-intensifies",
+              "domain": "www.tennis365.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 4422,
+              "truncated": false
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 8,
+            "urls_extracted": 7,
+            "urls_failed": 1,
+            "urls_summarized": 3
+          }
+        },
+        {
+          "query": "indian wells miami 2026 defending points",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "Identify how many points top players must defend in March hard-court Masters.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null,
+          "url_results": [
+            {
+              "url": "https://www.lta.org.uk/news/10-players-to-watch-at-indian-wells-and-miami-open-2026/",
+              "domain": "www.lta.org.uk",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 8400,
+              "truncated": false
+            },
+            {
+              "url": "https://www.puntodebreak.com/en/2026/03/03/sinner-between-rock-and-hard-place-in-indian-wells",
+              "domain": "www.puntodebreak.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 3077,
+              "truncated": false
+            },
+            {
+              "url": "https://en.tennistemple.com/actu/indian-wells-andreeva-defends-title-poin/S6Hz",
+              "domain": "en.tennistemple.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 1511,
+              "truncated": false
+            },
+            {
+              "url": "https://www.wtatennis.com/news/4452085/sunshine-swing-411-dates-draws-prize-money-and-everything-you-need-to-know",
+              "domain": "www.wtatennis.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 5147,
+              "truncated": false
+            },
+            {
+              "url": "https://www.tennis.com/news/articles/sinner-fritz-which-atp-star-use-promising-indian-wells-result-bnp-paribas-open",
+              "domain": "www.tennis.com",
+              "success": true,
+              "error": null,
+              "method": "boilerpy",
+              "status_code": 200,
+              "content_chars": 2632,
+              "truncated": false
+            },
+            {
+              "url": "https://www.tennis365.com/atp-tour/atp-indian-wells-how-many-points-will-alcaraz-sinner-djokovic-draper-drop-at-atp-1000-event",
+              "domain": "www.tennis365.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 4393,
+              "truncated": false
+            },
+            {
+              "url": "https://tennishead.net/alexandra-eala-given-better-chance-to-progress-in-indian-wells-after-dubai-run/",
+              "domain": "tennishead.net",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.atptour.com/en/news/alcaraz-sinner-no-1-projection-doha-2026",
+              "domain": "www.atptour.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 3275,
+              "truncated": false
+            },
+            {
+              "url": "https://gulfnews.com/sport/tennis/why-alex-eala-has-a-lot-to-lose-at-the-miami-open-next-month-1.500456645",
+              "domain": "gulfnews.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 2871,
+              "truncated": false
+            },
+            {
+              "url": "https://en.tennistemple.com/actu/lois-boisson-skips-miami-wta-1000-amid-p/mEWg",
+              "domain": "en.tennistemple.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 1323,
+              "truncated": false
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 10,
+            "urls_extracted": 9,
+            "urls_failed": 1,
+            "urls_summarized": 3
+          }
+        },
+        {
+          "query": "monte carlo 2026 entry withdrawals",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "Surface early injury or withdrawal news for the first clay Masters.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null,
+          "url_results": [
+            {
+              "url": "https://lastwordonsports.com/tennis/2025/08/18/2025-us-open-five-players-withdraw/",
+              "domain": "lastwordonsports.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 3065,
+              "truncated": false
+            },
+            {
+              "url": "https://www.puntodebreak.com/en/2025/04/04/important-last-minute-withdrawal-at-the-atp-monte-carlo-2025",
+              "domain": "www.puntodebreak.com",
+              "success": true,
+              "error": null,
+              "method": "boilerpy",
+              "status_code": 200,
+              "content_chars": 685,
+              "truncated": false
+            },
+            {
+              "url": "https://www.tennis365.com/tennis-news/monte-carlo-masters-entry-list-carlos-alcaraz-novak-djokovic",
+              "domain": "www.tennis365.com",
+              "success": true,
+              "error": null,
+              "method": "readability",
+              "status_code": 200,
+              "content_chars": 3592,
+              "truncated": false
+            },
+            {
+              "url": "https://bolavip.com/en/tennis/world-no-1-jannik-sinners-honest-admission-on-rome-open-return-after-three-month-suspension",
+              "domain": "bolavip.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 2918,
+              "truncated": false
+            },
+            {
+              "url": "https://lastwordonsports.com/tennis/2025/06/08/boss-open-stuttgart-five-players-withdraw/",
+              "domain": "lastwordonsports.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 3437,
+              "truncated": false
+            },
+            {
+              "url": "https://www.advisorperspectives.com/articles/2023/01/10/the-dangers-of-monte-carlo-simulations",
+              "domain": "www.advisorperspectives.com",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.puntodebreak.com/en/2025/04/04/last-minute-drop-in-attendance-for-the-monte-carlo-masters-1000",
+              "domain": "www.puntodebreak.com",
+              "success": true,
+              "error": null,
+              "method": "boilerpy",
+              "status_code": 200,
+              "content_chars": 711,
+              "truncated": false
+            },
+            {
+              "url": "https://lastwordonsports.com/tennis/2025/05/04/italian-open-five-players-withdraw-from-event/",
+              "domain": "lastwordonsports.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 3243,
+              "truncated": false
+            },
+            {
+              "url": "https://lastwordonsports.com/tennis/2025/06/06/atp-libema-open-four-players-withdraw-from-event/",
+              "domain": "lastwordonsports.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 2905,
+              "truncated": false
+            },
+            {
+              "url": "https://lastwordonsports.com/tennis/2025/03/30/grand-prix-hassan-ii-marrakech-six-players-withdraw-from-event/",
+              "domain": "lastwordonsports.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 2734,
+              "truncated": false
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 10,
+            "urls_extracted": 9,
+            "urls_failed": 1,
+            "urls_summarized": 3
+          }
+        },
+        {
+          "query": "top atp players injuries 2026 season",
+          "tool": "AskNews",
+          "temporal_role": "current",
+          "intent": "Broad scan for injury, surgery, or layoff reports that could hit leading contenders before April 27.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 20,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "AskNews",
+        "Google"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "google/gemini-3.1-pro-preview",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 82.56469249725342,
+        "error": "LLM call failed after 3 attempts: litellm.BadRequestError: LLM Provider NOT provided. Pass in the LLM provider you are trying to call. You passed model=google/gemini-3.1-pro-preview\n Pass model as E.g. For 'Huggingface' inference endpoints pass in `completion(model='huggingface/starcoder',..)` Learn more: https://docs.litellm.ai/docs/providers"
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 83.4155797958374,
+        "error": "LLM call failed after 3 attempts: litellm.BadRequestError: LLM Provider NOT provided. Pass in the LLM provider you are trying to call. You passed model=google/gemini-3.1-pro-preview\n Pass model as E.g. For 'Huggingface' inference endpoints pass in `completion(model='huggingface/starcoder',..)` Learn more: https://docs.litellm.ai/docs/providers"
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 18633,
+        "token_output": 2842,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.098529,
+        "duration_seconds": 83.41556477546692,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.4",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7006,
+        "token_output": 2853,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.077825,
+        "duration_seconds": 82.56475257873535,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17938,
+        "token_output": 2461,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.126605,
+        "duration_seconds": 83.4155433177948,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17938,
+        "token_output": 2593,
+        "token_reasoning": 1536,
+        "used_reasoning": true,
+        "cost": 0.05662,
+        "duration_seconds": 83.41551947593689,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 7006,
+        "token_output": 3076,
+        "token_reasoning": 1664,
+        "used_reasoning": true,
+        "cost": 0.03862,
+        "duration_seconds": 82.56479573249817,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16377,
+        "token_output": 2866,
+        "token_reasoning": 1856,
+        "used_reasoning": true,
+        "cost": 0.055681999999999995,
+        "duration_seconds": 83.41549944877625,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "steps1_2_research": 0.0662,
+    "step3_outside_view": 0.1164,
+    "step5_inside_view": 0.3374,
+    "step6_aggregation": 0.3374,
+    "step7_supervisor": 0.3373
+  },
+  "total_pipeline_cost": 0.8573
+}

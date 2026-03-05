@@ -1,0 +1,23 @@
+{
+  "confidence": "high",
+  "prediction": {
+    "10": 12500.0,
+    "20": 13300.0,
+    "40": 13900.0,
+    "60": 14400.0,
+    "80": 15000.0,
+    "90": 15500.0
+  },
+  "search_queries": [
+    "Alcaraz Monte Carlo 2025 result points (Google)",
+    "Alcaraz 2025 Indian Wells Miami Barcelona results (Google)",
+    "What were Carlos Alcaraz's results and points earned at each ATP Masters 1000 and ATP 500 tournament during the spring clay and hard court season of 2025 (specifically Indian Wells, Miami, Monte-Carlo, and Barcelona)? Also, what were Jannik Sinner's results at these same tournaments in 2025? (Agent)",
+    "ATP rankings points defended Alcaraz Sinner spring 2026 (Google News)"
+  ],
+  "cost": 0.3373,
+  "divergence": {
+    "metric_name": "rn_spread",
+    "metric_value": 0.1597,
+    "threshold": 0.045
+  }
+}
