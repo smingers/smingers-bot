@@ -26,6 +26,20 @@ from src.utils.metaculus_api import MetaculusClient
 logger = logging.getLogger(__name__)
 
 
+def should_skip_question(question) -> bool:
+    """
+    Return True if the question should be skipped by automated runs.
+
+    Currently skips meta questions whose titles start with
+    \"Will the community prediction be higher\" (case-insensitive).
+    """
+    title = (getattr(question, "title", "") or "").strip().lower()
+    if title.startswith("will the community prediction be higher"):
+        logger.debug("Skipping meta question Q%s: %s", getattr(question, "id", "?"), question.title)
+        return True
+    return False
+
+
 async def forecast_metaculus_questions(
     tournament_id: str,
     limit: int = 50,
@@ -88,6 +102,23 @@ async def forecast_metaculus_questions(
                 logger.info("No questions to forecast after dedup. Exiting.")
                 return 0
 
+            # Apply skip filter for meta questions
+            before_skip = len(questions_to_forecast)
+            questions_to_forecast = [
+                q for q in questions_to_forecast if not should_skip_question(q)
+            ]
+            if not questions_to_forecast:
+                logger.info(
+                    "No questions need forecasting after applying skip filter (IDs from check). "
+                    "Exiting."
+                )
+                return 0
+            if len(questions_to_forecast) < before_skip:
+                logger.info(
+                    "Skip filter removed %d question(s) based on title prefix",
+                    before_skip - len(questions_to_forecast),
+                )
+
             # Sort by scheduled_close_time (None last)
             questions_to_forecast.sort(key=lambda q: (q.scheduled_close_time or "") or "z")
     else:
@@ -111,11 +142,29 @@ async def forecast_metaculus_questions(
             logger.info(f"Already forecasted: {len(forecasted_ids)} questions")
 
             questions_to_forecast = [q for q in questions if q.id not in forecasted_ids]
-            logger.info(f"new-only: {len(questions_to_forecast)} new questions to forecast")
+            logger.info(
+                f"new-only (before skip filter): {len(questions_to_forecast)} new questions"
+            )
 
             if not questions_to_forecast:
-                logger.info("No questions need forecasting. Exiting.")
+                logger.info("No questions need forecasting (all already forecasted). Exiting.")
                 return 0
+
+            # Apply skip filter for meta questions
+            before_skip = len(questions_to_forecast)
+            questions_to_forecast = [
+                q for q in questions_to_forecast if not should_skip_question(q)
+            ]
+            if not questions_to_forecast:
+                logger.info("No questions need forecasting after applying skip filter. Exiting.")
+                return 0
+            if len(questions_to_forecast) < before_skip:
+                logger.info(
+                    "Skip filter removed %d question(s) based on title prefix",
+                    before_skip - len(questions_to_forecast),
+                )
+
+            logger.info(f"new-only: {len(questions_to_forecast)} new questions to forecast")
 
     # Forecast questions using shared runner
     questions_to_process = questions_to_forecast[:limit]
