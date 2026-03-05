@@ -1,0 +1,852 @@
+{
+  "plan_analysis": "The meta-question hinges on how the Metaculus community forecast for \u201cArtemis II will succeed before 2027\u201d moves in the final eight days before 2026-03-13.  Two broad evidence streams matter:\n\nA. Technical / program news: Any fresh information on Artemis II hardware readiness (Orion heat-shield work, SLS upper-stage helium flow fix, pad processing, flight-readiness reviews, congressional funding signals, crew training milestones) could quickly nudge confidence up or down.\n\nB. Forecast-behaviour statistics: How volatile is a Metaculus community prediction this close to the snapshot time?  What is the historical frequency of \u22651 pp moves within a week for space-mission questions or in general?  Understanding this base-rate plus trend direction (75 % now, 76 % a few days ago) helps estimate the probability of crossing the 76 % line.\n\nThe pre-research bundle already includes the current 75 % value, the full long-run history, and background on past schedule slips but nothing about:\n \u2022 very recent (last few days) Artemis II engineering / managerial updates\n \u2022 whether a key review, test, or congressional hearing is scheduled before 13 March\n \u2022 quantitative data on typical Metaculus forecast drift in the final week\n \u2022 historical success / delay rates for comparable NASA crewed missions to calibrate community bias\n \u2022 any contrarian negative developments (budget cuts, further hardware issues) since the latest scrape\n\nThe search strategy therefore splits: 1-5 target freshest news and scheduled events that could plausibly shift the forecast; 6-8 pull historical/analytical pieces on Metaculus volatility and mission precedents to anchor base-rate reasoning.",
+  "reflect_analysis": null,
+  "queries_planned": [
+    {
+      "query": "Artemis II March 2026 update",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "catch any NASA or media update in the past few days on schedule, hardware status, or readiness reviews.",
+      "phase": "plan"
+    },
+    {
+      "query": "Artemis II flight readiness review date",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "see if an FRR or similar milestone is announced or completed before 13 March.",
+      "phase": "plan"
+    },
+    {
+      "query": "Orion heat shield fix progress 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "detect success/problems in the key heat-shield re-work that could sway confidence.",
+      "phase": "plan"
+    },
+    {
+      "query": "SLS upper stage helium leak Artemis II",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "semantic search for status of the helium-flow repair and any fresh anomalies.",
+      "phase": "plan"
+    },
+    {
+      "query": "NASA budget hearing Artemis 2026",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "pick up political/funding news that might influence perceptions of program risk.",
+      "phase": "plan"
+    },
+    {
+      "query": "Metaculus prediction daily volatility study",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "find analyses/blog posts quantifying typical day-to-day swings in Metaculus community forecasts.",
+      "phase": "plan"
+    },
+    {
+      "query": "Metaculus last week forecast change analysis",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "gather data on how often community probabilities shift \u22651 ppt in the final week before deadline.",
+      "phase": "plan"
+    },
+    {
+      "query": "NASA crewed mission success rate post-Apollo",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "obtain historical base rates for modern NASA human-spaceflight mission success vs delay/failure to contextualise community optimism.",
+      "phase": "plan"
+    }
+  ],
+  "gap_queries": [],
+  "seed_context_chars": 14947,
+  "historical_context_chars": 42664,
+  "current_context_chars": 94332,
+  "phases": {
+    "pre_research": {
+      "duration_seconds": 9.23,
+      "seed_context_chars": 14161,
+      "search_id": "question_urls",
+      "searched": true,
+      "urls_found": 12,
+      "urls_scraped": 5,
+      "urls_summarized": 5,
+      "urls": [
+        {
+          "url": "https://www.nasa.gov/mission/artemis-ii/",
+          "domain": "www.nasa.gov",
+          "scraped": true,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_words": 567
+        },
+        {
+          "url": "https://www.nasa.gov/missions/artemis/nasas-first-flight-with-crew-important-step-on-long-term-return-to-the-moon-missions-to-mars/",
+          "domain": "www.nasa.gov",
+          "scraped": true,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_words": 1198
+        },
+        {
+          "url": "https://www.rand.org/pubs/commentary/2025/10/nasas-artemis-ii-mission-is-crucial-as-doubts-build.html",
+          "domain": "www.rand.org",
+          "scraped": true,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_words": 1006
+        },
+        {
+          "url": "https://www.nasa.gov/mission/artemis-iii/",
+          "domain": "www.nasa.gov",
+          "scraped": true,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_words": 493
+        },
+        {
+          "url": "https://www.nasa.gov/missions/artemis/artemis-iii/",
+          "domain": "www.nasa.gov",
+          "scraped": true,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_words": 1274
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ]
+    },
+    "plan": {
+      "duration_seconds": 38.6,
+      "cost": 0.0221,
+      "num_queries": 8
+    },
+    "execute": {
+      "duration_seconds": 59.67,
+      "cost": 0.0586,
+      "queries_executed": 8,
+      "queries_successful": 8
+    },
+    "assemble": {
+      "historical_context_chars": 42664,
+      "current_context_chars": 94332
+    }
+  },
+  "total_queries_planned": 8,
+  "total_queries_executed": 8,
+  "total_gap_queries": 0,
+  "total_cost": 0.0962,
+  "total_duration_seconds": 107.5,
+  "query_details": [
+    {
+      "query": "Artemis II March 2026 update",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "catch any NASA or media update in the past few days on schedule, hardware status, or readiness reviews.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://theconversation.com/with-artemis-ii-facing-delays-nasa-announces-big-structural-changes-to-the-lunar-program-277169",
+          "domain": "theconversation.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 7688,
+          "truncated": false
+        },
+        {
+          "url": "https://www.nasa.gov/blogs/missions/2026/03/03/nasa-repairs-upper-stage-helium-flow-preps-continue-ahead-of-rollout/",
+          "domain": "www.nasa.gov",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 1734,
+          "truncated": false
+        },
+        {
+          "url": "https://www.floridatoday.com/story/tech/science/space/2026/03/02/nasa-artemis-moon-lunar-mission-overhaul-launch-florida/88942759007/",
+          "domain": "www.floridatoday.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 6792,
+          "truncated": false
+        },
+        {
+          "url": "https://www.nasa.gov/news-release/nasa-adds-mission-to-artemis-lunar-program-updates-architecture/",
+          "domain": "www.nasa.gov",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 5742,
+          "truncated": false
+        },
+        {
+          "url": "https://www.scientificamerican.com/podcast/episode/womens-heart-health-artemis-update-female-reindeer-antlers-mystery/",
+          "domain": "www.scientificamerican.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 10066,
+          "truncated": false
+        },
+        {
+          "url": "https://www.discovermagazine.com/the-launch-date-of-artemis-ii-has-been-postponed-again-this-is-why-48765",
+          "domain": "www.discovermagazine.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 3780,
+          "truncated": false
+        },
+        {
+          "url": "https://www.npr.org/2026/02/21/nx-s1-5722339/nasa-artemis-ii-march-launch-delay",
+          "domain": "www.npr.org",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 2589,
+          "truncated": false
+        },
+        {
+          "url": "https://nasawatch.com/artemis/another-artemis-ii-issue-arises/",
+          "domain": "nasawatch.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.floridatoday.com/story/tech/science/space/2026/03/01/rocket-launch-schedule-in-march-from-cape-canaveral-and-nasa-kennedy-space-center-florida/88938173007/",
+          "domain": "www.floridatoday.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 4104,
+          "truncated": false
+        },
+        {
+          "url": "https://www.space.com/space-exploration/artemis/problem-pops-up-with-artemis-2-moon-rocket-this-will-almost-assuredly-impact-the-march-launch-window",
+          "domain": "www.space.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 5874,
+          "truncated": false
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 9,
+        "urls_failed": 1,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "Artemis II flight readiness review date",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "see if an FRR or similar milestone is announced or completed before 13 March.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://www.npr.org/2026/02/20/nx-s1-5720953/nasa-artemis-ii-moon-launch-date",
+          "domain": "www.npr.org",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 2481,
+          "truncated": false
+        },
+        {
+          "url": "https://www.floridatoday.com/story/tech/science/space/2026/02/20/nasas-artemis-ii-rocket-space-launch-system-completes-key-test-launch-dates/88756793007/",
+          "domain": "www.floridatoday.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 5446,
+          "truncated": false
+        },
+        {
+          "url": "https://www.nasa.gov/missions/artemis/artemis-2/final-steps-underway-for-nasas-first-crewed-artemis-moon-mission/",
+          "domain": "www.nasa.gov",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 8809,
+          "truncated": false
+        },
+        {
+          "url": "https://spacenews.com/nasa-preparing-for-artemis-2-rollback-to-fix-upper-stage-problem/",
+          "domain": "spacenews.com",
+          "success": false,
+          "error": "HTTP 429",
+          "method": null,
+          "status_code": 429,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://ny1.com/nyc/at-the-movies/news/2026/02/20/artemis-ii-practice-run-successful--flight-review-for-launch-ahead",
+          "domain": "ny1.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 2482,
+          "truncated": false
+        },
+        {
+          "url": "https://www.al.com/news/huntsville/2026/02/nasa-sets-target-launch-date-for-artemis-ii-lunar-mission-whens-blastoff.html",
+          "domain": "www.al.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.engadget.com/science/space/nasa-targets-march-6-for-artemis-2-launch-to-take-astronauts-around-the-moon-170727116.html",
+          "domain": "www.engadget.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 1771,
+          "truncated": false
+        },
+        {
+          "url": "https://www.msn.com/en-us/news/insight/nasa-sets-artemis-ii-launch-target/gm-E3627686BA?gemSnapshotKey=E3627686BA-snapshot-1&uxmode=ruby",
+          "domain": "www.msn.com",
+          "success": false,
+          "error": "Content extraction failed",
+          "method": null,
+          "status_code": 200,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://talkoftitusville.com/2026/01/23/artemis-ii-does-not-have-a-set-launch-date-yet/",
+          "domain": "talkoftitusville.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 6115,
+          "truncated": false
+        },
+        {
+          "url": "https://www.houstonpublicmedia.org/articles/news/nasa/2026/01/20/541134/artemis-ii-is-at-nasas-launch-pad-heres-what-happens-next/",
+          "domain": "www.houstonpublicmedia.org",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 4028,
+          "truncated": false
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 7,
+        "urls_failed": 3,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "Orion heat shield fix progress 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "detect success/problems in the key heat-shield re-work that could sway confidence.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://www.jagranjosh.com/us/trending/nasa-artemis-2-delayed-again-1860002500",
+          "domain": "www.jagranjosh.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 2365,
+          "truncated": false
+        },
+        {
+          "url": "https://www.bgr.com/1997942/why-nasa-preparing-artemis-3-before-launch-2-orion/",
+          "domain": "www.bgr.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 4508,
+          "truncated": false
+        },
+        {
+          "url": "https://www.thespacereview.com/article/5007/1",
+          "domain": "www.thespacereview.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 12129,
+          "truncated": false
+        },
+        {
+          "url": "https://www.space.com/space-exploration/artemis/historic-artemis-2-moon-launch-may-be-just-1-month-away",
+          "domain": "www.space.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 6087,
+          "truncated": false
+        },
+        {
+          "url": "https://www.bgr.com/1995112/china-put-astronauts-on-moon-before-nasa/",
+          "domain": "www.bgr.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 5254,
+          "truncated": false
+        },
+        {
+          "url": "https://www.flyingmag.com/spacex-stands-behind-its-ambitious-lunar-timeline/",
+          "domain": "www.flyingmag.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://arstechnica.com/space/2025/06/starships-rough-year-gets-worse-after-a-late-night-explosion-in-south-texas/",
+          "domain": "arstechnica.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 10955,
+          "truncated": false
+        },
+        {
+          "url": "https://www.space.com/space-exploration/artemis/2026-is-the-year-humanity-will-finally-go-back-to-the-moon",
+          "domain": "www.space.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 11946,
+          "truncated": false
+        },
+        {
+          "url": "https://www.nasa.gov/centers-and-facilities/nesc/nesc-key-in-progress-technical-activities/",
+          "domain": "www.nasa.gov",
+          "success": true,
+          "error": null,
+          "method": "boilerpy",
+          "status_code": 200,
+          "content_chars": 2486,
+          "truncated": false
+        },
+        {
+          "url": "https://www.npr.org/2025/02/19/g-s1-49451/artemis-moon-nasa-sls-rocket-doge-musk",
+          "domain": "www.npr.org",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 8262,
+          "truncated": false
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 9,
+        "urls_failed": 1,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "SLS upper stage helium leak Artemis II",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "semantic search for status of the helium-flow repair and any fresh anomalies.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 20,
+      "error": null
+    },
+    {
+      "query": "NASA budget hearing Artemis 2026",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "pick up political/funding news that might influence perceptions of program risk.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 24,
+      "error": null
+    },
+    {
+      "query": "Metaculus prediction daily volatility study",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "find analyses/blog posts quantifying typical day-to-day swings in Metaculus community forecasts.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://www.metaculus.com/questions/8869/btc-realized-volatility-2025-2027/",
+          "domain": "www.metaculus.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.metaculus.com/help/prediction-resources/",
+          "domain": "www.metaculus.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.mid-co.com/markets/stocks.php?article=gnwcq-2026-2-18-metaculus-launches-futureeval-to-track-ai-forecasting-accuracy",
+          "domain": "www.mid-co.com",
+          "success": true,
+          "error": null,
+          "method": "boilerpy",
+          "status_code": 200,
+          "content_chars": 138,
+          "truncated": false
+        },
+        {
+          "url": "https://finance.yahoo.com/news/metaculus-launches-futureeval-track-ai-022200447.html",
+          "domain": "finance.yahoo.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 2667,
+          "truncated": false
+        },
+        {
+          "url": "https://www.metaculus.com/notebooks/14965/forecasting-our-world-in-data-the-next-100-years/",
+          "domain": "www.metaculus.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.metaculus.com/",
+          "domain": "www.metaculus.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.metaculus.com/questions/?order_by=-activity&status=active&search=vix&categories=",
+          "domain": "www.metaculus.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://arxiv.org/html/2312.09081v1/",
+          "domain": "arxiv.org",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 65167,
+          "truncated": true
+        },
+        {
+          "url": "https://www.astralcodexten.com/p/metaculus-monday",
+          "domain": "www.astralcodexten.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 8077,
+          "truncated": false
+        },
+        {
+          "url": "https://www.metaculus.com/futureeval/",
+          "domain": "www.metaculus.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 4,
+        "urls_failed": 6,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "Metaculus last week forecast change analysis",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "gather data on how often community probabilities shift \u22651 ppt in the final week before deadline.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://forum.effectivealtruism.org/posts/Br5DLWcvgGiKN4EMq/an-analysis-of-metaculus-predictions-of-future-ea-resources",
+          "domain": "forum.effectivealtruism.org",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 9584,
+          "truncated": false
+        },
+        {
+          "url": "https://www.lesswrong.com/posts/q5ihyrBWiGcRJfd7a/the-state-of-metaculus",
+          "domain": "www.lesswrong.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 20042,
+          "truncated": true
+        },
+        {
+          "url": "https://www.metaculus.com/faq/",
+          "domain": "www.metaculus.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.metaculus.com/questions/31275/substantial-change-in-covid-origin-market-in-2025/",
+          "domain": "www.metaculus.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://github.com/Metaculus/forecasting-tools",
+          "domain": "github.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 21897,
+          "truncated": true
+        },
+        {
+          "url": "https://www.metaculus.com/tournament/forecasting-Our-World-in-Data/",
+          "domain": "www.metaculus.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://forecastingaifutures.substack.com/p/forecasting-agi-insights-from-prediction-markets",
+          "domain": "forecastingaifutures.substack.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://forum.effectivealtruism.org/posts/x5Re9EKwGvAjZSmeb/takeaways-from-the-metaculus-ai-progress-tournament",
+          "domain": "forum.effectivealtruism.org",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 13541,
+          "truncated": false
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 8,
+        "urls_extracted": 4,
+        "urls_failed": 4,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "NASA crewed mission success rate post-Apollo",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "obtain historical base rates for modern NASA human-spaceflight mission success vs delay/failure to contextualise community optimism.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://www.reddit.com/r/spaceflight/comments/19dp5ld/lunar_fails_moon_landing_missions_have_only_45/",
+          "domain": "www.reddit.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Apollo_program",
+          "domain": "en.wikipedia.org",
+          "success": true,
+          "error": null,
+          "method": "wikipedia_api",
+          "status_code": 200,
+          "content_chars": 65195,
+          "truncated": true
+        },
+        {
+          "url": "https://www.wbaltv.com/article/why-its-so-difficult-to-land-on-the-moon-even-5-decades-after-apollo/46944896",
+          "domain": "www.wbaltv.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 9793,
+          "truncated": false
+        },
+        {
+          "url": "https://www.nasa.gov/wp-content/uploads/2023/03/sp-4102.pdf",
+          "domain": "www.nasa.gov",
+          "success": false,
+          "error": "Content extraction failed",
+          "method": null,
+          "status_code": 200,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://ntrs.nasa.gov/api/citations/20160001259/downloads/20160001259.pdf",
+          "domain": "ntrs.nasa.gov",
+          "success": false,
+          "error": "",
+          "method": null,
+          "status_code": null,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.quora.com/What-level-of-confidence-did-the-NASA-scientists-involved-in-Apollo-11-have-that-the-mission-would-be-a-complete-success",
+          "domain": "www.quora.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://carolinereview.com/premium/theconversation/stories/nasas-artemis-ii-crewed-mission-to-the-moon-shows-how-us-space-strategy-has-changed-since-apollo,62354?",
+          "domain": "carolinereview.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 8189,
+          "truncated": false
+        },
+        {
+          "url": "https://ntrs.nasa.gov/api/citations/20190002249/downloads/20190002249.pdf",
+          "domain": "ntrs.nasa.gov",
+          "success": false,
+          "error": "",
+          "method": null,
+          "status_code": null,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.rmg.co.uk/stories/space-astronomy/why-did-we-stop-going-moon",
+          "domain": "www.rmg.co.uk",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.skyatnightmagazine.com/space-missions/how-the-apollo-moon-landings-changed-the-world-forever",
+          "domain": "www.skyatnightmagazine.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 10939,
+          "truncated": false
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 4,
+        "urls_failed": 6,
+        "urls_summarized": 3
+      }
+    }
+  ]
+}
