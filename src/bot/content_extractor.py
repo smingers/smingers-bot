@@ -555,6 +555,7 @@ class HTMLContentExtractor:
 
         # Strategy 3: Readability
         if HAS_READABILITY:
+            readability_text: str | None = None
             try:
                 doc = Document(html_content)
                 readability_soup = BeautifulSoup(doc.summary(), "html.parser")
@@ -573,6 +574,7 @@ class HTMLContentExtractor:
 
         # Strategy 4: BoilerPy3
         if HAS_BOILERPY and self.boilerpy_extractor:
+            boilerpy_result: str | None = None
             try:
                 boilerpy_result = self._extract_boilerpy(html_content)
                 if boilerpy_result:
@@ -1399,6 +1401,7 @@ class ConcurrentContentExtractor:
                 # Retry on transient server errors before raise_for_status so we can
                 # inspect the status code without swallowing the response body.
                 if status_code in self.RETRY_STATUSES and attempt < self.MAX_RETRIES:
+                    await response.aread()  # Consume body so connection can return to pool
                     delay = self.RETRY_BASE_DELAY * (2**attempt)
                     logger.debug(
                         f"[fetch] HTTP {status_code} for {url} "
