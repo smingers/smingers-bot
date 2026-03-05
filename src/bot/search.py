@@ -249,6 +249,12 @@ class SearchPipeline:
         # Rate limiter for AskNews calls (free tier has concurrency limit)
         self._asknews_rate_limiter = asyncio.Semaphore(1)
 
+        # Intra-run URL cache shared across all ConcurrentContentExtractor instances
+        # created by this SearchPipeline.  Prevents re-fetching the same URL in
+        # different queries (legacy path), across agentic search steps, or between
+        # question URL scraping and the main Google search phase.
+        self._url_cache: dict[str, dict] = {}
+
         # Per-invocation cost tracking (reset each time execute_searches_from_response is called)
         self._current_summarization_cost = 0.0
         self._current_agentic_cost = 0.0
@@ -574,10 +580,41 @@ class SearchPipeline:
     # resolution source pages (EIA, FRED) often have sparse data tables.
     _MIN_QUESTION_URL_CONTENT_WORDS = 50
 
-    # Domains to filter out (internal cross-references, not data sources)
+    # Domains to filter out of question URL scraping.
+    # Two reasons to be here:
+    #   (a) internal cross-references that are never data sources (Metaculus itself)
+    #   (b) domains that are always unscrapable — either because they require JS /
+    #       authentication (social media, YouTube) or because the URL points at an
+    #       API endpoint rather than an HTML page (api.stlouisfed.org).
+    # Keeping them here prevents them from counting against the max_urls cap before
+    # they ever reach ConcurrentContentExtractor.BLOCKED_DOMAINS.
     _FILTERED_DOMAINS = {
+        # Metaculus internal links
         "metaculus.com",
         "www.metaculus.com",
+        # Social media — JS-rendered or login-gated (also in BLOCKED_DOMAINS)
+        "twitter.com",
+        "www.twitter.com",
+        "x.com",
+        "www.x.com",
+        "facebook.com",
+        "www.facebook.com",
+        "fb.com",
+        "www.fb.com",
+        "instagram.com",
+        "www.instagram.com",
+        "linkedin.com",
+        "www.linkedin.com",
+        "tiktok.com",
+        "www.tiktok.com",
+        "youtube.com",
+        "www.youtube.com",
+        "reddit.com",
+        "www.reddit.com",
+        # Google Trends — JS app; bot has a dedicated Google Trends integration
+        "trends.google.com",
+        # FRED API endpoint — returns JSON, not HTML; fred.stlouisfed.org (the web UI) is fine
+        "api.stlouisfed.org",
     }
 
     # Regex: markdown links [text](url)
@@ -686,7 +723,7 @@ class SearchPipeline:
 
         # Scrape URLs using existing infrastructure
         try:
-            async with ConcurrentContentExtractor() as extractor:
+            async with ConcurrentContentExtractor(url_cache=self._url_cache) as extractor:
                 results = await extractor.extract_content(urls)
         except Exception as e:
             logger.error(f"[question_urls] Scraping failed: {e}")
@@ -878,7 +915,7 @@ class SearchPipeline:
                 )
 
             # Extract content from URLs
-            async with ConcurrentContentExtractor() as extractor:
+            async with ConcurrentContentExtractor(url_cache=self._url_cache) as extractor:
                 logger.info(f"[google_search_and_scrape] Extracting content from {len(urls)} URLs")
                 results = await extractor.extract_content(urls)
 
@@ -1482,7 +1519,7 @@ class SearchPipeline:
             if not urls:
                 return f'<RawContent query="{query}">No URLs returned from Google.</RawContent>\n'
 
-            async with ConcurrentContentExtractor() as extractor:
+            async with ConcurrentContentExtractor(url_cache=self._url_cache) as extractor:
                 results = await extractor.extract_content(urls)
 
             output = ""

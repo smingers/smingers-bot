@@ -24,6 +24,7 @@ import io
 import json
 import logging
 import re
+import time
 from dataclasses import dataclass
 from typing import Any
 from urllib.parse import unquote, urlparse
@@ -218,7 +219,9 @@ class SpreadsheetParser:
             wb.close()
 
             if skipped_sheets > 0:
-                parts.append(f"[{skipped_sheets} additional sheet(s) not shown — sheet limit reached]")
+                parts.append(
+                    f"[{skipped_sheets} additional sheet(s) not shown — sheet limit reached]"
+                )
 
             return "\n\n".join(parts) if parts else "(Excel file had no data)"
         except Exception as e:
@@ -504,33 +507,51 @@ class HTMLContentExtractor:
         except Exception:
             return html_content
 
-    def extract(self, url: str, html_content: str) -> tuple[str | None, str | None]:
+    def extract(self, url: str, html_content: str) -> tuple[str | None, str | None, list[dict]]:
         """
         Extract article content from HTML using multiple backends.
 
-        Returns a tuple of (content, method) where method is one of:
-        "site-specific", "trafilatura", "readability", "boilerpy",
-        "density", "fallback", or None if extraction failed.
+        Returns a tuple of (content, method, attempts) where:
+        - method is one of: "site-specific", "trafilatura", "readability",
+          "boilerpy", "density", "fallback", or None if extraction failed.
+        - attempts is a list of dicts recording every backend that was tried,
+          its word count, computed score (None for backends that produced no
+          content), and whether it was selected as the winner.  Backends not
+          available in the current environment are omitted entirely.
         """
         if not html_content or len(html_content.strip()) < 100:
-            return None, None
+            return None, None, []
 
         html_content = self._preprocess_html(html_content)
         metadata = self._get_article_metadata(html_content, url)
         soup = BeautifulSoup(html_content, "html.parser")
 
         cleaned_results = []
+        # Keyed by backend name so the scoring loop can fill in scores in O(1).
+        attempts: dict[str, dict] = {}
 
         # Strategy 1: Site-specific selectors
         site_specific = self._extract_with_selectors(html_content, url)
         if site_specific and len(site_specific.strip()) > 500:
             cleaned_results.append((site_specific, 1.2, "site-specific"))
+        attempts["site-specific"] = {
+            "backend": "site-specific",
+            "word_count": len(site_specific.split()) if site_specific else 0,
+            "score": None,
+            "selected": False,
+        }
 
         # Strategy 2: Trafilatura
         if HAS_TRAFILATURA:
             trafilatura_result = self._extract_trafilatura(html_content)
             if trafilatura_result:
                 cleaned_results.append((trafilatura_result, 1.0, "trafilatura"))
+            attempts["trafilatura"] = {
+                "backend": "trafilatura",
+                "word_count": len(trafilatura_result.split()) if trafilatura_result else 0,
+                "score": None,
+                "selected": False,
+            }
 
         # Strategy 3: Readability
         if HAS_READABILITY:
@@ -542,6 +563,13 @@ class HTMLContentExtractor:
                     cleaned_results.append((readability_text, 0.9, "readability"))
             except Exception as e:
                 logger.debug(f"Readability failed: {e}")
+                readability_text = None
+            attempts["readability"] = {
+                "backend": "readability",
+                "word_count": len(readability_text.split()) if readability_text else 0,
+                "score": None,
+                "selected": False,
+            }
 
         # Strategy 4: BoilerPy3
         if HAS_BOILERPY and self.boilerpy_extractor:
@@ -550,7 +578,13 @@ class HTMLContentExtractor:
                 if boilerpy_result:
                     cleaned_results.append((boilerpy_result, 0.8, "boilerpy"))
             except Exception:
-                pass
+                boilerpy_result = None
+            attempts["boilerpy"] = {
+                "backend": "boilerpy",
+                "word_count": len(boilerpy_result.split()) if boilerpy_result else 0,
+                "score": None,
+                "selected": False,
+            }
 
         # Score and select best result
         if cleaned_results:
@@ -560,24 +594,52 @@ class HTMLContentExtractor:
                 length_score = min(len(content) / 5000, 1.0)
                 total_score = base_weight * score * length_score
                 scored_results.append((content, total_score, label))
+                if label in attempts:
+                    attempts[label]["score"] = round(total_score, 3)
 
             best_result, _, label = max(scored_results, key=lambda scored: scored[1])
             logger.debug(f"Selected content from {label} with length {len(best_result)}")
-            return self._format_with_metadata(self._clean_content(best_result), metadata), label
+            if label in attempts:
+                attempts[label]["selected"] = True
+            return (
+                self._format_with_metadata(self._clean_content(best_result), metadata),
+                label,
+                list(attempts.values()),
+            )
 
         # Fallback: auto-detect main content div
         guessed_div = self._find_content_by_density(soup)
         if guessed_div:
             text = guessed_div.get_text(separator=" ", strip=True)
             if text:
-                return self._format_with_metadata(self._clean_content(text), metadata), "density"
+                attempts["density"] = {
+                    "backend": "density",
+                    "word_count": len(text.split()),
+                    "score": None,
+                    "selected": True,
+                }
+                return (
+                    self._format_with_metadata(self._clean_content(text), metadata),
+                    "density",
+                    list(attempts.values()),
+                )
 
         # Last resort: collect all <p> and <li> elements
         fallback = self._fallback_extract_paragraphs(soup)
         if fallback:
-            return self._format_with_metadata(self._clean_content(fallback), metadata), "fallback"
+            attempts["fallback"] = {
+                "backend": "fallback",
+                "word_count": len(fallback.split()),
+                "score": None,
+                "selected": True,
+            }
+            return (
+                self._format_with_metadata(self._clean_content(fallback), metadata),
+                "fallback",
+                list(attempts.values()),
+            )
 
-        return None, None
+        return None, None, list(attempts.values())
 
     def _extract_with_selectors(self, html_content: str, url: str) -> str | None:
         """Extract content using site-specific CSS selectors."""
@@ -993,14 +1055,31 @@ class ConcurrentContentExtractor:
     # Request timeout
     TIMEOUT = 15.0
 
-    def __init__(self, bright_data_api_key: str | None = None):
+    # Retry configuration — only transient failures are retried
+    MAX_RETRIES = 2
+    RETRY_BASE_DELAY = 1.0  # seconds; doubled on each attempt (1s, 2s)
+    RETRY_STATUSES = {429, 500, 502, 503, 504}
+
+    def __init__(
+        self,
+        url_cache: dict[str, dict[str, Any]] | None = None,
+        bright_data_api_key: str | None = None,
+    ):
         """
         Initialize the concurrent content extractor.
 
         Args:
+            url_cache: Optional shared dict for intra-run URL deduplication.
+                Pass the same dict across multiple extractor instances (e.g. all
+                extractors created by a single SearchPipeline) to avoid re-fetching
+                the same URL more than once per forecast run.  Results are stored
+                keyed by the original URL string.  Concurrent cache misses for the
+                same URL may cause a redundant fetch (no lock held), but the result
+                is harmless and rare in practice.
             bright_data_api_key: Optional Bright Data API key for more reliable scraping.
                                 If not provided, uses direct HTTP requests.
         """
+        self._url_cache = url_cache
         self.bright_data_api_key = bright_data_api_key
         self.html_extractor = HTMLContentExtractor()
         self._client: httpx.AsyncClient | None = None
@@ -1093,6 +1172,8 @@ class ConcurrentContentExtractor:
         method: str | None = None,
         content_chars: int = 0,
         truncated: bool = False,
+        response_time_ms: int = 0,
+        extraction_attempts: list[dict] | None = None,
     ) -> dict[str, Any]:
         """Build a standardized extraction result dict."""
         return {
@@ -1105,6 +1186,8 @@ class ConcurrentContentExtractor:
             "method": method,
             "content_chars": content_chars,
             "truncated": truncated,
+            "response_time_ms": response_time_ms,
+            "extraction_attempts": extraction_attempts,
         }
 
     async def _fetch_wikipedia(self, url: str) -> dict[str, Any]:
@@ -1254,7 +1337,34 @@ class ConcurrentContentExtractor:
             )
 
     async def _fetch_url(self, url: str) -> dict[str, Any]:
-        """Fetch a single URL and extract content."""
+        """Fetch a URL, returning a cached result if one exists for this run.
+
+        Delegates to _fetch_url_impl for the actual HTTP request and content
+        extraction.  Both successes and failures are cached so that the same URL
+        is never fetched more than once per SearchPipeline lifetime (e.g. across
+        agentic search steps or when the same URL appears in multiple queries).
+        Blocked-domain stubs are not cached because they involve no I/O.
+        """
+        if self._url_cache is not None and url in self._url_cache:
+            logger.debug(f"[cache] URL cache hit: {url[:80]}")
+            return self._url_cache[url]
+
+        t0 = time.monotonic()
+        result = await self._fetch_url_impl(url)
+        result["response_time_ms"] = round((time.monotonic() - t0) * 1000)
+
+        if self._url_cache is not None and result.get("error") != "Blocked domain":
+            self._url_cache[url] = result
+
+        return result
+
+    async def _fetch_url_impl(self, url: str) -> dict[str, Any]:
+        """Fetch a single URL and extract content.
+
+        Retries up to MAX_RETRIES times on transient failures (429 and 5xx status
+        codes, and request timeouts) using exponential back-off.  Permanent errors
+        (403, 404, 401, 402, etc.) are returned immediately without retrying.
+        """
         domain = urlparse(url).netloc
         if self._is_blocked_domain(url):
             return self._make_result(url, domain, error="Blocked domain")
@@ -1272,131 +1382,207 @@ class ConcurrentContentExtractor:
         url_ext = url.lower().split("?")[0]
         is_non_html_by_extension = url_ext.endswith((".csv", ".xlsx", ".xls", ".pdf", ".json"))
 
-        try:
-            # Skip Bright Data for non-HTML content (spreadsheets, PDFs, JSON, Google Sheets)
-            if self.bright_data_api_key and not self._is_google_sheets_url(url) and not is_non_html_by_extension:
-                return await self._fetch_with_bright_data(url)
+        for attempt in range(self.MAX_RETRIES + 1):
+            try:
+                # Skip Bright Data for non-HTML content (spreadsheets, PDFs, JSON, Google Sheets)
+                if (
+                    self.bright_data_api_key
+                    and not self._is_google_sheets_url(url)
+                    and not is_non_html_by_extension
+                ):
+                    return await self._fetch_with_bright_data(url)
 
-            # Direct HTTP request
-            response = await self._client.get(fetch_url)
-            status_code = response.status_code
-            response.raise_for_status()
+                # Direct HTTP request
+                response = await self._client.get(fetch_url)
+                status_code = response.status_code
 
-            # Detect spreadsheet content by Content-Type header or URL extension
-            content_type = response.headers.get("content-type", "").lower()
-            url_lower = fetch_url.lower().split("?")[0]  # strip query params for extension check
-
-            is_csv = "text/csv" in content_type or url_lower.endswith(".csv")
-            is_excel = (
-                "spreadsheetml" in content_type
-                or "ms-excel" in content_type
-                or url_lower.endswith(".xlsx")
-                or url_lower.endswith(".xls")
-            )
-            is_pdf = "application/pdf" in content_type or url_lower.endswith(".pdf")
-            is_json = (
-                "application/json" in content_type
-                or "text/json" in content_type
-                or url_lower.endswith(".json")
-            )
-            # Google Sheets export always returns CSV regardless of content-type header
-            is_google_sheets = self._is_google_sheets_url(url)
-
-            if is_csv or is_google_sheets:
-                parsed_content = SpreadsheetParser.parse_csv(response.text)
-                if parsed_content is None:
-                    return self._make_result(
-                        url, domain, success=False, error="CSV parsing failed", status_code=status_code, method="spreadsheet_csv"
+                # Retry on transient server errors before raise_for_status so we can
+                # inspect the status code without swallowing the response body.
+                if status_code in self.RETRY_STATUSES and attempt < self.MAX_RETRIES:
+                    delay = self.RETRY_BASE_DELAY * (2**attempt)
+                    logger.debug(
+                        f"[fetch] HTTP {status_code} for {url} "
+                        f"(attempt {attempt + 1}/{self.MAX_RETRIES + 1}), retrying in {delay:.1f}s"
                     )
-                return self._make_result(
-                    url, domain, content=parsed_content, success=True, status_code=status_code,
-                    method="spreadsheet_csv", content_chars=len(parsed_content),
+                    await asyncio.sleep(delay)
+                    continue
+
+                response.raise_for_status()
+
+                # Detect spreadsheet content by Content-Type header or URL extension
+                content_type = response.headers.get("content-type", "").lower()
+                url_lower = fetch_url.lower().split("?")[
+                    0
+                ]  # strip query params for extension check
+
+                is_csv = "text/csv" in content_type or url_lower.endswith(".csv")
+                is_excel = (
+                    "spreadsheetml" in content_type
+                    or "ms-excel" in content_type
+                    or url_lower.endswith(".xlsx")
+                    or url_lower.endswith(".xls")
+                )
+                is_pdf = "application/pdf" in content_type or url_lower.endswith(".pdf")
+                is_json = (
+                    "application/json" in content_type
+                    or "text/json" in content_type
+                    or url_lower.endswith(".json")
+                )
+                # Google Sheets export always returns CSV regardless of content-type header
+                is_google_sheets = self._is_google_sheets_url(url)
+
+                if is_csv or is_google_sheets:
+                    parsed_content = SpreadsheetParser.parse_csv(response.text)
+                    if parsed_content is None:
+                        return self._make_result(
+                            url,
+                            domain,
+                            success=False,
+                            error="CSV parsing failed",
+                            status_code=status_code,
+                            method="spreadsheet_csv",
+                        )
+                    return self._make_result(
+                        url,
+                        domain,
+                        content=parsed_content,
+                        success=True,
+                        status_code=status_code,
+                        method="spreadsheet_csv",
+                        content_chars=len(parsed_content),
+                    )
+
+                if is_excel:
+                    parsed_content = SpreadsheetParser.parse_excel(response.content)
+                    if parsed_content is None:
+                        return self._make_result(
+                            url,
+                            domain,
+                            success=False,
+                            error="Excel parsing failed",
+                            status_code=status_code,
+                            method="spreadsheet_excel",
+                        )
+                    return self._make_result(
+                        url,
+                        domain,
+                        content=parsed_content,
+                        success=True,
+                        status_code=status_code,
+                        method="spreadsheet_excel",
+                        content_chars=len(parsed_content),
+                    )
+
+                if is_pdf:
+                    parsed_content = SpreadsheetParser.parse_pdf(response.content)
+                    if parsed_content is None:
+                        return self._make_result(
+                            url,
+                            domain,
+                            success=False,
+                            error="PDF parsing failed",
+                            status_code=status_code,
+                            method="pdf",
+                        )
+                    return self._make_result(
+                        url,
+                        domain,
+                        content=parsed_content,
+                        success=True,
+                        status_code=status_code,
+                        method="pdf",
+                        content_chars=len(parsed_content),
+                    )
+
+                if is_json:
+                    parsed_content = SpreadsheetParser.parse_json(response.text)
+                    if parsed_content is None:
+                        return self._make_result(
+                            url,
+                            domain,
+                            success=False,
+                            error="JSON parsing failed",
+                            status_code=status_code,
+                            method="json",
+                        )
+                    return self._make_result(
+                        url,
+                        domain,
+                        content=parsed_content,
+                        success=True,
+                        status_code=status_code,
+                        method="json",
+                        content_chars=len(parsed_content),
+                    )
+
+                raw_html = response.text
+
+                if not raw_html or len(raw_html.strip()) < 100:
+                    return self._make_result(
+                        url,
+                        domain,
+                        error="Empty or very short HTML received",
+                        status_code=status_code,
+                    )
+
+                # Extract content
+                processed_content, method, extraction_attempts = self.html_extractor.extract(
+                    url, raw_html
                 )
 
-            if is_excel:
-                parsed_content = SpreadsheetParser.parse_excel(response.content)
-                if parsed_content is None:
+                if not processed_content:
                     return self._make_result(
-                        url, domain, success=False, error="Excel parsing failed", status_code=status_code, method="spreadsheet_excel"
+                        url,
+                        domain,
+                        error="Content extraction failed",
+                        status_code=status_code,
+                        extraction_attempts=extraction_attempts,
                     )
-                return self._make_result(
-                    url, domain, content=parsed_content, success=True, status_code=status_code,
-                    method="spreadsheet_excel", content_chars=len(parsed_content),
-                )
 
-            if is_pdf:
-                parsed_content = SpreadsheetParser.parse_pdf(response.content)
-                if parsed_content is None:
-                    return self._make_result(
-                        url, domain, success=False, error="PDF parsing failed", status_code=status_code, method="pdf"
+                # Truncate if too long
+                truncated = len(processed_content) > self.MAX_CONTENT_LENGTH
+                content_chars = len(processed_content)
+                if truncated:
+                    processed_content = (
+                        processed_content[: self.MAX_CONTENT_LENGTH] + "...[truncated]"
                     )
-                return self._make_result(
-                    url, domain, content=parsed_content, success=True, status_code=status_code,
-                    method="pdf", content_chars=len(parsed_content),
-                )
 
-            if is_json:
-                parsed_content = SpreadsheetParser.parse_json(response.text)
-                if parsed_content is None:
-                    return self._make_result(
-                        url, domain, success=False, error="JSON parsing failed", status_code=status_code, method="json"
-                    )
-                return self._make_result(
-                    url, domain, content=parsed_content, success=True, status_code=status_code,
-                    method="json", content_chars=len(parsed_content),
-                )
-
-            raw_html = response.text
-
-            if not raw_html or len(raw_html.strip()) < 100:
                 return self._make_result(
                     url,
                     domain,
-                    error="Empty or very short HTML received",
+                    content=processed_content,
+                    success=True,
                     status_code=status_code,
+                    method=method,
+                    content_chars=content_chars,
+                    truncated=truncated,
+                    extraction_attempts=extraction_attempts,
                 )
 
-            # Extract content
-            processed_content, method = self.html_extractor.extract(url, raw_html)
-
-            if not processed_content:
+            except (TimeoutError, httpx.TimeoutException):
+                if attempt < self.MAX_RETRIES:
+                    delay = self.RETRY_BASE_DELAY * (2**attempt)
+                    logger.debug(
+                        f"[fetch] Timeout for {url} "
+                        f"(attempt {attempt + 1}/{self.MAX_RETRIES + 1}), retrying in {delay:.1f}s"
+                    )
+                    await asyncio.sleep(delay)
+                    continue
+                return self._make_result(url, domain, error="Request timed out")
+            except httpx.HTTPStatusError as e:
+                logger.debug(f"HTTP error for {url}: {e}")
                 return self._make_result(
                     url,
                     domain,
-                    error="Content extraction failed",
-                    status_code=status_code,
+                    error=f"HTTP {e.response.status_code}",
+                    status_code=e.response.status_code,
                 )
+            except Exception as e:
+                logger.debug(f"Error processing {url}: {e}")
+                return self._make_result(url, domain, error=str(e))
 
-            # Truncate if too long
-            truncated = len(processed_content) > self.MAX_CONTENT_LENGTH
-            content_chars = len(processed_content)
-            if truncated:
-                processed_content = processed_content[: self.MAX_CONTENT_LENGTH] + "...[truncated]"
-
-            return self._make_result(
-                url,
-                domain,
-                content=processed_content,
-                success=True,
-                status_code=status_code,
-                method=method,
-                content_chars=content_chars,
-                truncated=truncated,
-            )
-
-        except (TimeoutError, httpx.TimeoutException):
-            return self._make_result(url, domain, error="Request timed out")
-        except httpx.HTTPStatusError as e:
-            logger.debug(f"HTTP error for {url}: {e}")
-            return self._make_result(
-                url,
-                domain,
-                error=f"HTTP {e.response.status_code}",
-                status_code=e.response.status_code,
-            )
-        except Exception as e:
-            logger.debug(f"Error processing {url}: {e}")
-            return self._make_result(url, domain, error=str(e))
+        # Unreachable: all retry paths either return or continue the loop.
+        return self._make_result(url, domain, error="Max retries exceeded")
 
     async def _fetch_with_bright_data(self, url: str) -> dict[str, Any]:
         """Fetch URL using Bright Data API."""
@@ -1432,11 +1618,17 @@ class ConcurrentContentExtractor:
                     url, domain, error="Empty HTML from Bright Data", status_code=200
                 )
 
-            processed_content, method = self.html_extractor.extract(url, raw_html)
+            processed_content, method, extraction_attempts = self.html_extractor.extract(
+                url, raw_html
+            )
 
             if not processed_content:
                 return self._make_result(
-                    url, domain, error="Content extraction failed", status_code=200
+                    url,
+                    domain,
+                    error="Content extraction failed",
+                    status_code=200,
+                    extraction_attempts=extraction_attempts,
                 )
 
             truncated = len(processed_content) > self.MAX_CONTENT_LENGTH
@@ -1453,6 +1645,7 @@ class ConcurrentContentExtractor:
                 method=method,
                 content_chars=content_chars,
                 truncated=truncated,
+                extraction_attempts=extraction_attempts,
             )
 
         except Exception as e:
