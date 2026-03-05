@@ -7,10 +7,12 @@ Multi-backend HTML content extraction with site-specific configs:
 3. Readability (fallback)
 4. BoilerPy3 (last resort)
 
-Also handles spreadsheet formats via SpreadsheetParser:
+Also handles non-HTML formats via SpreadsheetParser:
 - CSV files (detected by Content-Type or .csv extension) — stdlib csv
 - Excel files (.xlsx, detected by Content-Type or extension) — openpyxl
 - Google Sheets (public) — URL rewritten to CSV export before fetching
+- PDF files (detected by Content-Type or .pdf extension) — pymupdf
+- JSON data endpoints (detected by Content-Type or .json extension) — stdlib json
 
 Also includes ConcurrentContentExtractor for concurrent URL fetching.
 """
@@ -19,6 +21,7 @@ import asyncio
 import csv
 import html as html_lib
 import io
+import json
 import logging
 import re
 from dataclasses import dataclass
@@ -57,6 +60,13 @@ try:
     HAS_OPENPYXL = True
 except ImportError:
     HAS_OPENPYXL = False
+
+try:
+    import fitz  # pymupdf
+
+    HAS_PYMUPDF = True
+except ImportError:
+    HAS_PYMUPDF = False
 
 logger = logging.getLogger(__name__)
 
@@ -176,6 +186,90 @@ class SpreadsheetParser:
         except Exception as e:
             logger.debug(f"Excel parsing failed: {e}")
             return f"(Excel parsing error: {e})"
+
+    @staticmethod
+    def parse_pdf(data: bytes, max_pages: int = 20) -> str:
+        """
+        Parse PDF bytes and return extracted text with page markers.
+
+        Extracts text from up to max_pages pages. Scanned/image-only PDFs
+        will return empty pages (OCR is not performed).
+
+        Args:
+            data: Raw PDF file bytes
+            max_pages: Maximum number of pages to extract
+
+        Returns:
+            Plain text with [Page N] markers, with truncation note if needed
+        """
+        if not HAS_PYMUPDF:
+            return "(PDF parsing unavailable: pymupdf not installed)"
+
+        try:
+            doc = fitz.open(stream=data, filetype="pdf")
+            total_pages = len(doc)
+            pages_to_read = min(total_pages, max_pages)
+
+            parts = []
+            for page_num in range(pages_to_read):
+                page = doc[page_num]
+                text = page.get_text()
+                if text.strip():
+                    parts.append(f"[Page {page_num + 1}]\n{text.strip()}")
+
+            doc.close()
+
+            if not parts:
+                return "(PDF had no extractable text — may be a scanned/image-only document)"
+
+            result = "\n\n".join(parts)
+            if total_pages > max_pages:
+                result += f"\n\n[Showing {max_pages} of {total_pages} pages]"
+            return result
+        except Exception as e:
+            logger.debug(f"PDF parsing failed: {e}")
+            return f"(PDF parsing error: {e})"
+
+    @staticmethod
+    def parse_json(text: str, max_chars: int = 15000) -> str:
+        """
+        Parse a JSON string and return a readable representation.
+
+        For arrays: shows length and first few items.
+        For objects: shows all keys with their values.
+        Truncates to max_chars to avoid excessive token usage.
+
+        Args:
+            text: Raw JSON text
+            max_chars: Maximum output characters
+
+        Returns:
+            Formatted JSON string, truncated if needed
+        """
+        try:
+            data = json.loads(text)
+        except json.JSONDecodeError as e:
+            logger.debug(f"JSON parsing failed: {e}")
+            return f"(JSON parsing error: {e})"
+
+        try:
+            if isinstance(data, list):
+                total = len(data)
+                # Show a summary header then pretty-print the first items
+                preview = json.dumps(data[:50], indent=2, ensure_ascii=False)
+                header = f"[JSON array — {total} items]\n"
+                result = header + preview
+                if total > 50:
+                    result += f"\n... [{total - 50} more items]"
+            else:
+                result = json.dumps(data, indent=2, ensure_ascii=False)
+
+            if len(result) > max_chars:
+                result = result[:max_chars] + "\n...[truncated]"
+            return result
+        except Exception as e:
+            logger.debug(f"JSON formatting failed: {e}")
+            return f"(JSON formatting error: {e})"
 
 
 @dataclass
@@ -1143,6 +1237,12 @@ class ConcurrentContentExtractor:
                 or url_lower.endswith(".xlsx")
                 or url_lower.endswith(".xls")
             )
+            is_pdf = "application/pdf" in content_type or url_lower.endswith(".pdf")
+            is_json = (
+                "application/json" in content_type
+                or "text/json" in content_type
+                or url_lower.endswith(".json")
+            )
             # Google Sheets export always returns CSV regardless of content-type header
             is_google_sheets = self._is_google_sheets_url(url)
 
@@ -1169,6 +1269,32 @@ class ConcurrentContentExtractor:
                     success=bool(parsed_content),
                     status_code=status_code,
                     method="spreadsheet_excel",
+                    content_chars=content_chars,
+                )
+
+            if is_pdf:
+                parsed_content = SpreadsheetParser.parse_pdf(response.content)
+                content_chars = len(parsed_content)
+                return self._make_result(
+                    url,
+                    domain,
+                    content=parsed_content,
+                    success=bool(parsed_content),
+                    status_code=status_code,
+                    method="pdf",
+                    content_chars=content_chars,
+                )
+
+            if is_json:
+                parsed_content = SpreadsheetParser.parse_json(response.text)
+                content_chars = len(parsed_content)
+                return self._make_result(
+                    url,
+                    domain,
+                    content=parsed_content,
+                    success=bool(parsed_content),
+                    status_code=status_code,
+                    method="json",
                     content_chars=content_chars,
                 )
 
