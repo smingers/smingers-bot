@@ -106,18 +106,18 @@ class TestCrossPolllinationMap:
             assert len(label) > 0
 
     def test_creates_cross_model_diversity(self):
-        """Middle agents receive context from different models."""
-        # Agent 1 (idx 1) should get context from Agent 4 (idx 3) - different models
+        """Middle agents receive context from different models (three-outside-view: only 0, 2, 4 produce)."""
+        # Forecaster 2 (idx 1) gets from Forecaster 5 (idx 4) - o3
         source_for_agent_1 = CROSS_POLLINATION_MAP[1][0]
-        assert source_for_agent_1 == 3  # Gets from o3
+        assert source_for_agent_1 == 4  # Gets from Forecaster 5 (o3)
 
-        # Agent 2 (idx 2) should get context from Agent 2 (idx 1)
+        # Forecaster 3 (idx 2) gets from Forecaster 1 (idx 0) - Sonnet 4.6
         source_for_agent_2 = CROSS_POLLINATION_MAP[2][0]
-        assert source_for_agent_2 == 1  # Gets from Sonnet 4.5
+        assert source_for_agent_2 == 0  # Gets from Forecaster 1
 
-        # Agent 3 (idx 3) should get context from Agent 3 (idx 2)
+        # Forecaster 4 (idx 3) gets from Forecaster 3 (idx 2) - GPT-5.2
         source_for_agent_3 = CROSS_POLLINATION_MAP[3][0]
-        assert source_for_agent_3 == 2  # Gets from o3-mini-high
+        assert source_for_agent_3 == 2  # Gets from Forecaster 3
 
 
 # ============================================================================
@@ -275,12 +275,13 @@ class TestCrossPolllinationLogic:
 
     def test_handles_failed_source_agent_falls_back_to_self(self):
         """When designated source failed, falls back to self's outside view."""
+        # Agent 2 (idx 1) gets from Agent 5 (idx 4) per map; make idx 4 failed so fallback to self (idx 1).
         outside_view_outputs = [
             "Output 1",
             "Output 2",
             "Output 3",
-            f"{_FAILED_OUTPUT_PREFIX}Agent 4 failed",  # Agent 4 (idx 3) failed
-            "Output 5",
+            "Output 4",
+            f"{_FAILED_OUTPUT_PREFIX}Agent 5 failed",
         ]
         current_context = "Current context"
 
@@ -307,7 +308,7 @@ class TestCrossPolllinationLogic:
 
             context_map[i] = f"Current context: {current_context}\n{label}: {source_output}"
 
-        # Agent 2 (idx 1) gets from Agent 4 (idx 3) which failed → falls back to self (idx 1)
+        # Agent 2 (idx 1) gets from Agent 5 (idx 4) which failed → falls back to self (idx 1)
         assert "Output 2" in context_map[1]
         assert _FAILED_OUTPUT_PREFIX not in context_map[1]
 
@@ -320,23 +321,22 @@ class TestCrossPolllinationLogic:
             source_idx, label = CROSS_POLLINATION_MAP[i]
             context_map[i] = outside_view_outputs[source_idx]
 
-        # Verify based on CROSS_POLLINATION_MAP
+        # Verify based on CROSS_POLLINATION_MAP (1<-4, 2<-0, 3<-2)
         assert "UNIQUE_OUTPUT_0" in context_map[0]  # Agent 1 <- Agent 1
-        assert "UNIQUE_OUTPUT_3" in context_map[1]  # Agent 2 <- Agent 4
-        assert "UNIQUE_OUTPUT_1" in context_map[2]  # Agent 3 <- Agent 2
+        assert "UNIQUE_OUTPUT_4" in context_map[1]  # Agent 2 <- Agent 5
+        assert "UNIQUE_OUTPUT_0" in context_map[2]  # Agent 3 <- Agent 1
         assert "UNIQUE_OUTPUT_2" in context_map[3]  # Agent 4 <- Agent 3
         assert "UNIQUE_OUTPUT_4" in context_map[4]  # Agent 5 <- Agent 5
 
     def test_fallback_scans_for_any_valid_when_self_also_failed(self):
         """When both designated source and self failed, falls back to first valid output."""
-        # Forecaster 2 (idx 1) gets from Forecaster 4 (idx 3) per map.
-        # Both idx 1 and idx 3 fail → should fall back to first valid (idx 0).
+        # Per map: 1<-4, 2<-0, 3<-2. Make 1,2,3,4 all fail so agents 1,2,3 fall back to idx 0.
         outside_view_outputs = [
             "Valid output from agent 1",
             f"{_FAILED_OUTPUT_PREFIX}Agent 2 error",
             f"{_FAILED_OUTPUT_PREFIX}Agent 3 error",
             f"{_FAILED_OUTPUT_PREFIX}Agent 4 error",
-            "Valid output from agent 5",
+            f"{_FAILED_OUTPUT_PREFIX}Agent 5 error",
         ]
         current_context = "Current context"
 
@@ -362,10 +362,10 @@ class TestCrossPolllinationLogic:
 
             context_map[i] = f"Current context: {current_context}\n{label}: {source_output}"
 
-        # Agent 2 (idx 1): source idx 3 failed, self idx 1 failed → falls back to idx 0
+        # Agent 2 (idx 1): source idx 4 failed, self idx 1 failed → falls back to idx 0
         assert "Valid output from agent 1" in context_map[1]
 
-        # Agent 3 (idx 2): source idx 1 failed, self idx 2 failed → falls back to idx 0
+        # Agent 3 (idx 2): source idx 0 valid → no fallback
         assert "Valid output from agent 1" in context_map[2]
 
         # Agent 4 (idx 3): source idx 2 failed, self idx 3 failed → falls back to idx 0
@@ -374,8 +374,8 @@ class TestCrossPolllinationLogic:
         # Agent 1 (idx 0): source is self (idx 0), which is valid → no fallback needed
         assert "Valid output from agent 1" in context_map[0]
 
-        # Agent 5 (idx 4): source is self (idx 4), which is valid → no fallback needed
-        assert "Valid output from agent 5" in context_map[4]
+        # Agent 5 (idx 4): source is self (idx 4), which failed → falls back to idx 0
+        assert "Valid output from agent 1" in context_map[4]
 
     def test_all_failed_gives_empty_context(self):
         """When all 5 outside views failed, forecasters receive empty context."""
@@ -425,10 +425,10 @@ class TestCrossPolllinationLogic:
 
             context_map[i] = f"Current context: {current_context}\n{label}: {source_output}"
 
-        # Verify standard mapping applies
+        # Verify standard mapping applies (1<-4, 2<-0, 3<-2)
         assert "Valid output 0" in context_map[0]  # Self
-        assert "Valid output 3" in context_map[1]  # From Forecaster 4
-        assert "Valid output 1" in context_map[2]  # From Forecaster 2
+        assert "Valid output 4" in context_map[1]  # From Forecaster 5
+        assert "Valid output 0" in context_map[2]  # From Forecaster 1
         assert "Valid output 2" in context_map[3]  # From Forecaster 3
         assert "Valid output 4" in context_map[4]  # Self
 
@@ -718,8 +718,8 @@ class TestForecastPipeline:
             )
 
             # Should have called LLM multiple times:
-            # 2 for query generation + 5 for step1 + 5 for step2 = 12 calls
-            assert mock_llm.complete.call_count == 12
+            # 2 for query generation + 3 outside view + 5 inside view = 10 calls
+            assert mock_llm.complete.call_count == 10
 
     @pytest.mark.asyncio
     async def test_pipeline_calls_search_for_both_contexts(
