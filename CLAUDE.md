@@ -190,8 +190,8 @@ All forecasters have equal weight (1.0). Quality tier models:
 
 Cross-pollination structure (creates cross-model diversity):
 - Forecaster 1 receives Forecaster 1's outside view output (Sonnet 4.6 ← self)
-- Forecaster 2 receives Forecaster 4's outside view output (Sonnet 4.6 ← o3)
-- Forecaster 3 receives Forecaster 2's outside view output (GPT-5.2 ← Sonnet 4.6)
+- Forecaster 2 receives Forecaster 5's outside view output (Sonnet 4.6 ← o3)
+- Forecaster 3 receives Forecaster 1's outside view output (GPT-5.2 ← Sonnet 4.6)
 - Forecaster 4 receives Forecaster 3's outside view output (o3 ← GPT-5.2)
 - Forecaster 5 receives Forecaster 5's outside view output (o3 ← self)
 
@@ -225,7 +225,7 @@ metaculus-bot/
 │   │   ├── exceptions.py      # Custom exception types
 │   │   ├── metrics.py         # Typed metrics dataclasses
 │   │   ├── pipeline_data.py   # Typed intermediate data structures between pipeline steps
-│   │   └── content_extractor.py # Web scraping
+│   │   └── content_extractor.py # Web scraping + CSV/Excel/PDF/JSON parsing
 │   ├── utils/
 │   │   ├── llm.py             # LLM client with cost tracking
 │   │   └── metaculus_api.py   # Metaculus API wrapper
@@ -237,7 +237,7 @@ metaculus-bot/
 │   └── config.py              # Configuration handling
 ├── tests/
 │   ├── conftest.py            # Pytest fixtures
-│   └── unit/                  # 22 test files (see Test Infrastructure below)
+│   └── unit/                  # 31 test files (see Test Infrastructure below)
 ├── data/                      # Forecast artifacts and database
 ├── main.py                    # CLI entry point
 ├── run_bot.py                 # GitHub Actions entry point
@@ -265,7 +265,7 @@ metaculus-bot/
 | `src/bot/cdf.py` | CDF generation and interpolation for numeric questions |
 | `src/bot/supervisor.py` | Supervisor agent for ensemble disagreement resolution |
 | `src/bot/divergence.py` | Ensemble divergence calculation |
-| `src/bot/content_extractor.py` | Web content extraction |
+| `src/bot/content_extractor.py` | Web content extraction + CSV/Excel/Google Sheets/PDF/JSON parsing |
 | `src/utils/llm.py` | LLM client with cost tracking (via litellm) |
 | `src/utils/metaculus_api.py` | Metaculus API wrapper |
 | `src/storage/artifact_store.py` | Saves all intermediate outputs |
@@ -461,7 +461,7 @@ ruff format .
 
 ### Test Infrastructure
 
-23 test files in `tests/unit/`. Key test files:
+31 test files in `tests/unit/`. Key test files:
 - `test_extractors.py` - Probability/percentile extraction (100+ tests)
 - `test_cdf_generation.py` - 201-point CDF generation
 - `test_base_forecaster.py` - Base forecaster with mocked LLM pipeline
@@ -474,6 +474,9 @@ ruff format .
 - `test_question_url_extraction.py` - URL scraping from question text
 - `test_runner.py` - Batch runner error handling
 - `test_config.py` - Configuration resolution
+- `test_spreadsheet_parsing.py` - CSV/Excel/Google Sheets parsing
+- `test_pdf_json_parsing.py` - PDF and JSON parsing
+- `test_run_bot_skip_filter.py` - `should_skip_question()` meta-question filter
 
 Fixtures in `conftest.py` provide sample LLM responses for:
 - Binary responses (standard, decimal, extreme, missing)
@@ -538,6 +541,7 @@ The bot runs automatically via `.github/workflows/run-bot.yaml`:
 - **Schedule**: Every 30 minutes
 - **Entry point**: `run_bot.py`
 - **Strategy**: `new-only` (forecasts new questions only)
+- **Skip filter**: Meta questions titled "Will the community prediction be higher..." are skipped via `should_skip_question()` in `run_bot.py`
 - **Tournaments**: 32916 (spring-aib-2026) and MiniBench
 
 **Required secrets:**
