@@ -187,3 +187,12 @@ Success: 0 | Failed: 1
 
 🟡 OTHER Q42424: Will the community prediction be higher than 10.00% on 2026-
   KeyError: 'background'
+
+======================================================================
+RUN: 2026-03-05T03:28:19.842200+00:00
+Tournament: minibench | Selection: new-only | Via: run_bot.py
+Success: 0 | Failed: 1
+======================================================================
+
+🟡 OTHER Q42426: Will the community prediction be higher than 44.00% on 2026-
+  KeyError: 'background'
