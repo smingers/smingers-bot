@@ -348,6 +348,52 @@ class TestReflectionParsing:
         assert all(q.temporal_role == "current" for q in queries)
         assert all(q.phase == "reflect" for q in queries)
 
+    @pytest.mark.asyncio
+    async def test_reflect_and_gap_fill_formats_prompt_without_keyerror(
+        self,
+        planner,
+        sample_reflect_response_sufficient,
+        monkeypatch,
+    ):
+        """Smoke test: _reflect_and_gap_fill should format RESEARCH_REFLECT_PROMPT without KeyError.
+
+        This catches mismatches between the prompt placeholders and the arguments passed to .format(),
+        e.g. forgetting to supply a 'background' field when the prompt uses {background}.
+        """
+
+        # Patch _call_model so we don't hit a real LLM; just return a well-formed reflection response.
+        def fake_call_model(model, prompt, temperature):
+            # Ensure the prompt is a non-empty string and contains expected metadata fields.
+            assert isinstance(prompt, str)
+            assert "QUESTION:" in prompt
+            assert "Type:" in prompt
+            return sample_reflect_response_sufficient
+
+        monkeypatch.setattr(planner, "_call_model", fake_call_model)
+
+        question_params = {
+            "question_title": "Test reflection formatting",
+            "background_info": "Some background context for the question.",
+            "question_text": "Fallback question text.",
+            "resolution_criteria": "Test criteria.",
+            "fine_print": "Test fine print.",
+            "today": "2026-03-05",
+            "scheduled_resolve_time": "2026-03-15T00:00:00Z",
+        }
+
+        # If the prompt/format arguments are out of sync (e.g. missing 'background'),
+        # this call would raise a KeyError and the test would fail.
+        analysis, gap_queries = await planner._reflect_and_gap_fill(
+            question_details=None,
+            question_type="binary",
+            question_params=question_params,
+            query_results=[],
+        )
+
+        assert isinstance(analysis, str)
+        assert "Coverage" in sample_reflect_response_sufficient
+        assert gap_queries == []
+
 
 # =============================================================================
 # Helper Method Tests

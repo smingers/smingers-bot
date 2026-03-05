@@ -28,6 +28,8 @@ dependencies = [
     "fredapi>=0.5.2",
     "yfinance>=0.2.40",
     "rank-bm25 (>=0.2.2,<0.3.0)",
+    "readability-lxml (>=0.8.4.1,<0.9.0.0)",
+    "boilerpy3 (>=1.0.7,<2.0.0)",
 ]
 
 [project.scripts]
