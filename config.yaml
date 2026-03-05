@@ -113,7 +113,7 @@ research:
   planner:
     max_plan_queries: 8     # Max queries generated in planning phase
     max_gap_queries: 3       # Max gap-fill queries from reflection phase
-    reflection_enabled: true # Set false to skip reflection (saves 1 LLM call)
+    reflection_enabled: false # Set false to skip reflection (saves 1 LLM call)
 
   # Google search via Serper API
   google_enabled: true
