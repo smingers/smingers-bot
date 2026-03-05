@@ -23,11 +23,12 @@ import html as html_lib
 import io
 import json
 import logging
+import random
 import re
 import time
 from dataclasses import dataclass
 from typing import Any
-from urllib.parse import unquote, urlparse
+from urllib.parse import parse_qs, unquote, urlencode, urlparse, urlunparse
 
 import httpx
 from bs4 import BeautifulSoup, Tag
@@ -1031,6 +1032,50 @@ class HTMLContentExtractor:
         return content
 
 
+# Query parameter names that are commonly used for tracking; stripped when building
+# the URL cache key so the same page reached via different tracking links dedupes.
+_TRACKING_QUERY_PARAMS = frozenset(
+    {
+        "utm_source",
+        "utm_medium",
+        "utm_campaign",
+        "utm_term",
+        "utm_content",
+        "fbclid",
+        "gclid",
+        "gclsrc",
+        "dclid",
+        "gbraid",
+        "wbraid",
+        "msclkid",
+        "twclid",
+        "mc_cid",
+        "mc_eid",
+        "_ga",
+    }
+)
+
+
+def _normalize_url_for_cache(url: str) -> str:
+    """Return a cache key for the URL by stripping tracking query parameters.
+
+    The same page reached via different UTM or click-id params will share a cache
+    entry. The original URL is still used for the actual fetch.
+    """
+    parsed = urlparse(url)
+    if not parsed.query:
+        return url
+    params = parse_qs(parsed.query, keep_blank_values=False)
+    filtered = {k: v for k, v in params.items() if k.lower() not in _TRACKING_QUERY_PARAMS}
+    if not filtered:
+        new_query = ""
+    else:
+        new_query = urlencode(sorted(filtered.items()), doseq=True)
+    return urlunparse(
+        (parsed.scheme, parsed.netloc, parsed.path, parsed.params, new_query, parsed.fragment)
+    )
+
+
 class ConcurrentContentExtractor:
     """
     Concurrent URL fetcher and content extractor.
@@ -1075,9 +1120,10 @@ class ConcurrentContentExtractor:
                 Pass the same dict across multiple extractor instances (e.g. all
                 extractors created by a single SearchPipeline) to avoid re-fetching
                 the same URL more than once per forecast run.  Results are stored
-                keyed by the original URL string.  Concurrent cache misses for the
-                same URL may cause a redundant fetch (no lock held), but the result
-                is harmless and rare in practice.
+                keyed by a normalized URL (tracking query params stripped) so the
+                same page via different UTM/click-id links reuses the cache.
+                Concurrent cache misses for the same normalized URL may cause a
+                redundant fetch (no lock held), but the result is harmless and rare.
             bright_data_api_key: Optional Bright Data API key for more reliable scraping.
                                 If not provided, uses direct HTTP requests.
         """
@@ -1345,18 +1391,24 @@ class ConcurrentContentExtractor:
         extraction.  Both successes and failures are cached so that the same URL
         is never fetched more than once per SearchPipeline lifetime (e.g. across
         agentic search steps or when the same URL appears in multiple queries).
-        Blocked-domain stubs are not cached because they involve no I/O.
+        Cache key is normalized (tracking params stripped) so the same page via
+        different UTM/click-id links reuses the cache.  Blocked-domain stubs are
+        not cached because they involve no I/O.
         """
-        if self._url_cache is not None and url in self._url_cache:
+        cache_key = _normalize_url_for_cache(url) if self._url_cache is not None else None
+
+        if cache_key is not None and cache_key in self._url_cache:
             logger.debug(f"[cache] URL cache hit: {url[:80]}")
-            return self._url_cache[url]
+            cached = self._url_cache[cache_key]
+            # Return a copy so result["url"] reflects the requested URL (callers may key by it).
+            return {**cached, "url": url}
 
         t0 = time.monotonic()
         result = await self._fetch_url_impl(url)
         result["response_time_ms"] = round((time.monotonic() - t0) * 1000)
 
-        if self._url_cache is not None and result.get("error") != "Blocked domain":
-            self._url_cache[url] = result
+        if cache_key is not None and result.get("error") != "Blocked domain":
+            self._url_cache[cache_key] = result
 
         return result
 
@@ -1402,7 +1454,7 @@ class ConcurrentContentExtractor:
                 # inspect the status code without swallowing the response body.
                 if status_code in self.RETRY_STATUSES and attempt < self.MAX_RETRIES:
                     await response.aread()  # Consume body so connection can return to pool
-                    delay = self.RETRY_BASE_DELAY * (2**attempt)
+                    delay = self.RETRY_BASE_DELAY * (2**attempt) * (0.5 + random.random())
                     logger.debug(
                         f"[fetch] HTTP {status_code} for {url} "
                         f"(attempt {attempt + 1}/{self.MAX_RETRIES + 1}), retrying in {delay:.1f}s"
@@ -1564,7 +1616,7 @@ class ConcurrentContentExtractor:
 
             except (TimeoutError, httpx.TimeoutException):
                 if attempt < self.MAX_RETRIES:
-                    delay = self.RETRY_BASE_DELAY * (2**attempt)
+                    delay = self.RETRY_BASE_DELAY * (2**attempt) * (0.5 + random.random())
                     logger.debug(
                         f"[fetch] Timeout for {url} "
                         f"(attempt {attempt + 1}/{self.MAX_RETRIES + 1}), retrying in {delay:.1f}s"
