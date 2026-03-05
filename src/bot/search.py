@@ -913,13 +913,12 @@ class SearchPipeline:
                     logger.debug(f"[google_search_and_scrape] Skipping low-content: {url}")
                     continue
 
-                if content:
-                    truncated = _bm25_filter_content(content, question_details.title)
-                    logger.debug(
-                        f"[google_search_and_scrape] Summarizing {len(truncated)} chars from {url}"
-                    )
-                    summarize_tasks.append(self._summarize_article(truncated, question_details))
-                    valid_urls.append(url)
+                truncated = _bm25_filter_content(content, question_details.title)
+                logger.debug(
+                    f"[google_search_and_scrape] Summarizing {len(truncated)} chars from {url}"
+                )
+                summarize_tasks.append(self._summarize_article(truncated, question_details))
+                valid_urls.append(url)
 
             if not summarize_tasks:
                 logger.warning("[google_search_and_scrape] No content to summarize")
@@ -1059,28 +1058,18 @@ class SearchPipeline:
                     strategy="news knowledge",
                 )
 
-                # Combine and deduplicate articles by URL
+                # Combine and deduplicate articles by URL (hot first — more recent)
                 hot_articles = hot_response.as_dicts or []
                 historical_articles = historical_response.as_dicts or []
 
-                seen_urls = set()
+                seen_urls: set[str] = set()
                 unique_articles = []
-
-                # Process hot articles first (they're more recent)
-                for article in hot_articles:
-                    article_dict = article.__dict__
-                    url = article_dict.get("article_url", "")
+                for article in [*hot_articles, *historical_articles]:
+                    d = article.__dict__
+                    url = d.get("article_url", "")
                     if url and url not in seen_urls:
                         seen_urls.add(url)
-                        unique_articles.append(article_dict)
-
-                # Then add historical articles that aren't duplicates
-                for article in historical_articles:
-                    article_dict = article.__dict__
-                    url = article_dict.get("article_url", "")
-                    if url and url not in seen_urls:
-                        seen_urls.add(url)
-                        unique_articles.append(article_dict)
+                        unique_articles.append(d)
 
                 # Sort by date (newest first)
                 unique_articles = sorted(
@@ -1916,28 +1905,32 @@ Source: Federal Reserve Economic Data (FRED), St. Louis Fed
             logger.error(f"[fred_search] Error: {e}\n{traceback.format_exc()}")
             return f'<FREDData query="{query}">\nError retrieving FRED data: {e}\n</FREDData>'
 
-    def _extract_fred_query(self, query: str) -> str:
-        """Extract the search term from a query like 'FRED data for US unemployment rate'."""
-        # Try to find quoted term first
+    @staticmethod
+    def _strip_query_prefix(query: str, prefixes: list[str]) -> str:
+        """Extract a search term by stripping a known prefix or returning quoted text."""
         quoted = re.search(r'["\']([^"\']+)["\']', query)
         if quoted:
             return quoted.group(1)
-
-        # Strip common prefixes
         query_lower = query.lower()
-        for phrase in [
-            "fred data for ",
-            "fred series for ",
-            "fred series ",
-            "fred data ",
-            "fred ",
-            "economic data for ",
-            "economic data ",
-        ]:
+        for phrase in prefixes:
             if query_lower.startswith(phrase):
                 return query[len(phrase) :].strip().strip("\"'")
-
         return query.strip()
+
+    def _extract_fred_query(self, query: str) -> str:
+        """Extract the search term from a query like 'FRED data for US unemployment rate'."""
+        return self._strip_query_prefix(
+            query,
+            [
+                "fred data for ",
+                "fred series for ",
+                "fred series ",
+                "fred data ",
+                "fred ",
+                "economic data for ",
+                "economic data ",
+            ],
+        )
 
     # -------------------------------------------------------------------------
     # yFinance (Stock/ETF Market Data)
@@ -2032,30 +2025,22 @@ Source: Federal Reserve Economic Data (FRED), St. Louis Fed
 
     def _extract_yfinance_query(self, query: str) -> str:
         """Extract the ticker/search term from a query like 'yFinance data for AAPL'."""
-        # Try to find quoted term first
-        quoted = re.search(r'["\']([^"\']+)["\']', query)
-        if quoted:
-            return quoted.group(1)
-
-        # Strip common prefixes
-        query_lower = query.lower()
-        for phrase in [
-            "yfinance data for ",
-            "yfinance ticker ",
-            "yfinance ",
-            "stock data for ",
-            "stock price for ",
-            "stock price ",
-            "options data for ",
-            "options for ",
-            "market data for ",
-            "market data ",
-            "ticker ",
-        ]:
-            if query_lower.startswith(phrase):
-                return query[len(phrase) :].strip().strip("\"'")
-
-        return query.strip()
+        return self._strip_query_prefix(
+            query,
+            [
+                "yfinance data for ",
+                "yfinance ticker ",
+                "yfinance ",
+                "stock data for ",
+                "stock price for ",
+                "stock price ",
+                "options data for ",
+                "options for ",
+                "market data for ",
+                "market data ",
+                "ticker ",
+            ],
+        )
 
     def _resolve_yfinance_ticker(self, cleaned_query: str) -> str:
         """Resolve a cleaned query to a ticker symbol.
@@ -2450,40 +2435,3 @@ Source: Federal Reserve Economic Data (FRED), St. Louis Fed
         if before_date and source_date:
             return source_date <= before_date
         return False
-
-
-# -------------------------------------------------------------------------
-# Convenience functions
-# -------------------------------------------------------------------------
-
-
-async def execute_searches_from_response(
-    response: str,
-    search_id: str,
-    question_details: dict,
-    config: dict,
-    llm_client: LLMClient | None = None,
-) -> tuple[str, dict[str, Any]]:
-    """
-    Convenience function to process search queries from a response.
-
-    Args:
-        response: Response containing search queries (from query generation)
-        search_id: Identifier for logging (e.g., "historical", "current")
-        question_details: Dict with title, resolution_criteria, fine_print, description
-        config: Configuration dict
-        llm_client: Optional LLMClient instance
-
-    Returns:
-        Tuple of (formatted_search_results_string, metadata_dict)
-    """
-    qd = QuestionDetails(
-        title=question_details.get("title", ""),
-        resolution_criteria=question_details.get("resolution_criteria", ""),
-        fine_print=question_details.get("fine_print", ""),
-        description=question_details.get("description", ""),
-        resolution_date=question_details.get("resolution_date"),
-    )
-
-    async with SearchPipeline(config, llm_client) as pipeline:
-        return await pipeline.execute_searches_from_response(response, search_id, qd)
