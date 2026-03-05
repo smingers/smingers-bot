@@ -17,6 +17,7 @@ import asyncio
 import json
 import logging
 import os
+import re
 import sys
 from datetime import UTC, datetime
 from pathlib import Path
@@ -27,9 +28,9 @@ load_dotenv()
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from src.bot.search import QuestionDetails, SearchPipeline
-from src.config import ResolvedConfig
-from src.utils.llm import LLMClient, get_cost_tracker, reset_cost_tracker
+from src.bot.search import QuestionDetails, SearchPipeline  # noqa: E402
+from src.config import ResolvedConfig  # noqa: E402
+from src.utils.llm import LLMClient, get_cost_tracker, reset_cost_tracker  # noqa: E402
 
 logger = logging.getLogger(__name__)
 
@@ -274,21 +275,11 @@ async def load_question_from_api(question_id: int) -> dict:
 # ---------------------------------------------------------------------------
 
 
-import re
-
 # Patterns that match Action/Thought/Finish with optional markdown bold/italic
-_ACTION_LINE_RE = re.compile(
-    r"^\s*\**\s*Action\s*\**\s*:\s*(.+)", re.IGNORECASE
-)
-_FINISH_LINE_RE = re.compile(
-    r"^\s*\**\s*Finish\s*\**\s*:?\s*(.*)", re.IGNORECASE
-)
-_THOUGHT_PREFIX_RE = re.compile(
-    r"^\s*\**\s*Thought\s*\**\s*:\s*", re.IGNORECASE
-)
-_ACTION_OR_FINISH_RE = re.compile(
-    r"^\s*\**\s*(Action|Finish)\s*\**\s*:", re.IGNORECASE
-)
+_ACTION_LINE_RE = re.compile(r"^\s*\**\s*Action\s*\**\s*:\s*(.+)", re.IGNORECASE)
+_FINISH_LINE_RE = re.compile(r"^\s*\**\s*Finish\s*\**\s*:?\s*(.*)", re.IGNORECASE)
+_THOUGHT_PREFIX_RE = re.compile(r"^\s*\**\s*Thought\s*\**\s*:\s*", re.IGNORECASE)
+_ACTION_OR_FINISH_RE = re.compile(r"^\s*\**\s*(Action|Finish)\s*\**\s*:", re.IGNORECASE)
 
 
 def parse_actions(response: str) -> list[tuple[str, str]]:
@@ -369,7 +360,9 @@ async def execute_action(
 
         elif tool_lower == "google trends":
             return (
-                await search_pipeline._google_trends_search(query, question_details=question_details)
+                await search_pipeline._google_trends_search(
+                    query, question_details=question_details
+                )
                 or "No results found."
             )
 
@@ -506,7 +499,16 @@ async def run_react_research(
             # Finish?
             if has_finish(response_text):
                 print("\n>> Agent signaled FINISH")
-                trace.append({"step": step, "thought": thought, "action": None, "tool": None, "query": None, "observation": None})
+                trace.append(
+                    {
+                        "step": step,
+                        "thought": thought,
+                        "action": None,
+                        "tool": None,
+                        "query": None,
+                        "observation": None,
+                    }
+                )
                 break
 
             # Parse actions (may be multiple per turn)
@@ -539,7 +541,16 @@ async def run_react_research(
 
                 if has_finish(response_text):
                     print("\n>> Agent signaled FINISH on retry")
-                    trace.append({"step": step, "thought": thought, "action": None, "tool": None, "query": None, "observation": None})
+                    trace.append(
+                        {
+                            "step": step,
+                            "thought": thought,
+                            "action": None,
+                            "tool": None,
+                            "query": None,
+                            "observation": None,
+                        }
+                    )
                     break
 
                 actions = parse_actions(response_text)
@@ -547,7 +558,16 @@ async def run_react_research(
                     print(">> Still no action parsed after retry. Full output:")
                     print(response_text)
                     print(">> Giving up on this step.")
-                    trace.append({"step": step, "thought": thought, "action": None, "tool": None, "query": None, "observation": None})
+                    trace.append(
+                        {
+                            "step": step,
+                            "thought": thought,
+                            "action": None,
+                            "tool": None,
+                            "query": None,
+                            "observation": None,
+                        }
+                    )
                     break
 
             # Execute all actions in parallel
@@ -562,20 +582,24 @@ async def run_react_research(
             )
 
             # Record each action+observation as a separate trace entry within this step
-            for i, ((tool_name, query), observation) in enumerate(zip(actions, observations, strict=True)):
+            for i, ((tool_name, query), observation) in enumerate(
+                zip(actions, observations, strict=True)
+            ):
                 obs_display = observation[:300] + "..." if len(observation) > 300 else observation
                 label = f"{tool_name}: {query}"
                 suffix = f" [{i + 1}/{len(actions)}]" if len(actions) > 1 else ""
                 print(f"Observation{suffix}: {obs_display}")
 
-                trace.append({
-                    "step": step,
-                    "thought": thought if i == 0 else f"(parallel with step {step} action 1)",
-                    "action": label,
-                    "tool": tool_name,
-                    "query": query,
-                    "observation": observation,
-                })
+                trace.append(
+                    {
+                        "step": step,
+                        "thought": thought if i == 0 else f"(parallel with step {step} action 1)",
+                        "action": label,
+                        "tool": tool_name,
+                        "query": query,
+                        "observation": observation,
+                    }
+                )
 
     # --- Phase 3: Final brief ---
     print("\n" + "=" * 70)
@@ -633,7 +657,7 @@ def save_output(result: dict, question: dict, output_dir: str | None = None):
     """Save research output to files."""
     if output_dir is None:
         timestamp = datetime.now(UTC).strftime("%Y%m%d_%H%M%S")
-        output_dir = f"data/react_research/{question['id']}_{timestamp}"
+        output_dir = f"scratchpad/react_research/{question['id']}_{timestamp}"
 
     os.makedirs(output_dir, exist_ok=True)
 
@@ -684,7 +708,9 @@ def main():
     group.add_argument("--data-dir", help="Path to existing data/ artifact directory")
     group.add_argument("--question", type=int, help="Metaculus question ID")
 
-    parser.add_argument("--model", default="openrouter/openai/o3", help="Model for reasoning (default: o3)")
+    parser.add_argument(
+        "--model", default="openrouter/openai/o3", help="Model for reasoning (default: o3)"
+    )
     parser.add_argument("--max-steps", type=int, default=7, help="Maximum ReAct steps (default: 7)")
     parser.add_argument("--plan-only", action="store_true", help="Just print the plan")
     parser.add_argument("--verbose", action="store_true", help="Show full LLM responses")
