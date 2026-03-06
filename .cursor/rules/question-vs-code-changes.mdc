@@ -1,0 +1,39 @@
+---
+description: Answer user questions directly instead of making code changes
+alwaysApply: true
+---
+
+# Answer Questions, Don't Change Code
+
+When the user asks a question, treat it as a request for an explanation or recommendation, **not** as a request to modify files.
+
+- **Primary behavior**
+  - Clearly answer the user's question in natural language.
+  - Provide reasoning, options, and concrete suggestions as needed.
+  - Only propose code changes in the response when they help illustrate an answer.
+
+- **When NOT to change code**
+  - A question alone (e.g., "Why is this slow?", "How does this work?", "What should I do here?") is **not** permission to edit files.
+  - Do not run tools that modify the workspace (e.g., `ApplyPatch`) just because a question mentions code or tests.
+  - Do not "pre-emptively" refactor, rename, or restructure code when the user is only asking for understanding or advice.
+
+- **When code changes are allowed**
+  - Wait for an explicit, declarative request such as:
+    - "Refactor this"
+    - "Fix this bug"
+    - "Implement X"
+    - "Update `foo.py` to do Y"
+  - If in doubt, default to explanation rather than editing.
+
+- **Examples**
+
+```markdown
+User: "Why is my test failing?"
+❌ BAD: Modify the test file or source code without being asked.
+✅ GOOD: Explain the likely cause, point to the relevant lines, and suggest a fix the user can apply (or ask them if they want you to make the change).
+
+User: "What does this function do?"
+❌ BAD: Rewrite or refactor the function.
+✅ GOOD: Describe the behavior, edge cases, and potential improvements without editing files.
+```
+
