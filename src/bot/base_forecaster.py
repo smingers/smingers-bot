@@ -424,12 +424,14 @@ class BaseForecaster(ForecasterMixin, ABC):
             {
                 "query": u.get("url", ""),
                 "tool": "QuestionURLScrape",
-                "success": u.get("scraped", False),
-                "num_results": 1 if u.get("scraped") else 0,
+                "success": u.get("success", False),
+                "num_results": 1 if u.get("success") else 0,
                 "domain": u.get("domain"),
                 "method": u.get("method"),
                 "content_words": u.get("content_words"),
                 "error": u.get("error"),
+                "response_time_ms": u.get("response_time_ms"),
+                "usage": u.get("usage"),
             }
             for u in pre_research.get("urls", [])
         ]
@@ -551,13 +553,15 @@ class BaseForecaster(ForecasterMixin, ABC):
                 {
                     "query": u["url"],
                     "tool": "QuestionURLScrape",
-                    "success": u.get("scraped", False),
-                    "num_results": 1 if u.get("scraped") else 0,
+                    "success": u.get("success", False),
+                    "num_results": 1 if u.get("success") else 0,
                     "domain": u.get("domain"),
                     "method": u.get("method"),
                     "status_code": u.get("status_code"),
                     "content_words": u.get("content_words"),
                     "error": u.get("error"),
+                    "response_time_ms": u.get("response_time_ms"),
+                    "usage": u.get("usage"),
                 }
                 for u in question_url_metadata.get("urls", [])
             ],

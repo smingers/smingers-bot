@@ -12,7 +12,14 @@ from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
 
-from src.bot.search import AgenticSearchResult, GoogleScrapeResult, QuestionDetails, SearchPipeline
+from src.bot.search import (
+    AgenticSearchResult,
+    AgenticSearchStepData,
+    AgenticStepSearchResult,
+    GoogleScrapeResult,
+    QuestionDetails,
+    SearchPipeline,
+)
 
 # ============================================================================
 # Query Parsing Tests
@@ -524,3 +531,194 @@ Search queries:
             # Should not raise, but record error in metadata
             assert metadata["queries"][0]["success"] is False
             assert "Search failed" in metadata["queries"][0]["error"]
+
+
+# ============================================================================
+# URL Tracking Tests
+# ============================================================================
+
+
+class TestAgenticStepSearchResult:
+    """Tests for the AgenticStepSearchResult dataclass and _google_search_agentic."""
+
+    def test_dataclass_construction(self):
+        """AgenticStepSearchResult holds content and url_results."""
+        url_records = [
+            {
+                "url": "https://example.com",
+                "domain": "example.com",
+                "success": True,
+                "status_code": 200,
+                "error": None,
+                "response_time_ms": 123,
+                "method": "trafilatura",
+                "content_chars": 5000,
+                "truncated": False,
+                "usage": "raw_to_agent",
+            }
+        ]
+        result = AgenticStepSearchResult(
+            content="<RawContent>text</RawContent>", url_results=url_records
+        )
+        assert result.content == "<RawContent>text</RawContent>"
+        assert len(result.url_results) == 1
+        assert result.url_results[0]["usage"] == "raw_to_agent"
+
+    def test_empty_url_results(self):
+        """AgenticStepSearchResult accepts empty url_results."""
+        result = AgenticStepSearchResult(content="no urls", url_results=[])
+        assert result.url_results == []
+
+    @pytest.mark.asyncio
+    async def test_google_search_agentic_returns_step_result(self):
+        """_google_search_agentic returns AgenticStepSearchResult, not a plain str."""
+        config = {"_active_models": {}, "models": {}, "research": {}}
+        with (
+            patch(
+                "src.bot.search.SearchPipeline._google_search", new_callable=AsyncMock
+            ) as mock_search,
+            patch("src.bot.search.ConcurrentContentExtractor") as mock_extractor_cls,
+        ):
+            mock_search.return_value = ["https://example.com/article"]
+            mock_extractor = AsyncMock()
+            mock_extractor.__aenter__ = AsyncMock(return_value=mock_extractor)
+            mock_extractor.__aexit__ = AsyncMock(return_value=False)
+            mock_extractor.extract_content = AsyncMock(
+                return_value={
+                    "https://example.com/article": {
+                        "success": True,
+                        "content": "word " * 150,
+                        "domain": "example.com",
+                        "status_code": 200,
+                        "error": None,
+                        "response_time_ms": 200,
+                        "method": "trafilatura",
+                        "content_chars": 750,
+                        "truncated": False,
+                    }
+                }
+            )
+            mock_extractor_cls.return_value = mock_extractor
+
+            pipeline = SearchPipeline(config)
+            result = await pipeline._google_search_agentic("hospital trends")
+
+        assert isinstance(result, AgenticStepSearchResult)
+        assert isinstance(result.content, str)
+        assert len(result.url_results) == 1
+        assert result.url_results[0]["url"] == "https://example.com/article"
+        assert result.url_results[0]["usage"] == "raw_to_agent"
+        assert result.url_results[0]["truncated"] is False
+
+    @pytest.mark.asyncio
+    async def test_google_search_agentic_blocked_domain_usage(self):
+        """URLs blocked by extractor get usage='blocked'."""
+        config = {"_active_models": {}, "models": {}, "research": {}}
+        with (
+            patch(
+                "src.bot.search.SearchPipeline._google_search", new_callable=AsyncMock
+            ) as mock_search,
+            patch("src.bot.search.ConcurrentContentExtractor") as mock_extractor_cls,
+        ):
+            mock_search.return_value = ["https://twitter.com/post/123"]
+            mock_extractor = AsyncMock()
+            mock_extractor.__aenter__ = AsyncMock(return_value=mock_extractor)
+            mock_extractor.__aexit__ = AsyncMock(return_value=False)
+            mock_extractor.extract_content = AsyncMock(
+                return_value={
+                    "https://twitter.com/post/123": {
+                        "success": False,
+                        "content": None,
+                        "domain": "twitter.com",
+                        "status_code": None,
+                        "error": "Blocked domain",
+                        "response_time_ms": 0,
+                        "method": None,
+                        "content_chars": 0,
+                        "truncated": False,
+                    }
+                }
+            )
+            mock_extractor_cls.return_value = mock_extractor
+
+            pipeline = SearchPipeline(config)
+            result = await pipeline._google_search_agentic("twitter news")
+
+        assert isinstance(result, AgenticStepSearchResult)
+        assert result.url_results[0]["usage"] == "blocked"
+
+    @pytest.mark.asyncio
+    async def test_google_search_agentic_exception_returns_step_result(self):
+        """On exception, returns AgenticStepSearchResult with url_results=[]."""
+        config = {"_active_models": {}, "models": {}, "research": {}}
+        with patch(
+            "src.bot.search.SearchPipeline._google_search",
+            new_callable=AsyncMock,
+            side_effect=RuntimeError("network error"),
+        ):
+            pipeline = SearchPipeline(config)
+            result = await pipeline._google_search_agentic("some query")
+
+        assert isinstance(result, AgenticStepSearchResult)
+        assert result.url_results == []
+        assert "Error during search" in result.content
+
+
+class TestAgenticSearchStepDataUrlResults:
+    """Tests for url_results field on AgenticSearchStepData."""
+
+    def test_default_url_results_is_empty_dict(self):
+        """url_results defaults to {} (not shared across instances)."""
+        step1 = AgenticSearchStepData(
+            step_number=1,
+            queries_executed=[("q1", "Google")],
+            search_results_raw="raw",
+            analysis_after_step="analysis",
+        )
+        step2 = AgenticSearchStepData(
+            step_number=2,
+            queries_executed=[("q2", "Google")],
+            search_results_raw="raw2",
+            analysis_after_step="analysis2",
+        )
+        # Mutating one should not affect the other
+        step1.url_results["q1 (Google)"] = [{"url": "https://a.com"}]
+        assert step2.url_results == {}
+
+    def test_url_results_serialized_in_agentic_instrumentation(self):
+        """url_results from AgenticSearchStepData appears in instrumentation dict."""
+        url_record = {
+            "url": "https://cdc.gov/report",
+            "domain": "cdc.gov",
+            "success": True,
+            "status_code": 200,
+            "error": None,
+            "response_time_ms": 300,
+            "method": "trafilatura",
+            "content_chars": 8000,
+            "truncated": False,
+            "usage": "raw_to_agent",
+        }
+        step = AgenticSearchStepData(
+            step_number=1,
+            queries_executed=[("hospital data", "Google")],
+            search_results_raw="<RawContent>...</RawContent>",
+            analysis_after_step="Analysis here",
+            url_results={"hospital data (Google)": [url_record]},
+        )
+
+        # Simulate the serialization done in execute_searches_from_response
+        serialized = {
+            "step_number": step.step_number,
+            "queries_executed": step.queries_executed,
+            "search_results_chars": len(step.search_results_raw),
+            "analysis_chars": len(step.analysis_after_step),
+            "url_results": step.url_results,
+        }
+
+        assert "url_results" in serialized
+        assert "hospital data (Google)" in serialized["url_results"]
+        records = serialized["url_results"]["hospital data (Google)"]
+        assert len(records) == 1
+        assert records[0]["usage"] == "raw_to_agent"
+        assert records[0]["truncated"] is False
