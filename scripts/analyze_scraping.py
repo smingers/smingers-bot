@@ -46,7 +46,7 @@ def _question_url_queries_from_plan(plan_path: Path) -> list[dict] | None:
         domain = u.get("domain") or (urlparse(url).netloc if url else "unknown")
         if domain.startswith("www."):
             domain = domain[4:]
-        success = u.get("scraped", False)
+        success = u.get("success", u.get("scraped", False))
         queries.append(
             {
                 "query": url,
