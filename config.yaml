@@ -78,7 +78,7 @@ ensemble:
   # Agents for preview and live modes (higher quality)
   quality:
     - name: "forecaster_1"
-      model: "openrouter/google/gemini-3.1-pro-preview"
+      model: "openrouter/anthropic/claude-sonnet-4.6"
       weight: 1.0
 
     - name: "forecaster_2"
@@ -129,7 +129,7 @@ research:
   asknews_max_results: 10
 
   # Agentic search (iterative LLM-guided research)
-  agentic_search_enabled: false
+  agentic_search_enabled: true
   # Max steps per mode (use a single number for all modes, or per-mode overrides)
   agentic_search_max_steps:
     test: 3

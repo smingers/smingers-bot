@@ -1,0 +1,1421 @@
+{
+  "plan_analysis": "The question hinges on which individual the 88-member Assembly of Experts will formally elect as Supreme Leader before 1 Jan 2027.  Forecasters already know the constitutional framework, interim council, and a shortlist mentioned in mid-2025.  Still missing:\n\n1. Current state: Who really leads in behind-the-scenes horse-trading right now; have dates been set for the Assembly\u2019s special session; which blocs (hard-liners, IRGC, reformists, Qom clerics) control the Assembly.\n2. Key drivers: a) IRGC preferences and ability to coerce/convince clerics, b) ideological leanings and patronage networks inside the Assembly, c) any \u201cdark horse\u201d compromise figures, d) public unrest pushing for abolition or a leadership council.\n3. Background conditions & contrarian check: Likelihood the Islamic Republic collapses or the velayat-e faqih system is replaced; whether past debates on multi-member leadership provide a precedent; historical base rate of hereditary or \u201cother\u201d successions in theocratic systems.\n4. Resolution mechanism details: Procedure, quorum, timeline, past behaviour of the Assembly in crises (1989), and whether constitutional amendments would be required for abolition.\n\nThe search strategy therefore gathers:\n\u2022 Structural data on Assembly composition and faction strength (background/base rate).\n\u2022 Historical precedents for Supreme Leader choice and any moves to abolish/alter the office (base rate/contrarian).\n\u2022 Fresh reporting or leaks on current lobbying, endorsements, IRGC positioning, and scheduled Assembly meetings (current state & key drivers).\n\u2022 Signals of regime-level instability or popular demands for ending the post (contrarian).",
+  "reflect_analysis": null,
+  "queries_planned": [
+    {
+      "query": "Iran Assembly of Experts composition 2024",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "membership list and factional/ideological breakdown to gauge voting blocs and base rates.",
+      "phase": "plan"
+    },
+    {
+      "query": "Supreme Leader succession 1989 process",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "detailed account of the last transition to understand procedural precedent and timelines.",
+      "phase": "plan"
+    },
+    {
+      "query": "father to son succession theocracy examples",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "historical frequency of hereditary handovers in comparable religious regimes; informs plausibility of Mojtaba Khamenei.",
+      "phase": "plan"
+    },
+    {
+      "query": "Provide analysis of historical proposals or attempts (1989-2026) to create a Leadership Council or abolish Iran\u2019s Supreme Leader position, citing constitutional debates and clerical statements.",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "map precedent and feasibility of \u201cPosition abolished/None\u201d outcomes.",
+      "phase": "plan"
+    },
+    {
+      "query": "Assembly of Experts vote new leader 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "latest reporting on timing, special sessions, and frontrunner tallies.",
+      "phase": "plan"
+    },
+    {
+      "query": "IRGC supports Mojtaba Khamenei 2026",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "gather recent coverage or leaks on IRGC endorsement, pressure, or opposition around Mojtaba.",
+      "phase": "plan"
+    },
+    {
+      "query": "Hassan Khomeini succession endorsements 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "track reformist/centrist clerical backing and public sentiment for Hassan Khomeini.",
+      "phase": "plan"
+    },
+    {
+      "query": "abolish velayat-e faqih protests 2026",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "uncover reports of mass protests, opposition figures, or parliamentary moves that might lead to abolishing the Supreme Leader position.",
+      "phase": "plan"
+    }
+  ],
+  "gap_queries": [],
+  "seed_context_chars": 10940,
+  "historical_context_chars": 41972,
+  "current_context_chars": 90640,
+  "phases": {
+    "pre_research": {
+      "duration_seconds": 58.59,
+      "seed_context_chars": 10940,
+      "search_id": "question_urls",
+      "searched": true,
+      "urls_found": 8,
+      "urls_scraped": 4,
+      "urls_summarized": 4,
+      "urls": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Ali_Khamenei",
+          "domain": "en.wikipedia.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 437,
+          "method": "wikipedia_api",
+          "content_chars": 83950,
+          "truncated": true,
+          "content_words": 2322,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.nytimes.com/2025/06/21/world/middleeast/iran-ayatollah-israel-war.html",
+          "domain": "www.nytimes.com",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 42,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "content_words": 0,
+          "usage": "failed"
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Gholam-Hossein_Mohseni-Eje%27i",
+          "domain": "en.wikipedia.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 208,
+          "method": "wikipedia_api",
+          "content_chars": 7075,
+          "truncated": false,
+          "content_words": 1094,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Asghar_Hijazi",
+          "domain": "en.wikipedia.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 211,
+          "method": "wikipedia_api",
+          "content_chars": 3592,
+          "truncated": false,
+          "content_words": 551,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Hassan_Khomeini",
+          "domain": "en.wikipedia.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 218,
+          "method": "wikipedia_api",
+          "content_chars": 3697,
+          "truncated": false,
+          "content_words": 561,
+          "usage": "summarized"
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ]
+    },
+    "plan": {
+      "duration_seconds": 27.64,
+      "cost": 0.0224,
+      "num_queries": 8
+    },
+    "execute": {
+      "duration_seconds": 134.91,
+      "cost": 0.0991,
+      "queries_executed": 8,
+      "queries_successful": 8
+    },
+    "assemble": {
+      "historical_context_chars": 41972,
+      "current_context_chars": 90640
+    }
+  },
+  "total_queries_planned": 8,
+  "total_queries_executed": 8,
+  "total_gap_queries": 0,
+  "total_cost": 0.1342,
+  "total_duration_seconds": 221.14,
+  "query_details": [
+    {
+      "query": "Iran Assembly of Experts composition 2024",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "membership list and factional/ideological breakdown to gauge voting blocs and base rates.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://en.wikipedia.org/wiki/2024_Iranian_Assembly_of_Experts_election",
+          "domain": "en.wikipedia.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 626,
+          "method": "wikipedia_api",
+          "content_chars": 3753,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/List_of_members_in_the_Sixth_Term_of_the_Assembly_of_Experts",
+          "domain": "en.wikipedia.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 626,
+          "method": "wikipedia_api",
+          "content_chars": 3700,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.euronews.com/2026/03/03/what-is-irans-assembly-of-experts-and-who-will-succeed-khamenei",
+          "domain": "www.euronews.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 377,
+          "method": "site-specific",
+          "content_chars": 4420,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://grokipedia.com/page/2024_iranian_assembly_of_experts_election",
+          "domain": "grokipedia.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 1176,
+          "method": "trafilatura",
+          "content_chars": 34806,
+          "truncated": true,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.yahoo.com/news/articles/irans-assembly-experts-succeed-khamenei-164711345.html",
+          "domain": "www.yahoo.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 2235,
+          "method": "boilerpy",
+          "content_chars": 2883,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.britannica.com/topic/Assembly-of-Experts",
+          "domain": "www.britannica.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 497,
+          "method": "trafilatura",
+          "content_chars": 1882,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.facebook.com/CBSNews/posts/irans-88-member-assembly-of-experts-is-close-to-picking-a-new-supreme-leader-to-/1329857789006062/",
+          "domain": "www.facebook.com",
+          "success": false,
+          "status_code": null,
+          "error": "Blocked domain",
+          "response_time_ms": 0,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "blocked"
+        },
+        {
+          "url": "https://mei.edu/publication/moving-post-khamenei-era-role-assembly-experts/",
+          "domain": "mei.edu",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 502,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://commonslibrary.parliament.uk/irans-2024-elections/",
+          "domain": "commonslibrary.parliament.uk",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 502,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.washingtonexaminer.com/news/world/4478138/iran-assembly-of-experts-bombed-during-election-next-supreme-leader/",
+          "domain": "www.washingtonexaminer.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 616,
+          "method": "trafilatura",
+          "content_chars": 2356,
+          "truncated": false,
+          "usage": "dropped_cap"
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 7,
+        "urls_failed": 3,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "Supreme Leader succession 1989 process",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "detailed account of the last transition to understand procedural precedent and timelines.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://www.wxii12.com/article/iran-khamenei-death-succession/70573865",
+          "domain": "www.wxii12.com",
+          "success": false,
+          "status_code": 451,
+          "error": "HTTP 451",
+          "response_time_ms": 517,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=0He-y9L3kSI",
+          "domain": "www.youtube.com",
+          "success": false,
+          "status_code": null,
+          "error": "Blocked domain",
+          "response_time_ms": 0,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "blocked"
+        },
+        {
+          "url": "https://www.mprnews.org/story/2026/03/01/how-succession-works-in-iran-and-who-could-be-the-countrys-next-supreme-leader",
+          "domain": "www.mprnews.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 1881,
+          "method": "trafilatura",
+          "content_chars": 444,
+          "truncated": false,
+          "usage": "dropped_short"
+        },
+        {
+          "url": "https://apnews.com/article/iran-supreme-leader-khamenei-succession-c1d1505581d36ffc84d3ededcb10a7d5",
+          "domain": "apnews.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 919,
+          "method": "site-specific",
+          "content_chars": 3534,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.facebook.com/groups/kakampinoy/posts/791328140461693/",
+          "domain": "www.facebook.com",
+          "success": false,
+          "status_code": null,
+          "error": "Blocked domain",
+          "response_time_ms": 0,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "blocked"
+        },
+        {
+          "url": "https://www.washingtoninstitute.org/policy-analysis/supreme-succession",
+          "domain": "www.washingtoninstitute.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 448,
+          "method": "trafilatura",
+          "content_chars": 12926,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/1989_Iranian_Supreme_Leader_election",
+          "domain": "en.wikipedia.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 639,
+          "method": "wikipedia_api",
+          "content_chars": 5474,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.finedayradio.com/news/tv-delmarva-channel-33/irans-complex-leadership-succession-process-explained-after-supreme-leaders-death/",
+          "domain": "www.finedayradio.com",
+          "success": false,
+          "status_code": 404,
+          "error": "HTTP 404",
+          "response_time_ms": 2202,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.facebook.com/cnbcinternational/posts/the-death-of-irans-supreme-leader-ayatollah-ali-khamenei-sets-in-motion-a-formal/1288294456491731/",
+          "domain": "www.facebook.com",
+          "success": false,
+          "status_code": null,
+          "error": "Blocked domain",
+          "response_time_ms": 0,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "blocked"
+        },
+        {
+          "url": "https://www.researchgate.net/publication/263115534_Succession_and_the_Supreme_Leader_in_Iran",
+          "domain": "www.researchgate.net",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 515,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 4,
+        "urls_failed": 6,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "father to son succession theocracy examples",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "historical frequency of hereditary handovers in comparable religious regimes; informs plausibility of Mojtaba Khamenei.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://www.reddit.com/r/goodworldbuilding/comments/xqwpit/do_you_have_systems_of_government_that_arent_a/",
+          "domain": "www.reddit.com",
+          "success": false,
+          "status_code": null,
+          "error": "Blocked domain",
+          "response_time_ms": 0,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "blocked"
+        },
+        {
+          "url": "https://abc7news.com/post/iran-leader-death-ayatollah-ali-khamenei-dead-heres-how-succession-works-could-supreme/18664109/",
+          "domain": "abc7news.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 1789,
+          "method": "site-specific",
+          "content_chars": 3570,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=AoXmeRf5ucs",
+          "domain": "www.youtube.com",
+          "success": false,
+          "status_code": null,
+          "error": "Blocked domain",
+          "response_time_ms": 0,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "blocked"
+        },
+        {
+          "url": "https://www.gauthmath.com/solution/1986326601608452/Which-is-an-example-of-a-theocracy-Despite-having-a-son-the-king-names-his-niece",
+          "domain": "www.gauthmath.com",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 891,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Historical_inheritance_systems",
+          "domain": "en.wikipedia.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 1834,
+          "method": "wikipedia_api",
+          "content_chars": 46679,
+          "truncated": true,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.facebook.com/inversebible/videos/07-understanding-theocracy/1729312000828126/",
+          "domain": "www.facebook.com",
+          "success": false,
+          "status_code": null,
+          "error": "Blocked domain",
+          "response_time_ms": 0,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "blocked"
+        },
+        {
+          "url": "https://www.quora.com/What-are-four-examples-of-a-theocratic-state",
+          "domain": "www.quora.com",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 902,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://medcraveonline.com/JHAAS/theocratic-system-of-government-religious-judgment.html",
+          "domain": "medcraveonline.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 3056,
+          "method": "site-specific",
+          "content_chars": 57048,
+          "truncated": true,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.facebook.com/groups/satmin/posts/517141112687233/",
+          "domain": "www.facebook.com",
+          "success": false,
+          "status_code": null,
+          "error": "Blocked domain",
+          "response_time_ms": 0,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "blocked"
+        },
+        {
+          "url": "https://politics.stackexchange.com/questions/48048/which-theocracies-exist-today",
+          "domain": "politics.stackexchange.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 1603,
+          "method": "site-specific",
+          "content_chars": 8108,
+          "truncated": false,
+          "usage": "summarized"
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 4,
+        "urls_failed": 6,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "Provide analysis of historical proposals or attempts (1989-2026) to create a Leadership Council or abolish Iran\u2019s Supreme Leader position, citing constitutional debates and clerical statements.",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "map precedent and feasibility of \u201cPosition abolished/None\u201d outcomes.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 1,
+      "error": null,
+      "agentic_instrumentation": {
+        "steps_taken": 2,
+        "queries_executed": [
+          "Iran leadership council proposal 2014",
+          "Assembly Experts replace Supreme Leader debate",
+          "Rafsanjani collective leadership comments 2007",
+          "1989 Iran constitution leadership amendment",
+          "abolish velayat faqih ayatollah statements"
+        ],
+        "step_data": [
+          {
+            "step_number": 1,
+            "queries_executed": [
+              [
+                "Iran leadership council proposal 2014",
+                "Google"
+              ],
+              [
+                "Assembly Experts replace Supreme Leader debate",
+                "Google News"
+              ],
+              [
+                "Rafsanjani collective leadership comments 2007",
+                "Google"
+              ],
+              [
+                "1989 Iran constitution leadership amendment",
+                "Google"
+              ],
+              [
+                "abolish velayat faqih ayatollah statements",
+                "Google"
+              ]
+            ],
+            "search_results_chars": 74050,
+            "analysis_chars": 0,
+            "url_results": {
+              "Iran leadership council proposal 2014 (Google)": [
+                {
+                  "url": "https://www.aljazeera.com/features/2026/3/5/irans-succession-question-rouhanis-name-resurfaces-amid-leadership-void",
+                  "domain": "www.aljazeera.com",
+                  "success": true,
+                  "status_code": 200,
+                  "error": null,
+                  "response_time_ms": 137,
+                  "method": "site-specific",
+                  "content_chars": 6303,
+                  "truncated": false,
+                  "usage": "raw_to_agent"
+                },
+                {
+                  "url": "https://www.maryam-rajavi.com/en/provisional-government-by-the-national-council-of-resistance-of-iran/",
+                  "domain": "www.maryam-rajavi.com",
+                  "success": true,
+                  "status_code": 200,
+                  "error": null,
+                  "response_time_ms": 1977,
+                  "method": "site-specific",
+                  "content_chars": 2870,
+                  "truncated": false,
+                  "usage": "dropped_cap"
+                },
+                {
+                  "url": "https://www.facebook.com/travisakers/posts/the-leadership-structure-of-iran-can-be-difficult-to-understand-for-those-withou/10174246601730722/",
+                  "domain": "www.facebook.com",
+                  "success": false,
+                  "status_code": null,
+                  "error": "Blocked domain",
+                  "response_time_ms": 0,
+                  "method": null,
+                  "content_chars": 0,
+                  "truncated": false,
+                  "usage": "blocked"
+                },
+                {
+                  "url": "https://en.wikipedia.org/wiki/Assembly_of_Experts",
+                  "domain": "en.wikipedia.org",
+                  "success": true,
+                  "status_code": 200,
+                  "error": null,
+                  "response_time_ms": 1574,
+                  "method": "wikipedia_api",
+                  "content_chars": 17400,
+                  "truncated": true,
+                  "usage": "dropped_cap"
+                },
+                {
+                  "url": "https://hansard.parliament.uk/commons/2014-02-26/debates/140226104000002/Iran(JointPlanOfAction)",
+                  "domain": "hansard.parliament.uk",
+                  "success": false,
+                  "status_code": 403,
+                  "error": "HTTP 403",
+                  "response_time_ms": 143,
+                  "method": null,
+                  "content_chars": 0,
+                  "truncated": false,
+                  "usage": "failed"
+                },
+                {
+                  "url": "https://abcnews.com/International/iran-forms-interim-leadership-council-president-pezeshkian-resurfaces/story?id=130650550",
+                  "domain": "abcnews.com",
+                  "success": true,
+                  "status_code": 200,
+                  "error": null,
+                  "response_time_ms": 1858,
+                  "method": "site-specific",
+                  "content_chars": 3188,
+                  "truncated": false,
+                  "usage": "dropped_cap"
+                },
+                {
+                  "url": "https://www.iranintl.com/en/202603016621",
+                  "domain": "www.iranintl.com",
+                  "success": true,
+                  "status_code": 200,
+                  "error": null,
+                  "response_time_ms": 1170,
+                  "method": "site-specific",
+                  "content_chars": 5457,
+                  "truncated": false,
+                  "usage": "dropped_cap"
+                },
+                {
+                  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6643625/",
+                  "domain": "pmc.ncbi.nlm.nih.gov",
+                  "success": true,
+                  "status_code": 200,
+                  "error": null,
+                  "response_time_ms": 1040,
+                  "method": "site-specific",
+                  "content_chars": 67209,
+                  "truncated": true,
+                  "usage": "raw_to_agent"
+                },
+                {
+                  "url": "https://www.facebook.com/misanharriman/posts/what-is-the-interim-leadership-councilarticle-111-of-irans-constitution-authoris/1443740670435628/",
+                  "domain": "www.facebook.com",
+                  "success": false,
+                  "status_code": null,
+                  "error": "Blocked domain",
+                  "response_time_ms": 0,
+                  "method": null,
+                  "content_chars": 0,
+                  "truncated": false,
+                  "usage": "blocked"
+                },
+                {
+                  "url": "https://wilmap.stanford.edu/country/iran",
+                  "domain": "wilmap.stanford.edu",
+                  "success": true,
+                  "status_code": 200,
+                  "error": null,
+                  "response_time_ms": 1508,
+                  "method": "boilerpy",
+                  "content_chars": 1023,
+                  "truncated": false,
+                  "usage": "raw_to_agent"
+                }
+              ],
+              "Assembly Experts replace Supreme Leader debate (Google News)": [
+                {
+                  "url": "https://www.iranintl.com/en/202603069419",
+                  "domain": "www.iranintl.com",
+                  "success": true,
+                  "status_code": 200,
+                  "error": null,
+                  "response_time_ms": 1167,
+                  "method": "site-specific",
+                  "content_chars": 17651,
+                  "truncated": true,
+                  "usage": "raw_to_agent"
+                },
+                {
+                  "url": "https://www.facebook.com/deutschewellenews/posts/eyewitness-footage-shows-the-destroyed-building-that-houses-the-assembly-of-expe/1366535022168475/",
+                  "domain": "www.facebook.com",
+                  "success": false,
+                  "status_code": null,
+                  "error": "Blocked domain",
+                  "response_time_ms": 0,
+                  "method": null,
+                  "content_chars": 0,
+                  "truncated": false,
+                  "usage": "blocked"
+                },
+                {
+                  "url": "https://www.cnn.com/2026/02/28/middleeast/iran-supreme-leader-ali-khamenei-replacement-intl-hnk",
+                  "domain": "www.cnn.com",
+                  "success": true,
+                  "status_code": 200,
+                  "error": null,
+                  "response_time_ms": 1892,
+                  "method": "site-specific",
+                  "content_chars": 4715,
+                  "truncated": false,
+                  "usage": "raw_to_agent"
+                },
+                {
+                  "url": "https://www.modernghana.com/news/1476467/succession-debate-who-could-replace-ali-khamenei.amp",
+                  "domain": "www.modernghana.com",
+                  "success": true,
+                  "status_code": 200,
+                  "error": null,
+                  "response_time_ms": 884,
+                  "method": "trafilatura",
+                  "content_chars": 3820,
+                  "truncated": false,
+                  "usage": "dropped_cap"
+                },
+                {
+                  "url": "https://english.alarabiya.net/amp/News/middle-east/2026/03/04/who-could-replace-khamenei-iran-weighs-possible-successors-after-his-death",
+                  "domain": "english.alarabiya.net",
+                  "success": false,
+                  "status_code": 403,
+                  "error": "HTTP 403",
+                  "response_time_ms": 637,
+                  "method": null,
+                  "content_chars": 0,
+                  "truncated": false,
+                  "usage": "failed"
+                },
+                {
+                  "url": "https://www.theguardian.com/world/2026/mar/03/chaos-signals-iran-struggling-to-function-as-war-turns-into-fight-for-survival",
+                  "domain": "www.theguardian.com",
+                  "success": true,
+                  "status_code": 200,
+                  "error": null,
+                  "response_time_ms": 853,
+                  "method": "site-specific",
+                  "content_chars": 6601,
+                  "truncated": false,
+                  "usage": "raw_to_agent"
+                },
+                {
+                  "url": "https://www.iranintl.com/en/202603052337",
+                  "domain": "www.iranintl.com",
+                  "success": true,
+                  "status_code": 200,
+                  "error": null,
+                  "response_time_ms": 1236,
+                  "method": "site-specific",
+                  "content_chars": 16566,
+                  "truncated": true,
+                  "usage": "dropped_cap"
+                },
+                {
+                  "url": "https://www.facebook.com/deutschewellenews/posts/the-grandson-of-irans-first-supreme-leader-and-son-of-the-second-supreme-leader-/1367322082089769/",
+                  "domain": "www.facebook.com",
+                  "success": false,
+                  "status_code": null,
+                  "error": "Blocked domain",
+                  "response_time_ms": 0,
+                  "method": null,
+                  "content_chars": 0,
+                  "truncated": false,
+                  "usage": "blocked"
+                },
+                {
+                  "url": "https://ktxs.com/news/local-criminal-justice-expert-weighs-in-on-doj-approach-to-epstein-case",
+                  "domain": "ktxs.com",
+                  "success": true,
+                  "status_code": 200,
+                  "error": null,
+                  "response_time_ms": 976,
+                  "method": "trafilatura",
+                  "content_chars": 2029,
+                  "truncated": false,
+                  "usage": "dropped_cap"
+                },
+                {
+                  "url": "https://news4sanantonio.com/news/nation-world/senate-to-vote-on-save-america-act-as-voter-id-debate-intensifies-susan-collins-chuck-schumer-photo-id",
+                  "domain": "news4sanantonio.com",
+                  "success": true,
+                  "status_code": 200,
+                  "error": null,
+                  "response_time_ms": 1069,
+                  "method": "site-specific",
+                  "content_chars": 2702,
+                  "truncated": false,
+                  "usage": "dropped_cap"
+                }
+              ],
+              "Rafsanjani collective leadership comments 2007 (Google)": [
+                {
+                  "url": "https://www.theguardian.com/world/2007/sep/05/iran.topstories3",
+                  "domain": "www.theguardian.com",
+                  "success": true,
+                  "status_code": 200,
+                  "error": null,
+                  "response_time_ms": 1047,
+                  "method": "site-specific",
+                  "content_chars": 3152,
+                  "truncated": false,
+                  "usage": "raw_to_agent"
+                },
+                {
+                  "url": "https://www.npr.org/2007/09/07/14232828/irans-leadership-changes-may-alter-policy",
+                  "domain": "www.npr.org",
+                  "success": true,
+                  "status_code": 200,
+                  "error": null,
+                  "response_time_ms": 1863,
+                  "method": "site-specific",
+                  "content_chars": 4010,
+                  "truncated": false,
+                  "usage": "dropped_cap"
+                },
+                {
+                  "url": "https://www.nytimes.com/2007/09/05/world/middleeast/05rafsanjani.html",
+                  "domain": "www.nytimes.com",
+                  "success": false,
+                  "status_code": 403,
+                  "error": "HTTP 403",
+                  "response_time_ms": 119,
+                  "method": null,
+                  "content_chars": 0,
+                  "truncated": false,
+                  "usage": "failed"
+                },
+                {
+                  "url": "https://www.ncr-iran.org/en/news/iran-protests/iran-rafsanjanis-remarks-deepen-the-regimes-internal-crisis-more-than-ever-before/",
+                  "domain": "www.ncr-iran.org",
+                  "success": true,
+                  "status_code": 200,
+                  "error": null,
+                  "response_time_ms": 2015,
+                  "method": "site-specific",
+                  "content_chars": 6940,
+                  "truncated": false,
+                  "usage": "raw_to_agent"
+                },
+                {
+                  "url": "https://www.brandeis.edu/crown/publications/middle-east-briefs/pdfs/1-100/meb38.pdf",
+                  "domain": "www.brandeis.edu",
+                  "success": true,
+                  "status_code": 200,
+                  "error": null,
+                  "response_time_ms": 3674,
+                  "method": "pdf",
+                  "content_chars": 37336,
+                  "truncated": false,
+                  "usage": "dropped_cap"
+                },
+                {
+                  "url": "https://www.voanews.com/a/rafsanjani-calls-iran-leaders-ignorant/1666889.html",
+                  "domain": "www.voanews.com",
+                  "success": true,
+                  "status_code": 200,
+                  "error": null,
+                  "response_time_ms": 1525,
+                  "method": "trafilatura",
+                  "content_chars": 6116,
+                  "truncated": false,
+                  "usage": "raw_to_agent"
+                },
+                {
+                  "url": "https://www.rferl.org/a/1347486.html",
+                  "domain": "www.rferl.org",
+                  "success": true,
+                  "status_code": 200,
+                  "error": null,
+                  "response_time_ms": 1708,
+                  "method": "site-specific",
+                  "content_chars": 28737,
+                  "truncated": true,
+                  "usage": "dropped_cap"
+                },
+                {
+                  "url": "https://njnnetwork.com/2009/07/end-game-for-president-ahmadinejad-as-protests-continue-and-political-maneuvers-change-the-guard/",
+                  "domain": "njnnetwork.com",
+                  "success": true,
+                  "status_code": 200,
+                  "error": null,
+                  "response_time_ms": 3100,
+                  "method": "site-specific",
+                  "content_chars": 14138,
+                  "truncated": false,
+                  "usage": "dropped_cap"
+                },
+                {
+                  "url": "https://www.columbiaspectator.com/2007/09/25/student-reactions-ahmadinejads-speech/",
+                  "domain": "www.columbiaspectator.com",
+                  "success": false,
+                  "status_code": 200,
+                  "error": "Content extraction failed",
+                  "response_time_ms": 1724,
+                  "method": null,
+                  "content_chars": 0,
+                  "truncated": false,
+                  "usage": "failed"
+                },
+                {
+                  "url": "https://www.boloji.com/articles/165/iran-elections-expose-simmering-clerical-disharmony",
+                  "domain": "www.boloji.com",
+                  "success": true,
+                  "status_code": 200,
+                  "error": null,
+                  "response_time_ms": 3006,
+                  "method": "site-specific",
+                  "content_chars": 39051,
+                  "truncated": true,
+                  "usage": "dropped_cap"
+                }
+              ],
+              "1989 Iran constitution leadership amendment (Google)": [
+                {
+                  "url": "https://www.constituteproject.org/constitution/Iran_1989",
+                  "domain": "www.constituteproject.org",
+                  "success": true,
+                  "status_code": 200,
+                  "error": null,
+                  "response_time_ms": 798,
+                  "method": "site-specific",
+                  "content_chars": 86054,
+                  "truncated": true,
+                  "usage": "raw_to_agent"
+                },
+                {
+                  "url": "https://www.tehrantimes.com/news/524368/What-does-Iran-s-constitution-say-about-choosing-a-new-Leader",
+                  "domain": "www.tehrantimes.com",
+                  "success": true,
+                  "status_code": 200,
+                  "error": null,
+                  "response_time_ms": 1316,
+                  "method": "site-specific",
+                  "content_chars": 2902,
+                  "truncated": false,
+                  "usage": "dropped_cap"
+                },
+                {
+                  "url": "https://pcwcr.princeton.edu/reports/iran1989.html",
+                  "domain": "pcwcr.princeton.edu",
+                  "success": true,
+                  "status_code": 200,
+                  "error": null,
+                  "response_time_ms": 1106,
+                  "method": "trafilatura",
+                  "content_chars": 2888,
+                  "truncated": false,
+                  "usage": "raw_to_agent"
+                },
+                {
+                  "url": "https://www.instagram.com/reel/DVfZt0zCS1D/",
+                  "domain": "www.instagram.com",
+                  "success": false,
+                  "status_code": null,
+                  "error": "Blocked domain",
+                  "response_time_ms": 0,
+                  "method": null,
+                  "content_chars": 0,
+                  "truncated": false,
+                  "usage": "blocked"
+                },
+                {
+                  "url": "https://www.facebook.com/aljazeera/videos/who-is-choosing-irans-next-supreme-leader/2603777170018789/",
+                  "domain": "www.facebook.com",
+                  "success": false,
+                  "status_code": null,
+                  "error": "Blocked domain",
+                  "response_time_ms": 0,
+                  "method": null,
+                  "content_chars": 0,
+                  "truncated": false,
+                  "usage": "blocked"
+                },
+                {
+                  "url": "https://www.leader.ir/en/content/14132/Leadership-in-the-Constitution-of-the-Islamic-Republic-of-Iran",
+                  "domain": "www.leader.ir",
+                  "success": false,
+                  "status_code": null,
+                  "error": "[Errno 8] nodename nor servname provided, or not known",
+                  "response_time_ms": 6024,
+                  "method": null,
+                  "content_chars": 0,
+                  "truncated": false,
+                  "usage": "failed"
+                },
+                {
+                  "url": "https://hrlibrary.umn.edu/research/iran-constitution.html",
+                  "domain": "hrlibrary.umn.edu",
+                  "success": true,
+                  "status_code": 200,
+                  "error": null,
+                  "response_time_ms": 3545,
+                  "method": "trafilatura",
+                  "content_chars": 102555,
+                  "truncated": true,
+                  "usage": "dropped_cap"
+                },
+                {
+                  "url": "https://www.youtube.com/watch?v=GspKO1Succo",
+                  "domain": "www.youtube.com",
+                  "success": false,
+                  "status_code": null,
+                  "error": "Blocked domain",
+                  "response_time_ms": 0,
+                  "method": null,
+                  "content_chars": 0,
+                  "truncated": false,
+                  "usage": "blocked"
+                },
+                {
+                  "url": "https://en.wikipedia.org/wiki/1989_Iranian_Supreme_Leader_election",
+                  "domain": "en.wikipedia.org",
+                  "success": true,
+                  "status_code": 200,
+                  "error": null,
+                  "response_time_ms": 639,
+                  "method": "wikipedia_api",
+                  "content_chars": 5474,
+                  "truncated": false,
+                  "usage": "raw_to_agent"
+                }
+              ],
+              "abolish velayat faqih ayatollah statements (Google)": [
+                {
+                  "url": "https://al-islam.org/shia-political-thought-ahmed-vaezi/what-wilayat-al-faqih",
+                  "domain": "al-islam.org",
+                  "success": true,
+                  "status_code": 200,
+                  "error": null,
+                  "response_time_ms": 1327,
+                  "method": "trafilatura",
+                  "content_chars": 1891,
+                  "truncated": false,
+                  "usage": "raw_to_agent"
+                },
+                {
+                  "url": "https://www.reddit.com/r/shia/comments/wf9typ/can_someone_tell_me_ayotallah_sistanis_view_on/",
+                  "domain": "www.reddit.com",
+                  "success": false,
+                  "status_code": null,
+                  "error": "Blocked domain",
+                  "response_time_ms": 0,
+                  "method": null,
+                  "content_chars": 0,
+                  "truncated": false,
+                  "usage": "blocked"
+                },
+                {
+                  "url": "https://irandataportal.syr.edu/rulings-on-following-emulation-velayat-e-faqih-and-decisions-of-the-ruler",
+                  "domain": "irandataportal.syr.edu",
+                  "success": true,
+                  "status_code": 200,
+                  "error": null,
+                  "response_time_ms": 3385,
+                  "method": "trafilatura",
+                  "content_chars": 8618,
+                  "truncated": false,
+                  "usage": "dropped_cap"
+                },
+                {
+                  "url": "https://www.shiachat.com/forum/topic/234994951-against-wilayet-al-faqih/",
+                  "domain": "www.shiachat.com",
+                  "success": false,
+                  "status_code": null,
+                  "error": "[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1016)",
+                  "response_time_ms": 2195,
+                  "method": null,
+                  "content_chars": 0,
+                  "truncated": false,
+                  "usage": "failed"
+                },
+                {
+                  "url": "https://www.oasiscenter.eu/en/iran-critics-guardianship-jurisconsult",
+                  "domain": "www.oasiscenter.eu",
+                  "success": true,
+                  "status_code": 200,
+                  "error": null,
+                  "response_time_ms": 2008,
+                  "method": "trafilatura",
+                  "content_chars": 20999,
+                  "truncated": true,
+                  "usage": "dropped_cap"
+                },
+                {
+                  "url": "https://en.wikipedia.org/wiki/Guardianship_of_the_Islamic_Jurist",
+                  "domain": "en.wikipedia.org",
+                  "success": true,
+                  "status_code": 200,
+                  "error": null,
+                  "response_time_ms": 2192,
+                  "method": "wikipedia_api",
+                  "content_chars": 91250,
+                  "truncated": true,
+                  "usage": "dropped_cap"
+                },
+                {
+                  "url": "https://www.facebook.com/breakingbattlegrounds/posts/share-with-your-liberal-friends-ayatollah-khomeinis-commandments-centered-on-est/1345466424267166/",
+                  "domain": "www.facebook.com",
+                  "success": false,
+                  "status_code": null,
+                  "error": "Blocked domain",
+                  "response_time_ms": 0,
+                  "method": null,
+                  "content_chars": 0,
+                  "truncated": false,
+                  "usage": "blocked"
+                },
+                {
+                  "url": "https://www.washingtoninstitute.org/policy-analysis/ayatollah-khamenei-shifting-velayat-e-faqih-military-control",
+                  "domain": "www.washingtoninstitute.org",
+                  "success": true,
+                  "status_code": 200,
+                  "error": null,
+                  "response_time_ms": 1081,
+                  "method": "trafilatura",
+                  "content_chars": 6917,
+                  "truncated": false,
+                  "usage": "dropped_cap"
+                },
+                {
+                  "url": "https://www.cambridge.org/core/books/how-islam-rules-in-iran/khameneism-and-the-absolute-velayate-faqih/FE78D0BA6EDEEB6F1F02C6602AE58522",
+                  "domain": "www.cambridge.org",
+                  "success": true,
+                  "status_code": 200,
+                  "error": null,
+                  "response_time_ms": 2125,
+                  "method": "site-specific",
+                  "content_chars": 2697,
+                  "truncated": false,
+                  "usage": "raw_to_agent"
+                },
+                {
+                  "url": "https://oiccpress.com/ijps/article/download/7580/4240/5260",
+                  "domain": "oiccpress.com",
+                  "success": true,
+                  "status_code": 200,
+                  "error": null,
+                  "response_time_ms": 2190,
+                  "method": "pdf",
+                  "content_chars": 49098,
+                  "truncated": false,
+                  "usage": "raw_to_agent"
+                }
+              ]
+            }
+          }
+        ],
+        "error": null
+      }
+    },
+    {
+      "query": "Assembly of Experts vote new leader 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "latest reporting on timing, special sessions, and frontrunner tallies.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://www.cnbc.com/2026/03/02/iran-ayatollah-trump-supreme-leader.html",
+          "domain": "www.cnbc.com",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 790,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.fdd.org/analysis/2026/03/03/israel-strikes-tehran-regimes-assembly-of-experts-underlining-efforts-to-disrupt-succession-process/",
+          "domain": "www.fdd.org",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 789,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.jpost.com/middle-east/iran-news/article-888965",
+          "domain": "www.jpost.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 862,
+          "method": "site-specific",
+          "content_chars": 3785,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.bloomberg.com/news/articles/2026-03-03/israel-struck-iran-assembly-of-experts-while-they-met-kan-says",
+          "domain": "www.bloomberg.com",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 789,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.iranintl.com/en/202603052337",
+          "domain": "www.iranintl.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 1236,
+          "method": "site-specific",
+          "content_chars": 16566,
+          "truncated": true,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.axios.com/2026/03/03/iran-supreme-leader-council-israel-strike",
+          "domain": "www.axios.com",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 789,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://nypost.com/2026/03/03/world-news/israel-bombs-irans-top-mullahs-as-they-count-votes-for-next-supreme-leader-reports/",
+          "domain": "nypost.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 1492,
+          "method": "site-specific",
+          "content_chars": 5404,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.turkiyetoday.com/region/iranian-leadership-council-meets-for-4th-time-3215702",
+          "domain": "www.turkiyetoday.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 2686,
+          "method": "site-specific",
+          "content_chars": 3869,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.nytimes.com/2026/03/03/world/middleeast/iran-mojtaba-khamenei-successor.html",
+          "domain": "www.nytimes.com",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 439,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.pbs.org/newshour/world/inside-irans-succession-process-and-who-could-be-the-countrys-next-supreme-leader",
+          "domain": "www.pbs.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 950,
+          "method": "trafilatura",
+          "content_chars": 1479,
+          "truncated": false,
+          "usage": "dropped_cap"
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 5,
+        "urls_failed": 5,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "IRGC supports Mojtaba Khamenei 2026",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "gather recent coverage or leaks on IRGC endorsement, pressure, or opposition around Mojtaba.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 20,
+      "error": null
+    },
+    {
+      "query": "Hassan Khomeini succession endorsements 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "track reformist/centrist clerical backing and public sentiment for Hassan Khomeini.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 1,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://www.iranintl.com/en/202603020285",
+          "domain": "www.iranintl.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 1278,
+          "method": "site-specific",
+          "content_chars": 26745,
+          "truncated": true,
+          "usage": "summarized"
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 1,
+        "urls_extracted": 1,
+        "urls_failed": 0,
+        "urls_summarized": 1
+      }
+    },
+    {
+      "query": "abolish velayat-e faqih protests 2026",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "uncover reports of mass protests, opposition figures, or parliamentary moves that might lead to abolishing the Supreme Leader position.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 19,
+      "error": null
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+**Analyzing leadership predictions**
+
+I need to create a prediction using probabilities across nine options. Today is March 6, 2026, leaving us with about 301 days until January 1, 2027. Looking at historical data, there have only been two Supreme Leader transitions since 1979, making the sample quite small. I see that Khamenei was a previous president, giving a 100% chance for a successor in that context. I should define reference classes to compare other autocratic regimes for a thorough analysis of potential successors.**Calibrating succession probabilities**
+
+I need to analyze sources for a summarized evaluation regarding potential successors. This includes reference class analysis and setting a timeframe. I’ll focus on base rates to gauge the likelihood of a Supreme Leader coming from security or hardline backgrounds in Iran. Candidates are likely to be middle-aged clerics aligned with hardliners. 
+
+Looking at potential candidates, Alireza Arafi might have about a 15% chance, while Gholam-Hossein Mohseni-Eje’i could be around 20%. I'll also estimate probabilities for others, ensuring the total sums to 100% and justifying my choices along the way.**Emphasizing unpredictability in succession**
+
+I need to highlight the probability of selecting "Someone else" as a candidate because of the many possibilities and unpredictability involved. With 301 days until a resolution, I should note that autocratic successions often lead to surprises. Historical examples include Deng Xiaoping overtaking a designated successor and the unexpected selection of Khamenei in 1989. So, there's a significant chance of an upset happening. I’ll adjust my analysis to reflect this probability and make sure to format it well.

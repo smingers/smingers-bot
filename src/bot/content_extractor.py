@@ -1328,6 +1328,7 @@ class ConcurrentContentExtractor:
                     "titles": page_title,
                     "prop": "extracts",
                     "explaintext": 1,
+                    "redirects": 1,
                     "format": "json",
                 },
                 headers=headers,

@@ -1,0 +1,1033 @@
+{
+  "plan_analysis": "The pre-research gives useful background on the present crisis, but forecasters still lack:\n\n\u2022 Current state & signals: Are U.S.\u2013Iran contacts actually happening? Who is mediating? What are the two sides\u2019 latest public and private positions? Is there international or domestic pressure for a deal?\n\n\u2022 Key drivers to watch: (a) military tempo/costs of continued fighting, (b) internal Iranian succession politics and economic crisis, (c) U.S. domestic calculations (election season, troop safety), and (d) third-party mediation or UN action. We need fresh reporting on each.\n\n\u2022 Resolution mechanism intelligence: What constitutes an \u201cofficial bilateral ceasefire\u201d and where such an announcement would appear (e.g., White House, Iranian presidency, UN depositary). Tracking precedent language helps.\n\n\u2022 Base rate / reference class: How quickly the United States has reached ceasefires/armistices with opponent states in past limited wars, and how long Iran has previously taken to accept ceasefires after major strikes.\n\n\u2022 Contrarian evidence: Statements from hard-line IRGC commanders, U.S. hawks, or Israeli officials that rule out a ceasefire; proof of escalating attacks that would make an agreement unlikely.\n\nThe eight queries below cover (1) immediate news on negotiations, mediation, and official statements; (2) international and domestic pressures; (3) historical ceasefire timing data for both the United States and Iran; and (4) hard-line opposition that could block an agreement.",
+  "reflect_analysis": null,
+  "queries_planned": [
+    {
+      "query": "US Iran ceasefire talks March 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Find the latest public or leaked information on bilateral or mediated ceasefire negotiations begun after the 28 Feb strikes.",
+      "phase": "plan"
+    },
+    {
+      "query": "Oman mediation Iran United States 2026",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "Surface in-depth coverage of any Omani, Qatari, or other Gulf-state shuttle diplomacy aimed at stopping hostilities.",
+      "phase": "plan"
+    },
+    {
+      "query": "Iranian interim leadership ceasefire statements 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Track comments by Iran\u2019s new Supreme Leader or acting leadership regarding negotiations or conditions for a ceasefire.",
+      "phase": "plan"
+    },
+    {
+      "query": "UN Security Council Iran US ceasefire draft",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Check for pending or passed UNSC resolutions or calls that could formalize or pressure a bilateral ceasefire.",
+      "phase": "plan"
+    },
+    {
+      "query": "US public opinion Iran war 2026 polls",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Gauge domestic U.S. appetite for continued conflict, a key political driver of a ceasefire decision.",
+      "phase": "plan"
+    },
+    {
+      "query": "United States bilateral ceasefire agreements list",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Identify past instances (Korea 1953, Gulf War 1991, etc.) to establish a base rate and typical negotiation duration.",
+      "phase": "plan"
+    },
+    {
+      "query": "Iran prior ceasefires timing after major strikes",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Look at Iran\u2013Iraq War 1988, Twelve-Day War 2025, and any other direct conflicts to see how quickly Iran has accepted ceasefires historically.",
+      "phase": "plan"
+    },
+    {
+      "query": "Time between conflict start and ceasefire US wars, Korean 1950-1953, Gulf 1991, Iraq 2003-2011",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "Compile a small dataset of U.S. wars showing elapsed days from first major strike to official ceasefire/armistice to inform the statistical base rate.",
+      "phase": "plan"
+    }
+  ],
+  "gap_queries": [],
+  "seed_context_chars": 14645,
+  "historical_context_chars": 36508,
+  "current_context_chars": 69053,
+  "phases": {
+    "pre_research": {
+      "duration_seconds": 241.35,
+      "seed_context_chars": 14645,
+      "search_id": "question_urls",
+      "searched": true,
+      "urls_found": 7,
+      "urls_scraped": 4,
+      "urls_summarized": 4,
+      "urls": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Iran%E2%80%93Israel_proxy_conflict",
+          "domain": "en.wikipedia.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 671,
+          "method": "wikipedia_api",
+          "content_chars": 69492,
+          "truncated": true,
+          "content_words": 2315,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Twelve-Day_War",
+          "domain": "en.wikipedia.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 504,
+          "method": "wikipedia_api",
+          "content_chars": 74674,
+          "truncated": true,
+          "content_words": 2321,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.amnesty.org/en/latest/news/2026/01/iran-deaths-injuries-authorities-protest-bloodshed/",
+          "domain": "www.amnesty.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 1052,
+          "method": "site-specific",
+          "content_chars": 11014,
+          "truncated": false,
+          "content_words": 1670,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/2025%E2%80%932026_Iran%E2%80%93United_States_negotiations",
+          "domain": "en.wikipedia.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 698,
+          "method": "wikipedia_api",
+          "content_chars": 44330,
+          "truncated": true,
+          "content_words": 2299,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/2026_Iran_conflict",
+          "domain": "en.wikipedia.org",
+          "success": false,
+          "status_code": 200,
+          "error": "Wikipedia extract too short",
+          "response_time_ms": 402,
+          "method": "wikipedia_api",
+          "content_chars": 0,
+          "truncated": false,
+          "content_words": 0,
+          "usage": "failed"
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ]
+    },
+    "plan": {
+      "duration_seconds": 26.93,
+      "cost": 0.0217,
+      "num_queries": 8
+    },
+    "execute": {
+      "duration_seconds": 216.09,
+      "cost": 0.1019,
+      "queries_executed": 8,
+      "queries_successful": 8
+    },
+    "assemble": {
+      "historical_context_chars": 36508,
+      "current_context_chars": 69053
+    }
+  },
+  "total_queries_planned": 8,
+  "total_queries_executed": 8,
+  "total_gap_queries": 0,
+  "total_cost": 0.1415,
+  "total_duration_seconds": 484.38,
+  "query_details": [
+    {
+      "query": "US Iran ceasefire talks March 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Find the latest public or leaked information on bilateral or mediated ceasefire negotiations begun after the 28 Feb strikes.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://www.iranintl.com/en/202603054889",
+          "domain": "www.iranintl.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 1137,
+          "method": "site-specific",
+          "content_chars": 16380,
+          "truncated": true,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://time.com/7382836/iran-us-israel-war-trump-araghchi-ground-invasion-cease-fire/",
+          "domain": "time.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 886,
+          "method": "trafilatura",
+          "content_chars": 1668,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.armscontrol.org/act/2026-03/news/trump-strikes-iran-amid-nuclear-talks",
+          "domain": "www.armscontrol.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 1698,
+          "method": "site-specific",
+          "content_chars": 6147,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.thenationalnews.com/news/2026/03/06/tehran-says-no-talks-or-ceasefire-despite-us-claims-of-heavy-losses-to-iranian-forces/",
+          "domain": "www.thenationalnews.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 835,
+          "method": "site-specific",
+          "content_chars": 6318,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.ohchr.org/en/press-briefing-notes/2026/03/middle-east-crisis-plays-out-worst-fears-talks-only-way-out",
+          "domain": "www.ohchr.org",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 95,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://iranwire.com/en/news/149966-araghchi-iran-has-not-sought-ceasefire-or-talks-with-us/",
+          "domain": "iranwire.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 3130,
+          "method": "trafilatura",
+          "content_chars": 2073,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://carnegieendowment.org/emissary/2026/03/gulf-states-iran-war-security",
+          "domain": "carnegieendowment.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 187,
+          "method": "trafilatura",
+          "content_chars": 407,
+          "truncated": false,
+          "usage": "dropped_short"
+        },
+        {
+          "url": "https://www.aljazeera.com/news/2026/3/3/oman-calls-for-immediate-ceasefire-says-off-ramps",
+          "domain": "www.aljazeera.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 645,
+          "method": "site-specific",
+          "content_chars": 2328,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.jpost.com/middle-east/iran-news/article-888816",
+          "domain": "www.jpost.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 944,
+          "method": "site-specific",
+          "content_chars": 7156,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.nytimes.com/2026/03/04/us/politics/trump-iran-intelligence-leaders.html",
+          "domain": "www.nytimes.com",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 48,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 8,
+        "urls_failed": 2,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "Oman mediation Iran United States 2026",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "Surface in-depth coverage of any Omani, Qatari, or other Gulf-state shuttle diplomacy aimed at stopping hostilities.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 20,
+      "error": null
+    },
+    {
+      "query": "Iranian interim leadership ceasefire statements 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Track comments by Iran\u2019s new Supreme Leader or acting leadership regarding negotiations or conditions for a ceasefire.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://www.palestinechronicle.com/iran-begins-supreme-leader-succession-talks-rejects-us-role-in-leadership-choice/",
+          "domain": "www.palestinechronicle.com",
+          "success": false,
+          "status_code": 429,
+          "error": "HTTP 429",
+          "response_time_ms": 7018,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.middleeastmonitor.com/20260306-iran-says-it-is-ready-for-ground-invasion-and-rejects-ceasefire-with-us/",
+          "domain": "www.middleeastmonitor.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 2606,
+          "method": "trafilatura",
+          "content_chars": 2046,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://thesoufancenter.org/intelbrief-2026-march-1b/",
+          "domain": "thesoufancenter.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 1226,
+          "method": "site-specific",
+          "content_chars": 7430,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.longwarjournal.org/archives/2026/03/us-israeli-campaign-hits-iranian-regimes-military-and-repression-apparatus-regime-forms-leadership-council-march-1-updates.php",
+          "domain": "www.longwarjournal.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 1360,
+          "method": "trafilatura",
+          "content_chars": 8257,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.cbsnews.com/live-updates/israel-us-attack-iran-trump-says-major-combat-operations/",
+          "domain": "www.cbsnews.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 4164,
+          "method": "trafilatura",
+          "content_chars": 88601,
+          "truncated": true,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.bbc.com/news/articles/cx2lgvg5rl1o",
+          "domain": "www.bbc.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 2710,
+          "method": "trafilatura",
+          "content_chars": 6249,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.washingtonpost.com/national-security/2026/03/02/iran-regime-change-trump/",
+          "domain": "www.washingtonpost.com",
+          "success": false,
+          "status_code": null,
+          "error": "Request timed out",
+          "response_time_ms": 48369,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://wanaen.com/we-never-started-this-war-but-we-will-defend-our-citizens/",
+          "domain": "wanaen.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 416,
+          "method": "trafilatura",
+          "content_chars": 3025,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.theglobeandmail.com/canada/article-who-are-the-three-men-on-irans-interim-leadership-council/",
+          "domain": "www.theglobeandmail.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 2368,
+          "method": "site-specific",
+          "content_chars": 7112,
+          "truncated": false,
+          "usage": "dropped_cap"
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 9,
+        "urls_extracted": 7,
+        "urls_failed": 2,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "UN Security Council Iran US ceasefire draft",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Check for pending or passed UNSC resolutions or calls that could formalize or pressure a bilateral ceasefire.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://www.reuters.com/world/middle-east/un-security-council-meet-sunday-over-us-strikes-iran-2025-06-22/",
+          "domain": "www.reuters.com",
+          "success": false,
+          "status_code": 401,
+          "error": "HTTP 401",
+          "response_time_ms": 87,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.aljazeera.com/news/2025/6/22/key-players-tangle-at-unsc-at-perilous-turn-of-us-israel-iran-conflict",
+          "domain": "www.aljazeera.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 2764,
+          "method": "site-specific",
+          "content_chars": 4255,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.france24.com/en/middle-east/20250622-russia-and-china-push-for-a-ceasefire-as-un-security-council-meets-on-iran",
+          "domain": "www.france24.com",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 77,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://news.un.org/en/story/2025/09/1165875",
+          "domain": "news.un.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 3005,
+          "method": "trafilatura",
+          "content_chars": 651,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.nytimes.com/2025/11/07/world/middleeast/trump-gaza-plan-us-security-council.html",
+          "domain": "www.nytimes.com",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 65,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.democracynow.org/2025/9/19/headlines/us_vetoes_un_security_council_draft_resolution_calling_for_immediate_ceasefire_in_gaza",
+          "domain": "www.democracynow.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 5217,
+          "method": "trafilatura",
+          "content_chars": 1506,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.theguardian.com/world/2025/jun/04/us-vetoes-gaza-ceasefire-un-security-council",
+          "domain": "www.theguardian.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 1272,
+          "method": "site-specific",
+          "content_chars": 4226,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.newarab.com/news/us-shares-draft-un-resolution-trumps-gaza-peace-plan",
+          "domain": "www.newarab.com",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 86,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.trtworld.com/article/7c316fbb752e",
+          "domain": "www.trtworld.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 2499,
+          "method": "trafilatura",
+          "content_chars": 2328,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.dailysabah.com/world/world-leaders-to-address-un-as-gaza-ukraine-iran-dominate-agenda/news",
+          "domain": "www.dailysabah.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 1441,
+          "method": "site-specific",
+          "content_chars": 6728,
+          "truncated": false,
+          "usage": "summarized"
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 6,
+        "urls_failed": 4,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "US public opinion Iran war 2026 polls",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Gauge domestic U.S. appetite for continued conflict, a key political driver of a ceasefire decision.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://news.gallup.com/poll/702767/americans-views-nation-global-image-power.aspx",
+          "domain": "news.gallup.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 2089,
+          "method": "site-specific",
+          "content_chars": 11548,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.cnn.com/2026/03/02/politics/cnn-poll-59-of-americans-disapprove-of-iran-strikes-and-most-think-a-long-term-conflict-is-likely",
+          "domain": "www.cnn.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 4594,
+          "method": "trafilatura",
+          "content_chars": 5294,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.reuters.com/world/us/just-one-four-americans-support-us-strikes-iran-reutersipsos-poll-finds-2026-03-01/",
+          "domain": "www.reuters.com",
+          "success": false,
+          "status_code": 401,
+          "error": "HTTP 401",
+          "response_time_ms": 286,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.chathamhouse.org/2026/03/trump-polls-and-war-iran-what-happened-president-peace",
+          "domain": "www.chathamhouse.org",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 284,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.usatoday.com/story/news/politics/2026/03/05/will-iran-war-hurt-republicans-2026-elections/88948398007/",
+          "domain": "www.usatoday.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 538,
+          "method": "site-specific",
+          "content_chars": 7267,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.axios.com/2026/03/04/iran-attacks-polls-americans-disapprove",
+          "domain": "www.axios.com",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 276,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.aljazeera.com/news/2026/3/2/poll-suggests-only-a-quarter-of-americans-support-attacks-on-iran",
+          "domain": "www.aljazeera.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 595,
+          "method": "site-specific",
+          "content_chars": 5001,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.nytimes.com/2026/03/04/us/politics/iran-us-war-military-polls.html",
+          "domain": "www.nytimes.com",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 277,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://arabcenterdc.org/resource/the-us-israel-war-on-iran-analyses-and-perspectives/",
+          "domain": "arabcenterdc.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 3164,
+          "method": "site-specific",
+          "content_chars": 17225,
+          "truncated": true,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://globalaffairs.org/research/public-opinion-survey/majority-americans-say-congress-approval-needed-us-strikes-iran",
+          "domain": "globalaffairs.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 824,
+          "method": "site-specific",
+          "content_chars": 11590,
+          "truncated": false,
+          "usage": "dropped_cap"
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 6,
+        "urls_failed": 4,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "United States bilateral ceasefire agreements list",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Identify past instances (Korea 1953, Gulf War 1991, etc.) to establish a base rate and typical negotiation duration.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://www.whitehouse.gov/articles/2025/08/president-trump-brokers-another-historic-peace-deal/",
+          "domain": "www.whitehouse.gov",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 205,
+          "method": "site-specific",
+          "content_chars": 2239,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://peacemaker.un.org/en/areas-of-work/peace-agreements-database-and-language-of-peace-tool/peace-agreements-search",
+          "domain": "peacemaker.un.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 4064,
+          "method": "site-specific",
+          "content_chars": 833,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.justsecurity.org/122215/closer-look-trump-peace-deals/",
+          "domain": "www.justsecurity.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 2423,
+          "method": "site-specific",
+          "content_chars": 12821,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.facebook.com/foreign.policy.magazine/posts/some-of-trumps-self-proclaimed-peace-dealsand-his-role-in-themarent-as-clear-cut/1157860812872215/",
+          "domain": "www.facebook.com",
+          "success": false,
+          "status_code": null,
+          "error": "Blocked domain",
+          "response_time_ms": 0,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "blocked"
+        },
+        {
+          "url": "https://www.state.gov/wp-content/uploads/2020/02/Agreement-For-Bringing-Peace-to-Afghanistan-02.29.20.pdf",
+          "domain": "www.state.gov",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 2856,
+          "method": "pdf",
+          "content_chars": 9589,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Abraham_Accords",
+          "domain": "en.wikipedia.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 2729,
+          "method": "wikipedia_api",
+          "content_chars": 23381,
+          "truncated": true,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.cfr.org/articles/guide-trumps-twenty-point-gaza-peace-deal",
+          "domain": "www.cfr.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 1478,
+          "method": "trafilatura",
+          "content_chars": 15057,
+          "truncated": true,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://palestinenexus.com/articles/a-history-of-ceasefire-talks-between-israel-and-hamas",
+          "domain": "palestinenexus.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 450,
+          "method": "trafilatura",
+          "content_chars": 16910,
+          "truncated": true,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.state.gov/peace-agreement-between-the-democratic-republic-of-the-congo-and-the-republic-of-rwanda",
+          "domain": "www.state.gov",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 2729,
+          "method": "trafilatura",
+          "content_chars": 27981,
+          "truncated": true,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.congress.gov/crs_external_products/RL/PDF/RL33222/RL33222.51.pdf",
+          "domain": "www.congress.gov",
+          "success": false,
+          "status_code": null,
+          "error": "Request timed out",
+          "response_time_ms": 49024,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 8,
+        "urls_failed": 2,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "Iran prior ceasefires timing after major strikes",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Look at Iran\u2013Iraq War 1988, Twelve-Day War 2025, and any other direct conflicts to see how quickly Iran has accepted ceasefires historically.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Twelve-Day_War_ceasefire",
+          "domain": "en.wikipedia.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 1684,
+          "method": "wikipedia_api",
+          "content_chars": 11098,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.aljazeera.com/news/2026/1/13/a-timeline-of-crises-faced-by-iran-since-1979",
+          "domain": "www.aljazeera.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 504,
+          "method": "site-specific",
+          "content_chars": 6429,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.nytimes.com/2025/06/24/world/middleeast/israel-iran-ceasefire-timeline.html",
+          "domain": "www.nytimes.com",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 268,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.reddit.com/r/worldnews/comments/1lj2z77/iranian_media_tehran_fired_its_last_round_of/",
+          "domain": "www.reddit.com",
+          "success": false,
+          "status_code": null,
+          "error": "Blocked domain",
+          "response_time_ms": 0,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "blocked"
+        },
+        {
+          "url": "https://english.news.cn/20250625/da57ea401a194463824ddf749973923a/c.html",
+          "domain": "english.news.cn",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 5136,
+          "method": "site-specific",
+          "content_chars": 6401,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.foxnews.com/politics/timeline-trumps-israel-iran-ceasefire-nearly-collapses-hours-after-announcement",
+          "domain": "www.foxnews.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 3629,
+          "method": "site-specific",
+          "content_chars": 4013,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=fSa-YAeIIj4",
+          "domain": "www.youtube.com",
+          "success": false,
+          "status_code": null,
+          "error": "Blocked domain",
+          "response_time_ms": 0,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "blocked"
+        },
+        {
+          "url": "https://www.longwarjournal.org/archives/2025/06/israel-and-iran-trade-strikes-ceasefire-goes-into-effect-june-24-updates.php",
+          "domain": "www.longwarjournal.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 1548,
+          "method": "trafilatura",
+          "content_chars": 3769,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.facebook.com/ChinaGlobalTVNetwork/posts/iranian-state-media-said-a-ceasefire-between-iran-and-israel-came-into-effect-at/1387971442696324/",
+          "domain": "www.facebook.com",
+          "success": false,
+          "status_code": null,
+          "error": "Blocked domain",
+          "response_time_ms": 0,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "blocked"
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 9,
+        "urls_extracted": 5,
+        "urls_failed": 4,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "Time between conflict start and ceasefire US wars, Korean 1950-1953, Gulf 1991, Iraq 2003-2011",
+      "tool": "Agent",
+      "temporal_role": "historical",
+      "intent": "Compile a small dataset of U.S. wars showing elapsed days from first major strike to official ceasefire/armistice to inform the statistical base rate.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 1,
+      "error": null,
+      "agentic_instrumentation": {
+        "steps_taken": 2,
+        "queries_executed": [
+          "Korean War armistice date 1953",
+          "Gulf War ceasefire February 28 1991",
+          "UN Resolution 687 Gulf War ceasefire",
+          "Iraq War formal end December 2011",
+          "Iraq War ceasefire May 1 2003"
+        ],
+        "step_data": [
+          {
+            "step_number": 1,
+            "queries_executed": [
+              [
+                "Korean War armistice date 1953",
+                "Google"
+              ],
+              [
+                "Gulf War ceasefire February 28 1991",
+                "Google"
+              ],
+              [
+                "UN Resolution 687 Gulf War ceasefire",
+                "Google"
+              ],
+              [
+                "Iraq War formal end December 2011",
+                "Google"
+              ],
+              [
+                "Iraq War ceasefire May 1 2003",
+                "Google"
+              ]
+            ],
+            "search_results_chars": 56538,
+            "analysis_chars": 0
+          }
+        ],
+        "error": null
+      }
+    }
+  ]
+}

@@ -1,0 +1,227 @@
+{
+  "question_id": 42472,
+  "timestamp": "20260306_142732",
+  "created_at": "2026-03-06T14:37:48.708614+00:00",
+  "config_hash": "9f156024b0a8",
+  "config_snapshot": {
+    "mode": "live",
+    "models": {
+      "fast": {
+        "query_generator": "openrouter/openai/gpt-4o-mini",
+        "article_summarizer": "openrouter/openai/gpt-4o-mini",
+        "agentic_search": "openrouter/openai/gpt-4o-mini"
+      },
+      "quality": {
+        "query_generator": "openrouter/openai/o3",
+        "article_summarizer": "openrouter/google/gemini-3-flash-preview",
+        "agentic_search": "openrouter/openai/o3"
+      }
+    },
+    "ensemble": {
+      "fast": [
+        {
+          "name": "forecaster_1",
+          "model": "openrouter/openai/gpt-4o-mini",
+          "weight": 1.0
+        },
+        {
+          "name": "forecaster_2",
+          "model": "openrouter/openai/gpt-4o-mini",
+          "weight": 1.0
+        },
+        {
+          "name": "forecaster_3",
+          "model": "openrouter/openai/gpt-4o-mini",
+          "weight": 1.0
+        },
+        {
+          "name": "forecaster_4",
+          "model": "openrouter/openai/gpt-4o-mini",
+          "weight": 1.0
+        },
+        {
+          "name": "forecaster_5",
+          "model": "openrouter/openai/gpt-4o-mini",
+          "weight": 1.0
+        }
+      ],
+      "quality": [
+        {
+          "name": "forecaster_1",
+          "model": "openrouter/google/gemini-3.1-pro-preview",
+          "weight": 1.0
+        },
+        {
+          "name": "forecaster_2",
+          "model": "openrouter/anthropic/claude-sonnet-4.6",
+          "weight": 1.0
+        },
+        {
+          "name": "forecaster_3",
+          "model": "openrouter/openai/gpt-5.4",
+          "weight": 1.0
+        },
+        {
+          "name": "forecaster_4",
+          "model": "openrouter/openai/o3",
+          "weight": 1.0
+        },
+        {
+          "name": "forecaster_5",
+          "model": "openrouter/openai/o3",
+          "weight": 1.0
+        }
+      ],
+      "aggregation": "weighted_average"
+    },
+    "research": {
+      "iterative_planner_enabled": true,
+      "planner": {
+        "max_plan_queries": 8,
+        "max_gap_queries": 3,
+        "reflection_enabled": false
+      },
+      "google_enabled": true,
+      "google_max_results": 10,
+      "asknews_enabled": true,
+      "asknews_max_results": 10,
+      "agentic_search_enabled": true,
+      "agentic_search_max_steps": 7,
+      "google_trends_enabled": true,
+      "fred_enabled": true,
+      "yfinance_enabled": true,
+      "stock_return_enabled": true,
+      "stock_return_history_years": 10,
+      "question_url_scraping_enabled": true,
+      "question_url_max_scrape": 5,
+      "community_prediction_scraping_enabled": true,
+      "community_prediction_wait_seconds": 5.0,
+      "scraping_enabled": true,
+      "max_articles_to_scrape": 10,
+      "max_content_length": 15000,
+      "sources": [
+        {
+          "type": "llm_knowledge",
+          "enabled": true
+        },
+        {
+          "type": "asknews",
+          "enabled": true,
+          "cache_mode": "no_cache"
+        },
+        {
+          "type": "asknews_wiki",
+          "enabled": true,
+          "max_results": 5
+        },
+        {
+          "type": "article_scraping",
+          "enabled": true,
+          "max_articles": 5,
+          "max_content_length": 5000
+        }
+      ]
+    },
+    "submission": {
+      "store_reasoning": true,
+      "tournament_id": null
+    },
+    "storage": {
+      "base_dir": "./data",
+      "database_path": "./data/forecasts.db",
+      "snapshot_configs": true
+    },
+    "logging": {
+      "level": "INFO",
+      "log_llm_calls": true,
+      "track_costs": true
+    },
+    "llm": {
+      "timeout_seconds": 240,
+      "max_output_tokens": 5000,
+      "temperature": {
+        "query_generation": 0.3,
+        "research_planning": 0.3,
+        "research_reflection": 0.2,
+        "article_summarization": 0.1,
+        "agentic_search": 0.3,
+        "forecasting": 0.5
+      }
+    },
+    "supervisor": {
+      "enabled": true,
+      "model": {
+        "fast": "openrouter/openai/gpt-4o-mini",
+        "quality": "openrouter/anthropic/claude-opus-4.6"
+      },
+      "divergence_threshold": {
+        "binary": 15.0,
+        "numeric": 0.045,
+        "multiple_choice": 25.0
+      },
+      "max_search_queries": 4,
+      "temperature": 0.3
+    },
+    "active_models": {
+      "query_generator": "openrouter/openai/o3",
+      "article_summarizer": "openrouter/google/gemini-3-flash-preview",
+      "agentic_search": "openrouter/openai/o3"
+    },
+    "active_agents": [
+      {
+        "name": "forecaster_1",
+        "model": "openrouter/google/gemini-3.1-pro-preview",
+        "weight": 1.0
+      },
+      {
+        "name": "forecaster_2",
+        "model": "openrouter/anthropic/claude-sonnet-4.6",
+        "weight": 1.0
+      },
+      {
+        "name": "forecaster_3",
+        "model": "openrouter/openai/gpt-5.4",
+        "weight": 1.0
+      },
+      {
+        "name": "forecaster_4",
+        "model": "openrouter/openai/o3",
+        "weight": 1.0
+      },
+      {
+        "name": "forecaster_5",
+        "model": "openrouter/openai/o3",
+        "weight": 1.0
+      }
+    ],
+    "should_submit": true
+  },
+  "costs": {
+    "total_calls": 33,
+    "successful_calls": 31,
+    "failed_calls": 2,
+    "total_input_tokens": 174053,
+    "total_output_tokens": 33847,
+    "total_reasoning_tokens": 3712,
+    "total_cost": 0.645995
+  },
+  "timing": {
+    "start": "2026-03-06T14:27:32.108337+00:00",
+    "end": "2026-03-06T14:37:48.708420+00:00",
+    "duration_seconds": 616.600083
+  },
+  "errors": [
+    "forecaster_1 outside view failed (openrouter/google/gemini-3.1-pro-preview): LLM call failed after 3 attempts: litellm.RateLimitError: RateLimitError: OpenrouterException - {\"error\":{\"message\":\"Provider returned error\",\"code\":429,\"metadata\":{\"raw\":\"{\\n  \\\"error\\\": {\\n    \\\"code\\\": 429,\\n    \\\"message\\\": \\\"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\\\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-3.1-pro\\\\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-3.1-pro\\\\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-3.1-pro\\\\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-3.1-pro\\\\nPlease retry in 19.103673481s.\\\",\\n    \\\"status\\\": \\\"RESOURCE_EXHAUSTED\\\",\\n    \\\"details\\\": [\\n      {\\n        \\\"@type\\\": \\\"type.googleapis.com/google.rpc.Help\\\",\\n        \\\"links\\\": [\\n          {\\n            \\\"description\\\": \\\"Learn more about Gemini API quotas\\\",\\n            \\\"url\\\": \\\"https://ai.google.dev/gemini-api/docs/rate-limits\\\"\\n          }\\n        ]\\n      },\\n      {\\n        \\\"@type\\\": \\\"type.googleapis.com/google.rpc.QuotaFailure\\\",\\n        \\\"violations\\\": [\\n          {\\n            \\\"quotaMetric\\\": \\\"generativelanguage.googleapis.com/generate_content_free_tier_input_token_count\\\",\\n            \\\"quotaId\\\": \\\"GenerateContentInputTokensPerModelPerDay-FreeTier\\\",\\n            \\\"quotaDimensions\\\": {\\n              \\\"location\\\": \\\"global\\\",\\n              \\\"model\\\": \\\"gemini-3.1-pro\\\"\\n            }\\n          },\\n          {\\n            \\\"quotaMetric\\\": \\\"generativelanguage.googleapis.com/generate_content_free_tier_input_token_count\\\",\\n            \\\"quotaId\\\": \\\"GenerateContentInputTokensPerModelPerMinute-FreeTier\\\",\\n            \\\"quotaDimensions\\\": {\\n              \\\"model\\\": \\\"gemini-3.1-pro\\\",\\n              \\\"location\\\": \\\"global\\\"\\n            }\\n          },\\n          {\\n            \\\"quotaMetric\\\": \\\"generativelanguage.googleapis.com/generate_content_free_tier_requests\\\",\\n            \\\"quotaId\\\": \\\"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\\\",\\n            \\\"quotaDimensions\\\": {\\n              \\\"model\\\": \\\"gemini-3.1-pro\\\",\\n              \\\"location\\\": \\\"global\\\"\\n            }\\n          },\\n          {\\n            \\\"quotaMetric\\\": \\\"generativelanguage.googleapis.com/generate_content_free_tier_requests\\\",\\n            \\\"quotaId\\\": \\\"GenerateRequestsPerDayPerProjectPerModel-FreeTier\\\",\\n            \\\"quotaDimensions\\\": {...\",\"provider_name\":\"Google AI Studio\",\"is_byok\":true}},\"user_id\":\"user_2yQGELhZHDx79ZY0bzj4Hel6Bm4\"}",
+    "forecaster_1 inside view failed (openrouter/google/gemini-3.1-pro-preview): LLM call failed after 3 attempts: litellm.RateLimitError: RateLimitError: OpenrouterException - {\"error\":{\"message\":\"Provider returned error\",\"code\":429,\"metadata\":{\"raw\":\"{\\n  \\\"error\\\": {\\n    \\\"code\\\": 429,\\n    \\\"message\\\": \\\"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\\\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-3.1-pro\\\\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-3.1-pro\\\\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-3.1-pro\\\\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-3.1-pro\\\\nPlease retry in 22.459535474s.\\\",\\n    \\\"status\\\": \\\"RESOURCE_EXHAUSTED\\\",\\n    \\\"details\\\": [\\n      {\\n        \\\"@type\\\": \\\"type.googleapis.com/google.rpc.Help\\\",\\n        \\\"links\\\": [\\n          {\\n            \\\"description\\\": \\\"Learn more about Gemini API quotas\\\",\\n            \\\"url\\\": \\\"https://ai.google.dev/gemini-api/docs/rate-limits\\\"\\n          }\\n        ]\\n      },\\n      {\\n        \\\"@type\\\": \\\"type.googleapis.com/google.rpc.QuotaFailure\\\",\\n        \\\"violations\\\": [\\n          {\\n            \\\"quotaMetric\\\": \\\"generativelanguage.googleapis.com/generate_content_free_tier_requests\\\",\\n            \\\"quotaId\\\": \\\"GenerateRequestsPerDayPerProjectPerModel-FreeTier\\\",\\n            \\\"quotaDimensions\\\": {\\n              \\\"location\\\": \\\"global\\\",\\n              \\\"model\\\": \\\"gemini-3.1-pro\\\"\\n            }\\n          },\\n          {\\n            \\\"quotaMetric\\\": \\\"generativelanguage.googleapis.com/generate_content_free_tier_requests\\\",\\n            \\\"quotaId\\\": \\\"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\\\",\\n            \\\"quotaDimensions\\\": {\\n              \\\"location\\\": \\\"global\\\",\\n              \\\"model\\\": \\\"gemini-3.1-pro\\\"\\n            }\\n          },\\n          {\\n            \\\"quotaMetric\\\": \\\"generativelanguage.googleapis.com/generate_content_free_tier_input_token_count\\\",\\n            \\\"quotaId\\\": \\\"GenerateContentInputTokensPerModelPerMinute-FreeTier\\\",\\n            \\\"quotaDimensions\\\": {\\n              \\\"location\\\": \\\"global\\\",\\n              \\\"model\\\": \\\"gemini-3.1-pro\\\"\\n            }\\n          },\\n          {\\n            \\\"quotaMetric\\\": \\\"generativelanguage.googleapis.com/generate_content_free_tier_input_token_count\\\",\\n            \\\"quotaId\\\": \\\"GenerateContentInputTokensPerModelPerDay-FreeTier\\\",\\n            \\\"quotaDimensions\\\": {...\",\"provider_name\":\"Google AI Studio\",\"is_byok\":true}},\"user_id\":\"user_2yQGELhZHDx79ZY0bzj4Hel6Bm4\"}"
+  ],
+  "analysis": {
+    "id": 42472,
+    "title": "Will the US and Iran agree to a ceasefire before May 2026?",
+    "type": "binary",
+    "status": "open",
+    "scheduled_close": "2026-05-01T01:00:00Z",
+    "scheduled_resolve": "2026-05-02T01:00:00Z",
+    "community_prediction": null,
+    "num_forecasters": 61
+  }
+}
