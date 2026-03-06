@@ -580,42 +580,15 @@ class SearchPipeline:
     # resolution source pages (EIA, FRED) often have sparse data tables.
     _MIN_QUESTION_URL_CONTENT_WORDS = 50
 
-    # Domains to filter out of question URL scraping.
-    # Two reasons to be here:
-    #   (a) internal cross-references that are never data sources (Metaculus itself)
-    #   (b) domains that are always unscrapable — either because they require JS /
-    #       authentication (social media, YouTube) or because the URL points at an
-    #       API endpoint rather than an HTML page (api.stlouisfed.org).
-    # Keeping them here prevents them from counting against the max_urls cap before
-    # they ever reach ConcurrentContentExtractor.BLOCKED_DOMAINS.
-    _FILTERED_DOMAINS = {
-        # Metaculus internal links
-        "metaculus.com",
-        "www.metaculus.com",
-        # Social media — JS-rendered or login-gated (also in BLOCKED_DOMAINS)
-        "twitter.com",
-        "www.twitter.com",
-        "x.com",
-        "www.x.com",
-        "facebook.com",
-        "www.facebook.com",
-        "fb.com",
-        "www.fb.com",
-        "instagram.com",
-        "www.instagram.com",
-        "linkedin.com",
-        "www.linkedin.com",
-        "tiktok.com",
-        "www.tiktok.com",
-        "youtube.com",
-        "www.youtube.com",
-        "reddit.com",
-        "www.reddit.com",
-        # Google Trends — JS app; bot has a dedicated Google Trends integration
-        "trends.google.com",
-        # FRED API endpoint — returns JSON, not HTML; fred.stlouisfed.org (the web UI) is fine
-        "api.stlouisfed.org",
-    }
+    # Derived from ConcurrentContentExtractor.BLOCKED_DOMAINS — the single source of truth.
+    # Expands each base domain with a "www." variant for exact netloc matching.
+    # Keeps these URLs from counting against the question_url_max_scrape cap before
+    # they ever reach the extractor.
+    _FILTERED_DOMAINS = frozenset(
+        variant
+        for base in ConcurrentContentExtractor.BLOCKED_DOMAINS
+        for variant in (base, f"www.{base}")
+    )
 
     # Regex: markdown links [text](url)
     # Note: won't match URLs with nested parens (e.g., Wikipedia disambiguation pages).

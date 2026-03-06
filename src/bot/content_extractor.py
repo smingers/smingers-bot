@@ -1084,17 +1084,24 @@ class ConcurrentContentExtractor:
     Optionally supports Bright Data API for more reliable scraping.
     """
 
-    # Sites that commonly block or have anti-bot measures
-    BLOCKED_DOMAINS = [
-        "twitter.com",
-        "x.com",
-        "facebook.com",
-        "fb.com",
-        "instagram.com",
-        "linkedin.com",
-        "tiktok.com",
-        "trends.google.com",  # JS-rendered app; bot has dedicated Google Trends integration
-    ]
+    # Sites that are always unscrapable — JS-rendered, login-gated, or non-HTML endpoints.
+    # This is the single source of truth; SearchPipeline._FILTERED_DOMAINS derives from it.
+    BLOCKED_DOMAINS = frozenset(
+        {
+            "metaculus.com",  # internal cross-references, never a data source
+            "twitter.com",
+            "x.com",
+            "facebook.com",
+            "fb.com",
+            "instagram.com",
+            "linkedin.com",
+            "tiktok.com",
+            "youtube.com",
+            "reddit.com",
+            "trends.google.com",  # JS app; bot has a dedicated Google Trends integration
+            "api.stlouisfed.org",  # JSON API endpoint, not an HTML page
+        }
+    )
 
     # Maximum content length to return (chars)
     MAX_CONTENT_LENGTH = 15000

@@ -297,12 +297,22 @@ class LLMClient:
                 except (TypeError, AttributeError):
                     pass
 
-                # Extract reasoning content (available from some providers)
+                # Extract reasoning from OpenRouter's reasoning_details or similar structure
                 reasoning_content = None
                 try:
+                    # 1. Standard litellm attr
                     raw_reasoning_content = getattr(message, "reasoning_content", None)
                     if isinstance(raw_reasoning_content, str) and raw_reasoning_content:
                         reasoning_content = raw_reasoning_content
+                    # 2. Check within 'reasoning' attribute (for openrouter spec)
+                    elif hasattr(message, "reasoning") and message.reasoning:
+                        reasoning_content = message.reasoning
+                    # 3. Check inside raw message object if it's a dict-like obj
+                    elif hasattr(message, "get"):
+                        if message.get("reasoning_content"):
+                            reasoning_content = message.get("reasoning_content")
+                        elif message.get("reasoning"):
+                            reasoning_content = message.get("reasoning")
                 except (TypeError, AttributeError):
                     pass
 
