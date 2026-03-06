@@ -1,0 +1,190 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 1,
+      "queries": [
+        {
+          "query": "https://finance.yahoo.com/quote/CINF",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1,
+          "domain": "finance.yahoo.com",
+          "method": "trafilatura",
+          "content_words": 869,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": false,
+      "num_queries": 0,
+      "queries": [],
+      "tools_used": [],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": false,
+      "num_queries": 0,
+      "queries": [],
+      "tools_used": [],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "google/gemini-3.1-pro-preview",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 27.715185403823853,
+        "error": "LLM call failed after 3 attempts: litellm.BadRequestError: LLM Provider NOT provided. Pass in the LLM provider you are trying to call. You passed model=google/gemini-3.1-pro-preview\n Pass model as E.g. For 'Huggingface' inference endpoints pass in `completion(model='huggingface/starcoder',..)` Learn more: https://docs.litellm.ai/docs/providers"
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 32.12407374382019,
+        "error": "LLM call failed after 3 attempts: litellm.BadRequestError: LLM Provider NOT provided. Pass in the LLM provider you are trying to call. You passed model=google/gemini-3.1-pro-preview\n Pass model as E.g. For 'Huggingface' inference endpoints pass in `completion(model='huggingface/starcoder',..)` Learn more: https://docs.litellm.ai/docs/providers"
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 3929,
+        "token_output": 1621,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.036102,
+        "duration_seconds": 32.12406063079834,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.4",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 2762,
+        "token_output": 1940,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.042910000000000004,
+        "duration_seconds": 27.715239763259888,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4501,
+        "token_output": 1964,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.051965,
+        "duration_seconds": 32.12403964996338,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4501,
+        "token_output": 861,
+        "token_reasoning": 64,
+        "used_reasoning": true,
+        "cost": 0.01589,
+        "duration_seconds": 32.12401866912842,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 2762,
+        "token_output": 1180,
+        "token_reasoning": 192,
+        "used_reasoning": true,
+        "cost": 0.014964000000000002,
+        "duration_seconds": 27.715270280838013,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 3458,
+        "token_output": 1234,
+        "token_reasoning": 256,
+        "used_reasoning": true,
+        "cost": 0.016788,
+        "duration_seconds": 32.12399744987488,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "steps1_2_research": 0.0204,
+    "step3_outside_view": 0.0579,
+    "step5_inside_view": 0.1207,
+    "step6_aggregation": 0.1207,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.199
+}
