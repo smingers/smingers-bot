@@ -55,6 +55,7 @@ def setup_logging(verbose: bool = False):
     # Suppress noisy third-party loggers
     logging.getLogger("trafilatura").setLevel(logging.CRITICAL)
     logging.getLogger("LiteLLM").setLevel(logging.WARNING)
+    logging.getLogger("litellm").setLevel(logging.WARNING)
 
 
 async def list_questions(tournament_id: int | str):

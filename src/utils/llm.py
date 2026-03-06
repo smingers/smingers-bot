@@ -18,6 +18,7 @@ from src.bot.exceptions import LLMError
 
 # Configure litellm
 litellm.set_verbose = False
+litellm.suppress_debug_info = True
 
 logger = logging.getLogger(__name__)
 

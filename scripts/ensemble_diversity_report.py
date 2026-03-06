@@ -1244,8 +1244,7 @@ def _build_resolved_section(resolved: list[ForecastAnalysis]) -> str:
                     <span class="comparison-value resolution-value" title="{res_title}">{res_display}</span>
                 </div>
                 <div class="comparison-item">
-                    <span class="comparison-label">My Forecast</span>
-                    <span class="supervisor-badge-resolved">{"(Supervisor)" if my_is_supervisor else ""}</span>
+                    <span class="comparison-label">My Forecast{' <span class="supervisor-badge-resolved">(SUPERVISOR)</span>' if my_is_supervisor else ""}</span>
                     <span class="comparison-value my-value">{my_display}</span>
                 </div>
                 <div class="comparison-item">
