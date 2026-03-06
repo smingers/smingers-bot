@@ -1,0 +1,7 @@
+**Creating a forecast analysis**
+
+I need to approach this like a professional forecaster. First, I’ll summarize the sources, weigh the evidence, and establish a clear timeframe and justification for our conclusions. Next, I'll include a calibration section that gives an inside view of the probabilities. I’ll make a checklist for clarity. Previously, we had an outside view probability of 32%, but now I’ll adjust that based on the latest news.**Analyzing leaderboard dynamics**
+
+I want to consider the latest developments for our ranking analysis. As of March 6, 2026, the Anthropic model leads, with Google close behind but potentially launching new variants soon. Given Anthropic’s rumored Claude 4.x and the recent release of OpenAI's GPT-5.4, which could disrupt the current standings, I think my inside view should nudge down from 32% to about 30%. The competition is tight, but Google’s recent quick iterations add an interesting twist!**Crafting a thorough analysis**
+
+I need to create a comprehensive analysis by summarizing information from key sources like Fortune, Tom's Guide, Onyx, and the OpenAI news cluster. I'll also include a ranking snapshot and insights from the Robinhood market. This structured approach will help ensure that I cover all the essential elements. Once I gather and present this information, I’ll be able to produce a well-rounded final answer. Let's get to it!

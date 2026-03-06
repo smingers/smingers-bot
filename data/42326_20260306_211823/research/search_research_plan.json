@@ -1,0 +1,1082 @@
+{
+  "plan_analysis": "The snapshot supplied shows that as of 6 Mar 2026 Google\u2019s top-scoring Gemini model sits 4 Elo points behind Anthropic\u2019s #1 model. 56 days remain before the cut-off.  \nA forecaster still needs to know:\n\n1. Base-rate / precedent  \n   \u2022 How often does the #1 spot change on LM Arena and how long do leaders typically stay on top?  \n   \u2022 Has a Google Gemini model ever held #1 before and how quickly did it climb?\n\n2. Resolution mechanism details  \n   \u2022 How ties are displayed; whether LMSYS updates scores continuously or in batches; how often new model versions are added.\n\n3. Key drivers to watch  \n   \u2022 Imminent releases or upgrades from Google (e.g., \u201cGemini Ultra 3/4\u201d), Anthropic (\u201cClaude 4\u201d), OpenAI (\u201cGPT-5 / GPT-4.5\u201d) or xAI that could reshuffle the top.  \n   \u2022 LMSYS policy on integrating new models and re-verifying scores.\n\n4. Current trajectory  \n   \u2022 Most recent leaderboard snapshots since 6 Mar 2026 to see if Google is gaining ground.  \n   \u2022 Vote volume and confidence intervals for the top models.\n\n5. Contrarian evidence  \n   \u2022 Any indications that Anthropic/OpenAI/xAI will release a stronger model in April that could block Google.  \n\nThe eight queries below target these gaps: four historical/base-rate/mechanism queries and four current-status/driver/contrarian queries.",
+  "reflect_analysis": null,
+  "queries_planned": [
+    {
+      "query": "LM Arena leaderboard archive",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "collect past snapshots to analyze how often #1 changes and prior Google peaks",
+      "phase": "plan"
+    },
+    {
+      "query": "Google Gemini rank history LMSYS",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "find timeline of Gemini positions to gauge trend speed toward #1",
+      "phase": "plan"
+    },
+    {
+      "query": "LMSYS update cadence policy",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "learn how frequently new/updated models are added, affecting near-term movements",
+      "phase": "plan"
+    },
+    {
+      "query": "arena.ai tie break rules",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "confirm how ties are displayed/resolved, pertinent to Yes/No determination",
+      "phase": "plan"
+    },
+    {
+      "query": "Gemini Ultra 3 release news",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "surface any recent or upcoming Gemini model launches that could boost Google to #1",
+      "phase": "plan"
+    },
+    {
+      "query": "Claude 4 model leak",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "detect reports of Anthropic\u2019s next model that might keep or regain #1",
+      "phase": "plan"
+    },
+    {
+      "query": "LM Arena leaderboard March 2026",
+      "tool": "Google",
+      "temporal_role": "current",
+      "intent": "obtain the latest leaderboard numbers after 6 Mar to measure Google\u2019s momentum",
+      "phase": "plan"
+    },
+    {
+      "query": "News on OpenAI GPT-5 April launch",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "find credible stories or rumors of an OpenAI release before May that could change rankings",
+      "phase": "plan"
+    }
+  ],
+  "gap_queries": [],
+  "seed_context_chars": 2482,
+  "historical_context_chars": 32818,
+  "current_context_chars": 50935,
+  "phases": {
+    "pre_research": {
+      "duration_seconds": 11.98,
+      "seed_context_chars": 2482,
+      "search_id": "question_urls",
+      "searched": true,
+      "urls_found": 2,
+      "urls_scraped": 1,
+      "urls_summarized": 1,
+      "urls": [
+        {
+          "url": "https://arena.ai/leaderboard/text",
+          "domain": "arena.ai",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 4074,
+          "method": "trafilatura",
+          "content_chars": 19275,
+          "truncated": true,
+          "content_words": 3854,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://huggingface.co/spaces/lmarena-ai/lmarena-leaderboard",
+          "domain": "huggingface.co",
+          "success": false,
+          "status_code": 200,
+          "error": "Content extraction failed",
+          "response_time_ms": 243,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "content_words": 0,
+          "usage": "failed"
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ]
+    },
+    "plan": {
+      "duration_seconds": 33.75,
+      "cost": 0.0189,
+      "num_queries": 8
+    },
+    "execute": {
+      "duration_seconds": 50.29,
+      "cost": 0.0589,
+      "queries_executed": 8,
+      "queries_successful": 8
+    },
+    "assemble": {
+      "historical_context_chars": 32818,
+      "current_context_chars": 50935
+    }
+  },
+  "total_queries_planned": 8,
+  "total_queries_executed": 8,
+  "total_gap_queries": 0,
+  "total_cost": 0.0851,
+  "total_duration_seconds": 96.02,
+  "query_details": [
+    {
+      "query": "LM Arena leaderboard archive",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "collect past snapshots to analyze how often #1 changes and prior Google peaks",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard",
+          "domain": "huggingface.co",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 267,
+          "method": "readability",
+          "content_chars": 153,
+          "truncated": false,
+          "usage": "dropped_short"
+        },
+        {
+          "url": "https://arena.ai/leaderboard",
+          "domain": "arena.ai",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 15163,
+          "method": "trafilatura",
+          "content_chars": 38706,
+          "truncated": true,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://lmsys.org/blog/2023-05-25-leaderboard/",
+          "domain": "lmsys.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 2273,
+          "method": "site-specific",
+          "content_chars": 10587,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.reddit.com/r/singularity/comments/1peult4/lmarena_leaderboard_gpt_51_is_falling_more_and/",
+          "domain": "www.reddit.com",
+          "success": false,
+          "status_code": null,
+          "error": "Blocked domain",
+          "response_time_ms": 0,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "blocked"
+        },
+        {
+          "url": "https://observablehq.com/@llms/lmsys-chatbot-arena-leader-over-time",
+          "domain": "observablehq.com",
+          "success": false,
+          "status_code": 200,
+          "error": "Content extraction failed",
+          "response_time_ms": 5566,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://actrixft.com/llm-comparisons-benchmarks-and-leaderboards/",
+          "domain": "actrixft.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 218,
+          "method": "trafilatura",
+          "content_chars": 6772,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://openlm.ai/chatbot-arena/",
+          "domain": "openlm.ai",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 2159,
+          "method": "trafilatura",
+          "content_chars": 25442,
+          "truncated": true,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://github.com/VILA-Lab/Open-LLM-Leaderboard",
+          "domain": "github.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 3024,
+          "method": "trafilatura",
+          "content_chars": 5724,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=YP3Vmh4tYog",
+          "domain": "www.youtube.com",
+          "success": false,
+          "status_code": null,
+          "error": "Blocked domain",
+          "response_time_ms": 0,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "blocked"
+        },
+        {
+          "url": "https://www.kaggle.com/datasets/nuhmanpk/lm-arena-leaderboards",
+          "domain": "www.kaggle.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 972,
+          "method": "readability",
+          "content_chars": 176,
+          "truncated": false,
+          "usage": "dropped_short"
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 7,
+        "urls_failed": 3,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "Google Gemini rank history LMSYS",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "find timeline of Gemini positions to gauge trend speed toward #1",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://medium.com/@seraphimautomations/google-reclaims-the-throne-gemini-3-smashes-lmsys-records-and-topples-gpt-5-1-5f2a6c5f5dfe",
+          "domain": "medium.com",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 4681,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://newsletter.learnprompting.org/p/new-gemini-2-5-pro-the-undisputed-lmsys-champion",
+          "domain": "newsletter.learnprompting.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 5387,
+          "method": "site-specific",
+          "content_chars": 3727,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.reddit.com/r/Bard/comments/1hha035/there_is_a_gemini_model_on_lmsys_which_deserves/",
+          "domain": "www.reddit.com",
+          "success": false,
+          "status_code": null,
+          "error": "Blocked domain",
+          "response_time_ms": 0,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "blocked"
+        },
+        {
+          "url": "https://www.metaculus.com/questions/42318/will-any-google-gemini-model-rank-1-on-the-lmsys-lm-arena-leaderboard-on-april-1-2026/",
+          "domain": "www.metaculus.com",
+          "success": false,
+          "status_code": null,
+          "error": "Blocked domain",
+          "response_time_ms": 0,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "blocked"
+        },
+        {
+          "url": "https://aidevdayindia.org/blogs/google-gemini-3-pro-agentic-multimodal-ai/gemini-3-pro-lmsys-arena-ranking-2026.html",
+          "domain": "aidevdayindia.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 15595,
+          "method": "trafilatura",
+          "content_chars": 5241,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.facebook.com/groups/aiautomationsforbusiness/posts/1192666151782243/",
+          "domain": "www.facebook.com",
+          "success": false,
+          "status_code": null,
+          "error": "Blocked domain",
+          "response_time_ms": 0,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "blocked"
+        },
+        {
+          "url": "https://learnprompting.org/blog/gemini_pro_update?srsltid=AfmBOoqCM46qz5wgRz-765yBV_V_DdNEcj_ZV1Pqjz0euKucuZRAM4pk",
+          "domain": "learnprompting.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 15967,
+          "method": "trafilatura",
+          "content_chars": 4067,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.classcentral.com/course/youtube-sorry-sam-gemini-exp-1121-382420",
+          "domain": "www.classcentral.com",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 5273,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 8,
+        "urls_extracted": 3,
+        "urls_failed": 5,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "LMSYS update cadence policy",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "learn how frequently new/updated models are added, affecting near-term movements",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://skywork.ai/blog/chatbot-arena-lmsys-review-2025/",
+          "domain": "skywork.ai",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 22299,
+          "method": "site-specific",
+          "content_chars": 5461,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.facebook.com/groups/aifire.co/posts/1940908036514496/",
+          "domain": "www.facebook.com",
+          "success": false,
+          "status_code": null,
+          "error": "Blocked domain",
+          "response_time_ms": 0,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "blocked"
+        },
+        {
+          "url": "https://developers.flow.com/blockchain-development-tutorials/use-AI-to-build-on-flow/cursor/cadence-rules",
+          "domain": "developers.flow.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 925,
+          "method": "trafilatura",
+          "content_chars": 26051,
+          "truncated": true,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.cadence.com/en_US/home/training.html",
+          "domain": "www.cadence.com",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 2387,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.linkedin.com/posts/edwinzchen_lmarena-is-a-cancer-on-ai-activity-7404211333061394432-cHTt",
+          "domain": "www.linkedin.com",
+          "success": false,
+          "status_code": null,
+          "error": "Blocked domain",
+          "response_time_ms": 0,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "blocked"
+        },
+        {
+          "url": "https://grafana.com/docs/alloy/latest/introduction/release-cadence/",
+          "domain": "grafana.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 6214,
+          "method": "trafilatura",
+          "content_chars": 611,
+          "truncated": false,
+          "usage": "dropped_short"
+        },
+        {
+          "url": "https://cadence-lang.org/docs/cadence-migration-guide/improvements",
+          "domain": "cadence-lang.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 4845,
+          "method": "trafilatura",
+          "content_chars": 58251,
+          "truncated": true,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.instaclustr.com/education/open-source-ai/top-10-open-source-llms-for-2025/",
+          "domain": "www.instaclustr.com",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 5461,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=ehusZItYPkg",
+          "domain": "www.youtube.com",
+          "success": false,
+          "status_code": null,
+          "error": "Blocked domain",
+          "response_time_ms": 0,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "blocked"
+        },
+        {
+          "url": "https://logicamatrix.com/f/planning-models-update--why-cadence-matter-for-service-and-cost",
+          "domain": "logicamatrix.com",
+          "success": false,
+          "status_code": null,
+          "error": "Blocked domain",
+          "response_time_ms": 0,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "blocked"
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 4,
+        "urls_failed": 6,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "arena.ai tie break rules",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "confirm how ties are displayed/resolved, pertinent to Yes/No determination",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "http://oreateai.com/blog/beyond-the-score-understanding-the-tiebreaker/0b555151816fdf5be870b6cc1c65249a",
+          "domain": "oreateai.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 22123,
+          "method": "site-specific",
+          "content_chars": 1999,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.oreateai.com/blog/understanding-the-tiebreak-rules-at-the-us-open/81fd73a790110750bbb54a424ce5187a",
+          "domain": "www.oreateai.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 21429,
+          "method": "site-specific",
+          "content_chars": 2198,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.reddit.com/r/10s/comments/ukyw5c/help_request_to_players_of_tennis_arena_an/",
+          "domain": "www.reddit.com",
+          "success": false,
+          "status_code": null,
+          "error": "Blocked domain",
+          "response_time_ms": 0,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "blocked"
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=OQ4CBWrr4vM",
+          "domain": "www.youtube.com",
+          "success": false,
+          "status_code": null,
+          "error": "Blocked domain",
+          "response_time_ms": 0,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "blocked"
+        },
+        {
+          "url": "https://arena.ai/faq",
+          "domain": "arena.ai",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 18117,
+          "method": "site-specific",
+          "content_chars": 5804,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.oreateai.com/blog/understanding-tiebreaks-the-deciding-factor-in-competitions/fd8f8a4fd09f71b9da75141d8683cba0",
+          "domain": "www.oreateai.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 21497,
+          "method": "site-specific",
+          "content_chars": 2248,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.facebook.com/groups/975789260411857/posts/1154338462556935/",
+          "domain": "www.facebook.com",
+          "success": false,
+          "status_code": null,
+          "error": "Blocked domain",
+          "response_time_ms": 0,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "blocked"
+        },
+        {
+          "url": "https://lidraughts.org/tournament/help?system=arena",
+          "domain": "lidraughts.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 21539,
+          "method": "site-specific",
+          "content_chars": 2243,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://boardgamegeek.com/thread/3447159/ai-behavior-tie-break-on-non-ship-targets",
+          "domain": "boardgamegeek.com",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 15202,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://forum.effectivealtruism.org/posts/C7DbrkCpSe4AdcMek/arena-2-0-impact-report",
+          "domain": "forum.effectivealtruism.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 17001,
+          "method": "site-specific",
+          "content_chars": 17620,
+          "truncated": true,
+          "usage": "dropped_cap"
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 6,
+        "urls_failed": 4,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "Gemini Ultra 3 release news",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "surface any recent or upcoming Gemini model launches that could boost Google to #1",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-1-flash-lite/",
+          "domain": "blog.google",
+          "success": false,
+          "status_code": null,
+          "error": "",
+          "response_time_ms": 14839,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.techbuzz.ai/articles/google-unveils-gemini-3-1-flash-lite-for-enterprise-scale",
+          "domain": "www.techbuzz.ai",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 16097,
+          "method": "boilerpy",
+          "content_chars": 6361,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://developers.googleblog.com/5-things-to-try-with-gemini-3-pro-in-gemini-cli/",
+          "domain": "developers.googleblog.com",
+          "success": false,
+          "status_code": null,
+          "error": "",
+          "response_time_ms": 14838,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.tomsguide.com/ai/google-just-launched-gemini-3-1-flash-lite-7-prompts-to-test-its-new-thinking-mode",
+          "domain": "www.tomsguide.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 19550,
+          "method": "site-specific",
+          "content_chars": 7140,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.eweek.com/news/google-launches-gemini-3-deep-think-ai-ultra-users/",
+          "domain": "www.eweek.com",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 15789,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://fortune.com/2025/11/19/google-gemini-3-antigravity-ai-explained/",
+          "domain": "fortune.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 15106,
+          "method": "trafilatura",
+          "content_chars": 3867,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://cryptorank.io/news/feed/3e313-google-canvas-ai-us-launch",
+          "domain": "cryptorank.io",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 18620,
+          "method": "site-specific",
+          "content_chars": 21547,
+          "truncated": true,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://techcrunch.com/2025/11/18/google-launches-gemini-3-with-new-coding-app-and-record-benchmark-scores/",
+          "domain": "techcrunch.com",
+          "success": false,
+          "status_code": null,
+          "error": "",
+          "response_time_ms": 14837,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://mashable.com/article/google-gemini-3",
+          "domain": "mashable.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 17379,
+          "method": "trafilatura",
+          "content_chars": 963,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.databricks.com/blog/launching-gemini-3-pro-databricks",
+          "domain": "www.databricks.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 16550,
+          "method": "site-specific",
+          "content_chars": 4398,
+          "truncated": false,
+          "usage": "dropped_cap"
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 6,
+        "urls_failed": 4,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "Claude 4 model leak",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "detect reports of Anthropic\u2019s next model that might keep or regain #1",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://www.anthropic.com/research/agentic-misalignment",
+          "domain": "www.anthropic.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 19830,
+          "method": "trafilatura",
+          "content_chars": 47202,
+          "truncated": true,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.uniladtech.com/news/ai/chilling-soul-overview-anthropic-claude-ai-has-leaked-429789-20251204",
+          "domain": "www.uniladtech.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 22333,
+          "method": "site-specific",
+          "content_chars": 3277,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://dataconomy.com/2026/02/04/anthropic-fennec-leak-signals-imminent-claude-sonnet-5-launch/",
+          "domain": "dataconomy.com",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 15839,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.macobserver.com/news/claude-opus-4-6-spotted-after-claude-sonnet-5-imminent-launch-details-leak/",
+          "domain": "www.macobserver.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 15658,
+          "method": "site-specific",
+          "content_chars": 2817,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://arstechnica.com/ai/2025/05/hidden-ai-instructions-reveal-how-anthropic-controls-claude-4/",
+          "domain": "arstechnica.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 15420,
+          "method": "site-specific",
+          "content_chars": 4656,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.lawfaremedia.org/article/ai-might-let-you-die-to-save-itself",
+          "domain": "www.lawfaremedia.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 16792,
+          "method": "site-specific",
+          "content_chars": 12423,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://venturebeat.com/ai/time-magazine-appears-to-accidentally-publish-embargoed-story-confirming-anthropic-claude-4-opus",
+          "domain": "venturebeat.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 15248,
+          "method": "site-specific",
+          "content_chars": 1484,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.actuia.com/en/news/a-leak-reveals-the-entire-system-prompt-of-claude-37-sonnet/",
+          "domain": "www.actuia.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 16286,
+          "method": "trafilatura",
+          "content_chars": 4525,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.thestack.technology/claude-4-of-blackmail-bioweapons-and-bad-code/",
+          "domain": "www.thestack.technology",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 15513,
+          "method": "trafilatura",
+          "content_chars": 6062,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.ndtv.com/feature/top-ai-models-blackmail-leak-secrets-when-facing-existential-crisis-study-8729547",
+          "domain": "www.ndtv.com",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 15838,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 8,
+        "urls_failed": 2,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "LM Arena leaderboard March 2026",
+      "tool": "Google",
+      "temporal_role": "current",
+      "intent": "obtain the latest leaderboard numbers after 6 Mar to measure Google\u2019s momentum",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://huggingface.co/spaces/lmarena-ai/arena-leaderboard",
+          "domain": "huggingface.co",
+          "success": false,
+          "status_code": 200,
+          "error": "Content extraction failed",
+          "response_time_ms": 936,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://llm-stats.com/",
+          "domain": "llm-stats.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 4889,
+          "method": "readability",
+          "content_chars": 255,
+          "truncated": false,
+          "usage": "dropped_short"
+        },
+        {
+          "url": "https://kalshi.com/markets/kxllm1/yearend-top-llm/kxllm1-26feb21",
+          "domain": "kalshi.com",
+          "success": false,
+          "status_code": 429,
+          "error": "HTTP 429",
+          "response_time_ms": 22579,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://manifold.markets/Bayesian/which-company-has-the-best-ai-model-0PE9Utg8Qg",
+          "domain": "manifold.markets",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 16076,
+          "method": "trafilatura",
+          "content_chars": 1407,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://robinhood.com/us/en/prediction-markets/technology/events/best-ai-this-week-mar-07-2026/",
+          "domain": "robinhood.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 2328,
+          "method": "trafilatura",
+          "content_chars": 2270,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://astrogeology.usgs.gov/pygeoapi//llm-stats.com/",
+          "domain": "astrogeology.usgs.gov",
+          "success": false,
+          "status_code": 404,
+          "error": "HTTP 404",
+          "response_time_ms": 5399,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.mangomindbd.com/blog/lmsys-chatbot-arena-leaderboard-2026/",
+          "domain": "www.mangomindbd.com",
+          "success": false,
+          "status_code": 200,
+          "error": "Content extraction failed",
+          "response_time_ms": 2216,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://onyx.app/llm-leaderboard",
+          "domain": "onyx.app",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 5390,
+          "method": "trafilatura",
+          "content_chars": 5212,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://arena.ai/leaderboard/image-edit",
+          "domain": "arena.ai",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 3375,
+          "method": "trafilatura",
+          "content_chars": 2779,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://vertu.com/lifestyle/open-source-llm-leaderboard-2026-rankings-benchmarks-the-best-models-right-now/?srsltid=AfmBOopogJA4pvSV8wKeo4nNARiZrvfs3bIdc-UbNsnmZiYB_4raPQqE",
+          "domain": "vertu.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 18607,
+          "method": "site-specific",
+          "content_chars": 15243,
+          "truncated": true,
+          "usage": "summarized"
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 6,
+        "urls_failed": 4,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "News on OpenAI GPT-5 April launch",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "find credible stories or rumors of an OpenAI release before May that could change rankings",
+      "phase": "plan",
+      "success": true,
+      "num_results": 19,
+      "error": null
+    }
+  ]
+}
