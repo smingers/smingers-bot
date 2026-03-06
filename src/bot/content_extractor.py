@@ -1088,7 +1088,7 @@ class ConcurrentContentExtractor:
     # This is the single source of truth; SearchPipeline._FILTERED_DOMAINS derives from it.
     BLOCKED_DOMAINS = frozenset(
         {
-            "metaculus.com",  # internal cross-references, never a data source
+            "metaculus.com",  # internal cross-references, never a data source (see docstring below)
             "twitter.com",
             "x.com",
             "facebook.com",
@@ -1098,6 +1098,7 @@ class ConcurrentContentExtractor:
             "tiktok.com",
             "youtube.com",
             "reddit.com",
+            "reuters.com",
             "trends.google.com",  # JS app; bot has a dedicated Google Trends integration
             "api.stlouisfed.org",  # JSON API endpoint, not an HTML page
         }

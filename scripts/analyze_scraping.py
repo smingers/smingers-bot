@@ -112,6 +112,7 @@ def analyze_google_scraping(all_data: list[dict]) -> dict:
     queries_without_url_data = 0
     truncated_count = 0
     content_chars_by_domain = defaultdict(list)
+    usage_counts = Counter()
 
     for data in all_data:
         research = data.get("centralized_research", {})
@@ -159,6 +160,9 @@ def analyze_google_scraping(all_data: list[dict]) -> dict:
                     if status is not None:
                         status_codes[status] += 1
 
+                    usage = url_info.get("usage") or "unknown"
+                    usage_counts[usage] += 1
+
     # Compute per-domain success rates
     all_domains = set(domain_success.keys()) | set(domain_fail.keys())
     domain_stats = []
@@ -191,6 +195,14 @@ def analyze_google_scraping(all_data: list[dict]) -> dict:
     for domain_errs in domain_errors.values():
         all_errors.update(domain_errs)
 
+    # Domains with most HTTP 403 (and other top error status codes for JSON)
+    domains_most_403 = [
+        (d, domain_errors[d].get("HTTP 403", 0))
+        for d in all_domains
+        if domain_errors[d].get("HTTP 403", 0) > 0
+    ]
+    domains_most_403.sort(key=lambda x: x[1], reverse=True)
+
     return {
         "queries_with_url_data": queries_with_url_data,
         "queries_without_url_data": queries_without_url_data,
@@ -210,6 +222,8 @@ def analyze_google_scraping(all_data: list[dict]) -> dict:
         "status_codes": dict(status_codes.most_common()),
         "top_errors": dict(all_errors.most_common(10)),
         "domains": domain_stats,
+        "domains_most_403": [{"domain": d, "count": c} for d, c in domains_most_403],
+        "usage_breakdown": dict(usage_counts.most_common()),
     }
 
 
@@ -274,6 +288,14 @@ def analyze_question_url_scraping(all_data: list[dict]) -> dict:
         )
     domain_stats.sort(key=lambda x: x["total"], reverse=True)
 
+    all_domains_qu = set(domain_success.keys()) | set(domain_fail.keys())
+    domains_most_403 = [
+        (d, domain_errors[d].get("HTTP 403", 0))
+        for d in all_domains_qu
+        if domain_errors[d].get("HTTP 403", 0) > 0
+    ]
+    domains_most_403.sort(key=lambda x: x[1], reverse=True)
+
     return {
         "forecasts_with_urls": forecasts_with_urls,
         "totals": {
@@ -284,6 +306,7 @@ def analyze_question_url_scraping(all_data: list[dict]) -> dict:
         },
         "extraction_methods": dict(method_counts.most_common()),
         "domains": domain_stats,
+        "domains_most_403": [{"domain": d, "count": c} for d, c in domains_most_403],
     }
 
 
@@ -316,6 +339,16 @@ def print_report(google: dict, question_urls: dict, total_files: int) -> None:
             print("\nTop errors:")
             for error, count in google["top_errors"].items():
                 print(f"  {error}: {count}")
+
+        if google.get("usage_breakdown"):
+            print("\nURL usage (extracted vs dropped vs failed):")
+            for usage, count in google["usage_breakdown"].items():
+                print(f"  {usage}: {count}")
+
+        if google.get("domains_most_403"):
+            print("\nDomains with most HTTP 403 (Google search URLs):")
+            for entry in google["domains_most_403"][:25]:
+                print(f"  {entry['domain']:40s}  {entry['count']:4d} 403s")
 
         # Top domains by volume
         print("\nTop domains (by volume):")
@@ -361,6 +394,11 @@ def print_report(google: dict, question_urls: dict, total_files: int) -> None:
             for d in question_urls["domains"][:15]:
                 rate_pct = f"{d['success_rate']:.0%}"
                 print(f"  {d['domain']:40s}  {d['success']:2d}/{d['total']:2d} ({rate_pct:>4s})")
+
+        if question_urls.get("domains_most_403"):
+            print("\nDomains with most HTTP 403 (question URLs):")
+            for entry in question_urls["domains_most_403"][:25]:
+                print(f"  {entry['domain']:40s}  {entry['count']:4d} 403s")
     else:
         print("No question URL data found")
 
