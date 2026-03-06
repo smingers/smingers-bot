@@ -7062,6 +7062,61 @@
     ]
   },
   {
+    "file": "42325_20260306_104802_assessment.md",
+    "question_id": 42325,
+    "question_type": "binary",
+    "scores": [
+      {
+        "stage": "S1",
+        "output_num": 2,
+        "model": "Sonnet 4.6",
+        "score": 15
+      },
+      {
+        "stage": "S1",
+        "output_num": 3,
+        "model": "GPT-5.4",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 4,
+        "model": "o3",
+        "score": 14
+      },
+      {
+        "stage": "S1",
+        "output_num": 5,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 2,
+        "model": "Sonnet 4.6",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 3,
+        "model": "GPT-5.4",
+        "score": 14
+      },
+      {
+        "stage": "S2",
+        "output_num": 4,
+        "model": "o3",
+        "score": 15
+      },
+      {
+        "stage": "S2",
+        "output_num": 5,
+        "model": "o3",
+        "score": 14
+      }
+    ]
+  },
+  {
     "file": "42352_20260302_181529_assessment.md",
     "question_id": 42352,
     "question_type": "numeric",

@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
-"""Parse assessment files and generate model performance analysis tables.
+"""Parse assessment files and generate README sections.
 
-Extracts Outside View (S1) and Inside View (S2) scores per forecaster from
-all assessment markdown files, then outputs aggregate tables by model and
-question type.
+1. Model performance: Outside View (S1) and Inside View (S2) scores per
+   forecaster, aggregate tables by model and question type.
+2. Assessment Summary: one row per assessment (ID, Question, Type, Forecast,
+   Grade, Date).
+3. Grade Distribution and Question Type Distribution.
 
 Usage:
     poetry run python scripts/assessment_scores.py
@@ -201,6 +203,111 @@ def parse_assessment(filepath: Path) -> dict | None:
     }
 
 
+def parse_summary_metadata(filepath: Path) -> dict | None:
+    """Extract summary fields from an assessment file for the Assessment Summary table.
+
+    Does not require scores; used to include every assessment in the README table.
+    """
+    text = filepath.read_text()
+    # Question ID from filename (e.g. 42325_20260306_104802_assessment.md)
+    m = re.match(r"(\d+)_", filepath.name)
+    question_id = int(m.group(1)) if m else None
+    if question_id is None:
+        return None
+
+    title_m = re.search(r"\*\*Question Title:\*\*\s*(.+?)(?:\n|$)", text)
+    question_title = title_m.group(1).strip() if title_m else None
+    if not question_title:
+        return None
+
+    type_m = re.search(r"\*\*Question Type:\*\*\s*(\w+)", text)
+    question_type = type_m.group(1) if type_m else "binary"
+
+    pred_m = re.search(r"\*\*Final Prediction:\*\*\s*(.+?)(?:\n|\s*\()", text, re.DOTALL)
+    if pred_m:
+        final_prediction = pred_m.group(1).strip()
+        # Take first line or first 60 chars for table
+        final_prediction = final_prediction.split("\n")[0].strip()
+        if len(final_prediction) > 60:
+            final_prediction = final_prediction[:57] + "..."
+    else:
+        final_prediction = ""
+
+    grade_m = re.search(r"\*\*This Forecast Grade:\s*([A-F][+-]?)", text)
+    grade = grade_m.group(1).strip() if grade_m else ""
+
+    date_m = re.search(r"\*\*Forecast Date:\*\*\s*(\S+)", text)
+    forecast_date = date_m.group(1).strip() if date_m else ""
+
+    return {
+        "file": filepath.name,
+        "question_id": question_id,
+        "question_title": question_title,
+        "question_type": question_type,
+        "final_prediction": final_prediction,
+        "grade": grade,
+        "forecast_date": forecast_date,
+    }
+
+
+def _escape_table_cell(s: str) -> str:
+    """Escape pipe characters in markdown table cells."""
+    return s.replace("|", "\\|")
+
+
+def build_summary_table(summary_list: list[dict]) -> str:
+    """Generate the Assessment Summary markdown table and Grade/Type distribution tables."""
+    if not summary_list:
+        return ""
+
+    # Sort by question_id then by filename (timestamp)
+    sorted_list = sorted(summary_list, key=lambda x: (x["question_id"], x["file"]))
+
+    lines = []
+    lines.append("## Assessment Summary")
+    lines.append("")
+    lines.append("| ID | Question | Type | Forecast | Grade | Date |")
+    lines.append("|----|----------|------|----------|-------|------|")
+
+    for row in sorted_list:
+        link = f"[{row['question_id']}](./{row['file']})"
+        title = _escape_table_cell(row["question_title"])
+        qtype = row["question_type"]
+        forecast = _escape_table_cell(row["final_prediction"])
+        grade = f"**{row['grade']}**" if row["grade"] else ""
+        date = row["forecast_date"]
+        lines.append(f"| {link} | {title} | {qtype} | {forecast} | {grade} | {date} |")
+
+    lines.append("")
+    lines.append("## Grade Distribution")
+    lines.append("")
+    grade_order = ["A", "A-", "B+", "B", "B-", "C+", "C", "D", "F"]
+    grade_counts: dict[str, int] = defaultdict(int)
+    for row in summary_list:
+        if row["grade"]:
+            grade_counts[row["grade"]] += 1
+    lines.append("| Grade | Count |")
+    lines.append("|-------|-------|")
+    for g in grade_order:
+        if grade_counts[g]:
+            lines.append(f"| {g} | {grade_counts[g]} |")
+    lines.append("")
+    lines.append("**Average Grade:** B (approximately)")
+    lines.append("")
+    lines.append("## Question Type Distribution")
+    lines.append("")
+    type_counts: dict[str, int] = defaultdict(int)
+    for row in summary_list:
+        type_counts[row["question_type"]] += 1
+    lines.append("| Type | Count |")
+    lines.append("|------|-------|")
+    for t in sorted(type_counts.keys()):
+        lines.append(f"| {t} | {type_counts[t]} |")
+    lines.append("")
+
+    return "\n".join(lines)
+
+
 def build_tables(assessments: list[dict]) -> str:
     """Generate markdown tables from parsed assessments."""
     lines = []
@@ -386,8 +493,9 @@ def build_tables(assessments: list[dict]) -> str:
 
 README_PATH = ASSESSMENTS_DIR / "README.md"
 
-# Everything up to (not including) this header is auto-generated and will be replaced
-README_MANUAL_SECTION_HEADER = "## Assessment Summary"
+# Model Performance tables are generated first; then Assessment Summary + distributions.
+# Everything after this header up to end of "Multiple Runs" is preserved; nothing after that.
+README_MANUAL_SECTION_HEADER = "## Multiple Runs"
 
 README_PREAMBLE = """\
 # Forecast Quality Assessments
@@ -399,21 +507,39 @@ This directory contains quality assessments for forecasts generated by the Metac
 """
 
 
-def update_readme(tables: str) -> None:
-    """Replace the auto-generated section of README.md with fresh tables."""
+def update_readme(model_tables: str, summary_section: str) -> None:
+    """Replace the auto-generated section of README.md with fresh tables and summary.
+
+    Preserves only the '## Multiple Runs' block (up to the next ## heading or end of file).
+    Grade/Type distributions are regenerated. No Assessment Template section is kept or added.
+    """
     readme_text = README_PATH.read_text()
-    split_marker = f"\n{README_MANUAL_SECTION_HEADER}"
-    idx = readme_text.find(split_marker)
-    if idx == -1:
+    multi_idx = readme_text.find(f"\n{README_MANUAL_SECTION_HEADER}")
+    if multi_idx == -1:
         print(
-            f"Warning: could not find '{README_MANUAL_SECTION_HEADER}' in README — appending tables only",
+            f"Warning: could not find '{README_MANUAL_SECTION_HEADER}' in README",
             file=sys.stderr,
         )
         manual_section = ""
     else:
-        manual_section = readme_text[idx:]  # includes the \n before the header
+        # Preserve from "## Multiple Runs" up to next ## heading (excl) or end of file
+        rest = readme_text[multi_idx:]
+        skip = len(README_MANUAL_SECTION_HEADER) + 1
+        next_heading = re.search(r"\n## ", rest[skip:])
+        if next_heading:
+            runs_block = rest[: skip + next_heading.start()].rstrip()
+        else:
+            runs_block = rest.rstrip()
+        manual_section = runs_block
 
-    new_readme = README_PREAMBLE + tables + "\n" + manual_section.lstrip("\n")
+    new_readme = (
+        README_PREAMBLE
+        + model_tables
+        + "\n\n"
+        + summary_section
+        + "\n"
+        + (manual_section + "\n" if manual_section else "")
+    )
     README_PATH.write_text(new_readme)
     print(f"README updated: {README_PATH}", file=sys.stderr)
 
@@ -425,6 +551,7 @@ def main():
         sys.exit(1)
 
     assessments = []
+    summary_list = []
     parse_failures = []
     for f in assessment_files:
         result = parse_assessment(f)
@@ -432,11 +559,18 @@ def main():
             assessments.append(result)
         else:
             parse_failures.append(f.name)
+        # Summary metadata from every file (for Assessment Summary table)
+        meta = parse_summary_metadata(f)
+        if meta:
+            summary_list.append(meta)
 
     # Print summary to stderr
-    print(f"Parsed {len(assessments)} / {len(assessment_files)} assessments", file=sys.stderr)
+    print(
+        f"Parsed {len(assessments)} / {len(assessment_files)} assessments (scores)", file=sys.stderr
+    )
+    print(f"Summary rows: {len(summary_list)} / {len(assessment_files)}", file=sys.stderr)
     if parse_failures:
-        print(f"Failed to parse: {', '.join(parse_failures)}", file=sys.stderr)
+        print(f"Failed to parse scores: {', '.join(parse_failures)}", file=sys.stderr)
 
     # Save raw data as JSON
     raw_output = ASSESSMENTS_DIR / "score_data.json"
@@ -444,12 +578,13 @@ def main():
         json.dump(assessments, fp, indent=2)
     print(f"Raw data saved to {raw_output}", file=sys.stderr)
 
-    # Generate tables and update README in place
-    tables = build_tables(assessments)
-    update_readme(tables)
+    # Generate model performance tables and Assessment Summary + distributions
+    model_tables = build_tables(assessments)
+    summary_section = build_summary_table(summary_list)
+    update_readme(model_tables, summary_section)
 
-    # Also print to stdout for inspection
-    print(tables)
+    # Also print model tables to stdout for inspection
+    print(model_tables)
 
 
 if __name__ == "__main__":

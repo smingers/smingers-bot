@@ -40,10 +40,11 @@ When asked to analyze a forecast run using this template:
 
 5. Save the completed assessment to: `docs/assessments/{QUESTION_ID}_{TIMESTAMP}_assessment.md`
 
-6. Update `docs/assessments/README.md`:
-   - Add a row to the Assessment Summary table (keep sorted by question ID)
-   - Update the Grade Distribution counts
-   - Update the Question Type Distribution counts
+6. Regenerate `docs/assessments/README.md` by running:
+   ```
+   poetry run python scripts/assessment_scores.py
+   ```
+   This updates both the **Assessment Summary** table (one row per assessment, including the new one), **Grade Distribution**, and **Question Type Distribution**, and refreshes the **Model Performance Analysis** tables (Outside/Inside View scores, cross-pollination). You do not need to manually add a row or edit the README.
 
 ---
 
