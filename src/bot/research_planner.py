@@ -572,6 +572,7 @@ class IterativeResearchPlanner(ForecasterMixin):
                 "queries_executed": [list(pair) for pair in sd.queries_executed],
                 "search_results_chars": len(sd.search_results_raw),
                 "analysis_chars": len(sd.analysis_after_step),
+                "url_results": sd.url_results,
             }
             for sd in agentic_result.step_data
         ]
