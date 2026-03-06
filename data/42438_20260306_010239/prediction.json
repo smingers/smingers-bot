@@ -1,0 +1,12 @@
+{
+  "distribution": {
+    "Round of 64": 0.0125,
+    "Round of 32": 0.07,
+    "Sweet 16": 0.17,
+    "Elite Eight": 0.2475,
+    "Final Four": 0.21999999999999997,
+    "Championship Game (loss)": 0.085,
+    "Championship Game (win)": 0.19500000000000003
+  },
+  "submitted": true
+}

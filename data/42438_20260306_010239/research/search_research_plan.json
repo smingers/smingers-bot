@@ -1,0 +1,862 @@
+{
+  "plan_analysis": "The pre-research provides Duke\u2019s season record and ranking as of late February, plus historical program success. A forecaster still needs:\n\u2022 Current state: any roster injuries, ACC-tournament results, final regular-season games, and updated predictive metrics (KenPom, BartTorvik) through March 6.  \n\u2022 Bracket outlook: up-to-date bracketology showing Duke\u2019s projected region, path strength, and likely opponents.  \n\u2022 Base rates: how #1 overall seeds and #1 seeds in general historically fare (Round reached probabilities) and specifically how Duke has performed when seeded #1.  \n\u2022 Key drivers & contrarian angles: injury news, coaching/tournament track record under Jon Scheyer, and the strength/form of top national contenders who could eliminate Duke.  \n\u2022 Resolution mechanism: confirmation of official NCAA bracket release date and seeding procedures.\n\nThe search strategy therefore covers: (1) historical performance data for #1 seeds and KenPom #1\u2019s; (2) Duke-specific historical tournament results; (3) current injury/roster news; (4) current ACC-tournament and late-season developments; (5) updated analytics and title odds; (6) latest bracketology/path analysis; (7) news on main competing teams that could block Duke; (8) any new rules/tournament announcements affecting resolution.",
+  "reflect_analysis": null,
+  "queries_planned": [
+    {
+      "query": "overall 1 seed ncaa tournament performance",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Get base-rate statistics on how far the #1 overall seed typically advances (Final Four, title, etc.).",
+      "phase": "plan"
+    },
+    {
+      "query": "duke blue devils record as number one seed",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Retrieve Duke\u2019s historical outcomes when entering the tournament as a #1 seed.",
+      "phase": "plan"
+    },
+    {
+      "query": "Duke basketball injuries March 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Find any recent or lingering injury/suspension news that could impact Duke\u2019s tournament run.",
+      "phase": "plan"
+    },
+    {
+      "query": "2026 ACC tournament Duke result",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Obtain latest game outcomes and form indicators from the ACC tournament.",
+      "phase": "plan"
+    },
+    {
+      "query": "Bracketology 2026 Duke projected region",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "Collect the most recent expert bracket projections outlining Duke\u2019s seeding, region, and potential opponents.",
+      "phase": "plan"
+    },
+    {
+      "query": "March 6 2026 KenPom rankings title odds",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "Fetch updated efficiency metrics and probabilistic models (KenPom, BartTorvik, ESPN BPI) for Duke and competitors.",
+      "phase": "plan"
+    },
+    {
+      "query": "kenpom number 1 team tournament success rate",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Determine how often the season-ending KenPom #1 team wins or makes the Final Four/Championship.",
+      "phase": "plan"
+    },
+    {
+      "query": "Houston Michigan Arizona Purdue basketball form March 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Gauge momentum and health of other top contenders most likely to face Duke deep in the tournament.",
+      "phase": "plan"
+    }
+  ],
+  "gap_queries": [],
+  "seed_context_chars": 14326,
+  "historical_context_chars": 37887,
+  "current_context_chars": 83683,
+  "phases": {
+    "pre_research": {
+      "duration_seconds": 22.67,
+      "seed_context_chars": 14326,
+      "search_id": "question_urls",
+      "searched": true,
+      "urls_found": 5,
+      "urls_scraped": 5,
+      "urls_summarized": 5,
+      "urls": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Duke_Blue_Devils_men's_basketball",
+          "domain": "en.wikipedia.org",
+          "scraped": true,
+          "method": "wikipedia_api",
+          "status_code": 200,
+          "content_words": 2486
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/2015_NCAA_Division_I_men's_basketball_tournament",
+          "domain": "en.wikipedia.org",
+          "scraped": true,
+          "method": "wikipedia_api",
+          "status_code": 200,
+          "content_words": 2388
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/2025_NCAA_Division_I_men's_basketball_tournament",
+          "domain": "en.wikipedia.org",
+          "scraped": true,
+          "method": "wikipedia_api",
+          "status_code": 200,
+          "content_words": 2191
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/2025%E2%80%9326_NCAA_Division_I_men's_basketball_season",
+          "domain": "en.wikipedia.org",
+          "scraped": true,
+          "method": "wikipedia_api",
+          "status_code": 200,
+          "content_words": 2490
+        },
+        {
+          "url": "https://www.espn.com/mens-college-basketball/rankings",
+          "domain": "www.espn.com",
+          "scraped": true,
+          "method": "boilerpy",
+          "status_code": 200,
+          "content_words": 67
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ]
+    },
+    "plan": {
+      "duration_seconds": 31.46,
+      "cost": 0.02,
+      "num_queries": 8
+    },
+    "execute": {
+      "duration_seconds": 66.31,
+      "cost": 0.0508,
+      "queries_executed": 8,
+      "queries_successful": 8
+    },
+    "assemble": {
+      "historical_context_chars": 37887,
+      "current_context_chars": 83683
+    }
+  },
+  "total_queries_planned": 8,
+  "total_queries_executed": 8,
+  "total_gap_queries": 0,
+  "total_cost": 0.0906,
+  "total_duration_seconds": 120.44,
+  "query_details": [
+    {
+      "query": "overall 1 seed ncaa tournament performance",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Get base-rate statistics on how far the #1 overall seed typically advances (Final Four, title, etc.).",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://www.ncaa.com/news/basketball-men/article/2025-03-16/division-i-mens-basketball-teams-most-ncaa-tournament-no-1-seeds",
+          "domain": "www.ncaa.com",
+          "success": true,
+          "error": null,
+          "method": "readability",
+          "status_code": 200,
+          "content_chars": 1645,
+          "truncated": false
+        },
+        {
+          "url": "https://www.ncaa.com/news/basketball-men/article/2019-01-08/how-many-times-has-number-1-seed-won-march-madness",
+          "domain": "www.ncaa.com",
+          "success": true,
+          "error": null,
+          "method": "readability",
+          "status_code": 200,
+          "content_chars": 2984,
+          "truncated": false
+        },
+        {
+          "url": "https://www.ncaa.com/news/basketball-men/article/2025-04-07/ncaa-tournament-all-time-no-1-seeds-teams-history",
+          "domain": "www.ncaa.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 39545,
+          "truncated": true
+        },
+        {
+          "url": "https://www.reddit.com/r/NCAAW/comments/1b2v50g/what_benefit_does_the_1_seed_in_the_tournament/",
+          "domain": "www.reddit.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/NCAA_Division_I_men%27s_basketball_tournament_upsets",
+          "domain": "en.wikipedia.org",
+          "success": true,
+          "error": null,
+          "method": "wikipedia_api",
+          "status_code": 200,
+          "content_chars": 15481,
+          "truncated": true
+        },
+        {
+          "url": "https://www.ncaa.com/news/basketball-men/article/2025-04-16/records-every-seed-march-madness-1985-2025",
+          "domain": "www.ncaa.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 1977,
+          "truncated": false
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=YorZJJI2uk0",
+          "domain": "www.youtube.com",
+          "success": false,
+          "error": "Content extraction failed",
+          "method": null,
+          "status_code": 200,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://sports.yahoo.com/why-the-race-for-the-ncaa-tournaments-no-1-overall-seed-doesnt-matter-154825002.html",
+          "domain": "sports.yahoo.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 4495,
+          "truncated": false
+        },
+        {
+          "url": "https://www.betfirm.com/seeds-national-championship-odds/",
+          "domain": "www.betfirm.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 9,
+        "urls_extracted": 6,
+        "urls_failed": 3,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "duke blue devils record as number one seed",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Retrieve Duke\u2019s historical outcomes when entering the tournament as a #1 seed.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://www.tsn.ca/ncaa/article/duke-extends-all-time-record-149th-no-1-ranking-in-ap-top-25-n1-48082245/",
+          "domain": "www.tsn.ca",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 2629,
+          "truncated": false
+        },
+        {
+          "url": "https://triblive.com/sports/duke-extends-no-1-record-in-ap-top-25/",
+          "domain": "triblive.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 887,
+          "truncated": false
+        },
+        {
+          "url": "https://www.forbes.com/sites/timcasey/2026/03/02/after-losing-5-starters-to-nba-duke-eyes-no-1-ncaa-tournament-seed/",
+          "domain": "www.forbes.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=KT7gOcUYxkE",
+          "domain": "www.youtube.com",
+          "success": false,
+          "error": "Content extraction failed",
+          "method": null,
+          "status_code": 200,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.sportingnews.com/ca/ncaa-basketball/duke/news/duke-breaks-records-149th-no-1-ranking-ap-poll-history/c135070baaaee2a4ccd3213e",
+          "domain": "www.sportingnews.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 3268,
+          "truncated": false
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=NIeg-5VUELs",
+          "domain": "www.youtube.com",
+          "success": false,
+          "error": "Content extraction failed",
+          "method": null,
+          "status_code": 200,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.msn.com/en-us/news/insight/duke-extends-ap-no-1-record/gm-GMD90A8A5B?gemSnapshotKey=GMD90A8A5B-snapshot-0&uxmode=ruby",
+          "domain": "www.msn.com",
+          "success": false,
+          "error": "Content extraction failed",
+          "method": null,
+          "status_code": 200,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://sports.yahoo.com/articles/duke-rises-no-1-ap-194110102.html",
+          "domain": "sports.yahoo.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 4581,
+          "truncated": false
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Duke_Blue_Devils_men%27s_basketball",
+          "domain": "en.wikipedia.org",
+          "success": true,
+          "error": null,
+          "method": "wikipedia_api",
+          "status_code": 200,
+          "content_chars": 23647,
+          "truncated": true
+        },
+        {
+          "url": "https://www.cbs17.com/sports/duke/no-1-ncaa-tourney-seed-now-in-dukes-hands-after-win-over-no-1-michigan/",
+          "domain": "www.cbs17.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 5,
+        "urls_failed": 5,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "Duke basketball injuries March 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Find any recent or lingering injury/suspension news that could impact Duke\u2019s tournament run.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://www.fayobserver.com/story/sports/college/acc/2026/03/05/caleb-wilson-injury-update-unc-basketball-duke-hubert-davis/88998967007/",
+          "domain": "www.fayobserver.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 838,
+          "truncated": false
+        },
+        {
+          "url": "https://tarheelswire.usatoday.com/story/sports/college/tarheels/mens-basketball/2026/03/05/unc-basketball-hubert-davis-provides-update-on-caleb-wilson/89003472007/",
+          "domain": "tarheelswire.usatoday.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 1775,
+          "truncated": false
+        },
+        {
+          "url": "https://www.tennessean.com/story/sports/college/vanderbilt/2026/03/05/duke-miles-vanderbilt-basketball-knocked-out-teeth/88801879007/",
+          "domain": "www.tennessean.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 505,
+          "truncated": false
+        },
+        {
+          "url": "https://bleacherreport.com/articles/25403425-caleb-wilson-injury-update-latest-news-status-unc-vs-duke-and-timeline-return",
+          "domain": "bleacherreport.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 1887,
+          "truncated": false
+        },
+        {
+          "url": "https://keepingitheel.com/unc-caleb-wilson-injury-decision-vs-duke-just-made-easier-thanks-miami",
+          "domain": "keepingitheel.com",
+          "success": true,
+          "error": null,
+          "method": "boilerpy",
+          "status_code": 200,
+          "content_chars": 2847,
+          "truncated": false
+        },
+        {
+          "url": "https://www.fayobserver.com/story/sports/college/basketball/2026/03/05/duke-unc-earn-double-byes-as-acc-tournament-bracket-is-revealed/89008810007/",
+          "domain": "www.fayobserver.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 2884,
+          "truncated": false
+        },
+        {
+          "url": "https://www.nytimes.com/athletic/7070745/2026/02/26/duke-michigan-injuries-darryn-peterson/",
+          "domain": "www.nytimes.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 12901,
+          "truncated": false
+        },
+        {
+          "url": "https://bleacherreport.com/articles/25402939-ncaa-will-require-injury-reports-2026-mens-womens-march-madness-financial-penalties-revealed",
+          "domain": "bleacherreport.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 2205,
+          "truncated": false
+        },
+        {
+          "url": "https://keepingitheel.com/caleb-wilson-injury-unc-hubert-davis-must-make-this-call-against-duke",
+          "domain": "keepingitheel.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 2683,
+          "truncated": false
+        },
+        {
+          "url": "https://www.fayobserver.com/story/sports/college/baseball/2026/03/05/cider-cannon-duke-baseball-injury-corey-muscara/89008644007/",
+          "domain": "www.fayobserver.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 1511,
+          "truncated": false
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 10,
+        "urls_failed": 0,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "2026 ACC tournament Duke result",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Obtain latest game outcomes and form indicators from the ACC tournament.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://www.on3.com/her/news/2026-acc-womens-basketball-tournament-updated-bracket-results-tv/",
+          "domain": "www.on3.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 4021,
+          "truncated": false
+        },
+        {
+          "url": "https://www.newsobserver.com/sports/college/acc/article314805909.html",
+          "domain": "www.newsobserver.com",
+          "success": false,
+          "error": "Request timed out",
+          "method": null,
+          "status_code": null,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.espn.com/mens-college-basketball/recap?gameId=401820771",
+          "domain": "www.espn.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 1888,
+          "truncated": false
+        },
+        {
+          "url": "https://www.greenvilleonline.com/story/sports/college/clemson/2026/03/01/acc-tournament-basketball-womens-2026-bracket-scores-results-championship/88928759007/",
+          "domain": "www.greenvilleonline.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 2861,
+          "truncated": false
+        },
+        {
+          "url": "https://www.fayobserver.com/story/sports/college/basketball/2026/03/02/duke-basketball-nc-state-score-live-updates-highlights-stats/88775648007/",
+          "domain": "www.fayobserver.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 5061,
+          "truncated": false
+        },
+        {
+          "url": "https://sports.yahoo.com/mens-college-basketball/article/duke-clinches-share-of-acc-regular-season-title-with-77-51-blowout-win-over-virginia-204235556.html",
+          "domain": "sports.yahoo.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 2156,
+          "truncated": false
+        },
+        {
+          "url": "https://goduke.com/news/2026/2/27/mens-basketball-no-1-duke-no-11-virginia-meet-as-top-acc-teams",
+          "domain": "goduke.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 20874,
+          "truncated": true
+        },
+        {
+          "url": "https://www.cbs17.com/sports/acc-basketball/live-scoreboard-north-carolina-state-wolfpack-duke-blue-devils-mens-acc-basketball-2026-raleigh/",
+          "domain": "www.cbs17.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://theacc.com/news/2026/2/23/duke-wins-2026-acc-mens-fencing-team-championship.aspx",
+          "domain": "theacc.com",
+          "success": true,
+          "error": null,
+          "method": "boilerpy",
+          "status_code": 200,
+          "content_chars": 3693,
+          "truncated": false
+        },
+        {
+          "url": "https://www.newsobserver.com/sports/college/acc/article314782556.html",
+          "domain": "www.newsobserver.com",
+          "success": false,
+          "error": "Request timed out",
+          "method": null,
+          "status_code": null,
+          "content_chars": 0,
+          "truncated": false
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 7,
+        "urls_failed": 3,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "Bracketology 2026 Duke projected region",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "Collect the most recent expert bracket projections outlining Duke\u2019s seeding, region, and potential opponents.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 20,
+      "error": null
+    },
+    {
+      "query": "March 6 2026 KenPom rankings title odds",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "Fetch updated efficiency metrics and probabilistic models (KenPom, BartTorvik, ESPN BPI) for Duke and competitors.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 20,
+      "error": null
+    },
+    {
+      "query": "kenpom number 1 team tournament success rate",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Determine how often the season-ending KenPom #1 team wins or makes the Final Four/Championship.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://kenpom.com/index.php?s=RankAdjDE",
+          "domain": "kenpom.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.reddit.com/r/CollegeBasketball/comments/1bhs7uw/if_the_last_23_years_repeats_itself_based_on/",
+          "domain": "www.reddit.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://247sports.com/longformarticle/ncaa-tournament-2025-college-basketballs-10-teams-with-national-championship-formulas-per-kenpom-245884978/",
+          "domain": "247sports.com",
+          "success": true,
+          "error": null,
+          "method": "boilerpy",
+          "status_code": 200,
+          "content_chars": 6920,
+          "truncated": false
+        },
+        {
+          "url": "https://kenpom.com/blog/program-ratings/",
+          "domain": "kenpom.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://bleacherreport.com/articles/25171095-mens-ncaa-tournament-2025-power-ranking-all-68-teams",
+          "domain": "bleacherreport.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 114759,
+          "truncated": true
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=gmrOgSjRrd8",
+          "domain": "www.youtube.com",
+          "success": false,
+          "error": "Content extraction failed",
+          "method": null,
+          "status_code": 200,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.collegebasketballtimes.com/post/men-s-ncaa-tournament-breakdown-by-the-numbers",
+          "domain": "www.collegebasketballtimes.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 8509,
+          "truncated": false
+        },
+        {
+          "url": "https://fansided.com/kenpom-explained-how-use-advanced-stats-build-better-bracket",
+          "domain": "fansided.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 4179,
+          "truncated": false
+        },
+        {
+          "url": "https://www.on3.com/news/march-madness-ranking-title-contenders-with-historic-kenpom-data-in-week-15/",
+          "domain": "www.on3.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 4501,
+          "truncated": false
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=vLnSsVXipzU",
+          "domain": "www.youtube.com",
+          "success": false,
+          "error": "Content extraction failed",
+          "method": null,
+          "status_code": 200,
+          "content_chars": 0,
+          "truncated": false
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 5,
+        "urls_failed": 5,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "Houston Michigan Arizona Purdue basketball form March 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Gauge momentum and health of other top contenders most likely to face Duke deep in the tournament.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://www.aol.com/articles/ncaa-tournament-selection-committee-reveals-190544732.html",
+          "domain": "www.aol.com",
+          "success": true,
+          "error": null,
+          "method": "readability",
+          "status_code": 200,
+          "content_chars": 2213,
+          "truncated": false
+        },
+        {
+          "url": "https://www.foxsports.com/stories/college-basketball/florida-duke-michigan-arizona",
+          "domain": "www.foxsports.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 11517,
+          "truncated": false
+        },
+        {
+          "url": "https://www.si.com/college-basketball/projecting-mens-ap-top-25-michigan-state-rises-purdue-plummets",
+          "domain": "www.si.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 4659,
+          "truncated": false
+        },
+        {
+          "url": "https://www.covers.com/ncaab/march-madness/odds",
+          "domain": "www.covers.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 6543,
+          "truncated": false
+        },
+        {
+          "url": "https://www.espn.co.uk/mens-college-basketball/story/_/id/47204818/mens-college-basketball-joe-lunardi-bracketology-watch-guide-2026-march-madness",
+          "domain": "www.espn.co.uk",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 2639,
+          "truncated": false
+        },
+        {
+          "url": "https://bleacherreport.com/articles/25401867-latest-2026-mens-ncaa-tournament-bracket-projections",
+          "domain": "bleacherreport.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 19368,
+          "truncated": true
+        },
+        {
+          "url": "https://www.espn.com/mens-college-basketball/story/_/id/48014824/ap-mens-college-basketball-top-25-poll-reaction-2025-2026-week-16",
+          "domain": "www.espn.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 8046,
+          "truncated": false
+        },
+        {
+          "url": "https://www.nytimes.com/athletic/7055371/2026/02/18/mens-college-basketball-national-title-odds-michigan-arizona/",
+          "domain": "www.nytimes.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 6212,
+          "truncated": false
+        },
+        {
+          "url": "https://www.usatoday.com/story/sports/ncaab/2026/02/28/march-madness-bracket-predictions-bubble-seeds-ncaa-tournament/88848521007/",
+          "domain": "www.usatoday.com",
+          "success": true,
+          "error": null,
+          "method": "readability",
+          "status_code": 200,
+          "content_chars": 5680,
+          "truncated": false
+        },
+        {
+          "url": "https://www.on3.com/news/2026-ncaa-tournament-predictions-bracketology-projections-shift-after-no-1-overall-seed-changes-hands/",
+          "domain": "www.on3.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 4539,
+          "truncated": false
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 10,
+        "urls_failed": 0,
+        "urls_summarized": 3
+      }
+    }
+  ]
+}
