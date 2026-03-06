@@ -89,6 +89,9 @@ class ForecastAnalysis:
     resolved: bool = False
     resolution: str | float | None = None  # "Yes"/"No", numeric value, or option name
     score_data: dict | None = None  # 7-field score dict
+    scheduled_resolve_time: str | None = None  # Planned resolve time (ISO)
+    actual_resolve_time: str | None = None  # When event actually resolved (ISO)
+    resolution_set_time: str | None = None  # When Metaculus set the resolution (ISO)
 
     # Supervisor data (only present when supervisor triggered)
     supervisor_ran: bool = False
@@ -455,6 +458,9 @@ def enrich_with_tracking(analyses: list[ForecastAnalysis], tracking: dict[int, d
         a.resolved = bool(entry.get("resolved"))
         a.resolution = entry.get("resolution")
         a.score_data = entry.get("score_data")
+        a.scheduled_resolve_time = entry.get("scheduled_resolve_time")
+        a.actual_resolve_time = entry.get("actual_resolve_time")
+        a.resolution_set_time = entry.get("resolution_set_time")
 
 
 def read_text(path: Path) -> str | None:
@@ -1122,20 +1128,23 @@ def _build_resolved_section(resolved: list[ForecastAnalysis]) -> str:
         else ""
     )
 
-    # Build per-question cards sorted by peer_score (best first)
+    cards = []
+    # Default order: best peer score first; client-side JS can re-sort by resolution date.
     sorted_resolved = sorted(
         resolved,
         key=lambda a: a.score_data.get("peer_score", 0) if a.score_data else 0,
         reverse=True,
     )
-
-    cards = []
     for a in sorted_resolved:
         sd = a.score_data or {}
         peer = sd.get("peer_score")
+        peer_attr = peer if isinstance(peer, (int, float)) else 0.0
         score_class = (
             "score-positive" if peer and peer > 0 else "score-negative" if peer and peer < 0 else ""
         )
+
+        # Resolution timestamp for sorting: prefer resolution_set_time, then actual, then scheduled.
+        res_ts = a.resolution_set_time or a.actual_resolve_time or a.scheduled_resolve_time or ""
 
         # Format resolution value (API no longer returns resolution; run scrape_resolutions.py to fetch)
         res_title = ""
@@ -1219,7 +1228,7 @@ def _build_resolved_section(resolved: list[ForecastAnalysis]) -> str:
                 </tr>"""
 
         cards.append(f"""
-        <div class="resolved-card {score_class}">
+        <div class="resolved-card {score_class}" data-peer-score="{peer_attr}" data-resolution-set-time="{res_ts}">
             <div class="resolved-header">
                 <div class="forecast-title">
                     <a href="https://www.metaculus.com/questions/{a.question_id}" target="_blank">Q{a.question_id}</a>
@@ -1255,6 +1264,11 @@ def _build_resolved_section(resolved: list[ForecastAnalysis]) -> str:
         <h2>Resolved Questions</h2>
         {resolution_note}
         {summary}
+        <div class="resolved-sort">
+            <span class="resolved-sort-label">Sort by</span>
+            <button type="button" class="sort-peer active" data-sort="peer">Peer score</button>
+            <button type="button" class="sort-date" data-sort="resolution_date">Resolution date</button>
+        </div>
         <div class="forecast-list">
             {"".join(cards)}
         </div>
@@ -2134,6 +2148,35 @@ def _build_html(
         border-radius: 4px;
     }}
 
+    .resolved-sort {{
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin: 0 0 16px 0;
+        font-size: 0.85rem;
+        color: var(--text-dim);
+    }}
+    .resolved-sort-label {{
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        font-size: 0.75rem;
+        color: var(--text-dim);
+    }}
+    .resolved-sort button {{
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        padding: 4px 10px;
+        font-size: 0.8rem;
+        color: var(--text-dim);
+        cursor: pointer;
+    }}
+    .resolved-sort button.active {{
+        border-color: var(--accent);
+        color: var(--accent);
+        background: rgba(88, 166, 255, 0.12);
+    }}
+
     .forecast-card {{
         background: var(--surface);
         border: 1px solid var(--border);
@@ -2731,6 +2774,49 @@ document.getElementById('reportBackdrop').addEventListener('click', function(e) 
 document.addEventListener('keydown', function(e) {{
     if (e.key === 'Escape') closeReport();
 }});
+
+// Resolved Questions sorting
+(function() {{
+    function parsePeerScore(card) {{
+        var v = parseFloat(card.getAttribute('data-peer-score'));
+        return isNaN(v) ? -Infinity : v;
+    }}
+    function parseResolutionTime(card) {{
+        var v = card.getAttribute('data-resolution-set-time');
+        if (!v) return 0;
+        var t = Date.parse(v);
+        return isNaN(t) ? 0 : t;
+    }}
+    function sortResolved(mode) {{
+        var container = document.querySelector('#resolved .forecast-list');
+        if (!container) return;
+        var cards = Array.prototype.slice.call(
+            container.querySelectorAll('.resolved-card')
+        );
+        cards.sort(function(a, b) {{
+            if (mode === 'resolution_date') {{
+                return parseResolutionTime(b) - parseResolutionTime(a);
+            }} else {{
+                return parsePeerScore(b) - parsePeerScore(a);
+            }}
+        }});
+        cards.forEach(function(card) {{ container.appendChild(card); }});
+    }}
+    var peerBtn = document.querySelector('#resolved .resolved-sort .sort-peer');
+    var dateBtn = document.querySelector('#resolved .resolved-sort .sort-date');
+    if (peerBtn && dateBtn) {{
+        peerBtn.addEventListener('click', function() {{
+            peerBtn.classList.add('active');
+            dateBtn.classList.remove('active');
+            sortResolved('peer');
+        }});
+        dateBtn.addEventListener('click', function() {{
+            dateBtn.classList.add('active');
+            peerBtn.classList.remove('active');
+            sortResolved('resolution_date');
+        }});
+    }}
+}})();
 
 </script>
 

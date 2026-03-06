@@ -30,10 +30,15 @@ from dotenv import load_dotenv
 from src.utils.metaculus_api import MIN_INTERVAL_SECONDS
 
 DEFAULT_TRACKING_FILE = Path("data/tracking/minibench.json")
+ALL_TRACKING_FILES = [
+    Path("data/tracking/minibench.json"),
+    Path("data/tracking/32916.json"),
+    Path("data/tracking/other.json"),
+]
 
-# Rate limit: align with core Metaculus client (MIN_INTERVAL_SECONDS between calls).
-# Can be overridden via --delay if needed.
-DEFAULT_DELAY_SECONDS = MIN_INTERVAL_SECONDS
+# Rate limit: align with core Metaculus client but use a slightly higher
+# default (2.0s) to reduce the chance of 429s. Can be overridden via --delay.
+DEFAULT_DELAY_SECONDS = max(MIN_INTERVAL_SECONDS, 2.0)
 # After a 429, wait this long before the next request to let the limit window reset.
 POST_429_COOLDOWN_SECONDS = 6.0
 
@@ -41,10 +46,12 @@ POST_429_COOLDOWN_SECONDS = 6.0
 def fetch_score_data(
     token: str, question_ids: list[int], delay_seconds: float = DEFAULT_DELAY_SECONDS
 ) -> dict[int, dict]:
-    """Fetch score data for each question from the Metaculus API.
+    """Fetch score and resolution metadata for each question from the Metaculus API.
 
     Uses the /posts/{id}/ endpoint which includes my_forecasts.score_data
-    even though aggregations and resolution values are now null.
+    even though aggregations and resolution values are now null. We also
+    capture resolution timing fields from the nested question object:
+    scheduled_resolve_time, actual_resolve_time, and resolution_set_time.
     """
     client = httpx.Client(
         base_url="https://www.metaculus.com/api",
@@ -81,14 +88,29 @@ def fetch_score_data(
             print(f"  FAILED: {qid}")
             continue
 
-        q = data.get("question", {})
+        q = data.get("question", {}) or {}
         my_forecasts = q.get("my_forecasts", {})
 
         # score_data is a dict with 7 fields when scored, empty/None when not yet scored
+        # Resolution timing fields live on the nested question object.
+        scheduled_resolve_time = q.get("scheduled_resolve_time") or data.get(
+            "scheduled_resolve_time"
+        )
+        actual_resolve_time = (
+            q.get("actual_resolve_time")
+            or q.get("actual_resolution_time")
+            or data.get("actual_resolve_time")
+            or data.get("actual_resolution_time")
+        )
+        resolution_set_time = q.get("resolution_set_time") or data.get("resolution_set_time")
+
         results[qid] = {
             "resolved": data.get("resolved", False),
             "resolution": q.get("resolution"),  # Currently always null due to API lockdown
             "score_data": my_forecasts.get("score_data") or {},
+            "scheduled_resolve_time": scheduled_resolve_time,
+            "actual_resolve_time": actual_resolve_time,
+            "resolution_set_time": resolution_set_time,
         }
 
         has_scores = bool(results[qid]["score_data"])
@@ -117,11 +139,27 @@ def update_tracking(tracking: dict, api_results: dict[int, dict]) -> tuple[int, 
         if not api_q:
             continue
 
+        # Always sync scheduled_resolve_time when present so we keep planned dates fresh.
+        if api_q.get("scheduled_resolve_time") is not None:
+            forecast["scheduled_resolve_time"] = api_q["scheduled_resolve_time"]
+
         # Mark newly resolved questions
         if not forecast.get("resolved") and api_q.get("resolved"):
             forecast["resolved"] = True
             forecast["status"] = "resolved"
             newly_resolved += 1
+
+        # For resolved questions (newly or previously), backfill resolution timing fields
+        # when they are available from the API but missing in the tracking file.
+        if api_q.get("resolved"):
+            if api_q.get("actual_resolve_time") is not None and not forecast.get(
+                "actual_resolve_time"
+            ):
+                forecast["actual_resolve_time"] = api_q["actual_resolve_time"]
+            if api_q.get("resolution_set_time") is not None and not forecast.get(
+                "resolution_set_time"
+            ):
+                forecast["resolution_set_time"] = api_q["resolution_set_time"]
 
         # Add or refresh score data — always overwrite with latest from API
         # in case Metaculus recalculates scores
@@ -193,8 +231,11 @@ def main():
     parser.add_argument(
         "--tracking-file",
         type=Path,
-        default=DEFAULT_TRACKING_FILE,
-        help=f"Path to tracking JSON file (default: {DEFAULT_TRACKING_FILE})",
+        default=None,
+        help=(
+            "Path to a single tracking JSON file. "
+            "If omitted, all standard tracking files are updated."
+        ),
     )
     parser.add_argument(
         "--delay",
@@ -211,35 +252,58 @@ def main():
         print("Error: METACULUS_TOKEN not set")
         return
 
-    tracking_file = args.tracking_file
-    with open(tracking_file) as f:
-        tracking = json.load(f)
+    if args.tracking_file is not None:
+        tracking_files: list[Path] = [args.tracking_file]
+    else:
+        tracking_files = ALL_TRACKING_FILES
 
-    # Only fetch unresolved questions; once resolved the question is scored and does not need re-checking.
-    question_ids = [
-        f["question_id"] for f in tracking["forecasts"] if f.get("resolved") is not True
-    ]
-    print(
-        f"Fetching score data for {len(question_ids)} unresolved question(s) from {tracking_file}..."
-    )
-    print(f"  (delay between requests: {args.delay}s)")
+    for tracking_file in tracking_files:
+        if not tracking_file.exists():
+            print(f"Skipping missing tracking file: {tracking_file}")
+            continue
 
-    api_results = fetch_score_data(token, question_ids, delay_seconds=args.delay)
-    newly_resolved, score_updates = update_tracking(tracking, api_results)
-    recompute_stats(tracking)
-    tracking["last_updated"] = datetime.now(tz=UTC).isoformat()
+        with open(tracking_file) as f:
+            tracking = json.load(f)
 
-    with open(tracking_file, "w") as f:
-        json.dump(tracking, f, indent=2)
+        # Fetch unresolved questions, plus any resolved ones that are missing resolution
+        # timing fields so we can backfill scheduled/actual/set times incrementally.
+        question_ids: list[int] = []
+        for forecast in tracking["forecasts"]:
+            resolved = forecast.get("resolved") is True
+            missing_time_fields = any(
+                forecast.get(field) is None
+                for field in (
+                    "scheduled_resolve_time",
+                    "actual_resolve_time",
+                    "resolution_set_time",
+                )
+            )
+            if (not resolved) or missing_time_fields:
+                question_ids.append(forecast["question_id"])
 
-    print(f"\nUpdated {tracking_file}")
-    print(f"  Newly resolved: {newly_resolved}")
-    print(f"  Score updates: {score_updates}")
-    if tracking.get("score_stats"):
-        print(f"  Total scored: {tracking['score_stats'].get('total_scored', 0)}")
-        print(f"  Mean spot peer score: {tracking['score_stats']['mean_spot_peer_score']:.2f}")
-    print(f"  Total resolved: {tracking['resolution_stats']['total_resolved']}")
-    print(f"  Total unresolved: {tracking['resolution_stats']['total_unresolved']}")
+        if not question_ids:
+            print(f"No questions to update in {tracking_file}")
+            continue
+
+        print(f"Fetching score data for {len(question_ids)} question(s) from {tracking_file}...")
+        print(f"  (delay between requests: {args.delay}s)")
+
+        api_results = fetch_score_data(token, question_ids, delay_seconds=args.delay)
+        newly_resolved, score_updates = update_tracking(tracking, api_results)
+        recompute_stats(tracking)
+        tracking["last_updated"] = datetime.now(tz=UTC).isoformat()
+
+        with open(tracking_file, "w") as f:
+            json.dump(tracking, f, indent=2)
+
+        print(f"\nUpdated {tracking_file}")
+        print(f"  Newly resolved: {newly_resolved}")
+        print(f"  Score updates: {score_updates}")
+        if tracking.get("score_stats"):
+            print(f"  Total scored: {tracking['score_stats'].get('total_scored', 0)}")
+            print(f"  Mean spot peer score: {tracking['score_stats']['mean_spot_peer_score']:.2f}")
+        print(f"  Total resolved: {tracking['resolution_stats']['total_resolved']}")
+        print(f"  Total unresolved: {tracking['resolution_stats']['total_unresolved']}")
 
 
 if __name__ == "__main__":

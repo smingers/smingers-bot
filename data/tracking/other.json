@@ -1,7 +1,7 @@
 {
   "tournament_id": "other",
   "tournament_name": "Other tournaments and standalone questions",
-  "last_updated": "2026-03-06T09:42:11.659848+00:00",
+  "last_updated": "2026-03-06T11:01:02.798066+00:00",
   "total_forecasts": 13,
   "forecasts": [
     {
@@ -12,15 +12,25 @@
       "forecast_timestamp": "2026-02-06T01:29:07.036917+00:00",
       "snapshot_timestamp": "2026-02-18T22:30:00+00:00",
       "num_forecasters": 1,
-      "resolved": false,
-      "resolution": null,
+      "resolved": true,
+      "resolution": "Yes",
       "comparison": {
         "type": "binary",
         "my_probability": 0.306,
         "community_probability": 0.75,
         "difference": -0.444
       },
-      "score_data": null
+      "score_data": {
+        "baseline_score": -57.100894914137385,
+        "peer_score": -35.213885098446056,
+        "coverage": 0.4736942247083746,
+        "relative_legacy_score": -1.2367528063977389,
+        "weighted_coverage": 0.8728731784779341
+      },
+      "scheduled_resolve_time": "2026-04-01T00:00:00Z",
+      "actual_resolve_time": "2026-02-28T07:29:00Z",
+      "resolution_set_time": "2026-02-28T14:32:30.896946Z",
+      "status": "resolved"
     },
     {
       "question_id": 41597,
@@ -55,7 +65,8 @@
         "max_difference_option": "2",
         "max_difference_value": -0.03957947686116697
       },
-      "score_data": null
+      "score_data": null,
+      "scheduled_resolve_time": "2026-05-01T01:00:00Z"
     },
     {
       "question_id": 41699,
@@ -73,7 +84,8 @@
         "community_probability": 0.28,
         "difference": 0.164
       },
-      "score_data": null
+      "score_data": null,
+      "scheduled_resolve_time": "2026-03-10T00:00:00Z"
     },
     {
       "question_id": 16402,
@@ -98,7 +110,8 @@
         "community_iqr": 2.973,
         "uncertainty_ratio": 0.2735
       },
-      "score_data": null
+      "score_data": null,
+      "scheduled_resolve_time": "2050-12-31T18:00:00Z"
     },
     {
       "question_id": 22150,
@@ -116,7 +129,8 @@
         "community_probability": 0.0699,
         "difference": 0.1931
       },
-      "score_data": null
+      "score_data": null,
+      "scheduled_resolve_time": "2200-01-01T05:00:00Z"
     },
     {
       "question_id": 40281,
@@ -134,7 +148,8 @@
         "community_probability": 0.04,
         "difference": 0.0294
       },
-      "score_data": null
+      "score_data": null,
+      "scheduled_resolve_time": "2026-11-01T00:00:00Z"
     },
     {
       "question_id": 40413,
@@ -159,7 +174,8 @@
         "community_iqr": 15.597,
         "uncertainty_ratio": 1.0002
       },
-      "score_data": null
+      "score_data": null,
+      "scheduled_resolve_time": "2026-12-01T01:00:00Z"
     },
     {
       "question_id": 41514,
@@ -177,7 +193,8 @@
         "community_probability": 0.18,
         "difference": -0.032
       },
-      "score_data": null
+      "score_data": null,
+      "scheduled_resolve_time": "2026-05-01T05:00:00Z"
     },
     {
       "question_id": 41548,
@@ -202,11 +219,12 @@
         "community_iqr": 594,
         "uncertainty_ratio": 0.0011
       },
-      "score_data": null
+      "score_data": null,
+      "scheduled_resolve_time": "2032-01-01T12:00:00Z"
     },
     {
       "question_id": 41593,
-      "question_title": "When will Claude Plays Pokemon beat the first Pokémon game? (2026)",
+      "question_title": "When will Claude Plays Pokemon beat the first Pok\u00e9mon game? (2026)",
       "question_type": "date",
       "question_url": "https://www.metaculus.com/questions/41593/",
       "forecast_timestamp": "2026-02-01T15:09:27+00:00",
@@ -227,7 +245,8 @@
         "community_iqr": 8640000,
         "uncertainty_ratio": 1.1
       },
-      "score_data": null
+      "score_data": null,
+      "scheduled_resolve_time": "2026-10-01T01:00:00Z"
     },
     {
       "question_id": 41882,
@@ -274,7 +293,8 @@
         "max_difference_option": "Rastriya Swatantra Party",
         "max_difference_value": -0.5082510288065843
       },
-      "score_data": null
+      "score_data": null,
+      "scheduled_resolve_time": "2026-03-06T00:00:00Z"
     },
     {
       "question_id": 42035,
@@ -299,7 +319,8 @@
         "community_iqr": 7.35,
         "uncertainty_ratio": 0.3401
       },
-      "score_data": null
+      "score_data": null,
+      "scheduled_resolve_time": "2026-03-18T04:00:00Z"
     },
     {
       "question_id": 41968,
@@ -309,14 +330,25 @@
       "forecast_timestamp": "2026-02-02T14:44:11.081096+00:00",
       "snapshot_timestamp": "2026-02-02T14:44:11.081096+00:00",
       "num_forecasters": 82,
-      "resolved": false,
-      "resolution": null,
+      "resolved": true,
+      "resolution": 0.1,
       "comparison": null,
-      "score_data": null
+      "score_data": null,
+      "scheduled_resolve_time": "2026-02-10T10:33:57Z",
+      "actual_resolve_time": "2026-02-10T00:00:00Z",
+      "resolution_set_time": "2026-02-14T07:24:55.540417Z",
+      "status": "resolved"
     }
   ],
   "binary_count": 5,
   "numeric_count": 5,
   "multiple_choice_count": 2,
-  "date_count": 1
+  "date_count": 1,
+  "resolution_stats": {
+    "total_resolved": 2,
+    "total_unresolved": 11,
+    "binary_resolved": 1,
+    "numeric_resolved": 1,
+    "multiple_choice_resolved": 0
+  }
 }

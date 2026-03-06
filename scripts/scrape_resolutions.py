@@ -32,6 +32,11 @@ from datetime import UTC, datetime
 from pathlib import Path
 
 DEFAULT_TRACKING_FILE = Path("data/tracking/minibench.json")
+ALL_TRACKING_FILES = [
+    Path("data/tracking/minibench.json"),
+    Path("data/tracking/32916.json"),
+    Path("data/tracking/other.json"),
+]
 BASE_URL = "https://www.metaculus.com/questions"
 
 
@@ -367,24 +372,40 @@ def main():
     parser.add_argument(
         "--tracking-file",
         type=Path,
-        default=DEFAULT_TRACKING_FILE,
-        help=f"Path to tracking JSON file (default: {DEFAULT_TRACKING_FILE})",
+        default=None,
+        help=(
+            "Path to a single tracking JSON file. "
+            "If omitted, all standard tracking files are processed."
+        ),
     )
     args = parser.parse_args()
 
-    tracking, questions = get_questions_needing_resolution(args.tracking_file)
-    if not questions:
-        print(
-            "No questions to scrape: every resolved question already has a resolution value, "
-            "or there are no resolved questions missing one."
-        )
-        return
-    print(f"Scraping resolution for {len(questions)} resolved question(s) missing resolution ...")
-    results = scrape_with_playwright(questions)
-    if results:
-        merge_into_tracking(tracking, results, args.tracking_file)
+    if args.tracking_file is not None:
+        tracking_files: list[Path] = [args.tracking_file]
     else:
-        print("No resolutions extracted.")
+        tracking_files = ALL_TRACKING_FILES
+
+    for tracking_file in tracking_files:
+        if not tracking_file.exists():
+            print(f"Skipping missing tracking file: {tracking_file}")
+            continue
+
+        tracking, questions = get_questions_needing_resolution(tracking_file)
+        if not questions:
+            print(
+                f"No questions to scrape in {tracking_file}: every resolved question already has "
+                "a resolution value, or there are no resolved questions missing one."
+            )
+            continue
+        print(
+            f"Scraping resolution for {len(questions)} resolved question(s) missing resolution "
+            f"in {tracking_file} ..."
+        )
+        results = scrape_with_playwright(questions)
+        if results:
+            merge_into_tracking(tracking, results, tracking_file)
+        else:
+            print("No resolutions extracted.")
 
 
 if __name__ == "__main__":
