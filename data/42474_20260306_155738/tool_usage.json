@@ -1,0 +1,1700 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 7,
+      "queries": [
+        {
+          "query": "https://en.wikipedia.org/wiki/Iran%E2%80%93Israel_proxy_conflict",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1,
+          "domain": "en.wikipedia.org",
+          "method": "wikipedia_api",
+          "content_words": 2315,
+          "error": null,
+          "response_time_ms": 333,
+          "usage": "summarized"
+        },
+        {
+          "query": "https://en.wikipedia.org/wiki/Twelve-Day_War",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1,
+          "domain": "en.wikipedia.org",
+          "method": "wikipedia_api",
+          "content_words": 2321,
+          "error": null,
+          "response_time_ms": 96,
+          "usage": "summarized"
+        },
+        {
+          "query": "https://www.amnesty.org/en/latest/news/2026/01/iran-deaths-injuries-authorities-protest-bloodshed/",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0,
+          "domain": "www.amnesty.org",
+          "method": null,
+          "content_words": 0,
+          "error": "HTTP 403",
+          "response_time_ms": 122,
+          "usage": "failed"
+        },
+        {
+          "query": "https://en.wikipedia.org/wiki/2025%E2%80%932026_Iran%E2%80%93United_States_negotiations",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1,
+          "domain": "en.wikipedia.org",
+          "method": "wikipedia_api",
+          "content_words": 2299,
+          "error": null,
+          "response_time_ms": 384,
+          "usage": "summarized"
+        },
+        {
+          "query": "https://en.wikipedia.org/wiki/2026_Iran_conflict",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1,
+          "domain": "en.wikipedia.org",
+          "method": "wikipedia_api",
+          "content_words": 2379,
+          "error": null,
+          "response_time_ms": 745,
+          "usage": "summarized"
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "US Iran ceasefire history",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "identify any past formal ceasefires or truces between the two states to establish an extremely low base rate.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null,
+          "url_results": [
+            {
+              "url": "https://en.wikipedia.org/wiki/Twelve-Day_War_ceasefire",
+              "domain": "en.wikipedia.org",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 5370,
+              "method": "wikipedia_api",
+              "content_chars": 11098,
+              "truncated": false,
+              "usage": "summarized"
+            },
+            {
+              "url": "https://www.cfr.org/global-conflict-tracker/conflict/confrontation-between-united-states-and-iran",
+              "domain": "www.cfr.org",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 7841,
+              "method": "trafilatura",
+              "content_chars": 47391,
+              "truncated": true,
+              "usage": "summarized"
+            },
+            {
+              "url": "https://www.bbc.com/news/articles/czjk3kxr3zno",
+              "domain": "www.bbc.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 4034,
+              "method": "trafilatura",
+              "content_chars": 5851,
+              "truncated": false,
+              "usage": "summarized"
+            },
+            {
+              "url": "https://www.congress.gov/crs-product/IF13032",
+              "domain": "www.congress.gov",
+              "success": false,
+              "status_code": 403,
+              "error": "HTTP 403",
+              "response_time_ms": 3445,
+              "method": null,
+              "content_chars": 0,
+              "truncated": false,
+              "usage": "failed"
+            },
+            {
+              "url": "https://www.foxnews.com/politics/timeline-trumps-israel-iran-ceasefire-nearly-collapses-hours-after-announcement",
+              "domain": "www.foxnews.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 6581,
+              "method": "site-specific",
+              "content_chars": 4013,
+              "truncated": false,
+              "usage": "dropped_cap"
+            },
+            {
+              "url": "https://www.aljazeera.com/news/2025/6/24/have-israel-and-iran-agreed-to-a-ceasefire-what-we-know",
+              "domain": "www.aljazeera.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 4191,
+              "method": "site-specific",
+              "content_chars": 8218,
+              "truncated": false,
+              "usage": "dropped_cap"
+            },
+            {
+              "url": "https://www.britannica.com/event/Israel-Iran-conflict",
+              "domain": "www.britannica.com",
+              "success": false,
+              "status_code": 403,
+              "error": "HTTP 403",
+              "response_time_ms": 5977,
+              "method": null,
+              "content_chars": 0,
+              "truncated": false,
+              "usage": "failed"
+            },
+            {
+              "url": "https://www.youtube.com/watch?v=KmbMGOKUHGk",
+              "domain": "www.youtube.com",
+              "success": false,
+              "status_code": null,
+              "error": "Blocked domain",
+              "response_time_ms": 0,
+              "method": null,
+              "content_chars": 0,
+              "truncated": false,
+              "usage": "blocked"
+            },
+            {
+              "url": "https://www.reuters.com/world/middle-east/trump-announces-israel-iran-ceasefire-2025-06-23/",
+              "domain": "www.reuters.com",
+              "success": false,
+              "status_code": 401,
+              "error": "HTTP 401",
+              "response_time_ms": 3578,
+              "method": null,
+              "content_chars": 0,
+              "truncated": false,
+              "usage": "failed"
+            },
+            {
+              "url": "https://en.wikipedia.org/wiki/Iran%E2%80%93United_States_relations",
+              "domain": "en.wikipedia.org",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 4191,
+              "method": "wikipedia_api",
+              "content_chars": 51113,
+              "truncated": true,
+              "usage": "dropped_cap"
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 10,
+            "urls_extracted": 6,
+            "urls_failed": 4,
+            "urls_summarized": 3
+          }
+        },
+        {
+          "query": "US adversary ceasefire after strikes",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "find case studies where the US agreed to ceasefires soon after major bombing/regime-targeting operations, to gauge typical timelines.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null,
+          "url_results": [
+            {
+              "url": "https://www.foxnews.com/politics/trumps-iran-gamble-pays-off-wwiii-doomsayers-now-praise-israel-hamas-ceasefire",
+              "domain": "www.foxnews.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 2034,
+              "method": "site-specific",
+              "content_chars": 5810,
+              "truncated": false,
+              "usage": "summarized"
+            },
+            {
+              "url": "https://www.koreatimes.co.kr/world/20251030/us-determined-to-prevent-collapse-of-gaza-ceasefire-after-overnight-airstrikes",
+              "domain": "www.koreatimes.co.kr",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 11338,
+              "method": "site-specific",
+              "content_chars": 5203,
+              "truncated": false,
+              "usage": "dropped_cap"
+            },
+            {
+              "url": "https://www.longwarjournal.org/archives/2025/10/houthis-signal-pause-on-attacks-on-israel-after-gaza-ceasefire-detail-attacks-during-the-conflict.php",
+              "domain": "www.longwarjournal.org",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 1248,
+              "method": "site-specific",
+              "content_chars": 6407,
+              "truncated": false,
+              "usage": "dropped_cap"
+            },
+            {
+              "url": "https://www.youtube.com/watch?v=S3h5I6O4AqU",
+              "domain": "www.youtube.com",
+              "success": false,
+              "status_code": null,
+              "error": "Blocked domain",
+              "response_time_ms": 0,
+              "method": null,
+              "content_chars": 0,
+              "truncated": false,
+              "usage": "blocked"
+            },
+            {
+              "url": "https://www.pbs.org/newshour/politics/watch-live-trump-may-address-war-with-iran-at-medal-of-honor-ceremony",
+              "domain": "www.pbs.org",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 1434,
+              "method": "site-specific",
+              "content_chars": 4766,
+              "truncated": false,
+              "usage": "summarized"
+            },
+            {
+              "url": "https://www.cbsnews.com/news/israel-syrian-leaders-agree-to-ceasefire-u-s-envoy-says/",
+              "domain": "www.cbsnews.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 2638,
+              "method": "trafilatura",
+              "content_chars": 1522,
+              "truncated": false,
+              "usage": "dropped_cap"
+            },
+            {
+              "url": "https://en.wikipedia.org/wiki/Ceasefire",
+              "domain": "en.wikipedia.org",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 60,
+              "method": "wikipedia_api",
+              "content_chars": 13686,
+              "truncated": false,
+              "usage": "summarized"
+            },
+            {
+              "url": "https://truthout.org/articles/biden-officials-say-ceasefire-talks-are-suspended-as-harris-names-iran-top-enemy/",
+              "domain": "truthout.org",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 2329,
+              "method": "trafilatura",
+              "content_chars": 4516,
+              "truncated": false,
+              "usage": "dropped_cap"
+            },
+            {
+              "url": "https://www.youtube.com/watch?v=ScSyD_qMKDg",
+              "domain": "www.youtube.com",
+              "success": false,
+              "status_code": null,
+              "error": "Blocked domain",
+              "response_time_ms": 0,
+              "method": null,
+              "content_chars": 0,
+              "truncated": false,
+              "usage": "blocked"
+            },
+            {
+              "url": "https://www.youtube.com/watch?v=S5_L53enxzc",
+              "domain": "www.youtube.com",
+              "success": false,
+              "status_code": null,
+              "error": "Blocked domain",
+              "response_time_ms": 0,
+              "method": null,
+              "content_chars": 0,
+              "truncated": false,
+              "usage": "blocked"
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 10,
+            "urls_extracted": 7,
+            "urls_failed": 3,
+            "urls_summarized": 3
+          }
+        },
+        {
+          "query": "mediation Oman US Iran negotiations 2025 2026",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "map the chronology and substance of Omani-brokered talks to assess whether a ready-made framework exists for a ceasefire.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null,
+          "url_results": [
+            {
+              "url": "https://www.lemonde.fr/en/international/article/2026/02/28/mediator-oman-hails-breakthrough-in-us-iran-nuclear-talks_6750947_4.html",
+              "domain": "www.lemonde.fr",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 6242,
+              "method": "site-specific",
+              "content_chars": 4542,
+              "truncated": false,
+              "usage": "dropped_cap"
+            },
+            {
+              "url": "https://www.iranintl.com/en/202602271026",
+              "domain": "www.iranintl.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 7480,
+              "method": "site-specific",
+              "content_chars": 30315,
+              "truncated": true,
+              "usage": "summarized"
+            },
+            {
+              "url": "https://www.chosun.com/english/world-en/2026/02/26/C25BVRILUFEJLIGHVDG35JHYPI/",
+              "domain": "www.chosun.com",
+              "success": false,
+              "status_code": 200,
+              "error": "Content extraction failed",
+              "response_time_ms": 8677,
+              "method": null,
+              "content_chars": 0,
+              "truncated": false,
+              "usage": "failed"
+            },
+            {
+              "url": "https://www.youtube.com/watch?v=qePqwqWJpCM",
+              "domain": "www.youtube.com",
+              "success": false,
+              "status_code": null,
+              "error": "Blocked domain",
+              "response_time_ms": 0,
+              "method": null,
+              "content_chars": 0,
+              "truncated": false,
+              "usage": "blocked"
+            },
+            {
+              "url": "https://www.timesofisrael.com/us-iran-said-to-agree-to-further-talks-next-week-as-mediator-claims-progress/",
+              "domain": "www.timesofisrael.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 9475,
+              "method": "site-specific",
+              "content_chars": 13380,
+              "truncated": false,
+              "usage": "summarized"
+            },
+            {
+              "url": "https://www.cbsnews.com/video/full-interview-omans-foreign-minister-badr-bin-hamad-al-busaidi/",
+              "domain": "www.cbsnews.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 6868,
+              "method": "trafilatura",
+              "content_chars": 544,
+              "truncated": false,
+              "usage": "dropped_short"
+            },
+            {
+              "url": "https://english.alarabiya.net/News/middle-east/2026/02/28/mediator-oman-urges-us-to-pull-back-from-iran-conflict",
+              "domain": "english.alarabiya.net",
+              "success": false,
+              "status_code": 403,
+              "error": "HTTP 403",
+              "response_time_ms": 8678,
+              "method": null,
+              "content_chars": 0,
+              "truncated": false,
+              "usage": "failed"
+            },
+            {
+              "url": "https://www.youtube.com/watch?v=IwW8dHxvlQw",
+              "domain": "www.youtube.com",
+              "success": false,
+              "status_code": null,
+              "error": "Blocked domain",
+              "response_time_ms": 0,
+              "method": null,
+              "content_chars": 0,
+              "truncated": false,
+              "usage": "blocked"
+            },
+            {
+              "url": "https://www.hindustantimes.com/world-news/iran-tells-mediator-oman-its-open-to-efforts-for-de-escalation-amid-us-israel-strikes-101772382044917.html",
+              "domain": "www.hindustantimes.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 7259,
+              "method": "trafilatura",
+              "content_chars": 3015,
+              "truncated": false,
+              "usage": "summarized"
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 9,
+            "urls_extracted": 5,
+            "urls_failed": 4,
+            "urls_summarized": 3
+          }
+        },
+        {
+          "query": "[HISTORICAL] After leadership death ceasefire timing data US conflicts",
+          "tool": "Agent",
+          "temporal_role": "historical",
+          "intent": "gather cross-case evidence on how leadership decapitation affects probability and timing of ceasefires, with examples like Libya 2011, Iraq 2003 insurgency truces, etc.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null,
+          "agentic_instrumentation": {
+            "steps_taken": 2,
+            "queries_executed": [
+              "ceasefire after enemy leader death",
+              "Korean War armistice timeline Stalin",
+              "Hitler death unconditional surrender timeline",
+              "Gaddafi death ceasefire Libya 2011",
+              "Kosovo war Milosevic ceasefire agreement"
+            ],
+            "step_data": [
+              {
+                "step_number": 1,
+                "queries_executed": [
+                  [
+                    "ceasefire after enemy leader death",
+                    "Google"
+                  ],
+                  [
+                    "Korean War armistice timeline Stalin",
+                    "Google"
+                  ],
+                  [
+                    "Hitler death unconditional surrender timeline",
+                    "Google"
+                  ],
+                  [
+                    "Gaddafi death ceasefire Libya 2011",
+                    "Google"
+                  ],
+                  [
+                    "Kosovo war Milosevic ceasefire agreement",
+                    "Google"
+                  ]
+                ],
+                "search_results_chars": 92242,
+                "analysis_chars": 0,
+                "url_results": {
+                  "ceasefire after enemy leader death (Google)": [
+                    {
+                      "url": "https://www.reuters.com/world/middle-east/eu-chief-diplomat-calls-ceasefire-middle-east-after-sinwars-death-2024-10-19/",
+                      "domain": "www.reuters.com",
+                      "success": false,
+                      "status_code": 401,
+                      "error": "HTTP 401",
+                      "response_time_ms": 887,
+                      "method": null,
+                      "content_chars": 0,
+                      "truncated": false,
+                      "usage": "failed"
+                    },
+                    {
+                      "url": "https://www.facebook.com/WatchSalemNewsChannel/posts/kevin-mccullough-reports-of-khameneis-death-mark-a-decisive-shift-not-a-forever-/947696027773850/",
+                      "domain": "www.facebook.com",
+                      "success": false,
+                      "status_code": null,
+                      "error": "Blocked domain",
+                      "response_time_ms": 0,
+                      "method": null,
+                      "content_chars": 0,
+                      "truncated": false,
+                      "usage": "blocked"
+                    },
+                    {
+                      "url": "https://english.aawsat.com/arab-world/5072444-hamas-leader%E2%80%99s-death-creates-chance-ceasefire-us-defense-secretary-says",
+                      "domain": "english.aawsat.com",
+                      "success": true,
+                      "status_code": 200,
+                      "error": null,
+                      "response_time_ms": 3034,
+                      "method": "site-specific",
+                      "content_chars": 7881,
+                      "truncated": false,
+                      "usage": "dropped_cap"
+                    },
+                    {
+                      "url": "https://www.thecairoreview.com/essays/the-world-fears-wider-war-after-hamas-leaders-assassination/",
+                      "domain": "www.thecairoreview.com",
+                      "success": true,
+                      "status_code": 200,
+                      "error": null,
+                      "response_time_ms": 2754,
+                      "method": "site-specific",
+                      "content_chars": 10817,
+                      "truncated": false,
+                      "usage": "dropped_cap"
+                    },
+                    {
+                      "url": "https://en.wikipedia.org/wiki/Twelve-Day_War_ceasefire",
+                      "domain": "en.wikipedia.org",
+                      "success": true,
+                      "status_code": 200,
+                      "error": null,
+                      "response_time_ms": 5370,
+                      "method": "wikipedia_api",
+                      "content_chars": 11098,
+                      "truncated": false,
+                      "usage": "raw_to_agent"
+                    },
+                    {
+                      "url": "https://www.facebook.com/groups/225085148766978/posts/1595917171683762/",
+                      "domain": "www.facebook.com",
+                      "success": false,
+                      "status_code": null,
+                      "error": "Blocked domain",
+                      "response_time_ms": 0,
+                      "method": null,
+                      "content_chars": 0,
+                      "truncated": false,
+                      "usage": "blocked"
+                    },
+                    {
+                      "url": "https://www.straitstimes.com/asia/hamas-leaders-death-creates-chance-for-ceasefire-us-defense-secretary-says",
+                      "domain": "www.straitstimes.com",
+                      "success": true,
+                      "status_code": 200,
+                      "error": null,
+                      "response_time_ms": 1995,
+                      "method": "site-specific",
+                      "content_chars": 2159,
+                      "truncated": false,
+                      "usage": "dropped_cap"
+                    },
+                    {
+                      "url": "https://abc7chicago.com/post/israels-military-says-ceasefire-is-back-death-toll-overnight-strikes-gaza-reaches-104/18085188/",
+                      "domain": "abc7chicago.com",
+                      "success": true,
+                      "status_code": 200,
+                      "error": null,
+                      "response_time_ms": 1045,
+                      "method": "site-specific",
+                      "content_chars": 5963,
+                      "truncated": false,
+                      "usage": "raw_to_agent"
+                    },
+                    {
+                      "url": "https://www.facebook.com/aljazeera/videos/breaking-news-irans-supreme-leader-khamenei-confirmed-dead/1204065485085544/",
+                      "domain": "www.facebook.com",
+                      "success": false,
+                      "status_code": null,
+                      "error": "Blocked domain",
+                      "response_time_ms": 0,
+                      "method": null,
+                      "content_chars": 0,
+                      "truncated": false,
+                      "usage": "blocked"
+                    },
+                    {
+                      "url": "https://www.bbc.co.uk/news/articles/cp4wgqypwrxo",
+                      "domain": "www.bbc.co.uk",
+                      "success": true,
+                      "status_code": 200,
+                      "error": null,
+                      "response_time_ms": 1916,
+                      "method": "site-specific",
+                      "content_chars": 5386,
+                      "truncated": false,
+                      "usage": "raw_to_agent"
+                    }
+                  ],
+                  "Korean War armistice timeline Stalin (Google)": [
+                    {
+                      "url": "https://en.wikipedia.org/wiki/Korean_Armistice_Agreement",
+                      "domain": "en.wikipedia.org",
+                      "success": true,
+                      "status_code": 200,
+                      "error": null,
+                      "response_time_ms": 1304,
+                      "method": "wikipedia_api",
+                      "content_chars": 21657,
+                      "truncated": true,
+                      "usage": "raw_to_agent"
+                    },
+                    {
+                      "url": "https://www.thehistoryreader.com/military-history/july-27-1953-korean-war-armistice-ceasefire-without-peace/",
+                      "domain": "www.thehistoryreader.com",
+                      "success": false,
+                      "status_code": 403,
+                      "error": "HTTP 403",
+                      "response_time_ms": 3488,
+                      "method": null,
+                      "content_chars": 0,
+                      "truncated": false,
+                      "usage": "failed"
+                    },
+                    {
+                      "url": "https://www.asianstudies.org/publications/eaa/archives/the-korean-war-101-causes-course-and-conclusion-of-the-conflict/",
+                      "domain": "www.asianstudies.org",
+                      "success": false,
+                      "status_code": 403,
+                      "error": "HTTP 403",
+                      "response_time_ms": 3268,
+                      "method": null,
+                      "content_chars": 0,
+                      "truncated": false,
+                      "usage": "failed"
+                    },
+                    {
+                      "url": "https://www.history.com/this-day-in-history/july-27/armistice-ends-the-korean-war",
+                      "domain": "www.history.com",
+                      "success": true,
+                      "status_code": 200,
+                      "error": null,
+                      "response_time_ms": 2230,
+                      "method": "site-specific",
+                      "content_chars": 5363,
+                      "truncated": false,
+                      "usage": "raw_to_agent"
+                    },
+                    {
+                      "url": "https://www.facebook.com/AmericanExperiencePBS/posts/accelerated-by-joseph-stalins-death-and-the-installation-of-new-leadership-in-mo/1142260661282880/",
+                      "domain": "www.facebook.com",
+                      "success": false,
+                      "status_code": null,
+                      "error": "Blocked domain",
+                      "response_time_ms": 0,
+                      "method": null,
+                      "content_chars": 0,
+                      "truncated": false,
+                      "usage": "blocked"
+                    },
+                    {
+                      "url": "https://www.army.mil/article/190943/commemorating_korean_war_armistice_day",
+                      "domain": "www.army.mil",
+                      "success": true,
+                      "status_code": 200,
+                      "error": null,
+                      "response_time_ms": 5284,
+                      "method": "site-specific",
+                      "content_chars": 5021,
+                      "truncated": false,
+                      "usage": "raw_to_agent"
+                    },
+                    {
+                      "url": "https://mershoncenter.osu.edu/legacy-korean-war",
+                      "domain": "mershoncenter.osu.edu",
+                      "success": false,
+                      "status_code": 403,
+                      "error": "HTTP 403",
+                      "response_time_ms": 3244,
+                      "method": null,
+                      "content_chars": 0,
+                      "truncated": false,
+                      "usage": "failed"
+                    },
+                    {
+                      "url": "https://www.archives.gov/milestone-documents/armistice-agreement-restoration-south-korean-state",
+                      "domain": "www.archives.gov",
+                      "success": true,
+                      "status_code": 200,
+                      "error": null,
+                      "response_time_ms": 3484,
+                      "method": "site-specific",
+                      "content_chars": 53873,
+                      "truncated": true,
+                      "usage": "dropped_cap"
+                    },
+                    {
+                      "url": "https://www.youtube.com/watch?v=Uzu-TbV7Hnc",
+                      "domain": "www.youtube.com",
+                      "success": false,
+                      "status_code": null,
+                      "error": "Blocked domain",
+                      "response_time_ms": 0,
+                      "method": null,
+                      "content_chars": 0,
+                      "truncated": false,
+                      "usage": "blocked"
+                    },
+                    {
+                      "url": "https://aru.figshare.com/articles/thesis/Stalin_and_the_origin_of_the_Korean_War_a_reconsideration/23763897",
+                      "domain": "aru.figshare.com",
+                      "success": false,
+                      "status_code": 202,
+                      "error": "Content extraction failed",
+                      "response_time_ms": 4239,
+                      "method": null,
+                      "content_chars": 0,
+                      "truncated": false,
+                      "usage": "failed"
+                    }
+                  ],
+                  "Hitler death unconditional surrender timeline (Google)": [
+                    {
+                      "url": "https://en.wikipedia.org/wiki/Death_of_Adolf_Hitler",
+                      "domain": "en.wikipedia.org",
+                      "success": true,
+                      "status_code": 200,
+                      "error": null,
+                      "response_time_ms": 311,
+                      "method": "wikipedia_api",
+                      "content_chars": 25579,
+                      "truncated": true,
+                      "usage": "raw_to_agent"
+                    },
+                    {
+                      "url": "https://www.trumanlibraryinstitute.org/wwii-80-the-death-of-adolf-hitler/",
+                      "domain": "www.trumanlibraryinstitute.org",
+                      "success": true,
+                      "status_code": 200,
+                      "error": null,
+                      "response_time_ms": 234,
+                      "method": "trafilatura",
+                      "content_chars": 5825,
+                      "truncated": false,
+                      "usage": "raw_to_agent"
+                    },
+                    {
+                      "url": "https://www.history.com/this-day-in-history/april-30/adolf-hitler-commits-suicide",
+                      "domain": "www.history.com",
+                      "success": true,
+                      "status_code": 200,
+                      "error": null,
+                      "response_time_ms": 807,
+                      "method": "site-specific",
+                      "content_chars": 10241,
+                      "truncated": false,
+                      "usage": "dropped_cap"
+                    },
+                    {
+                      "url": "https://www.historic-newspapers.com/blogs/article/the-final-days-of-the-third-reich-and-the-death-of-adolf-hitler?srsltid=AfmBOorPktmeDCjBlIHiM0vVWnrKhtZF5ifj6Q90jTdxQQpEimV_pK2M",
+                      "domain": "www.historic-newspapers.com",
+                      "success": true,
+                      "status_code": 200,
+                      "error": null,
+                      "response_time_ms": 3550,
+                      "method": "site-specific",
+                      "content_chars": 6843,
+                      "truncated": false,
+                      "usage": "dropped_cap"
+                    },
+                    {
+                      "url": "https://www.facebook.com/CommemorativeAF/posts/eighty-years-ago-today-the-world-learned-that-adolf-hitler-was-deadon-april-30-1/1103466681819547/",
+                      "domain": "www.facebook.com",
+                      "success": false,
+                      "status_code": null,
+                      "error": "Blocked domain",
+                      "response_time_ms": 0,
+                      "method": null,
+                      "content_chars": 0,
+                      "truncated": false,
+                      "usage": "blocked"
+                    },
+                    {
+                      "url": "https://www.youtube.com/watch?v=DY2MoJ8UnoY",
+                      "domain": "www.youtube.com",
+                      "success": false,
+                      "status_code": null,
+                      "error": "Blocked domain",
+                      "response_time_ms": 0,
+                      "method": null,
+                      "content_chars": 0,
+                      "truncated": false,
+                      "usage": "blocked"
+                    },
+                    {
+                      "url": "https://www.bbc.com/news/world-europe-44131106",
+                      "domain": "www.bbc.com",
+                      "success": true,
+                      "status_code": 200,
+                      "error": null,
+                      "response_time_ms": 2059,
+                      "method": "trafilatura",
+                      "content_chars": 4206,
+                      "truncated": false,
+                      "usage": "raw_to_agent"
+                    },
+                    {
+                      "url": "https://www.history.navy.mil/browse-by-topic/wars-conflicts-and-operations/world-war-ii/1945/ve-day/ve-day-aftermath.html",
+                      "domain": "www.history.navy.mil",
+                      "success": false,
+                      "status_code": null,
+                      "error": "[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1016)",
+                      "response_time_ms": 354,
+                      "method": null,
+                      "content_chars": 0,
+                      "truncated": false,
+                      "usage": "failed"
+                    },
+                    {
+                      "url": "https://en.wikipedia.org/wiki/End_of_World_War_II_in_Europe",
+                      "domain": "en.wikipedia.org",
+                      "success": true,
+                      "status_code": 200,
+                      "error": null,
+                      "response_time_ms": 1744,
+                      "method": "wikipedia_api",
+                      "content_chars": 23472,
+                      "truncated": true,
+                      "usage": "dropped_cap"
+                    }
+                  ],
+                  "Gaddafi death ceasefire Libya 2011 (Google)": [
+                    {
+                      "url": "https://www.aljazeera.com/news/2011/12/27/libya-the-revolt-that-brought-down-gaddafi",
+                      "domain": "www.aljazeera.com",
+                      "success": true,
+                      "status_code": 200,
+                      "error": null,
+                      "response_time_ms": 883,
+                      "method": "site-specific",
+                      "content_chars": 3130,
+                      "truncated": false,
+                      "usage": "raw_to_agent"
+                    },
+                    {
+                      "url": "https://www.bbc.com/news/world-africa-13249923",
+                      "domain": "www.bbc.com",
+                      "success": true,
+                      "status_code": 200,
+                      "error": null,
+                      "response_time_ms": 1714,
+                      "method": "site-specific",
+                      "content_chars": 4690,
+                      "truncated": false,
+                      "usage": "raw_to_agent"
+                    },
+                    {
+                      "url": "https://www.cfr.org/articles/death-qaddafi",
+                      "domain": "www.cfr.org",
+                      "success": true,
+                      "status_code": 200,
+                      "error": null,
+                      "response_time_ms": 1142,
+                      "method": "boilerpy",
+                      "content_chars": 3147,
+                      "truncated": false,
+                      "usage": "raw_to_agent"
+                    },
+                    {
+                      "url": "https://www.youtube.com/watch?v=EnmMZ2bSlnc",
+                      "domain": "www.youtube.com",
+                      "success": false,
+                      "status_code": null,
+                      "error": "Blocked domain",
+                      "response_time_ms": 0,
+                      "method": null,
+                      "content_chars": 0,
+                      "truncated": false,
+                      "usage": "blocked"
+                    },
+                    {
+                      "url": "https://www.facebook.com/groups/africaviewfacts/posts/1270528298129976/",
+                      "domain": "www.facebook.com",
+                      "success": false,
+                      "status_code": null,
+                      "error": "Blocked domain",
+                      "response_time_ms": 0,
+                      "method": null,
+                      "content_chars": 0,
+                      "truncated": false,
+                      "usage": "blocked"
+                    },
+                    {
+                      "url": "https://www.theguardian.com/world/2011/oct/23/gaddafi-last-words-begged-mercy",
+                      "domain": "www.theguardian.com",
+                      "success": true,
+                      "status_code": 200,
+                      "error": null,
+                      "response_time_ms": 1499,
+                      "method": "site-specific",
+                      "content_chars": 15016,
+                      "truncated": true,
+                      "usage": "dropped_cap"
+                    },
+                    {
+                      "url": "https://www.democracynow.org/2011/10/20/muammar_gaddafi_killed_in_libya_as",
+                      "domain": "www.democracynow.org",
+                      "success": true,
+                      "status_code": 200,
+                      "error": null,
+                      "response_time_ms": 3435,
+                      "method": "trafilatura",
+                      "content_chars": 12942,
+                      "truncated": false,
+                      "usage": "dropped_cap"
+                    },
+                    {
+                      "url": "https://www.amnesty.org/en/latest/press-release/2011/10/libya-urged-investigate-whether-al-gaddafi-death-was-war-crime/",
+                      "domain": "www.amnesty.org",
+                      "success": false,
+                      "status_code": 403,
+                      "error": "HTTP 403",
+                      "response_time_ms": 1061,
+                      "method": null,
+                      "content_chars": 0,
+                      "truncated": false,
+                      "usage": "failed"
+                    },
+                    {
+                      "url": "https://www.nytimes.com/2011/10/21/world/africa/qaddafi-is-killed-as-libyan-forces-take-surt.html",
+                      "domain": "www.nytimes.com",
+                      "success": false,
+                      "status_code": 403,
+                      "error": "HTTP 403",
+                      "response_time_ms": 1060,
+                      "method": null,
+                      "content_chars": 0,
+                      "truncated": false,
+                      "usage": "failed"
+                    }
+                  ],
+                  "Kosovo war Milosevic ceasefire agreement (Google)": [
+                    {
+                      "url": "https://www.brookings.edu/articles/peace-at-any-price-kosovo-deal-costs-milosevic-little-is-unlikely-to-resolve-crisis/",
+                      "domain": "www.brookings.edu",
+                      "success": true,
+                      "status_code": 200,
+                      "error": null,
+                      "response_time_ms": 3072,
+                      "method": "site-specific",
+                      "content_chars": 10098,
+                      "truncated": false,
+                      "usage": "dropped_cap"
+                    },
+                    {
+                      "url": "https://www.rand.org/pubs/research_briefs/RB71.html",
+                      "domain": "www.rand.org",
+                      "success": true,
+                      "status_code": 200,
+                      "error": null,
+                      "response_time_ms": 1913,
+                      "method": "site-specific",
+                      "content_chars": 12847,
+                      "truncated": false,
+                      "usage": "raw_to_agent"
+                    },
+                    {
+                      "url": "https://en.wikipedia.org/wiki/Kosovo_War",
+                      "domain": "en.wikipedia.org",
+                      "success": true,
+                      "status_code": 200,
+                      "error": null,
+                      "response_time_ms": 1779,
+                      "method": "wikipedia_api",
+                      "content_chars": 105897,
+                      "truncated": true,
+                      "usage": "raw_to_agent"
+                    },
+                    {
+                      "url": "https://ciaotest.cc.columbia.edu/olj/iai/iai_98goj01.html",
+                      "domain": "ciaotest.cc.columbia.edu",
+                      "success": true,
+                      "status_code": 200,
+                      "error": null,
+                      "response_time_ms": 344,
+                      "method": "site-specific",
+                      "content_chars": 57068,
+                      "truncated": true,
+                      "usage": "raw_to_agent"
+                    },
+                    {
+                      "url": "https://www.wsws.org/en/articles/1998/10/koso-o20.html",
+                      "domain": "www.wsws.org",
+                      "success": true,
+                      "status_code": 200,
+                      "error": null,
+                      "response_time_ms": 3183,
+                      "method": "site-specific",
+                      "content_chars": 6475,
+                      "truncated": false,
+                      "usage": "dropped_cap"
+                    },
+                    {
+                      "url": "https://clintonwhitehouse5.archives.gov/WH/Work/040199.html",
+                      "domain": "clintonwhitehouse5.archives.gov",
+                      "success": true,
+                      "status_code": 200,
+                      "error": null,
+                      "response_time_ms": 2673,
+                      "method": "site-specific",
+                      "content_chars": 19897,
+                      "truncated": true,
+                      "usage": "dropped_cap"
+                    },
+                    {
+                      "url": "https://chomsky.info/199907__/",
+                      "domain": "chomsky.info",
+                      "success": true,
+                      "status_code": 200,
+                      "error": null,
+                      "response_time_ms": 917,
+                      "method": "site-specific",
+                      "content_chars": 22805,
+                      "truncated": true,
+                      "usage": "dropped_cap"
+                    },
+                    {
+                      "url": "https://www.dw.com/en/25-years-later-what-happened-during-the-kosovo-war/a-69318675",
+                      "domain": "www.dw.com",
+                      "success": true,
+                      "status_code": 200,
+                      "error": null,
+                      "response_time_ms": 2834,
+                      "method": "site-specific",
+                      "content_chars": 6507,
+                      "truncated": false,
+                      "usage": "dropped_cap"
+                    },
+                    {
+                      "url": "https://www.rand.org/pubs/monograph_reports/MR1351.html",
+                      "domain": "www.rand.org",
+                      "success": true,
+                      "status_code": 200,
+                      "error": null,
+                      "response_time_ms": 1777,
+                      "method": "site-specific",
+                      "content_chars": 2641,
+                      "truncated": false,
+                      "usage": "dropped_cap"
+                    },
+                    {
+                      "url": "https://www.everycrsreport.com/reports/RL30127.html",
+                      "domain": "www.everycrsreport.com",
+                      "success": true,
+                      "status_code": 200,
+                      "error": null,
+                      "response_time_ms": 1669,
+                      "method": "trafilatura",
+                      "content_chars": 58740,
+                      "truncated": true,
+                      "usage": "dropped_cap"
+                    }
+                  ]
+                }
+              }
+            ],
+            "error": null
+          }
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Agent"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "Iran interim leadership ceasefire statements March 2026",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "obtain latest public positions from Iran\u2019s new leaders on negotiating a ceasefire with the US.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null,
+          "url_results": [
+            {
+              "url": "https://www.iranintl.com/en/202603054889",
+              "domain": "www.iranintl.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 5396,
+              "method": "site-specific",
+              "content_chars": 16380,
+              "truncated": true,
+              "usage": "dropped_cap"
+            },
+            {
+              "url": "https://www.palestinechronicle.com/iran-begins-supreme-leader-succession-talks-rejects-us-role-in-leadership-choice/",
+              "domain": "www.palestinechronicle.com",
+              "success": false,
+              "status_code": 429,
+              "error": "HTTP 429",
+              "response_time_ms": 15847,
+              "method": null,
+              "content_chars": 0,
+              "truncated": false,
+              "usage": "failed"
+            },
+            {
+              "url": "https://www.middleeastmonitor.com/20260306-iran-says-it-is-ready-for-ground-invasion-and-rejects-ceasefire-with-us/",
+              "domain": "www.middleeastmonitor.com",
+              "success": false,
+              "status_code": 403,
+              "error": "HTTP 403",
+              "response_time_ms": 6004,
+              "method": null,
+              "content_chars": 0,
+              "truncated": false,
+              "usage": "failed"
+            },
+            {
+              "url": "https://thesoufancenter.org/intelbrief-2026-march-1b/",
+              "domain": "thesoufancenter.org",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 5030,
+              "method": "site-specific",
+              "content_chars": 7430,
+              "truncated": false,
+              "usage": "dropped_cap"
+            },
+            {
+              "url": "https://mwi.westpoint.edu/tell-me-how-this-ends-six-questions-that-will-shape-the-outcome-of-the-us-israeli-operations-against-iran/",
+              "domain": "mwi.westpoint.edu",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 3261,
+              "method": "site-specific",
+              "content_chars": 31946,
+              "truncated": true,
+              "usage": "dropped_cap"
+            },
+            {
+              "url": "https://www.cbsnews.com/live-updates/israel-us-attack-iran-trump-says-major-combat-operations/",
+              "domain": "www.cbsnews.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 9769,
+              "method": "trafilatura",
+              "content_chars": 88601,
+              "truncated": true,
+              "usage": "dropped_cap"
+            },
+            {
+              "url": "https://www.longwarjournal.org/archives/2026/03/us-israeli-campaign-hits-iranian-regimes-military-and-repression-apparatus-regime-forms-leadership-council-march-1-updates.php",
+              "domain": "www.longwarjournal.org",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 5814,
+              "method": "trafilatura",
+              "content_chars": 8257,
+              "truncated": false,
+              "usage": "dropped_cap"
+            },
+            {
+              "url": "https://www.bbc.com/news/articles/cx2lgvg5rl1o",
+              "domain": "www.bbc.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 3835,
+              "method": "trafilatura",
+              "content_chars": 6249,
+              "truncated": false,
+              "usage": "summarized"
+            },
+            {
+              "url": "https://wanaen.com/we-never-started-this-war-but-we-will-defend-our-citizens/",
+              "domain": "wanaen.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 5519,
+              "method": "trafilatura",
+              "content_chars": 3025,
+              "truncated": false,
+              "usage": "summarized"
+            },
+            {
+              "url": "https://www.turkiyetoday.com/region/iran-president-says-post-khamenei-interim-leadership-council-started-work-3215391",
+              "domain": "www.turkiyetoday.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 5710,
+              "method": "site-specific",
+              "content_chars": 1193,
+              "truncated": false,
+              "usage": "summarized"
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 10,
+            "urls_extracted": 8,
+            "urls_failed": 2,
+            "urls_summarized": 3
+          }
+        },
+        {
+          "query": "Trump administration ceasefire offer Iran 2026",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "track U.S. executive-branch messaging on willingness, conditions, or timelines for a ceasefire.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null,
+          "url_results": [
+            {
+              "url": "https://www.cbsnews.com/live-updates/us-iran-war-spreads-azerbaijan-israel-strikes-tehran-lebanon/",
+              "domain": "www.cbsnews.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 993,
+              "method": "trafilatura",
+              "content_chars": 63511,
+              "truncated": true,
+              "usage": "summarized"
+            },
+            {
+              "url": "https://www.npr.org/2026/03/06/nx-s1-5738448/iran-us-israel-war",
+              "domain": "www.npr.org",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 4696,
+              "method": "site-specific",
+              "content_chars": 9499,
+              "truncated": false,
+              "usage": "summarized"
+            },
+            {
+              "url": "https://time.com/7382836/iran-us-israel-war-trump-araghchi-ground-invasion-cease-fire/",
+              "domain": "time.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 6750,
+              "method": "trafilatura",
+              "content_chars": 1668,
+              "truncated": false,
+              "usage": "summarized"
+            },
+            {
+              "url": "https://www.nytimes.com/2026/03/04/us/politics/trump-iran-intelligence-leaders.html",
+              "domain": "www.nytimes.com",
+              "success": false,
+              "status_code": 403,
+              "error": "HTTP 403",
+              "response_time_ms": 2593,
+              "method": null,
+              "content_chars": 0,
+              "truncated": false,
+              "usage": "failed"
+            },
+            {
+              "url": "https://www.cnbc.com/2026/03/03/trump-iran-shifting-narrative-us-war.html",
+              "domain": "www.cnbc.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 8193,
+              "method": "site-specific",
+              "content_chars": 7148,
+              "truncated": false,
+              "usage": "dropped_cap"
+            },
+            {
+              "url": "https://www.armscontrol.org/act/2026-03/news/trump-strikes-iran-amid-nuclear-talks",
+              "domain": "www.armscontrol.org",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 2337,
+              "method": "site-specific",
+              "content_chars": 6147,
+              "truncated": false,
+              "usage": "dropped_cap"
+            },
+            {
+              "url": "https://www.axios.com/2026/03/04/iran-netanyahu-trump-white-house-talks",
+              "domain": "www.axios.com",
+              "success": false,
+              "status_code": 403,
+              "error": "HTTP 403",
+              "response_time_ms": 6755,
+              "method": null,
+              "content_chars": 0,
+              "truncated": false,
+              "usage": "failed"
+            },
+            {
+              "url": "https://www.aljazeera.com/news/2026/3/4/trumps-endgame-in-iran-regime-change-without-us-boots-on-the-ground",
+              "domain": "www.aljazeera.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 3440,
+              "method": "site-specific",
+              "content_chars": 6914,
+              "truncated": false,
+              "usage": "dropped_cap"
+            },
+            {
+              "url": "https://www.latimes.com/politics/story/2026-03-03/israel-believes-iran-war-could-last-months-testing-u-s-resolve",
+              "domain": "www.latimes.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 3143,
+              "method": "trafilatura",
+              "content_chars": 8008,
+              "truncated": false,
+              "usage": "dropped_cap"
+            },
+            {
+              "url": "https://www.theguardian.com/commentisfree/2026/mar/02/us-trump-iran-war",
+              "domain": "www.theguardian.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 5191,
+              "method": "site-specific",
+              "content_chars": 6953,
+              "truncated": false,
+              "usage": "dropped_cap"
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 10,
+            "urls_extracted": 8,
+            "urls_failed": 2,
+            "urls_summarized": 3
+          }
+        },
+        {
+          "query": "missile drone attacks Gulf bases March 2026",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "monitor ongoing Iranian kinetic activity against US forces; decreasing frequency would signal ripening conditions for ceasefire.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null,
+          "url_results": [
+            {
+              "url": "https://understandingwar.org/research/middle-east/iran-update-evening-special-report-march-5-2026/",
+              "domain": "understandingwar.org",
+              "success": false,
+              "status_code": 403,
+              "error": "HTTP 403",
+              "response_time_ms": 7262,
+              "method": null,
+              "content_chars": 0,
+              "truncated": false,
+              "usage": "failed"
+            },
+            {
+              "url": "https://www.pbs.org/newshour/show/iranian-drone-missile-attacks-on-gulf-nations-risk-pulling-more-countries-into-war",
+              "domain": "www.pbs.org",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 4888,
+              "method": "site-specific",
+              "content_chars": 4644,
+              "truncated": false,
+              "usage": "summarized"
+            },
+            {
+              "url": "https://www.longwarjournal.org/archives/2026/03/iran-targets-us-bases-diplomatic-missions-and-oil-infrastructure-in-arab-countries-on-march-3-5.php",
+              "domain": "www.longwarjournal.org",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 5704,
+              "method": "site-specific",
+              "content_chars": 6779,
+              "truncated": false,
+              "usage": "summarized"
+            },
+            {
+              "url": "https://www.jpost.com/middle-east/iran-news/2026-03-06/live-updates-889041",
+              "domain": "www.jpost.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 3392,
+              "method": "trafilatura",
+              "content_chars": 4043,
+              "truncated": false,
+              "usage": "dropped_cap"
+            },
+            {
+              "url": "https://jinsa.org/jinsa_report/gulf-situation-assessment-irans-attacks-on-arab-states-will-backfire/",
+              "domain": "jinsa.org",
+              "success": false,
+              "status_code": 403,
+              "error": "HTTP 403",
+              "response_time_ms": 5711,
+              "method": null,
+              "content_chars": 0,
+              "truncated": false,
+              "usage": "failed"
+            },
+            {
+              "url": "https://www.aljazeera.com/news/2026/3/6/iran-targets-israeli-embassy-in-bahrain-saudi-arabia-intercepts-missile",
+              "domain": "www.aljazeera.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 2487,
+              "method": "site-specific",
+              "content_chars": 3954,
+              "truncated": false,
+              "usage": "summarized"
+            },
+            {
+              "url": "https://www.pbs.org/newshour/world/chaos-sown-by-irans-attacks-across-the-persian-gulf-is-key-to-its-strategy",
+              "domain": "www.pbs.org",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 5898,
+              "method": "site-specific",
+              "content_chars": 6971,
+              "truncated": false,
+              "usage": "dropped_cap"
+            },
+            {
+              "url": "https://understandingwar.org/research/middle-east/iran-update-evening-special-report-march-4-2026/",
+              "domain": "understandingwar.org",
+              "success": false,
+              "status_code": 403,
+              "error": "HTTP 403",
+              "response_time_ms": 7261,
+              "method": null,
+              "content_chars": 0,
+              "truncated": false,
+              "usage": "failed"
+            },
+            {
+              "url": "https://www.cnn.com/2026/03/05/middleeast/radar-bases-us-missile-defense-iran-war-intl-invs",
+              "domain": "www.cnn.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 10015,
+              "method": "site-specific",
+              "content_chars": 5636,
+              "truncated": false,
+              "usage": "dropped_cap"
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 9,
+            "urls_extracted": 6,
+            "urls_failed": 3,
+            "urls_summarized": 3
+          }
+        },
+        {
+          "query": "Diplomatic efforts US Iran ceasefire since Feb 2026 Middle East mediators",
+          "tool": "AskNews",
+          "temporal_role": "current",
+          "intent": "pull in broad semantic coverage of any active mediation initiatives, UN resolutions, or multilateral frameworks aimed at brokering a US-Iran ceasefire before May 2026.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 20,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "AskNews",
+        "Google News"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 12716,
+        "token_output": 1918,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.066918,
+        "duration_seconds": 65.0216293334961,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 19531,
+        "token_output": 3473,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.11068800000000001,
+        "duration_seconds": 84.70058560371399,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 18804,
+        "token_output": 2811,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.098577,
+        "duration_seconds": 84.70057153701782,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.4",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11356,
+        "token_output": 3333,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.106775,
+        "duration_seconds": 65.02169680595398,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17425,
+        "token_output": 3232,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.135605,
+        "duration_seconds": 84.70055437088013,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 19041,
+        "token_output": 2051,
+        "token_reasoning": 704,
+        "used_reasoning": true,
+        "cost": 0.05449,
+        "duration_seconds": 84.70053625106812,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 11356,
+        "token_output": 2325,
+        "token_reasoning": 1216,
+        "used_reasoning": true,
+        "cost": 0.041312,
+        "duration_seconds": 65.02174854278564,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16725,
+        "token_output": 1540,
+        "token_reasoning": 512,
+        "used_reasoning": true,
+        "cost": 0.04577,
+        "duration_seconds": 84.70052003860474,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "steps1_2_research": 0.1537,
+    "step3_outside_view": 0.215,
+    "step5_inside_view": 0.4451,
+    "step6_aggregation": 0.4451,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.8138
+}
