@@ -728,10 +728,10 @@ class SearchPipeline:
 
             if sufficient:
                 max_content = self.config.get("research", {}).get("max_content_length", 15000)
-                truncated = _bm25_filter_content(
+                bm25_filtered = _bm25_filter_content(
                     content, question_details.title, max_chars=max_content
                 )
-                summarize_tasks.append(self._summarize_article(truncated, question_details))
+                summarize_tasks.append(self._summarize_article(bm25_filtered, question_details))
                 valid_urls.append(url)
                 metadata["urls_scraped"] += 1
                 usage = "summarized"
@@ -751,6 +751,7 @@ class SearchPipeline:
                 "response_time_ms": extraction.get("response_time_ms", 0),
                 "method": extraction.get("method"),
                 "content_chars": extraction.get("content_chars", 0),
+                "truncated": extraction.get("truncated", False),
                 "content_words": len(content.split()) if sufficient else 0,
                 "usage": usage,
             }
@@ -1594,6 +1595,7 @@ class SearchPipeline:
                         "response_time_ms": extraction.get("response_time_ms", 0),
                         "method": extraction.get("method"),
                         "content_chars": extraction.get("content_chars", 0),
+                        "truncated": extraction.get("truncated", False),
                         "usage": usage,
                     }
                 )

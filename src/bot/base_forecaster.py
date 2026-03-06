@@ -430,6 +430,8 @@ class BaseForecaster(ForecasterMixin, ABC):
                 "method": u.get("method"),
                 "content_words": u.get("content_words"),
                 "error": u.get("error"),
+                "response_time_ms": u.get("response_time_ms"),
+                "usage": u.get("usage"),
             }
             for u in pre_research.get("urls", [])
         ]
@@ -558,6 +560,8 @@ class BaseForecaster(ForecasterMixin, ABC):
                     "status_code": u.get("status_code"),
                     "content_words": u.get("content_words"),
                     "error": u.get("error"),
+                    "response_time_ms": u.get("response_time_ms"),
+                    "usage": u.get("usage"),
                 }
                 for u in question_url_metadata.get("urls", [])
             ],
