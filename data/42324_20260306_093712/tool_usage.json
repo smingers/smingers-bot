@@ -1,0 +1,835 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 2,
+      "queries": [
+        {
+          "query": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1,
+          "domain": "www.cisa.gov",
+          "method": "boilerpy",
+          "content_words": 637,
+          "error": null
+        },
+        {
+          "query": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1,
+          "domain": "www.cisa.gov",
+          "method": "json",
+          "content_words": 1353,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "CISA KEV monthly additions statistics",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "find analyses or datasets showing how many vulnerabilities were added to KEV per month in prior years to establish base rate and seasonality",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null,
+          "url_results": [
+            {
+              "url": "https://www.securityweek.com/cisa-kev-catalog-expanded-20-in-2025-topping-1480-entries/",
+              "domain": "www.securityweek.com",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.runzero.com/resources/kevology/",
+              "domain": "www.runzero.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 5328,
+              "truncated": false
+            },
+            {
+              "url": "https://www.cisa.gov/sites/default/files/2025-01/CPG%20Adoption%20Report.pdf",
+              "domain": "www.cisa.gov",
+              "success": true,
+              "error": null,
+              "method": "pdf",
+              "status_code": 200,
+              "content_chars": 28570,
+              "truncated": false
+            },
+            {
+              "url": "https://www.bitsight.com/blog/slicing-through-cisas-kev-catalog",
+              "domain": "www.bitsight.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 3618,
+              "truncated": false
+            },
+            {
+              "url": "http://www.gopher.security/news/cisas-kev-catalog-grows-by-1484-vulnerabilities-in-2025",
+              "domain": "www.gopher.security",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 7484,
+              "truncated": false
+            },
+            {
+              "url": "https://www.immersivelabs.com/resources/blog/lessons-from-the-latest-cisa-kev-additions",
+              "domain": "www.immersivelabs.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 4440,
+              "truncated": false
+            },
+            {
+              "url": "https://therecord.media/kev-list-vulnerabilities-patched-significantly-faster",
+              "domain": "therecord.media",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 6626,
+              "truncated": false
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 7,
+            "urls_extracted": 6,
+            "urls_failed": 1,
+            "urls_summarized": 3
+          }
+        },
+        {
+          "query": "known_exploited_vulnerabilities.json archived copies",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "locate Wayback/Stanford Internet Archive or GitHub mirrors of the official feed so a time-series of daily counts can be reconstructed",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null,
+          "url_results": [
+            {
+              "url": "https://github.com/cisagov/kev-data",
+              "domain": "github.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 3707,
+              "truncated": false
+            },
+            {
+              "url": "https://discuss.rapid7.com/t/cisas-known-exploited-vulnerabilities-catalog/10201",
+              "domain": "discuss.rapid7.com",
+              "success": false,
+              "error": "Content extraction failed",
+              "method": null,
+              "status_code": 200,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.cvedetails.com/",
+              "domain": "www.cvedetails.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 2976,
+              "truncated": false
+            },
+            {
+              "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog-print",
+              "domain": "www.cisa.gov",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 167992,
+              "truncated": true
+            },
+            {
+              "url": "https://www.exploit-db.com/",
+              "domain": "www.exploit-db.com",
+              "success": true,
+              "error": null,
+              "method": "boilerpy",
+              "status_code": 200,
+              "content_chars": 2741,
+              "truncated": false
+            },
+            {
+              "url": "https://www.reddit.com/r/github/comments/t7vtyp/why_is_the_dependabot_showing_vulnerabilities_in/",
+              "domain": "www.reddit.com",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://github.com/hrbrmstr/cisa-known-exploited-vulns",
+              "domain": "github.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 977,
+              "truncated": false
+            },
+            {
+              "url": "https://vulncheck.com/blog/the-anatomy-of-an-exploited-cve",
+              "domain": "vulncheck.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 7401,
+              "truncated": false
+            },
+            {
+              "url": "https://cvefeed.io/cisakev/cisa-known-exploited-vulnerability-catalog",
+              "domain": "cvefeed.io",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 17038,
+              "truncated": true
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 9,
+            "urls_extracted": 7,
+            "urls_failed": 2,
+            "urls_summarized": 3
+          }
+        },
+        {
+          "query": "CISA KEV additions January 2026",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "get the exact number and timing of entries added just before the forecast window to refine recent trend",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null,
+          "url_results": [
+            {
+              "url": "https://www.cisa.gov/news-events/alerts/2026/03/03/cisa-adds-two-known-exploited-vulnerabilities-catalog",
+              "domain": "www.cisa.gov",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 1489,
+              "truncated": false
+            },
+            {
+              "url": "https://www.cisa.gov/news-events/alerts/2026/01/29/cisa-adds-one-known-exploited-vulnerability-catalog",
+              "domain": "www.cisa.gov",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 1410,
+              "truncated": false
+            },
+            {
+              "url": "https://www.cisa.gov/news-events/alerts/2026/01/27/cisa-adds-one-known-exploited-vulnerability-catalog",
+              "domain": "www.cisa.gov",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 1442,
+              "truncated": false
+            },
+            {
+              "url": "https://thehackernews.com/2026/01/cisa-updates-kev-catalog-with-four.html",
+              "domain": "thehackernews.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 2413,
+              "truncated": false
+            },
+            {
+              "url": "https://www.cisa.gov/news-events/alerts/2026/01/23/cisa-adds-one-known-exploited-vulnerability-catalog",
+              "domain": "www.cisa.gov",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 1410,
+              "truncated": false
+            },
+            {
+              "url": "https://www.greynoise.io/blog/unmasking-cisas-hidden-kev-ransomware-updates",
+              "domain": "www.greynoise.io",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 3510,
+              "truncated": false
+            },
+            {
+              "url": "https://www.linkedin.com/pulse/threat-vulnerabilities-report-january-2026-loginsoft-uo7fc",
+              "domain": "www.linkedin.com",
+              "success": false,
+              "error": "Blocked domain",
+              "method": null,
+              "status_code": null,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://cyberpress.org/cisa-adds-four-critical-vulnerabilities-to-kev-catalog-following-active-exploitation/",
+              "domain": "cyberpress.org",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.scworld.com/brief/cisa-adds-microsoft-windows-vulnerability-cve-2026-20805-to-kev-catalog",
+              "domain": "www.scworld.com",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://diamatix.com/novini-cisa-adds-kev-catalog-2025/",
+              "domain": "diamatix.com",
+              "success": false,
+              "error": "Blocked domain",
+              "method": null,
+              "status_code": null,
+              "content_chars": 0,
+              "truncated": false
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 10,
+            "urls_extracted": 6,
+            "urls_failed": 4,
+            "urls_summarized": 3
+          }
+        },
+        {
+          "query": "CISA KEV inclusion criteria change 2026",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "discover any policy or process change that could accelerate or decelerate the rate of additions, serving as a contrarian check",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null,
+          "url_results": [
+            {
+              "url": "https://www.cisa.gov/known-exploited-vulnerabilities",
+              "domain": "www.cisa.gov",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 8070,
+              "truncated": false
+            },
+            {
+              "url": "https://www.cisa.gov/news-events/alerts/2026/02/24/cisa-adds-one-known-exploited-vulnerability-catalog",
+              "domain": "www.cisa.gov",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 1411,
+              "truncated": false
+            },
+            {
+              "url": "https://windowsforum.com/threads/cisa-kev-adds-cve-2026-20045-urgent-patch-for-cisco-unified-communications.398096/",
+              "domain": "windowsforum.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 17284,
+              "truncated": true
+            },
+            {
+              "url": "https://www.linkedin.com/posts/praveen-kumar-karthikeyan_cisa-kev-catalog-update-feb-122026-activity-7428055497590820864-5BR-",
+              "domain": "www.linkedin.com",
+              "success": false,
+              "error": "Blocked domain",
+              "method": null,
+              "status_code": null,
+              "content_chars": 0,
+              "truncated": false
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 4,
+            "urls_extracted": 3,
+            "urls_failed": 1,
+            "urls_summarized": 3
+          }
+        }
+      ],
+      "tools_used": [
+        "Google"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "CISA adds vulnerabilities KEV March 2026",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "capture any catalog updates published after the 5 Mar snapshot so forecasters always have the latest count",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null,
+          "url_results": [
+            {
+              "url": "https://thehackernews.com/2026/03/hikvision-and-rockwell-automation-cvss.html",
+              "domain": "thehackernews.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 1730,
+              "truncated": false
+            },
+            {
+              "url": "https://thehackernews.com/2026/03/cisa-adds-actively-exploited-vmware.html",
+              "domain": "thehackernews.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 1934,
+              "truncated": false
+            },
+            {
+              "url": "https://cyberpress.org/vulnerability-in-qualcomm-chipsets/",
+              "domain": "cyberpress.org",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/cisa-flags-vmware-aria-operations-rce-flaw-as-exploited-in-attacks/",
+              "domain": "www.bleepingcomputer.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 3152,
+              "truncated": false
+            },
+            {
+              "url": "https://www.scworld.com/brief/cisa-adds-soliton-filezen-vulnerability-to-known-exploited-vulnerabilities-catalog",
+              "domain": "www.scworld.com",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://socradar.io/blog/cve-2026-22719-vmware-aria-operations/",
+              "domain": "socradar.io",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://securityaffairs.com/188473/hacking/u-s-cisa-adds-a-flaw-in-soliton-systems-k-k-filezen-to-its-known-exploited-vulnerabilities-catalog.html",
+              "domain": "securityaffairs.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 4092,
+              "truncated": false
+            },
+            {
+              "url": "https://gbhackers.com/cisa-warns-of-vmware-aria-operations-vulnerability/",
+              "domain": "gbhackers.com",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://cybersecuritynews.com/vmware-aria-operations-vulnerability-2/",
+              "domain": "cybersecuritynews.com",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://cyberpress.org/vulnerability-in-vmware-aria-operations/",
+              "domain": "cyberpress.org",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 10,
+            "urls_extracted": 4,
+            "urls_failed": 6,
+            "urls_summarized": 3
+          }
+        },
+        {
+          "query": "added to CISA KEV\" past week",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "pick up day-to-day press releases or vendor blogs announcing their CVE was just included, giving early warning before querying the catalog",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null,
+          "url_results": [
+            {
+              "url": "https://www.securityweek.com/taiwan-security-firm-confirms-flaw-flagged-by-cisa-likely-exploited-by-chinese-apt/",
+              "domain": "www.securityweek.com",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://www.computerweekly.com/news/366639264/Flaws-in-Google-Microsoft-products-added-to-Cisa-catalogue",
+              "domain": "www.computerweekly.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 4909,
+              "truncated": false
+            },
+            {
+              "url": "https://thehackernews.com/2025/10/five-new-exploited-bugs-land-in-cisas.html",
+              "domain": "thehackernews.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 2775,
+              "truncated": false
+            },
+            {
+              "url": "https://www.infosecurity-magazine.com/news/cisa-zeroday-bugspyware-attacks-kev/",
+              "domain": "www.infosecurity-magazine.com",
+              "success": true,
+              "error": null,
+              "method": "trafilatura",
+              "status_code": 200,
+              "content_chars": 2341,
+              "truncated": false
+            },
+            {
+              "url": "https://www.scworld.com/news/a-second-fortinet-fortiweb-zero-day-spurs-7-day-cisa-kev-deadline",
+              "domain": "www.scworld.com",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://cyble.com/blog/cisa-kev-2025-exploited-vulnerabilities-growth/",
+              "domain": "cyble.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 4112,
+              "truncated": false
+            },
+            {
+              "url": "https://securityaffairs.com/184856/hacking/u-s-cisa-adds-a-google-chromium-v8-flaw-to-its-known-exploited-vulnerabilities-catalog.html",
+              "domain": "securityaffairs.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 4041,
+              "truncated": false
+            },
+            {
+              "url": "https://therecord.media/cisa-orders-federal-gov-patch-fortra-bug",
+              "domain": "therecord.media",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 4345,
+              "truncated": false
+            },
+            {
+              "url": "https://www.securityweek.com/cisa-warns-of-exploited-solarwinds-notepad-microsoft-vulnerabilities/",
+              "domain": "www.securityweek.com",
+              "success": false,
+              "error": "HTTP 403",
+              "method": null,
+              "status_code": 403,
+              "content_chars": 0,
+              "truncated": false
+            },
+            {
+              "url": "https://thehackernews.com/2025/07/cisa-adds-citrix-netscaler-cve-2025.html",
+              "domain": "thehackernews.com",
+              "success": true,
+              "error": null,
+              "method": "site-specific",
+              "status_code": 200,
+              "content_chars": 6908,
+              "truncated": false
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 10,
+            "urls_extracted": 7,
+            "urls_failed": 3,
+            "urls_summarized": 3
+          }
+        },
+        {
+          "query": "upcoming Patch Tuesday April 2026 exploited bugs",
+          "tool": "AskNews",
+          "temporal_role": "current",
+          "intent": "assess likelihood that Microsoft\u2019s April patch cycle will yield new in-the-wild exploits that CISA will soon add",
+          "phase": "plan",
+          "success": true,
+          "num_results": 18,
+          "error": null
+        },
+        {
+          "query": "Pwn2Own Vancouver 2026 zero-days likely exploitation",
+          "tool": "AskNews",
+          "temporal_role": "current",
+          "intent": "identify prizes or vulnerabilities from the contest that historically get weaponised quickly and then enter KEV",
+          "phase": "plan",
+          "success": true,
+          "num_results": 34,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "Google News",
+        "AskNews"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/google/gemini-3.1-pro-preview",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 45.921993017196655,
+        "error": "LLM call failed after 3 attempts: litellm.RateLimitError: RateLimitError: OpenrouterException - {\"error\":{\"message\":\"Provider returned error\",\"code\":429,\"metadata\":{\"raw\":\"{\\n  \\\"error\\\": {\\n    \\\"code\\\": 429,\\n    \\\"message\\\": \\\"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\\\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-3.1-pro\\\\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-3.1-pro\\\\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-3.1-pro\\\\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-3.1-pro\\\\nPlease retry in 4.794657179s.\\\",\\n    \\\"status\\\": \\\"RESOURCE_EXHAUSTED\\\",\\n    \\\"details\\\": [\\n      {\\n        \\\"@type\\\": \\\"type.googleapis.com/google.rpc.Help\\\",\\n        \\\"links\\\": [\\n          {\\n            \\\"description\\\": \\\"Learn more about Gemini API quotas\\\",\\n            \\\"url\\\": \\\"https://ai.google.dev/gemini-api/docs/rate-limits\\\"\\n          }\\n        ]\\n      },\\n      {\\n        \\\"@type\\\": \\\"type.googleapis.com/google.rpc.QuotaFailure\\\",\\n        \\\"violations\\\": [\\n          {\\n            \\\"quotaMetric\\\": \\\"generativelanguage.googleapis.com/generate_content_free_tier_input_token_count\\\",\\n            \\\"quotaId\\\": \\\"GenerateContentInputTokensPerModelPerMinute-FreeTier\\\",\\n            \\\"quotaDimensions\\\": {\\n              \\\"model\\\": \\\"gemini-3.1-pro\\\",\\n              \\\"location\\\": \\\"global\\\"\\n            }\\n          },\\n          {\\n            \\\"quotaMetric\\\": \\\"generativelanguage.googleapis.com/generate_content_free_tier_requests\\\",\\n            \\\"quotaId\\\": \\\"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\\\",\\n            \\\"quotaDimensions\\\": {\\n              \\\"location\\\": \\\"global\\\",\\n              \\\"model\\\": \\\"gemini-3.1-pro\\\"\\n            }\\n          },\\n          {\\n            \\\"quotaMetric\\\": \\\"generativelanguage.googleapis.com/generate_content_free_tier_requests\\\",\\n            \\\"quotaId\\\": \\\"GenerateRequestsPerDayPerProjectPerModel-FreeTier\\\",\\n            \\\"quotaDimensions\\\": {\\n              \\\"location\\\": \\\"global\\\",\\n              \\\"model\\\": \\\"gemini-3.1-pro\\\"\\n            }\\n          },\\n          {\\n            \\\"quotaMetric\\\": \\\"generativelanguage.googleapis.com/generate_content_free_tier_input_token_count\\\",\\n            \\\"quotaId\\\": \\\"GenerateContentInputTokensPerModelPerDay-FreeTier\\\",\\n            \\\"quotaDimensions\\\": {\\n...\",\"provider_name\":\"Google AI Studio\",\"is_byok\":true}},\"user_id\":\"user_2yQGELhZHDx79ZY0bzj4Hel6Bm4\"}"
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 57.71277332305908,
+        "error": "LLM call failed after 3 attempts: litellm.RateLimitError: RateLimitError: OpenrouterException - {\"error\":{\"message\":\"Provider returned error\",\"code\":429,\"metadata\":{\"raw\":\"{\\n  \\\"error\\\": {\\n    \\\"code\\\": 429,\\n    \\\"message\\\": \\\"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\\\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-3.1-pro\\\\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-3.1-pro\\\\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-3.1-pro\\\\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-3.1-pro\\\\nPlease retry in 18.762418237s.\\\",\\n    \\\"status\\\": \\\"RESOURCE_EXHAUSTED\\\",\\n    \\\"details\\\": [\\n      {\\n        \\\"@type\\\": \\\"type.googleapis.com/google.rpc.Help\\\",\\n        \\\"links\\\": [\\n          {\\n            \\\"description\\\": \\\"Learn more about Gemini API quotas\\\",\\n            \\\"url\\\": \\\"https://ai.google.dev/gemini-api/docs/rate-limits\\\"\\n          }\\n        ]\\n      },\\n      {\\n        \\\"@type\\\": \\\"type.googleapis.com/google.rpc.QuotaFailure\\\",\\n        \\\"violations\\\": [\\n          {\\n            \\\"quotaMetric\\\": \\\"generativelanguage.googleapis.com/generate_content_free_tier_input_token_count\\\",\\n            \\\"quotaId\\\": \\\"GenerateContentInputTokensPerModelPerMinute-FreeTier\\\",\\n            \\\"quotaDimensions\\\": {\\n              \\\"location\\\": \\\"global\\\",\\n              \\\"model\\\": \\\"gemini-3.1-pro\\\"\\n            }\\n          },\\n          {\\n            \\\"quotaMetric\\\": \\\"generativelanguage.googleapis.com/generate_content_free_tier_requests\\\",\\n            \\\"quotaId\\\": \\\"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\\\",\\n            \\\"quotaDimensions\\\": {\\n              \\\"location\\\": \\\"global\\\",\\n              \\\"model\\\": \\\"gemini-3.1-pro\\\"\\n            }\\n          },\\n          {\\n            \\\"quotaMetric\\\": \\\"generativelanguage.googleapis.com/generate_content_free_tier_requests\\\",\\n            \\\"quotaId\\\": \\\"GenerateRequestsPerDayPerProjectPerModel-FreeTier\\\",\\n            \\\"quotaDimensions\\\": {\\n              \\\"location\\\": \\\"global\\\",\\n              \\\"model\\\": \\\"gemini-3.1-pro\\\"\\n            }\\n          },\\n          {\\n            \\\"quotaMetric\\\": \\\"generativelanguage.googleapis.com/generate_content_free_tier_input_token_count\\\",\\n            \\\"quotaId\\\": \\\"GenerateContentInputTokensPerModelPerDay-FreeTier\\\",\\n            \\\"quotaDimensions\\\": {...\",\"provider_name\":\"Google AI Studio\",\"is_byok\":true}},\"user_id\":\"user_2yQGELhZHDx79ZY0bzj4Hel6Bm4\"}"
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 23762,
+        "token_output": 2154,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.103596,
+        "duration_seconds": 57.712735652923584,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.4",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8433,
+        "token_output": 2129,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0741,
+        "duration_seconds": 45.92205452919006,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 21533,
+        "token_output": 2915,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.15139,
+        "duration_seconds": 57.7126944065094,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 21533,
+        "token_output": 1309,
+        "token_reasoning": 320,
+        "used_reasoning": true,
+        "cost": 0.053538,
+        "duration_seconds": 57.712658166885376,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 8433,
+        "token_output": 2744,
+        "token_reasoning": 1536,
+        "used_reasoning": true,
+        "cost": 0.038818,
+        "duration_seconds": 45.92208790779114,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 20516,
+        "token_output": 1862,
+        "token_reasoning": 704,
+        "used_reasoning": true,
+        "cost": 0.055928,
+        "duration_seconds": 57.71263074874878,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "steps1_2_research": 0.063,
+    "step3_outside_view": 0.1129,
+    "step5_inside_view": 0.3645,
+    "step6_aggregation": 0.3645,
+    "step7_supervisor": 0.2737
+  },
+  "total_pipeline_cost": 0.8141
+}

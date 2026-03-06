@@ -1,0 +1,23 @@
+{
+  "confidence": "medium",
+  "prediction": {
+    "10": 27.0,
+    "20": 33.0,
+    "40": 40.0,
+    "60": 47.0,
+    "80": 56.0,
+    "90": 65.0
+  },
+  "search_queries": [
+    "CISA KEV additions January February 2026 count (Google)",
+    "CISA budget cuts staffing 2026 KEV catalog (Google News)",
+    "How many vulnerabilities were added to the CISA Known Exploited Vulnerabilities (KEV) catalog in January 2026 and the first half of February 2026? Please check the CISA KEV JSON feed or any security industry reports that track monthly KEV addition counts for early 2026. (Agent)",
+    "CISA KEV monthly additions rate 2026 slowdown (Google News)"
+  ],
+  "cost": 0.2737,
+  "divergence": {
+    "metric_name": "rn_spread",
+    "metric_value": 0.0655,
+    "threshold": 0.045
+  }
+}
