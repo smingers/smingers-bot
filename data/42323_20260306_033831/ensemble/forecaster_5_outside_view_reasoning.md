@@ -1,0 +1,7 @@
+**Considering arrival predictions**
+
+I need to produce an outside view prediction for cumulative arrivals from January 1 to April 30, 2026. We’re starting from March 6, with about 66 days elapsed in a 121-day period. There's likely some data available for the first 65 days this year, but for now, I should use historical averages as a baseline. I’ll analyze past monthly counts from January to April and gather records to help approximate the data for this year. For example, the first half of 2025 had a total of 19,982 arrivals over 182 days.**Approximating arrival patterns**
+
+I need to estimate arrival counts for the first four months of the year, likely around 10,000 to 12,000. Given the usual patterns, crossings tend to spike during warmer months, while winter has fewer due to rough seas. Past years show varying trends—e.g., in 2022, there were about 6,299 arrivals in the Jan-Apr timeframe. In 2023, the count was around 4,000 to 5,000. Forecasting for 2026, it seems plausible to project a similar or slightly higher trend than 2025 based on past data.**Finalizing arrival probabilities**
+
+I’m refining the probability estimates for arrival counts based on historical data from 2018 to 2025. For counts between 0-5k, I see about a 25% chance; 5,001-10,000 seems plausible at around 45%; for 10,001-20,000, I estimate roughly 28%; and over 20,000 appears very unlikely, at just 2%. I need to keep in mind upward trends and the current political environment, which might influence the numbers. Now I’m ready to craft the final analysis.
