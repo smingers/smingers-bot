@@ -1,0 +1,733 @@
+{
+  "plan_analysis": "The pre-research already gives daily U.S. Google-Trends values for \u201cwar\u201d through 2026-03-06, a 90-day mean/\u03c3, and an 8-day base-rate computed from those 90 days.  \nWhat a forecaster still needs:\n\n1. Broader base-rate: How often do large one-week spikes like this decay, hold, or keep rising when they occur in earlier months/years? 90 days is too short and may over-weight the current conflict.\n2. Cause of the 2026-02-28 surge to 100. Knowing whether it was a fleeting news headline, a major geopolitical escalation, entertainment release, or other event informs how sticky interest might be.\n3. Near-term catalysts (6\u201314 Mar) that could push public searches higher: scheduled peace talks, votes on war aid, troop movements, expected offensives, anniversaries, or pop-culture releases with \u201cwar\u201d in the title.\n4. Typical decay curves of \u201cwar\u201d Google-Trends spikes (key driver).\n5. Contrarian signals: upcoming anniversaries, movie/TV/game launches, or commemorations that could re-ignite searches even if geopolitics quiets down.\n6. Verification details: understanding any SerpApi quirks has been covered; no extra search needed.",
+  "reflect_analysis": null,
+  "queries_planned": [
+    {
+      "query": "Google Trends war 2019-2026 daily",
+      "tool": "Google Trends",
+      "temporal_role": "historical",
+      "intent": "download multi-year daily series to examine past 8-day post-spike behaviour and longer-term base rates.",
+      "phase": "plan"
+    },
+    {
+      "query": "war search interest decay after spike",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "find academic/blog analyses quantifying how quickly Google-Trends interest typically reverts after big spikes.",
+      "phase": "plan"
+    },
+    {
+      "query": "February 28 2026 war headline cause",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "identify the specific news or event behind the recent peak to gauge persistence.",
+      "phase": "plan"
+    },
+    {
+      "query": "Ukraine conflict escalation March 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "check for planned offensives, negotiations, or deadlines that could raise \u201cwar\u201d searches next week.",
+      "phase": "plan"
+    },
+    {
+      "query": "Iran Israel war tensions March 2026",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "surface any brewing Middle-East flashpoints likely to dominate news in the 6-14 Mar window.",
+      "phase": "plan"
+    },
+    {
+      "query": "\u201cWar\u201d movie game album release March 2026",
+      "tool": "Google",
+      "temporal_role": "current",
+      "intent": "see if entertainment media titled \u201cWar\u201d will debut during the forecast period, a possible non-geopolitical driver.",
+      "phase": "plan"
+    },
+    {
+      "query": "war anniversaries early March",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "list major historical-war anniversaries (e.g., Iraq 2003, Crimea 2014) that often spark retrospective coverage and search interest.",
+      "phase": "plan"
+    },
+    {
+      "query": "upcoming military offensives March 6-14 2026 global",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "catch any scheduled or rumored offensives/operations worldwide during the resolution window that could spike searches.",
+      "phase": "plan"
+    }
+  ],
+  "gap_queries": [],
+  "seed_context_chars": 3338,
+  "historical_context_chars": 20639,
+  "current_context_chars": 104634,
+  "phases": {
+    "pre_research": {
+      "duration_seconds": 39.44,
+      "seed_context_chars": 3338,
+      "search_id": "question_urls",
+      "searched": true,
+      "urls_found": 1,
+      "urls_scraped": 1,
+      "urls_summarized": 1,
+      "urls": [
+        {
+          "url": "https://serpapi.com/",
+          "domain": "serpapi.com",
+          "scraped": true,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_words": 273
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "google_trends_pre_research": true
+    },
+    "plan": {
+      "duration_seconds": 28.33,
+      "cost": 0.0169,
+      "num_queries": 8
+    },
+    "execute": {
+      "duration_seconds": 85.72,
+      "cost": 0.0495,
+      "queries_executed": 8,
+      "queries_successful": 8
+    },
+    "assemble": {
+      "historical_context_chars": 20639,
+      "current_context_chars": 104634
+    }
+  },
+  "total_queries_planned": 8,
+  "total_queries_executed": 8,
+  "total_gap_queries": 0,
+  "total_cost": 0.0685,
+  "total_duration_seconds": 153.48,
+  "query_details": [
+    {
+      "query": "Google Trends war 2019-2026 daily",
+      "tool": "Google Trends",
+      "temporal_role": "historical",
+      "intent": "download multi-year daily series to examine past 8-day post-spike behaviour and longer-term base rates.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 1,
+      "error": null
+    },
+    {
+      "query": "war search interest decay after spike",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "find academic/blog analyses quantifying how quickly Google-Trends interest typically reverts after big spikes.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://www.reddit.com/r/charts/comments/1m3yoak/october_7_2023_google_searches_for_israel_and/",
+          "domain": "www.reddit.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://evrimagaci.org/gpt/google-trends-misreadings-spark-confusion-after-bondi-attack-521265?srsltid=AfmBOopK5WY4HwullbRcIm9vWnr0yZ4Wf417BGmcldRbQfVxGsqoqDQC",
+          "domain": "evrimagaci.org",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 6625,
+          "truncated": false
+        },
+        {
+          "url": "https://www.cam.ac.uk/stories/russia-web-search",
+          "domain": "www.cam.ac.uk",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12687346/",
+          "domain": "pmc.ncbi.nlm.nih.gov",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://stats.stackexchange.com/questions/400451/find-the-cause-of-periodic-behaviour-present-in-google-search-war",
+          "domain": "stats.stackexchange.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.theguardian.com/us-news/2022/mar/29/bunker-sales-soar-anxiety-over-russia-rises-ukraine",
+          "domain": "www.theguardian.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 9958,
+          "truncated": false
+        },
+        {
+          "url": "https://arstechnica.com/information-technology/2017/02/theres-a-big-spike-in-google-searches-related-to-world-war-ii/",
+          "domain": "arstechnica.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 4259,
+          "truncated": false
+        },
+        {
+          "url": "https://abcnews.com/Technology/mass-shootings-search-interest-familiar-cycle/story?id=39849925",
+          "domain": "abcnews.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 1656,
+          "truncated": false
+        },
+        {
+          "url": "https://www.nature.com/articles/s41598-023-39035-3",
+          "domain": "www.nature.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 42230,
+          "truncated": true
+        },
+        {
+          "url": "https://mashable.com/article/draft-age",
+          "domain": "mashable.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 1763,
+          "truncated": false
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 6,
+        "urls_failed": 4,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "February 28 2026 war headline cause",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "identify the specific news or event behind the recent peak to gauge persistence.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://www.washingtonpost.com/opinions/2026/02/28/trump-war-iran-/",
+          "domain": "www.washingtonpost.com",
+          "success": false,
+          "error": "Request timed out",
+          "method": null,
+          "status_code": null,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.nytimes.com/2026/02/28/opinion/trump-iran-war.html",
+          "domain": "www.nytimes.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://global.morningstar.com/en-ca/markets/how-worried-should-canadian-stock-investors-be-about-iran-war",
+          "domain": "global.morningstar.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 7501,
+          "truncated": false
+        },
+        {
+          "url": "https://theintercept.com/2026/02/28/us-attack-iran-iraq-war/",
+          "domain": "theintercept.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 14803,
+          "truncated": false
+        },
+        {
+          "url": "https://www.stripes.com/theaters/middle_east/2026-02-28/strikes-on-bahrain-iran-israel-20902624.html",
+          "domain": "www.stripes.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 5132,
+          "truncated": false
+        },
+        {
+          "url": "https://english.news.cn/20260301/b6ca336809e546918074949c54f49068/c.html",
+          "domain": "english.news.cn",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 10615,
+          "truncated": false
+        },
+        {
+          "url": "https://www.reuters.com/world/middle-east/irans-ali-khamenei-who-based-iron-rule-fiery-hostility-us-israel-dies-86-2026-03-01/",
+          "domain": "www.reuters.com",
+          "success": false,
+          "error": "HTTP 401",
+          "method": null,
+          "status_code": 401,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.dw.com/en/what-will-war-on-iran-mean-for-israel/a-76168659",
+          "domain": "www.dw.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 4031,
+          "truncated": false
+        },
+        {
+          "url": "https://www.nytimes.com/2026/02/28/world/middleeast/ayatollah-ali-khamenei-dead.html",
+          "domain": "www.nytimes.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://apnews.com/article/iran-us-explosion-tehran-c2f11247d8a66e36929266f2c557a54c",
+          "domain": "apnews.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 10951,
+          "truncated": false
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 6,
+        "urls_failed": 4,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "Ukraine conflict escalation March 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "check for planned offensives, negotiations, or deadlines that could raise \u201cwar\u201d searches next week.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-march-5-2026/",
+          "domain": "understandingwar.org",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.atlanticcouncil.org/blogs/ukrainealert/iran-war-could-save-vladimir-putins-failing-ukraine-invasion/",
+          "domain": "www.atlanticcouncil.org",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.cfr.org/global-conflict-tracker/conflict/conflict-ukraine",
+          "domain": "www.cfr.org",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 43686,
+          "truncated": true
+        },
+        {
+          "url": "https://www.themoscowtimes.com/2026/03/03/russias-war-on-ukraine-isnt-at-a-stalemate-its-in-unstable-equilibrium-a92109",
+          "domain": "www.themoscowtimes.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 7757,
+          "truncated": false
+        },
+        {
+          "url": "https://www.iiss.org/online-analysis/online-analysis/2026/02/russiaukraine-war-escalation-not-stalemate/",
+          "domain": "www.iiss.org",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.aljazeera.com/news/2026/3/4/amid-middle-east-crisis-europe-fumbles-towards-mutual-defence",
+          "domain": "www.aljazeera.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 6615,
+          "truncated": false
+        },
+        {
+          "url": "https://kyivindependent.com/us-joins-russia-china-in-opposing-iaea-resolution-condemning-attacks-on-ukraines-energy-infrastructure/",
+          "domain": "kyivindependent.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 1992,
+          "truncated": false
+        },
+        {
+          "url": "https://www.nytimes.com/2026/03/04/world/europe/iran-trump-world-reaction.html",
+          "domain": "www.nytimes.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-march-4-2026/",
+          "domain": "understandingwar.org",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.washingtonpost.com/world/2026/03/04/pedro-sanchez-trump-war-feud-spain/",
+          "domain": "www.washingtonpost.com",
+          "success": false,
+          "error": "Request timed out",
+          "method": null,
+          "status_code": null,
+          "content_chars": 0,
+          "truncated": false
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 4,
+        "urls_failed": 6,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "Iran Israel war tensions March 2026",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "surface any brewing Middle-East flashpoints likely to dominate news in the 6-14 Mar window.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 20,
+      "error": null
+    },
+    {
+      "query": "\u201cWar\u201d movie game album release March 2026",
+      "tool": "Google",
+      "temporal_role": "current",
+      "intent": "see if entertainment media titled \u201cWar\u201d will debut during the forecast period, a possible non-geopolitical driver.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://theplayersaid.com/2026/03/02/wargame-watch-whats-new-upcoming-march-2026/",
+          "domain": "theplayersaid.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 81941,
+          "truncated": true
+        },
+        {
+          "url": "https://www.reddit.com/r/PS5/comments/1na39xo/amazons_god_of_war_series_set_to_begin_filming_in/",
+          "domain": "www.reddit.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.ign.com/articles/upcoming-new-video-game-movies-2026-tv-shows-release-dates",
+          "domain": "www.ign.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 18195,
+          "truncated": true
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/List_of_video_games_released_in_2026",
+          "domain": "en.wikipedia.org",
+          "success": true,
+          "error": null,
+          "method": "wikipedia_api",
+          "status_code": 200,
+          "content_chars": 646,
+          "truncated": false
+        },
+        {
+          "url": "https://www.avclub.com/state-of-play-trailers-god-of-war-sons-of-sparta",
+          "domain": "www.avclub.com",
+          "success": true,
+          "error": null,
+          "method": "readability",
+          "status_code": 200,
+          "content_chars": 2931,
+          "truncated": false
+        },
+        {
+          "url": "https://blog.playstation.com/2026/02/12/god-of-war-greek-trilogy-remake-in-development-god-of-war-sons-of-sparta-out-now/",
+          "domain": "blog.playstation.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 3359,
+          "truncated": false
+        },
+        {
+          "url": "https://variety.com/2026/gaming/news/god-of-war-game-sons-of-sparta-original-trilogy-remake-1236661145/",
+          "domain": "variety.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 1716,
+          "truncated": false
+        },
+        {
+          "url": "https://www.gamespot.com/articles/2026-upcoming-games-release-schedule/1100-6534941/",
+          "domain": "www.gamespot.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=qfeqfrGCs6w",
+          "domain": "www.youtube.com",
+          "success": false,
+          "error": "Content extraction failed",
+          "method": null,
+          "status_code": 200,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.instagram.com/popular/vietnam-war-game-release-2026/",
+          "domain": "www.instagram.com",
+          "success": false,
+          "error": "Blocked domain",
+          "method": null,
+          "status_code": null,
+          "content_chars": 0,
+          "truncated": false
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 6,
+        "urls_failed": 4,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "war anniversaries early March",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "list major historical-war anniversaries (e.g., Iraq 2003, Crimea 2014) that often spark retrospective coverage and search interest.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Portal:United_States/Anniversaries/March",
+          "domain": "en.wikipedia.org",
+          "success": false,
+          "error": "Wikipedia extract too short",
+          "method": "wikipedia_api",
+          "status_code": 200,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.history.co.uk/articles/major-historical-anniversaries-in-march",
+          "domain": "www.history.co.uk",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 5284,
+          "truncated": false
+        },
+        {
+          "url": "https://www.historyextra.com/on-this-day/this-month-in-history-historical-anniversaries-march/",
+          "domain": "www.historyextra.com",
+          "success": true,
+          "error": null,
+          "method": "readability",
+          "status_code": 200,
+          "content_chars": 14341,
+          "truncated": false
+        },
+        {
+          "url": "https://www.historyplace.com/specials/calendar/march.htm",
+          "domain": "www.historyplace.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 26219,
+          "truncated": true
+        },
+        {
+          "url": "https://www.facebook.com/kolr10kozl/posts/heres-a-timeline-of-significant-events-that-have-happened-in-the-month-of-march-/1357864663050948/",
+          "domain": "www.facebook.com",
+          "success": false,
+          "error": "Blocked domain",
+          "method": null,
+          "status_code": null,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://nationalvmm.org/this-month-in-history-march-1-29/",
+          "domain": "nationalvmm.org",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 10887,
+          "truncated": false
+        },
+        {
+          "url": "https://www.threads.com/@historyextra/post/DHYproYCElH/what-historical-anniversaries-are-in-march-we-round-up-the-events-births-and-dea?hl=en",
+          "domain": "www.threads.com",
+          "success": false,
+          "error": "Content extraction failed",
+          "method": null,
+          "status_code": 200,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.thehistorylist.com/major-anniversaries-in-us-history-2025/",
+          "domain": "www.thehistorylist.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Wikipedia:Selected_anniversaries/March",
+          "domain": "en.wikipedia.org",
+          "success": true,
+          "error": null,
+          "method": "wikipedia_api",
+          "status_code": 200,
+          "content_chars": 23712,
+          "truncated": true
+        },
+        {
+          "url": "https://www.historic-uk.com/HistoryUK/HistoryofBritain/Historic-March/",
+          "domain": "www.historic-uk.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 5,
+        "urls_failed": 5,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "upcoming military offensives March 6-14 2026 global",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "catch any scheduled or rumored offensives/operations worldwide during the resolution window that could spike searches.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 20,
+      "error": null
+    }
+  ]
+}
