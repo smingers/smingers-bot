@@ -129,7 +129,7 @@ research:
   asknews_max_results: 10
 
   # Agentic search (iterative LLM-guided research)
-  agentic_search_enabled: true
+  agentic_search_enabled: false
   # Max steps per mode (use a single number for all modes, or per-mode overrides)
   agentic_search_max_steps:
     test: 3
