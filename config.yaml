@@ -78,7 +78,7 @@ ensemble:
   # Agents for preview and live modes (higher quality)
   quality:
     - name: "forecaster_1"
-      model: "google/gemini-3.1-pro-preview"
+      model: "openrouter/google/gemini-3.1-pro-preview"
       weight: 1.0
 
     - name: "forecaster_2"
