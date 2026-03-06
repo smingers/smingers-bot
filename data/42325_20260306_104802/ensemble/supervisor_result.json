@@ -1,0 +1,16 @@
+{
+  "confidence": "high",
+  "prediction": 0.55,
+  "search_queries": [
+    "BIS semiconductor export control final rule 2026 OIRA review (Google News)",
+    "BIS global AI chip licensing rule timeline draft status (Google News)",
+    "Has the Bureau of Industry and Security submitted any new semiconductor or AI chip export control rules to OIRA for review in 2026? Check the OIRA regulatory review dashboard at reginfo.gov and recent BIS announcements for any indication of imminent final rule publication before May 2026. (Agent)",
+    "BIS entity list semiconductor additions 2026 (Google News)"
+  ],
+  "cost": 0.2372,
+  "divergence": {
+    "metric_name": "std_dev",
+    "metric_value": 15.71,
+    "threshold": 15.0
+  }
+}

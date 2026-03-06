@@ -1,0 +1,916 @@
+{
+  "plan_analysis": "The question hinges on whether, within the next 56 days, the Bureau of Industry and Security (BIS) will move an already-in-process or new semiconductor-related export-control package to \u201cfinal rule\u201d status in the Federal Register.  \nWhat we already have: only the formal resolution source (BIS page on Federal Register).  \nKey information gaps a forecaster still needs:\n\n1. Current rulemaking pipeline  \n   \u2022 Are there semiconductor export-control items sitting in \u201cproposed\u201d or \u201cinterim final\u201d status that could be finalized quickly?  \n   \u2022 Has BIS or Commerce conveyed a target publication date?\n\n2. Historical/base-rate context  \n   \u2022 How often has BIS published semiconductor-focused final rules and what is the typical lag from proposal/interim to finalization?  \n   \u2022 Frequency of BIS final rules in comparable 1\u20132-month windows.\n\n3. Background conditions & drivers  \n   \u2022 Political/strategic pressure (Congress, White House, geopolitical tensions) to tighten controls.  \n   \u2022 Industry or allied-government pushback that could delay or water down rules.\n\n4. Contrarian evidence  \n   \u2022 Signals of delay: litigation risk, inter-agency disagreements, supply-chain concerns, or Administration pause.\n\nThe search strategy therefore:  \n\u2022 Mine the Federal Register and BIS sites for the rulemaking docket history to establish the base rate and locate any ready-to-be-finalized rules.  \n\u2022 Scan recent news, statements, and policy documents (regulatory agendas, press briefings, congressional hearings) for timing clues and political momentum.  \n\u2022 Look for reports of obstacles or deliberate slow-rolling that would argue against publication before 1 May 2026.",
+  "reflect_analysis": null,
+  "queries_planned": [
+    {
+      "query": "site:federalregister.gov BIS final rule semiconductor",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Compile historical semiconductor-related BIS final rules to determine base rate and typical publication patterns.",
+      "phase": "plan"
+    },
+    {
+      "query": "BIS interim final semiconductor 2023 status",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Trace the October 2023 interim final rule and any subsequent steps toward a final rule to estimate likely timeline.",
+      "phase": "plan"
+    },
+    {
+      "query": "BIS final semiconductor rule expected 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Find up-to-the-minute reporting on whether BIS is expected to publish a final rule in the next few weeks.",
+      "phase": "plan"
+    },
+    {
+      "query": "Congress chip export control pressure 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Gauge political drivers that could accelerate or mandate a tightening rule before May 1.",
+      "phase": "plan"
+    },
+    {
+      "query": "Upcoming Commerce final semiconductor export restrictions United States Jan 2026-present",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "Surface any official or analyst statements on imminent BIS final rules.",
+      "phase": "plan"
+    },
+    {
+      "query": "BIS spring 2026 regulatory agenda semiconductor",
+      "tool": "Google",
+      "temporal_role": "current",
+      "intent": "Check the latest Unified Agenda or BIS schedule indicating anticipated rulemaking dates.",
+      "phase": "plan"
+    },
+    {
+      "query": "semiconductor export control rule legal challenges",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Identify past instances where litigation or industry action delayed final rules, informing contrarian probabilities.",
+      "phase": "plan"
+    },
+    {
+      "query": "Biden administration pause chip export tightening",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Look for evidence of a possible freeze or reassessment that could prevent publication before the deadline.",
+      "phase": "plan"
+    }
+  ],
+  "gap_queries": [],
+  "seed_context_chars": 0,
+  "historical_context_chars": 27934,
+  "current_context_chars": 72221,
+  "phases": {
+    "pre_research": {
+      "duration_seconds": 0.17,
+      "seed_context_chars": 0,
+      "search_id": "question_urls",
+      "searched": true,
+      "urls_found": 2,
+      "urls_scraped": 0,
+      "urls_summarized": 0,
+      "urls": [
+        {
+          "url": "https://www.federalregister.gov/agencies/bureau-of-industry-and-security",
+          "domain": "www.federalregister.gov",
+          "scraped": false,
+          "method": null,
+          "status_code": 404,
+          "error": "HTTP 404"
+        },
+        {
+          "url": "https://www.bis.gov/regulations",
+          "domain": "www.bis.gov",
+          "scraped": false,
+          "method": null,
+          "status_code": null,
+          "error": "[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1016)"
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ]
+    },
+    "plan": {
+      "duration_seconds": 28.39,
+      "cost": 0.0152,
+      "num_queries": 8
+    },
+    "execute": {
+      "duration_seconds": 73.12,
+      "cost": 0.0584,
+      "queries_executed": 8,
+      "queries_successful": 8
+    },
+    "assemble": {
+      "historical_context_chars": 27934,
+      "current_context_chars": 72221
+    }
+  },
+  "total_queries_planned": 8,
+  "total_queries_executed": 8,
+  "total_gap_queries": 0,
+  "total_cost": 0.0736,
+  "total_duration_seconds": 101.69,
+  "query_details": [
+    {
+      "query": "site:federalregister.gov BIS final rule semiconductor",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Compile historical semiconductor-related BIS final rules to determine base rate and typical publication patterns.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://www.federalregister.gov/documents/2022/10/13/2022-21658/implementation-of-additional-export-controls-certain-advanced-computing-and-semiconductor",
+          "domain": "www.federalregister.gov",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 188330,
+          "truncated": true
+        },
+        {
+          "url": "https://www.federalregister.gov/documents/2024/12/05/2024-28270/foreign-produced-direct-product-rule-additions-and-refinements-to-controls-for-advanced-computing",
+          "domain": "www.federalregister.gov",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 288489,
+          "truncated": true
+        },
+        {
+          "url": "https://www.federalregister.gov/documents/2024/12/04/2024-28423/public-briefing-on-changes-to-advanced-computing-and-semiconductor-manufacturing-items",
+          "domain": "www.federalregister.gov",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 4431,
+          "truncated": false
+        },
+        {
+          "url": "https://www.federalregister.gov/documents/2024/04/04/2024-07004/implementation-of-additional-export-controls-certain-advanced-computing-items-supercomputer-and",
+          "domain": "www.federalregister.gov",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 218134,
+          "truncated": true
+        },
+        {
+          "url": "https://www.federalregister.gov/documents/2025/09/02/2025-16735/revocation-of-validated-end-user-authorizations-in-the-peoples-republic-of-china",
+          "domain": "www.federalregister.gov",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 6501,
+          "truncated": false
+        },
+        {
+          "url": "https://www.federalregister.gov/documents/2024/12/05/2024-28267/additions-and-modifications-to-the-entity-list-removals-from-the-validated-end-user-veu-program",
+          "domain": "www.federalregister.gov",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 69194,
+          "truncated": true
+        },
+        {
+          "url": "https://www.federalregister.gov/documents/2025/09/16/2025-17893/additions-and-revisions-to-the-entity-list",
+          "domain": "www.federalregister.gov",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 43726,
+          "truncated": true
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 7,
+        "urls_extracted": 7,
+        "urls_failed": 0,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "BIS interim final semiconductor 2023 status",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Trace the October 2023 interim final rule and any subsequent steps toward a final rule to estimate likely timeline.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://www.federalregister.gov/documents/2023/10/25/2023-23049/export-controls-on-semiconductor-manufacturing-items",
+          "domain": "www.federalregister.gov",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 223340,
+          "truncated": true
+        },
+        {
+          "url": "https://www.federalregister.gov/documents/2023/10/25/2023-23055/implementation-of-additional-export-controls-certain-advanced-computing-items-supercomputer-and",
+          "domain": "www.federalregister.gov",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 436352,
+          "truncated": true
+        },
+        {
+          "url": "https://www.bis.gov/news-updates",
+          "domain": "www.bis.gov",
+          "success": false,
+          "error": "[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1016)",
+          "method": null,
+          "status_code": null,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.hklaw.com/en/insights/publications/2024/12/us-strengthens-export-controls-on-advanced-computing-items",
+          "domain": "www.hklaw.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 32341,
+          "truncated": true
+        },
+        {
+          "url": "https://www.cov.com/en/news-and-insights/insights/2024/12/us-department-of-commerce-strengthens-export-controls-on-advanced-computing-and-semiconductor-manufacturing-items",
+          "domain": "www.cov.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 27272,
+          "truncated": true
+        },
+        {
+          "url": "https://www.afslaw.com/perspectives/alerts/taking-stock-summary-bis-actions-fall-2024-and-peek-what-next-under-the-trump",
+          "domain": "www.afslaw.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.morganlewis.com/pubs/2024/04/bis-update-commerce-releases-multitiered-updates-to-semiconductor-and-supercomputer-rules",
+          "domain": "www.morganlewis.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 24000,
+          "truncated": true
+        },
+        {
+          "url": "https://www.semiconductors.org/wp-content/uploads/2024/07/SIA-Comments-to-BIS-on-Semiconductor-Manufacturing-IFR.pdf",
+          "domain": "www.semiconductors.org",
+          "success": true,
+          "error": null,
+          "method": "pdf",
+          "status_code": 200,
+          "content_chars": 48358,
+          "truncated": false
+        },
+        {
+          "url": "https://www.bdo.com/insights/tax/bis-updates-expands-semiconductor-export-control-rules",
+          "domain": "www.bdo.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 7353,
+          "truncated": false
+        },
+        {
+          "url": "https://www.federalregister.gov/documents/2023/12/15/2023-27588/export-controls-on-semiconductor-manufacturing-items-implementation-of-additional-export-controls",
+          "domain": "www.federalregister.gov",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 4042,
+          "truncated": false
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 8,
+        "urls_failed": 2,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "BIS final semiconductor rule expected 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Find up-to-the-minute reporting on whether BIS is expected to publish a final rule in the next few weeks.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://www.morganlewis.com/pubs/2026/02/key-us-export-controls-considerations-for-global-data-center-projects",
+          "domain": "www.morganlewis.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 20340,
+          "truncated": true
+        },
+        {
+          "url": "https://www.mayerbrown.com/en/insights/publications/2026/01/administration-policies-on-advanced-ai-chips-codified",
+          "domain": "www.mayerbrown.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 10424,
+          "truncated": false
+        },
+        {
+          "url": "https://www.gibsondunn.com/international-trade-2025-year-end-update/",
+          "domain": "www.gibsondunn.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://sourceability.com/post/export-controls-on-nexperia-fuel-semiconductor-supply-chain-risk",
+          "domain": "sourceability.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 97122,
+          "truncated": true
+        },
+        {
+          "url": "https://www.piie.com/blogs/realtime-economics/2025/new-export-rule-escalates-us-china-tensions",
+          "domain": "www.piie.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.lexology.com/pro/content/six-trade-developments-you-missed-in-the-last-month",
+          "domain": "www.lexology.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.digitimes.com/news/a20260114VL200/usa-ai-chip-exports-policy-nvidia.html",
+          "domain": "www.digitimes.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 481,
+          "truncated": false
+        },
+        {
+          "url": "https://www.globaltradeandsanctionslaw.com/trump-administration-rescinds-biden-ai-diffusion-rule/",
+          "domain": "www.globaltradeandsanctionslaw.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 8407,
+          "truncated": false
+        },
+        {
+          "url": "https://natlawreview.com/article/china-expands-export-control-rare-earth-minerals-and-more",
+          "domain": "natlawreview.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.hoganlovells.com/en/publications/trumpxi-meeting-calmed-uschina-trade-tensions-with-initial-agreements",
+          "domain": "www.hoganlovells.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 5,
+        "urls_failed": 5,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "Congress chip export control pressure 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Gauge political drivers that could accelerate or mandate a tightening rule before May 1.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://cepa.org/article/us-chips-and-china-a-confusing-cocktail/",
+          "domain": "cepa.org",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 5440,
+          "truncated": false
+        },
+        {
+          "url": "https://www.reuters.com/world/china/china-parliament-approve-growth-policy-plans-amid-growing-us-rivalry-2026-03-04/",
+          "domain": "www.reuters.com",
+          "success": false,
+          "error": "HTTP 401",
+          "method": null,
+          "status_code": 401,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.jdsupra.com/legalnews/2026-policy-outlook-federal-priorities-7250131/",
+          "domain": "www.jdsupra.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 5161,
+          "truncated": false
+        },
+        {
+          "url": "https://www.lawfaremedia.org/article/trump-s-illegal-ai-chip-export-controls--and-who-can-challenge-them",
+          "domain": "www.lawfaremedia.org",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 19748,
+          "truncated": true
+        },
+        {
+          "url": "https://www.aljazeera.com/economy/2026/1/21/us-house-panel-advances-bill-to-give-congress-authority-on-ai-chip-exports",
+          "domain": "www.aljazeera.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 3639,
+          "truncated": false
+        },
+        {
+          "url": "https://www.cnbc.com/2026/02/26/nvidia-china-chip-sales-export-controls-ai-competition.html",
+          "domain": "www.cnbc.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 2738,
+          "truncated": false
+        },
+        {
+          "url": "https://carnegieendowment.org/emissary/2025/12/china-ai-chip-sales-nvidia-trump",
+          "domain": "carnegieendowment.org",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 358,
+          "truncated": false
+        },
+        {
+          "url": "https://www.cfr.org/articles/trade-trends-watch-2026",
+          "domain": "www.cfr.org",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 7526,
+          "truncated": false
+        },
+        {
+          "url": "https://evrimagaci.org/gpt/trump-shifts-ai-chip-policy-as-china-cuts-us-debt-527911",
+          "domain": "evrimagaci.org",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 7557,
+          "truncated": false
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 9,
+        "urls_extracted": 8,
+        "urls_failed": 1,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "Upcoming Commerce final semiconductor export restrictions United States Jan 2026-present",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "Surface any official or analyst statements on imminent BIS final rules.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 20,
+      "error": null
+    },
+    {
+      "query": "BIS spring 2026 regulatory agenda semiconductor",
+      "tool": "Google",
+      "temporal_role": "current",
+      "intent": "Check the latest Unified Agenda or BIS schedule indicating anticipated rulemaking dates.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://www.federalregister.gov/documents/2026/01/15/2026-00789/revision-to-license-review-policy-for-advanced-computing-commodities",
+          "domain": "www.federalregister.gov",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 29107,
+          "truncated": true
+        },
+        {
+          "url": "https://www.bis.gov/press-release/applied-materials-pay-252-million-penalty-bis-illegally-exporting-semiconductor-manufacturing-equipment",
+          "domain": "www.bis.gov",
+          "success": false,
+          "error": "[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1016)",
+          "method": null,
+          "status_code": null,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.finnegan.com/en/insights/articles/biss-new-2026-license-review-process-for-ai-chips.html",
+          "domain": "www.finnegan.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.amadeolaw.com/the-govcon-bulletin/proposed-far-rule-prohibits-use-of-semiconductors-from-foreign-adversaries",
+          "domain": "www.amadeolaw.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 5695,
+          "truncated": false
+        },
+        {
+          "url": "https://sanctionsnews.bakermckenzie.com/bis-revises-license-review-policy-for-advanced-computing-commodities-ai-semiconductors-to-china-and-macau-when-exported-from-the-united-states/",
+          "domain": "sanctionsnews.bakermckenzie.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 8149,
+          "truncated": false
+        },
+        {
+          "url": "https://www.globalpolicywatch.com/2026/02/a-month-in-semiconductor-policy-section-232-measures-bis-rule-and-taiwan-deal-signal-strategic-push/",
+          "domain": "www.globalpolicywatch.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 20948,
+          "truncated": true
+        },
+        {
+          "url": "https://cvgstrategy.com/bis-revises-policies-for-semiconductors/",
+          "domain": "cvgstrategy.com",
+          "success": false,
+          "error": "Server disconnected without sending a response.",
+          "method": null,
+          "status_code": null,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.federalregister.gov/documents/2026/02/17/2026-03065/federal-acquisition-regulation-prohibition-on-certain-semiconductor-products-and-services",
+          "domain": "www.federalregister.gov",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 131483,
+          "truncated": true
+        },
+        {
+          "url": "https://www.digitimes.com/news/a20260303VL204/security-sales-military-chips-technology.html",
+          "domain": "www.digitimes.com",
+          "success": true,
+          "error": null,
+          "method": "boilerpy",
+          "status_code": 200,
+          "content_chars": 712,
+          "truncated": false
+        },
+        {
+          "url": "https://www.jdsupra.com/legalnews/far-council-proposes-rule-to-prohibit-2784982/",
+          "domain": "www.jdsupra.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 12347,
+          "truncated": false
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 7,
+        "urls_failed": 3,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "semiconductor export control rule legal challenges",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Identify past instances where litigation or industry action delayed final rules, informing contrarian probabilities.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://www.gao.gov/products/gao-25-107386",
+          "domain": "www.gao.gov",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.csis.org/analysis/understanding-us-allies-current-legal-authority-implement-ai-and-semiconductor-export",
+          "domain": "www.csis.org",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.meritalk.com/articles/gao-details-progress-challenges-in-semiconductor-export-controls/",
+          "domain": "www.meritalk.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 3461,
+          "truncated": false
+        },
+        {
+          "url": "https://laweconcenter.org/resources/us-export-controls-on-ai-and-semiconductors/",
+          "domain": "laweconcenter.org",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.bis.gov/press-release/commerce-strengthens-export-controls-restrict-chinas-capability-produce-advanced-semiconductors-military",
+          "domain": "www.bis.gov",
+          "success": false,
+          "error": "[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1016)",
+          "method": null,
+          "status_code": null,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.corporatecomplianceinsights.com/sweeping-export-controls-semiconductor-value-chain/",
+          "domain": "www.corporatecomplianceinsights.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.mayerbrown.com/en/insights/publications/2025/05/us-commerce-department-announces-new-export-compliance-expectations-related-to-artificial-intelligence",
+          "domain": "www.mayerbrown.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 8057,
+          "truncated": false
+        },
+        {
+          "url": "https://www.jdsupra.com/legalnews/managing-export-control-risks-in-the-ai-2426245/",
+          "domain": "www.jdsupra.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 17414,
+          "truncated": true
+        },
+        {
+          "url": "https://www.globaltradeandsanctionslaw.com/bis-imposes-new-export-controls-on-quantum-semiconductor-and-additive-manufacturing-technologies/",
+          "domain": "www.globaltradeandsanctionslaw.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 6241,
+          "truncated": false
+        },
+        {
+          "url": "https://cepa.org/article/chip-challenge-goodbye-export-controls/",
+          "domain": "cepa.org",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 9049,
+          "truncated": false
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 5,
+        "urls_failed": 5,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "Biden administration pause chip export tightening",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Look for evidence of a possible freeze or reassessment that could prevent publication before the deadline.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://warontherocks.com/2026/01/the-burn-and-the-choke-why-semiconductor-controls-will-outlast-chinas-rare-earth-weapon/",
+          "domain": "warontherocks.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.economist.com/leaders/2025/05/08/donald-trump-is-right-to-ditch-joe-bidens-chip-export-rules",
+          "domain": "www.economist.com",
+          "success": false,
+          "error": "HTTP 403",
+          "method": null,
+          "status_code": 403,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.aljazeera.com/economy/2025/5/28/trump-tells-us-chip-design-software-makers-to-halt-china-sales-report",
+          "domain": "www.aljazeera.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 2499,
+          "truncated": false
+        },
+        {
+          "url": "https://www.cnbc.com/2025/05/14/ai-chip-export-rules-nvidia.html",
+          "domain": "www.cnbc.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 5174,
+          "truncated": false
+        },
+        {
+          "url": "https://builtin.com/articles/trump-lifts-ai-chip-ban-china-nvidia",
+          "domain": "builtin.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 18042,
+          "truncated": true
+        },
+        {
+          "url": "https://www.vox.com/future-perfect/419791/trump-nvidia-h20-china-ai-chip",
+          "domain": "www.vox.com",
+          "success": false,
+          "error": "Blocked domain",
+          "method": null,
+          "status_code": null,
+          "content_chars": 0,
+          "truncated": false
+        },
+        {
+          "url": "https://www.investopedia.com/chip-software-stocks-tumble-trump-china-cadence-synopsys-nvidia-earnings-11743742",
+          "domain": "www.investopedia.com",
+          "success": true,
+          "error": null,
+          "method": "boilerpy",
+          "status_code": 200,
+          "content_chars": 3012,
+          "truncated": false
+        },
+        {
+          "url": "https://interestingengineering.com/culture/us-bans-key-chip-software-sales-to-china",
+          "domain": "interestingengineering.com",
+          "success": true,
+          "error": null,
+          "method": "trafilatura",
+          "status_code": 200,
+          "content_chars": 4620,
+          "truncated": false
+        },
+        {
+          "url": "https://cepa.org/article/bidens-final-global-chip-controls-target-china-and-allies/",
+          "domain": "cepa.org",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 6745,
+          "truncated": false
+        },
+        {
+          "url": "https://www.wionews.com/business-economy/nvidia-s-china-ai-chip-plans-hit-pause-as-h20-supply-remains-tight-1752991652936",
+          "domain": "www.wionews.com",
+          "success": true,
+          "error": null,
+          "method": "site-specific",
+          "status_code": 200,
+          "content_chars": 3615,
+          "truncated": false
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 7,
+        "urls_failed": 3,
+        "urls_summarized": 3
+      }
+    }
+  ]
+}
