@@ -15,7 +15,7 @@ import math
 import os
 import re
 import traceback
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from typing import Any
 from urllib.parse import urlparse
@@ -63,6 +63,17 @@ class AgenticSearchStepData:
     queries_executed: list[tuple[str, str]]  # (query, source) pairs
     search_results_raw: str  # Raw search results fed to LLM
     analysis_after_step: str  # Analysis produced after this step
+    # Per-sub-query URL records, keyed by "{query} ({source})".
+    # FRED / yFinance sub-queries have empty lists (they return data, not URLs).
+    url_results: dict[str, list[dict]] = field(default_factory=dict)
+
+
+@dataclass
+class AgenticStepSearchResult:
+    """Return value for _google_search_agentic: raw content string + URL tracking."""
+
+    content: str
+    url_results: list[dict]
 
 
 @dataclass
@@ -514,6 +525,7 @@ class SearchPipeline:
                                     "queries_executed": sd.queries_executed,
                                     "search_results_chars": len(sd.search_results_raw),
                                     "analysis_chars": len(sd.analysis_after_step),
+                                    "url_results": sd.url_results,
                                 }
                                 for sd in agentic_result.step_data
                             ],
@@ -710,29 +722,38 @@ class SearchPipeline:
         for url in urls:
             extraction = results.get(url, {})
             content = (extraction.get("content") or "").strip()
+            success = extraction.get("success", False)
+            error = extraction.get("error")
+            sufficient = success and len(content.split()) >= self._MIN_QUESTION_URL_CONTENT_WORDS
 
-            url_meta: dict[str, Any] = {
-                "url": url,
-                "domain": extraction.get("domain", urlparse(url).netloc),
-                "scraped": extraction.get("success", False),
-                "method": extraction.get("method"),
-                "status_code": extraction.get("status_code"),
-            }
-
-            if (
-                extraction.get("success")
-                and len(content.split()) >= self._MIN_QUESTION_URL_CONTENT_WORDS
-            ):
+            if sufficient:
                 max_content = self.config.get("research", {}).get("max_content_length", 15000)
                 truncated = _bm25_filter_content(
                     content, question_details.title, max_chars=max_content
                 )
                 summarize_tasks.append(self._summarize_article(truncated, question_details))
                 valid_urls.append(url)
-                url_meta["content_words"] = len(content.split())
                 metadata["urls_scraped"] += 1
+                usage = "summarized"
+            elif error == "Blocked domain":
+                usage = "blocked"
+            elif not success:
+                usage = "failed"
             else:
-                url_meta["error"] = extraction.get("error", "Insufficient content")
+                usage = "dropped_short"
+
+            url_meta: dict[str, Any] = {
+                "url": url,
+                "domain": extraction.get("domain", urlparse(url).netloc),
+                "success": success,
+                "status_code": extraction.get("status_code"),
+                "error": error if not sufficient else None,
+                "response_time_ms": extraction.get("response_time_ms", 0),
+                "method": extraction.get("method"),
+                "content_chars": extraction.get("content_chars", 0),
+                "content_words": len(content.split()) if sufficient else 0,
+                "usage": usage,
+            }
 
             metadata["urls"].append(url_meta)
 
@@ -892,43 +913,65 @@ class SearchPipeline:
                 logger.info(f"[google_search_and_scrape] Extracting content from {len(urls)} URLs")
                 results = await extractor.extract_content(urls)
 
-            # Build per-URL tracking data
-            url_results = []
-            for url in urls:
-                extraction = results.get(url, {})
-                url_results.append(
-                    {
-                        "url": url,
-                        "domain": extraction.get("domain", urlparse(url).netloc),
-                        "success": extraction.get("success", False),
-                        "error": extraction.get("error"),
-                        "method": extraction.get("method"),
-                        "status_code": extraction.get("status_code"),
-                        "content_chars": extraction.get("content_chars", 0),
-                        "truncated": extraction.get("truncated", False),
-                    }
-                )
-
-            # Summarize top results
+            # Summarize top results — determine which URLs are summarized first
+            # so we can assign `usage` accurately in the url_results below.
             summarize_tasks = []
             valid_urls = []
             max_results = 3
+            summarized_urls: set[str] = set()
+            dropped_cap_urls: set[str] = set()
+            _cap_reached = False
 
             for url, extraction in results.items():
-                if len(summarize_tasks) >= max_results:
-                    break
-
                 content = (extraction.get("content") or "").strip()
-                if len(content.split()) < 100:
-                    logger.debug(f"[google_search_and_scrape] Skipping low-content: {url}")
+                if not extraction.get("success") or len(content.split()) < 100:
                     continue
-
+                if _cap_reached:
+                    dropped_cap_urls.add(url)
+                    continue
                 truncated = _bm25_filter_content(content, question_details.title)
                 logger.debug(
                     f"[google_search_and_scrape] Summarizing {len(truncated)} chars from {url}"
                 )
                 summarize_tasks.append(self._summarize_article(truncated, question_details))
                 valid_urls.append(url)
+                summarized_urls.add(url)
+                if len(summarize_tasks) >= max_results:
+                    _cap_reached = True
+
+            # Build per-URL tracking data (after summarization loop so usage is known)
+            url_results = []
+            for url in urls:
+                extraction = results.get(url, {})
+                success = extraction.get("success", False)
+                error = extraction.get("error")
+                content = (extraction.get("content") or "").strip()
+                if error == "Blocked domain":
+                    usage = "blocked"
+                elif not success:
+                    usage = "failed"
+                elif url in summarized_urls:
+                    usage = "summarized"
+                elif url in dropped_cap_urls:
+                    usage = "dropped_cap"
+                elif len(content.split()) < 100:
+                    usage = "dropped_short"
+                else:
+                    usage = "dropped_cap"
+                url_results.append(
+                    {
+                        "url": url,
+                        "domain": extraction.get("domain", urlparse(url).netloc),
+                        "success": success,
+                        "status_code": extraction.get("status_code"),
+                        "error": error,
+                        "response_time_ms": extraction.get("response_time_ms", 0),
+                        "method": extraction.get("method"),
+                        "content_chars": extraction.get("content_chars", 0),
+                        "truncated": extraction.get("truncated", False),
+                        "usage": usage,
+                    }
+                )
 
             if not summarize_tasks:
                 logger.warning("[google_search_and_scrape] No content to summarize")
@@ -1423,15 +1466,25 @@ class SearchPipeline:
 
                 search_results_list = await asyncio.gather(*search_tasks, return_exceptions=True)
 
-                # Format search results
+                # Format search results and collect per-sub-query URL records
                 search_results = ""
+                step_url_results: dict[str, list[dict]] = {}
                 for (sq, source), result in zip(executed_queries, search_results_list, strict=True):
+                    key = f"{sq} ({source})"
                     if isinstance(result, Exception):
                         search_results += (
                             f"\nSearch query: {sq} (Source: {source})\nError: {result}\n"
                         )
+                        step_url_results[key] = []
+                    elif isinstance(result, AgenticStepSearchResult):
+                        search_results += (
+                            f"\nSearch query: {sq} (Source: {source})\n{result.content}\n"
+                        )
+                        step_url_results[key] = result.url_results
                     else:
+                        # FRED / yFinance return plain strings — no URLs
                         search_results += f"\nSearch query: {sq} (Source: {source})\n{result}\n"
+                        step_url_results[key] = []
 
                 logger.info(
                     f"[agentic_search] Step {step + 1}: Search complete, {len(search_results)} chars"
@@ -1444,6 +1497,7 @@ class SearchPipeline:
                         queries_executed=search_queries_with_source,
                         search_results_raw=search_results,
                         analysis_after_step=current_analysis,
+                        url_results=step_url_results,
                     )
                 )
 
@@ -1478,9 +1532,11 @@ class SearchPipeline:
             error=None,
         )
 
-    async def _google_search_agentic(self, query: str, is_news: bool = False) -> str:
+    async def _google_search_agentic(
+        self, query: str, is_news: bool = False
+    ) -> AgenticStepSearchResult:
         """
-        Google search that returns raw content (no summarization).
+        Google search that returns raw content (no summarization) plus URL tracking.
 
         Used by agentic search where the agent analyzes raw content.
         """
@@ -1490,7 +1546,10 @@ class SearchPipeline:
             urls = await self._google_search(query, is_news)
 
             if not urls:
-                return f'<RawContent query="{query}">No URLs returned from Google.</RawContent>\n'
+                return AgenticStepSearchResult(
+                    content=f'<RawContent query="{query}">No URLs returned from Google.</RawContent>\n',
+                    url_results=[],
+                )
 
             async with ConcurrentContentExtractor(url_cache=self._url_cache) as extractor:
                 results = await extractor.extract_content(urls)
@@ -1498,28 +1557,61 @@ class SearchPipeline:
             output = ""
             max_results = 3
             results_count = 0
+            used_urls: set[str] = set()
 
             for url, extraction in results.items():
-                if results_count >= max_results:
-                    break
-
                 content = (extraction.get("content") or "").strip()
-                if len(content.split()) < 100:
-                    continue
-
-                if content:
+                if results_count < max_results and len(content.split()) >= 100:
                     truncated = _bm25_filter_content(content, query)
                     output += f'\n<RawContent source="{url}">\n{truncated}\n</RawContent>\n'
                     results_count += 1
+                    used_urls.add(url)
+
+            # Build uniform URL records
+            url_records = []
+            for url in urls:
+                extraction = results.get(url, {})
+                success = extraction.get("success", False)
+                error = extraction.get("error")
+                content = (extraction.get("content") or "").strip()
+                if error == "Blocked domain":
+                    usage = "blocked"
+                elif not success:
+                    usage = "failed"
+                elif url in used_urls:
+                    usage = "raw_to_agent"
+                elif len(content.split()) < 100:
+                    usage = "dropped_short"
+                else:
+                    usage = "dropped_cap"
+                url_records.append(
+                    {
+                        "url": url,
+                        "domain": extraction.get("domain", urlparse(url).netloc),
+                        "success": success,
+                        "status_code": extraction.get("status_code"),
+                        "error": error,
+                        "response_time_ms": extraction.get("response_time_ms", 0),
+                        "method": extraction.get("method"),
+                        "content_chars": extraction.get("content_chars", 0),
+                        "usage": usage,
+                    }
+                )
 
             if not output:
-                return f'<RawContent query="{query}">No usable content extracted.</RawContent>\n'
+                return AgenticStepSearchResult(
+                    content=f'<RawContent query="{query}">No usable content extracted.</RawContent>\n',
+                    url_results=url_records,
+                )
 
-            return output
+            return AgenticStepSearchResult(content=output, url_results=url_records)
 
         except Exception as e:
             logger.error(f"[google_search_agentic] Error: {e}")
-            return f'<RawContent query="{query}">Error during search: {e}</RawContent>\n'
+            return AgenticStepSearchResult(
+                content=f'<RawContent query="{query}">Error during search: {e}</RawContent>\n',
+                url_results=[],
+            )
 
     # -------------------------------------------------------------------------
     # Google Trends

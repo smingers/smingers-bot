@@ -424,8 +424,8 @@ class BaseForecaster(ForecasterMixin, ABC):
             {
                 "query": u.get("url", ""),
                 "tool": "QuestionURLScrape",
-                "success": u.get("scraped", False),
-                "num_results": 1 if u.get("scraped") else 0,
+                "success": u.get("success", False),
+                "num_results": 1 if u.get("success") else 0,
                 "domain": u.get("domain"),
                 "method": u.get("method"),
                 "content_words": u.get("content_words"),
@@ -551,8 +551,8 @@ class BaseForecaster(ForecasterMixin, ABC):
                 {
                     "query": u["url"],
                     "tool": "QuestionURLScrape",
-                    "success": u.get("scraped", False),
-                    "num_results": 1 if u.get("scraped") else 0,
+                    "success": u.get("success", False),
+                    "num_results": 1 if u.get("success") else 0,
                     "domain": u.get("domain"),
                     "method": u.get("method"),
                     "status_code": u.get("status_code"),
