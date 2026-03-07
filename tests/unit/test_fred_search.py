@@ -158,6 +158,21 @@ class TestIsSuccessfulFredBlock:
     def test_not_freddata_rejected(self):
         assert SearchPipeline._is_successful_fred_block("Error: something") is False
 
+    def test_none_rejected(self):
+        assert SearchPipeline._is_successful_fred_block(None) is False  # type: ignore[arg-type]
+
+    def test_no_observations_rejected(self):
+        block = '<FREDData series="X">\nSeries X contains no observations.\n</FREDData>'
+        assert SearchPipeline._is_successful_fred_block(block) is False
+
+    def test_all_values_nan_rejected(self):
+        block = '<FREDData series="Y">\nAll values are NaN for this range.\n</FREDData>'
+        assert SearchPipeline._is_successful_fred_block(block) is False
+
+    def test_all_nan_rejected(self):
+        block = '<FREDData series="Z">\nAll NaN in result.\n</FREDData>'
+        assert SearchPipeline._is_successful_fred_block(block) is False
+
 
 # ============================================================================
 # FRED Query Parsing (Regex) Tests

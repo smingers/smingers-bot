@@ -2033,16 +2033,26 @@ Source: Federal Reserve Economic Data (FRED), St. Louis Fed
         Return True if the block is a successful FRED response suitable for seed context.
 
         _fred_search always wraps output in <FREDData ...>...</FREDData>. On failure it
-        puts \\nError or 'No matching FRED series' in the first few lines. We check a
-        fixed prefix (300 chars) so we don't mis-treat valid data containing the word
-        "Error" (e.g. in a series title) later in the block.
+        puts a newline followed by "Error", or "No matching FRED series", in the first
+        few lines. We also treat "no observations" and "all values are NaN" (or "all NaN")
+        as no useful data. We check a fixed prefix (300 chars) so we don't mis-treat
+        valid data containing those phrases later in the block.
         """
+        if block is None:
+            return False
         if not block or not block.strip():
             return False
         if not block.strip().startswith("<FREDData"):
             return False
         prefix = block[:300]
         if "\nError" in prefix or "No matching FRED series" in prefix:
+            return False
+        prefix_lower = prefix.lower()
+        if (
+            "no observations" in prefix_lower
+            or "all values are nan" in prefix_lower
+            or "all nan" in prefix_lower
+        ):
             return False
         return True
 
