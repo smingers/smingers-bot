@@ -1926,11 +1926,29 @@ Note: Google Trends values are relative (0-100 scale), not absolute search volum
             latest_value = data.iloc[-1]
             latest_date = data.index[-1].strftime("%Y-%m-%d")
             start_date = data.index[0].strftime("%Y-%m-%d")
-
             now = data.index[-1]
+            span_days = (now - data.index[0]).days
+            start_dt, end_dt = data.index[0], data.index[-1]
+            span_years = end_dt.year - start_dt.year
+            span_months = end_dt.month - start_dt.month
+            if span_months < 0:
+                span_years -= 1
+                span_months += 12
+            if span_years == 0 and span_months == 0:
+                span_str = "less than 1 month"
+            elif span_years == 0:
+                span_str = "1 month" if span_months == 1 else f"{span_months} months"
+            elif span_months == 0:
+                span_str = "1 year" if span_years == 1 else f"{span_years} years"
+            else:
+                y_str = "1 year" if span_years == 1 else f"{span_years} years"
+                m_str = "1 month" if span_months == 1 else f"{span_months} months"
+                span_str = f"{y_str}, {m_str}"
 
             stats_lines = []
             for label, years in [("1-year", 1), ("5-year", 5), ("10-year", 10)]:
+                if span_days < years * 365:
+                    continue
                 cutoff = now - timedelta(days=years * 365)
                 window = data[data.index >= cutoff]
                 if len(window) >= 2:
@@ -1938,10 +1956,10 @@ Note: Google Trends values are relative (0-100 scale), not absolute search volum
                         f"- {label}: mean={window.mean():.2f}, min={window.min():.2f}, "
                         f"max={window.max():.2f}"
                     )
-            # All-time
+            # All-time: always show, with span so readers know how much history exists
             stats_lines.append(
                 f"- All-time: mean={data.mean():.2f}, min={data.min():.2f}, "
-                f"max={data.max():.2f} (since {start_date})"
+                f"max={data.max():.2f} (since {start_date} - {span_str})"
             )
             stats_block = "\n".join(stats_lines)
 
@@ -1973,8 +1991,8 @@ Note: Google Trends values are relative (0-100 scale), not absolute search volum
                 )
             changes_block = "\n".join(change_lines) if change_lines else "- Insufficient data"
 
-            # Recent values table (last 12 data points)
-            recent = data.tail(12)
+            # Recent values table (last 36 data points)
+            recent = data.tail(36)
             recent_lines = ["Date,Value"]
             for date, value in recent.items():
                 recent_lines.append(f"{date.strftime('%Y-%m-%d')},{value:.2f}")
