@@ -115,11 +115,48 @@ class TestExtractFredSeriesFromQuestionText:
     def test_returns_none_when_no_match(self, pipeline):
         assert pipeline._extract_fred_series_from_question_text("No FRED here.") is None
         assert pipeline._extract_fred_series_from_question_text("") is None
+
+    def test_returns_none_for_whitespace_only(self, pipeline):
+        """Whitespace-only input returns None (explicit contract)."""
+        assert pipeline._extract_fred_series_from_question_text(" ") is None
         assert pipeline._extract_fred_series_from_question_text("   ") is None
+        assert pipeline._extract_fred_series_from_question_text("\t\n") is None
 
     def test_url_takes_precedence_over_phrase(self, pipeline):
         text = "Resolves to the series RPONTSYD. See https://api.stlouisfed.org/fred/series/observations?series_id=GVZCLS"
         assert pipeline._extract_fred_series_from_question_text(text) == "GVZCLS"
+
+
+# ============================================================================
+# FRED block success detection (pre-research)
+# ============================================================================
+
+
+class TestIsSuccessfulFredBlock:
+    """Tests for _is_successful_fred_block."""
+
+    def test_successful_block(self):
+        block = '<FREDData series="UNRATE">\nFRED Economic Data: Unemployment Rate\n...</FREDData>'
+        assert SearchPipeline._is_successful_fred_block(block) is True
+
+    def test_error_in_prefix_rejected(self):
+        block = '<FREDData query="x">\nError: FRED_API_KEY not configured.\n</FREDData>'
+        assert SearchPipeline._is_successful_fred_block(block) is False
+
+    def test_no_matching_series_rejected(self):
+        block = '<FREDData query="x">\nNo matching FRED series found for "x".\n</FREDData>'
+        assert SearchPipeline._is_successful_fred_block(block) is False
+
+    def test_error_later_in_block_accepted(self):
+        block = '<FREDData series="X">\nTitle: Error margin (standard deviation)\n...</FREDData>'
+        assert SearchPipeline._is_successful_fred_block(block) is True
+
+    def test_empty_or_whitespace_rejected(self):
+        assert SearchPipeline._is_successful_fred_block("") is False
+        assert SearchPipeline._is_successful_fred_block("   ") is False
+
+    def test_not_freddata_rejected(self):
+        assert SearchPipeline._is_successful_fred_block("Error: something") is False
 
 
 # ============================================================================

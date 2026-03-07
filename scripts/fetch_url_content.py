@@ -37,4 +37,8 @@ if __name__ == "__main__":
     if len(sys.argv) < 2:
         print("Usage: poetry run python scripts/fetch_url_content.py <url>", file=sys.stderr)
         sys.exit(1)
-    asyncio.run(main(sys.argv[1].strip()))
+    url = sys.argv[1].strip()
+    if not url:
+        print("Usage: poetry run python scripts/fetch_url_content.py <url>", file=sys.stderr)
+        sys.exit(1)
+    asyncio.run(main(url))
