@@ -1,0 +1,909 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "https://www.nar.realtor/research-and-statistics/housing-statistics/existing-home-sales",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1,
+          "domain": "www.nar.realtor",
+          "method": "site-specific",
+          "content_words": 321,
+          "error": null,
+          "response_time_ms": 899,
+          "usage": "summarized"
+        },
+        {
+          "query": "https://www.nar.realtor/newsroom",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1,
+          "domain": "www.nar.realtor",
+          "method": "readability",
+          "content_words": 0,
+          "error": null,
+          "response_time_ms": 654,
+          "usage": "dropped_short"
+        },
+        {
+          "query": "https://fred.stlouisfed.org/series/EXHOSLUSM495S",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1,
+          "domain": "fred.stlouisfed.org",
+          "method": "trafilatura",
+          "content_words": 229,
+          "error": null,
+          "response_time_ms": 418,
+          "usage": "summarized"
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 2,
+      "queries": [
+        {
+          "query": "EXHOSLUSM495S",
+          "tool": "FRED",
+          "temporal_role": "historical",
+          "intent": "Obtain full historical monthly SAAR series of U.S. existing-home sales for base-rate calculations and trend analysis.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        },
+        {
+          "query": "March existing home sales history",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Find historical March SAAR values to compute how often March exceeds 4 m.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null,
+          "url_results": [
+            {
+              "url": "https://www.mortgagenewsdaily.com/data/existing-home-sales",
+              "domain": "www.mortgagenewsdaily.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 2398,
+              "method": "site-specific",
+              "content_chars": 2449,
+              "truncated": false,
+              "usage": "summarized"
+            },
+            {
+              "url": "https://fred.stlouisfed.org/graph?graph_id=187068",
+              "domain": "fred.stlouisfed.org",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 7583,
+              "method": "site-specific",
+              "content_chars": 1947,
+              "truncated": false,
+              "usage": "summarized"
+            },
+            {
+              "url": "https://tradingeconomics.com/united-states/existing-home-sales",
+              "domain": "tradingeconomics.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 3739,
+              "method": "boilerpy",
+              "content_chars": 3273,
+              "truncated": false,
+              "usage": "dropped_cap"
+            },
+            {
+              "url": "https://www.census.gov/construction/nrs/",
+              "domain": "www.census.gov",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 7351,
+              "method": "trafilatura",
+              "content_chars": 1847,
+              "truncated": false,
+              "usage": "dropped_cap"
+            },
+            {
+              "url": "https://eyeonhousing.org/2025/04/new-home-sales-rise-in-march/",
+              "domain": "eyeonhousing.org",
+              "success": false,
+              "status_code": 403,
+              "error": "HTTP 403",
+              "response_time_ms": 980,
+              "method": null,
+              "content_chars": 0,
+              "truncated": false,
+              "usage": "failed"
+            },
+            {
+              "url": "https://store.realtor/existing-home-sales-historical-data-file-2025-download/?srsltid=AfmBOordIw4yhPg21xq_giktjBMaGtT3GKHAv8iXs_Zx1kxIkoiRmncr",
+              "domain": "store.realtor",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 4939,
+              "method": "trafilatura",
+              "content_chars": 3161,
+              "truncated": false,
+              "usage": "summarized"
+            },
+            {
+              "url": "https://ycharts.com/indicators/us_existing_home_sales",
+              "domain": "ycharts.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 2833,
+              "method": "trafilatura",
+              "content_chars": 4679,
+              "truncated": false,
+              "usage": "dropped_cap"
+            },
+            {
+              "url": "https://www.cnbc.com/2025/04/24/march-home-sales-drop.html",
+              "domain": "www.cnbc.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 5497,
+              "method": "site-specific",
+              "content_chars": 3137,
+              "truncated": false,
+              "usage": "dropped_cap"
+            },
+            {
+              "url": "https://www.realtor.com/news/real-estate-news/existing-home-sales-report-data-march-2025/",
+              "domain": "www.realtor.com",
+              "success": false,
+              "status_code": 429,
+              "error": "HTTP 429",
+              "response_time_ms": 8317,
+              "method": null,
+              "content_chars": 0,
+              "truncated": false,
+              "usage": "failed"
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 9,
+            "urls_extracted": 7,
+            "urls_failed": 2,
+            "urls_summarized": 3
+          }
+        }
+      ],
+      "tools_used": [
+        "FRED",
+        "Google"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 6,
+      "queries": [
+        {
+          "query": "MORTGAGE30US",
+          "tool": "FRED",
+          "temporal_role": "current",
+          "intent": "Retrieve the up-to-date 30-year fixed mortgage rate series to gauge interest-rate headwinds or relief.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        },
+        {
+          "query": "February 2026 existing home sales",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "Pull the fresh NAR release (or previews/leaks) for February to anchor the latest trajectory.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null,
+          "url_results": [
+            {
+              "url": "https://calculatedrisk.substack.com/p/1st-look-at-local-housing-markets-326",
+              "domain": "calculatedrisk.substack.com",
+              "success": false,
+              "status_code": 403,
+              "error": "HTTP 403",
+              "response_time_ms": 3014,
+              "method": null,
+              "content_chars": 0,
+              "truncated": false,
+              "usage": "failed"
+            },
+            {
+              "url": "https://www.fox5vegas.com/2026/03/06/report-fewer-las-vegas-homes-sold-february-prices-dip-record-highs/",
+              "domain": "www.fox5vegas.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 7248,
+              "method": "site-specific",
+              "content_chars": 3856,
+              "truncated": false,
+              "usage": "summarized"
+            },
+            {
+              "url": "https://nationalmortgageprofessional.com/news/mortgage-economic-review-march-2026",
+              "domain": "nationalmortgageprofessional.com",
+              "success": false,
+              "status_code": 403,
+              "error": "HTTP 403",
+              "response_time_ms": 3014,
+              "method": null,
+              "content_chars": 0,
+              "truncated": false,
+              "usage": "failed"
+            },
+            {
+              "url": "https://www.floridarealtors.org/news-media/news-articles/2026/03/nationwide-housing-market-shows-early-rebound",
+              "domain": "www.floridarealtors.org",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 7592,
+              "method": "trafilatura",
+              "content_chars": 3634,
+              "truncated": false,
+              "usage": "dropped_cap"
+            },
+            {
+              "url": "https://www.zillow.com/news/four-takeaways-for-agents-from-zillows-february-2026-market-report/",
+              "domain": "www.zillow.com",
+              "success": false,
+              "status_code": 403,
+              "error": "HTTP 403",
+              "response_time_ms": 946,
+              "method": null,
+              "content_chars": 0,
+              "truncated": false,
+              "usage": "failed"
+            },
+            {
+              "url": "https://bostonagentmagazine.com/2026/03/05/zillow-february-signals-spring-rebound-for-housing-market/",
+              "domain": "bostonagentmagazine.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 4506,
+              "method": "site-specific",
+              "content_chars": 1997,
+              "truncated": false,
+              "usage": "summarized"
+            },
+            {
+              "url": "https://www.reuters.com/business/us-existing-home-sales-drop-more-than-two-year-low-january-2026-02-12/",
+              "domain": "www.reuters.com",
+              "success": false,
+              "status_code": null,
+              "error": "Blocked domain",
+              "response_time_ms": 0,
+              "method": null,
+              "content_chars": 0,
+              "truncated": false,
+              "usage": "blocked"
+            },
+            {
+              "url": "https://economics.td.com/us-existing-home-sales",
+              "domain": "economics.td.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 4827,
+              "method": "trafilatura",
+              "content_chars": 4224,
+              "truncated": false,
+              "usage": "summarized"
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 8,
+            "urls_extracted": 4,
+            "urls_failed": 4,
+            "urls_summarized": 3
+          }
+        },
+        {
+          "query": "2026 home sales forecast MBA",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "Collect recent forecasts/outlooks from MBA, Fannie Mae, NAR, and major banks on 2026 sales levels.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null,
+          "url_results": [
+            {
+              "url": "https://finance.yahoo.com/personal-finance/mortgages/article/march-2026-housing-market-forecast-140000305.html",
+              "domain": "finance.yahoo.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 6063,
+              "method": "trafilatura",
+              "content_chars": 1719,
+              "truncated": false,
+              "usage": "summarized"
+            },
+            {
+              "url": "https://www.forbes.com/advisor/mortgages/mortgage-interest-rates-forecast/",
+              "domain": "www.forbes.com",
+              "success": false,
+              "status_code": 403,
+              "error": "HTTP 403",
+              "response_time_ms": 952,
+              "method": null,
+              "content_chars": 0,
+              "truncated": false,
+              "usage": "failed"
+            },
+            {
+              "url": "https://nationalmortgageprofessional.com/news/mba-solidifies-2026-forecast",
+              "domain": "nationalmortgageprofessional.com",
+              "success": false,
+              "status_code": 403,
+              "error": "HTTP 403",
+              "response_time_ms": 952,
+              "method": null,
+              "content_chars": 0,
+              "truncated": false,
+              "usage": "failed"
+            },
+            {
+              "url": "https://www.mba.org/news-and-research/newsroom/news/2025/10/19/mba-forecast--total-single-family-mortgage-originations-to-increase-8-percent-to--2.2-trillion-in-2026",
+              "domain": "www.mba.org",
+              "success": false,
+              "status_code": 403,
+              "error": "HTTP 403",
+              "response_time_ms": 952,
+              "method": null,
+              "content_chars": 0,
+              "truncated": false,
+              "usage": "failed"
+            },
+            {
+              "url": "https://www.scotsmanguide.com/news/mba-fannie-mae-see-2027-housing-market-very-differently/",
+              "domain": "www.scotsmanguide.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 7146,
+              "method": "site-specific",
+              "content_chars": 18975,
+              "truncated": true,
+              "usage": "dropped_cap"
+            },
+            {
+              "url": "https://www.usatoday.com/story/money/personalfinance/real-estate/2025/12/04/housing-market-forecasts-2026-mortgages-prices/87483830007/",
+              "domain": "www.usatoday.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 1340,
+              "method": "trafilatura",
+              "content_chars": 3325,
+              "truncated": false,
+              "usage": "summarized"
+            },
+            {
+              "url": "https://www.resiclubanalytics.com/p/mortgage-rates-2026-forecast-mba-fannie-mae",
+              "domain": "www.resiclubanalytics.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 4425,
+              "method": "site-specific",
+              "content_chars": 3750,
+              "truncated": false,
+              "usage": "dropped_cap"
+            },
+            {
+              "url": "https://www.realtor.com/news/trends/mortgage-rate-forecast-mba-economist/",
+              "domain": "www.realtor.com",
+              "success": false,
+              "status_code": 429,
+              "error": "HTTP 429",
+              "response_time_ms": 7948,
+              "method": null,
+              "content_chars": 0,
+              "truncated": false,
+              "usage": "failed"
+            },
+            {
+              "url": "https://www.mpamag.com/us/mortgage-industry/industry-trends/mba-sees-mortgage-rates-stuck-above-6-as-inventory-finally-loosens/560856",
+              "domain": "www.mpamag.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 1439,
+              "method": "site-specific",
+              "content_chars": 3024,
+              "truncated": false,
+              "usage": "summarized"
+            },
+            {
+              "url": "https://www.cutimes.com/2026/01/28/mba-raises-refi-forecast-as-mortgage-rates-fall/",
+              "domain": "www.cutimes.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 2614,
+              "method": "boilerpy",
+              "content_chars": 369,
+              "truncated": false,
+              "usage": "dropped_short"
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 10,
+            "urls_extracted": 6,
+            "urls_failed": 4,
+            "urls_summarized": 3
+          }
+        },
+        {
+          "query": "U.S. housing inventory February 2026",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "Obtain reports on current for-sale inventory trends, a primary supply constraint.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null,
+          "url_results": [
+            {
+              "url": "https://www.realtor.com/research/video-economic-and-housing-market-update-march-6-2026/",
+              "domain": "www.realtor.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 2547,
+              "method": "trafilatura",
+              "content_chars": 1290,
+              "truncated": false,
+              "usage": "summarized"
+            },
+            {
+              "url": "https://www.resiclubanalytics.com/p/state-inventory-update-housing-market-march-2026",
+              "domain": "www.resiclubanalytics.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 4016,
+              "method": "site-specific",
+              "content_chars": 7617,
+              "truncated": false,
+              "usage": "dropped_cap"
+            },
+            {
+              "url": "https://www.king5.com/article/money/markets/real-estate/seattle-area-housing-prices/281-b3a62017-4bf4-47c0-a194-21800cfc7b6e",
+              "domain": "www.king5.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 1255,
+              "method": "trafilatura",
+              "content_chars": 3938,
+              "truncated": false,
+              "usage": "dropped_cap"
+            },
+            {
+              "url": "https://www.census.gov/construction/nrs/current/index.html",
+              "domain": "www.census.gov",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 931,
+              "method": "trafilatura",
+              "content_chars": 1693,
+              "truncated": false,
+              "usage": "dropped_cap"
+            },
+            {
+              "url": "https://www.realtor.com/research/february-2026-employment-report/",
+              "domain": "www.realtor.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 3849,
+              "method": "site-specific",
+              "content_chars": 2814,
+              "truncated": false,
+              "usage": "summarized"
+            },
+            {
+              "url": "https://www.nar.realtor/newsroom/nar-existing-home-sales-report-shows-8-4-decrease-in-january",
+              "domain": "www.nar.realtor",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 376,
+              "method": "site-specific",
+              "content_chars": 5358,
+              "truncated": false,
+              "usage": "dropped_cap"
+            },
+            {
+              "url": "https://www.reuters.com/world/us/us-new-home-sales-fall-december-inventory-declines-2026-02-20/",
+              "domain": "www.reuters.com",
+              "success": false,
+              "status_code": null,
+              "error": "Blocked domain",
+              "response_time_ms": 0,
+              "method": null,
+              "content_chars": 0,
+              "truncated": false,
+              "usage": "blocked"
+            },
+            {
+              "url": "https://www.housingwire.com/articles/2026-housing-inventory-trends/",
+              "domain": "www.housingwire.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 706,
+              "method": "trafilatura",
+              "content_chars": 4124,
+              "truncated": false,
+              "usage": "summarized"
+            },
+            {
+              "url": "https://www.zillow.com/research/home-value-sales-forecast-33822/",
+              "domain": "www.zillow.com",
+              "success": false,
+              "status_code": 403,
+              "error": "HTTP 403",
+              "response_time_ms": 707,
+              "method": null,
+              "content_chars": 0,
+              "truncated": false,
+              "usage": "failed"
+            },
+            {
+              "url": "https://www.jpmorgan.com/insights/global-research/real-estate/us-housing-market-outlook",
+              "domain": "www.jpmorgan.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 3372,
+              "method": "site-specific",
+              "content_chars": 10279,
+              "truncated": false,
+              "usage": "dropped_cap"
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 10,
+            "urls_extracted": 8,
+            "urls_failed": 2,
+            "urls_summarized": 3
+          }
+        },
+        {
+          "query": "severe weather February 2026 US",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "Check for abnormal weather that could delay closings and depress March sales (contrarian factor).",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null,
+          "url_results": [
+            {
+              "url": "https://www.cnbc.com/2026/03/06/february-2026-jobs-report.html",
+              "domain": "www.cnbc.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 3884,
+              "method": "site-specific",
+              "content_chars": 5989,
+              "truncated": false,
+              "usage": "dropped_cap"
+            },
+            {
+              "url": "https://watchers.news/2026/03/04/multi-day-storm-event-forecast-across-central-and-southern-united-states-march-4-6/",
+              "domain": "watchers.news",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 3519,
+              "method": "trafilatura",
+              "content_chars": 2317,
+              "truncated": false,
+              "usage": "summarized"
+            },
+            {
+              "url": "https://climateimpactcompany.com/u-s-early-notes-severe-weather-pattern-continues-heavy-rain-pattern-for-texas-to-southwest-ohio-valley-and-washington-2-2/",
+              "domain": "climateimpactcompany.com",
+              "success": false,
+              "status_code": 403,
+              "error": "HTTP 403",
+              "response_time_ms": 3016,
+              "method": null,
+              "content_chars": 0,
+              "truncated": false,
+              "usage": "failed"
+            },
+            {
+              "url": "https://www.weather.gov/mpx/February18WinterStorm",
+              "domain": "www.weather.gov",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 2285,
+              "method": "trafilatura",
+              "content_chars": 8015,
+              "truncated": false,
+              "usage": "summarized"
+            },
+            {
+              "url": "https://www.reuters.com/world/us/us-nonfarm-payrolls-decline-february-unemployment-rate-rises-44-2026-03-06/",
+              "domain": "www.reuters.com",
+              "success": false,
+              "status_code": null,
+              "error": "Blocked domain",
+              "response_time_ms": 0,
+              "method": null,
+              "content_chars": 0,
+              "truncated": false,
+              "usage": "blocked"
+            },
+            {
+              "url": "https://www.bbc.com/news/articles/c75ere6z4weo",
+              "domain": "www.bbc.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 947,
+              "method": "site-specific",
+              "content_chars": 5111,
+              "truncated": false,
+              "usage": "dropped_cap"
+            },
+            {
+              "url": "https://wmo.int/media/news/extreme-heat-cold-precipitation-and-fires-mark-start-of-2026",
+              "domain": "wmo.int",
+              "success": false,
+              "status_code": 403,
+              "error": "HTTP 403",
+              "response_time_ms": 6867,
+              "method": null,
+              "content_chars": 0,
+              "truncated": false,
+              "usage": "failed"
+            },
+            {
+              "url": "https://www.theguardian.com/us-news/2026/feb/22/us-north-east-storm-blizzard-warnings",
+              "domain": "www.theguardian.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 1071,
+              "method": "site-specific",
+              "content_chars": 4595,
+              "truncated": false,
+              "usage": "dropped_cap"
+            },
+            {
+              "url": "https://www.foxweather.com/watch/fmc-9m50haorauh4new4",
+              "domain": "www.foxweather.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 3635,
+              "method": "trafilatura",
+              "content_chars": 349,
+              "truncated": false,
+              "usage": "dropped_short"
+            },
+            {
+              "url": "https://weather.com/science/weather-explainers/news/2026-01-28-february-weather-what-to-expect-winter-snow-storm",
+              "domain": "weather.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 4622,
+              "method": "site-specific",
+              "content_chars": 4164,
+              "truncated": false,
+              "usage": "summarized"
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 10,
+            "urls_extracted": 7,
+            "urls_failed": 3,
+            "urls_summarized": 3
+          }
+        },
+        {
+          "query": "U.S. housing market outlook spring 2026 existing home sales drivers forecasts Fannie Mae NAR",
+          "tool": "AskNews",
+          "temporal_role": "current",
+          "intent": "Surface broader analytical pieces tying together rates, inventory, and macro conditions that inform near-term sales expectations.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 20,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "FRED",
+        "Google News",
+        "AskNews"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4299,
+        "token_output": 1402,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.033927,
+        "duration_seconds": 37.68370175361633,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 22941,
+        "token_output": 3308,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.11844299999999999,
+        "duration_seconds": 78.60713863372803,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 22558,
+        "token_output": 3628,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.12209400000000001,
+        "duration_seconds": 78.60711431503296,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.4",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 3818,
+        "token_output": 2193,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.051985,
+        "duration_seconds": 37.68377423286438,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 20425,
+        "token_output": 2948,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.146345,
+        "duration_seconds": 78.60708475112915,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 21326,
+        "token_output": 1940,
+        "token_reasoning": 768,
+        "used_reasoning": true,
+        "cost": 0.058172,
+        "duration_seconds": 78.60705018043518,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 3818,
+        "token_output": 2094,
+        "token_reasoning": 1152,
+        "used_reasoning": true,
+        "cost": 0.024388,
+        "duration_seconds": 37.68382143974304,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 19982,
+        "token_output": 1686,
+        "token_reasoning": 512,
+        "used_reasoning": true,
+        "cost": 0.053452,
+        "duration_seconds": 78.6070168018341,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "steps1_2_research": 0.0579,
+    "step3_outside_view": 0.1103,
+    "step5_inside_view": 0.4985,
+    "step6_aggregation": 0.4985,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.6667
+}
