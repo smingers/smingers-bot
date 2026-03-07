@@ -1,0 +1,953 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "https://fred.stlouisfed.org/series/VIXCLS",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1,
+          "domain": "fred.stlouisfed.org",
+          "method": "trafilatura",
+          "content_words": 152,
+          "error": null,
+          "response_time_ms": 913,
+          "usage": "summarized"
+        },
+        {
+          "query": "https://www.cboe.com/tradable_products/vix/vix_historical_data/",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1,
+          "domain": "www.cboe.com",
+          "method": "trafilatura",
+          "content_words": 286,
+          "error": null,
+          "response_time_ms": 493,
+          "usage": "summarized"
+        },
+        {
+          "query": "https://stooq.com/q/d/l/?s=%5Evix",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0,
+          "domain": "stooq.com",
+          "method": null,
+          "content_words": 0,
+          "error": "Empty or very short HTML received",
+          "response_time_ms": 1052,
+          "usage": "failed"
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "VIXCLS",
+          "tool": "FRED",
+          "temporal_role": "historical",
+          "intent": "Download full daily history and summary stats of VIX closes for base-rate analysis and latest values.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        },
+        {
+          "query": "VIX historical distribution by level",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Find studies/charts showing how often the VIX falls into specific buckets (e.g., <15, 15-20, 20-25, >25).",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null,
+          "url_results": [
+            {
+              "url": "https://finance.yahoo.com/quote/%5EVIX/history/",
+              "domain": "finance.yahoo.com",
+              "success": false,
+              "status_code": 404,
+              "error": "HTTP 404",
+              "response_time_ms": 2727,
+              "method": null,
+              "content_chars": 0,
+              "truncated": false,
+              "usage": "failed"
+            },
+            {
+              "url": "https://www.investing.com/indices/volatility-s-p-500-historical-data",
+              "domain": "www.investing.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 17134,
+              "method": "trafilatura",
+              "content_chars": 1905,
+              "truncated": false,
+              "usage": "summarized"
+            },
+            {
+              "url": "https://www.macrotrends.net/2603/vix-volatility-index-historical-chart",
+              "domain": "www.macrotrends.net",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 1165,
+              "method": "trafilatura",
+              "content_chars": 384,
+              "truncated": false,
+              "usage": "dropped_short"
+            },
+            {
+              "url": "https://ycharts.com/indicators/vix_volatility_index",
+              "domain": "ycharts.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 2925,
+              "method": "trafilatura",
+              "content_chars": 4615,
+              "truncated": false,
+              "usage": "dropped_cap"
+            },
+            {
+              "url": "https://www.macroption.com/vix-all-time-low/",
+              "domain": "www.macroption.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 2107,
+              "method": "site-specific",
+              "content_chars": 6169,
+              "truncated": false,
+              "usage": "dropped_cap"
+            },
+            {
+              "url": "http://vixcentral.com/",
+              "domain": "vixcentral.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 898,
+              "method": "trafilatura",
+              "content_chars": 743,
+              "truncated": false,
+              "usage": "summarized"
+            },
+            {
+              "url": "https://tradingeconomics.com/united-states/cboe-volatility-index-vix-fed-data.html",
+              "domain": "tradingeconomics.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 5068,
+              "method": "trafilatura",
+              "content_chars": 2768,
+              "truncated": false,
+              "usage": "summarized"
+            },
+            {
+              "url": "https://www.spglobal.com/spdji/en/vix-intro/",
+              "domain": "www.spglobal.com",
+              "success": false,
+              "status_code": 403,
+              "error": "HTTP 403",
+              "response_time_ms": 1167,
+              "method": null,
+              "content_chars": 0,
+              "truncated": false,
+              "usage": "failed"
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 8,
+            "urls_extracted": 6,
+            "urls_failed": 2,
+            "urls_summarized": 3
+          }
+        },
+        {
+          "query": "VIX days below 15",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Quantify frequency and conditions of very low volatility regimes.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null,
+          "url_results": [
+            {
+              "url": "https://www.youtube.com/shorts/bsxhw8wUDn4",
+              "domain": "www.youtube.com",
+              "success": false,
+              "status_code": null,
+              "error": "Blocked domain",
+              "response_time_ms": 0,
+              "method": null,
+              "content_chars": 0,
+              "truncated": false,
+              "usage": "blocked"
+            },
+            {
+              "url": "https://www.cboe.com/tradable-products/vix/",
+              "domain": "www.cboe.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 9597,
+              "method": "site-specific",
+              "content_chars": 4395,
+              "truncated": false,
+              "usage": "summarized"
+            },
+            {
+              "url": "https://www.reddit.com/r/options/comments/1mowayc/vix_is_lowest_since_forever_should_we_hedge/",
+              "domain": "www.reddit.com",
+              "success": false,
+              "status_code": null,
+              "error": "Blocked domain",
+              "response_time_ms": 0,
+              "method": null,
+              "content_chars": 0,
+              "truncated": false,
+              "usage": "blocked"
+            },
+            {
+              "url": "https://www.investopedia.com/terms/v/vix.asp",
+              "domain": "www.investopedia.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 5200,
+              "method": "trafilatura",
+              "content_chars": 10649,
+              "truncated": false,
+              "usage": "summarized"
+            },
+            {
+              "url": "https://www.cnbc.com/quotes/.VIX",
+              "domain": "www.cnbc.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 9848,
+              "method": "trafilatura",
+              "content_chars": 640,
+              "truncated": false,
+              "usage": "dropped_cap"
+            },
+            {
+              "url": "https://www.fxstreet.com/analysis/wall-street-rallies-to-new-highs-but-complacency-creeps-in-as-vix-drops-below-15-202507281059",
+              "domain": "www.fxstreet.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 12711,
+              "method": "trafilatura",
+              "content_chars": 8720,
+              "truncated": false,
+              "usage": "summarized"
+            },
+            {
+              "url": "https://www.quora.com/Is-it-smart-to-the-buy-VIX-index-when-it-falls-below-20",
+              "domain": "www.quora.com",
+              "success": false,
+              "status_code": 403,
+              "error": "HTTP 403",
+              "response_time_ms": 842,
+              "method": null,
+              "content_chars": 0,
+              "truncated": false,
+              "usage": "failed"
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 7,
+            "urls_extracted": 4,
+            "urls_failed": 3,
+            "urls_summarized": 3
+          }
+        },
+        {
+          "query": "VIX days above 25",
+          "tool": "Google",
+          "temporal_role": "historical",
+          "intent": "Quantify frequency and drivers of high-stress regimes.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 1,
+          "error": null,
+          "url_results": [
+            {
+              "url": "https://www.reddit.com/r/options/comments/1p0lk13/vix_was_above_25_todayany_short_trades_done/",
+              "domain": "www.reddit.com",
+              "success": false,
+              "status_code": null,
+              "error": "Blocked domain",
+              "response_time_ms": 0,
+              "method": null,
+              "content_chars": 0,
+              "truncated": false,
+              "usage": "blocked"
+            },
+            {
+              "url": "https://seekingalpha.com/news/4418962-vix-surge-above-25-implies-above-average-but-far-from-perilous-recession-risk",
+              "domain": "seekingalpha.com",
+              "success": false,
+              "status_code": 403,
+              "error": "HTTP 403",
+              "response_time_ms": 1832,
+              "method": null,
+              "content_chars": 0,
+              "truncated": false,
+              "usage": "failed"
+            },
+            {
+              "url": "https://www.youtube.com/watch?v=TkzZsHM1hK4",
+              "domain": "www.youtube.com",
+              "success": false,
+              "status_code": null,
+              "error": "Blocked domain",
+              "response_time_ms": 0,
+              "method": null,
+              "content_chars": 0,
+              "truncated": false,
+              "usage": "blocked"
+            },
+            {
+              "url": "https://www.linkedin.com/posts/grant-johnsey-289677_vix-has-risen-to-the-mid-20s-when-vix-activity-7305959075907870721-1xUo",
+              "domain": "www.linkedin.com",
+              "success": false,
+              "status_code": null,
+              "error": "Blocked domain",
+              "response_time_ms": 0,
+              "method": null,
+              "content_chars": 0,
+              "truncated": false,
+              "usage": "blocked"
+            },
+            {
+              "url": "https://www.civolatility.com/p/vix-20-to-25",
+              "domain": "www.civolatility.com",
+              "success": false,
+              "status_code": 403,
+              "error": "HTTP 403",
+              "response_time_ms": 17223,
+              "method": null,
+              "content_chars": 0,
+              "truncated": false,
+              "usage": "failed"
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 5,
+            "urls_extracted": 0,
+            "urls_failed": 5,
+            "urls_summarized": 1
+          }
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "FRED"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": true,
+      "num_queries": 4,
+      "queries": [
+        {
+          "query": "April 2026 VIX futures quote",
+          "tool": "Google",
+          "temporal_role": "current",
+          "intent": "Pull current VXJ26 (April \u201926) futures price to gauge market-implied VIX on/near settlement.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null,
+          "url_results": [
+            {
+              "url": "https://finance.yahoo.com/quote/VIX260415P00011000/",
+              "domain": "finance.yahoo.com",
+              "success": false,
+              "status_code": 404,
+              "error": "HTTP 404",
+              "response_time_ms": 4098,
+              "method": null,
+              "content_chars": 0,
+              "truncated": false,
+              "usage": "failed"
+            },
+            {
+              "url": "https://www.marketwatch.com/investing/future/vxj26?gaa_at=eafs&gaa_n=AWEtsqcG64_dEmXrBxGscg-95zkq1WwxerEE8osgfX-xTCs0lv8OCdTYHXru&gaa_ts=69ac059a&gaa_sig=U3WfO5IBXZjqbHBHlATNLonIZX6WSkugdG2o9lfc5SX08vkcHABuxAYv2lhTFiYeHet4wRHXmkuQZq-M_f-5Rg%3D%3D",
+              "domain": "www.marketwatch.com",
+              "success": false,
+              "status_code": 401,
+              "error": "HTTP 401",
+              "response_time_ms": 9269,
+              "method": null,
+              "content_chars": 0,
+              "truncated": false,
+              "usage": "failed"
+            },
+            {
+              "url": "https://www.cboe.com/en/tradable-products/vix/vix-futures/",
+              "domain": "www.cboe.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 9926,
+              "method": "site-specific",
+              "content_chars": 4443,
+              "truncated": false,
+              "usage": "summarized"
+            },
+            {
+              "url": "https://www.barchart.com/futures/quotes/VI*0/futures-prices",
+              "domain": "www.barchart.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 4057,
+              "method": "trafilatura",
+              "content_chars": 5801,
+              "truncated": false,
+              "usage": "summarized"
+            },
+            {
+              "url": "https://finance.yahoo.com/quote/VIX260415C00042500/history/",
+              "domain": "finance.yahoo.com",
+              "success": false,
+              "status_code": 404,
+              "error": "HTTP 404",
+              "response_time_ms": 4097,
+              "method": null,
+              "content_chars": 0,
+              "truncated": false,
+              "usage": "failed"
+            },
+            {
+              "url": "https://www.investing.com/indices/us-spx-vix-futures",
+              "domain": "www.investing.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 11185,
+              "method": "trafilatura",
+              "content_chars": 1880,
+              "truncated": false,
+              "usage": "summarized"
+            },
+            {
+              "url": "https://www.macroption.com/vix-expiration-calendar/",
+              "domain": "www.macroption.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 12104,
+              "method": "site-specific",
+              "content_chars": 11902,
+              "truncated": false,
+              "usage": "dropped_cap"
+            },
+            {
+              "url": "https://www.tradingview.com/symbols/CBOE-VX1!/ideas/?contract=VXH2026",
+              "domain": "www.tradingview.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 11640,
+              "method": "trafilatura",
+              "content_chars": 9458,
+              "truncated": false,
+              "usage": "dropped_cap"
+            },
+            {
+              "url": "https://optioncharts.io/options/$VIX/option-chain",
+              "domain": "optioncharts.io",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 13576,
+              "method": "trafilatura",
+              "content_chars": 498,
+              "truncated": false,
+              "usage": "dropped_short"
+            },
+            {
+              "url": "https://finance.yahoo.com/quote/VIXW260401C00019000/",
+              "domain": "finance.yahoo.com",
+              "success": false,
+              "status_code": 404,
+              "error": "HTTP 404",
+              "response_time_ms": 4096,
+              "method": null,
+              "content_chars": 0,
+              "truncated": false,
+              "usage": "failed"
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 10,
+            "urls_extracted": 6,
+            "urls_failed": 4,
+            "urls_summarized": 3
+          }
+        },
+        {
+          "query": "FOMC April 2026 schedule expectations",
+          "tool": "Google News",
+          "temporal_role": "current",
+          "intent": "Capture reporting on the late-April FOMC meeting and policy expectations that could shift volatility.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null,
+          "url_results": [
+            {
+              "url": "https://www.reuters.com/business/odds-early-warsh-led-fed-rate-cuts-slide-with-bullish-outlook-2026-02-26/",
+              "domain": "www.reuters.com",
+              "success": false,
+              "status_code": null,
+              "error": "Blocked domain",
+              "response_time_ms": 0,
+              "method": null,
+              "content_chars": 0,
+              "truncated": false,
+              "usage": "blocked"
+            },
+            {
+              "url": "https://www.usbank.com/investing/financial-perspectives/market-news/federal-reserve-tapering-asset-purchases.html",
+              "domain": "www.usbank.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 2835,
+              "method": "site-specific",
+              "content_chars": 10919,
+              "truncated": false,
+              "usage": "summarized"
+            },
+            {
+              "url": "https://coingape.com/trending/fomc-meeting-march-2026-date-schedule-rate-cut-expectations-and-how-to-watch-live/",
+              "domain": "coingape.com",
+              "success": false,
+              "status_code": 403,
+              "error": "HTTP 403",
+              "response_time_ms": 928,
+              "method": null,
+              "content_chars": 0,
+              "truncated": false,
+              "usage": "failed"
+            },
+            {
+              "url": "https://www.goldmansachs.com/insights/articles/the-outlook-for-fed-rate-cuts-in-2026",
+              "domain": "www.goldmansachs.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 1232,
+              "method": "site-specific",
+              "content_chars": 4407,
+              "truncated": false,
+              "usage": "dropped_cap"
+            },
+            {
+              "url": "https://www.bankrate.com/banking/federal-reserve/fomc-what-to-expect/",
+              "domain": "www.bankrate.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 2020,
+              "method": "site-specific",
+              "content_chars": 10731,
+              "truncated": false,
+              "usage": "dropped_cap"
+            },
+            {
+              "url": "https://www.thestreet.com/fed/federal-reserve-officials-signal-shocking-twist-on-2026-interest-rate-cuts",
+              "domain": "www.thestreet.com",
+              "success": false,
+              "status_code": 403,
+              "error": "HTTP 403",
+              "response_time_ms": 897,
+              "method": null,
+              "content_chars": 0,
+              "truncated": false,
+              "usage": "failed"
+            },
+            {
+              "url": "https://www.advisorperspectives.com/dshort/updates/2026/01/29/feds-interest-rate-decision-january-28-2026",
+              "domain": "www.advisorperspectives.com",
+              "success": false,
+              "status_code": 403,
+              "error": "HTTP 403",
+              "response_time_ms": 927,
+              "method": null,
+              "content_chars": 0,
+              "truncated": false,
+              "usage": "failed"
+            },
+            {
+              "url": "https://www.forbes.com/sites/simonmoore/2026/02/09/what-to-expect-from-the-feds-march-decision/",
+              "domain": "www.forbes.com",
+              "success": false,
+              "status_code": 403,
+              "error": "HTTP 403",
+              "response_time_ms": 919,
+              "method": null,
+              "content_chars": 0,
+              "truncated": false,
+              "usage": "failed"
+            },
+            {
+              "url": "https://www.cnbc.com/2026/01/27/fed-preview-january-2026.html",
+              "domain": "www.cnbc.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 14484,
+              "method": "site-specific",
+              "content_chars": 4859,
+              "truncated": false,
+              "usage": "summarized"
+            },
+            {
+              "url": "https://finance.yahoo.com/personal-finance/banking/article/when-is-the-next-fed-meeting-150709150.html",
+              "domain": "finance.yahoo.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 15019,
+              "method": "trafilatura",
+              "content_chars": 1214,
+              "truncated": false,
+              "usage": "summarized"
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 10,
+            "urls_extracted": 5,
+            "urls_failed": 5,
+            "urls_summarized": 3
+          }
+        },
+        {
+          "query": "2026 Q1 earnings calendar",
+          "tool": "Google",
+          "temporal_role": "current",
+          "intent": "Identify timing of major earnings releases running up to 30 Apr which can affect VIX.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 3,
+          "error": null,
+          "url_results": [
+            {
+              "url": "https://finance.yahoo.com/calendar/earnings/",
+              "domain": "finance.yahoo.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 13869,
+              "method": "boilerpy",
+              "content_chars": 206,
+              "truncated": false,
+              "usage": "dropped_short"
+            },
+            {
+              "url": "https://www.nasdaq.com/market-activity/earnings",
+              "domain": "www.nasdaq.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 5820,
+              "method": "site-specific",
+              "content_chars": 2147,
+              "truncated": false,
+              "usage": "dropped_cap"
+            },
+            {
+              "url": "https://earningshub.com/earnings-calendar/month/january-2026",
+              "domain": "earningshub.com",
+              "success": false,
+              "status_code": 200,
+              "error": "Content extraction failed",
+              "response_time_ms": 2759,
+              "method": null,
+              "content_chars": 0,
+              "truncated": false,
+              "usage": "failed"
+            },
+            {
+              "url": "https://www.wallstreethorizon.com/earnings-calendar",
+              "domain": "www.wallstreethorizon.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 1741,
+              "method": "trafilatura",
+              "content_chars": 4559,
+              "truncated": false,
+              "usage": "summarized"
+            },
+            {
+              "url": "https://www.investing.com/earnings-calendar",
+              "domain": "www.investing.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 9234,
+              "method": "trafilatura",
+              "content_chars": 14040,
+              "truncated": false,
+              "usage": "summarized"
+            },
+            {
+              "url": "https://earningscall.biz/calendar/2026/01/20",
+              "domain": "earningscall.biz",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 5982,
+              "method": "readability",
+              "content_chars": 261,
+              "truncated": false,
+              "usage": "dropped_short"
+            },
+            {
+              "url": "https://www.barchart.com/stocks/earnings-dividends",
+              "domain": "www.barchart.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 3509,
+              "method": "boilerpy",
+              "content_chars": 2073,
+              "truncated": false,
+              "usage": "summarized"
+            },
+            {
+              "url": "https://www.zacks.com/earnings/earnings-calendar",
+              "domain": "www.zacks.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 556,
+              "method": "trafilatura",
+              "content_chars": 557,
+              "truncated": false,
+              "usage": "dropped_short"
+            },
+            {
+              "url": "https://finance.yahoo.com/calendar/earnings?from=2026-01-19&to=2026-01-24",
+              "domain": "finance.yahoo.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 15804,
+              "method": "boilerpy",
+              "content_chars": 206,
+              "truncated": false,
+              "usage": "dropped_short"
+            },
+            {
+              "url": "https://www.earningswhispers.com/calendar",
+              "domain": "www.earningswhispers.com",
+              "success": true,
+              "status_code": 200,
+              "error": null,
+              "response_time_ms": 12100,
+              "method": "fallback",
+              "content_chars": 804,
+              "truncated": false,
+              "usage": "dropped_cap"
+            }
+          ],
+          "scrape_stats": {
+            "urls_returned": 10,
+            "urls_extracted": 9,
+            "urls_failed": 1,
+            "urls_summarized": 3
+          }
+        },
+        {
+          "query": "Coverage of emerging geopolitical tensions in early 2026 and their expected impact on U.S. equity market volatility leading up to April",
+          "tool": "AskNews",
+          "temporal_role": "current",
+          "intent": "Surface contrarian risk events that could spike or dampen volatility before resolution.",
+          "phase": "plan",
+          "success": true,
+          "num_results": 20,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "Google",
+        "Google News",
+        "AskNews"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4944,
+        "token_output": 1656,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.039672,
+        "duration_seconds": 43.620566844940186,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 19104,
+        "token_output": 2832,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.09979199999999999,
+        "duration_seconds": 62.32326936721802,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 18715,
+        "token_output": 2658,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.096015,
+        "duration_seconds": 62.3232421875,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.4",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4352,
+        "token_output": 2388,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.05758,
+        "duration_seconds": 43.62062215805054,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16795,
+        "token_output": 2667,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.12398,
+        "duration_seconds": 62.32320952415466,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 17717,
+        "token_output": 1964,
+        "token_reasoning": 1024,
+        "used_reasoning": true,
+        "cost": 0.051146,
+        "duration_seconds": 62.3231840133667,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 4352,
+        "token_output": 1740,
+        "token_reasoning": 640,
+        "used_reasoning": true,
+        "cost": 0.022624,
+        "duration_seconds": 43.620651960372925,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 16372,
+        "token_output": 1560,
+        "token_reasoning": 512,
+        "used_reasoning": true,
+        "cost": 0.045224,
+        "duration_seconds": 62.3231635093689,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "steps1_2_research": 0.0483,
+    "step3_outside_view": 0.1199,
+    "step5_inside_view": 0.4162,
+    "step6_aggregation": 0.4162,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.5844
+}

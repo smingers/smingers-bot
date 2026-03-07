@@ -1,0 +1,5 @@
+**Predicting VIX Levels**
+
+I need to predict the VIX closing level for April 30, 2026, starting from March 7, 2026, which gives me about 54 days to analyze. I’ll summarize historical distributions, reference classes, and justify my predictions. I have the VIX's 10-year mean at 18.4 and plan to establish base rates based on closing values. Historically, VIX closes below 15 about 30% of the time, 15-20 around 35%, 20-25 about 15%, and ≥25 roughly 20%.**Refining VIX Distribution Estimates**
+
+I want to approximate the VIX distribution more accurately by using 10-year percentiles from 2016 to 2026, taking into account events like the COVID spike. My estimates are 28% for below 15, 32% for 15-20, 15% for 20-25, and 25% for over 25. Alternatively, I've noted that using all data since 1990 gives a mean around 19.4. I must factor in the current level of 23.75 and examine the expected probabilities for two months ahead, focusing on mean reversion and establishing conditional distributions.
