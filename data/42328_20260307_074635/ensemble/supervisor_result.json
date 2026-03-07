@@ -1,0 +1,16 @@
+{
+  "confidence": "high",
+  "prediction": 0.95,
+  "search_queries": [
+    "Legifrance JORF d\u00e9cret nomination ministre f\u00e9vrier 2026 (Google)",
+    "remaniement gouvernement Lecornu f\u00e9vrier mars 2026 (Google News)",
+    "Please check the JORF (Journal officiel) on Legifrance for all minister-level appointment and termination decrees published between February 17 and March 7, 2026. Specifically, identify how many individuals were replaced in roles of ministre, ministre d\u00e9l\u00e9gu\u00e9, or secr\u00e9taire d'\u00c9tat, and list the names of those departing and their replacements. Pay special attention to whether Charlotte Parmentier-Lecocq was formally replaced by decree. (Agent)",
+    "Parmentier-Lecocq d\u00e9mission remplacement secr\u00e9taire \u00c9tat 2026 (Google News)"
+  ],
+  "cost": 0.2933,
+  "divergence": {
+    "metric_name": "std_dev",
+    "metric_value": 24.88,
+    "threshold": 15.0
+  }
+}

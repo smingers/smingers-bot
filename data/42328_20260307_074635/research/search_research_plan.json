@@ -1,0 +1,889 @@
+{
+  "plan_analysis": "The question asks whether, within the 55-day window 17 Feb \u2013 30 Apr 2026, France will publish JORF decrees that swap out more than two ministers.  \nAlready known: nothing \u2013 we only have the wording of the resolution source (JORF) and the time window.  \nForecasters still need:\n\n1. Historical base rate: How often have French governments changed \u22653 ministers in similarly short intervals, especially late in a presidential term?  \n2. Current state of the resolution mechanism: Have any decrees since 17 Feb 2026 already replaced ministers? (If three or more have already occurred, the question is essentially resolved.)  \n3. Near-term signals and drivers: a) political rumours of an imminent reshuffle, b) scandals/investigations involving ministers, c) electoral or policy deadlines that typically trigger changes, d) Presidential or PM popularity data that might push for a reset.  \n4. Contrarian evidence: explicit denials that a reshuffle is planned; commentary on governmental stability.  \n\nThe search strategy therefore covers:  \n\u2022 Historical statistics on French \u201cremaniements\u201d size/frequency.  \n\u2022 Direct check of the JORF database for any 2026 decrees since 17 Feb.  \n\u2022 Latest news/rumours about an upcoming remaniement.  \n\u2022 Current scandals or ministerial performance issues.  \n\u2022 Approval ratings of the president/PM, a key driver for reshuffles.  \n\u2022 Commentary arguing that no reshuffle is likely.",
+  "reflect_analysis": null,
+  "queries_planned": [
+    {
+      "query": "fr\u00e9quence remaniements minist\u00e9riels France 2000-2025",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Get studies/articles listing every cabinet reshuffle and number of ministers changed, to build a base rate.",
+      "phase": "plan"
+    },
+    {
+      "query": "d\u00e9cret nomination ministre f\u00e9vrier-mars 2026 site:legifrance.gouv.fr",
+      "tool": "Google",
+      "temporal_role": "current",
+      "intent": "Directly see if JORF has already posted any minister-level appointment/termination decrees after 17 Feb 2026.",
+      "phase": "plan"
+    },
+    {
+      "query": "remaniement gouvernemental mars 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Collect latest rumours or announcements of an imminent reshuffle.",
+      "phase": "plan"
+    },
+    {
+      "query": "scandal ministre France 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Identify fresh scandals/investigations that could force dismissals.",
+      "phase": "plan"
+    },
+    {
+      "query": "large cabinet reshuffle Macron 2017-2024",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Examine past Macron-era reshuffles, number of ministers replaced, typical triggers and timing.",
+      "phase": "plan"
+    },
+    {
+      "query": "popularit\u00e9 Premier ministre France 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Find recent polls on PM approval as a pressure gauge for a reshuffle.",
+      "phase": "plan"
+    },
+    {
+      "query": "AskNews: Are French political outlets reporting concrete plans or firm denials from the \u00c9lys\u00e9e or Matignon about a government reshuffle before May 2026? Focus on coverage Feb\u2013Mar 2026.",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "Sweep for nuanced reporting beyond headline searches, including denials.",
+      "phase": "plan"
+    }
+  ],
+  "gap_queries": [],
+  "seed_context_chars": 0,
+  "historical_context_chars": 14300,
+  "current_context_chars": 52341,
+  "phases": {
+    "pre_research": {
+      "duration_seconds": 0.53,
+      "seed_context_chars": 0,
+      "search_id": "question_urls",
+      "searched": true,
+      "urls_found": 2,
+      "urls_scraped": 0,
+      "urls_summarized": 0,
+      "urls": [
+        {
+          "url": "https://www.legifrance.gouv.fr/jorf/jo",
+          "domain": "www.legifrance.gouv.fr",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 483,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "content_words": 0,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.elysee.fr/le-gouvernement",
+          "domain": "www.elysee.fr",
+          "success": false,
+          "status_code": 404,
+          "error": "HTTP 404",
+          "response_time_ms": 150,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "content_words": 0,
+          "usage": "failed"
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ]
+    },
+    "plan": {
+      "duration_seconds": 16.87,
+      "cost": 0.0146,
+      "num_queries": 7
+    },
+    "execute": {
+      "duration_seconds": 33.23,
+      "cost": 0.033,
+      "queries_executed": 7,
+      "queries_successful": 7
+    },
+    "assemble": {
+      "historical_context_chars": 14300,
+      "current_context_chars": 52341
+    }
+  },
+  "total_queries_planned": 7,
+  "total_queries_executed": 7,
+  "total_gap_queries": 0,
+  "total_cost": 0.0476,
+  "total_duration_seconds": 50.63,
+  "query_details": [
+    {
+      "query": "fr\u00e9quence remaniements minist\u00e9riels France 2000-2025",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Get studies/articles listing every cabinet reshuffle and number of ministers changed, to build a base rate.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://www.nouvelobs.com/politique/20251006.OBS108431/ministres-ephemeres-gouvernements-eclairs-depuis-la-dissolution-la-france-connait-une-pluie-de-records.html",
+          "domain": "www.nouvelobs.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 7127,
+          "method": "site-specific",
+          "content_chars": 7096,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.bfmtv.com/politique/gouvernement/sebastien-lecornu-michel-barnier-depuis-la-dissolution-des-gouvernements-a-la-longevite-toujours-plus-courte_AD-202510060431.html",
+          "domain": "www.bfmtv.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 5526,
+          "method": "trafilatura",
+          "content_chars": 3633,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.lemonde.fr/les-decodeurs/article/2025/10/08/perdu-face-a-la-crise-politique-francaise-la-chronologie-pour-vous-y-retrouver_6645348_4355770.html",
+          "domain": "www.lemonde.fr",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 10072,
+          "method": "site-specific",
+          "content_chars": 17020,
+          "truncated": true,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.lesechos.fr/politique-societe/politique/les-premiers-ministres-de-la-ve-republique-1403982",
+          "domain": "www.lesechos.fr",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 5789,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://fr.wikipedia.org/wiki/Gouvernement_Lecornu_II",
+          "domain": "fr.wikipedia.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 4223,
+          "method": "wikipedia_api",
+          "content_chars": 23409,
+          "truncated": true,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.huffingtonpost.fr/remaniement-ministeriel/",
+          "domain": "www.huffingtonpost.fr",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 6863,
+          "method": "boilerpy",
+          "content_chars": 4941,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.lagazettedescommunes.com/1026344/gouvernement-lecornu-iii-mini-remaniement-mais-grandes-consequences-pour-les-collectivites/",
+          "domain": "www.lagazettedescommunes.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 10971,
+          "method": "trafilatura",
+          "content_chars": 484,
+          "truncated": false,
+          "usage": "dropped_short"
+        },
+        {
+          "url": "https://www.virgule.lu/international/le-remaniement-du-gouvernement-francais-se-precise/2184712.html",
+          "domain": "www.virgule.lu",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 12065,
+          "method": "trafilatura",
+          "content_chars": 3965,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.lexpress.fr/politique/lrem/crise-politique-la-france-a-vu-130-ministres-defiler-depuis-2022-7IP5DARIGVB4PNVVOR7ZJZ4BDY/",
+          "domain": "www.lexpress.fr",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 9371,
+          "method": "site-specific",
+          "content_chars": 3192,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.info.gouv.fr/actualite/qu-est-ce-qu-un-remaniement-ministeriel",
+          "domain": "www.info.gouv.fr",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 10074,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 8,
+        "urls_failed": 2,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "d\u00e9cret nomination ministre f\u00e9vrier-mars 2026 site:legifrance.gouv.fr",
+      "tool": "Google",
+      "temporal_role": "current",
+      "intent": "Directly see if JORF has already posted any minister-level appointment/termination decrees after 17 Feb 2026.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 1,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000053586369",
+          "domain": "www.legifrance.gouv.fr",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 9349,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000053525953",
+          "domain": "www.legifrance.gouv.fr",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 9348,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000053599182",
+          "domain": "www.legifrance.gouv.fr",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 9348,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.legifrance.gouv.fr/loda/id/JORFTEXT000053614038",
+          "domain": "www.legifrance.gouv.fr",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 9347,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000053594732",
+          "domain": "www.legifrance.gouv.fr",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 9347,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000053619386",
+          "domain": "www.legifrance.gouv.fr",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 9347,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000053613666",
+          "domain": "www.legifrance.gouv.fr",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 9347,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000053608027",
+          "domain": "www.legifrance.gouv.fr",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 9347,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.legifrance.gouv.fr/jorf/jo/2026/02/26/0049",
+          "domain": "www.legifrance.gouv.fr",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 9347,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.legifrance.gouv.fr/loda/id/JORFTEXT000053613072",
+          "domain": "www.legifrance.gouv.fr",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 9347,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 0,
+        "urls_failed": 10,
+        "urls_summarized": 1
+      }
+    },
+    {
+      "query": "remaniement gouvernemental mars 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Collect latest rumours or announcements of an imminent reshuffle.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://lenouvelliste.com/article/264793/remaniement-ministeriel-la-nouvelle-equipe-du-premier-ministre-fils-aime",
+          "domain": "lenouvelliste.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 356,
+          "method": "site-specific",
+          "content_chars": 1343,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.lenational.org/post_article.php?pol=7656",
+          "domain": "www.lenational.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 847,
+          "method": "trafilatura",
+          "content_chars": 1300,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.courrierdesmaires.fr/article/gouvernement-lecornu-iii-mini-remaniement-mais-grandes-consequences-pour-les-collectivites.59776",
+          "domain": "www.courrierdesmaires.fr",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 3647,
+          "method": "boilerpy",
+          "content_chars": 178,
+          "truncated": false,
+          "usage": "dropped_short"
+        },
+        {
+          "url": "https://www.radiofrance.fr/franceinfo/podcasts/les-documents-franceinfo/remaniement-quatre-nouveaux-entrants-au-gouvernement-1693292",
+          "domain": "www.radiofrance.fr",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 3625,
+          "method": "site-specific",
+          "content_chars": 1557,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.lemonde.fr/politique/article/2026/02/21/gouvernement-de-sebastien-lecornu-un-remaniement-attendu-dans-le-courant-de-la-semaine-prochaine_6667734_823448.html",
+          "domain": "www.lemonde.fr",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 1705,
+          "method": "boilerpy",
+          "content_chars": 8573,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.tf1info.fr/politique/attendue-en-cette-fin-de-semaine-l-annonce-du-remaniement-est-finalement-repoussee-2426143.html",
+          "domain": "www.tf1info.fr",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 8864,
+          "method": "site-specific",
+          "content_chars": 2554,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.haitilibre.com/article-46988-haiti-remaniement-deux-ministeres-regaliens-aux-mains-de-femmes.html",
+          "domain": "www.haitilibre.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 4313,
+          "method": "site-specific",
+          "content_chars": 3291,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.lopinion.fr/politique/remaniement-rachida-dati-entame-le-bras-de-fer-avec-sebastien-lecornu",
+          "domain": "www.lopinion.fr",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 9141,
+          "method": "trafilatura",
+          "content_chars": 3735,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.leparisien.fr/elections/municipales/municipales-a-clamart-et-chatillon-lentree-de-jean-didier-berger-au-gouvernement-bouscule-a-peine-la-campagne-01-03-2026-H72OE4M56FCXVNZOINRMJONZ4Y.php",
+          "domain": "www.leparisien.fr",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 511,
+          "method": "trafilatura",
+          "content_chars": 1420,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.lenational.org/post_article.php?pol=7648",
+          "domain": "www.lenational.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 1192,
+          "method": "trafilatura",
+          "content_chars": 1297,
+          "truncated": false,
+          "usage": "dropped_cap"
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 10,
+        "urls_failed": 0,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "scandal ministre France 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Identify fresh scandals/investigations that could force dismissals.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 1,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://www.france24.com/en/video/20250907-france-what-you-need-to-know-about-the-political-crisis",
+          "domain": "www.france24.com",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 3703,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.rfi.fr/en/france/20260202-french-pm-faces-new-no-confidence-votes-as-budget-faces-final-hurdle",
+          "domain": "www.rfi.fr",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 210,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.france24.com/en/20151204-france-government-publishes-guide-surviving-terrorism-paris-attacks",
+          "domain": "www.france24.com",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 3701,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://lens.maville.com/actu/actudet_-jo-2026.-les-agents-de-l-ice-n-auront-aucun-role-operationnel-selon-le-ministre-italien-de-l-interieur-_-7175668_actu.Htm",
+          "domain": "lens.maville.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 8474,
+          "method": "trafilatura",
+          "content_chars": 2952,
+          "truncated": false,
+          "usage": "summarized"
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 4,
+        "urls_extracted": 1,
+        "urls_failed": 3,
+        "urls_summarized": 1
+      }
+    },
+    {
+      "query": "large cabinet reshuffle Macron 2017-2024",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Examine past Macron-era reshuffles, number of ministers replaced, typical triggers and timing.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://www.nytimes.com/2024/01/12/world/europe/france-macron-cabinet-reshuffle.html",
+          "domain": "www.nytimes.com",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 7233,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://graphics.france24.com/france-macron-new-cabinet/",
+          "domain": "graphics.france24.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 6992,
+          "method": "site-specific",
+          "content_chars": 20092,
+          "truncated": true,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.reuters.com/world/europe/french-pm-elisabeth-borne-resigns-macrons-office-2024-01-08/",
+          "domain": "www.reuters.com",
+          "success": false,
+          "status_code": null,
+          "error": "Blocked domain",
+          "response_time_ms": 0,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "blocked"
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=bf7ZWNhC4jU",
+          "domain": "www.youtube.com",
+          "success": false,
+          "status_code": null,
+          "error": "Blocked domain",
+          "response_time_ms": 0,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "blocked"
+        },
+        {
+          "url": "https://www.lemonde.fr/en/politics/article/2024/01/11/macron-replaces-foreign-culture-labor-ministers-in-reshuffle_6424726_5.html",
+          "domain": "www.lemonde.fr",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 1706,
+          "method": "site-specific",
+          "content_chars": 3280,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.dw.com/en/french-president-reshuffles-cabinet-to-include-key-ally-after-resignations/a-45905026",
+          "domain": "www.dw.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 7370,
+          "method": "site-specific",
+          "content_chars": 3756,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.theguardian.com/world/2022/jul/04/emmanuel-macron-reshuffles-cabinet-france",
+          "domain": "www.theguardian.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 2206,
+          "method": "site-specific",
+          "content_chars": 2435,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.politico.eu/article/macron-completes-painstaking-reshuffle-with-health-energy-appointments/",
+          "domain": "www.politico.eu",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 7752,
+          "method": "site-specific",
+          "content_chars": 2438,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.seattletimes.com/nation-world/macron-appoints-french-cabinet-but-doubts-over-governments-stability-persist/",
+          "domain": "www.seattletimes.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 7227,
+          "method": "site-specific",
+          "content_chars": 5412,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://english.ahram.org.eg/NewsParis/471057.aspx",
+          "domain": "english.ahram.org.eg",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 7231,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 6,
+        "urls_failed": 4,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "popularit\u00e9 Premier ministre France 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Find recent polls on PM approval as a pressure gauge for a reshuffle.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://www.ipsos.com/fr-fr/barometre-politique-ipsos-bva-la-tribune-dimanche",
+          "domain": "www.ipsos.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 5569,
+          "method": "boilerpy",
+          "content_chars": 5869,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.lefigaro.fr/politique/sondage-l-embellie-se-confirme-pour-emmanuel-macron-20260305",
+          "domain": "www.lefigaro.fr",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 3994,
+          "method": "site-specific",
+          "content_chars": 2398,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.france24.com/fr/europe/20260304-d%C3%A9fiant-trump-disant-non-guerre-pedro-sanchez-r%C3%A9colte-soutiens-europe-iran-israel-etats-unis",
+          "domain": "www.france24.com",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 4024,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.publicsenat.fr/actualites/politique/sondage-emmanuel-macron-reste-un-mauvais-president-pour-77-des-francais",
+          "domain": "www.publicsenat.fr",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 10117,
+          "method": "site-specific",
+          "content_chars": 4269,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.lopinion.fr/politique/popularite-macron-rechute-lecornu-sinstalle",
+          "domain": "www.lopinion.fr",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 7921,
+          "method": "trafilatura",
+          "content_chars": 3855,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.lesechos.fr/politique-societe/politique/direct-crise-politique-un-premier-ministre-attendu-vendredi-la-gauche-reclame-la-cohabitation-2191099",
+          "domain": "www.lesechos.fr",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 7643,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.sudouest.fr/elections/sondages/sondage-la-popularite-de-macron-en-baisse-lecornu-progresse-28006855.php",
+          "domain": "www.sudouest.fr",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 4641,
+          "method": "site-specific",
+          "content_chars": 1476,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.franceinfo.fr/politique/gouvernement-de-sebastien-lecornu/direct-sebastien-lecornu-assure-etre-loyal-a-emmanuel-macron-mais-ca-ne-signifie-pas-que-je-suis-son-collaborateur_7547764.html",
+          "domain": "www.franceinfo.fr",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 6507,
+          "method": "trafilatura",
+          "content_chars": 8054,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.clubpatrimoine.com/contenus/crise-politique-budgetaire-inedite",
+          "domain": "www.clubpatrimoine.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 4405,
+          "method": "trafilatura",
+          "content_chars": 11198,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.radiofrance.fr/franceculture/podcasts/la-revue-de-presse-internationale/au-japon-la-premiere-ministre-sanae-takaichi-compte-sur-sa-popularite-pour-remporter-les-elections-anticipees-6253067",
+          "domain": "www.radiofrance.fr",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 7641,
+          "method": "site-specific",
+          "content_chars": 5990,
+          "truncated": false,
+          "usage": "dropped_cap"
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 8,
+        "urls_failed": 2,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "AskNews: Are French political outlets reporting concrete plans or firm denials from the \u00c9lys\u00e9e or Matignon about a government reshuffle before May 2026? Focus on coverage Feb\u2013Mar 2026.",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "Sweep for nuanced reporting beyond headline searches, including denials.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 20,
+      "error": null
+    }
+  ]
+}
