@@ -81,6 +81,48 @@ class TestExtractFredQuery:
 
 
 # ============================================================================
+# FRED series extraction from question text (pre-research)
+# ============================================================================
+
+
+class TestExtractFredSeriesFromQuestionText:
+    """Tests for _extract_fred_series_from_question_text."""
+
+    @pytest.fixture
+    def pipeline(self):
+        return SearchPipeline({})
+
+    def test_extracts_series_id_from_api_url(self, pipeline):
+        text = "A script will paginate through https://api.stlouisfed.org/fred/series/observations?series_id=GVZCLS"
+        assert pipeline._extract_fred_series_from_question_text(text) == "GVZCLS"
+
+    def test_extracts_series_id_from_fred_series_url(self, pipeline):
+        text = "Data at https://fred.stlouisfed.org/series/EXHOSLUSM495S"
+        assert pipeline._extract_fred_series_from_question_text(text) == "EXHOSLUSM495S"
+
+    def test_extracts_for_the_series_phrase(self, pipeline):
+        text = "Resolves to the value found on the FRED API for the series DFII30 once the data is published."
+        assert pipeline._extract_fred_series_from_question_text(text) == "DFII30"
+
+    def test_extracts_the_series_phrase(self, pipeline):
+        text = "The series RPONTSYD is a dataset tracked by the FRED API."
+        assert pipeline._extract_fred_series_from_question_text(text) == "RPONTSYD"
+
+    def test_returns_uppercase_from_phrase(self, pipeline):
+        text = "for the series gvzcls once published"
+        assert pipeline._extract_fred_series_from_question_text(text) == "GVZCLS"
+
+    def test_returns_none_when_no_match(self, pipeline):
+        assert pipeline._extract_fred_series_from_question_text("No FRED here.") is None
+        assert pipeline._extract_fred_series_from_question_text("") is None
+        assert pipeline._extract_fred_series_from_question_text("   ") is None
+
+    def test_url_takes_precedence_over_phrase(self, pipeline):
+        text = "Resolves to the series RPONTSYD. See https://api.stlouisfed.org/fred/series/observations?series_id=GVZCLS"
+        assert pipeline._extract_fred_series_from_question_text(text) == "GVZCLS"
+
+
+# ============================================================================
 # FRED Query Parsing (Regex) Tests
 # ============================================================================
 

@@ -215,6 +215,8 @@ class IterativeResearchPlanner(ForecasterMixin):
             log(f"  Seed context: {len(seed_context)} chars from question URLs")
             if seed_metadata.get("google_trends_pre_research"):
                 log("  Google Trends pre-research: included in seed context")
+            if seed_metadata.get("fred_pre_research"):
+                log("  FRED pre-research: included in seed context")
         else:
             log("  No seed context from question URLs")
 
@@ -361,6 +363,27 @@ class IterativeResearchPlanner(ForecasterMixin):
                             f"{seed_context}\n\n{trends_block}" if seed_context else trends_block
                         )
                         seed_metadata["google_trends_pre_research"] = True
+
+            # If question text mentions a FRED series (URL or "the series XXXX"), fetch it and add to seed context
+            if research_config.get("fred_enabled", True):
+                question_text = " ".join(
+                    [
+                        question_details.title or "",
+                        question_details.description or "",
+                        question_details.resolution_criteria or "",
+                        question_details.fine_print or "",
+                    ]
+                )
+                series_id = search._extract_fred_series_from_question_text(question_text)
+                if series_id:
+                    fred_block = await search._fred_search(series_id)
+                    if fred_block:
+                        err_lead = fred_block[:400]
+                        if "Error" not in err_lead and "No matching FRED series" not in err_lead:
+                            seed_context = (
+                                f"{seed_context}\n\n{fred_block}" if seed_context else fred_block
+                            )
+                            seed_metadata["fred_pre_research"] = True
 
         # Save seed context artifact
         if self.artifact_store and seed_context:

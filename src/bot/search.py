@@ -2054,6 +2054,34 @@ Source: Federal Reserve Economic Data (FRED), St. Louis Fed
             ],
         )
 
+    def _extract_fred_series_from_question_text(self, text: str) -> str | None:
+        """
+        Extract a FRED series ID from question text (resolution_criteria, fine_print, etc.).
+
+        Tries in order: (1) series_id= in api.stlouisfed.org URLs,
+        (2) /series/ID in fred.stlouisfed.org URLs, (3) "for the series XXXX" / "the series XXXX".
+        Returns the first match or None.
+        """
+        if not text or not text.strip():
+            return None
+        # URL: api.stlouisfed.org ... series_id=XXXX
+        m = re.search(r"api\.stlouisfed\.org[^\"\s]*series_id=([A-Z0-9]+)", text, re.IGNORECASE)
+        if m:
+            return m.group(1).upper()
+        # URL: fred.stlouisfed.org/series/XXXX
+        m = re.search(r"fred\.stlouisfed\.org/series/([A-Z0-9]+)", text, re.IGNORECASE)
+        if m:
+            return m.group(1).upper()
+        # Phrase: "for the series XXXX" or "the series XXXX"
+        m = re.search(
+            r"(?:for\s+the\s+series|the\s+series)\s+([A-Z0-9]{2,20})\b",
+            text,
+            re.IGNORECASE,
+        )
+        if m:
+            return m.group(1).upper()
+        return None
+
     # -------------------------------------------------------------------------
     # yFinance (Stock/ETF Market Data)
     # -------------------------------------------------------------------------
