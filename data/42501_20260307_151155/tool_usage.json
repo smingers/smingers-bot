@@ -1,0 +1,238 @@
+{
+  "centralized_research": {
+    "question_urls": {
+      "search_id": "question_urls",
+      "searched": true,
+      "num_queries": 3,
+      "queries": [
+        {
+          "query": "https://fred.stlouisfed.org/series/SP500",
+          "tool": "QuestionURLScrape",
+          "success": true,
+          "num_results": 1,
+          "domain": "fred.stlouisfed.org",
+          "method": "trafilatura",
+          "content_words": 177,
+          "error": null,
+          "response_time_ms": 405,
+          "usage": "summarized"
+        },
+        {
+          "query": "https://www.spglobal.com/spdji/en/indices/equity/sp-500/",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0,
+          "domain": "www.spglobal.com",
+          "method": null,
+          "content_words": 0,
+          "error": "HTTP 403",
+          "response_time_ms": 44,
+          "usage": "failed"
+        },
+        {
+          "query": "https://finance.yahoo.com/quote/%5EGSPC/history",
+          "tool": "QuestionURLScrape",
+          "success": false,
+          "num_results": 0,
+          "domain": "finance.yahoo.com",
+          "method": null,
+          "content_words": 0,
+          "error": "HTTP 404",
+          "response_time_ms": 406,
+          "usage": "failed"
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "historical": {
+      "search_id": "historical",
+      "searched": false,
+      "num_queries": 0,
+      "queries": [],
+      "tools_used": [],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "current": {
+      "search_id": "current",
+      "searched": false,
+      "num_queries": 0,
+      "queries": [],
+      "tools_used": [],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    },
+    "fred_pre_research": {
+      "search_id": "fred_pre_research",
+      "searched": true,
+      "num_queries": 1,
+      "queries": [
+        {
+          "query": "SP500",
+          "tool": "FRED",
+          "temporal_role": "historical",
+          "success": true,
+          "num_results": 1,
+          "error": null
+        }
+      ],
+      "tools_used": [
+        "FRED"
+      ],
+      "llm_cost": 0.0,
+      "llm_cost_summarization": 0.0,
+      "llm_cost_agentic": 0.0,
+      "error": null
+    }
+  },
+  "agents": {
+    "forecaster_1": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 2523,
+        "token_output": 1306,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.027159,
+        "duration_seconds": 33.3923134803772,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 3339,
+        "token_output": 2275,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.044142,
+        "duration_seconds": 47.3985321521759,
+        "error": null
+      }
+    },
+    "forecaster_2": {
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 2947,
+        "token_output": 1672,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.033921,
+        "duration_seconds": 47.398521184921265,
+        "error": null
+      }
+    },
+    "forecaster_3": {
+      "model": "openrouter/openai/gpt-5.4",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 2282,
+        "token_output": 1864,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.03937,
+        "duration_seconds": 33.39238357543945,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 2959,
+        "token_output": 1977,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.04445,
+        "duration_seconds": 47.39850449562073,
+        "error": null
+      }
+    },
+    "forecaster_4": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 0,
+        "token_output": 0,
+        "token_reasoning": 0,
+        "used_reasoning": false,
+        "cost": 0.0,
+        "duration_seconds": 0.0,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 3659,
+        "token_output": 1350,
+        "token_reasoning": 320,
+        "used_reasoning": true,
+        "cost": 0.018118000000000002,
+        "duration_seconds": 47.39848613739014,
+        "error": null
+      }
+    },
+    "forecaster_5": {
+      "model": "openrouter/openai/o3",
+      "weight": 1.0,
+      "step1": {
+        "searched": false,
+        "queries": [],
+        "token_input": 2282,
+        "token_output": 1672,
+        "token_reasoning": 832,
+        "used_reasoning": true,
+        "cost": 0.01794,
+        "duration_seconds": 33.3924286365509,
+        "error": null
+      },
+      "step2": {
+        "searched": false,
+        "queries": [],
+        "token_input": 2539,
+        "token_output": 1893,
+        "token_reasoning": 704,
+        "used_reasoning": true,
+        "cost": 0.020222,
+        "duration_seconds": 47.398470878601074,
+        "error": null
+      }
+    }
+  },
+  "step_costs": {
+    "steps1_2_research": 0.0151,
+    "step3_outside_view": 0.0845,
+    "step5_inside_view": 0.1609,
+    "step6_aggregation": 0.1609,
+    "step7_supervisor": 0.0
+  },
+  "total_pipeline_cost": 0.2604
+}
