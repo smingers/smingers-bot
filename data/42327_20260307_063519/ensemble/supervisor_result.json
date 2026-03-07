@@ -1,0 +1,16 @@
+{
+  "confidence": "high",
+  "prediction": 0.05,
+  "search_queries": [
+    "IAEA GOV/2026/6 Iran report March 2026 (Google News)",
+    "IAEA Iran report centrifuge cascade installed 2026 (Google)",
+    "Has the IAEA ever stated in an official Iran safeguards report that centrifuge cascades were \"installed\" at Natanz or Fordow based solely on satellite imagery or remote monitoring, without physical inspector access to the facility? Also, what is the full text or detailed summary of the most recent IAEA Iran report GOV/2026/6 distributed in late February 2026? (Agent)",
+    "IAEA next Iran Board report schedule 2026 (Google News)"
+  ],
+  "cost": 0.3043,
+  "divergence": {
+    "metric_name": "std_dev",
+    "metric_value": 23.85,
+    "threshold": 15.0
+  }
+}

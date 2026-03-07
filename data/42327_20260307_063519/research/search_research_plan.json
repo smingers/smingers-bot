@@ -1,0 +1,942 @@
+{
+  "plan_analysis": "The pre-research context only confirms where IAEA reports live; it does not tell us 1) how often IAEA reports come out in the Feb\u2013Apr window, 2) how often they have contained \u201cinstalled\u201d cascade language in the past, 3) what the current expansion status at Natanz/Fordow is, or 4) what political/technical factors could accelerate or halt new cascade installation before May 1 2026.  \nA skilled forecaster therefore still needs:\n\nBackground conditions \u2013 overall trajectory of Iran\u2019s enrichment programme and JCPOA diplomacy going into spring 2026.  \nBase rate \u2013 historical frequency with which IAEA Iran reports (esp. the February or March Board of Governors report) have mentioned new cascades.  \nResolution mechanism \u2013 typical publication dates and document codes (GOV/202X/XX, GOV/INF/..) so forecasters know when/where to look.  \nKey drivers \u2013 recent Iranian announcements, construction activity at Natanz/Fordow, and inspection access issues.  \nCurrent state \u2013 the most recent IAEA report (likely GOV/2026/xx of late-Feb 2026) plus any press leaks or satellite imagery after that report.  \nContrarian check \u2013 evidence Iran may pause or roll back installation (e.g., a political deal) or that the IAEA cannot confirm installations due to lack of access.\n\nThe queries below collectively fill those gaps: they pull historic IAEA PDFs to estimate the base rate, list past report publication dates to understand the resolution mechanism, surface current news/leaks/satellite-imagery about cascade work, and look for diplomatic de-escalation signals that would point toward a \u201cNo\u201d outcome.",
+  "reflect_analysis": null,
+  "queries_planned": [
+    {
+      "query": "installed centrifuge cascade Natanz Fordow site:iaea.org filetype:pdf",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Retrieve past IAEA reports that explicitly used the word \u201cinstalled\u201d for Natanz/Fordow cascades to establish the base rate.",
+      "phase": "plan"
+    },
+    {
+      "query": "IAEA Board of Governors Iran report schedule 2015-2025",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "List historical publication dates/codes of Feb-Apr Iran safeguards reports to map the resolution mechanism\u2019s timing.",
+      "phase": "plan"
+    },
+    {
+      "query": "Iran announced new centrifuge cascades 2021 2024",
+      "tool": "Google News",
+      "temporal_role": "historical",
+      "intent": "Compile Iranian public statements on cascade installations to see how often announcements preceded IAEA confirmation.",
+      "phase": "plan"
+    },
+    {
+      "query": "GOV/2026 Iran safeguards report pdf",
+      "tool": "Google",
+      "temporal_role": "current",
+      "intent": "Locate any February-2026 IAEA report already released to check whether it already mentions installations (baseline for current state).",
+      "phase": "plan"
+    },
+    {
+      "query": "Iran Natanz Fordow cascade installation 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Surface any March-April 2026 reporting or leaks about new cascades after the latest IAEA report.",
+      "phase": "plan"
+    },
+    {
+      "query": "Since January 2026 updates on Iranian centrifuge expansion at Natanz or Fordow and IAEA access limitations",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "Catch semantically related coverage that may not use identical keywords (e.g., satellite-imagery pieces, diplomatic cables).",
+      "phase": "plan"
+    },
+    {
+      "query": "Iran nuclear de-escalation talks early 2026",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "Probe for contrarian signals that Iran might freeze or roll back enrichment, reducing installation likelihood.",
+      "phase": "plan"
+    },
+    {
+      "query": "\u201cinstalled\u201d AND \u201ccascade\u201d AND GOV/IRN in title",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Quick scan for any lesser-known IAEA information circulars or GOV/INF documents that historically used the key wording, further refining the base-rate estimate.",
+      "phase": "plan"
+    }
+  ],
+  "gap_queries": [],
+  "seed_context_chars": 2320,
+  "historical_context_chars": 36428,
+  "current_context_chars": 100203,
+  "phases": {
+    "pre_research": {
+      "duration_seconds": 4.99,
+      "seed_context_chars": 2320,
+      "search_id": "question_urls",
+      "searched": true,
+      "urls_found": 2,
+      "urls_scraped": 1,
+      "urls_summarized": 1,
+      "urls": [
+        {
+          "url": "https://www.iaea.org/topics/iran",
+          "domain": "www.iaea.org",
+          "success": false,
+          "status_code": 404,
+          "error": "HTTP 404",
+          "response_time_ms": 176,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "content_words": 0,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.iaea.org/search?search_api_fulltext=Iran%20verification",
+          "domain": "www.iaea.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 592,
+          "method": "trafilatura",
+          "content_chars": 1911,
+          "truncated": false,
+          "content_words": 244,
+          "usage": "summarized"
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ]
+    },
+    "plan": {
+      "duration_seconds": 24.55,
+      "cost": 0.0156,
+      "num_queries": 8
+    },
+    "execute": {
+      "duration_seconds": 60.4,
+      "cost": 0.0564,
+      "queries_executed": 8,
+      "queries_successful": 8
+    },
+    "assemble": {
+      "historical_context_chars": 36428,
+      "current_context_chars": 100203
+    }
+  },
+  "total_queries_planned": 8,
+  "total_queries_executed": 8,
+  "total_gap_queries": 0,
+  "total_cost": 0.0738,
+  "total_duration_seconds": 89.93,
+  "query_details": [
+    {
+      "query": "installed centrifuge cascade Natanz Fordow site:iaea.org filetype:pdf",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Retrieve past IAEA reports that explicitly used the word \u201cinstalled\u201d for Natanz/Fordow cascades to establish the base rate.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://www.iaea.org/sites/default/files/documents/gov2023-57.pdf",
+          "domain": "www.iaea.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 8539,
+          "method": "pdf",
+          "content_chars": 25839,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.iaea.org/sites/default/files/documents/gov2022-24.pdf",
+          "domain": "www.iaea.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 8562,
+          "method": "pdf",
+          "content_chars": 43337,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.iaea.org/sites/default/files/documents/gov2023-39.pdf",
+          "domain": "www.iaea.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 8747,
+          "method": "pdf",
+          "content_chars": 43213,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.iaea.org/sites/default/files/documents/gov2024-41.pdf",
+          "domain": "www.iaea.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 8672,
+          "method": "pdf",
+          "content_chars": 31592,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.iaea.org/sites/default/files/documents/gov2022-62.pdf",
+          "domain": "www.iaea.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 8708,
+          "method": "pdf",
+          "content_chars": 44654,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.iaea.org/sites/default/files/24/11/gov2024-61.pdf",
+          "domain": "www.iaea.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 8612,
+          "method": "pdf",
+          "content_chars": 29108,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.iaea.org/sites/default/files/24/06/gov2024-26.pdf",
+          "domain": "www.iaea.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 8577,
+          "method": "pdf",
+          "content_chars": 25886,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.iaea.org/sites/default/files/documents/govinf2022-25.pdf",
+          "domain": "www.iaea.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 8490,
+          "method": "pdf",
+          "content_chars": 3276,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.iaea.org/sites/default/files/documents/gov2023-24.pdf",
+          "domain": "www.iaea.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 8653,
+          "method": "pdf",
+          "content_chars": 49873,
+          "truncated": false,
+          "usage": "dropped_cap"
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 9,
+        "urls_extracted": 9,
+        "urls_failed": 0,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "IAEA Board of Governors Iran report schedule 2015-2025",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "List historical publication dates/codes of Feb-Apr Iran safeguards reports to map the resolution mechanism\u2019s timing.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://www.iaea.org/sites/default/files/25/06/gov2025-24.pdf",
+          "domain": "www.iaea.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 8665,
+          "method": "pdf",
+          "content_chars": 30402,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.iranwatch.org/library/multilateral-organizations/international-atomic-energy-agency/september-2025-board-report-verification-monitoring-islamic-republic-iran-light",
+          "domain": "www.iranwatch.org",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 4692,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.iaea.org/sites/default/files/gov2025-71.pdf",
+          "domain": "www.iaea.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 8511,
+          "method": "pdf",
+          "content_chars": 6831,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://main.un.org/securitycouncil/en/content/2231/iaea-reports",
+          "domain": "main.un.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 4543,
+          "method": "boilerpy",
+          "content_chars": 9232,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.iaea.org/sites/default/files/documents/gov2025-50.pdf",
+          "domain": "www.iaea.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 8630,
+          "method": "pdf",
+          "content_chars": 25693,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://isis-online.org/isis-reports/analysis-of-iaea-iran-verification-and-monitoring-and-npt-safeguards-reports-september-2025",
+          "domain": "isis-online.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 4684,
+          "method": "site-specific",
+          "content_chars": 16590,
+          "truncated": true,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.securitycouncilreport.org/monthly-forecast/2025-06/iran-15.php",
+          "domain": "www.securitycouncilreport.org",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 4691,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://vienna.usmission.gov/u-s-statement-agenda-item-6-iaea-board-of-governors-meeting-march-2025/",
+          "domain": "vienna.usmission.gov",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 8503,
+          "method": "site-specific",
+          "content_chars": 6023,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.iaea.org/board-of-governors/year/2015/year/2025",
+          "domain": "www.iaea.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 5944,
+          "method": "trafilatura",
+          "content_chars": 3719,
+          "truncated": false,
+          "usage": "dropped_cap"
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 9,
+        "urls_extracted": 7,
+        "urls_failed": 2,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "Iran announced new centrifuge cascades 2021 2024",
+      "tool": "Google News",
+      "temporal_role": "historical",
+      "intent": "Compile Iranian public statements on cascade installations to see how often announcements preceded IAEA confirmation.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://www.iranwatch.org/our-publications/weapon-program-background-report/irans-nuclear-milestones",
+          "domain": "www.iranwatch.org",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 138,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://iranprimer.usip.org/blog/2023/may/03/timeline-iran%E2%80%99s-nuclear-program-2018",
+          "domain": "iranprimer.usip.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 2626,
+          "method": "site-specific",
+          "content_chars": 18459,
+          "truncated": true,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://world-nuclear.org/information-library/country-profiles/countries-g-n/iran",
+          "domain": "world-nuclear.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 9125,
+          "method": "site-specific",
+          "content_chars": 56122,
+          "truncated": true,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.iranintl.com/en/202409116813",
+          "domain": "www.iranintl.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 1593,
+          "method": "site-specific",
+          "content_chars": 24760,
+          "truncated": true,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.timesofisrael.com/un-watchdog-says-iran-activated-new-advanced-centrifuges-plans-to-install-more/",
+          "domain": "www.timesofisrael.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 3524,
+          "method": "site-specific",
+          "content_chars": 4404,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://apnews.com/article/iran-nuclear-iaea-mideast-wars-israel-7450481f9e42ea5b786c5d672ec382a1",
+          "domain": "apnews.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 2090,
+          "method": "site-specific",
+          "content_chars": 4551,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.unitedagainstnucleariran.com/irans-nuclear-program-overview",
+          "domain": "www.unitedagainstnucleariran.com",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 180,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.bbc.com/news/world-middle-east-33521655",
+          "domain": "www.bbc.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 2875,
+          "method": "site-specific",
+          "content_chars": 7951,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://iranprimer.usip.org/blog/2024/may/30/timeline-irans-nuclear-challenges-and-iaea",
+          "domain": "iranprimer.usip.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 2468,
+          "method": "site-specific",
+          "content_chars": 43744,
+          "truncated": true,
+          "usage": "dropped_cap"
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 9,
+        "urls_extracted": 7,
+        "urls_failed": 2,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "GOV/2026 Iran safeguards report pdf",
+      "tool": "Google",
+      "temporal_role": "current",
+      "intent": "Locate any February-2026 IAEA report already released to check whether it already mentions installations (baseline for current state).",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://www.iaea.org/sites/default/files/25/06/gov2025-38.pdf",
+          "domain": "www.iaea.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 354,
+          "method": "pdf",
+          "content_chars": 11480,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.iaea.org/sites/default/files/25/06/gov2025-25.pdf",
+          "domain": "www.iaea.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 385,
+          "method": "pdf",
+          "content_chars": 71773,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.securitycouncilreport.org/un_documents_type/iaea-documents/page/6?ctype=Iran&cbtype=iran",
+          "domain": "www.securitycouncilreport.org",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 2646,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.gov.uk/government/speeches/implementation-of-the-npt-safeguards-agreement-and-unsc-resolutions-in-iran-e3-statement-to-the-iaea-board-of-governors-march-2026",
+          "domain": "www.gov.uk",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 4834,
+          "method": "site-specific",
+          "content_chars": 5734,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.iranwatch.org/library/multilateral-organizations/international-atomic-energy-agency/npt-safeguards-agreement-islamic-republic-iran-gov202525",
+          "domain": "www.iranwatch.org",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 157,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://hrvoices.org/document/iaea-report-implementation-of-the-npt-safeguards-agreement-and-relevant-provisions-of-security-council-resolutions-in-the-islamic-republic-of-iran_377344",
+          "domain": "hrvoices.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 8581,
+          "method": "trafilatura",
+          "content_chars": 502,
+          "truncated": false,
+          "usage": "dropped_short"
+        },
+        {
+          "url": "https://www.congress.gov/crs-product/IF11583",
+          "domain": "www.congress.gov",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 4716,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "http://www.iaea.org/newscenter/focus/iran/iaea-and-iran-iaea-board-reports",
+          "domain": "www.iaea.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 5525,
+          "method": "trafilatura",
+          "content_chars": 38980,
+          "truncated": true,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.federalregister.gov/public-inspection/2026-04450/iran-continuation-of-national-emergency-notice-of-march-2-2026",
+          "domain": "www.federalregister.gov",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 5679,
+          "method": "boilerpy",
+          "content_chars": 3242,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://cdn.muniverse.co.uk/cloud-conference-research-reports/hmun26/sc-iran-research-report.pdf",
+          "domain": "cdn.muniverse.co.uk",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 9139,
+          "method": "pdf",
+          "content_chars": 10221,
+          "truncated": false,
+          "usage": "summarized"
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 7,
+        "urls_failed": 3,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "Iran Natanz Fordow cascade installation 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Surface any March-April 2026 reporting or leaks about new cascades after the latest IAEA report.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://www.washingtonpost.com/national-security/2026/03/03/trump-iran-war-rationale-hegseth-rubio/",
+          "domain": "www.washingtonpost.com",
+          "success": false,
+          "status_code": null,
+          "error": "Request timed out",
+          "response_time_ms": 48651,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.bloomberg.com/graphics/2026-iran-protects-nuclear-sites/",
+          "domain": "www.bloomberg.com",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 216,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.aljazeera.com/news/2025/6/19/what-is-irans-fordow-nuclear-facility-and-could-us-weapons-destroy-it",
+          "domain": "www.aljazeera.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 390,
+          "method": "site-specific",
+          "content_chars": 8747,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.armscontrol.org/factsheets/status-irans-nuclear-program-1",
+          "domain": "www.armscontrol.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 788,
+          "method": "trafilatura",
+          "content_chars": 7205,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.jpost.com/opinion/article-886623",
+          "domain": "www.jpost.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 577,
+          "method": "site-specific",
+          "content_chars": 5514,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.bbc.com/news/articles/cn9yll5yjx5o",
+          "domain": "www.bbc.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 3751,
+          "method": "site-specific",
+          "content_chars": 6307,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.reuters.com/world/china/how-much-damage-have-israeli-strikes-caused-irans-nuclear-programme-2025-06-16/",
+          "domain": "www.reuters.com",
+          "success": false,
+          "status_code": null,
+          "error": "Blocked domain",
+          "response_time_ms": 0,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "blocked"
+        },
+        {
+          "url": "https://www.timesofisrael.com/explainer-the-handful-of-facilities-at-the-core-of-irans-nuclear-program/",
+          "domain": "www.timesofisrael.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 1423,
+          "method": "trafilatura",
+          "content_chars": 4930,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.abc.net.au/news/2026-02-07/iran-nuclear-sites-program-us-strikes-pickaxe-mountain-uranium/106288446",
+          "domain": "www.abc.net.au",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 4060,
+          "method": "trafilatura",
+          "content_chars": 10757,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://time.com/7295632/israel-strikes-iran-nuclear-site-program/",
+          "domain": "time.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 1753,
+          "method": "trafilatura",
+          "content_chars": 1119,
+          "truncated": false,
+          "usage": "dropped_cap"
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 7,
+        "urls_failed": 3,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "Since January 2026 updates on Iranian centrifuge expansion at Natanz or Fordow and IAEA access limitations",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "Catch semantically related coverage that may not use identical keywords (e.g., satellite-imagery pieces, diplomatic cables).",
+      "phase": "plan",
+      "success": true,
+      "num_results": 20,
+      "error": null
+    },
+    {
+      "query": "Iran nuclear de-escalation talks early 2026",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "Probe for contrarian signals that Iran might freeze or roll back enrichment, reducing installation likelihood.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 20,
+      "error": null
+    },
+    {
+      "query": "\u201cinstalled\u201d AND \u201ccascade\u201d AND GOV/IRN in title",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Quick scan for any lesser-known IAEA information circulars or GOV/INF documents that historically used the key wording, further refining the base-rate estimate.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://iar.iga.in.gov/latestArticle/329/10",
+          "domain": "iar.iga.in.gov",
+          "success": false,
+          "status_code": 200,
+          "error": "Content extraction failed",
+          "response_time_ms": 5582,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.energy.ca.gov/sites/default/files/2025-11/Restructured_2025_Energy_Code_-_California_Code_of_Regulations_-_Title_24_Part_6_%28For_Information_Only%29_ada.pdf",
+          "domain": "www.energy.ca.gov",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 14039,
+          "method": "pdf",
+          "content_chars": 27644,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.ecfr.gov/current/title-10/chapter-I/part-110",
+          "domain": "www.ecfr.gov",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 8237,
+          "method": "site-specific",
+          "content_chars": 212824,
+          "truncated": true,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://le.utah.gov/xcode/Title72/C72_1800010118000101.xml",
+          "domain": "le.utah.gov",
+          "success": false,
+          "status_code": 200,
+          "error": "Content extraction failed",
+          "response_time_ms": 9874,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.mesaaz.gov/files/assets/public/v/2/business-development/engineering/approvedproducts/apl-water-revisions.pdf",
+          "domain": "www.mesaaz.gov",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 5610,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://grants.dnrc.mt.gov/gallery/076f4a29-4dd6-4ca8-aa4a-5d173522e716/49130331/",
+          "domain": "grants.dnrc.mt.gov",
+          "success": false,
+          "status_code": 200,
+          "error": "Content extraction failed",
+          "response_time_ms": 5598,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://codelibrary.amlegal.com/codes/cascadeid/latest/cascade_id/0-0-0-1083",
+          "domain": "codelibrary.amlegal.com",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 5610,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://eplanning.blm.gov/public_projects/nepa/59400/71291/78089/CSNM_Draft_TMP_and_EA_03.25.16_no_Plate_Maps_OPT2.pdf",
+          "domain": "eplanning.blm.gov",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 9010,
+          "method": "pdf",
+          "content_chars": 3978,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.congress.gov/crs-product/R40094",
+          "domain": "www.congress.gov",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 5610,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://leg.colorado.gov/sites/default/files/images/olls/crs2024-title-30.docx",
+          "domain": "leg.colorado.gov",
+          "success": false,
+          "status_code": 200,
+          "error": "Content extraction failed",
+          "response_time_ms": 10174,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 3,
+        "urls_failed": 7,
+        "urls_summarized": 3
+      }
+    }
+  ]
+}
