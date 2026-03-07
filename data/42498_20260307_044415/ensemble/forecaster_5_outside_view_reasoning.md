@@ -1,0 +1,5 @@
+**Evaluating exclusion probabilities**
+
+I’m considering the outside view for assessing a company that remains excluded after two months of designation. There's the Acronis case, and even though only one case stands, it does suggest that exclusions aren't often reversed quickly. However, local observers mention legal vulnerabilities, hinting it could be unlawful. So, gathering data on past designations could clarify how frequently these exclusions change. For now, I estimate a 70% chance that the exclusion remains in effect.**Analyzing exclusion probabilities**
+
+I'm looking at the likelihood of exclusions remaining in effect for domestic companies. So far, we've seen that previous exclusions, like Kaspersky, have stayed in place for years. While I note foreign adversaries like Huawei often remain excluded, domestic companies might be different. For example, TikTok managed to temporarily overcome a ban in court. Historically, we see similar cases where legal challenges do affect these decisions quickly. Therefore, I estimate that the probability of exclusions staying in effect might be around 62%.

@@ -1,0 +1,16 @@
+{
+  "confidence": "medium",
+  "prediction": 0.48,
+  "search_queries": [
+    "Anthropic lawsuit filed supply chain designation 2026 (Google News)",
+    "Anthropic DoD supply chain risk statutory authority \u00a73252 \u00a74713 (Google News)",
+    "Has Anthropic filed a lawsuit challenging the Department of Defense supply chain risk designation as of March 2026? If so, in which court was it filed, and has any emergency motion for a temporary restraining order or preliminary injunction been submitted? (Agent)",
+    "Historical TRO preliminary injunction timeline national security tech ban executive action (Google)"
+  ],
+  "cost": 0.3099,
+  "divergence": {
+    "metric_name": "std_dev",
+    "metric_value": 15.29,
+    "threshold": 15.0
+  }
+}

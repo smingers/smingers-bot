@@ -1,0 +1,993 @@
+{
+  "plan_analysis": "The question hinges on whether a DoD (10 U.S.C. \u00a7 3252) or civilian-agency (41 U.S.C. \u00a7 4713) exclusion of Anthropic is still legally in force on 1 May 2026.  The pre-research material already supplies the statutory language, the public statements by Trump and Sec. Hegseth, and expert commentary that the designation is vulnerable in court\u2014but it does NOT tell us:  \n\u2022 Whether an actual written exclusion order/memo has been issued under either statute and filed in the Federal Register or elsewhere.  \n\u2022 Whether Anthropic (or an interested party) has filed for a judicial stay in the D.C. Circuit, and the typical speed/success rate of such motions under \u00a7 1327/\u00a7 4713 or under \u00a7 3252.  \n\u2022 Historical base-rate data: how often a \u00a7 3252 or \u00a7 4713 exclusion is overturned, enjoined, or still in force 60\u201390 days later; the size of the reference class (Acronis, Huawei-style NDAA bans, etc.).  \n\u2022 Procedural timelines for previous \u00a7 4713 exclusions (FASC orders) and \u00a7 3252 designations.  \n\u2022 Political/administrative signals after the initial flare-up\u2014e.g., any White House, DoD, or congressional follow-ups indicating a walk-back, clarification, or codification.  \n\u2022 Contrarian evidence: legal scholars or court watchers arguing the designation could actually stand, or evidence that the D.C. Circuit is unlikely to act before 1 May.  \n\nThe search strategy therefore targets:  \n1. Official documents confirming the statutory basis and current legal status of the Anthropic exclusion.  \n2. Court dockets and filings (PACER, D.C. Circuit) for any suit or stay request by Anthropic.  \n3. Historical data on prior exclusions under both statutes and their legal outcomes/timelines.  \n4. News and commentary since 1 Mar 2026 tracking government or congressional action.  \n5. Analyses of D.C. Circuit turnaround times on emergency motions under \u00a7 1327 and \u00a7 4713.  \n6. Any indications of potential settlement or rescission negotiations.",
+  "reflect_analysis": null,
+  "queries_planned": [
+    {
+      "query": "10 U.S.C. 3252 supply chain risk Federal Register",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "List prior official designations and see how many remained in force, establishing base rate and precedent.",
+      "phase": "plan"
+    },
+    {
+      "query": "41 U.S.C. 4713 exclusion orders history",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Identify every past \u00a7 4713 (FASC) exclusion, timing, and litigation outcome for base-rate and timeline analysis.",
+      "phase": "plan"
+    },
+    {
+      "query": "Anthropic supply chain risk memorandum pdf",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Find the actual DoD or Department of War written order to verify statutory citation and effective date.",
+      "phase": "plan"
+    },
+    {
+      "query": "Anthropic v. Hegseth docket D.C. Circuit",
+      "tool": "Google",
+      "temporal_role": "current",
+      "intent": "Check whether Anthropic has filed a petition for review or emergency stay and obtain filing dates.",
+      "phase": "plan"
+    },
+    {
+      "query": "Anthropic exclusion judicial stay request",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "Surface any recent reporting (last 14 days) about Anthropic seeking or receiving a court injunction against the designation.",
+      "phase": "plan"
+    },
+    {
+      "query": "D.C. Circuit emergency stay success rate \u00a7 1327",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Find studies or law-review notes on how often the D.C. Circuit grants stays in \u00a7 4713 exclusion cases, informing likelihood of injunction before 1 May.",
+      "phase": "plan"
+    },
+    {
+      "query": "Congress reaction Anthropic ban 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Capture any legislative or oversight actions that could pressure DoD to rescind or entrench the designation.",
+      "phase": "plan"
+    },
+    {
+      "query": "supply chain risk exclusion overturned timeline",
+      "tool": "AskNews",
+      "temporal_role": "historical",
+      "intent": "Retrieve analytical pieces comparing timelines from exclusion to court reversal, giving forecasters practical time-to-injunction benchmarks.",
+      "phase": "plan"
+    }
+  ],
+  "gap_queries": [],
+  "seed_context_chars": 12864,
+  "historical_context_chars": 81493,
+  "current_context_chars": 61820,
+  "phases": {
+    "pre_research": {
+      "duration_seconds": 20.55,
+      "seed_context_chars": 12864,
+      "search_id": "question_urls",
+      "searched": true,
+      "urls_found": 16,
+      "urls_scraped": 4,
+      "urls_summarized": 4,
+      "urls": [
+        {
+          "url": "https://www.law.cornell.edu/uscode/text/10/3252",
+          "domain": "www.law.cornell.edu",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 762,
+          "method": "site-specific",
+          "content_chars": 15199,
+          "truncated": true,
+          "content_words": 2546,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.law.cornell.edu/uscode/text/44/3552#b_6",
+          "domain": "www.law.cornell.edu",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 497,
+          "method": "trafilatura",
+          "content_chars": 1330,
+          "truncated": false,
+          "content_words": 194,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.law.cornell.edu/uscode/text/41/4713",
+          "domain": "www.law.cornell.edu",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 1289,
+          "method": "boilerpy",
+          "content_chars": 33533,
+          "truncated": true,
+          "content_words": 2282,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.law.cornell.edu/uscode/text/41/1327",
+          "domain": "www.law.cornell.edu",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 887,
+          "method": "boilerpy",
+          "content_chars": 2971,
+          "truncated": false,
+          "content_words": 466,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://natlawreview.com/article/order-first-fascsa-order-has-been-issued-odni",
+          "domain": "natlawreview.com",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 124,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "content_words": 0,
+          "usage": "failed"
+        }
+      ],
+      "tools_used": [
+        "QuestionURLScrape"
+      ]
+    },
+    "plan": {
+      "duration_seconds": 27.35,
+      "cost": 0.0209,
+      "num_queries": 8
+    },
+    "execute": {
+      "duration_seconds": 77.86,
+      "cost": 0.0608,
+      "queries_executed": 8,
+      "queries_successful": 8
+    },
+    "assemble": {
+      "historical_context_chars": 81493,
+      "current_context_chars": 61820
+    }
+  },
+  "total_queries_planned": 8,
+  "total_queries_executed": 8,
+  "total_gap_queries": 0,
+  "total_cost": 0.0984,
+  "total_duration_seconds": 125.77,
+  "query_details": [
+    {
+      "query": "10 U.S.C. 3252 supply chain risk Federal Register",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "List prior official designations and see how many remained in force, establishing base rate and precedent.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title10-section3252&num=0&edition=prelim",
+          "domain": "uscode.house.gov",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 8652,
+          "method": "site-specific",
+          "content_chars": 21299,
+          "truncated": true,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.federalregister.gov/documents/2020/09/01/2020-18939/federal-acquisition-supply-chain-security-act",
+          "domain": "www.federalregister.gov",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 2050,
+          "method": "trafilatura",
+          "content_chars": 12696,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.acq.osd.mil/asda/dpc/cp/cyber/section-3252.html",
+          "domain": "www.acq.osd.mil",
+          "success": false,
+          "status_code": null,
+          "error": "[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1016)",
+          "response_time_ms": 4544,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.lexology.com/library/detail.aspx?g=45430926-504d-4b26-b0bc-cb63dcd2528d",
+          "domain": "www.lexology.com",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 197,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.acquisition.gov/node/36019/printable/print",
+          "domain": "www.acquisition.gov",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 2444,
+          "method": "trafilatura",
+          "content_chars": 37266,
+          "truncated": true,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.federalregister.gov/documents/2023/10/05/2023-21320/federal-acquisition-regulation-implementation-of-federal-acquisition-supply-chain-security-act",
+          "domain": "www.federalregister.gov",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 1662,
+          "method": "trafilatura",
+          "content_chars": 99820,
+          "truncated": true,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.law.cornell.edu/definitions/uscode.php?width=840&height=800&iframe=true&def_id=10-USC-1338888048-684799000&term_occur=999&term_src=title:10:subtitle:A:part:V:subpart:B:chapter:223:section:3252",
+          "domain": "www.law.cornell.edu",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 8218,
+          "method": "trafilatura",
+          "content_chars": 970,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.acquisition.gov/dfars/subpart-239.73-requirements-information-relating-supply-chain-risk",
+          "domain": "www.acquisition.gov",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 19394,
+          "method": "site-specific",
+          "content_chars": 10936,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.federalregister.gov/documents/2024/04/22/2024-07931/federal-acquisition-regulation-sustainable-procurement",
+          "domain": "www.federalregister.gov",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 4259,
+          "method": "trafilatura",
+          "content_chars": 261327,
+          "truncated": true,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.acq.osd.mil/dpap/dars/dfars/doc/current/239_73.docx",
+          "domain": "www.acq.osd.mil",
+          "success": false,
+          "status_code": null,
+          "error": "[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1016)",
+          "response_time_ms": 4543,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 7,
+        "urls_failed": 3,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "41 U.S.C. 4713 exclusion orders history",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Identify every past \u00a7 4713 (FASC) exclusion, timing, and litigation outcome for base-rate and timeline analysis.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title41-section4713&num=0&edition=prelim",
+          "domain": "uscode.house.gov",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 9706,
+          "method": "site-specific",
+          "content_chars": 34732,
+          "truncated": true,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.govinfo.gov/link/uscode/41/4713",
+          "domain": "www.govinfo.gov",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 8105,
+          "method": "pdf",
+          "content_chars": 46487,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.acquisition.gov/far/52.204-302",
+          "domain": "www.acquisition.gov",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 19638,
+          "method": "site-specific",
+          "content_chars": 15277,
+          "truncated": true,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.ecfr.gov/current/title-41/subtitle-D/chapter-201/part-201-1/subpart-C/section-201-1.303",
+          "domain": "www.ecfr.gov",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 7562,
+          "method": "site-specific",
+          "content_chars": 6799,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.govregs.com/uscode/expand/title41_subtitleI_chapter47_section4713",
+          "domain": "www.govregs.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 15233,
+          "method": "trafilatura",
+          "content_chars": 54510,
+          "truncated": true,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://codes.findlaw.com/us/title-41-public-contracts/41-usc-sect-4713/",
+          "domain": "codes.findlaw.com",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 5321,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://uscode.house.gov/view.xhtml?path=/prelim@title41/subtitle1/divisionB/chapter13/subchapter3&edition=prelim",
+          "domain": "uscode.house.gov",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 8831,
+          "method": "site-specific",
+          "content_chars": 33006,
+          "truncated": true,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://dodcio.defense.gov/Portals/0/Documents/Library/ICT-ServicesSupplyChain-RMA.pdf",
+          "domain": "dodcio.defense.gov",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 4551,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.congress.gov/115/statute/STATUTE-132/STATUTE-132-Pg5173.pdf",
+          "domain": "www.congress.gov",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 13536,
+          "method": "pdf",
+          "content_chars": 61386,
+          "truncated": false,
+          "usage": "dropped_cap"
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 9,
+        "urls_extracted": 7,
+        "urls_failed": 2,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "Anthropic supply chain risk memorandum pdf",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Find the actual DoD or Department of War written order to verify statutory citation and effective date.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://techcrunch.com/2026/03/02/tech-workers-urge-dod-congress-to-withdraw-anthropic-label-as-a-supply-chain-risk/",
+          "domain": "techcrunch.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 411,
+          "method": "site-specific",
+          "content_chars": 4616,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.bnnbloomberg.ca/business/2026/03/06/anthropic-vows-court-fight-in-pentagon-row/",
+          "domain": "www.bnnbloomberg.ca",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 7350,
+          "method": "site-specific",
+          "content_chars": 3152,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.chinadaily.com.cn/a/202603/04/WS69a78f5ea310d6866eb3b8a8.html",
+          "domain": "www.chinadaily.com.cn",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 9097,
+          "method": "site-specific",
+          "content_chars": 1979,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://timesofindia.indiatimes.com/technology/tech-news/us-governments-transition-to-chatgpt-from-anthropic-starts-read-memo/articleshow/128963069.cms",
+          "domain": "timesofindia.indiatimes.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 6335,
+          "method": "trafilatura",
+          "content_chars": 3591,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://techcrunch.com/2026/02/27/pentagon-moves-to-designate-anthropic-as-a-supply-chain-risk/",
+          "domain": "techcrunch.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 606,
+          "method": "trafilatura",
+          "content_chars": 4265,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.engadget.com/ai/trump-orders-federal-agencies-to-drop-anthropic-services-amid-pentagon-feud-222029306.html",
+          "domain": "www.engadget.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 8173,
+          "method": "trafilatura",
+          "content_chars": 4692,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.qatar-tribune.com/article/222479/business/us-govt-agencies-move-to-cease-anthropic-use-after-recent-dispute",
+          "domain": "www.qatar-tribune.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 5537,
+          "method": "site-specific",
+          "content_chars": 5945,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://techcrunch.com/2026/02/27/employees-at-google-and-openai-support-anthropics-pentagon-stand-in-open-letter/",
+          "domain": "techcrunch.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 4511,
+          "method": "site-specific",
+          "content_chars": 4784,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.thehindu.com/news/international/trump-elon-musk-bill-gates-new-epstein-file-dump/article70572956.ece",
+          "domain": "www.thehindu.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 5052,
+          "method": "site-specific",
+          "content_chars": 3345,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.oaktreecapital.com/insights/memo/ai-hurtles-ahead",
+          "domain": "www.oaktreecapital.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 5235,
+          "method": "trafilatura",
+          "content_chars": 2161,
+          "truncated": false,
+          "usage": "dropped_cap"
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 10,
+        "urls_failed": 0,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "Anthropic v. Hegseth docket D.C. Circuit",
+      "tool": "Google",
+      "temporal_role": "current",
+      "intent": "Check whether Anthropic has filed a petition for review or emergency stay and obtain filing dates.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 1,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://www.nytimes.com/2026/02/18/technology/defense-department-anthropic-ai-safety.html",
+          "domain": "www.nytimes.com",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 3416,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.axios.com/2026/02/24/anthropic-pentagon-claude-hegseth-dario",
+          "domain": "www.axios.com",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 3416,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://content.next.westlaw.com/practical-law/document/I2cc91fc817d411f1b030ab7612df8733/Big-Tech-Docket-Pentagon-clashes-with-Anthropic-inks-deal-with-OpenAI?viewType=FullText&productData=categoryPageUrl%3AHome%2FPracticalLaw&navId=17B2B7FAC191847ACC81614B375C393E&transitionType=CategoryPageItem&contextData=(sc.Default)",
+          "domain": "content.next.westlaw.com",
+          "success": false,
+          "status_code": 200,
+          "error": "Content extraction failed",
+          "response_time_ms": 5412,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.nbcrightnow.com/politics/hegseth-labels-anthropic-a-supply-chain-risk-after-ai-dispute-preventing-us-military-vendors-from/article_966e9689-6f89-5ce9-8d63-d76c4572d683.html",
+          "domain": "www.nbcrightnow.com",
+          "success": false,
+          "status_code": 429,
+          "error": "HTTP 429",
+          "response_time_ms": 8846,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.facebook.com/gettheinformation/posts/anthropic-says-its-prepared-to-challenge-the-defense-department-in-court-if-the-/1533581932104131/",
+          "domain": "www.facebook.com",
+          "success": false,
+          "status_code": null,
+          "error": "Blocked domain",
+          "response_time_ms": 0,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "blocked"
+        },
+        {
+          "url": "https://www.reuters.com/business/hegseth-gives-anthropic-until-friday-back-down-ai-safeguards-axios-reports-2026-02-24/",
+          "domain": "www.reuters.com",
+          "success": false,
+          "status_code": null,
+          "error": "Blocked domain",
+          "response_time_ms": 0,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "blocked"
+        },
+        {
+          "url": "https://www.supremecourt.gov/search.aspx?filename=/docket/docketfiles/html/public/25-6423.html",
+          "domain": "www.supremecourt.gov",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 2775,
+          "method": "trafilatura",
+          "content_chars": 512,
+          "truncated": false,
+          "usage": "dropped_short"
+        },
+        {
+          "url": "https://www.lawfaremedia.org/projects-series/trials-of-the-trump-administration/tracking-trump-administration-litigation/judges-shouldn-t-rely-on-ai-for-the-ordinary-meaning-of-text",
+          "domain": "www.lawfaremedia.org",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 2646,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.bbc.com/news/articles/c5y4jpg922qo",
+          "domain": "www.bbc.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 4968,
+          "method": "trafilatura",
+          "content_chars": 3152,
+          "truncated": false,
+          "usage": "summarized"
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 9,
+        "urls_extracted": 2,
+        "urls_failed": 7,
+        "urls_summarized": 1
+      }
+    },
+    {
+      "query": "Anthropic exclusion judicial stay request",
+      "tool": "AskNews",
+      "temporal_role": "current",
+      "intent": "Surface any recent reporting (last 14 days) about Anthropic seeking or receiving a court injunction against the designation.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 20,
+      "error": null
+    },
+    {
+      "query": "D.C. Circuit emergency stay success rate \u00a7 1327",
+      "tool": "Google",
+      "temporal_role": "historical",
+      "intent": "Find studies or law-review notes on how often the D.C. Circuit grants stays in \u00a7 4713 exclusion cases, informing likelihood of injunction before 1 May.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://journals.law.harvard.edu/jlpp/wp-content/uploads/sites/90/2021/06/McFadden-The-Precedential-Effects-of-the-Supreme-Courts-Emergency-Stays.pdf",
+          "domain": "journals.law.harvard.edu",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 5267,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.yalejreg.com/nc/d-c-circuit-review-reviewed-more-administrative-stays/",
+          "domain": "www.yalejreg.com",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 5267,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.supremecourt.gov/DocketPDF/25/25A312/374989/20250918113320383_Trump%20v%20Cook%20Appendix.pdf",
+          "domain": "www.supremecourt.gov",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 8171,
+          "method": "pdf",
+          "content_chars": 38148,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.democracydocket.com/wp-content/uploads/2025/10/2025-09-11-Emergency-motion-to-stay-pending-appeal.pdf",
+          "domain": "www.democracydocket.com",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 5266,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "http://guptawessler.com/wp-content/uploads/2020/07/Emergency-Motion-DC-Circuit.pdf",
+          "domain": "guptawessler.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 9408,
+          "method": "pdf",
+          "content_chars": 35760,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://media.cadc.uscourts.gov/orders/docs/2025/11/25-5124LDEN2.FINAL.pdf",
+          "domain": "media.cadc.uscourts.gov",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 10461,
+          "method": "pdf",
+          "content_chars": 38147,
+          "truncated": false,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.congress.gov/crs-product/R48369",
+          "domain": "www.congress.gov",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 5266,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://oag.dc.gov/sites/default/files/2025-11/National_Guard_Ruling.pdf",
+          "domain": "oag.dc.gov",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 8136,
+          "method": "pdf",
+          "content_chars": 47353,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://cardozolawreview.com/how-the-supreme-courts-inconsistent-approach-to-granting-emergency-relief-will-exacerbate-rather-than-mitigate-the-disruption-its-emergency-stay-policy-is-supposed-to-address/",
+          "domain": "cardozolawreview.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 6629,
+          "method": "site-specific",
+          "content_chars": 35975,
+          "truncated": true,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.skadden.com/insights/publications/2024/07/supreme-court-opens-the-door-to-more-rule-challenges",
+          "domain": "www.skadden.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 5472,
+          "method": "site-specific",
+          "content_chars": 17829,
+          "truncated": true,
+          "usage": "summarized"
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 6,
+        "urls_failed": 4,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "Congress reaction Anthropic ban 2026",
+      "tool": "Google News",
+      "temporal_role": "current",
+      "intent": "Capture any legislative or oversight actions that could pressure DoD to rescind or entrench the designation.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 3,
+      "error": null,
+      "url_results": [
+        {
+          "url": "https://www.cnbc.com/2026/03/04/anthropic-ai-pentagon-defense-business-risk.html",
+          "domain": "www.cnbc.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 7866,
+          "method": "site-specific",
+          "content_chars": 10069,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.mayerbrown.com/en/insights/publications/2026/03/pentagon-designates-anthropic-a-supply-chain-risk-what-government-contractors-need-to-know",
+          "domain": "www.mayerbrown.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 5413,
+          "method": "site-specific",
+          "content_chars": 14963,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.linkedin.com/pulse/wrap-anthropic-ban-20b-breach-tab-army-seeks-industry-partners-yyxqc",
+          "domain": "www.linkedin.com",
+          "success": false,
+          "status_code": null,
+          "error": "Blocked domain",
+          "response_time_ms": 0,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "blocked"
+        },
+        {
+          "url": "https://www.lawfaremedia.org/article/pentagon's-anthropic-designation-won't-survive-first-contact-with-legal-system",
+          "domain": "www.lawfaremedia.org",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 7202,
+          "method": "site-specific",
+          "content_chars": 23816,
+          "truncated": true,
+          "usage": "dropped_cap"
+        },
+        {
+          "url": "https://www.nytimes.com/live/2026/02/27/us/trump-bill-clinton-epstein",
+          "domain": "www.nytimes.com",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 4644,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.businessinsider.com/sam-altman-openai-pentagon-government-deal-controversy-explained-2026-3",
+          "domain": "www.businessinsider.com",
+          "success": true,
+          "status_code": 200,
+          "error": null,
+          "response_time_ms": 6576,
+          "method": "site-specific",
+          "content_chars": 10088,
+          "truncated": false,
+          "usage": "summarized"
+        },
+        {
+          "url": "https://www.reuters.com/technology/anthropic-investors-push-de-escalate-pentagon-clash-over-ai-safeguards-sources-2026-03-04/",
+          "domain": "www.reuters.com",
+          "success": false,
+          "status_code": null,
+          "error": "Blocked domain",
+          "response_time_ms": 0,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "blocked"
+        },
+        {
+          "url": "https://breakingdefense.com/2026/02/pentagon-cto-says-its-not-democratic-for-anthropic-to-limit-military-use-of-claude-ai/",
+          "domain": "breakingdefense.com",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 5412,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://www.axios.com/2026/02/26/anthropic-pentagon-ultamatim-congress-deadline",
+          "domain": "www.axios.com",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 5413,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        },
+        {
+          "url": "https://mlq.ai/news/anthropic-announces-plan-to-sue-pentagon-over-supply-chain-risk-label/",
+          "domain": "mlq.ai",
+          "success": false,
+          "status_code": 403,
+          "error": "HTTP 403",
+          "response_time_ms": 4644,
+          "method": null,
+          "content_chars": 0,
+          "truncated": false,
+          "usage": "failed"
+        }
+      ],
+      "scrape_stats": {
+        "urls_returned": 10,
+        "urls_extracted": 4,
+        "urls_failed": 6,
+        "urls_summarized": 3
+      }
+    },
+    {
+      "query": "supply chain risk exclusion overturned timeline",
+      "tool": "AskNews",
+      "temporal_role": "historical",
+      "intent": "Retrieve analytical pieces comparing timelines from exclusion to court reversal, giving forecasters practical time-to-injunction benchmarks.",
+      "phase": "plan",
+      "success": true,
+      "num_results": 20,
+      "error": null
+    }
+  ]
+}
