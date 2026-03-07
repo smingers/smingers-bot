@@ -215,6 +215,8 @@ class IterativeResearchPlanner(ForecasterMixin):
             log(f"  Seed context: {len(seed_context)} chars from question URLs")
             if seed_metadata.get("google_trends_pre_research"):
                 log("  Google Trends pre-research: included in seed context")
+            if seed_metadata.get("fred_pre_research"):
+                log("  FRED pre-research: included in seed context")
         else:
             log("  No seed context from question URLs")
 
@@ -361,6 +363,40 @@ class IterativeResearchPlanner(ForecasterMixin):
                             f"{seed_context}\n\n{trends_block}" if seed_context else trends_block
                         )
                         seed_metadata["google_trends_pre_research"] = True
+
+            # If question text mentions a FRED series (URL or "the series XXXX"), fetch it and add to seed context.
+            # We only use the first detected series (v1); multiple series could be supported later.
+            if research_config.get("fred_enabled", True):
+                question_text = " ".join(
+                    [
+                        question_details.title or "",
+                        question_details.description or "",
+                        question_details.resolution_criteria or "",
+                        question_details.fine_print or "",
+                    ]
+                )
+                series_id = search._extract_fred_series_from_question_text(question_text)
+                if series_id:
+                    fred_block = await search._fred_search(series_id)
+                    if search._is_successful_fred_block(fred_block):
+                        seed_context = (
+                            f"{seed_context}\n\n{fred_block}" if seed_context else fred_block
+                        )
+                        seed_metadata["fred_pre_research"] = True
+                        seed_metadata["fred"] = {
+                            "query": series_id,
+                            "success": True,
+                            "error": None,
+                        }
+                    else:
+                        logger.info(
+                            f"FRED pre-research: skipped, no/invalid data for series_id={series_id}"
+                        )
+                        seed_metadata["fred"] = {
+                            "query": series_id,
+                            "success": False,
+                            "error": "no/invalid data",
+                        }
 
         # Save seed context artifact
         if self.artifact_store and seed_context:

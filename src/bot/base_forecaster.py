@@ -436,6 +436,21 @@ class BaseForecaster(ForecasterMixin, ABC):
             for u in pre_research.get("urls", [])
         ]
 
+        # Phase 0 FRED: same shape as Phase 2 query_details so tool_usage.json records it
+        fred_pre = pre_research.get("fred")
+        fred_pre_research_queries = []
+        if fred_pre:
+            fred_pre_research_queries = [
+                {
+                    "query": fred_pre.get("query", ""),
+                    "tool": "FRED",
+                    "temporal_role": "historical",
+                    "success": fred_pre.get("success", False),
+                    "num_results": 1 if fred_pre.get("success") else 0,
+                    "error": fred_pre.get("error"),
+                }
+            ]
+
         research_metrics = {
             "question_urls": ResearchMetrics(
                 search_id="question_urls",
@@ -443,6 +458,13 @@ class BaseForecaster(ForecasterMixin, ABC):
                 num_queries=pre_research.get("urls_found", 0),
                 queries=question_url_queries,
                 tools_used=["QuestionURLScrape"] if question_url_queries else [],
+            ),
+            "fred_pre_research": ResearchMetrics(
+                search_id="fred_pre_research",
+                searched=len(fred_pre_research_queries) > 0,
+                num_queries=len(fred_pre_research_queries),
+                queries=fred_pre_research_queries,
+                tools_used=["FRED"] if fred_pre_research_queries else [],
             ),
             "historical": ResearchMetrics(
                 search_id="historical",

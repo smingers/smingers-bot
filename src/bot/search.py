@@ -2028,6 +2028,35 @@ Source: Federal Reserve Economic Data (FRED), St. Louis Fed
             return f'<FREDData query="{query}">\nError retrieving FRED data: {e}\n</FREDData>'
 
     @staticmethod
+    def _is_successful_fred_block(block: str) -> bool:
+        """
+        Return True if the block is a successful FRED response suitable for seed context.
+
+        _fred_search always wraps output in <FREDData ...>...</FREDData>. On failure it
+        puts a newline followed by "Error", or "No matching FRED series", in the first
+        few lines. We also treat "no observations" and "all values are NaN" (or "all NaN")
+        as no useful data. We check a fixed prefix (300 chars) so we don't mis-treat
+        valid data containing those phrases later in the block.
+        """
+        if block is None:
+            return False
+        if not block or not block.strip():
+            return False
+        if not block.strip().startswith("<FREDData"):
+            return False
+        prefix = block[:300]
+        if "\nError" in prefix or "No matching FRED series" in prefix:
+            return False
+        prefix_lower = prefix.lower()
+        if (
+            "no observations" in prefix_lower
+            or "all values are nan" in prefix_lower
+            or "all nan" in prefix_lower
+        ):
+            return False
+        return True
+
+    @staticmethod
     def _strip_query_prefix(query: str, prefixes: list[str]) -> str:
         """Extract a search term by stripping a known prefix or returning quoted text."""
         quoted = re.search(r'["\']([^"\']+)["\']', query)
@@ -2053,6 +2082,34 @@ Source: Federal Reserve Economic Data (FRED), St. Louis Fed
                 "economic data ",
             ],
         )
+
+    def _extract_fred_series_from_question_text(self, text: str) -> str | None:
+        """
+        Extract a FRED series ID from question text (resolution_criteria, fine_print, etc.).
+
+        Tries in order: (1) series_id= in api.stlouisfed.org URLs (first match),
+        (2) /series/ID in fred.stlouisfed.org URLs, (3) "for the series XXXX" / "the series XXXX".
+        Returns the first match or None. Phrase form only supports alphanumeric IDs (2-20 chars).
+        """
+        if not text or not text.strip():
+            return None
+        # URL: api.stlouisfed.org ... series_id=XXXX (first series_id= wins)
+        m = re.search(r"api\.stlouisfed\.org[^\"\s]*series_id=([A-Z0-9]+)", text, re.IGNORECASE)
+        if m:
+            return m.group(1).upper()
+        # URL: fred.stlouisfed.org/series/XXXX
+        m = re.search(r"fred\.stlouisfed\.org/series/([A-Z0-9]+)", text, re.IGNORECASE)
+        if m:
+            return m.group(1).upper()
+        # Phrase: "for the series XXXX" or "the series XXXX" (alphanumeric ID only, 2-20 chars)
+        m = re.search(
+            r"(?:for\s+the\s+series|the\s+series)\s+([A-Z0-9]{2,20})\b",
+            text,
+            re.IGNORECASE,
+        )
+        if m:
+            return m.group(1).upper()
+        return None
 
     # -------------------------------------------------------------------------
     # yFinance (Stock/ETF Market Data)
